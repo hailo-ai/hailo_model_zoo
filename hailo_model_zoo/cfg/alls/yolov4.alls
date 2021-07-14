@@ -1,0 +1,29 @@
+allocator_param(optimize_one_to_many_shmifos=True,split_aware_optimize_buffers=False, automatic_l4_portals=True, cluster_timeout=600, max_auto_defuse=8, max_auto_merge_depth=2, max_lcu_usage=0, max_lcu_utilization=1.0, seed=30, timeout=2000, validate=True)
+context_switch_param(mode=manual, max_memory_utilization=0.87)
+#auto_context_0.compilation_param(fps=50)
+compilation_param({*}, mixed_mem=False)
+optimize_buffers()
+
+
+context_0 = context([conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, concat1, conv9, conv10, conv11, conv12, conv13, conv14, conv15, conv16, conv17, conv18, conv19, concat2, conv20, conv21, conv22, conv23, conv24, conv25, conv26, conv27, conv28, conv29, conv30, conv31, conv32, conv33, conv34, conv35, conv36, conv37, conv38, conv39, conv40, conv41, conv42, conv43, conv44, conv45, conv46, conv47, conv48, concat3])
+
+context_1 = context([conv49, conv50, conv51, conv52, conv53, conv54, conv55, conv56, conv57, conv58, conv59, conv60, conv61, conv62, conv63, conv64, conv65, conv66, conv67, conv68, conv69, conv70, conv71, conv72, conv73, conv74, conv75, conv76, conv77, conv78, concat4, conv79])
+
+context_2 = context([conv80, conv81, conv82, conv83, conv84, conv85, conv86, conv87, conv88, conv89, conv90, conv91, conv92])
+
+context_3 = context([conv93, conv94, conv95, conv96, concat5, conv97, conv98, conv99, conv100, maxpool1, maxpool2, maxpool3, concat6, conv101]) 
+
+context_4 = context([conv102, conv103, conv104, resize1, concat7, conv105, conv106, conv107, conv108, conv109, conv110, resize2, concat8, conv111, conv112, conv113, conv114, conv115, conv117, concat9, conv119, conv120, conv121, conv122, conv116, conv118_probs]) 
+
+context_5 = context([conv123, conv124, concat10, conv125, conv126_probs, conv127, conv128, conv129, conv130, conv131, conv133_probs, conv132])
+
+#compilation_param(conv2, use_16x4_sc=disabled, mixed_mem=False)
+#conv2_sd0, conv2_sd1, conv2_sd2, conv2_sd3, conv2_sd4, conv2_sd5, conv2_sd6, conv2_sd7, conv2_sdc = defuse(conv2, 8)
+
+context_0.compilation_param(fps=330.0)
+context_1.compilation_param(fps=620.0)
+context_2.compilation_param(fps=1000.0)
+context_3.compilation_param(fps=1100.0)
+context_4.compilation_param(fps=400.0)
+context_5.compilation_param(fps=400.0)
+

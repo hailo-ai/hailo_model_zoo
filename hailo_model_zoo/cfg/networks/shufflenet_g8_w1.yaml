@@ -1,0 +1,23 @@
+base:
+- base/resnet.yaml
+quantization:
+  should_equalize: false
+  should_ibc: true
+  calib_set_size: 64
+info:
+  network_source: https://github.com/osmr/imgclsmob
+network:
+  network_name: shufflenet_g8_w1
+allocation:
+  required_fps: 1029
+paths:
+  alls_script: shufflenet_g8_w1.alls
+  network_path:
+  - models_files/Classification/shufflenet_g8_w1/pretrained/2021-07-11/shufflenet_g8_w1_modified.ckpt.meta
+  - models_files/Classification/shufflenet_g8_w1/pretrained/2021-07-11/shufflenet_g8_w1_modified.ckpt.index
+  - models_files/Classification/shufflenet_g8_w1/pretrained/2021-07-11/shufflenet_g8_w1_modified.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/shufflenet_g8_w1/pretrained/2021-07-11/shufflenet_g8_w1.zip
+parser:
+  nodes:
+  - Pad
+  - output/BiasAdd

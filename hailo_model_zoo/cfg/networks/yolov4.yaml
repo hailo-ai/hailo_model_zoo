@@ -1,0 +1,117 @@
+base:
+- base/yolo.yaml
+postprocessing:
+  meta_arch: yolo_v4
+  anchors:
+    strides:
+    - 8
+    - 16
+    - 32
+    fpn: false
+    sizes:
+    - - 12
+      - 16
+      - 19
+      - 36
+      - 40
+      - 28
+    - - 36
+      - 75
+      - 76
+      - 55
+      - 72
+      - 146
+    - - 142
+      - 110
+      - 192
+      - 243
+      - 459
+      - 401
+hn_editor:
+  output_scheme:
+    outputs_to_split:
+    - conv133
+    - conv126
+    - conv118
+    split_output: true
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv133_centers
+        activation: sigmoid
+      - layer_name: conv133_obj
+        activation: sigmoid
+      - layer_name: conv133_probs
+        activation: sigmoid
+      - layer_name: conv126_centers
+        activation: sigmoid
+      - layer_name: conv126_obj
+        activation: sigmoid
+      - layer_name: conv126_probs
+        activation: sigmoid
+      - layer_name: conv118_centers
+        activation: sigmoid
+      - layer_name: conv118_obj
+        activation: sigmoid
+      - layer_name: conv118_probs
+        activation: sigmoid
+info:
+  network_source: https://github.com/AlexeyAB/darknet/wiki/YOLOv4-model-zoo
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  should_equalize: true
+  quantization_batch_size: 4
+  should_ibc: false
+  should_finetune: true
+  finetune_scheme:
+    loss_factors:
+    - 1.0
+    - 2.0
+    - 0.25
+    - 0.125
+    - 1.0
+    - 2.0
+    - 0.25
+    - 0.125
+    - 1.0
+    - 2.0
+    - 0.25
+    - 0.125
+    dataset_size: 4000
+    epochs: 8
+    learning_rate: 0.0001
+    loss_types:
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+allocation:
+  required_fps: 150
+preprocessing:
+  input_shape:
+  - 512
+  - 512
+  - 3
+  meta_arch: regnet_detection
+network:
+  network_name: yolov4
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2021-07-11/yolov4_1_3_512_512_static.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2021-07-11/yolov4.zip
+  alls_script: yolov4.alls
+parser:
+  nodes:
+  - null
+  - - Conv_1111
+    - Conv_723
+    - Conv_335

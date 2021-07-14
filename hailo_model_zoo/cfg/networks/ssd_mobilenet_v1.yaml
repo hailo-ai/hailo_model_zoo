@@ -1,0 +1,85 @@
+base:
+- base/coco.yaml
+- base/ssd.yaml
+quantization:
+  should_finetune: true
+  finetune_scheme:
+    loss_factors:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 1.0
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    dataset_size: 4000
+    epochs: 8
+    learning_rate: 0.0001
+    loss_types:
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+  should_ibc: false
+  calib_set_size: 64
+postprocessing:
+  device_pre_post_layers:
+    argmax: false
+    softmax: false
+    bilinear: false
+    nms: true
+  postprocess_config_json: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd_nms_postprocess_config.json
+  meta_arch: ssd
+  anchors:
+    predefined: true
+network:
+  network_name: ssd_mobilenet_v1
+allocation:
+  required_fps: 568
+paths:
+  alls_script: ssd_mobilenet_v1.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/ssd_mobilenet_v1.zip
+parser:
+  nodes:
+  - FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Conv2D
+  - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_0/ClassPredictor/BiasAdd
+    - BoxPredictor_1/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_1/ClassPredictor/BiasAdd
+    - BoxPredictor_2/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_2/ClassPredictor/BiasAdd
+    - BoxPredictor_3/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_3/ClassPredictor/BiasAdd
+    - BoxPredictor_4/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_4/ClassPredictor/BiasAdd
+    - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_5/ClassPredictor/BiasAdd

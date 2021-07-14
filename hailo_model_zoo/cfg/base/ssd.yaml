@@ -1,0 +1,36 @@
+quantization:
+  should_ibc: true
+  calib_set_size: 32
+preprocessing:
+  network_type: detection
+  meta_arch: mobilenet_ssd
+postprocessing:
+  meta_arch: ssd
+  nms_iou_thresh: 0.6
+  score_threshold: 0.3
+  anchors:
+    interpolated_scale_aspect_ratio: 1
+    aspect_ratios:
+    - 1.0
+    - 2.0
+    - 0.5
+    - 3.0
+    - 0.3333
+    max_scale: 0.95
+    min_scale: 0.2
+    scales: []
+    num_layers: 6
+    fpn: false
+info:
+  network_source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5

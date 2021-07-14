@@ -1,0 +1,17 @@
+base:
+- base/imagenet.yaml
+preprocessing:
+  meta_arch: basic_resnet
+info:
+  network_source: https://github.com/tensorflow/models/tree/master/research/slim
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375

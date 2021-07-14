@@ -1,0 +1,19 @@
+allocator_param(seed=3)
+compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
+compilation_param({deconv*}, resources_allocation_strategy=min_l3_mem_match_fps)
+
+compilation_param(conv43, no_contexts=true)
+compilation_param(conv46, no_contexts=true)
+compilation_param(conv49, no_contexts=true)
+compilation_param(conv52, no_contexts=true)
+
+deconv1_conv, deconv1_fi = defuse(deconv1, 1)
+deconv1_d0, deconv1_d1, deconv1_d2, deconv1_d3, deconv1_dc = defuse(deconv1_conv, 4)
+compilation_param({deconv1_d*}, resources_allocation_strategy=manual_scs_selection, number_of_subclusters=8)
+
+deconv2_conv, deconv2_fi = defuse(deconv2, 1)
+deconv2_d0, deconv2_d1, bla, bla1, deconv2_dc = defuse(deconv2_conv, 4)
+deconv3_conv, deconv3_fi = defuse(deconv3, 1)
+deconv3_d0, deconv3_d1, bla3, bla4, deconv3_dc = defuse(deconv3_conv, 4)
+
+quantization_param(output_layer1, precision_mode=a16_w16)

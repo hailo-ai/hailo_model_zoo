@@ -1,0 +1,51 @@
+base:
+- base/centerpose.yaml
+quantization:
+  calib_set_size: 2048
+  should_equalize: true
+  should_finetune: true
+  finetune_scheme:
+    loss_factors:
+    - 1.0
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    - 0.25
+    dataset_size: 4000
+    epochs: 8
+    learning_rate: 0.0001
+    loss_types:
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv64
+        activation: sigmoid
+      - layer_name: conv60
+        activation: sigmoid
+allocation:
+  required_fps: 132
+network:
+  network_name: centerpose_regnetx_800mf
+paths:
+  alls_script: centerpose_regnetx_800mf.alls
+  network_path:
+  - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnet.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip
+parser:
+  nodes:
+  - input.1
+  - - Conv_182
+    - Conv_185
+    - Conv_188
+    - Conv_191
+    - Conv_194
+    - Conv_197

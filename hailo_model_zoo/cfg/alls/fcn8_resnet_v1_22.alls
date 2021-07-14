@@ -1,0 +1,78 @@
+#print_buffers()
+allocator_param(seed=1000, validate=False)
+optimize_buffers()
+
+#maxpool1_d0, maxpool1_d1, maxpool_c = defuse(maxpool1, 2)
+
+
+#portal0 = portal(conv10, conv33)
+#compilation_param(portal0, buffer_in_l4=True)
+
+#compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
+compilation_param({conv*}, balance_output_multisplit=False)
+
+
+#conv8_d0, conv8_d1, conv8_c = defuse(conv8, 2)
+#conv9_d0, conv9_d1, conv9_c = defuse(conv9, 2)
+#conv13_d0, conv13_d1, conv13_c = defuse(conv13, 2)
+#conv14_d0, conv14_d1, conv14_c = defuse(conv14, 2)
+#conv16_d0, conv16_d1, conv16_c = defuse(conv16, 2)
+#
+#conv21_defuse_0, conv21_defuse_1, conv21_concat = defuse(conv21, 2) 
+#conv23_defuse_0, conv23_defuse_1, conv23_concat = defuse(conv23, 2) 
+#conv27_defuse_0, conv27_defuse_1, conv27_concat = defuse(conv27, 2) 
+
+#conv30_d0, conv30_d1, conv31_c = defuse(conv30, 2)
+#conv31_d0, conv31_d1, conv30_c = defuse(conv31, 2)
+
+
+#shortcut1 = shortcut(conv21_concat, [conv23_defuse_0, conv23_defuse_1, conv27_defuse_0, conv27_defuse_1] )
+#compilation_param(shortcut1, balance_output_multisplit=False)
+#shortcut_conv21_23 = shortcut(shortcut1,  [conv23_defuse_0, conv23_defuse_1])
+#shortcut_conv21_27 = shortcut(shortcut1,  [conv27_defuse_0, conv27_defuse_1])
+
+
+conv20_defuse_0, conv20_defuse_1, conv20_defuse_2, conv20_defuse_3, conv20_defuse_concat = defuse(conv20, 4)
+conv22_defuse_0, conv22_defuse_1, conv22_defuse_2, conv22_defuse_3, conv22_defuse_concat = defuse(conv22, 4)
+conv24_defuse_0, conv24_defuse_1, conv24_defuse_2, conv24_defuse_3, conv24_defuse_concat = defuse(conv24, 4)
+
+#shortcut0 = shortcut(conv20_defuse_concat, [conv22_defuse_0, conv22_defuse_1, conv22_defuse_2, conv22_defuse_3, conv24_defuse_0, conv24_defuse_1, conv24_defuse_2, conv24_defuse_3])
+#compilation_param(shortcut0, balance_output_multisplit=False)
+
+
+#shortcut_conv20_22_0 = shortcut(shortcut0, [conv22_defuse_0, conv22_defuse_1])
+#shortcut_conv20_22_1 = shortcut(shortcut0, [conv22_defuse_2, conv22_defuse_3])
+#shortcut_conv20_24_0 = shortcut(shortcut0, [conv24_defuse_0, conv24_defuse_1])
+#shortcut_conv20_24_1 = shortcut(shortcut0, [conv24_defuse_2, conv24_defuse_3])
+
+#shortcut_conv28_32 = shortcut(conv28, conv32)
+
+#buffers(shortcut0, shortcut_conv20_24_0, 1)
+#buffers(shortcut0, shortcut_conv20_24_1, 1)
+#buffers(shortcut0, shortcut_conv20_22_0, 1)
+#buffers(shortcut0, shortcut_conv20_22_1, 1)
+#
+#buffers(shortcut_conv20_24_0, conv24_defuse_0, 1)
+#buffers(shortcut_conv20_24_0, conv24_defuse_1, 1)
+#buffers(shortcut_conv20_24_1, conv24_defuse_2, 1)
+#buffers(shortcut_conv20_24_1, conv24_defuse_3, 1)
+#
+#
+#buffers(shortcut_conv20_22_0, conv22_defuse_0, 1)
+#buffers(shortcut_conv20_22_0, conv22_defuse_1, 1)
+#buffers(shortcut_conv20_22_1, conv22_defuse_2, 1)
+#buffers(shortcut_conv20_22_1, conv22_defuse_3, 1)
+#
+##buffers(conv15, conv17, 3)
+#
+#buffers(conv17, conv20_defuse_0, 2)
+#buffers(conv17, conv20_defuse_1, 2)
+#buffers(conv17, conv20_defuse_2, 2)
+#buffers(conv17, conv20_defuse_3, 2)
+
+#conv29_d0, conv29_d1, conv29_c = defuse(conv29, 2)
+
+
+#compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
+
+#quantization_param({conv*}, bias_mode=double_scale_initialization)

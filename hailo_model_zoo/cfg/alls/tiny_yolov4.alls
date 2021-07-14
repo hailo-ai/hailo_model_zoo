@@ -1,0 +1,2 @@
+# quantization_param(conv19, activation_clipping_mode=percentile, activation_clipping_values=[0.005, 99.95])
+quantization_param(conv19, activation_clipping_mode=manual, activation_clipping_values=[-20, 5])

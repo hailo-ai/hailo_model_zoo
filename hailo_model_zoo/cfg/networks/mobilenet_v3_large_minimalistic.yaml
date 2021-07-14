@@ -1,0 +1,24 @@
+base:
+- base/mobilenet.yaml
+quantization:
+  fast_ibc: true
+  should_equalize: true
+  should_ibc: true
+  calib_set:
+  - models_files/imagenet/2019-12-22/imagenet_train.tfrecord.000
+  calib_set_size: 128
+network:
+  network_name: mobilenet_v3_large_minimalistic
+allocation:
+  required_fps: 3500
+paths:
+  alls_script: mobilenet_v3_large_minimalistic.alls
+  network_path:
+  - models_files/Classification/mobilenet_v3_large_minimalistic/pretrained/2021-07-11/mobilenet_v3_large_minimalistic.ckpt.meta
+  - models_files/Classification/mobilenet_v3_large_minimalistic/pretrained/2021-07-11/mobilenet_v3_large_minimalistic.ckpt.index
+  - models_files/Classification/mobilenet_v3_large_minimalistic/pretrained/2021-07-11/mobilenet_v3_large_minimalistic.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3_large_minimalistic/pretrained/2021-07-11/mobilenet_v3_large_minimalistic.zip
+parser:
+  nodes:
+  - MobilenetV3/input
+  - MobilenetV3/Predictions/Softmax

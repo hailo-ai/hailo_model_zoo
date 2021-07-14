@@ -1,0 +1,29 @@
+base:
+- base/resnet.yaml
+network:
+  network_name: resnet_v1_50
+allocation:
+  allocation_timeout: 1200
+  max_elementwise_feed_repeat: 1
+  required_fps: 1267
+paths:
+  alls_script: resnet_v1_50.alls
+  network_path:
+  - models_files/Classification/resnet_v1_50/pretrained/2021-07-11/resnet_v1_50.ckpt.meta
+  - models_files/Classification/resnet_v1_50/pretrained/2021-07-11/resnet_v1_50.ckpt.index
+  - models_files/Classification/resnet_v1_50/pretrained/2021-07-11/resnet_v1_50.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_50/pretrained/2021-07-11/resnet_v1_50.zip
+parser:
+  nodes:
+  - resnet_v1_50/conv1/Pad
+  - resnet_v1_50/predictions/Softmax
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.68
+    - 116.78
+    - 103.94
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0

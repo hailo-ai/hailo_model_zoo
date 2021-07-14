@@ -1,0 +1,29 @@
+base:
+- base/coco.yaml
+- base/ssd.yaml
+network:
+  network_name: ssd_mobiledet_dsp
+allocation:
+  required_fps: 300
+paths:
+  alls_script: ssd_mobiledet_dsp.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobiledet_dsp/pretrained/2021-07-11/mobiledet_ssd.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobiledet_dsp/pretrained/2021-07-11/mobiledet_ssd.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobiledet_dsp/pretrained/2021-07-11/mobiledet_ssd.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobiledet_dsp/pretrained/2021-07-11/ssd_mobiledet_dsp.zip
+parser:
+  nodes:
+  - FeatureExtractor/MobileDetDSP/Conv/Conv2D
+  - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_0/ClassPredictor/BiasAdd
+    - BoxPredictor_1/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_1/ClassPredictor/BiasAdd
+    - BoxPredictor_2/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_2/ClassPredictor/BiasAdd
+    - BoxPredictor_3/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_3/ClassPredictor/BiasAdd
+    - BoxPredictor_4/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_4/ClassPredictor/BiasAdd
+    - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_5/ClassPredictor/BiasAdd

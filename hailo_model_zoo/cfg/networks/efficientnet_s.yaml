@@ -1,0 +1,27 @@
+base:
+- base/efficientnet.yaml
+network:
+  network_name: efficientnet_s
+allocation:
+  required_fps: 854
+paths:
+  alls_script: efficientnet_s.alls
+  network_path:
+  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.meta
+  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.index
+  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.zip
+parser:
+  normalization_params:
+    normalize_in_net: false
+    mean_list:
+    - 127
+    - 127
+    - 127
+    std_list:
+    - 128
+    - 128
+    - 128
+  nodes:
+  - efficientnet-edgetpu-S/model/stem/conv2d/Conv2D
+  - Softmax

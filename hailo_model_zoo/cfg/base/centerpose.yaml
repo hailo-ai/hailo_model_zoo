@@ -1,0 +1,31 @@
+base:
+- base/base.yaml
+postprocessing:
+  meta_arch: centerpose
+evaluation:
+  classes: 18
+  labels_offset: 0
+  dataset_name: cocopose
+  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+preprocessing:
+  network_type: pose_estimation
+  meta_arch: centerpose
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  - models_files/coco/2021-06-18/person_keypoints_val2017.json
+  should_equalize: false
+info:
+  network_source: https://github.com/tensorboy/centerpose
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 104.04
+    - 113.985
+    - 119.85
+    std_list:
+    - 73.695
+    - 69.87
+    - 70.89

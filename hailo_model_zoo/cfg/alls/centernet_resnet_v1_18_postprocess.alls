@@ -1,0 +1,1 @@
+quantization_param(conv27, activation_clipping_mode=manual, activation_clipping_values=[0.0,125])

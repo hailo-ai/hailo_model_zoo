@@ -1,0 +1,17 @@
+base:
+- base/mobilenet.yaml
+network:
+  network_name: mobilenet_v2_1.0
+allocation:
+  required_fps: 2613
+paths:
+  alls_script: mobilenet_v2_1.0.alls
+  network_path:
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.meta
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.index
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1.0.zip
+parser:
+  nodes:
+  - input_image
+  - MobilenetV2/Predictions/Softmax

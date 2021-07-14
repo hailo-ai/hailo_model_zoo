@@ -1,0 +1,3 @@
+## Allocator Script Version 1.0
+
+allocator_param(max_lcu_utilization=0.7)

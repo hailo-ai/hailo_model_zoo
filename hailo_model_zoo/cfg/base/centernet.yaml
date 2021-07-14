@@ -1,0 +1,34 @@
+base:
+- base/base.yaml
+postprocessing:
+  nms_iou_thresh: 0.6
+  score_threshold: 0.2
+  meta_arch: centernet
+  anchors:
+    predefined: true
+evaluation:
+  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  labels_offset: 1
+  classes: 80
+  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  dataset_name: coco_2017_detection
+preprocessing:
+  network_type: detection
+  meta_arch: centernet
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  quantization_batch_size: 4
+info:
+  network_source: https://gluon-cv.mxnet.io/model_zoo/detection.html
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375

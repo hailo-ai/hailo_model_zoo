@@ -1,0 +1,43 @@
+base:
+- base/coco.yaml
+- base/ssd.yaml
+network:
+  network_name: ssd_resnet_v1_18
+allocation:
+  required_fps: 731
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/ssd_resnet_v1_18.zip
+preprocessing:
+  meta_arch: resnet_ssd
+quantization:
+  should_equalize: false
+  should_ibc: false
+parser:
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+  nodes:
+  - FeatureExtractor/resnet_v1_18/resnet_v1_18/Pad
+  - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_0/ClassPredictor/BiasAdd
+    - BoxPredictor_1/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_1/ClassPredictor/BiasAdd
+    - BoxPredictor_2/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_2/ClassPredictor/BiasAdd
+    - BoxPredictor_3/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_3/ClassPredictor/BiasAdd
+    - BoxPredictor_4/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_4/ClassPredictor/BiasAdd
+    - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
+    - BoxPredictor_5/ClassPredictor/BiasAdd

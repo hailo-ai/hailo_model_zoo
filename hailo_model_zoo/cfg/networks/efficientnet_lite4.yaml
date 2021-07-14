@@ -1,0 +1,14 @@
+base:
+- base/efficientnet_lite.yaml
+network:
+  network_name: efficientnet_lite4
+allocation:
+  required_fps: 100
+paths:
+  network_path:
+  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.meta
+  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.index
+  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.zip
+quantization:
+  should_ibc: false

@@ -1,0 +1,40 @@
+base:
+- base/fcn.yaml
+quantization:
+  should_finetune: true
+  finetune_scheme:
+    loss_factors:
+    - 1.0
+    dataset_size: 1000
+    epochs: 4
+    learning_rate: 0.0001
+    loss_layer_names:
+    - conv33
+    loss_types:
+    - l2
+info:
+  network_source: internal
+postprocessing:
+  device_pre_post_layers:
+    softmax: false
+    argmax: false
+    bilinear: false
+    nms: false
+  ext_upsample: 8
+hn_editor:
+  flip: true
+network:
+  network_name: fcn8_resnet_v1_22
+allocation:
+  required_fps: 10
+paths:
+  alls_script: fcn8_resnet_v1_22.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.meta
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.index
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet_v1_22.zip
+parser:
+  nodes:
+  - base_fe_scope/resnet_v1_18/Pad
+  - add_1

@@ -1,0 +1,69 @@
+base:
+- base/base.yaml
+quantization:
+  should_equalize: true
+  should_ibc: false
+  should_finetune: false
+  finetune_scheme:
+    learning_rate: 0.0002
+    epochs: 8
+    dataset_size: 2048
+  calib_set_size: 64
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  quantization_batch_size: 4
+preprocessing:
+  network_type: detection
+  input_shape:
+  - 640
+  - 640
+  - 3
+  meta_arch: yolo_v5
+postprocessing:
+  nms_iou_thresh: 0.45
+  score_threshold: 0.01
+  meta_arch: yolo_v5
+  anchors:
+    fpn: false
+    strides:
+    - 8
+    - 16
+    - 32
+    sizes:
+    - - 10
+      - 13
+      - 16
+      - 30
+      - 33
+      - 23
+    - - 30
+      - 61
+      - 62
+      - 45
+      - 59
+      - 119
+    - - 116
+      - 90
+      - 156
+      - 198
+      - 373
+      - 326
+info:
+  network_source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+evaluation:
+  labels_offset: 1
+  classes: 80
+  dataset_name: coco_2017_detection
+  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord

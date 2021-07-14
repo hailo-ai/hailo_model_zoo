@@ -1,0 +1,21 @@
+base:
+- base/resnet.yaml
+network:
+  network_name: resnet_v1_18
+allocation:
+  required_fps: 1961
+paths:
+  alls_script: resnet_v1_18.alls
+  network_path:
+  - models_files/Classification/resnet_v1_18/pretrained/2021-07-11/resnet_v1_18.ckpt.meta
+  - models_files/Classification/resnet_v1_18/pretrained/2021-07-11/resnet_v1_18.ckpt.index
+  - models_files/Classification/resnet_v1_18/pretrained/2021-07-11/resnet_v1_18.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_18/pretrained/2021-07-11/resnet_v1_18.zip
+parser:
+  nodes:
+  - resnet_v1_18/conv1/Pad
+  - resnet_v1_18/predictions/Softmax
+info:
+  network_source: https://pytorch.org/docs/stable/torchvision/models.html
+quantization:
+  should_equalize: false

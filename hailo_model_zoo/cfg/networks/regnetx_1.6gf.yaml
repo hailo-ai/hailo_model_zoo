@@ -1,0 +1,16 @@
+base:
+- base/resnet.yaml
+info:
+  network_source: https://github.com/facebookresearch/pycls
+network:
+  network_name: regnetx_1.6gf
+allocation:
+  required_fps: 686
+paths:
+  network_path:
+  - models_files/Classification/regnetx_1.6gf/pretrained/2021-07-11/RegNetX-1.6GF_dds_8gpu.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnetx_1.6gf/pretrained/2021-07-11/regnetx_1.6gf.zip
+parser:
+  nodes:
+  - input
+  - Gemm_202

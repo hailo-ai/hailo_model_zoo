@@ -1,0 +1,19 @@
+base:
+- base/base.yaml
+evaluation:
+  dataset_name: imagenet
+  labels_offset: 0
+  classes: 1000
+  data_set: models_files/imagenet/2021-06-20/imagenet_val.tfrecord
+  validation_data_set: models_files/imagenet/2021-06-20/imagenet_val.tfrecord
+postprocessing:
+  device_pre_post_layers:
+    softmax: true
+    argmax: false
+    bilinear: false
+    nms: false
+preprocessing:
+  network_type: classification
+quantization:
+  calib_set:
+  - models_files/imagenet/2021-06-20/imagenet_calib.tfrecord

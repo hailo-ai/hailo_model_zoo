@@ -1,0 +1,64 @@
+quantization:
+  quantization_batch_size: 8
+  calib_set_size: 64
+  should_equalize: true
+  should_ibc: false
+  should_finetune: false
+  fast_ibc: true
+  finetune_scheme: {}
+  calib_batch_size: null
+hn_editor:
+  channels_remove:
+    enabled: false
+  flip: false
+  skip_connection_remove: null
+  bgr2rgb: false
+  output_scheme:
+    change_activations:
+      enabled: false
+    integrated_postprocessing:
+      enabled: false
+      chains: []
+    split_output: false
+paths:
+  alls_script: null
+  hailo_archive_path: null
+preprocessing:
+  input_shape: null
+  max_pad: 100
+allocation:
+  allocation_timeout: 1200
+  max_elementwise_feed_repeat: 4
+  required_fps: 1
+parser:
+  nodes:
+  - null
+  - null
+  start_node_shape: null
+  is_tf2_saved_model: false
+postprocessing:
+  anchors:
+    sizes: null
+  meta_arch: null
+  score_threshold: null
+  nms_iou_thresh: null
+  ext_upsample: null
+  device_pre_post_layers:
+    softmax: false
+    argmax: false
+    bilinear: false
+    nms: false
+    max_finder: false
+  postprocess_config_json: null
+evaluation:
+  labels_offset: 0
+  limit_num_images: 1000000000.0
+  infer_type: tf_infer
+  classes: 1
+  two_stage_arch: false
+  network_type: null
+  gt_json_path: null
+  labels_map: null
+info:
+  client_or_rnd: r&d
+  standard_or_customized: standard

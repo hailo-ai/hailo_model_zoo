@@ -1,0 +1,59 @@
+base:
+- base/yolo.yaml
+preprocessing:
+  input_shape: null
+  meta_arch: mobilenet_ssd_ar
+postprocessing:
+  nms_iou_thresh: 0.3
+  score_threshold: 0.1
+  meta_arch: yolo_v3
+  anchors:
+    strides:
+    - 16
+    - 32
+    sizes:
+    - - 23
+      - 27
+      - 37
+      - 58
+      - 81
+      - 82
+    - - 81
+      - 82
+      - 135
+      - 169
+      - 344
+      - 319
+quantization:
+  should_equalize: false
+  should_finetune: true
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  calib_set_size: 64
+  quantization_batch_size: 8
+  finetune_scheme:
+    loss_factors:
+    - 1.0
+    - 1.0
+    dataset_size: 4000
+    epochs: 8
+    learning_rate: 0.0001
+    loss_types:
+    - l2
+    - l2
+allocation:
+  required_fps: 1385
+network:
+  network_name: tiny_yolov4
+paths:
+  alls_script: tiny_yolov4.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/tiny_yolov4.zip
+parser:
+  nodes:
+  - detector/yolo-v4-tiny/Pad
+  - - detector/yolo-v4-tiny/Conv_17/BiasAdd
+    - detector/yolo-v4-tiny/Conv_20/BiasAdd

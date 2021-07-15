@@ -32,7 +32,7 @@ python hailo_model_zoo/datasets/create_imagenet_tfrecord.py calib --img /path/to
 ```
 
 ## COCO2017
-To evaluate/quantize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO ([**link**](https://cocodataset.org/#home)) TFRecod files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+To evaluate/quantize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO ([**link**](https://cocodataset.org/#home)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 ```
 python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017
@@ -40,7 +40,7 @@ python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017
 ```
 
 ## Cityscapes
-To evaluate/quantize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecod files (manual download is required).
+To evaluate/quantize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecord files (manual download is required).
 
 1. Download the Cityscapes dataset from [**here**](https://www.cityscapes-dataset.com/). The expected dataset structure:
 

@@ -6,7 +6,7 @@ export HMZ_DATA=/new/path/for/storage/
 ```
 
 ## ImageNet
-To evaluate/quantize/compile the classification models of the Hailo Model Zoo you should generate the ImageNet TFRecod files (manual download is required).
+To evaluate/quantize/compile the classification models of the Hailo Model Zoo you should generate the ImageNet TFRecord files (manual download is required).
 
 1. Download the ImageNet dataset from [**here**](https://www.kaggle.com/c/imagenet-object-localization-challenge/data). The expected dataset structure:
 

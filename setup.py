@@ -6,12 +6,14 @@ try:
     import hailo_sdk_client
 except ModuleNotFoundError:
     raise ModuleNotFoundError("hailo_sdk_client was not installed or you are not "
-                              "in the right virtual env.")
+                              "in the right virtualenv.\n"
+                              "In case you are not an Hailo customer please visit us at https://hailo.ai/")
 try:
     import hailo_platform
 except ModuleNotFoundError:
     raise ModuleNotFoundError("hailo_platform was not installed or you are not "
-                              "in the right virtual env.")
+                              "in the right virtualenv.\n"
+                              "In case you are not an Hailo customer please visit us at https://hailo.ai/")
 
 
 def main():
@@ -41,9 +43,9 @@ def main():
         description='Hailo machine learning utilities and examples',
         url='https://hailo.ai/',
         author='Hailo team',
-        author_email='contact@hailo.ai',
+        author_email='hailo_model_zoo@hailo.ai',
         entry_points={},
-        license='',
+        license='MIT',
         packages=find_packages(),
         install_requires=reqs,
         zip_safe=False

@@ -16,9 +16,9 @@ This document provides install instructions and basic usage examples of the Hail
 ```
 git clone https://github.com/hailo-ai/hailo_model_zoo.git
 ```
-3. run the install script:
+3. run the setup script:
 ```
-pip install -e .
+cd hailo_model_zoo; pip install -e .
 ```
 4. For setting up datasets please see [**DATA.md**](DATA.md).
 5. Verify Hailo-8 is connected through PCIe (required only to run on Hailo-8. Full-precision / emulation run on GPU.)
@@ -45,6 +45,7 @@ The following scheme shows highlevel view of the model-zoo evaluation process, a
 
 ### Evaluation
 
+The pre-trained models are stored on AWS S3 and will be downloaded automatically when running the model zoo.
 To evaluate models in full precision:
 ```
 python hailo_model_zoo/main.py eval <model_name>
@@ -98,4 +99,23 @@ python hailo_model_zoo/main.py eval <model_name> --visualize
 To create a video file from the network predictions:
 ```
 python hailo_model_zoo/main.py eval <model_name> --visualize --video-outpath /path/to/video_output.mp4
+```
+
+## Citation
+
+The Hailo quantization scheme includes the following papers:
+
+```
+@InProceedings{Finkelstein2019,
+  title = {Fighting Quantization Bias With Bias},
+  author = {Alexander Finkelstein and Uri Almog and Mark Grobman},
+  booktitle = {CVPR},
+  year = {2019}
+}
+@InProceedings{Meller2019,
+  title = {Same, Same But Different - Recovering Neural Network Quantization Error Through Weight Factorization},
+  author = {Eldad Meller and Alexander Finkelstein and Uri Almog and Mark Grobman},
+  booktitle = {ICML},
+  year = {2019}
+}
 ```

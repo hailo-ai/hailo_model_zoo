@@ -1,0 +1,3 @@
+#optimize_buffers()
+compilation_param({conv*}, balance_output_multisplit=False)
+ddr0 = ddr(conv35, concat1)

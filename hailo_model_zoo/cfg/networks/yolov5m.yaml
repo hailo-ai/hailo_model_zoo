@@ -19,16 +19,20 @@ quantization:
     - l2rel
     - l2rel
     - l2rel
+    loss_layer_names:
+    - conv93
+    - conv83
+    - conv73
 hn_editor:
   output_scheme:
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv107
+      - layer_name: conv93
         activation: sigmoid
-      - layer_name: conv97
+      - layer_name: conv83
         activation: sigmoid
-      - layer_name: conv87
+      - layer_name: conv73
         activation: sigmoid
 network:
   network_name: yolov5m
@@ -37,7 +41,7 @@ allocation:
 paths:
   alls_script: yolov5m.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolo-v5m.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/yolo-v5m.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolov5m.zip
 parser:
   nodes:

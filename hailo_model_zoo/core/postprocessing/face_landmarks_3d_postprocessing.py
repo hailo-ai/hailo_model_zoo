@@ -144,12 +144,14 @@ def face_3dmm_to_landmarks_np(face_3dmm_params, img_dims, roi_box):
 
 def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, img_dims=None, gt_images=None, **kwargs):
     assert img_dims[0] == img_dims[1], "Assumes square input"
-    endnodes = tf.squeeze(endnodes)
+    batch_size = tf.shape(endnodes)[0]
+    endnodes = tf.reshape(endnodes, [batch_size, -1])
     face_3dmm_params = endnodes * TDDFA_RESCALE_PARAMS['std'] + TDDFA_RESCALE_PARAMS['mean']
-
-    ptds3d = tf.py_func(face_3dmm_to_landmarks_batch,
-                        [face_3dmm_params, img_dims, gt_images['roi_box']],
-                        tf.float32)
+    roi_box = gt_images.get('roi_box',
+                            tf.tile([[0, 0, img_dims[1], img_dims[0]]], (batch_size, 1)))
+    ptds3d = tf.compat.v1.py_func(face_3dmm_to_landmarks_batch,
+                                  [face_3dmm_params, img_dims, roi_box],
+                                  tf.float32)
     return {'predictions': ptds3d}
 
 

@@ -7,18 +7,18 @@ def parse_detection_record(serialized_example):
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'height': tf.FixedLenFeature([], tf.int64),
-            'width': tf.FixedLenFeature([], tf.int64),
-            'image_id': tf.FixedLenFeature([], tf.int64),
-            'xmin': tf.VarLenFeature(tf.float32),
-            'xmax': tf.VarLenFeature(tf.float32),
-            'ymin': tf.VarLenFeature(tf.float32),
-            'ymax': tf.VarLenFeature(tf.float32),
-            'category_id': tf.VarLenFeature(tf.int64),
-            'num_boxes': tf.FixedLenFeature([], tf.int64),
-            'wider_hard_keep_index': tf.VarLenFeature(tf.int64),
-            'image_name': tf.FixedLenFeature([], tf.string),
-            'image_jpeg': tf.FixedLenFeature([], tf.string),
+            'height': tf.io.FixedLenFeature([], tf.int64),
+            'width': tf.io.FixedLenFeature([], tf.int64),
+            'image_id': tf.io.FixedLenFeature([], tf.int64),
+            'xmin': tf.io.VarLenFeature(tf.float32),
+            'xmax': tf.io.VarLenFeature(tf.float32),
+            'ymin': tf.io.VarLenFeature(tf.float32),
+            'ymax': tf.io.VarLenFeature(tf.float32),
+            'category_id': tf.io.VarLenFeature(tf.int64),
+            'num_boxes': tf.io.FixedLenFeature([], tf.int64),
+            'wider_hard_keep_index': tf.io.VarLenFeature(tf.int64),
+            'image_name': tf.io.FixedLenFeature([], tf.string),
+            'image_jpeg': tf.io.FixedLenFeature([], tf.string),
         })
     height = tf.cast(features['height'], tf.int32)
     width = tf.cast(features['width'], tf.int32)

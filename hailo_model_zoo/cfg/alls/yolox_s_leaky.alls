@@ -1,0 +1,6 @@
+compilation_param(conv10, balance_output_multisplit=False)
+compilation_param(conv21, balance_output_multisplit=False)
+compilation_param(conv24, balance_output_multisplit=False)
+compilation_param(conv34, balance_output_multisplit=False)
+compilation_param(conv43, balance_output_multisplit=False)
+compilation_param(conv49, balance_output_multisplit=False)

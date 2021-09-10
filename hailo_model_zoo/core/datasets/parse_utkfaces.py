@@ -8,13 +8,13 @@ def parse_age_gender_record(serialized_example):
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'height': tf.FixedLenFeature([], tf.int64),
-            'width': tf.FixedLenFeature([], tf.int64),
-            'image_id': tf.FixedLenFeature([], tf.int64),
-            'age': tf.FixedLenFeature([], tf.int64),
-            'is_female_int': tf.FixedLenFeature([], tf.int64),
-            'image_name': tf.FixedLenFeature([], tf.string),
-            'image_jpeg': tf.FixedLenFeature([], tf.string),
+            'height': tf.io.FixedLenFeature([], tf.int64),
+            'width': tf.io.FixedLenFeature([], tf.int64),
+            'image_id': tf.io.FixedLenFeature([], tf.int64),
+            'age': tf.io.FixedLenFeature([], tf.int64),
+            'is_female_int': tf.io.FixedLenFeature([], tf.int64),
+            'image_name': tf.io.FixedLenFeature([], tf.string),
+            'image_jpeg': tf.io.FixedLenFeature([], tf.string),
         })
     height = tf.cast(features['height'], tf.int32)
     width = tf.cast(features['width'], tf.int32)

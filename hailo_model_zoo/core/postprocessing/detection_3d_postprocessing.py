@@ -101,7 +101,8 @@ class SMOKEPostProcess(object):
         calib_dir = tf.constant(CALIB_DATA_PATH)
         calib_file_name = tf.strings.regex_replace(image_name, 'png', 'txt')
         calib_file_path = tf.strings.join([calib_dir, calib_file_name])
-        Ks, Ks_inv = tf.py_func(self._get_calib_from_tensor_filename, [calib_file_path], ['float32', 'float32'])
+        Ks, Ks_inv = tf.compat.v1.py_func(self._get_calib_from_tensor_filename, [
+                                          calib_file_path], ['float32', 'float32'])
         return Ks, Ks_inv
 
     def smoke_postprocessing(self, endnodes, device_pre_post_layers=None, recombine_output=False,
@@ -111,7 +112,7 @@ class SMOKEPostProcess(object):
 
         # recombining split regression output:
         if recombine_output:
-            endnodes = tf.py_func(self._recombine_split_endnodes, endnodes, ['float32', 'float32'])
+            endnodes = tf.compat.v1.py_func(self._recombine_split_endnodes, endnodes, ['float32', 'float32'])
         if device_pre_post_layers and device_pre_post_layers.get('max_finder', False):
             print('Not building postprocess NMS. Assuming the hw contains one!')
             heatmap = endnodes[1]
@@ -120,13 +121,13 @@ class SMOKEPostProcess(object):
             heatmap = _nms_heatmap(endnodes[1])
         self.bs = tf.shape(heatmap)[0]
         pred_regression = endnodes[0]
-        pred_regression = tf.py_func(self.add_activations, [pred_regression], ['float32'])[0]
-        scores, indexs, clses, ys, xs = tf.py_func(self._select_topk, [heatmap],
-                                                   ['float32', 'float32', 'float32', 'float32', 'float32'])
+        pred_regression = tf.compat.v1.py_func(self.add_activations, [pred_regression], ['float32'])[0]
+        scores, indexs, clses, ys, xs = tf.compat.v1.py_func(self._select_topk, [heatmap],
+                                                             ['float32', 'float32', 'float32', 'float32', 'float32'])
         tensor_list_for_select_point_of_interest = [self.bs, indexs, pred_regression]
         # returning a [BS, K, regression_head] tensor:
-        pred_regression = tf.py_func(self._select_point_of_interest, tensor_list_for_select_point_of_interest,
-                                     ['float32'])
+        pred_regression = tf.compat.v1.py_func(self._select_point_of_interest, tensor_list_for_select_point_of_interest,
+                                               ['float32'])
         pred_regression_pois = tf.reshape(pred_regression, [-1, self._regression_head])
         pred_proj_points = tf.concat([tf.reshape(xs, [-1, 1]), tf.reshape(ys, [-1, 1])], axis=1)
 
@@ -143,18 +144,18 @@ class SMOKEPostProcess(object):
                                        self._trans_mats_inv,
                                        self.bs]
 
-        pred_locations = tf.py_func(self._decode_location, preds_for_location_decoding, ['float32'])[0]
+        pred_locations = tf.compat.v1.py_func(self._decode_location, preds_for_location_decoding, ['float32'])[0]
         preds_for_dimension_decoding = [clses, pred_dimensions_offsets]
-        pred_dimensions = tf.py_func(self._decode_dimension, preds_for_dimension_decoding, ['float32'])[0]
-        pred_locations = tf.py_func(self._assign_items, [pred_locations, pred_dimensions], ['float32'])[0]
+        pred_dimensions = tf.compat.v1.py_func(self._decode_dimension, preds_for_dimension_decoding, ['float32'])[0]
+        pred_locations = tf.compat.v1.py_func(self._assign_items, [pred_locations, pred_dimensions], ['float32'])[0]
         # now for the rotations
         preds_for_orientation_decoding = [pred_orientation, pred_locations]
-        pred_rotys, pred_alphas = tf.py_func(self._decode_orientation, preds_for_orientation_decoding,
-                                             ['float32', 'float32'])
+        pred_rotys, pred_alphas = tf.compat.v1.py_func(self._decode_orientation, preds_for_orientation_decoding,
+                                                       ['float32', 'float32'])
 
         if self._pred_2d:
             inputs_for_box2d_encode = [self._Ks, pred_rotys, pred_dimensions, pred_locations, self._image_dims]
-            box2d = tf.py_func(self._encode_box2d, inputs_for_box2d_encode, ['float32'])
+            box2d = tf.compat.v1.py_func(self._encode_box2d, inputs_for_box2d_encode, ['float32'])
         else:
             box2d = tf.zeros([4])
         clses = tf.reshape(clses, [-1, 1])
@@ -167,7 +168,7 @@ class SMOKEPostProcess(object):
         pred_dimensions = tf.squeeze(pred_dimensions)
         box2d = tf.squeeze(box2d)
         res_list_for_concat = [clses, pred_alphas, box2d, pred_dimensions, pred_locations, pred_rotys, scores]
-        result = tf.py_func(self._concatenate_results, res_list_for_concat, ['float32'])[0]
+        result = tf.compat.v1.py_func(self._concatenate_results, res_list_for_concat, ['float32'])[0]
         return result
 
     def _recombine_split_endnodes(self, reg_depth, heatmap, reg_offset, reg_dims, reg_sin, reg_cos):

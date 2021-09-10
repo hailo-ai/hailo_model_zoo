@@ -7,13 +7,13 @@ def parse(serialized_example):
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'height': tf.FixedLenFeature([], tf.int64),
-            'width': tf.FixedLenFeature([], tf.int64),
-            'lanes': tf.VarLenFeature(tf.int64),
-            'y_samples': tf.VarLenFeature(tf.float32),
-            'num_of_lane_points': tf.VarLenFeature(tf.int64),
-            'image_name': tf.FixedLenFeature([], tf.string),
-            'image_jpeg': tf.FixedLenFeature([], tf.string),
+            'height': tf.io.FixedLenFeature([], tf.int64),
+            'width': tf.io.FixedLenFeature([], tf.int64),
+            'lanes': tf.io.VarLenFeature(tf.int64),
+            'y_samples': tf.io.VarLenFeature(tf.float32),
+            'num_of_lane_points': tf.io.VarLenFeature(tf.int64),
+            'image_name': tf.io.FixedLenFeature([], tf.string),
+            'image_jpeg': tf.io.FixedLenFeature([], tf.string),
         })
     height = tf.cast(features['height'], tf.int32)
     width = tf.cast(features['width'], tf.int32)

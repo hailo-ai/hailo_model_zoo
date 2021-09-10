@@ -38,6 +38,53 @@ To evaluate/quantize/compile the object detection / pose estimation models of th
 python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017
 python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017
 ```
+### Manual Download (Optional)
+1. Download COCO ([**here**](https://cocodataset.org/#home)). The expected dataset structure:
+
+Annotations:
+```
+annotations
+├── captions_train2017.json
+├── captions_val2017.json
+├── instances_train2017.json
+├── instances_val2017.json
+├── person_keypoints_train2017.json
+└── person_keypoints_val2017.json
+```
+Validation set:
+```
+val2017
+├── 000000000139.jpg
+├── 000000000285.jpg
+├── 000000000632.jpg
+├── 000000000724.jpg
+├── 000000000776.jpg
+├── 000000000785.jpg
+├── 000000000802.jpg
+├── 000000000872.jpg
+├── 000000000885.jpg
+├── ...
+```
+Training set:
+```
+train2017
+├── 000000000009.jpg
+├── 000000000025.jpg
+├── 000000000030.jpg
+├── 000000000034.jpg
+├── 000000000036.jpg
+├── 000000000042.jpg
+├── 000000000049.jpg
+├── 000000000061.jpg
+├── 000000000064.jpg
+├── ...
+```
+
+2. Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017 --img /path/to/val2017 --det /path/to/annotations
+python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017 --img /path/to/train2017 --det /path/to/annotations
+```
 
 ## Cityscapes
 To evaluate/quantize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecord files (manual download is required).
@@ -62,4 +109,117 @@ Cityscapes
 ```
 python hailo_model_zoo/datasets/create_cityscapes_tfrecord.py val --data /path/to/Cityscapes/
 python hailo_model_zoo/datasets/create_cityscapes_tfrecord.py calib --data /path/to/Cityscapes/
+```
+
+## WIDERFACE
+To evaluate/quantize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE ([**link**](http://shuoyang1213.me/WIDERFACE/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+
+```
+python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib
+python hailo_model_zoo/datasets/create_widerface_tfrecord.py val
+```
+
+### Manual Download (Optional)
+1. Download the following from [**here**](http://shuoyang1213.me/WIDERFACE/):
+    - WIDER Face Training Images
+    - WIDER Face Validation Images
+    - Face annotations
+2. Download the following from [**here**](https://github.com/biubug6/Pytorch_Retinaface/tree/master/widerface_evaluate/ground_truth)
+    - [**wider_hard_val.mat**](https://github.com/biubug6/Pytorch_Retinaface/raw/master/widerface_evaluate/ground_truth/wider_hard_val.mat)
+
+Expected directory structure:
+```
+widerface/
+├── wider_face_split
+|   ├── readme.txt
+|   ├── wider_face_test_filelist.txt
+|   ├── wider_face_test.mat
+|   ├── wider_face_train_bbx_gt.txt
+|   ├── wider_face_train.mat
+|   ├── wider_face_val_bbx_gt.txt
+|   ├── wider_face_val.mat
+|   └── wider_hard_val.mat
+├── WIDER_train
+│   └── images
+│       ├── 0--Parade
+│       ├── 10--People_Marching
+│       ├── 11--Meeting
+│       ├── ...
+└── WIDER_val
+    └── images
+        ├── 0--Parade
+        ├── 10--People_Marching
+        ├── 11--Meeting
+        ├── ...
+```
+
+3. Run the creation scripts
+```
+python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split 
+python hailo_model_zoo/datasets/create_widerface_tfrecord.py val --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split
+```
+## VisDrone
+To evaluate/quantize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone ([**link**](http://aiskyeye.com/download/object-detection-2/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+
+```
+python hailo_model_zoo/datasets/create_visdrone_tfrecord.py train
+python hailo_model_zoo/datasets/create_visdrone_tfrecord.py val
+```
+
+### Manual Download (Optional)
+1. Download VisDrone ([**here**](http://aiskyeye.com/download/object-detection-2/)). The expected dataset structure:
+
+Training set:
+```
+VisDrone2019-DET-train/
+├── annotations
+|   ├── 0000002_00005_d_0000014.txt
+│   ├── 0000002_00448_d_0000015.txt
+|   ├── ...
+└── images
+    ├── 0000002_00005_d_0000014.jpg
+    ├── 0000002_00448_d_0000015.jpg
+    ├── ...
+```
+
+Validation set:
+```
+VisDrone2019-DET-val/
+├── annotations
+│   ├── 0000001_02999_d_0000005.txt
+│   ├── 0000001_03499_d_0000006.txt
+|   ├── ...
+└── images
+    ├── 0000001_02999_d_0000005.jpg
+    ├── 0000001_03499_d_0000006.jpg
+    ├── ...
+```
+
+2. Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_visdrone_tfrecord.py train -d /path/to/VisDrone2019-DET-train
+python hailo_model_zoo/datasets/create_visdrone_tfrecord.py val -d /path/to/VisDrone2019-DET-val
+```
+## Pascal VOC augmented dataset
+Run the creation scripts:
+```
+python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py calib
+python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py val
+```
+
+### Manual Download (Optional)
+1. Download the dataset from [**here**](http://home.bharathh.info/pubs/codes/SBD/download.html). Expected dataset structure:
+```
+benchmark_RELEASE
+└── dataset
+    ├── cls
+    ├── img
+    ├── inst
+    ├── train.txt
+    └── val.txt
+```
+2. run the creation scripts:
+```
+python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py calib --root benchmark_RELEASE/dataset
+python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py val --root benchmark_RELEASE/dataset
 ```

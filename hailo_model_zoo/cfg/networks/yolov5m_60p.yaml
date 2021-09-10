@@ -1,0 +1,49 @@
+base:
+- base/yolo.yaml
+quantization:
+  should_finetune: true
+  finetune_scheme:
+    dataset_size: 4096
+    epochs: 5
+    learning_rate: 0.0002
+    loss_layer_names:
+    - conv92
+    - conv93
+    - conv82
+    - conv83
+    - conv72
+    - conv73
+    loss_types:
+    - l2rel
+    - l2rel
+    - l2rel
+    - l2rel
+    - l2rel
+    - l2rel
+    equalize_kernels: true
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv93
+        activation: sigmoid
+      - layer_name: conv83
+        activation: sigmoid
+      - layer_name: conv73
+        activation: sigmoid
+allocation:
+  required_fps: 216
+network:
+  network_name: yolov5m_60p
+paths:
+  alls_script: yolov5m_60p.alls
+  network_path:
+  - models_files/yolov5/yolov5m/2020-10-20/yolo-v5m.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolov5m.zip
+parser:
+  nodes:
+  - null
+  - - Conv_307
+    - Conv_286
+    - Conv_265

@@ -21,6 +21,7 @@ def get_dataset_parse_func(ds_name):
         'coco_detection': parse_coco.parse_detection_record,
         'visdrone_detection': parse_coco.parse_detection_record,
         'd2s_detection': parse_coco.parse_detection_record,
+        'd2s_fruits_detection': parse_coco.parse_detection_record,
         'coco_2017_detection': parse_coco.parse_detection_record,
         'cocopose': parse_coco.parse_pose_estimation_record,
         'afw': parse_afw.parse_record,

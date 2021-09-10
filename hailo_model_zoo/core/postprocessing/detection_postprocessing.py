@@ -1,7 +1,7 @@
 import json
 import os
 
-from object_detection.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
+from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc

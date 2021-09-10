@@ -30,30 +30,30 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv133
-    - conv126
-    - conv118
+    - conv110
+    - conv103
+    - conv95
     split_output: true
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv133_centers
+      - layer_name: conv110_centers
         activation: sigmoid
-      - layer_name: conv133_obj
+      - layer_name: conv110_obj
         activation: sigmoid
-      - layer_name: conv133_probs
+      - layer_name: conv110_probs
         activation: sigmoid
-      - layer_name: conv126_centers
+      - layer_name: conv103_centers
         activation: sigmoid
-      - layer_name: conv126_obj
+      - layer_name: conv103_obj
         activation: sigmoid
-      - layer_name: conv126_probs
+      - layer_name: conv103_probs
         activation: sigmoid
-      - layer_name: conv118_centers
+      - layer_name: conv95_centers
         activation: sigmoid
-      - layer_name: conv118_obj
+      - layer_name: conv95_obj
         activation: sigmoid
-      - layer_name: conv118_probs
+      - layer_name: conv95_probs
         activation: sigmoid
 info:
   network_source: https://github.com/AlexeyAB/darknet/wiki/YOLOv4-model-zoo
@@ -81,6 +81,19 @@ quantization:
     dataset_size: 4000
     epochs: 8
     learning_rate: 0.0001
+    loss_layer_names:
+    - conv110_centers
+    - conv110_scales
+    - conv110_obj
+    - conv110_probs
+    - conv103_centers
+    - conv103_scales
+    - conv103_obj
+    - conv103_probs
+    - conv95_centers
+    - conv95_scales
+    - conv95_obj
+    - conv95_probs
     loss_types:
     - l2
     - l2
@@ -106,7 +119,7 @@ network:
   network_name: yolov4
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2021-07-11/yolov4_1_3_512_512_static.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/yolov4_1_3_512_512_static.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2021-07-11/yolov4.zip
   alls_script: yolov4.alls
 parser:

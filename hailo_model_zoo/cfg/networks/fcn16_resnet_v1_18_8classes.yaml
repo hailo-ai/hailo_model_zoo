@@ -39,11 +39,11 @@ evaluation:
 network:
   network_name: fcn16_resnet_v1_18_8classes
 allocation:
-  required_fps: 32
+  required_fps: 36
 paths:
   alls_script: fcn16_resnet_v1_18_8classes.alls
   network_path:
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/2021-07-11/resnet18_fcn16.ckpt.meta
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/2021-07-11/resnet18_fcn16.ckpt.index
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/2021-07-11/resnet18_fcn16.ckpt.data-00000-of-00001
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/resnet18_fcn16.ckpt.meta
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/resnet18_fcn16.ckpt.index
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/resnet18_fcn16.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/2021-07-11/fcn16_resnet_v1_18_8classes.zip

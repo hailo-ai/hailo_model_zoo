@@ -73,15 +73,16 @@ preprocessing:
   - 3
   meta_arch: yolo_v3
 network:
-  network_name: yolov3
+  network_name: yolov3_gluon
 paths:
-  alls_script: yolov3.alls
+  alls_script: yolov3_gluon.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolov3.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_gluon/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_gluon/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_gluon/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_gluon/pretrained/2021-07-11/yolov3_gluon.zip
 parser:
+  ew_add_policy: fused_conv_and_add_identity_fallback
   nodes:
   - zero_padding2d/Pad
   - - yolov30_yolooutputv30_conv0/BiasAdd

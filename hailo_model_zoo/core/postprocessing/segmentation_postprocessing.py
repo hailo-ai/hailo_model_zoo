@@ -68,13 +68,16 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
 def visualize_segmentation_result(logits, image, **kwargs):
     logits = logits['predictions']
     dataset = kwargs['dataset_name']
+    height, width = logits.squeeze().shape
+    image = Image.fromarray(image.squeeze()).resize((width, height))
+    image = np.array(image)
     if dataset == 'coco_segmentation':
-        blur_img = Image.fromarray(np.array(image[0], np.uint8)).filter(ImageFilter.GaussianBlur(radius=4))
+        blur_img = Image.fromarray(np.array(image, np.uint8)).filter(ImageFilter.GaussianBlur(radius=4))
         mask_3d = logits[0, :, :, None] * np.ones(3, dtype=int)[None, None, :]
         blur_img = np.array(blur_img) * mask_3d
-        img_out = np.array(image[0] * (1 - mask_3d) + blur_img, np.uint8)
+        img_out = np.array(image * (1 - mask_3d) + blur_img, np.uint8)
     elif dataset == 'cityscapes':
-        img_out = color_segment_img(image[0], logits[0], dataset)
+        img_out = color_segment_img(image, logits[0], dataset)
     else:
         raise PostProcessingException("Visualization is not implemented for dataset {}".format(dataset))
     return img_out

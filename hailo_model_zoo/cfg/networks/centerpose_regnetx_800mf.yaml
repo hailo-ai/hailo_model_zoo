@@ -38,7 +38,7 @@ network:
 paths:
   alls_script: centerpose_regnetx_800mf.alls
   network_path:
-  - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnet.onnx
+  - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/centerpose_regnet.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip
 parser:
   nodes:

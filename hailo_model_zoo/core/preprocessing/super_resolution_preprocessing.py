@@ -63,8 +63,10 @@ def srgan(image, image_info, height, width, **kwargs):
         image = tf.cast(tf.squeeze(image, axis=0), tf.float32)
         if image_info:
             image_info['img_orig'] = image
-            hr_img = tf.expand_dims(image_info['hr_img'], axis=0)
-            hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
-            hr_img = tf.squeeze(hr_img, axis=0)
-            image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
+            hr_img = image_info.get('hr_img')
+            if hr_img:
+                hr_img = tf.expand_dims(hr_img, axis=0)
+                hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
+                hr_img = tf.squeeze(hr_img, axis=0)
+                image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
     return {'input_layer1': image, 'input_layer1_new': image}, image_info

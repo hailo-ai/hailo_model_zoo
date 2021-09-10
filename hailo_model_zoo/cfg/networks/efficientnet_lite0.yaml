@@ -5,8 +5,9 @@ network:
 allocation:
   required_fps: 1600
 paths:
+  alls_script: efficientnet_lite0.alls
   network_path:
-  - models_files/Classification/efficientnet_lite0/pretrained/2021-07-11/efficientnet_lite0.ckpt.meta
-  - models_files/Classification/efficientnet_lite0/pretrained/2021-07-11/efficientnet_lite0.ckpt.index
-  - models_files/Classification/efficientnet_lite0/pretrained/2021-07-11/efficientnet_lite0.ckpt.data-00000-of-00001
+  - models_files/Classification/efficientnet_lite0/pretrained/efficientnet_lite0.ckpt.meta
+  - models_files/Classification/efficientnet_lite0/pretrained/efficientnet_lite0.ckpt.index
+  - models_files/Classification/efficientnet_lite0/pretrained/efficientnet_lite0.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite0/pretrained/2021-07-11/efficientnet_lite0.zip

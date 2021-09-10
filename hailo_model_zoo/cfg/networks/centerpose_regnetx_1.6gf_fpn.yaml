@@ -8,9 +8,9 @@ hn_editor:
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv82
+      - layer_name: conv79
         activation: sigmoid
-      - layer_name: conv78
+      - layer_name: conv75
         activation: sigmoid
     integrated_postprocessing:
       enabled: true
@@ -19,9 +19,9 @@ hn_editor:
           network_name: center_nms
         paths:
           network_path:
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.meta
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.index
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.data-00000-of-00001
         parser:
           nodes:
           - input_1
@@ -32,9 +32,9 @@ hn_editor:
           network_name: joint_nms
         paths:
           network_path:
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.meta
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.index
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.data-00000-of-00001
         parser:
           nodes:
           - input_1
@@ -42,13 +42,12 @@ hn_editor:
         ports:
           output_layer5: input_layer1
 allocation:
-  required_fps: 119
+  required_fps: 130
 network:
   network_name: centerpose_regnetx_1.6gf_fpn
 paths:
-  alls_script: centerpose_regnetx_1.6gf_fpn.alls
   network_path:
-  - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centerpose_regnet.onnx
+  - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centerpose_regnet.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centerpose_regnetx_1.6gf_fpn.zip
 parser:
   nodes:

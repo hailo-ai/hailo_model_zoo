@@ -1,0 +1,2 @@
+context_switch_param(mode=automatic)
+resources_param(strategy=greedy, max_compute_utilization=0.85, max_control_utilization=0.70)

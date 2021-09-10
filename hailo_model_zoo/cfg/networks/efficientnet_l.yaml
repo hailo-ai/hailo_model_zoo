@@ -7,9 +7,9 @@ allocation:
 paths:
   alls_script: efficientnet_l.alls
   network_path:
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.meta
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.index
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.data-00000-of-00001
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.meta
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.index
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet_l.zip
 parser:
   nodes:

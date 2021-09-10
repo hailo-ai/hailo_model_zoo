@@ -44,10 +44,18 @@ For further information about the Hailo Dataflow Compiler please contact [**hail
   <img src="docs/images/diagram.jpg" />
 </p>
 
+### Use Your Own Network
+
+To add a new network to the hailo model zoo please check the following [**guide**](docs/TRAINING_GUIDE.md).
 
 ## Models
 
 Full list of pre-trained models can be found [**here**](docs/MODELS.md).
+
+## Benchmarks
+
+List of Hailo's benchmarks can be found in [**hailo.ai**](https://hailo.ai/developer-zone/benchmarks/).
+In order to reproduce the measurements please refer to the following [**page**](docs/BENCHMARKS.md).
 
 ## License
 

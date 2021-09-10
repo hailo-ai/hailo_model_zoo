@@ -1,0 +1,61 @@
+base:
+- base/centerpose.yaml
+quantization:
+  calib_set_size: 2048
+  should_equalize: true
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv62
+        activation: sigmoid
+      - layer_name: conv58
+        activation: sigmoid
+    integrated_postprocessing:
+      enabled: true
+      chains:
+      - network:
+          network_name: center_nms
+        paths:
+          network_path:
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_1_classes.ckpt.meta
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_1_classes.ckpt.index
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+        parser:
+          nodes:
+          - input_1
+          - null
+        ports:
+          output_layer1: input_layer1
+      - network:
+          network_name: joint_nms
+        paths:
+          network_path:
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_17_classes.ckpt.meta
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_17_classes.ckpt.index
+          - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+        parser:
+          nodes:
+          - input_1
+          - null
+        ports:
+          output_layer5: input_layer1
+allocation:
+  required_fps: 800
+network:
+  network_name: centerpose_regnetx_200mf_fpn
+paths:
+  alls_script: centerpose_regnetx_200mf_fpn.alls
+  network_path:
+  - models_files/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centerpose_regnet.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_200mf_fpn/pretrained/2021-08-17/centerpose_regnetx_200mf_fpn.zip
+parser:
+  nodes:
+  - input.1
+  - - Conv_124
+    - Conv_127
+    - Conv_130
+    - Conv_133
+    - Conv_136
+    - Conv_139

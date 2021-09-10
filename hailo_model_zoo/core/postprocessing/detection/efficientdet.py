@@ -17,11 +17,11 @@ class EfficientDetPostProc(object):
         self._label_offset = labels_offset
         if anchors is None:
             raise ValueError('Missing detection anchors metadata')
-        self._anchors_input = tf.reshape(tf.py_func(self.anchors_for_shape,
-                                                    [img_dims, anchors["aspect_ratios"],
-                                                     anchors["scales"],
-                                                     anchors["sizes"], anchors["strides"]],
-                                                    ['float32'])[0], (1, -1, 4))
+        self._anchors_input = tf.reshape(tf.compat.v1.py_func(self.anchors_for_shape,
+                                                              [img_dims, anchors["aspect_ratios"],
+                                                               anchors["scales"],
+                                                                  anchors["sizes"], anchors["strides"]],
+                                                              ['float32'])[0], (1, -1, 4))
 
     def bbox_transform_inv(self, deltas):
         cxa = (self._anchors_input[..., 0] + self._anchors_input[..., 2]) / 2
@@ -48,7 +48,7 @@ class EfficientDetPostProc(object):
         return tf.stack([y1, x1, y2, x2], axis=2)
 
     def postprocessing(self, endnodes, **kwargs):
-        with tf.name_scope('Postprocessor'):
+        with tf.compat.v1.name_scope('Postprocessor'):
             regression, classification = collect_box_class_predictions(endnodes, self._num_classes)
             classification = tf.sigmoid(classification)
             boxes = self.bbox_transform_inv(regression)

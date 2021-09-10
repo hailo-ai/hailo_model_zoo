@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import argparse
 import tensorflow as tf

@@ -2,6 +2,8 @@
 allocator_param(automatic_l4_portals=False)
 allocator_param(optimize_buffers=False, split_aware_optimize_buffers=False)
 
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
+
 shortcut0 = shortcut(maxpool1, [conv2, conv3])
 compilation_param(shortcut0, balance_output_multisplit=False)
 

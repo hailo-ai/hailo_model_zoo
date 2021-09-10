@@ -23,7 +23,7 @@ allocation:
 paths:
   alls_script: fcn16_resnet_v1_18.alls
   network_path:
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/2021-07-11/resnet18_fcn16_fhd.ckpt.meta
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/2021-07-11/resnet18_fcn16_fhd.ckpt.index
-  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/2021-07-11/resnet18_fcn16_fhd.ckpt.data-00000-of-00001
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/resnet18_fcn16_fhd.ckpt.meta
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/resnet18_fcn16_fhd.ckpt.index
+  - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/resnet18_fcn16_fhd.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn16_resnet_v1_18/pretrained/2021-07-11/fcn16_resnet_v1_18.zip

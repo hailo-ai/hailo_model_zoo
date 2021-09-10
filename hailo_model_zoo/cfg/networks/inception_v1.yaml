@@ -6,9 +6,9 @@ allocation:
   required_fps: 811
 paths:
   network_path:
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.meta
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.index
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.data-00000-of-00001
+  - models_files/Classification/inception_v1/pretrained/inception_v1.ckpt.meta
+  - models_files/Classification/inception_v1/pretrained/inception_v1.ckpt.index
+  - models_files/Classification/inception_v1/pretrained/inception_v1.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/inception_v1/pretrained/2021-07-11/inception_v1.zip
 parser:
   nodes:

@@ -3,11 +3,12 @@
 import argparse
 import os
 import random
+from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from pathlib import Path
+from tqdm import tqdm
 
 from hailo_model_zoo.utils import path_resolver
 
@@ -37,20 +38,19 @@ def _create_tfrecord(filenames, name, num_images):
     """
     tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC[name])
     (tfrecords_filename.parent).mkdir(parents=True, exist_ok=True)
-    writer = tf.io.TFRecordWriter(str(tfrecords_filename))
 
     image_placeholder = tf.compat.v1.placeholder(dtype=tf.uint8, name='image_placeholder')
     encoded_image = tf.image.encode_jpeg(image_placeholder)
-    i = 0
-    with tf.compat.v1.Session() as sess:
-        for mask_path, img_path in filenames:
+    progress_bar = tqdm(filenames[:num_images])
+    with tf.compat.v1.Session() as sess, tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
+        for i, (mask_path, img_path) in enumerate(progress_bar):
             img = np.array(Image.open(img_path), np.uint8)
             image_height = img.shape[0]
             image_width = img.shape[1]
             mask = np.array(Image.open(mask_path))
             mask = np.array(np.vectorize(classMap.get)(mask), np.uint8)
             img_jpeg = sess.run(encoded_image, feed_dict={image_placeholder: img})
-            print("converting image number " + str(i) + " from " + name + " : " + img_path, end='\r')
+            progress_bar.set_description(f"{name} #{i}: {img_path}")
             example = tf.train.Example(features=tf.train.Features(feature={
                 'height': _int64_feature(image_height),
                 'width': _int64_feature(image_width),
@@ -58,11 +58,7 @@ def _create_tfrecord(filenames, name, num_images):
                 'mask': _bytes_feature(mask.tostring()),
                 'image_jpeg': _bytes_feature(img_jpeg)}))
             writer.write(example.SerializeToString())
-            i += 1
-            if i >= num_images:
-                break
-    writer.close()
-    return i
+    return i + 1
 
 
 def get_img_labels_list(data_dir, name):
@@ -85,7 +81,7 @@ def get_img_labels_list(data_dir, name):
 def run(data_dir, name, num_images):
     img_labels_list = get_img_labels_list(data_dir, name)
     images_num = _create_tfrecord(img_labels_list, name, num_images)
-    print('\nDone converting {} images'.format(images_num))
+    print('Done converting {} images'.format(images_num))
 
 
 if __name__ == '__main__':

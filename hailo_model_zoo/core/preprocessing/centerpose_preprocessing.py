@@ -23,9 +23,9 @@ def _centerpose_preprocessing(image, height, width):
 def centerpose_preprocessing(image, image_info=None, height=None, width=None, **kwargs):
     image_info['orig_height'], image_info['orig_width'] = tf.shape(image)[0], tf.shape(image)[1]
     image_info['img_orig'] = tf.image.encode_jpeg(image, quality=100)
-    image, center, scale = tf.py_function(_centerpose_preprocessing,
-                                          [image, height, width],
-                                          [tf.float32, tf.float32, tf.float32])
+    image, center, scale = tf.compat.v1.py_function(_centerpose_preprocessing,
+                                                    [image, height, width],
+                                                    [tf.float32, tf.float32, tf.float32])
     image.set_shape((height, width, 3))
     image_info['img_resized'] = image
     image_info['center'], image_info['scale'] = center, scale

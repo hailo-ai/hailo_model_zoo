@@ -1,10 +1,5 @@
 quantization_param({conv*}, bias_mode=double_scale_initialization)
-
-optimize_buffers()
 compilation_param({conv*}, balance_output_multisplit=False)
+allocator_param(timeout=30m)
 
-#shortcut1 = shortcut(conv23, concat7)
-#shortcut2 = shortcut(shortcut1, concat7)
-#shortcut3 = shortcut(shortcut2, concat7)
-#shortcut4 = shortcut(shortcut3, concat7)
-#portal1 = portal(shortcut4, concat7, buffer_in_l4=True)
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

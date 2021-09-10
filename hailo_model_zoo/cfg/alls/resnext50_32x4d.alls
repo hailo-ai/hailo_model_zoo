@@ -1,6 +1,7 @@
 ### Auto generated allocation script ###
 
 allocator_param(agent=melg, builder_exit_point=post-compilation, clk_freq=400000000, cluster_timeout=1200, defuse_by_validator=True, enable_fixer=True, enable_macros=True, network_fps=400, max_cluster_util=1.0, seed=10, strategy=blind_search, timeout=1200, validate=True)
+resources_param(strategy=legacy)
 
 conv4_sd0, conv4_sd1, conv4_sdc = defuse(conv4, 2, defuse_type=SPATIAL)
 conv7_sd0, conv7_sd1, conv7_sdc = defuse(conv7, 2, defuse_type=SPATIAL)

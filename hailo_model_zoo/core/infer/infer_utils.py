@@ -8,7 +8,7 @@ def create_calib_set(calib_feed_callback, eval_num_examples, calib_filename):
     with tf.Graph().as_default():
         iterator = calib_feed_callback()
         [preprocessed_data, _] = iterator.get_next()
-        with tf.Session() as sess:
+        with tf.compat.v1.Session() as sess:
             sess.run([iterator.initializer])
             num_of_images = 0
             try:

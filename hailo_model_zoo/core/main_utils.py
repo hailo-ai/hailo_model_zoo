@@ -30,7 +30,7 @@ def _get_input_shape(runner, network_info):
     return (network_info.preprocessing.input_shape or runner.get_hn_model().get_input_layers()[0].output_shape[1:])
 
 
-def _resolve_alls_path(path):
+def resolve_alls_path(path):
     if not path:
         return None
 
@@ -61,17 +61,18 @@ def _apply_output_scheme(runner, network_info):
         integrate_postprocessing(runner, integrated_postprocessing)
 
 
-def get_network_info(model_name, read_only=False):
+def get_network_info(model_name, read_only=False, yaml_path=None):
     '''
     Args:
         model_name: The network name to load.
         read_only: If set return read-only object.
                    The read_only mode save run-time and memroy.
+        yaml_path: Path to external YAML file for network configuration
     Return:
         OmegaConf object that represent network configuration.
     '''
     net = f'networks/{model_name}.yaml'
-    cfg_path = path_resolver.resolve_cfg_path(net)
+    cfg_path = yaml_path if yaml_path is not None else path_resolver.resolve_cfg_path(net)
     if not cfg_path.is_file():
         raise ValueError('cfg file is missing in {}'.format(cfg_path))
     cfg = _load_cfg(cfg_path)
@@ -160,8 +161,8 @@ def load_model(runner, har_path, logger):
 
 
 def make_preprocessing(runner, network_info):
-    model_arch = network_info.preprocessing.meta_arch
-    max_pad = network_info.preprocessing.max_pad
+    preprocessing_args = network_info.preprocessing
+    meta_arch = preprocessing_args.get('meta_arch')
     hn_editor = network_info.hn_editor
     flip = hn_editor.flip
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
@@ -169,8 +170,8 @@ def make_preprocessing(runner, network_info):
     height, width, _ = _get_input_shape(runner, network_info)
 
     preproc_callback = preprocessing_factory.get_preprocessing(
-        model_arch, height=height, width=width, flip=flip, max_pad=max_pad,
-        normalization_params=normalization_params)
+        meta_arch, height=height, width=width, flip=flip,
+        normalization_params=normalization_params, **preprocessing_args)
 
     return preproc_callback
 
@@ -235,7 +236,7 @@ def quantize_model(runner, network_info, calib_feed_callback, results_dir):
         ft_cfg = None
 
     max_elementwise_feed_repeat = network_info.allocation.max_elementwise_feed_repeat
-    quantization_script_filename = _resolve_alls_path(network_info.paths.alls_script)
+    quantization_script_filename = resolve_alls_path(network_info.paths.alls_script)
 
     runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch, equalize=should_equalize,
                     ibc=should_ibc, finetune=should_finetune, ft_cfg=ft_cfg, batch_size=batch_size,
@@ -299,6 +300,7 @@ def make_eval_callback(network_info):
         channels_remove=network_info.hn_editor.channels_remove,
         dataset_name=network_info.evaluation.dataset_name,
         gt_json_path=gt_json_path,
+        centered=network_info.preprocessing.centered,
         nms_iou_thresh=network_info.postprocessing.nms_iou_thresh,
         score_threshold=network_info.postprocessing.score_threshold,
         input_shape=network_info.preprocessing.input_shape,
@@ -346,7 +348,7 @@ def get_hef_path(results_dir, model_name):
 def compile_model(runner, network_info, results_dir):
     fps = network_info.allocation.required_fps
     model_name = network_info.network.network_name
-    allocator_script_filename = _resolve_alls_path(network_info.paths.alls_script)
+    allocator_script_filename = resolve_alls_path(network_info.paths.alls_script)
     mapping_timeout = network_info.allocation.allocation_timeout
     hef = runner.get_hw_representation(
         fps=fps,

@@ -112,7 +112,6 @@ def resnet_v1_18_34(image, image_info=None, output_height=None, output_width=Non
     image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE)
     if image_info:
         image_info['img_orig'] = tf.cast(image, tf.uint8)
-
     return image, image_info
 
 

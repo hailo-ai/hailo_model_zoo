@@ -2,7 +2,7 @@ from itertools import product
 
 import numpy as np
 import tensorflow as tf
-from object_detection.core.post_processing import batch_multiclass_non_max_suppression
+from detection_tools.core.post_processing import batch_multiclass_non_max_suppression
 
 
 class FaceDetectionPostProc(object):
@@ -80,7 +80,7 @@ class FaceDetectionPostProc(object):
         return new_boxes
 
     def tf_postproc(self, endnodes):
-        with tf.name_scope('Postprocessor'):
+        with tf.compat.v1.name_scope('Postprocessor'):
             box_predictions, classes_predictions, landmarks_predictors = self.collect_box_class_predictions(endnodes)
             additional_fields = {}
             classes_predictions_softmax = tf.nn.softmax(classes_predictions, axis=2)
@@ -118,6 +118,7 @@ class FaceDetectionPostProc(object):
                    'detection_classes': nmsed_classes,
                    'num_detections': num_detections, }
 
+        nmsed_additional_fields = nmsed_additional_fields or {}
         face_landmarks = nmsed_additional_fields.get('landmarks')
         if tf.is_tensor(face_landmarks):
             results['face_landmarks'] = face_landmarks
@@ -205,7 +206,7 @@ class LibFaceDetectionPostProc(object):
         return new_boxes
 
     def tf_postproc(self, endnodes):
-        with tf.name_scope('Postprocessor'):
+        with tf.compat.v1.name_scope('Postprocessor'):
             (box_predictions, classes_predictions,
              landmarks_predictors, iou_predictors) = self.collect_box_class_predictions(endnodes)
             additional_fields = {}
@@ -271,4 +272,4 @@ def face_detection_postprocessing(endnodes, device_pre_post_layers=None, **kwarg
                               nms_iou_thresh=kwargs['nms_iou_thresh'],
                               score_threshold=kwargs['score_threshold'],
                               anchors=kwargs['anchors'])
-    return {'predictions': postproc.tf_postproc(endnodes)}
+    return postproc.tf_postproc(endnodes)

@@ -1,2 +1,0 @@
-optimize_buffers()
-compilation_param([conv23, conv37, conv46, conv53], balance_output_multisplit=False)

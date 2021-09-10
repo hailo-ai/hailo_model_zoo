@@ -8,6 +8,6 @@ evaluation:
   validation_data_set: models_files/visdrone/2020-05-25/visdrone_val.tfrecord
 quantization:
   calib_set:
-  - models_files/visdrone/2020-05-25/visdrone_val.tfrecord
+  - models_files/visdrone/2021-07-25/visdrone_train.tfrecord
 preprocessing:
   max_pad: 902

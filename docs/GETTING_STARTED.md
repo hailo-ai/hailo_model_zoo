@@ -5,8 +5,7 @@ This document provides install instructions and basic usage examples of the Hail
 ## System Requirements
 
 - Ubuntu 18.04, Python 3.6
-- The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.9 (Obtain from [**hailo.ai**](http://hailo.ai)).
-- The Hailo Model Zoo currently does not support running on CPU; a GPU system is required.
+- The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.11 (Obtain from [**hailo.ai**](http://hailo.ai)).
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 
 ## Install Instructions
@@ -29,7 +28,7 @@ Expected output:
 ```
 Identifying board
 Control Protocol Version: 2
-Firmware Version: 2.9.0 (release,app)
+Firmware Version: 4.0.0 (release,app)
 Logger Version: 0
 Board Name: Hailo-8
 ```

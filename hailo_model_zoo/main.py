@@ -5,23 +5,21 @@ from pathlib import Path
 
 
 from hailo_platform.drivers.hailort.pyhailort import HEF
-from hailo_platform.drivers.hw_object import HailoPcieObject
+from hailo_platform.drivers.hw_object import PcieDevice
 
-from hailo_sdk_common.states.states import States
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner, SdkNative, SdkPartialNumeric
+from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.report_generator import ReportGenerator
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
                                              make_preprocessing, make_calibset_callback,
                                              quantize_model, infer_model, compile_model, get_hef_path,
-                                             get_network_names)
+                                             get_network_names, resolve_alls_path)
 from hailo_model_zoo.utils.logger import get_logger
 
 
-EXCLUDED_PROFILING_MODES = set([ProfilerModes.INITIAL])
-
 TARGETS = {
-    'hailo8': HailoPcieObject,
+    'hailo8': PcieDevice,
     'full_precision': SdkNative,
     'emulator': SdkPartialNumeric
 }
@@ -36,6 +34,9 @@ def _make_parsing_base():
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
+    parsing_base_parser.add_argument(
+        '--yaml', type=str, default=None, dest='yaml_path',
+        help='Path to YAML for network configuration. By default using the default configuration')
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
@@ -58,15 +59,17 @@ def _make_hef_base():
     return hef_base_parser
 
 
-def _make_profiling_base():
-    def str_to_profiling_mode(name):
-        return ProfilerModes[name.upper()]
+def _str_to_profiling_mode(name):
+    return ProfilerModes[name.upper()]
 
+
+def _make_profiling_base():
     profile_base_parser = argparse.ArgumentParser(add_help=False)
+    profiler_mode_names = {profiler_mode.value for profiler_mode in ProfilerModes}
     profile_base_parser.add_argument(
         '--mode', help='Profiling mode', dest='profile_mode',
-        type=str_to_profiling_mode, default=ProfilerModes.PRE_PLACEMENT,
-        choices=set(ProfilerModes) - EXCLUDED_PROFILING_MODES)
+        type=str, default=ProfilerModes.PRE_PLACEMENT.value,
+        choices=profiler_mode_names)
     return profile_base_parser
 
 
@@ -153,7 +156,7 @@ def _ensure_runnable_state(args, logger, network_info, runner, target):
 
 def parse(args):
     logger = get_logger()
-    network_info = get_network_info(args.model_name)
+    network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     logger.info('Start run for network {} ...'.format(args.model_name))
 
     logger.info('Initializing the runner...')
@@ -164,7 +167,7 @@ def parse(args):
 
 def quantize(args):
     logger = get_logger()
-    network_info = get_network_info(args.model_name)
+    network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     logger.info('Start run for network {} ...'.format(args.model_name))
 
     logger.info('Initializing the runner...')
@@ -180,7 +183,7 @@ def quantize(args):
 
 def compile(args):
     logger = get_logger()
-    network_info = get_network_info(args.model_name)
+    network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     logger.info('Start run for network {} ...'.format(args.model_name))
 
     logger.info('Initializing the runner...')
@@ -197,11 +200,12 @@ def compile(args):
 
 
 def profile(args):
-    if args.hef_path and args.profile_mode is ProfilerModes.PRE_PLACEMENT:
+    profile_mode = _str_to_profiling_mode(args.profile_mode)
+    if args.hef_path and profile_mode is ProfilerModes.PRE_PLACEMENT:
         raise ValueError(
             "hef is not used when profiling in pre_placement mode. use --mode post_placement for profiling with a hef.")
     logger = get_logger()
-    network_info = get_network_info(args.model_name)
+    network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     logger.info('Start run for network {} ...'.format(args.model_name))
 
     logger.info('Initializing the runner...')
@@ -210,15 +214,18 @@ def profile(args):
     if args.har_path:
         load_model(runner, args.har_path, logger=logger)
 
-    if args.hef_path or args.profile_mode is ProfilerModes.PRE_PLACEMENT:
+    if args.hef_path or profile_mode is ProfilerModes.PRE_PLACEMENT:
         # we already have hef (or don't need one), just need .hn
         _ensure_parsed(runner, logger, network_info, args)
     else:
         # Quantize the model so profile_hn_model could compile & profile it
         _ensure_quantized(runner, logger, args, network_info)
 
-    stats, csv_data = runner.profile_hn_model(
-        network_info.allocation.required_fps, profiling_mode=args.profile_mode, hef_filename=args.hef_path)
+    alls_script_path = resolve_alls_path(network_info.paths.alls_script)
+    stats, csv_data = runner.profile_hn_model(network_info.allocation.required_fps,
+                                              profiling_mode=profile_mode,
+                                              hef_filename=args.hef_path,
+                                              allocator_script=alls_script_path)
     mem_file = io.StringIO()
     outpath = args.results_dir / f'{args.model_name}.html'
     report_generator = ReportGenerator(mem_file, csv_data, outpath, stats, hw_arch='hailo8')
@@ -233,7 +240,7 @@ def evaluate(args):
             f"hef is not used when evaluating with {args.target}. use --target hailo8 for evaluating with a hef.")
 
     logger = get_logger()
-    network_info = get_network_info(args.model_name)
+    network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 

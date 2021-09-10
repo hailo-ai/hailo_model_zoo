@@ -15,13 +15,15 @@ def normalize(image, normalization_params):
     return (image - list(mean)) / list(std)
 
 
-def get_preprocessing(name, height, width, normalization_params=None, **kwargs):
+def get_preprocessing(name, height, width, normalization_params, **kwargs):
     """Returns preprocessing_fn(image, height, width, **kwargs).
 
     Args:
-        name: The name of the preprocessing function.
-        is_training: `True` if the model is being used for training and `False`
-            otherwise.
+        name: meta architecture name
+        height: height of the input image
+        width: width of the input image
+        normalization_params: parameters for normalizing the input image
+        kwargs: additional preprocessing arguments
 
     Returns:
         preprocessing_fn: A function that preprocessing a single image (pre-batch).
@@ -60,8 +62,8 @@ def get_preprocessing(name, height, width, normalization_params=None, **kwargs):
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)
-    flip = kwargs.get('flip', False)
-    if kwargs.get('flip', False):
+    flip = kwargs.pop('flip', False)
+    if flip:
         height, width = width, height
 
     def preprocessing_fn(image, image_info=None):
@@ -69,5 +71,4 @@ def get_preprocessing(name, height, width, normalization_params=None, **kwargs):
         if normalization_params:
             image = normalize(image, normalization_params)
         return image, image_info
-
     return preprocessing_fn

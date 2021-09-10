@@ -24,10 +24,12 @@ paths:
   alls_script: null
   hailo_archive_path: null
 preprocessing:
+  meta_arch: null
+  centered: true
   input_shape: null
   max_pad: 100
 allocation:
-  allocation_timeout: 1200
+  allocation_timeout: null
   max_elementwise_feed_repeat: 4
   required_fps: 1
 parser:

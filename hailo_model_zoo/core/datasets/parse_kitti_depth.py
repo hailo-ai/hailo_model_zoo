@@ -11,11 +11,11 @@ def parse_record(serialized_example):
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'height': tf.FixedLenFeature([], tf.int64),
-            'width': tf.FixedLenFeature([], tf.int64),
-            'image_name': tf.FixedLenFeature([], tf.string),
-            'depth': tf.FixedLenFeature([], tf.string),
-            'image_jpeg': tf.FixedLenFeature([], tf.string)
+            'height': tf.io.FixedLenFeature([], tf.int64),
+            'width': tf.io.FixedLenFeature([], tf.int64),
+            'image_name': tf.io.FixedLenFeature([], tf.string),
+            'depth': tf.io.FixedLenFeature([], tf.string),
+            'image_jpeg': tf.io.FixedLenFeature([], tf.string)
         })
 
     height = tf.cast(features['height'], tf.int32)

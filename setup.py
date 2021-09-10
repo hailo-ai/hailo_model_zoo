@@ -3,13 +3,13 @@
 from setuptools import find_packages, setup
 
 try:
-    import hailo_sdk_client
+    import hailo_sdk_client  # noqa F401
 except ModuleNotFoundError:
     raise ModuleNotFoundError("hailo_sdk_client was not installed or you are not "
                               "in the right virtualenv.\n"
                               "In case you are not an Hailo customer please visit us at https://hailo.ai/")
 try:
-    import hailo_platform
+    import hailo_platform  # noqa F401
 except ModuleNotFoundError:
     raise ModuleNotFoundError("hailo_platform was not installed or you are not "
                               "in the right virtualenv.\n"
@@ -31,11 +31,10 @@ def main():
             'motmetrics==1.2.0',
             'omegaconf==2.1.0',
             'pillow==8.1.2',
-            'scikit-image==0.17.2',
-            'wget==3.2',
-            'tf-object-detection==0.0.3']
+            'detection-tools==0.3',
+            'scikit-image==0.17.2']
 
-    model_zoo_version = "1.0.0"
+    model_zoo_version = "1.1.0"
 
     setup(
         name='hailo_model_zoo',

@@ -48,9 +48,9 @@ network:
 paths:
   alls_script: tiny_yolov4.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/tiny_yolov4.zip
 parser:
   nodes:

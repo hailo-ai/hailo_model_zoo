@@ -28,7 +28,7 @@ def facenet_infer(runner, target, logger, eval_num_examples, print_num_examples,
             sdk_export.session.run([iterator.initializer, tf.compat.v1.local_variables_initializer()])
             num_of_images = 0
             try:
-                with tqdm(total=None, desc="Images Processed",
+                with tqdm(total=None, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
                     while num_of_images < eval_num_examples:
                         logits_batch, img_info = sdk_export.session.run([probs, image_info])

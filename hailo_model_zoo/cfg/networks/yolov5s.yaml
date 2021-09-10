@@ -17,11 +17,11 @@ hn_editor:
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv76
+      - layer_name: conv69
         activation: sigmoid
-      - layer_name: conv68
+      - layer_name: conv61
         activation: sigmoid
-      - layer_name: conv60
+      - layer_name: conv53
         activation: sigmoid
 network:
   network_name: yolov5s
@@ -30,7 +30,7 @@ allocation:
 paths:
   alls_script: yolov5s.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/2021-07-11/yolo-v5s.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/yolo-v5s.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/2021-07-11/yolov5s.zip
 parser:
   nodes:

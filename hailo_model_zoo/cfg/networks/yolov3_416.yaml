@@ -25,12 +25,12 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv83
-    - conv91
-    - conv98
+    - conv60
+    - conv68
+    - conv75
     split_output: true
 info:
-  network_source: https://cv.gluon.ai/model_zoo/detection.html
+  network_source: https://github.com/AlexeyAB/darknet
 quantization:
   should_finetune: true
   finetune_scheme:
@@ -76,23 +76,11 @@ network:
 paths:
   alls_script: yolov3_416.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3_416.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-08-16/yolov3_1_3_416_416_static.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-08-16/yolov3_416.zip
 parser:
   nodes:
-  - zero_padding2d/Pad
-  - - yolov30_yolooutputv30_conv0/BiasAdd
-    - yolov30_yolooutputv31_conv0/BiasAdd
-    - yolov30_yolooutputv32_conv0/BiasAdd
-  normalization_params:
-    std_list:
-    - 58.395
-    - 57.12
-    - 57.375
-    normalize_in_net: true
-    mean_list:
-    - 123.675
-    - 116.28
-    - 103.53
+  - input
+  - - Conv_865
+    - Conv_502
+    - Conv_139

@@ -32,13 +32,14 @@ def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
 
     def translate_coco_2017_to_2014(nmsed_classes):
         return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
-    with tf.name_scope('Postprocessor'):
+    with tf.compat.v1.name_scope('Postprocessor'):
         detections = tf.transpose(endnodes, [0, 1, 3, 2])
         post_processing_boxes, post_processing_scores, post_processing_classes, post_num_detections = \
             tf.map_fn(_single_batch_parse, detections, dtype=(tf.float32, tf.float32, tf.int32, tf.int32),
                       parallel_iterations=32, back_prop=False)
     if coco_2017_to_2014:
-        [post_processing_classes] = tf.py_func(translate_coco_2017_to_2014, [post_processing_classes], ['int32'])
+        [post_processing_classes] = tf.compat.v1.py_func(
+            translate_coco_2017_to_2014, [post_processing_classes], ['int32'])
     return {'detection_boxes': post_processing_boxes,
             'detection_scores': post_processing_scores,
             'detection_classes': post_processing_classes,

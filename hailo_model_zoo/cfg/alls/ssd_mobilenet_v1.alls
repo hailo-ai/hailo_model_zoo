@@ -3,3 +3,5 @@ quantization_param({conv*}, bias_mode=single_scale_decomposition)
 
 allocator_param(optimize_buffers=true)
 concat0 = concat([proposal_generator0, proposal_generator1], proposal_generator0_concat)
+
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

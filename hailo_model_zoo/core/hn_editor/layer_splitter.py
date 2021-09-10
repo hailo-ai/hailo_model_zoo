@@ -5,7 +5,9 @@ import copy
 class LayerSplitter(object):
     def __init__(self, runner, network_info, split_fc=False):
         supported_networks = ['yolov3',
+                              'yolov3_gluon',
                               'yolov3_416',
+                              'yolov3_gluon_416',
                               'yolov4',
                               'polylanenet_resnet_v1_34',
                               'smoke_regnetx_800mf']

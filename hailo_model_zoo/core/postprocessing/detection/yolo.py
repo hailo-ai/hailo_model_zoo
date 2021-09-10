@@ -22,13 +22,13 @@ class YoloPostProc(object):
             raise ValueError("Missing detection anchors/strides metadata")
         self._anchors_list = anchors["sizes"]
         self._strides = anchors["strides"]
-        self._split_output = output_scheme.get("split_output", False) if output_scheme else False
         self._num_classes = classes
         self._labels_offset = labels_offset
         self._yolo_decoding = {
             "yolo_v3": YoloPostProc._yolo3_decode,
             'yolo_v4': YoloPostProc._yolo4_decode,
-            "yolo_v5": YoloPostProc._yolo5_decode
+            "yolo_v5": YoloPostProc._yolo5_decode,
+            "yolox": YoloPostProc._yolox_decode,
         }
 
     @staticmethod
@@ -52,6 +52,12 @@ class YoloPostProc(object):
         box_scales = (raw_box_scales * 2) ** 2 * anchors_for_stride  # dim [N, HxW, 3, 2]
         return box_centers, box_scales, objness, class_pred
 
+    @staticmethod
+    def _yolox_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
+        box_centers = (raw_box_centers + offsets) * stride  # dim [N, HxW, 3, 2]
+        box_scales = (np.exp(raw_box_scales) * stride)  # dim [N, HxW, 3, 2]
+        return box_centers, box_scales, objness, class_pred
+
     def postprocessing(self, endnodes, **kwargs):
         """
         endnodes is a list of 3 output tensors:
@@ -72,7 +78,7 @@ class YoloPostProc(object):
         strides = self._strides
         num_classes = self._num_classes
         """bringing output layers back to original form:"""
-        if self._split_output:
+        if len(endnodes) > 3:
             endnodes = self.reorganize_split_output(endnodes)
 
         for output_ind, output_branch in enumerate(endnodes):  # iterating over the output layers:
@@ -80,10 +86,10 @@ class YoloPostProc(object):
             anchors_for_stride = np.array(anchors_list[::-1][output_ind])
             anchors_for_stride = np.reshape(anchors_for_stride, (1, 1, -1, 2))  # dim [1, 1, 3, 2]
             output_branch_and_data = [output_branch, anchors_for_stride, stride]
-            detection_boxes, detection_scores = tf.py_func(self.yolo_postprocess_numpy,
-                                                           output_branch_and_data,
-                                                           ['float32', 'float32'],
-                                                           name='{}_postprocessing'.format(self._network_arch))
+            detection_boxes, detection_scores = tf.compat.v1.py_func(self.yolo_postprocess_numpy,
+                                                                     output_branch_and_data,
+                                                                     ['float32', 'float32'],
+                                                                     name=f'{self._network_arch}_postprocessing')
 
             # detection_boxes is a [BS, num_detections, 1, 4] tensor, detection_scores is a
             # [BS, num_detections, num_classes] tensor
@@ -116,7 +122,7 @@ class YoloPostProc(object):
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.py_func(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        [nmsed_classes] = tf.compat.v1.py_func(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
         nmsed_classes.set_shape((1, 100))
 
         return {'detection_boxes': nmsed_boxes,
@@ -193,13 +199,22 @@ class YoloPostProc(object):
         """
         reorganized_endnodes_list = []
         for index in range(3):  # num of output nodes in the original (unmodified) network.
-            centers = endnodes[4 * index]
-            scales = endnodes[4 * index + 1]
-            obj = endnodes[4 * index + 2]
-            probs = endnodes[4 * index + 3]
-            branch_endnodes = tf.py_func(self.reorganize_split_output_numpy,
-                                         [centers, scales, obj, probs],
-                                         ['float32'], name='yolov3_match_remodeled_output')
+            num_branches = len(endnodes)
+            branch_index = int(num_branches / 3 * index)
+            if 'yolox' in self._network_arch:
+                # special case for yolox: 9 branches
+                centers = endnodes[branch_index][:, :, :, :2]
+                scales = endnodes[branch_index][:, :, :, 2:]
+                obj = endnodes[branch_index + 1]
+                probs = endnodes[branch_index + 2]
+            else:
+                centers = endnodes[branch_index]
+                scales = endnodes[branch_index + 1]
+                obj = endnodes[branch_index + 2]
+                probs = endnodes[branch_index + 3]
+            branch_endnodes = tf.compat.v1.py_func(self.reorganize_split_output_numpy,
+                                                   [centers, scales, obj, probs],
+                                                   ['float32'], name='yolov3_match_remodeled_output')
 
             reorganized_endnodes_list.append(branch_endnodes[0])  # because the py_func returns a list
         return reorganized_endnodes_list

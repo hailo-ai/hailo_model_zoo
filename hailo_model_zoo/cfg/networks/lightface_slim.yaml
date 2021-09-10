@@ -1,0 +1,68 @@
+base:
+- base/base.yaml
+evaluation:
+  labels_offset: 1
+  dataset_name: widerface
+  data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
+  validation_data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
+postprocessing:
+  meta_arch: retinaface
+  nms_iou_thresh: 0.3
+  score_threshold: 0.1
+  anchors:
+    steps:
+    - 8
+    - 16
+    - 32
+    - 64
+    min_sizes:
+    - - 10
+      - 16
+      - 24
+    - - 32
+      - 48
+    - - 64
+      - 96
+    - - 128
+      - 192
+      - 256
+preprocessing:
+  network_type: face_detection
+  meta_arch: face_ssd
+  max_pad: 2048
+info:
+  network_source: https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB
+parser:
+  nodes:
+  - null
+  - - '246'
+    - '232'
+    - '292'
+    - '278'
+    - '332'
+    - '318'
+    - '362'
+    - '350'
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.0
+    - 127.0
+    - 127.0
+    std_list:
+    - 128.0
+    - 128.0
+    - 128.0
+quantization:
+  calib_set:
+  - models_files/widerface/2020-03-23/widerfacecalibration_set.tfrecord
+  calib_set_size: 16
+paths:
+  network_path:
+  - models_files/FaceDetection/lightface_slim/2021-07-18/version-slim-320.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/lightface_slim/2021-07-18/lightface_slim.zip
+  alls_script: lightface_slim.alls
+allocation:
+  required_fps: 3880
+network:
+  network_name: lightface_slim

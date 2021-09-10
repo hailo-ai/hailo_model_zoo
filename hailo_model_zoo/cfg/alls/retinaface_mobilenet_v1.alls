@@ -1,0 +1,2 @@
+quantization_param([conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9, conv10, conv11, conv12, conv13, conv14, conv15, conv16, conv17, conv18, conv19, conv20, conv21, conv22, conv23, conv24, conv25, conv26, conv27, conv28, conv29, conv30, conv31, conv32, conv33, conv34, conv35, conv36, conv37, conv38, conv39, conv40, conv41, conv42, conv43], bias_mode=single_scale_decomposition)
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

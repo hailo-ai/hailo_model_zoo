@@ -1,0 +1,11 @@
+allocator_param(automatic_l4_portals=False, timeout=10800, seed=0, max_auto_defuse=8)
+
+
+resources_param(strategy=greedy, max_compute_utilization=0.9, max_control_utilization=0.9, max_memory_utilization=0.7)
+context_switch_param(mode=automatic, max_control_utilization=0.3, max_memory_utilization=0.5)
+
+ew_add1_d0, ew_add1_d1, ew_add1_dc = defuse(ew_add1, 2)
+output_mux_conv68_obj_conv68_probs = output_mux([conv68_obj, conv68_probs])
+output_mux_conv68_scales_conv68_centers = output_mux([conv68_scales, conv68_centers])
+output_mux_conv68_obj_conv68_probs_conv68_scales_conv68_centers = output_mux([output_mux_conv68_obj_conv68_probs, output_mux_conv68_scales_conv68_centers])
+

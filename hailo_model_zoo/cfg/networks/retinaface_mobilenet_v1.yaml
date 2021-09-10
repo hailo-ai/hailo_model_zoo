@@ -1,0 +1,27 @@
+base:
+- base/retinaface.yaml
+quantization:
+  quantization_batch_size: 4
+network:
+  network_name: retinaface_mobilenet_v1
+allocation:
+  required_fps: 114
+paths:
+  alls_script: retinaface_mobilenet_v1.alls
+  network_path:
+  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.meta
+  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.index
+  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet_v1_hd.zip
+parser:
+  nodes:
+  - retina_face/mobile_net_v1/stage1/Pad
+  - - retina_face/bbox_head/0.conv1x1/BiasAdd
+    - retina_face/class_head/0.conv1x1/BiasAdd
+    - retina_face/landmark_head/0.conv1x1/BiasAdd
+    - retina_face/bbox_head_1/1.conv1x1/BiasAdd
+    - retina_face/class_head_1/1.conv1x1/BiasAdd
+    - retina_face/landmark_head_1/1.conv1x1/BiasAdd
+    - retina_face/bbox_head_2/2.conv1x1/BiasAdd
+    - retina_face/class_head_2/2.conv1x1/BiasAdd
+    - retina_face/landmark_head_2/2.conv1x1/BiasAdd

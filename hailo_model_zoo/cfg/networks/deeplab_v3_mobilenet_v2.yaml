@@ -1,0 +1,41 @@
+base:
+- base/pascal.yaml
+info:
+  network_source: https://github.com/tensorflow/models/tree/master/research/deeplab
+allocation:
+  required_fps: 135
+network:
+  network_name: deeplab_v3_mobilenet_v2
+paths:
+  alls_script: deeplab_v3_mobilenet_v2.alls
+  network_path:
+  - models_files/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2021-08-12/model.pb
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2021-08-12/deeplab_v3_mobilenet_v2.zip
+parser:
+  nodes:
+  - import/MobilenetV2/MobilenetV2/input
+  - import/ArgMax
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+postprocessing:
+  device_pre_post_layers:
+    max_finder: false
+    bilinear: true
+    argmax: true
+    softmax: false
+preprocessing:
+  network_type: segmentation
+  meta_arch: fcn_resnet
+quantization:
+  should_equalize: false
+  should_ibc: false
+  should_finetune: false
+  quantization_batch_size: 1

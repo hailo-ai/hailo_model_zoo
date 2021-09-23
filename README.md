@@ -24,9 +24,9 @@ git clone https://github.com/hailo-ai/hailo_model_zoo.git
 ```
 cd hailo_model_zoo; pip install -e .
 ```
-* Run the Hailo Model Zoo. For example, to parse the YOLOv3 model:
+* Run the Hailo Model Zoo. For example, to parse the ResNet V1 50 model:
 ```
-python hailo_model_zoo/main.py parse yolov3
+python hailo_model_zoo/main.py parse resnet_v1_50
 ```
 
 ### Getting Started

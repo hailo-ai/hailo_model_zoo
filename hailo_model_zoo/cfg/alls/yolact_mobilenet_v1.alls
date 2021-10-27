@@ -1,0 +1,21 @@
+# quantization params
+quantization_param([conv1, conv18, conv19, deconv1], bias_mode=single_scale_decomposition)
+
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)
+
+# layers commands
+shortcut0 = shortcut(conv5, [dw5,conv42])
+
+mux_conv53_conv48 = output_mux([conv53, conv48])
+mux_conv47_conv46 = output_mux([conv47, conv46])
+mux_conv41_conv40 = output_mux([conv41, conv40])
+
+# compilation params
+compilation_param(conv5, balance_output_multisplit=False)
+compilation_param(conv16, balance_output_multisplit=False)
+compilation_param(conv17, balance_output_multisplit=False)
+compilation_param(conv18, balance_output_multisplit=False)
+compilation_param(conv35, balance_output_multisplit=False)
+compilation_param(conv43, balance_output_multisplit=False)
+compilation_param(shortcut0, balance_output_multisplit=False)

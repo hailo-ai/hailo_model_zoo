@@ -1,0 +1,29 @@
+base:
+- base/nanodet.yaml
+quantization:
+  quantization_batch_size: 4
+  should_finetune: true
+  finetune_scheme:
+    learning_rate: 0.0001
+    epochs: 8
+    dataset_size: 2048
+allocation:
+  required_fps: 1000
+preprocessing:
+  input_shape:
+  - 416
+  - 416
+  - 3
+network:
+  network_name: nanodet_repvgg
+paths:
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg/pretrained/2021-09-22/nanodet.zip
+  alls_script: nanodet_repvgg.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg/pretrained/nanodet.onnx
+parser:
+  nodes:
+  - null
+  - - Conv_65
+    - Conv_78
+    - Conv_91

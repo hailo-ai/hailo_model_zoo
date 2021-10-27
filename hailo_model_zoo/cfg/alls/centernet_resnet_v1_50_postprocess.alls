@@ -1,0 +1,19 @@
+### Auto generated allocation script ###
+
+allocator_param(seed=1003, enable_defuse_with_slack=False)
+
+quantization_param([conv1, conv14, conv27, conv46], bias_mode=single_scale_decomposition)
+quantization_param([conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9, conv10, conv11, conv12, conv13, conv15,
+                    conv16, conv17, conv18, conv19, conv20, conv21, conv22, conv23, conv24, conv25, conv26, conv28,
+                    conv29, conv30, conv31, conv32, conv33, conv34, conv35, conv36, conv37, conv38, conv39, conv40,
+                    conv41, conv42, conv43, conv44, conv45, conv47, conv48, conv49, conv50, conv51, conv52, conv53,
+                    conv54, deconv1, conv55, deconv2, conv56, deconv3, conv57, conv58, conv59, conv60, conv61, conv62,
+                    conv63], bias_mode=double_scale_initialization)
+quantization_param(conv54, precision_mode=a8_w4)
+quantization_param(conv49, precision_mode=a8_w4)
+quantization_param(conv52, precision_mode=a8_w4)
+quantization_param(conv44, precision_mode=a8_w4)
+
+compilation_param({conv*}, balance_output_multisplit=False)
+
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

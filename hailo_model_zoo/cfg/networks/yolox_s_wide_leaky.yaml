@@ -1,0 +1,25 @@
+base:
+- base/yolox.yaml
+hn_editor:
+  bgr2rgb: true
+network:
+  network_name: yolox_s_wide_leaky
+allocation:
+  required_fps: 54
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2021-09-12/yolox_s_wide_leaky.onnx
+  alls_script: yolox_s_wide_leaky.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2021-09-12/yolox_s_wide_leaky.zip
+parser:
+  nodes:
+  - null
+  - - Conv_197
+    - Sigmoid_199
+    - Sigmoid_200
+    - Conv_213
+    - Sigmoid_215
+    - Sigmoid_216
+    - Conv_229
+    - Sigmoid_231
+    - Sigmoid_232

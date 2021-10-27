@@ -1,0 +1,15 @@
+base:
+- networks/yolov5m.yaml
+hn_editor:
+  yuv2rgb: true
+  input_resize:
+    enabled: true
+    input_shape:
+    - 720
+    - 1280
+network:
+  network_name: yolov5m_yuv
+allocation:
+  required_fps: 100
+paths:
+  alls_script: yolov5m_yuv.alls

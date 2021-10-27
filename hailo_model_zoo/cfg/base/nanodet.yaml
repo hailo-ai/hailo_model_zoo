@@ -1,0 +1,37 @@
+base:
+- base/coco.yaml
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+hn_editor:
+  bgr2rgb: true
+preprocessing:
+  network_type: detection
+  meta_arch: yolo_v5
+  padding_color: 0
+postprocessing:
+  nms_iou_thresh: 0.6
+  score_threshold: 0.05
+  meta_arch: nanodet
+  anchors:
+    regression_length: 10
+    strides:
+    - 8
+    - 16
+    - 32
+info:
+  network_source: https://github.com/RangiLyu/nanodet
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+evaluation:
+  classes: 80
+  dataset_name: coco_2017_detection

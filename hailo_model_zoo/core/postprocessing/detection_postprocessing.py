@@ -8,6 +8,7 @@ from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.core.postprocessing.detection.efficientdet import EfficientDetPostProc
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage1_postprocessing import FasterRCNNStage1
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage2_postprocessing import FasterRCNNStage2
+from hailo_model_zoo.core.postprocessing.detection.nanodet import NanoDetPostProc
 
 
 DETECTION_ARCHS = {
@@ -16,7 +17,8 @@ DETECTION_ARCHS = {
     "centernet": CenternetPostProc,
     "efficientdet": EfficientDetPostProc,
     "faster_rcnn_stage1": FasterRCNNStage1,
-    "faster_rcnn_stage2": FasterRCNNStage2
+    "faster_rcnn_stage2": FasterRCNNStage2,
+    "nanodet": NanoDetPostProc,
 }
 
 

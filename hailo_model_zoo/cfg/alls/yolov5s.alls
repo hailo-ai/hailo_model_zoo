@@ -1,4 +1,3 @@
-quantization_param({conv*}, bias_mode=double_scale_initialization)
 compilation_param({conv*}, balance_output_multisplit=False)
 allocator_param(timeout=30m)
 

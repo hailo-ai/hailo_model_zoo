@@ -1,4 +1,4 @@
-quantization_param({conv*}, bias_mode=double_scale_initialization)
-quantization_param({fc*}, bias_mode=double_scale_initialization)
-
 fc1_d0, fc1_d1, fc1_dc = defuse(fc1, 2)
+
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)

@@ -152,7 +152,7 @@ if __name__ == '__main__':
     parser.add_argument('type', help="TFRecord of which dataset to create", type=str,
                         choices=['calib', 'val'])
     parser.add_argument('dataset', help="Which variant of the dataset to create", type=str,
-                        choices=['voc', 'aug'], default='aug')
+                        choices=['voc', 'aug'], default='aug', nargs='?')
     parser.add_argument('--root', help="dataset root directory", type=str,
                         default=None)
     args = parser.parse_args()

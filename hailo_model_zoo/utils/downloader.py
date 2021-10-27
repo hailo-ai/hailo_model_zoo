@@ -10,6 +10,8 @@ Usage:
     >>> download(hailo_storage+model_path, model_files_dir, getLogger())
 """
 import logging
+import shutil
+import tempfile
 import zipfile
 
 from pathlib import Path
@@ -55,9 +57,11 @@ def download_file(url: str, dst: Path = Path('.'), desc: Optional[str] = None) -
         dst = dst / filename
 
     desc = desc or filename
-    with dst.open('wb') as fout:
-        download_to_file(url, fout, desc=desc)
 
+    with tempfile.TemporaryDirectory() as temp_dir:
+        with open(f'{temp_dir}/temp_file', 'wb') as outfile:
+            download_to_file(url, outfile, desc=desc)
+        shutil.move(outfile.name, str(dst))
     return dst
 
 

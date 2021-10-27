@@ -9,6 +9,7 @@ from hailo_sdk_client.exposed_definitions import CalibrationDataType
 from hailo_sdk_client.tools.core_postprocess.core_postprocess_api import MetaArchitectures, add_nms_postprocess
 from hailo_sdk_client.tools.hn_modifications import transpose_hn_height_width
 from hailo_sdk_client.quantization.tools.quant_aware_fine_tune import FineTuneConfigurator
+from hailo_sdk_client.tools.hn_modifications import add_yuv_to_rgb_layers, add_resize_input_layers
 
 from hailo_model_zoo.core.infer import infer_factory
 from hailo_model_zoo.core.eval import eval_factory
@@ -20,6 +21,7 @@ from hailo_model_zoo.core.hn_editor.channel_remove import channel_remove
 from hailo_model_zoo.core.hn_editor.channel_transpose import bgr2rgb
 from hailo_model_zoo.core.hn_editor.layer_splitter import LayerSplitter
 from hailo_model_zoo.core.hn_editor.network_chainer import integrate_postprocessing
+from hailo_model_zoo.core.hn_editor.normalization_folding import fold_normalization
 from hailo_model_zoo.core.hn_editor.remove_skip_connection import skip_connection
 
 from hailo_model_zoo.utils import data, downloader, path_resolver
@@ -126,10 +128,17 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
     model_name = translate_model(runner, network_info, ckpt_path, tensor_shapes=start_node_shape)
 
     # hn editing
+    if network_info.parser.normalization_params.fold_normalization:
+        normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
+        assert normalize_in_net, f"fold_normalization implies normalize_in_net==true, but got {normalize_in_net}"
+        fold_normalization(runner, mean_list, std_list)
+
     hn_editor = network_info.hn_editor
     flip = hn_editor.flip
     channels_remove = hn_editor.channels_remove
+    input_resize = hn_editor.input_resize
     bgr_to_rgb = hn_editor.bgr2rgb
+    yuv_to_rgb = hn_editor.yuv2rgb
     skip_connection_remove = hn_editor.skip_connection_remove
     postprocess_config_json = network_info.postprocessing.postprocess_config_json
     if postprocess_config_json and postprocess_config_json.endswith('.json'):
@@ -142,12 +151,16 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
         )
     if flip:
         transpose_hn_height_width(runner)
-    if channels_remove.enabled and any([x is not None for x in channels_remove.values()]):
+    if channels_remove.enabled and any(x is not None for x in channels_remove.values()):
         channel_remove(runner, channels_remove)
     if skip_connection_remove:
         skip_connection(runner, skip_connection_remove)
     if bgr_to_rgb:
         bgr2rgb(runner)
+    if yuv_to_rgb:
+        add_yuv_to_rgb_layers(runner)
+    if input_resize.enabled:
+        add_resize_input_layers(runner, input_resize.input_shape)
 
     _apply_output_scheme(runner, network_info)
 
@@ -165,13 +178,16 @@ def make_preprocessing(runner, network_info):
     meta_arch = preprocessing_args.get('meta_arch')
     hn_editor = network_info.hn_editor
     flip = hn_editor.flip
+    yuv2rgb = hn_editor.yuv2rgb
+    input_resize = hn_editor.input_resize
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
     height, width, _ = _get_input_shape(runner, network_info)
 
     preproc_callback = preprocessing_factory.get_preprocessing(
-        meta_arch, height=height, width=width, flip=flip,
-        normalization_params=normalization_params, **preprocessing_args)
+        meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
+        input_resize=input_resize, normalization_params=normalization_params,
+        **preprocessing_args)
 
     return preproc_callback
 
@@ -214,11 +230,8 @@ def make_calibset_callback(network_info, batch_size, preproc_callback, override_
 
 def quantize_model(runner, network_info, calib_feed_callback, results_dir):
     batch_size = network_info.quantization.quantization_batch_size
-    should_equalize = network_info.quantization.should_equalize
-    should_ibc = network_info.quantization.should_ibc
     should_finetune = network_info.quantization.should_finetune
     calib_set_size = network_info.quantization.calib_set_size
-    fast_ibc = network_info.quantization.fast_ibc
 
     calib_num_batch = calib_set_size // batch_size
     if calib_set_size % batch_size != 0:
@@ -238,10 +251,10 @@ def quantize_model(runner, network_info, calib_feed_callback, results_dir):
     max_elementwise_feed_repeat = network_info.allocation.max_elementwise_feed_repeat
     quantization_script_filename = resolve_alls_path(network_info.paths.alls_script)
 
-    runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch, equalize=should_equalize,
-                    ibc=should_ibc, finetune=should_finetune, ft_cfg=ft_cfg, batch_size=batch_size,
+    runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch,
+                    finetune=should_finetune, ft_cfg=ft_cfg, batch_size=batch_size,
                     max_elementwise_feed_repeat=max_elementwise_feed_repeat, ft_batch_size=batch_size,
-                    model_script=quantization_script_filename, fast_ibc=fast_ibc,
+                    model_script=quantization_script_filename,
                     work_dir=None, data_type=CalibrationDataType.data_feed)
 
     model_name = network_info.network.network_name
@@ -360,7 +373,3 @@ def compile_model(runner, network_info, results_dir):
         hef_out_file.write(hef)
 
     runner.save_har(results_dir / f'{model_name}.har')
-
-
-def get_network_names():
-    return sorted([name.with_suffix('').name for name in path_resolver.NETWORK_CFG_DIR.glob('*.yaml')])

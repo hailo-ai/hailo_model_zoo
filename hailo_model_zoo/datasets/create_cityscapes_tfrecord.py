@@ -6,11 +6,13 @@ import random
 from pathlib import Path
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from PIL import Image
 from tqdm import tqdm
 
 from hailo_model_zoo.utils import path_resolver
+
+tf.disable_eager_execution()
 
 
 TF_RECORD_TYPE = 'val', 'calib'

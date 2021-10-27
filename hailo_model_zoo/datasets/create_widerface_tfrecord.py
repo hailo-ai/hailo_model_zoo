@@ -20,9 +20,9 @@ from hailo_model_zoo.utils.downloader import download_to_file, download_from_dri
 CALIB_SET_OFFSET = 999
 CALIB_SET_LENGTH = 128
 DOWNLOAD_URL = {
-    'calib': 'https://drive.google.com/uc?export=download&id=0B6eKvaijfFUDQUUwd21EckhUbWs',
-    'val': 'https://drive.google.com/uc?export=download&id=0B6eKvaijfFUDd3dIRmpvSk8tLUk',
-    'test': 'https://drive.google.com/uc?export=download&id=0B6eKvaijfFUDbW4tdGpaYjgzZkU',
+    'calib': 'https://drive.google.com/uc?id=15hGDLhsx8bLgLcIRD5DhYt5iBxnjNF1M&export=download',
+    'val': 'https://drive.google.com/uc?id=1GUCogbp16PMGa39thoMMeWxp7Rp5oM8Q&export=download',
+    'test': 'https://drive.google.com/uc?id=1HIfDbVEWKmsYKJZm4lchTBDLW5N7dY5T&export=download',
     'annotations': 'https://drive.google.com/uc?export=download&id=1sAl2oml7hK6aZRdgRjqQJsjV5CEr7nl4',
     'hard_gt':
         'https://github.com/biubug6/Pytorch_Retinaface/raw/master/widerface_evaluate/ground_truth/wider_hard_val.mat'

@@ -60,7 +60,7 @@ postprocessing:
 network:
   network_name: ssd_mobilenet_v1
 allocation:
-  required_fps: 788
+  required_fps: 668
 paths:
   alls_script: ssd_mobilenet_v1.alls
   network_path:

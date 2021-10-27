@@ -8,6 +8,9 @@ quantization:
   finetune_scheme: {}
   calib_batch_size: null
 hn_editor:
+  yuv2rgb: false
+  input_resize:
+    enabled: false
   channels_remove:
     enabled: false
   flip: false
@@ -28,16 +31,23 @@ preprocessing:
   centered: true
   input_shape: null
   max_pad: 100
+  padding_color: 114
 allocation:
   allocation_timeout: null
   max_elementwise_feed_repeat: 4
   required_fps: 1
 parser:
+  ew_add_policy: fused_conv_and_add
   nodes:
   - null
   - null
   start_node_shape: null
   is_tf2_saved_model: false
+  normalization_params:
+    normalize_in_net: false
+    fold_normalization: false
+    mean_list: null
+    std_list: null
 postprocessing:
   anchors:
     sizes: null

@@ -10,6 +10,7 @@ paths:
   - models_files/Classification/mobilenet_v1/pretrained/mobilenet_v1_1_0_224.ckpt.index
   - models_files/Classification/mobilenet_v1/pretrained/mobilenet_v1_1_0_224.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v1/pretrained/2021-07-11/mobilenet_v1.zip
+  alls_script: mobilenet_v1.alls
 parser:
   nodes:
   - MobilenetV1/MobilenetV1/Conv2d_0/Conv2D

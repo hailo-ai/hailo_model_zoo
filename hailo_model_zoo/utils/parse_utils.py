@@ -29,7 +29,7 @@ def translate_model(runner, network_info, ckpt_path, *, tensor_shapes=None):
 
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_obj = None
-    if normalize_in_net:
+    if normalize_in_net and not network_info.parser.normalization_params.fold_normalization:
         normalization_obj = Normalization(mean=mean_list, std=std_list)
 
     ckpt_path = str(ckpt_path)

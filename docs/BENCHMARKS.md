@@ -1,16 +1,17 @@
 # Benchmarks
 
-All model zoo networks can be measured by the hailortcli tool in order to measure FPS, power and latency.  
-For more information please refer to the **HailoRT documentation**.
-<br><br>
+In order to measure FPS, power and latency of the Hailo Model Zoo networks you can use the HailoRT command line interface.
+For more information please refer to the HailoRT documentation in [**hailo.ai**](https://hailo.ai/).
+
+<br>
+
 ## Example
 
-In order to measure performance using hailortcli, you will first need to generate the corresponding Hailo Executable File (HEF) for the model.  It can be done easily by using the following hailo model zoo command:  
+The HailoRT command line interface works with the Hailo Executable File (HEF) of the model. To generate the HEF file use the following command:
 ```
 python hailo_model_zoo/main.py compile <model_name>
 ```
-After building the HEF you will be able to measure the performance of the model.  
-Here is an example for measureing the performance of resnet_v1_50:
+After building the HEF you will be able to measure the performance of the model by using the HailoRT command line interface. Example for measuring performance of resnet_v1_50:
 ```
 hailortcli benchmark resnet_v1_50.hef
 ```

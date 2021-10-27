@@ -68,7 +68,7 @@ def log_degradation(logger, accuracies_output, accuracies_output_native):
         diff_coeff = 1 if result_native.is_bigger_better else -1.0
         diff = (result_native.value - result_quantized.value)
         deg = diff * diff_coeff
-        log += ' {}={:.2f}'.format(result_native.name, norm_coeff * deg)
+        log += ' {}={:.3f}'.format(result_native.name, norm_coeff * deg)
     logger.info(log)
     return log
 
@@ -77,6 +77,6 @@ def log_accuracy(logger, num_of_images, accuracies_output):
     log = 'Done {} images'.format(num_of_images)
     for result in accuracies_output:
         norm_coeff = 100.0 if result.is_percentage else 1.0
-        log += ' {}={:.2f}'.format(result.name, norm_coeff * result.value)
+        log += ' {}={:.3f}'.format(result.name, norm_coeff * result.value)
     logger.info(log)
     return log

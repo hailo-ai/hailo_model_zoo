@@ -1,1 +1,4 @@
 allocator_param(enable_muxer=False, muxer_slack=8)
+
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)

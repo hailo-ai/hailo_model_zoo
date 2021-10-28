@@ -34,7 +34,7 @@ def main():
             'detection-tools==0.3',
             'scikit-image==0.17.2']
 
-    model_zoo_version = "1.1.0"
+    model_zoo_version = "1.2.0"
 
     setup(
         name='hailo_model_zoo',

@@ -1,49 +1,17 @@
 base:
-- base/yolo.yaml
-postprocessing:
-  meta_arch: yolox
-  anchors:
-    fpn: false
-    strides:
-    - 32
-    - 16
-    - 8
-    sizes:
-    - - 1
-      - 1
-    - - 1
-      - 1
-    - - 1
-      - 1
-info:
-  network_source: https://github.com/Megvii-BaseDetection/YOLOX
-preprocessing:
-  centered: false
-  meta_arch: yolo_v5
-  input_shape:
-  - 640
-  - 640
-  - 3
+- base/yolox.yaml
+hn_editor:
+  bgr2rgb: true
 network:
   network_name: yolox_s_leaky
 allocation:
   required_fps: 300
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_leaky/pretrained/2021-08-25/yolox_s_leaky.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_leaky/pretrained/2021-09-12/yolox_s_leaky.onnx
   alls_script: yolox_s_leaky.alls
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_s_leaky/pretrained/2021-08-25/yolox_s_leaky.zip
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_s_leaky/pretrained/2021-09-12/yolox_s_leaky.zip
 parser:
-  normalization_params:
-    normalize_in_net: true
-    std_list:
-    - 58.395
-    - 57.12
-    - 57.375
-    mean_list:
-    - 123.675
-    - 116.28
-    - 103.53
   nodes:
   - null
   - - Conv_197
@@ -55,8 +23,3 @@ parser:
     - Conv_229
     - Sigmoid_231
     - Sigmoid_232
-  start_node_shape:
-  - 1
-  - 3
-  - 640
-  - 640

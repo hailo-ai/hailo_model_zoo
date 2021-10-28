@@ -3,6 +3,7 @@ import numpy as np
 import os
 
 from hailo_model_zoo.core.postprocessing.visualize_3d import visualization3Dbox
+from hailo_model_zoo.utils import path_resolver
 
 """
 KITTI_KS and KITTI_TRANS_MATS are from KITTI image calibration files.
@@ -14,7 +15,7 @@ KITTI_KS = np.array([[721.5377, 000.0000, 609.5593, 44.85728],
 KITTI_TRANS_MATS = np.array([[2.5765e-1, 2.4772e-17, 4.2633e-14],
                              [-2.4772e-17, 2.5765e-1, -3.0918e-1],
                              [0., 0., 1.]])
-CALIB_DATA_PATH = 'models_files/kitti_3d/label/calib/'
+CALIB_DATA_PATH = str(path_resolver.resolve_data_path('models_files/kitti_3d/label/calib/')) + '/'
 KITTI_DEPTH_REF = np.array([28.01, 16.32])
 KITTI_DIM_REF = np.array([[3.88, 1.63, 1.53], [1.78, 1.70, 0.58], [0.88, 1.73, 0.67]])
 

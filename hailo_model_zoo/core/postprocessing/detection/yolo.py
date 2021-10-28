@@ -198,11 +198,11 @@ class YoloPostProc(object):
            we split them into 3 groups of 4 and for each group return a single tensor.
         """
         reorganized_endnodes_list = []
-        for index in range(3):  # num of output nodes in the original (unmodified) network.
-            num_branches = len(endnodes)
-            branch_index = int(num_branches / 3 * index)
+        for index in range(len(self._anchors_list)):
+            branch_index = int(4 * index)
             if 'yolox' in self._network_arch:
                 # special case for yolox: 9 branches
+                branch_index = int(3 * index)
                 centers = endnodes[branch_index][:, :, :, :2]
                 scales = endnodes[branch_index][:, :, :, 2:]
                 obj = endnodes[branch_index + 1]

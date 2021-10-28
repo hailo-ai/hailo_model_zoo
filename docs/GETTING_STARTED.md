@@ -2,11 +2,15 @@
 
 This document provides install instructions and basic usage examples of the Hailo Model Zoo.
 
+<br>
+
 ## System Requirements
 
 - Ubuntu 18.04, Python 3.6
 - The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.11 (Obtain from [**hailo.ai**](http://hailo.ai)).
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
+
+<br>
 
 ## Install Instructions
 
@@ -33,18 +37,50 @@ Logger Version: 0
 Board Name: Hailo-8
 ```
 
+<br>
+
 ## Usage
 
 ### Flow Diagram
-The following scheme shows highlevel view of the model-zoo evaluation process, and the different stages in between.
+
+The following scheme shows high-level view of the model-zoo evaluation process, and the different stages in between.
 
 <p align="center">
   <img src="images/usage_flow.svg" />
 </p>
 
+### Parsing
+
+The pre-trained models are stored on AWS S3 and will be downloaded automatically when running the model zoo. To parse models into Hailo's internal representation and generate the Hailo Archive (HAR) file:
+```
+python hailo_model_zoo/main.py parse <model_name>
+```
+
+### Profiling
+
+To generate the Hailo profiler report:
+```
+python hailo_model_zoo/main.py profile <model_name>
+```
+\* The report contains information about your model and expected performance on the Hailo hardware.
+
+### Optimize
+
+To optimize models, convert them from full precision into integer representation and generate a quantized Hailo Archive (HAR) file:
+```
+python hailo_model_zoo/main.py quantize <model_name>
+```
+\* This step requires data for calibration. For additional information please see [**OPTIMIZATION.md**](OPTIMIZATION.md).
+
+### Compile
+
+To run the Hailo compiler and generate the Hailo Executable Format (HEF) file:
+```
+python hailo_model_zoo/main.py compile <model_name>
+```
+
 ### Evaluation
 
-The pre-trained models are stored on AWS S3 and will be downloaded automatically when running the model zoo.
 To evaluate models in full precision:
 ```
 python hailo_model_zoo/main.py eval <model_name>
@@ -66,31 +102,8 @@ To explore other options (for example: changing the default batch-size) use:
 python hailo_model_zoo/main.py eval --help
 ```
 
-### Parsing
-To parse models into Hailo's internal representation and generate the Hailo Archive (HAR) file:
-```
-python hailo_model_zoo/main.py parse <model_name>
-```
-
-### Quantize
-To quantize models from full precision into integer representation and generate a quantized Hailo Archive (HAR) file:
-```
-python hailo_model_zoo/main.py quantize <model_name>
-```
-
-### Profiling
-To generate the Hailo profiler report:
-```
-python hailo_model_zoo/main.py profile <model_name>
-```
-
-### Compile
-To run the Hailo compiler and generate the Hailo Executable Format (HEF) file:
-```
-python hailo_model_zoo/main.py compile <model_name>
-```
-
 ### Visualization
+
 To run visualization (without evaluation) and generate the output images:
 ```
 python hailo_model_zoo/main.py eval <model_name> --visualize
@@ -98,23 +111,4 @@ python hailo_model_zoo/main.py eval <model_name> --visualize
 To create a video file from the network predictions:
 ```
 python hailo_model_zoo/main.py eval <model_name> --visualize --video-outpath /path/to/video_output.mp4
-```
-
-## Citation
-
-The Hailo quantization scheme includes the following papers:
-
-```
-@InProceedings{Finkelstein2019,
-  title = {Fighting Quantization Bias With Bias},
-  author = {Alexander Finkelstein and Uri Almog and Mark Grobman},
-  booktitle = {CVPR},
-  year = {2019}
-}
-@InProceedings{Meller2019,
-  title = {Same, Same But Different - Recovering Neural Network Quantization Error Through Weight Factorization},
-  author = {Eldad Meller and Alexander Finkelstein and Uri Almog and Mark Grobman},
-  booktitle = {ICML},
-  year = {2019}
-}
 ```

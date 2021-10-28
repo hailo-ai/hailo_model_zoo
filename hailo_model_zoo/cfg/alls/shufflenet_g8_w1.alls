@@ -33,5 +33,11 @@ quantization_param(conv32, use_16bit_bias=True)
 quantization_param(conv33, use_16bit_bias=True)
 quantization_param(fc1, use_16bit_bias=True)
 
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)
+
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)
+
 ## Allocator Script Version 1.0
 fc1_d0, fc1_d1, fc1_dc = defuse(fc1, 2)

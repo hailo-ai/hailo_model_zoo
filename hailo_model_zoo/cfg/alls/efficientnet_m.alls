@@ -1,4 +1,4 @@
-allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=True, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=True, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=True, enable_fixer=True, enable_swapper=True, max_auto_defuse=8, max_auto_merge_depth=2, max_lcu_usage=0, max_lcu_utilization=1.0, seed=0, timeout=1200, validate=True)
+allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=True, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=True, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=True, enable_fixer=True, enable_swapper=True, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=0, timeout=1200, validate=True)
 
 quantization_param(conv2, use_16bit_bias=True)
 quantization_param(conv3, use_16bit_bias=True)

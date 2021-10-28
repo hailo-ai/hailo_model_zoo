@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-import os
 import argparse
 import logging
 from functools import partial
 import tensorflow as tf
+from pathlib import Path
 
 from hailo_platform.drivers.hailort.pyhailort import HEF, HailoRTTransformUtils
 from hailo_sdk_client import ClientRunner, HailoNN
@@ -24,9 +24,16 @@ class SourceFileNotFound(Exception):
     pass
 
 
-def _get_data_feed(model_name, data_path, dataset_name, height, width):
-    preproc_callback = preprocessing_factory.get_preprocessing(model_name, height=height,
-                                                               width=width, normalization_params=False)
+def _get_data_feed(network_info, model_name, data_path, dataset_name, height, width):
+    preprocessing_args = network_info.preprocessing
+    hn_editor = network_info.hn_editor
+    flip = hn_editor.flip
+    yuv2rgb = hn_editor.yuv2rgb
+    input_resize = hn_editor.input_resize
+    preproc_callback = preprocessing_factory.get_preprocessing(
+        model_name, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
+        input_resize=input_resize, normalization_params=False,
+        **preprocessing_args)
     data_feed = TFRecordFeed(preproc_callback, batch_size=1, dataset_name=dataset_name, tfrecord_file=data_path)
     return data_feed.iterator
 
@@ -35,15 +42,10 @@ def _init_dataset(runner, tf_path, network_info):
     model_arch = network_info['preprocessing']['meta_arch']
     dataset_name = network_info['evaluation'].get('dataset_name', None)
     height, width = HailoNN.from_parsed_hn(runner.get_hn()).get_input_layers()[0].output_shape[1:3]
-    data_feed_callback = partial(_get_data_feed, model_arch, tf_path,
+    data_feed_callback = partial(_get_data_feed, network_info, model_arch, tf_path,
                                  dataset_name, height, width)
 
     return data_feed_callback
-
-
-def _change_file_extension(file_name, new_extension):
-    file_name = os.path.splitext(file_name)[0]
-    return '{}.{}'.format(file_name, new_extension)
 
 
 def create_args_parser():
@@ -98,16 +100,17 @@ def _tf_preprocess(data_feed_callback, process_callback, num_of_images=None):
         return image_index
 
 
-def _get_default_output_file_name(tfrecord_file_path):
-    file_name = os.path.basename(tfrecord_file_path)
-    return _change_file_extension(file_name, 'bin')
-
-
-def convert_tf_record_to_bin_file(hef_path, tf_record_path, output_file_name,
-                                  num_of_images, transform, hn_path, har_path):
+def convert_tf_record_to_bin_file(hef_path: Path,
+                                  tf_record_path: Path,
+                                  output_file_name,
+                                  num_of_images,
+                                  transform,
+                                  har_path: Path = None,
+                                  hn_path: Path = None):
     '''By default uses hailo archive file, otherwise uses hn'''
 
-    network_name = os.path.basename(hef_path).rstrip('.hef')
+    # Extract the network name from the hef_path:
+    network_name = hef_path.stem
     network_info = get_network_info(network_name)
 
     _logger.info('Initializing the runner...')
@@ -118,8 +121,7 @@ def convert_tf_record_to_bin_file(hef_path, tf_record_path, output_file_name,
     _logger.info('Loading HEF file ...')
     try:
         # Load HAR into runner
-        with open(har_path, 'r') as hn:
-            runner.load_har(har_path)
+        runner.load_har(har_path)
     except IOError:
         try:
             with open(hn_path, 'r') as hn:
@@ -127,7 +129,7 @@ def convert_tf_record_to_bin_file(hef_path, tf_record_path, output_file_name,
         except IOError:
             raise SourceFileNotFound(f'Neither {har_path} nor {hn_path} files were found.')
 
-    hef = HEF(hef_path)
+    hef = HEF(str(hef_path))
     _logger.info('HEF loaded')
 
     input_layers_info = hef.get_input_layers_info()
@@ -169,15 +171,14 @@ if __name__ == '__main__':
     parser = create_args_parser()
     args = parser.parse_args()
 
-    if not args.output_file:
-        args.output_file = _get_default_output_file_name(args.tfrecord_file)
+    output_path = Path(args.output_file) if args.output_file else Path(args.tfrecord_file).with_suffix('.bin')
+    hn_path = Path(args.hef_path).with_suffix('.hn')
+    har_path = Path(args.hef_path).with_suffix('.har')
 
-    hn_path = _change_file_extension(args.hef_path, 'hn')
-    har_path = _change_file_extension(args.hef_path, 'har')
-    convert_tf_record_to_bin_file(args.hef_path,
-                                  args.tfrecord_file,
-                                  args.output_file,
+    convert_tf_record_to_bin_file(Path(args.hef_path),
+                                  Path(args.tfrecord_file),
+                                  output_path,
                                   args.num_of_images,
                                   args.transform,
-                                  hn_path,
-                                  har_path)
+                                  har_path,
+                                  hn_path)

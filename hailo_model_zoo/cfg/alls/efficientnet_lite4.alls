@@ -1,1 +1,0 @@
-quantization_param({conv*}, bias_mode=double_scale_initialization)

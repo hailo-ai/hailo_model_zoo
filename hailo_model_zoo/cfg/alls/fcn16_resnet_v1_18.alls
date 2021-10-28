@@ -1,8 +1,6 @@
 ## Allocator Script Version 1.0
 
 allocator_param(optimize_buffers=False)
-quantization_param({conv*}, bias_mode=double_scale_initialization)
-quantization_param({deconv*}, bias_mode=double_scale_initialization)
 
 shortcut0 = shortcut(maxpool1, [conv2, conv3])
 compilation_param(shortcut0, balance_output_multisplit=False)

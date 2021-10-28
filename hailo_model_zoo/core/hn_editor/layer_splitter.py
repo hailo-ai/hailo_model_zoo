@@ -8,7 +8,8 @@ class LayerSplitter(object):
                               'yolov3_gluon',
                               'yolov3_416',
                               'yolov3_gluon_416',
-                              'yolov4',
+                              'yolov4_leaky',
+                              'tiny_yolov4',
                               'polylanenet_resnet_v1_34',
                               'smoke_regnetx_800mf']
         self._runner = runner
@@ -44,6 +45,9 @@ class LayerSplitter(object):
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_polylanenet_hn_layer(layer)
             elif 'yolo' in self._split_type:
+                output_layer_ordinals = list(range(0, self._max_layers))
+                split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
+            elif 'tiny_yolov4' in self._split_type:
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
             elif 'smoke' in self._split_type:
@@ -233,6 +237,8 @@ class LayerSplitter(object):
         if 'polylanenet' in self._split_type:
             self._remodel_polylanenet_weights_and_biases_for_layer(layer)
         elif 'yolo' in self._split_type:
+            self._remodel_yolov3_weights_and_biases_for_layer(layer)
+        elif 'tiny_yolov4' in self._split_type:
             self._remodel_yolov3_weights_and_biases_for_layer(layer)
         elif 'smoke' in self._split_type:
             self._remodel_smoke_weights_and_biases_for_layer(layer)

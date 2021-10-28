@@ -1,0 +1,61 @@
+base:
+- base/centerpose.yaml
+quantization:
+  calib_set_size: 2048
+  should_equalize: true
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv40
+        activation: sigmoid
+      - layer_name: conv36
+        activation: sigmoid
+    integrated_postprocessing:
+      enabled: true
+      chains:
+      - network:
+          network_name: center_nms
+        paths:
+          network_path:
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.meta
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.index
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+        parser:
+          nodes:
+          - input_1
+          - null
+        ports:
+          output_layer1: input_layer1
+      - network:
+          network_name: joint_nms
+        paths:
+          network_path:
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.meta
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.index
+          - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+        parser:
+          nodes:
+          - input_1
+          - null
+        ports:
+          output_layer5: input_layer1
+allocation:
+  required_fps: 500
+network:
+  network_name: centerpose_repvgg_a0
+paths:
+  alls_script: centerpose_repvgg_a0.alls
+  network_path:
+  - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg_a0.zip
+parser:
+  nodes:
+  - input.1
+  - - Conv_71
+    - Conv_74
+    - Conv_77
+    - Conv_80
+    - Conv_83
+    - Conv_86

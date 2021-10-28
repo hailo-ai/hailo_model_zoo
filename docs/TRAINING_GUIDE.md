@@ -13,7 +13,7 @@ git clone https://github.com/AlexeyAB/darknet.git; cd darknet
 ```
 2. build the framework using <code>make</code> (it is recommended to build with CUDA support by setting <code>GPU=1</code> in the Makefile)
 3. Download pretrained weights for YOLOv3 model from [**here**](https://pjreddie.com/media/files/darknet53.conv.74)
-4. Create a new cfg file. This file contain the information about your model: input resolution, number of classes and so on. The defualt cfg file for YOLOv3 can be found in [**here**](https://github.com/AlexeyAB/darknet/blob/master/cfg/yolov3.cfg)
+4. Create a new cfg file. This file contain the information about your model: input resolution, number of classes and so on. The default cfg file for YOLOv3 can be found in [**here**](https://github.com/AlexeyAB/darknet/blob/master/cfg/yolov3.cfg)
 5. Add information about your data:
     * Create <code>obj.names</code> and <code>obj.data</code> in <code>build\darknet\x64\data\ </code>
     * Place your jpg images in <code>build\darknet\x64\data\obj\ </code>
@@ -33,7 +33,7 @@ data/obj/img3.jpg
 ```
 ./darknet detector train build/darknet/x64/data/obj.data cfg/yolov3.cfg yolov3.conv.74
 ```
-8. Final product would be avliable in <code>build\darknet\x64\backup\ </code>
+8. Final product would be available in <code>build\darknet\x64\backup\ </code>
 
 
 ## Export to ONNX
@@ -87,7 +87,7 @@ git clone https://github.com/AlexeyAB/darknet.git; cd darknet
 ```
 2. build the framework using <code>make</code> (it is recommended to build with CUDA support by setting <code>GPU=1</code> in the Makefile)
 3. Download pretrained weights for YOLOv4-leaky model from [**here**](https://drive.google.com/open?id=1dW-Sd70aTmXuFvYspiY85SwWdn0cr447)
-4. Create a new cfg file. This file contain the information about your model: input resolution, number of classes and so on. The defualt cfg file for YOLOv4-leaky can be found in [**here**](https://drive.google.com/open?id=1C4w_2loEpi-MznqMgKo16oZD7BcvgsCF).
+4. Create a new cfg file. This file contain the information about your model: input resolution, number of classes and so on. The default cfg file for YOLOv4-leaky can be found in [**here**](https://drive.google.com/open?id=1C4w_2loEpi-MznqMgKo16oZD7BcvgsCF).
 5. Add information about your data:
     * Create <code>obj.names</code> and <code>obj.data</code> in <code>build\darknet\x64\data\ </code>
     * Place your jpg images in <code>build\darknet\x64\data\obj\ </code>
@@ -107,7 +107,7 @@ data/obj/img3.jpg
 ```
 ./darknet detector train build/darknet/x64/data/obj.data cfg/yolov4-leaky.cfg yolov4-leaky.weights
 ```
-8. Final product would be avliable in <code>build\darknet\x64\backup\ </code>
+8. Final product would be available in <code>build\darknet\x64\backup\ </code>
 
 
 ## Export to ONNX
@@ -180,7 +180,7 @@ python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yo
 
 ## Export to ONNX
 To export the trained YOLOv5 network to ONNX:
-1. Install export requirments:
+1. Install export requirements:
 ```
 pip install -U coremltools>=4.1 onnx>=1.9.0 scikit-learn==0.19.2
 ```

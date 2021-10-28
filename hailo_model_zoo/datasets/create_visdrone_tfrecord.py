@@ -43,7 +43,7 @@ CATEGORY_INDEX_MAP = {
 }
 
 VAL_LOCATION = "models_files/visdrone/2020-05-25/visdrone_val.tfrecord"
-CALIB_LOCATION = "models_files/visdrone/2021-07-25/visdrone_calib.tfrecord"
+CALIB_LOCATION = "models_files/visdrone/2021-07-25/visdrone_train.tfrecord"
 TFRECORD_LOCATION = {
     'val': VAL_LOCATION,
     'train': CALIB_LOCATION

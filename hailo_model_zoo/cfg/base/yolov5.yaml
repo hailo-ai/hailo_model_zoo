@@ -1,0 +1,5 @@
+base:
+- base/yolo.yaml
+postprocessing:
+  nms_iou_thresh: 0.6
+  score_threshold: 0.001

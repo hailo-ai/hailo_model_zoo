@@ -10,7 +10,6 @@ MAX_PADDING_LENGTH = 100
 def _extract_box_from_image_info(image_info, max_padding_length=MAX_PADDING_LENGTH, is_normalized=True):
     horizontal_scale = tf.cast(image_info['width'], tf.float32) if is_normalized else 1
     vertical_scale = tf.cast(image_info['height'], tf.float32) if is_normalized else 1
-
     xmin = tf.expand_dims(
         _pad_tensor(image_info.pop('xmin') * horizontal_scale, max_padding_length), axis=1)
     xmax = tf.expand_dims(
@@ -129,7 +128,7 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
 
 
 def yolo_v5(image, image_info=None, height=None, width=None,
-            scope=None, color=(114, 114, 114), **kwargs):
+            scope=None, padding_color=114, **kwargs):
     """
     This is the preprocessing used by ultralytics
     - Normalize the image from [0,255] to [0,1]
@@ -139,7 +138,8 @@ def yolo_v5(image, image_info=None, height=None, width=None,
         image_height = image_shape[0]
         image_width = image_shape[1]
         image, new_width, new_height = tf.compat.v1.py_func(
-            lambda image, height, width: letterbox(image, height, width, color=color, centered=kwargs["centered"]),
+            lambda image, height, width: letterbox(image, height, width, color=[padding_color] * 3,
+                                                   centered=kwargs["centered"]),
             [image, height, width], [tf.uint8, tf.int64, tf.int64])
         image.set_shape((height, width, 3))
 

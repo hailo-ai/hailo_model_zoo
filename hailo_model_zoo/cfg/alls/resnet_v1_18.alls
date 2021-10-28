@@ -1,3 +1,6 @@
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)
+
 # These defuses are to help easy allocation- without them
 # each defuse has 8 subclusters with 40 L3 weight cuts.
 conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_d4, conv18_dc = defuse(conv18, 5)

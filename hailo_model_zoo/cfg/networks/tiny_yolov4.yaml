@@ -24,6 +24,12 @@ postprocessing:
       - 169
       - 344
       - 319
+hn_editor:
+  output_scheme:
+    outputs_to_split:
+    - conv18
+    - conv21
+    split_output: true
 quantization:
   should_equalize: false
   should_finetune: true
@@ -34,11 +40,23 @@ quantization:
   finetune_scheme:
     loss_factors:
     - 1.0
+    - 2.0
+    - 0.25
+    - 0.125
     - 1.0
+    - 2.0
+    - 0.25
+    - 0.125
     dataset_size: 4000
     epochs: 8
     learning_rate: 0.0001
     loss_types:
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
+    - l2
     - l2
     - l2
 allocation:

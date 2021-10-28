@@ -1,7 +1,5 @@
-optimize_buffers()
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)
+
 compilation_param({*}, resources_allocation_strategy=min_l3_mem_match_fps)
 compilation_param({conv*}, balance_output_multisplit=False)
-
-quantization_param({conv*}, bias_mode=double_scale_initialization)
-
-

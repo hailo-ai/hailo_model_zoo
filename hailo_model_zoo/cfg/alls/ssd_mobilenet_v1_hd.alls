@@ -1,1 +1,4 @@
 allocator_param(cluster_timeout=45)
+
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)

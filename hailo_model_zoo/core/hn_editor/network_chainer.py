@@ -2,6 +2,7 @@ from hailo_sdk_client import ClientRunner, JoinAction
 from hailo_sdk_client.runner.client_runner import InvalidArgumentsException
 from hailo_model_zoo.utils.parse_utils import translate_model
 from hailo_model_zoo.utils.path_resolver import resolve_model_path
+from hailo_sdk_client.tools.hn_modifications import transpose_hn_height_width
 
 
 def _apply_scope(layer_name, scope):
@@ -66,8 +67,18 @@ def integrate_postprocessing(runner, integrated_postprocessing_info):
             fixed_ports = ports
         tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name)
 
+        # If the first network is transposed, the chained network must also be trasnposed.
+        # So we first parse it with original input shapes and then "flip" it
+        if hn.net_params.transposed_net:
+            for k, v in tensor_shapes.items():
+                v[1], v[2] = v[2], v[1]
+                tensor_shapes[k] = v
         chained_runner = ClientRunner()
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
+
+        if hn.net_params.transposed_net:
+            transpose_hn_height_width(chained_runner)
+
         chained_name = chained_runner.get_hn()['name']
         scope = hn.net_params.net_scopes[0] if hn.net_params.net_scopes else hn.name
 

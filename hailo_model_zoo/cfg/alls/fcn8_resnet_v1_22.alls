@@ -1,6 +1,5 @@
 #print_buffers()
 allocator_param(seed=1000, validate=False)
-optimize_buffers()
 
 #maxpool1_d0, maxpool1_d1, maxpool_c = defuse(maxpool1, 2)
 
@@ -75,4 +74,3 @@ conv24_defuse_0, conv24_defuse_1, conv24_defuse_2, conv24_defuse_3, conv24_defus
 
 #compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
 
-#quantization_param({conv*}, bias_mode=double_scale_initialization)

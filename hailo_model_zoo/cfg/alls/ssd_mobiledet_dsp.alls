@@ -1,3 +1,6 @@
 ## Allocator Script Version 1.0
 
-allocator_param(max_lcu_utilization=0.7)
+# post_quantization_optimization commands
+post_quantization_optimization(bias_correction, policy=enabled)
+
+allocator_param(merge_min_layer_utilization=0.7)

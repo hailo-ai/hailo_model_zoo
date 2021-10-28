@@ -4,9 +4,18 @@ The Hailo Model Zoo works with TFRecord files which store the images and labels 
 ```
 export HMZ_DATA=/new/path/for/storage/
 ```
+- [ImageNet](#imagenet)
+- [COCO2017](#coco2017)
+- [Cityscapes](#cityscapes)
+- [WIDERFACE](#widerface)
+- [VisDrone](#visdrone)
+- [Pascal VOC augmented dataset](#pascal-voc-augmented-dataset)
+- [D2S augmented dataset](#d2s-augmented-dataset)
+
+<br>
 
 ## ImageNet
-To evaluate/quantize/compile the classification models of the Hailo Model Zoo you should generate the ImageNet TFRecord files (manual download is required).
+To evaluate/optimize/compile the classification models of the Hailo Model Zoo you should generate the ImageNet TFRecord files (manual download is required).
 
 1. Download the ImageNet dataset from [**here**](https://www.kaggle.com/c/imagenet-object-localization-challenge/data). The expected dataset structure:
 
@@ -31,8 +40,10 @@ python hailo_model_zoo/datasets/create_imagenet_tfrecord.py val --img /path/to/i
 python hailo_model_zoo/datasets/create_imagenet_tfrecord.py calib --img /path/to/imagenet/train/
 ```
 
+<br>
+
 ## COCO2017
-To evaluate/quantize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO ([**link**](https://cocodataset.org/#home)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+To evaluate/optimize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO ([**link**](https://cocodataset.org/#home)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 ```
 python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017
@@ -86,8 +97,10 @@ python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017 --img /path/to/v
 python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017 --img /path/to/train2017 --det /path/to/annotations
 ```
 
+<br>
+
 ## Cityscapes
-To evaluate/quantize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecord files (manual download is required).
+To evaluate/optimize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecord files (manual download is required).
 
 1. Download the Cityscapes dataset from [**here**](https://www.cityscapes-dataset.com/). The expected dataset structure:
 
@@ -111,8 +124,10 @@ python hailo_model_zoo/datasets/create_cityscapes_tfrecord.py val --data /path/t
 python hailo_model_zoo/datasets/create_cityscapes_tfrecord.py calib --data /path/to/Cityscapes/
 ```
 
+<br>
+
 ## WIDERFACE
-To evaluate/quantize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE ([**link**](http://shuoyang1213.me/WIDERFACE/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+To evaluate/optimize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE ([**link**](http://shuoyang1213.me/WIDERFACE/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 ```
 python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib
@@ -158,8 +173,11 @@ widerface/
 python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split 
 python hailo_model_zoo/datasets/create_widerface_tfrecord.py val --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split
 ```
+
+<br>
+
 ## VisDrone
-To evaluate/quantize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone ([**link**](http://aiskyeye.com/download/object-detection-2/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
+To evaluate/optimize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone ([**link**](http://aiskyeye.com/download/object-detection-2/)) TFRecord files. Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 ```
 python hailo_model_zoo/datasets/create_visdrone_tfrecord.py train
@@ -200,11 +218,14 @@ VisDrone2019-DET-val/
 python hailo_model_zoo/datasets/create_visdrone_tfrecord.py train -d /path/to/VisDrone2019-DET-train
 python hailo_model_zoo/datasets/create_visdrone_tfrecord.py val -d /path/to/VisDrone2019-DET-val
 ```
+
+<br>
+
 ## Pascal VOC augmented dataset
 Run the creation scripts:
 ```
-python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py calib
-python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py val
+python hailo_model_zoo/datasets/create_pascal_tfrecord.py calib
+python hailo_model_zoo/datasets/create_pascal_tfrecord.py val
 ```
 
 ### Manual Download (Optional)
@@ -220,6 +241,36 @@ benchmark_RELEASE
 ```
 2. run the creation scripts:
 ```
-python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py calib --root benchmark_RELEASE/dataset
-python /opt/hailo/adk/model_zoo/hailo_model_zoo/datasets/create_pascal_tfrecord.py val --root benchmark_RELEASE/dataset
+python hailo_model_zoo/datasets/create_pascal_tfrecord.py calib --root benchmark_RELEASE/dataset
+python hailo_model_zoo/datasets/create_pascal_tfrecord.py val --root benchmark_RELEASE/dataset
+```
+
+## D2S augmented dataset
+Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_d2s_tfrecord.py calib
+python hailo_model_zoo/datasets/create_d2s_tfrecord.py val
+```
+
+### Manual Download (Optional)
+1. Download the dataset from [**here**](https://www.mydrive.ch/shares/39000/993e79a47832a8ea7208a14d8b277c35/download/420938639-1629953496/d2s_images_v1.tar.xz).
+Extract using 'tar -xf d2s_images_v1.1.tar.xz'. Expected dataset structure:
+```
+└── images
+    ├── D2S_000200.jpg
+    ├── D2S_000201.jpg
+    ├── ...
+```
+2. Download the annotations from [**here**](https://www.mydrive.ch/shares/39000/993e79a47832a8ea7208a14d8b277c35/download/420938386-1629953481/d2s_annotations_v1.1.tar.xz).
+Extract using 'tar -xf d2s_annotations_v1.1.tar.xz'. Expected annotations structure:
+```
+└── annotations
+    ├── D2S_augmented.json
+    ├── D2S_validation.json
+    ├── ...
+```
+3. run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_d2s_tfrecord.py calib --img /path/to/dataset --det /path/to/annotations/D2S_augmented.json
+python hailo_model_zoo/datasets/create_d2s_tfrecord.py val --img /path/to/dataset --det /path/to/annotations/D2S_validation.json
 ```

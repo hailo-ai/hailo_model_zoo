@@ -29,3 +29,7 @@ def resolve_model_path(path_list):
 def resolve_data_path(path):
     data_dir = os.getenv('HMZ_DATA', _DATA_DEFAULT_DIRECTORY)
     return Path(data_dir) / path
+
+
+def get_network_names():
+    return sorted([name.with_suffix('').name for name in NETWORK_CFG_DIR.glob('*.yaml')])

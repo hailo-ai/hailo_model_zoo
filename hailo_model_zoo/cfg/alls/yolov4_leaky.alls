@@ -1,7 +1,7 @@
-allocator_param(optimize_one_to_many_shmifos=True,split_aware_optimize_buffers=False, automatic_l4_portals=True, cluster_timeout=600, max_auto_defuse=8, max_auto_merge_depth=2, max_lcu_usage=0, max_lcu_utilization=1.0, seed=30, timeout=2000, validate=True)
+allocator_param(optimize_one_to_many_shmifos=True,split_aware_optimize_buffers=False, automatic_l4_portals=True, cluster_timeout=600, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=30, timeout=2000, validate=True)
 context_switch_param(mode=manual, max_memory_utilization=0.87)
 compilation_param({*}, mixed_mem=False)
-optimize_buffers()
+
 resources_param(strategy=legacy)
 reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
 

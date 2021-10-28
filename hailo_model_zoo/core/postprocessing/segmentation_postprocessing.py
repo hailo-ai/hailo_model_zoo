@@ -27,7 +27,28 @@ def get_dataset_colors(dataset):
                                       [0., 60., 100., 115.],  # green - bus 16
                                       [0., 80., 100., 115.],  # green - train 17
                                       [0., 0., 230., 115.],  # green - motorcycle 18
-                                      [119., 11., 32., 115.]])}  # green - bicycle 19
+                                      [119., 11., 32., 115.]]),  # green - bicycle 19
+              'pascal': np.array([[200., 200., 200., 115.],   # grey - background 0
+                                  [244., 35., 232., 115.],    # orange - aeroplane 1
+                                  [70., 70., 70., 115.],      # yellow - bicycle 2
+                                  [102., 102., 156., 115.],   # yellow - bird 3
+                                  [190., 153., 153., 115.],   # yellow - boat 4
+                                  [153., 153., 153., 115.],   # purple - bottle 5
+                                  [250., 170., 30., 115.],    # purple - bus 6
+                                  [220., 220., 0., 115.],     # purple - car 7
+                                  [107., 142., 35., 115.],    # orange - cat 8
+                                  [244., 97., 66., 115.],     # orange - chair 9
+                                  [70., 130., 180., 115.],    # blue   - cow 10
+                                  [220., 20., 60., 115.],     # red    - diningtable 11
+                                  [255., 0., 0., 115.],       # green  - dog 12
+                                  [0., 0., 142., 115.],       # green  - horse 13
+                                  [0., 0., 70., 115.],        # green  - motorbike 14
+                                  [64., 248., 162., 115.],    # green  - person 15
+                                  [174., 239., 162., 115.],   # green  - pottedplant 16
+                                  [0., 230., 0., 115.],       # green  - sheep 17
+                                  [128., 146., 85., 115.],    # green  - sofa 18
+                                  [64., 187., 144., 115.],    # green  - train 19
+                                  [89., 197., 132., 115.]])}  # green  - tvmonitor 20
     return colors[dataset]
 
 
@@ -69,7 +90,7 @@ def visualize_segmentation_result(logits, image, **kwargs):
     logits = logits['predictions']
     dataset = kwargs['dataset_name']
     height, width = logits.squeeze().shape
-    image = Image.fromarray(image.squeeze()).resize((width, height))
+    image = Image.fromarray(image.astype(np.uint8).squeeze()).resize((width, height))
     image = np.array(image)
     if dataset == 'coco_segmentation':
         blur_img = Image.fromarray(np.array(image, np.uint8)).filter(ImageFilter.GaussianBlur(radius=4))
@@ -77,6 +98,8 @@ def visualize_segmentation_result(logits, image, **kwargs):
         blur_img = np.array(blur_img) * mask_3d
         img_out = np.array(image * (1 - mask_3d) + blur_img, np.uint8)
     elif dataset == 'cityscapes':
+        img_out = color_segment_img(image, logits[0], dataset)
+    elif dataset == 'pascal':
         img_out = color_segment_img(image, logits[0], dataset)
     else:
         raise PostProcessingException("Visualization is not implemented for dataset {}".format(dataset))

@@ -11,7 +11,7 @@ from hailo_model_zoo.utils.video_utils import VideoCapture
 def _open_image_file(img_path):
     image = tf.io.read_file(img_path)
     image = tf.cast(tf.image.decode_jpeg(image, channels=3), tf.uint8)
-    image_name = tf.string_split([img_path], os.path.sep).values[-1]
+    image_name = tf.compat.v1.string_split([img_path], os.path.sep).values[-1]
     return image, {
         'img_orig': image,
         'image_name': image_name,

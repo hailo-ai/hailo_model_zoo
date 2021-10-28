@@ -1,0 +1,45 @@
+base:
+- base/base.yaml
+info:
+  network_source: https://github.com/Megvii-BaseDetection/YOLOX
+preprocessing:
+  network_type: detection
+  meta_arch: yolo_v5
+  centered: false
+postprocessing:
+  nms_iou_thresh: 0.65
+  score_threshold: 0.01
+  meta_arch: yolox
+  anchors:
+    fpn: false
+    strides:
+    - 32
+    - 16
+    - 8
+    sizes:
+    - - 1
+      - 1
+    - - 1
+      - 1
+    - - 1
+      - 1
+parser:
+  normalization_params:
+    normalize_in_net: false
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+evaluation:
+  labels_offset: 1
+  classes: 80
+  dataset_name: coco_2017_detection
+  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord

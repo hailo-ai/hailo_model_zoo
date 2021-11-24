@@ -14,9 +14,6 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/ssd_resnet_v1_18.zip
 preprocessing:
   meta_arch: resnet_ssd
-quantization:
-  should_equalize: false
-  should_ibc: false
 parser:
   normalization_params:
     normalize_in_net: true

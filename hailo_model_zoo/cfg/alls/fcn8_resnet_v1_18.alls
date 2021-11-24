@@ -34,3 +34,7 @@ buffers(portal_portal_conv10_conv23_conv23, conv23, 19)
 portal_conv15_conv22 = portal(conv15_dc, conv22)
 buffers(conv15_dc, portal_conv15_conv22, 14)
 buffers(portal_conv15_conv22, conv22, 14)
+
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])

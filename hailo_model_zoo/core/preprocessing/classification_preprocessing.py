@@ -5,6 +5,13 @@ import tensorflow as tf
 
 RESIZE_SIDE = 256
 MOBILENET_CENTRAL_FRACTION = 0.875
+RESMLP_CENTRAL_FRACTION = 0.875
+MEAN_IMAGENET = [123.675, 116.28, 103.53]
+STD_IMAGENET = [58.395, 57.12, 57.375]
+
+
+class PatchifyException(Exception):
+    """Patchify exception."""
 
 
 def mobilenet_v1(image, image_info=None, height=None, width=None, **kwargs):
@@ -44,7 +51,7 @@ def _smallest_size_at_least(height, width, smallest_side):
     return new_height, new_width
 
 
-def _aspect_preserving_resize(image, smallest_side):
+def _aspect_preserving_resize(image, smallest_side, **kwargs):
     smallest_side = tf.convert_to_tensor(smallest_side, dtype=tf.int32)
 
     shape = tf.shape(image)
@@ -52,8 +59,12 @@ def _aspect_preserving_resize(image, smallest_side):
     width = shape[1]
     new_height, new_width = _smallest_size_at_least(height, width, smallest_side)
     image = tf.expand_dims(image, 0)
-    resized_image = tf.compat.v1.image.resize_bilinear(image, [new_height, new_width],
-                                                       align_corners=False)
+    if ("method" in kwargs) and (kwargs['method'] is not None):
+        resized_image = tf.image.resize(image, [new_height, new_width], method=kwargs["method"],
+                                        antialias=True)
+    else:
+        resized_image = tf.compat.v1.image.resize_bilinear(image, [new_height, new_width],
+                                                           align_corners=False)
     resized_image = tf.squeeze(resized_image)
     resized_image.set_shape([None, None, 3])
     return resized_image
@@ -129,3 +140,35 @@ def efficientnet(image, image_info=None, output_height=None, output_width=None, 
         image_info['img_orig'] = tf.cast(tf.compat.v1.image.resize_bicubic(
             [image], [output_height, output_width])[0], tf.uint8)
     return tf.cast(image_resize, tf.float32), image_info
+
+
+def _resmlp_base_preprocessing(image, output_height=None, output_width=None, crop_pct=None, **kwargs):
+    if output_height is not None:
+        assert output_width is not None
+        assert crop_pct is not None
+        image = _aspect_preserving_resize(image, RESIZE_SIDE, method='bicubic')
+        image = _central_crop([image], output_height, output_width)[0]
+        image.set_shape([output_height, output_width, 3])
+    image = tf.cast(image, tf.float32)
+    image = (image - MEAN_IMAGENET) / STD_IMAGENET  # ImageNet normalization on (224,224,3)
+    return image
+
+
+def resmlp(image, image_info=None, output_height=None, output_width=None, **kwargs):
+    image = _resmlp_base_preprocessing(image,
+                                       output_height, output_width,
+                                       RESMLP_CENTRAL_FRACTION,
+                                       method=kwargs.get('resize_method'))  # (H,W,C) = (224,224,3)
+
+    H = int(image.shape[0])
+    P = 16
+    G = H // P  # grid_size
+    image = tf.transpose(image, perm=[2, 0, 1])  # (3,224,224)
+    image = tf.reshape(image, (3, G, P, G, P))  # G = H//P. (3,G,P,G,P) = (3,14,16,14,16)
+    image = tf.transpose(image, perm=[0, 2, 4, 1, 3])  # (3,P,P,G,G) = (3,16,16,14,14)
+    image = tf.reshape(image, (3 * P * P, G * G, 1))  # (3PP,GG,1) = (768,196,1)
+    image = tf.transpose(image, perm=[2, 1, 0])  # (GG,1,3PP) = (1,196,768)
+
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info

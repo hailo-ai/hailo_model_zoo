@@ -1,7 +1,5 @@
 base:
 - base/yolov5.yaml
-quantization:
-  should_equalize: false
 hn_editor:
   output_scheme:
     change_activations:

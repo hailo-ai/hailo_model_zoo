@@ -1,17 +1,5 @@
 base:
 - base/fcn.yaml
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    dataset_size: 1000
-    epochs: 4
-    learning_rate: 0.0001
-    loss_layer_names:
-    - conv23
-    loss_types:
-    - l2
 info:
   network_source: internal
 network:

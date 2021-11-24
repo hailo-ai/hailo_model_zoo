@@ -15,7 +15,6 @@ quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   - models_files/coco/2021-06-18/person_keypoints_val2017.json
-  should_equalize: false
 info:
   network_source: https://github.com/tensorboy/centerpose
 parser:

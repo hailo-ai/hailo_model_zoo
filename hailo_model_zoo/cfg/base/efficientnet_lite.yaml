@@ -2,8 +2,6 @@ base:
 - base/imagenet.yaml
 evaluation:
   labels_offset: 0
-quantization:
-  should_ibc: true
 preprocessing:
   meta_arch: efficientnet
 info:

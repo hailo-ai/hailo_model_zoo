@@ -1,7 +1,6 @@
 base:
 - base/base.yaml
 quantization:
-  should_ibc: true
   calib_set:
   - models_files/widerface/2020-03-23/widerfacecalibration_set.tfrecord
   calib_set_size: 16

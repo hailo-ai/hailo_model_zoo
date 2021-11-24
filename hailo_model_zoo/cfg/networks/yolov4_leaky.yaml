@@ -30,9 +30,9 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv110
-    - conv103
-    - conv95
+    - yolov4_leaky/conv110
+    - yolov4_leaky/conv103
+    - yolov4_leaky/conv95
     split_output: true
     change_activations:
       enabled: true
@@ -60,53 +60,7 @@ info:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  should_equalize: true
   quantization_batch_size: 4
-  should_ibc: false
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 1.0e-05
-    loss_layer_names:
-    - conv110_centers
-    - conv110_scales
-    - conv110_obj
-    - conv110_probs
-    - conv103_centers
-    - conv103_scales
-    - conv103_obj
-    - conv103_probs
-    - conv95_centers
-    - conv95_scales
-    - conv95_obj
-    - conv95_probs
-    loss_types:
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
 allocation:
   required_fps: 150
 preprocessing:

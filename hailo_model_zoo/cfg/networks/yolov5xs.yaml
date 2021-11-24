@@ -1,11 +1,5 @@
 base:
 - base/yolo.yaml
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    learning_rate: 0.0002
-    epochs: 8
-    dataset_size: 2048
 preprocessing:
   input_shape:
   - 512
@@ -30,6 +24,7 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/yolov5s512.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2021-07-11/yolov5xs.zip
+  alls_script: yolov5xs.alls
 parser:
   nodes:
   - null

@@ -1,14 +1,11 @@
-import yaml
 from omegaconf import OmegaConf
 from pathlib import Path
 from functools import lru_cache
 
 from hailo_sdk_common.targets.inference_targets import ParamsKinds
 
-from hailo_sdk_client.exposed_definitions import CalibrationDataType
 from hailo_sdk_client.tools.core_postprocess.core_postprocess_api import MetaArchitectures, add_nms_postprocess
 from hailo_sdk_client.tools.hn_modifications import transpose_hn_height_width
-from hailo_sdk_client.quantization.tools.quant_aware_fine_tune import FineTuneConfigurator
 from hailo_sdk_client.tools.hn_modifications import add_yuv_to_rgb_layers, add_resize_input_layers
 
 from hailo_model_zoo.core.infer import infer_factory
@@ -74,7 +71,7 @@ def get_network_info(model_name, read_only=False, yaml_path=None):
         OmegaConf object that represent network configuration.
     '''
     net = f'networks/{model_name}.yaml'
-    cfg_path = yaml_path if yaml_path is not None else path_resolver.resolve_cfg_path(net)
+    cfg_path = Path(yaml_path) if yaml_path is not None else path_resolver.resolve_cfg_path(net)
     if not cfg_path.is_file():
         raise ValueError('cfg file is missing in {}'.format(cfg_path))
     cfg = _load_cfg(cfg_path)
@@ -208,8 +205,7 @@ def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch
         func = data.ImageFeed
     else:
         func = data.VideoFeed
-
-    return lambda: func(*args).iterator
+    return lambda: func(*args)
 
 
 def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path):
@@ -220,17 +216,18 @@ def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_
 
 def make_evalset_callback(network_info, batch_size, preproc_callback, override_path):
     resolved_data_path = override_path or path_resolver.resolve_data_path(network_info.evaluation.data_set)
-    return _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path)
+    return lambda: data_feed_cb().iterator
 
 
 def make_calibset_callback(network_info, batch_size, preproc_callback, override_path):
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
-    return _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path)
+    return data_feed_cb()._dataset.unbatch()
 
 
 def quantize_model(runner, network_info, calib_feed_callback, results_dir):
     batch_size = network_info.quantization.quantization_batch_size
-    should_finetune = network_info.quantization.should_finetune
     calib_set_size = network_info.quantization.calib_set_size
 
     calib_num_batch = calib_set_size // batch_size
@@ -240,22 +237,14 @@ def quantize_model(runner, network_info, calib_feed_callback, results_dir):
             "of the batch size {}".format(batch_size * calib_num_batch, calib_set_size, calib_set_size, batch_size)
         )
 
-    if should_finetune:
-        # Finetune currently expects dicts & lists.
-        # Casting OmegaConf types back to python builtin types.
-        ft_dict = yaml.safe_load(OmegaConf.to_yaml(network_info.quantization.finetune_scheme))
-        ft_cfg = FineTuneConfigurator(ft_dict,)
-    else:
-        ft_cfg = None
-
     max_elementwise_feed_repeat = network_info.allocation.max_elementwise_feed_repeat
     quantization_script_filename = resolve_alls_path(network_info.paths.alls_script)
 
     runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch,
-                    finetune=should_finetune, ft_cfg=ft_cfg, batch_size=batch_size,
-                    max_elementwise_feed_repeat=max_elementwise_feed_repeat, ft_batch_size=batch_size,
+                    batch_size=batch_size,
+                    max_elementwise_feed_repeat=max_elementwise_feed_repeat,
                     model_script=quantization_script_filename,
-                    work_dir=None, data_type=CalibrationDataType.data_feed)
+                    work_dir=None)
 
     model_name = network_info.network.network_name
     runner.save_har(results_dir / f'{model_name}.har')

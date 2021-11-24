@@ -24,18 +24,6 @@ postprocessing:
       - 169
       - 344
       - 319
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 1.0
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 0.0001
-    loss_types:
-    - l2
-    - l2
 allocation:
   required_fps: 1009
 network:

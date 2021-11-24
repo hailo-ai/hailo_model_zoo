@@ -11,6 +11,7 @@ export HMZ_DATA=/new/path/for/storage/
 - [VisDrone](#visdrone)
 - [Pascal VOC augmented dataset](#pascal-voc-augmented-dataset)
 - [D2S augmented dataset](#d2s-augmented-dataset)
+- [NYU Depth V2](#nyu-depth-v2)
 
 <br>
 
@@ -245,6 +246,8 @@ python hailo_model_zoo/datasets/create_pascal_tfrecord.py calib --root benchmark
 python hailo_model_zoo/datasets/create_pascal_tfrecord.py val --root benchmark_RELEASE/dataset
 ```
 
+<br>
+
 ## D2S augmented dataset
 Run the creation scripts:
 ```
@@ -273,4 +276,37 @@ Extract using 'tar -xf d2s_annotations_v1.1.tar.xz'. Expected annotations struct
 ```
 python hailo_model_zoo/datasets/create_d2s_tfrecord.py calib --img /path/to/dataset --det /path/to/annotations/D2S_augmented.json
 python hailo_model_zoo/datasets/create_d2s_tfrecord.py val --img /path/to/dataset --det /path/to/annotations/D2S_validation.json
+```
+
+<br>
+
+## NYU Depth V2
+Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py calib
+python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py val
+```
+
+### Manual Download (Optional)
+1. Download the dataset from [**here**](http://datasets.lids.mit.edu/fastdepth/data/nyudepthv2.tar.gz).
+Extract using 'tar -xf nyudepthv2.tar.gz'. Expected dataset structure:
+```
+└── train
+    └── study_0300
+        |── 00626.h5
+        ├── 00631.h5
+        ├── ...
+    ├── ...
+└── val
+    └── official
+        |── 00001.h5
+        |── 00002.h5
+        |── 00009.h5
+        ├── 00014.h5
+        ├── ...
+```
+2. run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py calib --data ./nyu_depth_v2/
+python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py val --data ./nyu_depth_v2/
 ```

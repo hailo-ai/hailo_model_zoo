@@ -7,8 +7,6 @@ postprocessing:
   nms_iou_thresh: 0.5
 quantization:
   quantization_batch_size: 1
-  should_equalize: true
-  should_ibc: true
   calib_set_size: 32
 network:
   network_name: ssd_mobilenet_v1_hd

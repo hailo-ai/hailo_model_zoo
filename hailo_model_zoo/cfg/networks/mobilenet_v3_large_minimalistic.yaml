@@ -1,9 +1,6 @@
 base:
 - base/mobilenet.yaml
 quantization:
-  fast_ibc: true
-  should_equalize: true
-  should_ibc: true
   calib_set:
   - models_files/imagenet/2019-12-22/imagenet_train.tfrecord.000
   calib_set_size: 128

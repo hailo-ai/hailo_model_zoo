@@ -1,5 +1,4 @@
 quantization:
-  should_ibc: true
   calib_set_size: 32
 preprocessing:
   network_type: detection

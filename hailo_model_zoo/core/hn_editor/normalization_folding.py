@@ -11,7 +11,7 @@ def fold_normalization(runner, mean_list, std_list):
     kernel = params[kernel_name]
     if kernel.shape[2] != 3:
         raise ValueError(f"Expected 3 channels in the first convolution, but got shape: {kernel.shape}")
-    new_kernel = kernel[:, :, :, :]
+    new_kernel = np.copy(kernel[:, :, :, :])
     for c in range(kernel.shape[2]):
         new_kernel[:, :, c, :] /= std_list[c]
     assert new_kernel.shape == kernel.shape

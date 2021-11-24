@@ -9,16 +9,19 @@ def _apply_scope(layer_name, scope):
     return layer_name if '/' in layer_name else f'{scope}/{layer_name}'
 
 
-def _make_tensor_shapes(hn, ports, start_node_name):
+def _make_tensor_shapes(hn, ports, start_node_name, is_onnx):
     tensor_shapes = {}
-    for port_source_layer, port_dest_layer in ports.items():
+    for port_source_layer, _ in ports.items():
         shape = hn.get_layer_by_name(port_source_layer).output_shape
         # hn lists batch dimension as -1 which isn't supported by the parser
         shape[0] = 1
-
         # FUTURE maybe work with original names? This should be port_original_dest_layer_name
-        tensor_name = "{}:0".format(start_node_name)
-        tensor_shapes[tensor_name] = shape
+        tensor_name = "{}".format(start_node_name)
+        if is_onnx:
+            tensor_shapes = None
+        else:
+            tensor_name += ":0"
+            tensor_shapes[tensor_name] = shape
 
     return tensor_shapes
 
@@ -65,7 +68,9 @@ def integrate_postprocessing(runner, integrated_postprocessing_info):
             fixed_ports = {_apply_scope(source, scope): dest for source, dest in ports.items()}
         else:
             fixed_ports = ports
-        tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name)
+        tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name,
+                                            integrated_postprocessing_info.
+                                            chains[0]['paths']['network_path'][0].endswith('.onnx'))
 
         # If the first network is transposed, the chained network must also be trasnposed.
         # So we first parse it with original input shapes and then "flip" it

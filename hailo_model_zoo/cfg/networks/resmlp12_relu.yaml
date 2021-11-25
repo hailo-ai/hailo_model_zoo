@@ -10,7 +10,7 @@ hn_editor:
           {
             "network": { "network_name": "resmlp12_core" },
             "paths":
-              { "network_path": ["models_files/resmlp12_bn/2021-11-11/resmlp_12_224_bn_relu.onnx"], },
+              { "network_path": ["models_files/Classification/resmlp12_relu/pretrained/2021-11-11/resmlp_12_224_bn_relu.onnx"], },
             "parser": { "nodes": ["Transpose_28", "435"] },
             "ports": { "output_layer1": "input_layer1" },
           },
@@ -22,7 +22,7 @@ allocation:
 paths:
   alls_script: resmlp12_relu.alls
   network_path:
-    ["models_files/Classification/resmlp12_relu/pretrained/2021-11-11/resmlp_12_224_relu.onnx"]
+    ["models_files/Classification/resmlp12_relu/pretrained/2021-11-11/resmlp_12_224_bn_relu.onnx"]
   url: "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resmlp12_relu/pretrained/2021-11-11/resmlp12_relu.zip"
 parser:
   nodes: ["Conv_19", "Conv_19"]

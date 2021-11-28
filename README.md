@@ -16,6 +16,25 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 ## Change Log
 
 <details>
+<summary> V1.3 </summary>
+
+- Update to use Dataflow Compiler v3.12.0 ([developer-zone](https://hailo.ai/developer-zone/))
+- New task: indoor depth estimation
+  - fast_depth
+  - Support NYU Depth V2 Dataset
+- New models:
+  - resmlp12 - new architecture support ([paper](https://arxiv.org/abs/2105.03404))
+  - yolox_l_leaky
+- Improvements:
+  - ssd_mobilenet_v1 - in-chip NMS optimitzation (de-fusing)
+- Model Optimitzation API Changes
+  - Model Optimization parameters can be updated using the networks' model script files (*.alls)
+  - Deprecated: quantization params in YAMLs
+- Training Guide: new training guide for yolov5 with compatible Dockerfile
+</details>
+
+
+<details>
 <summary> V1.2 </summary>
 
 - New features:

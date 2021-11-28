@@ -1,8 +1,6 @@
 base:
 - base/resnet.yaml
 quantization:
-  should_equalize: false
-  should_ibc: true
   calib_set_size: 64
 info:
   network_source: https://github.com/osmr/imgclsmob

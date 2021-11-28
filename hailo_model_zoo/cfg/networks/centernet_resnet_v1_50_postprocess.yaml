@@ -3,23 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 0.1
-    - 200.0
-    - 30.0
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 1.5e-05
-    loss_types:
-    - l2
-    - l2
-    - l2
-    loss_layer_names:
-    - conv60
-    - conv62
-    - conv58
 allocation:
   required_fps: 81
 postprocessing:

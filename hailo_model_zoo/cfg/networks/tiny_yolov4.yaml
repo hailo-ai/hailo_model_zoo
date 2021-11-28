@@ -27,38 +27,14 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv18
-    - conv21
+    - tiny_yolov4/conv18
+    - tiny_yolov4/conv21
     split_output: true
 quantization:
-  should_equalize: false
-  should_finetune: true
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   calib_set_size: 64
   quantization_batch_size: 8
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 0.0001
-    loss_types:
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
 allocation:
   required_fps: 1385
 network:

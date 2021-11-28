@@ -25,6 +25,12 @@ quantization_param(conv88, precision_mode=a8_w4)
 quantization_param(conv90, precision_mode=a8_w4)
 quantization_param(conv92, precision_mode=a8_w4)
 
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, mode=kernel_equalization, policy=enabled)
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, learning_rate=0.0002, epochs=5, dataset_size=4096, loss_layer_names=[conv92, conv93, conv82, conv83, conv72, conv73], loss_types=[l2rel, l2rel, l2rel, l2rel, l2rel, l2rel])
+
 # 75% memory:
 # quantization_param(conv45, precision_mode=a8_w4)
 # quantization_param(conv46, precision_mode=a8_w4)

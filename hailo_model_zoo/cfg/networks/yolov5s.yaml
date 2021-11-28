@@ -1,13 +1,6 @@
 base:
 - base/yolo.yaml
 quantization:
-  should_equalize: true
-  should_ibc: false
-  should_finetune: true
-  finetune_scheme:
-    learning_rate: 0.0002
-    epochs: 8
-    dataset_size: 2048
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   quantization_batch_size: 4

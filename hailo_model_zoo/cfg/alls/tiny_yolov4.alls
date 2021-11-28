@@ -3,6 +3,9 @@ quantization_param(conv19, activation_clipping_mode=manual, activation_clipping_
 # pre_quantization_optimization commands
 pre_quantization_optimization(equalization, policy=disabled)
 
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2])
+
 conv1_sd0, conv1_sd1, conv1_sd2, conv1_sdc = defuse(conv1, 3, defuse_type=SPATIAL)
 conv2_sd0, conv2_sd1, conv2_sd2, conv2_sd3, conv2_sdc = defuse(conv2, 4, defuse_type=SPATIAL)
 conv3_sd0, conv3_sd1, conv3_sd2, conv3_sd3, conv3_sdc = defuse(conv3, 4, defuse_type=SPATIAL)

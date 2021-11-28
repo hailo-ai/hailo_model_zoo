@@ -29,6 +29,8 @@ from hailo_model_zoo.core.postprocessing.face_landmarks_3d_postprocessing import
     face_landmarks_3d_postprocessing, visualize_face_landmarks_3d_result)
 from hailo_model_zoo.core.postprocessing.detection_3d_postprocessing import (
     detection_3d_postprocessing, visualize_3d_detection_result)
+from hailo_model_zoo.core.postprocessing.fast_depth_postprocessing import (
+    fast_depth_postprocessing, visualize_fast_depth_result)
 
 
 def get_visualization(name, **kwargs):
@@ -58,6 +60,7 @@ def get_visualization(name, **kwargs):
         'lane_detection': visualize_lane_detection_result,
         '3d_detection': visualize_3d_detection_result,
         'face_landmark_detection_3d': visualize_face_landmarks_3d_result,
+        'fast_depth': visualize_fast_depth_result,
     }
     if name not in visualization_fn_map:
         raise ValueError('Visualization name [%s] was not recognized' % name)
@@ -95,6 +98,7 @@ def get_postprocessing(name, flip=False):
         'lane_detection': lane_detection_postprocessing,
         '3d_detection': detection_3d_postprocessing,
         'face_landmark_detection_3d': face_landmarks_3d_postprocessing,
+        'fast_depth': fast_depth_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

@@ -1,8 +1,6 @@
 base:
 - base/yolact.yaml
 quantization:
-  should_equalize: true
-  should_ibc: true
   quantization_batch_size: 1
   calib_set_size: 64
 postprocessing:

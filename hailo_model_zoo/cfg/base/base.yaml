@@ -1,11 +1,6 @@
 quantization:
   quantization_batch_size: 8
   calib_set_size: 64
-  should_equalize: true
-  should_ibc: false
-  should_finetune: false
-  fast_ibc: true
-  finetune_scheme: {}
   calib_batch_size: null
 hn_editor:
   yuv2rgb: false

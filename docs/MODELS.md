@@ -10,6 +10,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
     - [Pose Estimation](#pose-estimation)
     - [Face Detection](#face-detection)
     - [Instance Segmentation](#instance-segmentation)
+    - [Depth Estimation](#depth-estimation)
 
 <br>
 
@@ -47,6 +48,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | resnext50_32x4d | 79.43 | 224x224x3 | 22.96 | 4.29 | [**link**](https://github.com/osmr/imgclsmob/tree/master/pytorch) |
 | shufflenet_g8_w1 | 66.29 | 224x224x3 | 0.92 | 0.18 | [**link**](https://github.com/osmr/imgclsmob/tree/master/pytorch) |
 | squeezenet_v1_1 | 59.88 | 224x224x3 | 1.24 | 0.39 | [**link**](https://github.com/osmr/imgclsmob/tree/master/pytorch) |
+| resmlp12_relu | 75.27 | 224x224x3 | 15.77 | 3.02 | [**link**](https://github.com/rwightman/pytorch-image-models/tree/master/timm/models) |
 
 <br>
 
@@ -77,6 +79,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | yolox_tiny_leaky | 30.25 | 416x416x3 | 5.05 | 	6.41 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_s_leaky | 37.42 | 640x640x3 | 8.96 | 	26.69 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_s_wide_leaky | 42.31 | 640x640x3 | 20.12 | 	29.73 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
+| yolox_l_leaky | 48.64 | 640x640x3 | 54.17 | 	77.74 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | nanodet_repvgg | 27.1 | 416x416x3 | 6.74 | 5.64 |  [**link**](https://github.com/RangiLyu/nanodet) |
 
 ### VisDrone
@@ -140,3 +143,10 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | Network Name | mIoU | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
 | -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
 | yolact_regnetx_600mf_31classes | 61.74 | 512x512x3 | 22.14 | 51.62	| [**link**](https://github.com/dbolya/yolact) |
+
+## Depth Estimation
+
+### NYU
+| Network Name | absRel | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
+| -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
+| fast_depth | 16.18 | 224x224x3 | 1.35 | 0.37	| [**link**](https://github.com/dwofk/fast-depth) |

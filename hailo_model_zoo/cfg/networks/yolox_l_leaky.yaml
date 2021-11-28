@@ -1,0 +1,25 @@
+base:
+- base/yolox.yaml
+hn_editor:
+  bgr2rgb: true
+network:
+  network_name: yolox_l_leaky
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_l_leaky/pretrained/2021-09-23/yolox_l_leaky.onnx
+  alls_script: yolox_l_leaky.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_l_leaky/pretrained/2021-09-23/yolox_l_leaky.zip
+parser:
+  nodes:
+  - null
+  - - Conv_307
+    - Sigmoid_309
+    - Sigmoid_310
+    - Conv_323
+    - Sigmoid_325
+    - Sigmoid_326
+    - Conv_339
+    - Sigmoid_341
+    - Sigmoid_342
+quantization:
+  quantization_batch_size: 2

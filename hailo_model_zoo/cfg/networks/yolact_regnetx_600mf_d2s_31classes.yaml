@@ -14,8 +14,6 @@ preprocessing:
   - 3
   meta_arch: regnet_detection
 quantization:
-  should_equalize: true
-  should_ibc: false
   calib_set_size: 64
   calib_set:
   - models_files/d2s/2021-10-24/D2S_calib.tfrecord
@@ -23,11 +21,11 @@ hn_editor:
   channels_remove:
     enabled: true
     layer_name:
-    - output_layer14
-    - output_layer11
-    - output_layer9
-    - output_layer3
-    - output_layer6
+    - yolact_regnetx_600mf_d2s_31classes/output_layer14
+    - yolact_regnetx_600mf_d2s_31classes/output_layer11
+    - yolact_regnetx_600mf_d2s_31classes/output_layer9
+    - yolact_regnetx_600mf_d2s_31classes/output_layer3
+    - yolact_regnetx_600mf_d2s_31classes/output_layer6
     num_of_anchors:
     - 9
     - 9

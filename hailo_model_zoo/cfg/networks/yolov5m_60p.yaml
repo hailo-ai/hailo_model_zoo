@@ -1,26 +1,5 @@
 base:
 - base/yolo.yaml
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    dataset_size: 4096
-    epochs: 5
-    learning_rate: 0.0002
-    loss_layer_names:
-    - conv92
-    - conv93
-    - conv82
-    - conv83
-    - conv72
-    - conv73
-    loss_types:
-    - l2rel
-    - l2rel
-    - l2rel
-    - l2rel
-    - l2rel
-    - l2rel
-    equalize_kernels: true
 hn_editor:
   output_scheme:
     change_activations:

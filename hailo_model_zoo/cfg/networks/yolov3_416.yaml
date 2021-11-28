@@ -25,44 +25,12 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv60
-    - conv68
-    - conv75
+    - yolov3_416/conv60
+    - yolov3_416/conv68
+    - yolov3_416/conv75
     split_output: true
 info:
   network_source: https://github.com/AlexeyAB/darknet
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 0.0001
-    loss_types:
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
 allocation:
   required_fps: 200
 preprocessing:

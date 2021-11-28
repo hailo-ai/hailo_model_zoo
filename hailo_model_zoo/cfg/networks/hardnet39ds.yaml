@@ -15,6 +15,3 @@ parser:
   nodes:
   - null
   - null
-quantization:
-  should_equalize: false
-  should_ibc: true

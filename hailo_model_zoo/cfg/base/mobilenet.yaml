@@ -17,5 +17,3 @@ parser:
     - 127.5
 evaluation:
   labels_offset: 1
-quantization:
-  should_ibc: true

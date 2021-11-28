@@ -152,41 +152,48 @@ python hailo_model_zoo/main.py eval yolov4 --target hailo8 --hef yolov4.hef  --d
 <details>
     <summary>YOLOv5</summary>
 
-## Training YOLOv5s
-To train your YOLOv5s network follow these steps (full instructions can be found in [**here**](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data)):
-1. Clone the YOLOv5 repo:
-```
-git clone https://github.com/ultralytics/yolov5.git; cd yolov5; git checkout v2.0
-```
-2. Install (Python>=3.6.0 and Pytorch>=1.7):
-```
-pip install -r requirements.txt
-```
-3. Create dataset.yaml file (for example, <code>data/coco128.yaml</code>) which defines the path to your images/annotation files.
+## Training YOLOv5
+### Prerequisites
+* docker ([installation instructions](https://docs.docker.com/engine/install/ubuntu/))
+* nvidia-docker2 ([installation instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
 
-3. Add information about your data:
-    * Create <code>dataset.yaml</code> (for example, <code>data/coco128.yaml</code>) which defines the path to your images/annotation files.
-    * Generate a txt for each image containing the annotations in the format of <code>\<object-class> \<x_center> \<y_center> \<width> \<height></code>. For example: for img1.jpg create img1.txt containing:
-```
-1 0.716797 0.395833 0.216406 0.147222
-0 0.687109 0.379167 0.255469 0.158333
-1 0.420312 0.395833 0.140625 0.166667
-```
-4. Start training (pretrained weights can be found [**here**](https://github.com/ultralytics/yolov5/releases/download/v2.0/yolov5s.pt)):
-```
-python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt
-```
+In order to train your YOLOv5 network take the following steps:
+1. **Building the docker image**  
+  Before running the build command make sure you update the time zone in the Dockerfile - **model_zoo/training/yolov5/Dockerfile** at line #2.  
+  ```
+  ARG timezone="Asia/Jerusalem"
+  ```  
+  Build the image:
+  ```
+  cd model_zoo/training/yolov5
+  docker build -t yolov5:v0 .
+  ```
+  - This command will build the docker image with the necessary requirements using the Dockerfile exists in this directory.  
 
+2. Start your docker:
+```
+docker run -it --gpus all --ipc=host -v /path/to/local/drive:/path/to/docker/dir yolov5:v0
+```
+3. Follow these steps (full instructions can be found in [**here**](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data)):
+  * Add information about your data:
+      * Create <code>dataset.yaml</code> (for example, <code>data/coco128.yaml</code>) which defines the path to your images/annotation files.
+      * Generate a txt for each image containing the annotations in the format of <code>\<object-class> \<x_center> \<y_center> \<width> \<height></code>. For example: for img1.jpg create img1.txt containing:
+  ```
+  1 0.716797 0.395833 0.216406 0.147222
+  0 0.687109 0.379167 0.255469 0.158333
+  1 0.420312 0.395833 0.140625 0.166667
+  ```
+  * Start training (pretrained weights can be found [**here**](https://github.com/ultralytics/yolov5/releases/download/v2.0/yolov5s.pt)):
+    ```
+    python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml   --weights yolov5s.pt --cfg models/yolov5s.yaml
+    ```  
+    * <code>yolov5s.pt</code> - pretrained weights. You can find the pretrained weights for **yolov5s**, **yolov5m**, **yolov5l**, **yolov5x** in you working directory. 
+    * <code>models/yolov5s.yaml</code> - configuration file of the yolov5 variant you would like to train
 
 ## Export to ONNX
-To export the trained YOLOv5 network to ONNX:
-1. Install export requirements:
+To export the trained YOLOv5 network to ONNX run the following script:
 ```
-pip install -U coremltools>=4.1 onnx>=1.9.0 scikit-learn==0.19.2
-```
-2. Run the following script:
-```
-python export.py --weights yolov5s.pt --img 640 --batch 1  # export at 640x640 with batch size 1
+python models/export.py --weights /path/to/trained/model.pt --img 640 --batch 1  # export at 640x640 with batch size 1
 ```
 
 

@@ -2,7 +2,6 @@ base:
 - base/centerpose.yaml
 quantization:
   calib_set_size: 2048
-  should_equalize: true
 hn_editor:
   output_scheme:
     change_activations:

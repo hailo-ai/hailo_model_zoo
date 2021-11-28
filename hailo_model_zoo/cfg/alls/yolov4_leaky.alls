@@ -1,3 +1,6 @@
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, learning_rate=1e-05, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_layer_names=[conv110_centers, conv110_scales, conv110_obj, conv110_probs, conv103_centers, conv103_scales, conv103_obj, conv103_probs, conv95_centers, conv95_scales, conv95_obj, conv95_probs], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+
 allocator_param(optimize_one_to_many_shmifos=True,split_aware_optimize_buffers=False, automatic_l4_portals=True, cluster_timeout=600, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=30, timeout=2000, validate=True)
 context_switch_param(mode=manual, max_memory_utilization=0.87)
 compilation_param({*}, mixed_mem=False)

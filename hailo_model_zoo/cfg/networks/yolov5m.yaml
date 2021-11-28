@@ -1,28 +1,9 @@
 base:
 - base/yolo.yaml
 quantization:
-  should_equalize: true
-  should_ibc: false
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   quantization_batch_size: 4
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 1.0
-    - 1.0
-    dataset_size: 4000
-    epochs: 4
-    learning_rate: 0.0001
-    loss_types:
-    - l2rel
-    - l2rel
-    - l2rel
-    loss_layer_names:
-    - conv93
-    - conv83
-    - conv73
 hn_editor:
   output_scheme:
     change_activations:

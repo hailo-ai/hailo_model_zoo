@@ -64,7 +64,7 @@ def srgan(image, image_info, height, width, **kwargs):
         if image_info:
             image_info['img_orig'] = image
             hr_img = image_info.get('hr_img')
-            if hr_img:
+            if hr_img is not None:
                 hr_img = tf.expand_dims(hr_img, axis=0)
                 hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
                 hr_img = tf.squeeze(hr_img, axis=0)

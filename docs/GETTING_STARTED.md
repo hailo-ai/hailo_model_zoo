@@ -7,7 +7,7 @@ This document provides install instructions and basic usage examples of the Hail
 ## System Requirements
 
 - Ubuntu 18.04, Python 3.6
-- The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.11 (Obtain from [**hailo.ai**](http://hailo.ai)).
+- The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.12 (Obtain from [**hailo.ai**](http://hailo.ai)).
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 
 <br>
@@ -30,11 +30,17 @@ hailo fw-control identify
 ```
 Expected output:
 ```
+(hailo) Running command 'fw-control' with 'hailortcli'
 Identifying board
 Control Protocol Version: 2
-Firmware Version: 4.0.0 (release,app)
+Firmware Version: 4.1.0 (develop,app)
 Logger Version: 0
 Board Name: Hailo-8
+Device Architecture: HAILO8_B0
+Serial Number: HLUTEV0211100081
+Part Number: HEV18B1C4GA
+Product Name: HAILO-8 AI ACCELERATOR EVB
+
 ```
 
 <br>

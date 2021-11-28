@@ -171,7 +171,7 @@ class LayerSplitter(object):
         return split_names, split_kernel_shapes
 
     def _add_layer_to_hn(self, name, shape, orig_layer, output_index):
-        output_layer_name = "output_layer{}".format(output_index)
+        output_layer_name = "{}/output_layer{}".format(self._get_network_name(), output_index)
         self._hn_modified["layers"][name] = copy.deepcopy(self._hn_modified["layers"][orig_layer])
         self._hn_modified["layers"][name]["output"] = [output_layer_name]
         self._hn_modified["layers"][name]["output_shapes"][0][-1] = shape[-1]
@@ -232,8 +232,6 @@ class LayerSplitter(object):
 
     def _split_layer_in_npz(self, layer):
         """replacing a layer entry in the npz with 4 layers"""
-        net_name = self._get_network_name()
-        layer = net_name + '/' + layer
         if 'polylanenet' in self._split_type:
             self._remodel_polylanenet_weights_and_biases_for_layer(layer)
         elif 'yolo' in self._split_type:

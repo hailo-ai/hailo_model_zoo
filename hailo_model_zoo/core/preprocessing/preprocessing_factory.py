@@ -11,6 +11,7 @@ from hailo_model_zoo.core.preprocessing import super_resolution_preprocessing
 from hailo_model_zoo.core.preprocessing import mono_depth_estimation_preprocessing
 from hailo_model_zoo.core.preprocessing import lane_detection_preprocessing
 from hailo_model_zoo.core.preprocessing import face_landmarks_preprocessing
+from hailo_model_zoo.core.preprocessing import fast_depth_preprocessing
 
 
 def convert_rgb_to_yuv(image):
@@ -77,6 +78,8 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'face_landmark_cnn': face_landmarks_preprocessing.face_landmark_cnn,
         'smoke': detection_preprocessing.centernet_resnet_v1_18_detection,
         'face_landmark_cnn_3d': face_landmarks_preprocessing.face_landmark_cnn,
+        'resmlp': classification_preprocessing.resmlp,
+        'fast_depth': fast_depth_preprocessing.fast_depth
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)

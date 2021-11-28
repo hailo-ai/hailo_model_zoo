@@ -17,5 +17,3 @@ parser:
   - resnet_v1_18/predictions/Softmax
 info:
   network_source: https://pytorch.org/docs/stable/torchvision/models.html
-quantization:
-  should_equalize: false

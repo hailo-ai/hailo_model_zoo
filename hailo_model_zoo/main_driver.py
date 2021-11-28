@@ -35,8 +35,8 @@ def _quantization(runner, logger, network_info, calib_path, results_dir):
 
     logger.info('Using batch size of {} for quantization'.format(quant_batch_size))
     preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_callback = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
-    quantize_model(runner, network_info, calib_feed_callback, results_dir)
+    calib_feed_dataset = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
+    quantize_model(runner, network_info, calib_feed_dataset, results_dir)
 
 
 def _ensure_runnable_state(args, logger, network_info, runner, target):

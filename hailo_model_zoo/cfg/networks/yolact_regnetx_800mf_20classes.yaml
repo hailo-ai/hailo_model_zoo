@@ -4,11 +4,11 @@ hn_editor:
   channels_remove:
     enabled: true
     layer_name:
-    - output_layer14
-    - output_layer11
-    - output_layer9
-    - output_layer3
-    - output_layer6
+    - yolact_regnetx_800mf_20classes/output_layer14
+    - yolact_regnetx_800mf_20classes/output_layer11
+    - yolact_regnetx_800mf_20classes/output_layer9
+    - yolact_regnetx_800mf_20classes/output_layer3
+    - yolact_regnetx_800mf_20classes/output_layer6
     num_of_anchors:
     - 9
     - 9

@@ -37,7 +37,4 @@ preprocessing:
   network_type: segmentation
   meta_arch: fcn_resnet
 quantization:
-  should_equalize: false
-  should_ibc: true
-  should_finetune: false
   quantization_batch_size: 1

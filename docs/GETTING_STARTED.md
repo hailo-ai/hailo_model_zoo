@@ -8,7 +8,7 @@ This document provides install instructions and basic usage examples of the Hail
 
 - Ubuntu 18.04, Python 3.6
 - The Hailo Model Zoo has been tested with Hailo Dataflow Compiler v3.12 (Obtain from [**hailo.ai**](http://hailo.ai)).
-- The Hailo Model Zoo has been tested with HailoRT 4.1.1 (Obtain from [**hailo.ai**](http://hailo.ai))
+- The Hailo Model Zoo has been tested with HailoRT 4.1.1 (Obtain from [**hailo.ai**](http://hailo.ai)).
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 
 <br>

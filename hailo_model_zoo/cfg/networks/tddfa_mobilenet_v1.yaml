@@ -1,0 +1,27 @@
+base:
+- base/tddfa.yaml
+quantization:
+  calib_set_size: 64
+  quantization_batch_size: 2
+allocation:
+  required_fps: 1000
+network:
+  network_name: tddfa_mobilenet_v1
+paths:
+  network_path:
+  - models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tddfa_mobilenet_v1_120x120.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tddfa_mobilenet_v1.zip
+  alls_script: tddfa_mobilenet_v1.alls
+info:
+  task: facial landmark detection
+  input_shape: 120x120x3
+  output_shape: '62'
+  operations: 0.18G
+  parameters: 3.26M
+  framework: pytorch
+  training_data: aflw2k3d train
+  validation_data: aflw2k3d val
+  eval_metric: NME
+  full_precision_result: 3.68
+  source: https://github.com/cleardusk/3DDFA_V2
+  license_url: https://opensource.org/licenses/MIT

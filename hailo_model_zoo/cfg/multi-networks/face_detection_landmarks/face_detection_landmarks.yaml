@@ -1,0 +1,6 @@
+models:
+  - lightface_slim
+  - tddfa_mobilenet_v1
+fps: 120
+alls_script: "face_detection_landmarks.alls"
+release_model_zoo: true

@@ -1,0 +1,34 @@
+base:
+- base/base.yaml
+hn_editor:
+  bgr2rgb: true
+quantization:
+  calib_set:
+  - models_files/300w-lp_tddfa/2021-11-28/300w-lp_tddfa.tfrecord
+  calib_set_name: 300w-lp_tddfa
+  quantization_batch_size: 4
+preprocessing:
+  network_type: face_landmark_detection_3d
+  meta_arch: face_landmark_cnn
+postprocessing:
+  postprocess_config_json: models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/bfm_noneck_v3.pkl
+  meta_arch: tddfa_postprocessing
+info:
+  source: https://github.com/cleardusk/3DDFA_V2
+parser:
+  normalization_params:
+    normalize_in_net: true
+    fold_normalization: true
+    mean_list:
+    - 128.0
+    - 128.0
+    - 128.0
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+evaluation:
+  dataset_name: aflw2k3d_tddfa
+  data_set: models_files/aflw2k3d_tddfa/2021-03-16/aflw2k3d_tddfa.tfrecord
+  validation_data_set: models_files/aflw2k3d_tddfa/2021-03-16/aflw2k3d_tddfa.tfrecord
+  gt_json_path: models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tri.pkl

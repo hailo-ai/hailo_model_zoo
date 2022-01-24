@@ -1,0 +1,87 @@
+diff --git a/demo_darknet2onnx.py b/demo_darknet2onnx.py
+index 697f197..cc24689 100644
+--- a/demo_darknet2onnx.py
++++ b/demo_darknet2onnx.py
+@@ -48,13 +48,13 @@ def detect(session, image_src):
+ 
+     boxes = post_processing(img_in, 0.4, 0.6, outputs)
+ 
+-    num_classes = 80
++    num_classes = 1
+     if num_classes == 20:
+         namesfile = 'data/voc.names'
+     elif num_classes == 80:
+         namesfile = 'data/coco.names'
+     else:
+-        namesfile = 'data/names'
++        namesfile = 'data/obj.names'
+ 
+     class_names = load_class_names(namesfile)
+     plot_boxes_cv2(image_src, boxes[0], savename='predictions_onnx.jpg', class_names=class_names)
+diff --git a/demo_pytorch2onnx.py b/demo_pytorch2onnx.py
+index 4a7a86e..6d7b6f3 100644
+--- a/demo_pytorch2onnx.py
++++ b/demo_pytorch2onnx.py
+@@ -28,7 +28,7 @@ def transform_to_onnx(weight_file, batch_size, n_classes, IN_IMAGE_H, IN_IMAGE_W
+ 
+     if dynamic:
+         x = torch.randn((1, 3, IN_IMAGE_H, IN_IMAGE_W), requires_grad=True)
+-        onnx_file_name = "yolov4_-1_3_{}_{}_dynamic.onnx".format(IN_IMAGE_H, IN_IMAGE_W)
++        onnx_file_name = "tiny_yolov4_license_plates-1_3_{}_{}_dynamic.onnx".format(IN_IMAGE_H, IN_IMAGE_W)
+         dynamic_axes = {"input": {0: "batch_size"}, "boxes": {0: "batch_size"}, "confs": {0: "batch_size"}}
+         # Export the model
+         print('Export the onnx model ...')
+@@ -46,7 +46,7 @@ def transform_to_onnx(weight_file, batch_size, n_classes, IN_IMAGE_H, IN_IMAGE_W
+ 
+     else:
+         x = torch.randn((batch_size, 3, IN_IMAGE_H, IN_IMAGE_W), requires_grad=True)
+-        onnx_file_name = "yolov4_{}_3_{}_{}_static.onnx".format(batch_size, IN_IMAGE_H, IN_IMAGE_W)
++        onnx_file_name = "tiny_yolov4_license_plates_{}_3_{}_{}_static.onnx".format(batch_size, IN_IMAGE_H, IN_IMAGE_W)
+         # Export the model
+         print('Export the onnx model ...')
+         torch.onnx.export(model,
+diff --git a/tool/darknet2onnx.py b/tool/darknet2onnx.py
+index 5c8c8e2..d71fc45 100644
+--- a/tool/darknet2onnx.py
++++ b/tool/darknet2onnx.py
+@@ -19,7 +19,7 @@ def transform_to_onnx(cfgfile, weightfile, batch_size=1):
+ 
+     if dynamic:
+         x = torch.randn((1, 3, model.height, model.width), requires_grad=True)
+-        onnx_file_name = "yolov4_-1_3_{}_{}_dynamic.onnx".format(model.height, model.width)
++        onnx_file_name = "tiny_yolov4_license_plates-1_3_{}_{}_dynamic.onnx".format(model.height, model.width)
+         dynamic_axes = {"input": {0: "batch_size"}, "boxes": {0: "batch_size"}, "confs": {0: "batch_size"}}
+         # Export the model
+         print('Export the onnx model ...')
+@@ -37,7 +37,7 @@ def transform_to_onnx(cfgfile, weightfile, batch_size=1):
+ 
+     else:
+         x = torch.randn((batch_size, 3, model.height, model.width), requires_grad=True)
+-        onnx_file_name = "yolov4_{}_3_{}_{}_static.onnx".format(batch_size, model.height, model.width)
++        onnx_file_name = "tiny_yolov4_license_plates_{}_3_{}_{}_static.onnx".format(batch_size, model.height, model.width)
+         torch.onnx.export(model,
+                           x,
+                           onnx_file_name,
+diff --git a/tool/darknet2pytorch.py b/tool/darknet2pytorch.py
+index 265b20e..b704aa0 100644
+--- a/tool/darknet2pytorch.py
++++ b/tool/darknet2pytorch.py
+@@ -1,3 +1,4 @@
++import torch
+ import torch.nn as nn
+ import torch.nn.functional as F
+ import numpy as np
+@@ -56,12 +57,7 @@ class Upsample_expand(nn.Module):
+ 
+     def forward(self, x):
+         assert (x.data.dim() == 4)
+-        
+-        x = x.view(x.size(0), x.size(1), x.size(2), 1, x.size(3), 1).\
+-            expand(x.size(0), x.size(1), x.size(2), self.stride, x.size(3), self.stride).contiguous().\
+-            view(x.size(0), x.size(1), x.size(2) * self.stride, x.size(3) * self.stride)
+-
+-        return x
++        return F.interpolate(x, scale_factor=self.stride, mode='nearest')
+ 
+ 
+ class Upsample_interpolate(nn.Module):

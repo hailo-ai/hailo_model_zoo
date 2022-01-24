@@ -1,0 +1,9 @@
+# update your data paths
+train: /path/to/vehicles/training/images/
+val: /path/to/vehicles/validation/images/
+
+# number of classes
+nc: 1
+
+# class names
+names: ['vehicle']

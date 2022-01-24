@@ -1,0 +1,2 @@
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0002, epochs=8, dataset_size=2048)

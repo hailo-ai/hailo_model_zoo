@@ -16,4 +16,15 @@ parser:
   - resnet_v1_18/conv1/Pad
   - resnet_v1_18/predictions/Softmax
 info:
-  network_source: https://pytorch.org/docs/stable/torchvision/models.html
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 1.82G
+  parameters: 11.68M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 68.848
+  source: https://pytorch.org/vision/0.8/models.html
+  license_url: https://github.com/pytorch/pytorch/blob/master/LICENSE

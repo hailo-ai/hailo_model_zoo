@@ -7,8 +7,7 @@ from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.report_generator import ReportGenerator
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
-                                             make_preprocessing, make_calibset_callback,
-                                             quantize_model, infer_model, compile_model, get_hef_path,
+                                             quantize_model, infer_model, compile_model, get_hef_path, info_model,
                                              resolve_alls_path)
 from hailo_model_zoo.utils.logger import get_logger
 from hailo_model_zoo.main import TARGETS
@@ -20,7 +19,7 @@ def _ensure_quantized(runner, logger, args, network_info):
     if runner.state != States.HAILO_MODEL:
         return
 
-    _quantization(runner, logger, network_info, args.calib_path, args.results_dir)
+    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir)
 
 
 def _ensure_parsed(runner, logger, network_info, args):
@@ -28,15 +27,6 @@ def _ensure_parsed(runner, logger, network_info, args):
         return
 
     parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
-
-
-def _quantization(runner, logger, network_info, calib_path, results_dir):
-    quant_batch_size = network_info.quantization.quantization_batch_size
-
-    logger.info('Using batch size of {} for quantization'.format(quant_batch_size))
-    preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_dataset = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
-    quantize_model(runner, network_info, calib_feed_dataset, results_dir)
 
 
 def _ensure_runnable_state(args, logger, network_info, runner, target):
@@ -87,7 +77,7 @@ def quantize(args):
 
     _ensure_parsed(runner, logger, network_info, args)
 
-    _quantization(runner, logger, network_info, args.calib_path, args.results_dir)
+    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir)
 
 
 def compile(args):
@@ -181,3 +171,10 @@ def evaluate(args):
                              dump_results=False, network_groups=network_groups)
 
         return result
+
+
+def info(args):
+    logger = get_logger()
+    logger.info('Printing {} Information'.format(args.model_name))
+    network_info = get_network_info(args.model_name)
+    info_model(args.model_name, network_info, logger)

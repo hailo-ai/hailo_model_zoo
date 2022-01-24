@@ -12,6 +12,7 @@ export HMZ_DATA=/new/path/for/storage/
 - [Pascal VOC augmented dataset](#pascal-voc-augmented-dataset)
 - [D2S augmented dataset](#d2s-augmented-dataset)
 - [NYU Depth V2](#nyu-depth-v2)
+- [300W-LP & AFLW2k3d](#300w-lp-and-aflw2k3d)
 
 <br>
 
@@ -309,4 +310,73 @@ Extract using 'tar -xf nyudepthv2.tar.gz'. Expected dataset structure:
 ```
 python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py calib --data ./nyu_depth_v2/
 python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py val --data ./nyu_depth_v2/
+```
+
+## 300W-LP and AFLW2k3d
+Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py 
+python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py 
+```
+
+### Manual Download (Optional)
+1. Download the augmented_cropped 300W-LP dataset from [**here**](https://drive.google.com/uc?id=17LfvBZFAeXt0ACPnVckfdrLTMHUpIQqE&export=download) and extract.
+Expected structure:
+```
+train_aug_120x120
+├── AFW_AFW_1051618982_1_0_10.jpg
+├── AFW_AFW_1051618982_1_0_11.jpg
+├── AFW_AFW_1051618982_1_0_12.jpg
+├── AFW_AFW_1051618982_1_0_13.jpg
+├── AFW_AFW_1051618982_1_0_1.jpg
+├── AFW_AFW_1051618982_1_0_2.jpg
+├── AFW_AFW_1051618982_1_0_3.jpg
+├── AFW_AFW_1051618982_1_0_4.jpg
+└── ...
+```
+2. Run 
+```
+python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/train_aug_120x120
+```
+
+3. Download the following files:
+  - the official dataset from [**here**](http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/Database/AFLW2000-3D.zip)
+  - the cropped dataset from [**here**](https://drive.google.com/open?id=17LfvBZFAeXt0ACPnVckfdrLTMHUpIQqE)
+  - The following files from [**here**](https://github.com/cleardusk/3DDFA/tree/master/test.configs)
+      - AFLW2000-3D.pose.npy
+      - AFLW2000-3D.pts68.npy
+      - AFLW2000-3D-Reannotated.pts68.npy
+      - AFLW2000-3D_crop.roi_box.npy
+   
+       The expected structure:
+       ```
+    aflw2k3d_tddfa
+    ├── AFLW2000-3D_crop.roi_box.npy
+    ├── AFLW2000-3D.pose.npy
+    ├── AFLW2000-3D.pts68.npy
+    ├── AFLW2000-3D-Reannotated.pts68.npy
+    └── test.data
+           ├── AFLW2000
+           |   ├── Code
+           |   |   ├── Mex
+           |   |   └── ModelGeneration
+           |   ├── image00002.jpg
+           |   ├── image00002.mat
+           |   ├── image00004.jpg
+           |   ├── image00004.mat
+           |   └── ...
+           ├── AFLW2000-3D_crop 
+           |   ├── image00002.jpg
+           |   ├── image00004.jpg
+           |   ├── image00006.jpg
+           |   ├── image00008.jpg
+           |   └── ...
+           ├── AFLW2000-3D_crop.list
+           ├── AFLW_GT_crop
+           |   └── ...
+           └── AFLW_GT_crop.list
+       ```
+4. Run the following:
+```
+python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py --dir /path/to/aflw2k3d_tddfa
 ```

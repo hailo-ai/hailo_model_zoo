@@ -17,14 +17,14 @@ hn_editor:
       - layer_name: conv53
         activation: sigmoid
 network:
-  network_name: yolov5xs
+  network_name: yolov5xs_wo_spp
 allocation:
   required_fps: 900
 paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/yolov5s512.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2021-07-11/yolov5xs.zip
-  alls_script: yolov5xs.alls
+  alls_script: yolov5xs_wo_spp.alls
 parser:
   nodes:
   - null
@@ -36,3 +36,16 @@ parser:
   - 3
   - 512
   - 512
+info:
+  task: object detection
+  input_shape: 512x512x3
+  output_shape: 16x16x255, 32x32x255, 64x64x255
+  operations: 5.68G
+  parameters: 7.85M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 32.74
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

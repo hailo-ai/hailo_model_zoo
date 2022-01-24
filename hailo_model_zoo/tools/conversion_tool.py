@@ -6,7 +6,6 @@ from functools import partial
 import tensorflow as tf
 from pathlib import Path
 
-from hailo_platform.drivers.hailort.pyhailort import HEF, HailoRTTransformUtils
 from hailo_sdk_client import ClientRunner, HailoNN
 from hailo_model_zoo.core.main_utils import get_network_info
 from hailo_model_zoo.utils.logger import get_logger
@@ -65,11 +64,6 @@ def create_args_parser():
                         help='The number of images to export from the input',
                         default=None,
                         type=int)
-    parser.add_argument('--transform',
-                        action='store_true',
-                        help='Should images be transformed',
-                        default=False,
-                        )
     return parser
 
 
@@ -90,9 +84,9 @@ def _tf_preprocess(data_feed_callback, process_callback, num_of_images=None):
 
             try:
                 while image_index < num_of_images:
-                    preprocessed_image, img_info = sess.run([preprocessed_data, image_info])
+                    preprocessed_image, _ = sess.run([preprocessed_data, image_info])
                     # Calling the process_callback to process the current pre-processed image:
-                    process_callback(image_index, preprocessed_image, img_info)
+                    process_callback(preprocessed_image)
                     image_index += 1
             except tf.errors.OutOfRangeError:
                 # Finished iterating all the images in the dataset
@@ -104,7 +98,6 @@ def convert_tf_record_to_bin_file(hef_path: Path,
                                   tf_record_path: Path,
                                   output_file_name,
                                   num_of_images,
-                                  transform,
                                   har_path: Path = None,
                                   hn_path: Path = None):
     '''By default uses hailo archive file, otherwise uses hn'''
@@ -129,22 +122,12 @@ def convert_tf_record_to_bin_file(hef_path: Path,
         except IOError:
             raise SourceFileNotFound(f'Neither {har_path} nor {hn_path} files were found.')
 
-    hef = HEF(str(hef_path))
-    _logger.info('HEF loaded')
-
-    input_layers_info = hef.get_input_layers_info()
-    if len(input_layers_info) > 1:
-        raise UnsupportedNetworkException(f'''Networks with multiple input layers \
-                                          ({len(input_layers_info)}) are not supported''')
-    input_layer_info = input_layers_info[0]
-
     _logger.info('Initializing the dataset ...')
     data_feed_callback = _init_dataset(runner, tf_record_path, network_info)
 
     bin_file = open(output_file_name, 'wb')
 
-    callback_part = partial(_save_pre_processed_image_callback, file_to_append=bin_file, should_transform=transform,
-                            input_layer_info=input_layer_info)
+    callback_part = partial(_save_pre_processed_image_callback, file_to_append=bin_file)
 
     numn_of_processed_images = _tf_preprocess(data_feed_callback, callback_part, num_of_images=num_of_images)
 
@@ -152,19 +135,9 @@ def convert_tf_record_to_bin_file(hef_path: Path,
     _logger.info(f'File {output_file_name} created with {numn_of_processed_images} images')
 
 
-def _save_pre_processed_image_callback(image_index, preprocessed_image, img_info, file_to_append,
-                                       should_transform=False, input_layer_info=None):
-    '''Callback function which used to get a pre-processed image from the dataset,
-       transfom it if needed and save it in the binary file'''
-    if should_transform:
-        data = HailoRTTransformUtils.pre_infer(input_data=preprocessed_image,
-                                               layer_info=input_layer_info,
-                                               quantized=False)
-    else:
-        # No transform is needed:
-        data = preprocessed_image.tobytes()
-
-    file_to_append.write(data)
+def _save_pre_processed_image_callback(preprocessed_image, file_to_append):
+    '''Callback function which used to get a pre-processed image from the dataset'''
+    file_to_append.write(preprocessed_image.tobytes())
 
 
 if __name__ == '__main__':
@@ -179,6 +152,5 @@ if __name__ == '__main__':
                                   Path(args.tfrecord_file),
                                   output_path,
                                   args.num_of_images,
-                                  args.transform,
                                   har_path,
                                   hn_path)

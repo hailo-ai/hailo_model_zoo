@@ -15,8 +15,6 @@ postprocessing:
       - 1
     - - 1
       - 1
-info:
-  network_source: https://github.com/Megvii-BaseDetection/YOLOX
 preprocessing:
   centered: false
   meta_arch: yolo_v5
@@ -59,3 +57,17 @@ parser:
   - 3
   - 416
   - 416
+info:
+  task: object detection
+  input_shape: 416x416x3
+  output_shape: 52x52x4, 52x52x1, 52x52x80, 26x26x4, 26x26x1, 26x26x80, 13x13x4, 13x13x1,
+    13x13x80
+  operations: 3.22G
+  parameters: 5.05M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 30.252
+  source: https://github.com/Megvii-BaseDetection/YOLOX
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

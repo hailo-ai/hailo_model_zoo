@@ -1,7 +1,7 @@
 base:
 - base/base.yaml
 info:
-  network_source: https://github.com/Megvii-BaseDetection/YOLOX
+  source: https://github.com/Megvii-BaseDetection/YOLOX
 preprocessing:
   network_type: detection
   meta_arch: yolo_v5

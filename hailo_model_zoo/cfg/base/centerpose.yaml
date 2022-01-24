@@ -16,7 +16,8 @@ quantization:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   - models_files/coco/2021-06-18/person_keypoints_val2017.json
 info:
-  network_source: https://github.com/tensorboy/centerpose
+  source: https://github.com/tensorboy/centerpose
+  license_url: https://opensource.org/licenses/MIT
 parser:
   normalization_params:
     normalize_in_net: true

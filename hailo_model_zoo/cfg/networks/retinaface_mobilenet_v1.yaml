@@ -25,3 +25,17 @@ parser:
     - retina_face/bbox_head_2/2.conv1x1/BiasAdd
     - retina_face/class_head_2/2.conv1x1/BiasAdd
     - retina_face/landmark_head_2/2.conv1x1/BiasAdd
+info:
+  task: face detection
+  input_shape: 736x1280x3
+  output_shape: 92x160x8, 92x160x4, 92x160x20, 46x80x8, 46x80x4, 46x80x20, 23x40x8,
+    23x40x4, 23x40x20
+  operations: 12.57G
+  parameters: 3.49M
+  framework: pytorch
+  training_data: wider train
+  validation_data: wider val
+  eval_metric: mAP
+  full_precision_result: 81.24
+  source: https://github.com/biubug6/Pytorch_Retinaface
+  license_url: https://opensource.org/licenses/MIT

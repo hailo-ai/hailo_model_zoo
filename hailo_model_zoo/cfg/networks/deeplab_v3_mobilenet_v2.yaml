@@ -1,7 +1,5 @@
 base:
 - base/pascal.yaml
-info:
-  network_source: https://github.com/tensorflow/models/tree/master/research/deeplab
 allocation:
   required_fps: 135
 network:
@@ -36,3 +34,16 @@ preprocessing:
   meta_arch: fcn_resnet
 quantization:
   quantization_batch_size: 1
+info:
+  task: semantic segmentation
+  input_shape: 513x513x3
+  output_shape: 513x513x1
+  operations: 1.64G
+  parameters: 2.10M
+  framework: tensorflow
+  training_data: pascal voc train2012
+  validation_data: pascal voc val2012
+  eval_metric: mIoU
+  full_precision_result: 71.512
+  source: https://github.com/tensorflow/models/tree/master/research/deeplab
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

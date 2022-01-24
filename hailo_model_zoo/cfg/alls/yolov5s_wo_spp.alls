@@ -1,0 +1,7 @@
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0002, epochs=8, dataset_size=2048)
+
+compilation_param({conv*}, balance_output_multisplit=False)
+allocator_param(timeout=30m)
+
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

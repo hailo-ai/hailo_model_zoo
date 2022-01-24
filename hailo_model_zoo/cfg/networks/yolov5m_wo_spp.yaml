@@ -1,0 +1,44 @@
+base:
+- base/yolo.yaml
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+  quantization_batch_size: 4
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv93
+        activation: sigmoid
+      - layer_name: conv83
+        activation: sigmoid
+      - layer_name: conv73
+        activation: sigmoid
+network:
+  network_name: yolov5m_wo_spp
+allocation:
+  required_fps: 191
+paths:
+  alls_script: yolov5m_wo_spp.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/yolo-v5m.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolov5m.zip
+parser:
+  nodes:
+  - images
+  - - Conv_307
+    - Conv_286
+    - Conv_265
+info:
+  input_shape: 640x640x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255
+  operations: 26.49G
+  parameters: 22.67M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 41.7
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

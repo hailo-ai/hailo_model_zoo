@@ -208,25 +208,31 @@ def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch
     return lambda: func(*args)
 
 
-def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path):
-    dataset_name = network_info.evaluation.dataset_name
+def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path, dataset_name):
     two_stage_arch = network_info.evaluation.two_stage_arch
     return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch, preproc_callback)
 
 
 def make_evalset_callback(network_info, batch_size, preproc_callback, override_path):
+    dataset_name = network_info.evaluation.dataset_name
     resolved_data_path = override_path or path_resolver.resolve_data_path(network_info.evaluation.data_set)
-    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path, dataset_name)
     return lambda: data_feed_cb().iterator
 
 
 def make_calibset_callback(network_info, batch_size, preproc_callback, override_path):
+    dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
-    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path, dataset_name)
     return data_feed_cb()._dataset.unbatch()
 
 
-def quantize_model(runner, network_info, calib_feed_callback, results_dir):
+def quantize_model(runner, logger, network_info, calib_path, results_dir):
+    quant_batch_size = network_info.quantization.quantization_batch_size
+
+    logger.info('Using batch size of {} for quantization'.format(quant_batch_size))
+    preproc_callback = make_preprocessing(runner, network_info)
+    calib_feed_callback = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
     batch_size = network_info.quantization.quantization_batch_size
     calib_set_size = network_info.quantization.calib_set_size
 
@@ -362,3 +368,22 @@ def compile_model(runner, network_info, results_dir):
         hef_out_file.write(hef)
 
     runner.save_har(results_dir / f'{model_name}.har')
+
+
+def info_model(model_name, network_info, logger):
+
+    def build_dict(info):
+        keys_list = ['task', 'input_shape', 'output_shape', 'operations', 'parameters',
+                     'framework', 'training_data', 'validation_data', 'eval_metric',
+                     'full_precision_result', 'source', 'license_url']
+        info_vals = [info[key_curr] for key_curr in keys_list]
+        info_dict = dict(zip(keys_list, info_vals))
+        return keys_list, info_dict
+
+    keys_list, info_dict = build_dict(network_info['info'])
+    msgs_list = list()
+    for key_curr in keys_list:
+        msg = "\t{0:<25}{1}".format(key_curr + ':', info_dict[key_curr])
+        msgs_list.append(msg)
+    msg_w_line = '\033[0m\n' + "\n".join(msgs_list)
+    logger.info(msg_w_line)

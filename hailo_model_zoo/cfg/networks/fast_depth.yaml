@@ -12,8 +12,6 @@ quantization:
   calib_set_size: 128
   calib_set:
   - models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_calib.tfrecord
-info:
-  network_source: https://github.com/dwofk/fast-depth
 network:
   network_name: fast_depth
 allocation:
@@ -38,3 +36,14 @@ parser:
     - 255
     - 255
     - 255
+info:
+  input_shape: 224x224x3
+  output_shape: 224x224x1
+  MACS: 0.37G
+  num_params: 1.35M
+  framework: pytorch
+  training_data: nyu_depth_v2 train
+  validation_data: nyu_depth_v2 validation
+  eval_metric: RMSE
+  source: https://github.com/dwofk/fast-depth
+  full_precision_result: 0.604

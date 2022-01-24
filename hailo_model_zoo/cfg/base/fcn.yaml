@@ -1,7 +1,7 @@
 base:
 - base/base.yaml
 info:
-  network_source: internal
+  source: internal
 quantization:
   calib_set_size: 64
   calib_set:

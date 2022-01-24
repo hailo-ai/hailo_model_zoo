@@ -2,5 +2,7 @@
 post_quantization_optimization(bias_correction, policy=enabled)
 # quantizing last layer to 16b
 quantization_param(output_layer1, precision_mode=a16_w16)
+
+# pre_quantization_optimization commands
 # setting conv20 layer manually
-quantization_param(conv20, activation_clipping_mode=manual, activation_clipping_values=[0, 15])
+pre_quantization_optimization(activation_clipping, layers=[conv20], mode=manual, clipping_values=[0, 15])

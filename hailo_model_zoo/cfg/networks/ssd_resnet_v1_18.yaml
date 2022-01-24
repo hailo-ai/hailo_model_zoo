@@ -39,3 +39,17 @@ parser:
     - BoxPredictor_4/ClassPredictor/BiasAdd
     - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_5/ClassPredictor/BiasAdd
+info:
+  task: object detection
+  input_shape: 300x300x3
+  output_shape: 19x19x12, 19x19x273, 10x10x24, 10x10x546, 5x5x24, 5x5x546, 3x3x24,
+    3x3x546, 2x2x24, 2x2x546, 1x1x24, 1x1x546
+  operations: 3.54G
+  parameters: 16.62M
+  framework: tensorflow
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 17.688
+  source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

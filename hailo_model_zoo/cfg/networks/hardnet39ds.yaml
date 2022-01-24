@@ -1,7 +1,5 @@
 base:
 - base/resnet.yaml
-info:
-  network_source: https://github.com/osmr/imgclsmob
 network:
   network_name: hardnet39ds
 allocation:
@@ -15,3 +13,16 @@ parser:
   nodes:
   - null
   - null
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 0.43G
+  parameters: 3.48M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 73.444
+  source: https://github.com/PingoLH/Pytorch-HarDNet
+  license_url: https://opensource.org/licenses/MIT

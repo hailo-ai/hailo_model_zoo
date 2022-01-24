@@ -30,8 +30,6 @@ preprocessing:
   network_type: face_detection
   meta_arch: face_ssd
   max_pad: 2048
-info:
-  network_source: https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB
 parser:
   nodes:
   - null
@@ -66,3 +64,16 @@ allocation:
   required_fps: 3880
 network:
   network_name: lightface_slim
+info:
+  task: face detection
+  input_shape: 240x320x3
+  output_shape: 30x40x12, 30x40x6, 15x20x8, 15x20x4, 8x10x8, 8x10x4, 4x5x12, 4x5x6
+  operations: 0.08G
+  parameters: 0.26M
+  framework: pytorch
+  training_data: wider train
+  validation_data: wider val
+  eval_metric: mAP
+  full_precision_result: 38.99
+  source: https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB
+  license_url: https://opensource.org/licenses/MIT

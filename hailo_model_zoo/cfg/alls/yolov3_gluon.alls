@@ -1,11 +1,9 @@
-### Auto generated allocation script ###
-
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
 
-allocator_param(optimize_one_to_many_shmifos=True, automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=400, defuse_by_validator=True, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=True, enable_fixer=False, enable_swapper=True, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=2, timeout=6000, validate=True)
-context_switch_param(max_compute_utilization=0.75, max_control_utilization=0.75, max_memory_utilization=0.75, max_utilization=1.0, mode=manual)
-resources_param(strategy=legacy)
+### Auto generated model script ###
+
+allocator_param(optimize_one_to_many_shmifos=True, automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=600, defuse_by_validator=True, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=True, enable_fixer=False, enable_swapper=True, max_auto_defuse=8, max_auto_merge_depth=2, max_lcu_usage=0, max_lcu_utilization=1.0, seed=2, timeout=6000, validate=True)
 
 ### DEFUSE ####
 ### CONTEXT 0 ###

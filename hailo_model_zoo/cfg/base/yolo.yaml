@@ -42,7 +42,7 @@ postprocessing:
       - 373
       - 326
 info:
-  network_source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
 parser:
   normalization_params:
     normalize_in_net: true

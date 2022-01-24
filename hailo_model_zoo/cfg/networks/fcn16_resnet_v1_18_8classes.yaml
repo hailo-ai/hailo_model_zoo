@@ -35,3 +35,16 @@ paths:
   - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/resnet18_fcn16.ckpt.index
   - models_files/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/resnet18_fcn16.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn16_resnet_v1_18_8classes/pretrained/2021-07-11/fcn16_resnet_v1_18_8classes.zip
+info:
+  task: semantic segmentation
+  input_shape: 1024x1920x3
+  output_shape: 1024x1920x1
+  operations: 71.19G
+  parameters: 11.18M
+  framework: gluoncv
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 76.04
+  source: https://cv.gluon.ai/model_zoo/segmentation.html
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

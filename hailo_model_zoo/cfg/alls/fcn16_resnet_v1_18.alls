@@ -1,7 +1,7 @@
 ## Allocator Script Version 1.0
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv22], loss_types=[l2])
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv22], loss_types=[l2])
 
 allocator_param(optimize_buffers=False)
 

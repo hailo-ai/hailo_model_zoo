@@ -1,5 +1,5 @@
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 1.0], loss_types=[l2, l2])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 1.0], loss_types=[l2, l2])
 
 compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps, balance_output_multisplit=False)
 conv1_d0, conv1_d1, conv1_d2, conv1_d3, conv1_dc = defuse(conv1, 4, defuse_type=SPATIAL)

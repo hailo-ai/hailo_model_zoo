@@ -1,7 +1,5 @@
 base:
 - base/pascal.yaml
-info:
-  network_source: https://github.com/bonlime/keras-deeplab-v3-plus
 allocation:
   required_fps: 110
 network:
@@ -38,3 +36,16 @@ preprocessing:
   meta_arch: fcn_resnet
 quantization:
   quantization_batch_size: 1
+info:
+  task: semantic segmentation
+  input_shape: 513x513x3
+  output_shape: 513x513x21
+  operations: 8.91G
+  parameters: 2.10M
+  framework: keras
+  training_data: pascal voc train2012
+  validation_data: pascal voc val2012
+  eval_metric: mIoU
+  full_precision_result: 76.029
+  source: https://github.com/bonlime/keras-deeplab-v3-plus
+  license_url: https://opensource.org/licenses/MIT

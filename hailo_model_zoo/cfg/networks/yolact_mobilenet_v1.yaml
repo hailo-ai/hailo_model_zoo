@@ -3,6 +3,21 @@ base:
 quantization:
   quantization_batch_size: 1
   calib_set_size: 64
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv48
+        activation: tanh
+      - layer_name: conv41
+        activation: tanh
+      - layer_name: conv34
+        activation: tanh
+      - layer_name: conv29
+        activation: tanh
+      - layer_name: conv24
+        activation: tanh
 postprocessing:
   anchors:
     scales:
@@ -51,3 +66,17 @@ parser:
     - prediction_layers/0_4/bbox_layer/conv2d/BiasAdd
     - prediction_layers/0_4/mask_layer/conv2d/BiasAdd
     - prediction_layers/0_4/conf_layer/conv2d/BiasAdd
+info:
+  task: instance segmentation
+  input_shape: 512x512x3
+  output_shape: 128x128x32, 64x64x12, 64x64x96, 64x64x243, 32x32x12, 32x32x96, 32x32x243,
+    16x16x12, 16x16x96, 16x16x243, 8x8x12, 8x8x96, 8x8x243, 4x4x12, 4x4x96, 4x4x243
+  operations: 51.92G
+  parameters: 19.11M
+  framework: pytorch
+  training_data: coco instances train2017
+  validation_data: coco instances val2017
+  eval_metric: mAP
+  full_precision_result: 17.79
+  source: https://github.com/dbolya/yolact
+  license_url: https://opensource.org/licenses/MIT

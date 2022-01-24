@@ -1,7 +1,5 @@
 base:
 - base/resnet.yaml
-info:
-  network_source: https://github.com/osmr/imgclsmob
 network:
   network_name: squeezenet_v1.1
 allocation:
@@ -17,3 +15,16 @@ parser:
   nodes:
   - Pad
   - Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 0.39G
+  parameters: 1.24M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 59.884
+  source: https://github.com/osmr/imgclsmob/tree/master/pytorch
+  license_url: https://opensource.org/licenses/MIT

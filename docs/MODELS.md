@@ -1,4 +1,4 @@
-# Pre-Trained Models
+# Public Pre-Trained Models
 
 Here, we give the full list of models supported by the Hailo Model Zoo.
 - FLOPs in the table are counted as MAC operations.
@@ -71,11 +71,11 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | yolov3_gluon_416:star: | 36.06 | 416x416x3 | 68.79 | 37.06	 |  [**link**](https://cv.gluon.ai/model_zoo/detection.html) |
 | yolov3_416:star: | 37.62 | 416x416x3 | 68.79 | 37.06	 |  [**link**](https://github.com/AlexeyAB/darknet) |
 | yolov4_leaky:star: | 42.4 | 512x512x3 | 66.05 | 	47.36 | [**link**](https://github.com/AlexeyAB/darknet/wiki/YOLOv4-model-zoo) |
-| yolov5xs* | 32.74 | 512x512x3 | 7.91 | 	5.8 | [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
-| yolov5s*:star: | 34.36 | 640x640x3 | 7.91 | 	9.06 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
-| yolov5s_spp | 35.25 | 640x640x3 | 7.46 | 	8.72 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
-| yolov5m*:star: | 41.7 | 640x640x3 | 22.95 | 	27.33 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
-| yolov5m_spp | 42.5 | 640x640x3 | 21.78 | 	26.14 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
+| yolov5xs_wo_spp* | 32.74 | 512x512x3 | 7.91 | 	5.8 | [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
+| yolov5s_wo_spp*:star: | 34.36 | 640x640x3 | 7.91 | 	9.06 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
+| yolov5s | 35.25 | 640x640x3 | 7.46 | 	8.72 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
+| yolov5m_wo_spp*:star: | 41.7 | 640x640x3 | 22.95 | 	27.33 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
+| yolov5m | 42.5 | 640x640x3 | 21.78 | 	26.14 |  [**link**](https://github.com/ultralytics/yolov5/releases/tag/v2.0) |
 | yolox_tiny_leaky | 30.25 | 416x416x3 | 5.05 | 	6.41 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_s_leaky | 37.42 | 640x640x3 | 8.96 | 	26.69 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_s_wide_leaky | 42.31 | 640x640x3 | 20.12 | 	29.73 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
@@ -147,6 +147,6 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 ## Depth Estimation
 
 ### NYU
-| Network Name | absRel | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
+| Network Name | RMSE | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
 | -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
-| fast_depth | 16.18 | 224x224x3 | 1.35 | 0.37	| [**link**](https://github.com/dwofk/fast-depth) |
+| fast_depth | 0.604 | 224x224x3 | 1.35 | 0.37	| [**link**](https://github.com/dwofk/fast-depth) |

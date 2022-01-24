@@ -29,8 +29,6 @@ hn_editor:
     - yolov3_gluon_416/conv68
     - yolov3_gluon_416/conv75
     split_output: true
-info:
-  network_source: https://cv.gluon.ai/model_zoo/detection.html
 allocation:
   required_fps: 200
 preprocessing:
@@ -64,3 +62,17 @@ parser:
     - 123.675
     - 116.28
     - 103.53
+info:
+  task: object detection
+  input_shape: 416x416x3
+  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x240, 26x26x6, 26x26x6, 26x26x3, 26x26x240,
+    52x52x6, 52x52x6, 52x52x3, 52x52x240
+  operations: 32.97G
+  parameters: 61.92M
+  framework: gluoncv
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 36.16
+  source: https://cv.gluon.ai/model_zoo/detection.html
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

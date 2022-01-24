@@ -1,0 +1,6 @@
+models:
+  - fast_depth
+  - ssd_mobilenet_v1_no_alls
+fps: 100
+alls_script: "fast_depth_ssd.alls"
+release_model_zoo: true

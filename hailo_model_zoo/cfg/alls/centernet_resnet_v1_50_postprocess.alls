@@ -1,4 +1,9 @@
-### Auto generated allocation script ###
+# New quantization params
+post_quantization_optimization(bias_correction, policy=disabled)
+pre_quantization_optimization(equalization, policy=enabled)
+post_quantization_optimization(finetune, policy=enabled, use_acceleras=disabled, dataset_size=4000, epochs=8, learning_rate=0.0001, loss_factors=[0.2, 0.1, 30.0], loss_layer_names=[ew_add1, conv60, conv62], loss_types=[l2, l2, l2])
+
+### Auto generated model script ###
 
 allocator_param(seed=1003, enable_defuse_with_slack=False)
 
@@ -14,9 +19,6 @@ quantization_param(conv49, precision_mode=a8_w4)
 quantization_param(conv52, precision_mode=a8_w4)
 quantization_param(conv44, precision_mode=a8_w4)
 
-# post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[0.1, 200.0, 30.0], dataset_size=4000, epochs=8, learning_rate=1.5e-05, loss_types=[l2, l2, l2], loss_layer_names=[conv60, conv62, conv58])
-
 compilation_param({conv*}, balance_output_multisplit=False)
 
-reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
+optimize_buffers()

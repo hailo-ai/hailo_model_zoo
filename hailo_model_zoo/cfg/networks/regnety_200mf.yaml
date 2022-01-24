@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 quantization:
   calib_set_size: 64
-info:
-  network_source: https://github.com/facebookresearch/pycls
 network:
   network_name: regnety_200mf
 allocation:
@@ -17,3 +15,16 @@ parser:
   nodes:
   - input
   - null
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 0.20G
+  parameters: 3.15M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 70.32
+  source: https://github.com/facebookresearch/pycls
+  license_url: https://opensource.org/licenses/MIT

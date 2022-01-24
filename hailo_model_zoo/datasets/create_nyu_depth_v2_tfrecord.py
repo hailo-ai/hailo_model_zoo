@@ -119,7 +119,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('type', help='which tf-record to create {}'.format(TF_RECORD_TYPE))
     parser.add_argument('--data', help="optional: path to manual downloaded dataset directory", type=str, default=None)
-    parser.add_argument('--num-images', help="optional: limit the number of images", type=int, default=8192)
+    parser.add_argument('--num-images', help="optional: limit the number of images", type=int, default=1024)
     args = parser.parse_args()
 
     dataset_train, dataset_val = download_dataset(args.data)

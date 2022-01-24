@@ -32,7 +32,7 @@ evaluation:
   data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
   validation_data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
 info:
-  network_source: https://github.com/biubug6/Pytorch_Retinaface
+  source: https://github.com/biubug6/Pytorch_Retinaface
 parser:
   normalization_params:
     normalize_in_net: true

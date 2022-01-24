@@ -5,7 +5,6 @@ network:
 allocation:
   required_fps: 854
 paths:
-  alls_script: efficientnet_s.alls
   network_path:
   - models_files/Classification/efficientnet_s/pretrained/efficientnet_s.ckpt.meta
   - models_files/Classification/efficientnet_s/pretrained/efficientnet_s.ckpt.index
@@ -25,3 +24,14 @@ parser:
   nodes:
   - efficientnet-edgetpu-S/model/stem/conv2d/Conv2D
   - Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1001'
+  operations: 2.36G
+  parameters: 5.41M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 77.61

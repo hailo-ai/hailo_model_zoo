@@ -14,9 +14,9 @@ hn_editor:
 allocation:
   required_fps: 216
 network:
-  network_name: yolov5m_60p
+  network_name: yolov5m_wo_spp_60p
 paths:
-  alls_script: yolov5m_60p.alls
+  alls_script: yolov5m_wo_spp_60p.alls
   network_path:
   - models_files/yolov5/yolov5m/2020-10-20/yolo-v5m.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolov5m.zip
@@ -26,3 +26,16 @@ parser:
   - - Conv_307
     - Conv_286
     - Conv_265
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255
+  operations: 26.49G
+  parameters: 22.67M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 41.7
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

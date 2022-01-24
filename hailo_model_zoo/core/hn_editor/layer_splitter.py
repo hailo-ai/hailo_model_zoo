@@ -10,6 +10,7 @@ class LayerSplitter(object):
                               'yolov3_gluon_416',
                               'yolov4_leaky',
                               'tiny_yolov4',
+                              'tiny_yolov4_license_plates',
                               'polylanenet_resnet_v1_34',
                               'smoke_regnetx_800mf']
         self._runner = runner
@@ -139,7 +140,7 @@ class LayerSplitter(object):
         split_kernel_shapes.append(depth_kernel_shape)
 
         """adding conv68 although it's not split because it needs to secure an output layer:"""
-        self._hn_modified["net_params"]["output_layers_order"].append('conv68')
+        self._hn_modified["net_params"]["output_layers_order"].append(f'{self._get_network_name()}/conv68')
 
         offset_name = layer + "_offset"
         offset_kernel_shape = kernel_shape[:3]
@@ -206,7 +207,7 @@ class LayerSplitter(object):
                          self._hn_modified["layers"][layer]["type"] == "output_layer"]
         if layer_list:
             for layer in output_layers:
-                if layer not in ['output_layer' + str(ind) for ind in layer_list]:
+                if layer not in [f'{self._get_network_name()}/output_layer{ind}' for ind in layer_list]:
                     output_layers.remove(layer)
 
         while len(output_layers) > 0:

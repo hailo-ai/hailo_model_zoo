@@ -2,7 +2,7 @@
 allocator_param(seed=1000, validate=False)
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv33], loss_types=[l2])
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv33], loss_types=[l2])
 
 #maxpool1_d0, maxpool1_d1, maxpool_c = defuse(maxpool1, 2)
 

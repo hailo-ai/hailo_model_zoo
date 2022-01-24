@@ -51,3 +51,16 @@ parser:
   - detector/yolo-v4-tiny/Pad
   - - detector/yolo-v4-tiny/Conv_17/BiasAdd
     - detector/yolo-v4-tiny/Conv_20/BiasAdd
+info:
+  task: object detection
+  input_shape: 416x416x3
+  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x240, 26x26x6, 26x26x6, 26x26x3, 26x26x240
+  operations: 3.46G
+  parameters: 6.05M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 19.01
+  source: https://github.com/Tianxiaomo/pytorch-YOLOv4
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

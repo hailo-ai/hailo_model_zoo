@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from hailo_model_zoo.core.postprocessing.detection.detection_common import (COCO_2017_TO_2014_TRANSLATION,
-                                                                            tf_postproc_nms)
+                                                                            tf_postproc_nms_centernet)
 
 
 def pad_list(lst, pad_size):
@@ -31,7 +31,7 @@ def _find_topk(probs, topk):
 class CenternetPostProc(object):
     def __init__(self, **kwargs):
         self._nms_on_device = kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False)
-        self._score_threshold = kwargs['score_threshold']
+        self._nms_topk_perclass = kwargs.get('post_nms_topk', 400)
 
     def postprocessing(self, endnodes, device_pre_post_layers=None, **kwargs):
         """since the preprocess not only resizes the image but also pads the smaller
@@ -40,7 +40,7 @@ class CenternetPostProc(object):
         we need to restore the relative bbox coordinates to
         the original convention based on the unpadded unresized image."""
         if self._nms_on_device:
-            return tf_postproc_nms(endnodes, self._score_threshold)
+            return tf_postproc_nms_centernet(endnodes, max_detections_per_class=self._nms_topk_perclass)
         bb_dict = {}
         if device_pre_post_layers and device_pre_post_layers.get('max_finder', False):
             endnodes.append(endnodes[0])  # following code expects prob tensor to be 3rd.
@@ -109,7 +109,7 @@ class CenternetPostProc(object):
     def _centernet_postprocessing(self, box_widths, box_offsets, sparse_probs, **kwargs):
         # endnodes3 is the sparse tensor of maximum prob values.
         TOPK = 100
-        PROB_THRESH = 0.00
+        PROB_THRESH = 0.0
         output_height = sparse_probs.shape[1]
         output_width = sparse_probs.shape[2]
 

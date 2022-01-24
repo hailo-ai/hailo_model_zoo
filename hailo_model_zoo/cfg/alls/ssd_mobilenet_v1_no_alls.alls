@@ -1,0 +1,4 @@
+reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])

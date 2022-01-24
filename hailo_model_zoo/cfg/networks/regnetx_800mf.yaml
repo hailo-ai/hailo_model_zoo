@@ -1,7 +1,5 @@
 base:
 - base/resnet.yaml
-info:
-  network_source: https://github.com/facebookresearch/pycls
 network:
   network_name: regnetx_800mf
 allocation:
@@ -14,3 +12,16 @@ parser:
   nodes:
   - input.1
   - Softmax_179
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 0.80G
+  parameters: 7.24M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 75.07
+  source: https://github.com/facebookresearch/pycls
+  license_url: https://opensource.org/licenses/MIT

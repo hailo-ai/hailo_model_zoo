@@ -73,6 +73,10 @@ def visualize_detection_result(logits, image, threshold=0.2, image_info=None, us
         labels = {1: {'name': 'person', 'id': 1}},
     elif 'widerface' in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
+    elif 'vehicle_detection' in dataset_name:
+        labels = {0: {'name': 'vehicle'}}
+    elif 'license_plates' in dataset_name:
+        labels = {0: {'name': 'plate'}}
     return visualize_boxes_and_labels_on_image_array(image[0],
                                                      boxes,
                                                      logits['detection_classes'][0],

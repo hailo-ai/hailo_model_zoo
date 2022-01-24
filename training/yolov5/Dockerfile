@@ -1,5 +1,5 @@
 ARG base_image=pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime
-ARG timezone="Asia/Jerusalem"
+ARG timezone
 FROM $base_image
 
 ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone

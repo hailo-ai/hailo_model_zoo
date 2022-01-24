@@ -10,4 +10,14 @@ paths:
   - models_files/Classification/resnet_v2_34/pretrained/resnet_v2_34.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v2_34/pretrained/2021-07-11/resnet_v2_34.zip
 info:
-  network_source: https://github.com/onnx/models/tree/master/vision/classification/resnet
+  task: classification
+  input_shape: 224x224x3
+  operations: 3.67G
+  parameters: 21.79M
+  framework: mxnet
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 73.1
+  source: https://github.com/onnx/models/tree/master/vision/classification/resnet
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

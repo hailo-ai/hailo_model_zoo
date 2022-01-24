@@ -19,6 +19,7 @@ except ModuleNotFoundError:
 def main():
 
     reqs = ['Cython',
+            'imageio==2.9.0',
             'matplotlib',
             'numpy',
             'opencv-python',
@@ -34,7 +35,18 @@ def main():
             'detection-tools==0.3',
             'scikit-image==0.17.2']
 
-    model_zoo_version = "1.3.0"
+    model_zoo_version = "1.4.0"
+
+    package_data = {
+        "hailo_model_zoo": [
+            "cfg/base/*.yaml", "cfg/networks/*.yaml", "cfg/alls/*.alls", "datasets/*",
+            "cfg/multi-networks/*.yaml", "cfg/multi-networks/*.yaml",
+            "core/postprocessing/*.json",
+            "core/postprocessing/src/*.cc",
+            "core/postprocessing/cython_utils/cython_nms.pyx",
+            "core/eval/widerface_evaluation_external/box_overlaps.pyx",
+        ]
+    }
 
     setup(
         name='hailo_model_zoo',
@@ -47,7 +59,8 @@ def main():
         license='MIT',
         packages=find_packages(),
         install_requires=reqs,
-        zip_safe=False
+        zip_safe=False,
+        package_data=package_data
     )
 
 

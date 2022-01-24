@@ -4,5 +4,5 @@ quantization_param({conv*}, bias_mode=single_scale_decomposition)
 # post_quantization_optimization commands
 post_quantization_optimization(bias_correction, policy=enabled)
 
-allocator_param(optimize_buffers=true, split_aware_optimize_buffers=true)
+allocator_param(split_aware_optimize_buffers=true)
 concat0 = concat([proposal_generator0, proposal_generator1], proposal_generator0_concat)

@@ -1,10 +1,10 @@
-allocator_param(optimize_buffers=False)
 
-quantization_param(conv1, activation_clipping_mode=percentile, activation_clipping_values=[0,99.5])
-quantization_param(dw1, activation_clipping_mode=percentile, activation_clipping_values=[0,99.5])
-quantization_param(conv2, activation_clipping_mode=percentile, activation_clipping_values=[0.05,99.5])
-quantization_param(conv3, activation_clipping_mode=percentile, activation_clipping_values=[0,99.5])
-quantization_param(dw2, activation_clipping_mode=percentile, activation_clipping_values=[0,99.5])
+# pre_quantization_optimization commands
+pre_quantization_optimization(activation_clipping, layers=[conv1], mode=percentile, clipping_values=[0, 99.5])
+pre_quantization_optimization(activation_clipping, layers=[dw1], mode=percentile, clipping_values=[0, 99.5])
+pre_quantization_optimization(activation_clipping, layers=[conv2], mode=percentile, clipping_values=[0.05, 99.5])
+pre_quantization_optimization(activation_clipping, layers=[conv3], mode=percentile, clipping_values=[0, 99.5])
+pre_quantization_optimization(activation_clipping, layers=[dw2], mode=percentile, clipping_values=[0, 99.5])
 
 # post_quantization_optimization commands
 post_quantization_optimization(bias_correction, policy=enabled)

@@ -19,3 +19,15 @@ parser:
   nodes:
   - MobilenetV3/input
   - MobilenetV3/Predictions/Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1001'
+  operations: 0.21G
+  parameters: 3.91M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 72.29
+  source: https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet

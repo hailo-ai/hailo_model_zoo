@@ -1,6 +1,20 @@
 base:
 - base/yolact.yaml
 hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv83
+        activation: tanh
+      - layer_name: conv75
+        activation: tanh
+      - layer_name: conv63
+        activation: tanh
+      - layer_name: conv66
+        activation: tanh
+      - layer_name: conv69
+        activation: tanh
   channels_remove:
     enabled: true
     layer_name:
@@ -454,3 +468,17 @@ parser:
     - Conv_327
     - Conv_343
     - Conv_335
+info:
+  task: instance segmentation
+  input_shape: 512x512x3
+  output_shape: 128x128x32, 64x64x36, 64x64x288, 64x64x180, 32x32x36, 32x32x288, 32x32x180,
+    16x16x36, 16x16x288, 16x16x180, 8x8x36, 8x8x288, 8x8x180, 4x4x36, 4x4x288, 4x4x180
+  operations: 51.47G
+  parameters: 21.97M
+  framework: pytorch
+  training_data: coco instances train2017
+  validation_data: coco instances val2017
+  eval_metric: mAP
+  full_precision_result: 22.73
+  source: https://github.com/dbolya/yolact
+  license_url: https://opensource.org/licenses/MIT

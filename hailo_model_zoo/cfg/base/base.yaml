@@ -1,6 +1,7 @@
 quantization:
   quantization_batch_size: 8
   calib_set_size: 64
+  calib_set_name: null
   calib_batch_size: null
 hn_editor:
   yuv2rgb: false
@@ -69,3 +70,15 @@ evaluation:
 info:
   client_or_rnd: r&d
   standard_or_customized: standard
+  task: N/A
+  input_shape: N/A
+  output_shape: N/A
+  operations: N/A
+  parameters: N/A
+  framework: N/A
+  training_data: N/A
+  validation_data: N/A
+  eval_metric: N/A
+  full_precision_result: null
+  source: N/A
+  license_url: N/A

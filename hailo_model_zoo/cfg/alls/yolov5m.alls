@@ -1,24 +1,24 @@
 quantization_param(conv45, precision_mode=a8_w4)
-quantization_param(conv46, precision_mode=a8_w4)
 quantization_param(conv50, precision_mode=a8_w4)
 quantization_param(conv52, precision_mode=a8_w4)
 quantization_param(conv84, precision_mode=a8_w4)
 quantization_param(conv88, precision_mode=a8_w4)
 quantization_param(conv90, precision_mode=a8_w4)
 
-# post_quantization_optimization commands
-post_quantization_optimization(finetune, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv93, conv83, conv73])
+quantization_param({*}, bias_mode=double_scale_initialization)
 
-allocator_param(timeout=100000, cluster_timeout=100000)
-portal0 = portal(conv27, concat7, buffer_in_l4=True)
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv94, conv85, conv75])
+#post_quantization_optimization(finetune, policy=enabled,  learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv94, conv85, conv75])
+
+portal0 = portal(conv27, concat8, buffer_in_l4=True)
 portal1 = portal(conv30, concat3, buffer_in_l4=True)
-portal2 = portal(conv44, concat5, buffer_in_l4=True)
-portal3 = portal(conv55, concat11, buffer_in_l4=True)
-portal4 = portal(conv64, concat9, buffer_in_l4=True)
+portal2 = portal(conv44, concat6, buffer_in_l4=True)
+portal3 = portal(conv56, concat12, buffer_in_l4=True)
+portal4 = portal(conv65, concat10, buffer_in_l4=True)
 buffers(conv44, portal2, 4)
-allocator_param(merge_min_layer_utilization=0.1)
+allocator_param(max_lcu_usage=1, max_lcu_utilization=0.1)
 
 conv45_d0, conv45_d1, conv45_dc = defuse(conv45, 2)
-conv46_d0, conv46_d1, conv46_dc = defuse(conv46, 2)
 
 reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

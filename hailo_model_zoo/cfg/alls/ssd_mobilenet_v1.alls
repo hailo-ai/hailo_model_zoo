@@ -7,7 +7,7 @@ reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
 quantization_param({conv*}, bias_mode=single_scale_decomposition)
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
 
 allocator_param(agent=melg, automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, builder_exit_point=post-compilation, clk_freq=400000000.0, cluster_timeout=300, defuse_by_validator=True, enable_axis_upsize=True, enable_fixer=True, enable_loose_mode=False, enable_macros=True, enable_swapper=True, max_auto_defuse=8, max_cluster_util=1.0, network_fps=1150.0, seed=74, strategy=blind_search, timeout=30000, validate=True, automatic_l4_portals=False, optimize_buffers=False)
 

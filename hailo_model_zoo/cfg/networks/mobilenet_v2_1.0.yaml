@@ -15,3 +15,16 @@ parser:
   nodes:
   - input_image
   - MobilenetV2/Predictions/Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1001'
+  operations: 0.31G
+  parameters: 3.49M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 71.84
+  source: https://github.com/tensorflow/models/tree/v1.13.0/research/slim
+  license_url: https://github.com/tensorflow/models/blob/v1.13.0/LICENSE

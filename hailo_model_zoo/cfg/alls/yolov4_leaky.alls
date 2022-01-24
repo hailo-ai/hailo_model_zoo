@@ -1,29 +1,7 @@
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, learning_rate=1e-05, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_layer_names=[conv110_centers, conv110_scales, conv110_obj, conv110_probs, conv103_centers, conv103_scales, conv103_obj, conv103_probs, conv95_centers, conv95_scales, conv95_obj, conv95_probs], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(bias_correction, policy=disabled)
+pre_quantization_optimization(equalization, policy=enabled)
+post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epochs=8, learning_rate=1e-5, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_layer_names=[conv110_centers, conv110_scales, conv110_obj, conv110_probs, conv103_centers, conv103_scales, conv103_obj, conv103_probs, conv95_centers, conv95_scales, conv95_obj, conv95_probs], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
 
-allocator_param(optimize_one_to_many_shmifos=True,split_aware_optimize_buffers=False, automatic_l4_portals=True, cluster_timeout=600, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=30, timeout=2000, validate=True)
-context_switch_param(mode=manual, max_memory_utilization=0.87)
-compilation_param({*}, mixed_mem=False)
-
-resources_param(strategy=legacy)
-reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
-
-context_0 = context([conv1, conv2, conv3, conv4, conv5, conv6, ew_add1, conv7, concat1, conv8, conv9, conv10, conv11, conv12, conv13, ew_add2, conv14, conv15, ew_add3, conv16, concat2, conv17, conv18, conv19, conv20, conv21, conv22, ew_add4, conv23, conv24, ew_add5, conv25, conv26, ew_add6, conv27, conv28, ew_add7, conv29, conv30, ew_add8, conv31, conv32, ew_add9, conv33, conv34, ew_add10, conv35, conv36, ew_add11, conv37, concat3])
-
-context_1 = context([conv38, conv39, conv40, conv41, conv42, conv43, conv44, ew_add12, conv45, conv46, ew_add13, conv47, conv48, ew_add14, conv49, conv50, ew_add15, conv51, conv52, ew_add16, conv53, conv54, ew_add17, conv55, conv56, ew_add18, conv57, conv58, ew_add19, conv59, concat4, conv60])
-
-context_2 = context([conv61, conv62, conv63, conv64, conv65, conv66, ew_add20, conv67, conv68, ew_add21, conv69, conv70, ew_add22])
-
-context_3 = context([conv71, conv72, ew_add23, conv73, concat5, conv74, conv75, conv76, conv77, maxpool1, maxpool2, maxpool3, concat6, conv78])
-
-context_4 = context([conv79, conv80, conv81, resize1, concat7, conv82, conv83, conv84, conv85, conv86, conv87, resize2, concat8, conv88, conv89, conv90, conv91, conv92, conv94, concat9, conv96, conv97, conv98, conv99, conv93, conv95_probs])
-
-context_5 = context([conv100, conv101, concat10, conv102, conv103_probs, conv104, conv105, conv106, conv107, conv108, conv110_probs, conv109])
-
-context_0.compilation_param(fps=330.0)
-context_1.compilation_param(fps=620.0)
-context_2.compilation_param(fps=1000.0)
-context_3.compilation_param(fps=1100.0)
-context_4.compilation_param(fps=400.0)
-context_5.compilation_param(fps=400.0)
-
+context_switch_param(max_memory_utilization=0.45, max_control_utilization=0.45, max_compute_utilization=0.45)
+resources_param(max_control_utilization=0.7, max_memory_utilization=0.7, max_compute_utilization=0.75)

@@ -1,5 +1,5 @@
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, learning_rate=0.0001, epochs=8, dataset_size=2048)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=2048)
 
 allocator_param(merge_min_layer_utilization=0.1)
 reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)

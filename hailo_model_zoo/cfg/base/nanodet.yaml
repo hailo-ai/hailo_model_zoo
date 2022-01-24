@@ -20,7 +20,7 @@ postprocessing:
     - 16
     - 32
 info:
-  network_source: https://github.com/RangiLyu/nanodet
+  source: https://github.com/RangiLyu/nanodet
 parser:
   normalization_params:
     normalize_in_net: true

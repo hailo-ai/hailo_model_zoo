@@ -37,3 +37,16 @@ parser:
     - BoxPredictor_4/ClassPredictor/BiasAdd
     - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_5/ClassPredictor/BiasAdd
+info:
+  task: object detection
+  input_shape: 300x300x3
+  output_shape: 2244x8x1
+  operations: 1.15G
+  parameters: 5.64M
+  framework: tensorflow
+  training_data: visdrone train2019
+  validation_data: visdrone val2019
+  eval_metric: mAP
+  full_precision_result: 2.376
+  source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

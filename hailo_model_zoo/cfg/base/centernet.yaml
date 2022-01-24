@@ -20,7 +20,7 @@ quantization:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
   quantization_batch_size: 4
 info:
-  network_source: https://gluon-cv.mxnet.io/model_zoo/detection.html
+  source: https://gluon-cv.mxnet.io/model_zoo/detection.html
 parser:
   normalization_params:
     normalize_in_net: true

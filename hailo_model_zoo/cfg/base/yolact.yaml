@@ -42,7 +42,7 @@ postprocessing:
       - 483.8096831596313
       - 609.5620039557886
 info:
-  network_source: https://github.com/dbolya/yolact
+  source: https://github.com/dbolya/yolact
 parser:
   normalization_params:
     normalize_in_net: true

@@ -4,14 +4,15 @@ compilation_param(conv55, balance_output_multisplit=False)
 compilation_param(conv68, balance_output_multisplit=False)
 compilation_param(conv78, balance_output_multisplit=False)
 
-quantization_param(conv93, activation_clipping_mode=percentile_force, activation_clipping_values=[0.0001,99.6])
-quantization_param(conv95, activation_clipping_mode=percentile_force, activation_clipping_values=[0.15,99.4])
- 
-quantization_param(conv111, activation_clipping_mode=percentile_force, activation_clipping_values=[0.0001,99.5])
-quantization_param(conv113, activation_clipping_mode=percentile_force, activation_clipping_values=[0.15,99.4])
+# pre_quantization_optimization commands
+pre_quantization_optimization(activation_clipping, layers=[conv93], mode=percentile_force, clipping_values=[0.0001,99.6])
+pre_quantization_optimization(activation_clipping, layers=[conv95], mode=percentile_force, clipping_values=[0.15,99.4])
 
-quantization_param(conv128, activation_clipping_mode=percentile_force, activation_clipping_values=[0.0001,99.5])
-quantization_param(conv130, activation_clipping_mode=percentile_force, activation_clipping_values=[0.15,99.4])
+pre_quantization_optimization(activation_clipping, layers=[conv111], mode=percentile_force, clipping_values=[0.0001,99.5])
+pre_quantization_optimization(activation_clipping, layers=[conv113], mode=percentile_force, clipping_values=[0.15,99.4])
+
+pre_quantization_optimization(activation_clipping, layers=[conv128], mode=percentile_force, clipping_values=[0.0001,99.5])
+pre_quantization_optimization(activation_clipping, layers=[conv130], mode=percentile_force, clipping_values=[0.15,99.4])
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[0.125, 2, 0.25, 0.125, 2, 0.25, 0.125, 2, 0.25], dataset_size=4000, epochs=8, learning_rate=1e-05, loss_layer_names=[conv94, conv95, conv96, conv112, conv113, conv114, conv129, conv130, conv131], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.125, 2, 0.25, 0.125, 2, 0.25, 0.125, 2, 0.25], dataset_size=4000, epochs=8, learning_rate=1e-05, loss_layer_names=[conv94, conv95, conv96, conv112, conv113, conv114, conv129, conv130, conv131], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2])

@@ -58,3 +58,14 @@ parser:
     - Conv_80
     - Conv_83
     - Conv_86
+info:
+  task: pose estimation
+  input_shape: 416x416x3
+  output_shape: 104x104x1, 104x104x2, 104x104x34, 104x104x2, 104x104x17, 104x104x2
+  operations: 14.15G
+  parameters: 11.71M
+  framework: pytorch
+  training_data: coco keypoints train2017
+  validation_data: coco keypoints val2017
+  eval_metric: AP
+  full_precision_result: 39.167

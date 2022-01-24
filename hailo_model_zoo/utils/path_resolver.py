@@ -7,6 +7,7 @@ _DATA_DEFAULT_DIRECTORY = 'data'
 BASE_CFG_DIR = _MODEL_ZOO_ROOT / 'cfg'
 NETWORK_CFG_DIR = BASE_CFG_DIR / 'networks'
 ALLS_DIR = BASE_CFG_DIR / 'alls'
+MULTI_NETWORKS_DIR = BASE_CFG_DIR / 'multi-networks'
 
 
 def resolve_alls_path(path):

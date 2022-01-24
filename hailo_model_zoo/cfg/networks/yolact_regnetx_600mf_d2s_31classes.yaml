@@ -18,6 +18,20 @@ quantization:
   calib_set:
   - models_files/d2s/2021-10-24/D2S_calib.tfrecord
 hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv83
+        activation: tanh
+      - layer_name: conv75
+        activation: tanh
+      - layer_name: conv63
+        activation: tanh
+      - layer_name: conv66
+        activation: tanh
+      - layer_name: conv69
+        activation: tanh
   channels_remove:
     enabled: true
     layer_name:
@@ -343,7 +357,6 @@ network:
 allocation:
   required_fps: 40
 paths:
-  alls_script: yolact_regnetx_600mf_d2s_31classes.alls
   network_path:
   - models_files/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2020-12-10/yolact_regnetx_600MF_fpn_d2s-opset11.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2020-12-10/yolact_regnetx_600mf.zip
@@ -371,3 +384,17 @@ parser:
     - Conv_327
     - Conv_343
     - Conv_335
+info:
+  task: instance segmentation
+  input_shape: 512x512x3
+  output_shape: 128x128x32, 64x64x36, 64x64x288, 64x64x279, 32x32x36, 32x32x288, 32x32x279,
+    16x16x36, 16x16x288, 16x16x279, 8x8x36, 8x8x288, 8x8x279, 4x4x36, 4x4x288, 4x4x279
+  operations: 51.62G
+  parameters: 22.14M
+  framework: pytorch
+  training_data: d2s augemented train
+  validation_data: d2s val
+  eval_metric: mAP
+  full_precision_result: 61.7458
+  source: https://github.com/dbolya/yolact
+  license_url: https://opensource.org/licenses/MIT

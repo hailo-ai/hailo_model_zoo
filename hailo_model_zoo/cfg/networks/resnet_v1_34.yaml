@@ -15,3 +15,14 @@ parser:
   nodes:
   - resnet_v1_34/conv1/Pad
   - resnet_v1_34/predictions/Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 3.67G
+  parameters: 21.79M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 72.682

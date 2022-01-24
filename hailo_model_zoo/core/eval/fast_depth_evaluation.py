@@ -14,7 +14,6 @@ class FastDepthEval(Eval):
         return net_output['predictions']
 
     def is_percentage(self):
-        # absrel is precantage but not all other matrics
         return False
 
     def is_bigger_better(self):
@@ -32,8 +31,8 @@ class FastDepthEval(Eval):
         self.avg = self.average_meter.average()
 
     def _get_accuracy(self):
-        return OrderedDict([('absrel', self.avg.absrel),
-                            ('rmse', self.avg.rmse),
+        return OrderedDict([('rmse', self.avg.rmse),
+                            ('absrel', self.avg.absrel),
                             ('mse', self.avg.mse),
                             ('lg10', self.avg.lg10),
                             ('mae', self.avg.mae),
@@ -71,9 +70,8 @@ class Result(object):
 
     def evaluate(self, output, target):
         valid_mask = ((target > 0) + (output > 0)) > 0
-
-        output = np.array(1e3 * output[valid_mask], dtype=np.float32)
-        target = np.array(1e3 * target[valid_mask], dtype=np.float32)
+        output = np.array(output[valid_mask], dtype=np.float32)
+        target = np.array(target[valid_mask], dtype=np.float32)
         abs_diff = np.abs(output - target)
 
         self.mse = np.mean((np.power(abs_diff, 2)))

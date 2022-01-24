@@ -19,10 +19,7 @@ TARGETS = {
 
 def _make_parsing_base():
     parsing_base_parser = argparse.ArgumentParser(add_help=False)
-    network_names = list(path_resolver.get_network_names())
-    # Setting empty metavar in order to prevent listing the models twice
-    parsing_base_parser.add_argument('model_name', type=str, choices=network_names, metavar='model_name',
-                                     help='Which network to run. Choices: ' + ', '.join(network_names))
+    add_model_name_arg(parsing_base_parser)
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
@@ -97,6 +94,19 @@ def _make_evaluation_base():
     return evaluation_base_parser
 
 
+def _make_info_base():
+    info_base_parser = argparse.ArgumentParser(add_help=False)
+    add_model_name_arg(info_base_parser)
+    return info_base_parser
+
+
+def add_model_name_arg(parser_):
+    network_names = list(path_resolver.get_network_names())
+    # Setting empty metavar in order to prevent listing the models twice
+    parser_.add_argument('model_name', type=str, choices=network_names, metavar='model_name',
+                         help='Which network to run. Choices: ' + ', '.join(network_names))
+
+
 def _create_args_parser():
     # --- create shared arguments parsers
     parsing_base_parser = _make_parsing_base()
@@ -104,9 +114,10 @@ def _create_args_parser():
     hef_base_parser = _make_hef_base()
     profile_base_parser = _make_profiling_base()
     evaluation_base_parser = _make_evaluation_base()
+    information_base_parser = _make_info_base()
 
     # --- create per action subparser
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(epilog='Example: main.py parse resnet_v1_50')
     # can't set the entry point for each subparser as it forces us to add imports which slow down the startup time.
     # instead we'll check the 'command' argument after parsing
     subparsers = parser.add_subparsers(dest='command')
@@ -131,17 +142,21 @@ def _create_args_parser():
         parsing_base_parser, quantization_base_parser, hef_base_parser, evaluation_base_parser],
         help="infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.")
 
+    subparsers.add_parser('info', parents=[information_base_parser],
+                          help="Print model information.")
+
     return parser
 
 
 def run(args):
-    from hailo_model_zoo.main_driver import parse, quantize, compile, profile, evaluate
+    from hailo_model_zoo.main_driver import parse, quantize, compile, profile, evaluate, info
     handlers = {
         'parse': parse,
         'quantize': quantize,
         'compile': compile,
         'profile': profile,
         'eval': evaluate,
+        'info': info,
     }
 
     return handlers[args.command](args)

@@ -11,3 +11,14 @@ paths:
   - models_files/Classification/efficientnet_lite1/pretrained/efficientnet_lite1.ckpt.index
   - models_files/Classification/efficientnet_lite1/pretrained/efficientnet_lite1.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite1/pretrained/2021-07-11/efficientnet_lite1.zip
+info:
+  task: classification
+  input_shape: 240x240x3
+  output_shape: '1000'
+  operations: 0.61G
+  parameters: 5.39M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 76.66

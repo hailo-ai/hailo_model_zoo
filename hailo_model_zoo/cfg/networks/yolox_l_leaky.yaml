@@ -23,3 +23,17 @@ parser:
     - Sigmoid_342
 quantization:
   quantization_batch_size: 2
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x4, 80x80x1, 80x80x80, 40x40x4, 40x40x1, 40x40x80, 20x20x4, 20x20x1,
+    20x20x80
+  operations: 77.74G
+  parameters: 54.17M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 48.641
+  source: https://github.com/Megvii-BaseDetection/YOLOX
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

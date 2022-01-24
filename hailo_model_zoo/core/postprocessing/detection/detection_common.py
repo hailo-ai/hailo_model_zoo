@@ -14,6 +14,10 @@ COCO_2017_TO_2014_TRANSLATION = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7,
                                  75: 85, 76: 86, 77: 87, 78: 88, 79: 89, 80: 90}
 
 
+def translate_coco_2017_to_2014(nmsed_classes):
+    return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
+
+
 def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
     def _single_batch_parse(args):
         frame_detections = args[:, :, :]
@@ -30,8 +34,6 @@ def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
                                                       [0, 0]], mode='CONSTANT', constant_values=0)
         return final_frame_results_padded[:, :4], final_frame_results_padded[:, 4], classes_expanded, num_detections
 
-    def translate_coco_2017_to_2014(nmsed_classes):
-        return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
     with tf.compat.v1.name_scope('Postprocessor'):
         detections = tf.transpose(endnodes, [0, 1, 3, 2])
         post_processing_boxes, post_processing_scores, post_processing_classes, post_num_detections = \
@@ -40,6 +42,44 @@ def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
     if coco_2017_to_2014:
         [post_processing_classes] = tf.compat.v1.py_func(
             translate_coco_2017_to_2014, [post_processing_classes], ['int32'])
+    return {'detection_boxes': post_processing_boxes,
+            'detection_scores': post_processing_scores,
+            'detection_classes': post_processing_classes,
+            'num_detections': post_num_detections}
+
+
+def tf_postproc_nms_centernet(endnodes, max_detections_per_class, coco_2017_to_2014=True, input_division_factor=4):
+    # SDK Tensor -> ADK
+    def _single_batch_parse(args):
+        label_offset = 1
+        frame_detections = args[:, :, :]
+        num_of_classes = args.shape[0]
+        boxes_and_scores = tf.reshape(frame_detections, [num_of_classes * max_detections_per_class, 5])
+
+        # Taking top k scores from all classes
+        _, topk_indices = tf.math.top_k(tf.reshape(boxes_and_scores[:, -1], [-1]), sorted=True,
+                                        k=int(max_detections_per_class / input_division_factor))
+        boxes_and_scores = tf.gather(boxes_and_scores, topk_indices)
+        num_detections = tf.shape(topk_indices)[0]
+        pad_size = max_detections_per_class - num_detections
+        classes_expanded = tf.unravel_index(topk_indices, [num_of_classes, max_detections_per_class])[0] + label_offset
+        classes_expanded = tf.expand_dims(classes_expanded, axis=1)
+        classes_expanded = tf.squeeze(tf.pad(classes_expanded, paddings=[[0, pad_size], [0, 0]],
+                                      mode='CONSTANT', constant_values=0), axis=1)
+        final_frame_results = boxes_and_scores
+        final_frame_results_padded = tf.pad(final_frame_results,
+                                            paddings=[[0, pad_size],
+                                                      [0, 0]], mode='CONSTANT', constant_values=0)
+        return final_frame_results_padded[:, :4], final_frame_results_padded[:, 4], classes_expanded, num_detections
+
+    with tf.name_scope('Postprocessor'):
+        detections = tf.transpose(endnodes, [0, 1, 3, 2])
+        post_processing_boxes, post_processing_scores, post_processing_classes, post_num_detections = \
+            tf.map_fn(_single_batch_parse, detections, dtype=(tf.float32, tf.float32, tf.int32, tf.int32),
+                      parallel_iterations=32, back_prop=False)
+    if coco_2017_to_2014:
+        [post_processing_classes] = tf.compat.v1.py_func(translate_coco_2017_to_2014,
+                                                         [post_processing_classes], ['int32'])
     return {'detection_boxes': post_processing_boxes,
             'detection_scores': post_processing_scores,
             'detection_classes': post_processing_classes,

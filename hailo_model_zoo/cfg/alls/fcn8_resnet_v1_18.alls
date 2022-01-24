@@ -1,6 +1,8 @@
 ## Allocator Script Version 1.0
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])
+
 allocator_param(automatic_l4_portals=False)
-allocator_param(optimize_buffers=False, split_aware_optimize_buffers=False)
 
 reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
 
@@ -34,7 +36,3 @@ buffers(portal_portal_conv10_conv23_conv23, conv23, 19)
 portal_conv15_conv22 = portal(conv15_dc, conv22)
 buffers(conv15_dc, portal_conv15_conv22, 14)
 buffers(portal_conv15_conv22, conv22, 14)
-
-
-# post_quantization_optimization commands
-post_quantization_optimization(finetune, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])

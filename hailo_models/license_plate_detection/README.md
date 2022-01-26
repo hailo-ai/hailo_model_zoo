@@ -48,4 +48,4 @@ hailortcli benchmark tiny_yolov4_license_plates.hef
 <br>
 
 ## Training on Custom Dataset
-A guide for finetuning the pre-trained model on a custom dataset can be found [**here**](./docs/TRAINING_GUIDE)
+A guide for finetuning the pre-trained model on a custom dataset can be found [**here**](./docs/TRAINING_GUIDE.md)

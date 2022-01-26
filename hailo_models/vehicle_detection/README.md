@@ -61,4 +61,4 @@ hailortcli benchmark yolov5m_vehicles.hef
 <br> 
 
 ## Training on Custom Dataset
-A guide for training the pre-trained model on a custom dataset can be found [**here**](./docs/TRAINING_GUIDE)
+A guide for training the pre-trained model on a custom dataset can be found [**here**](./docs/TRAINING_GUIDE.md)

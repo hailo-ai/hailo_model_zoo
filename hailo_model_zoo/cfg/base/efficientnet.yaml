@@ -5,7 +5,7 @@ evaluation:
 preprocessing:
   meta_arch: efficientnet
 info:
-  source: https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet"
+  source: https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
   license_url: https://www.apache.org/licenses/LICENSE-2.0
 parser:
   normalization_params:

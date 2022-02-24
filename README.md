@@ -27,6 +27,9 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 - New models:
   - unet_mobilenet_v2
 - Support Oxford-IIIT Pet Dataset
+- New mutli-network example: detection_pose_estimation which combines the following networks:
+  - yolov5m_wo_spp_60p
+  - centerpose_repvgg_a0
 - Improvements:
   - nanodet_repvgg mAP increased by 2%
 - New Tasks:

@@ -23,8 +23,9 @@ from hailo_model_zoo.core.postprocessing.lane_detection_postprocessing import (l
                                                                                visualize_lane_detection_result)
 from hailo_model_zoo.core.postprocessing.multiple_object_tracking_postprocessing import (
     multiple_object_tracking_postprocessing, visualize_tracking_result)
-from hailo_model_zoo.core.postprocessing.face_landmarks_postprocessing import (
-    face_landmarks_postprocessing, visualize_face_landmarks_result)
+from hailo_model_zoo.core.postprocessing.landmarks_postprocessing import (
+    face_landmarks_postprocessing, visualize_face_landmarks_result,
+    visualize_hand_landmarks_result, hand_landmarks_postprocessing)
 from hailo_model_zoo.core.postprocessing.face_landmarks_3d_postprocessing import (
     face_landmarks_3d_postprocessing, visualize_face_landmarks_3d_result)
 from hailo_model_zoo.core.postprocessing.detection_3d_postprocessing import (
@@ -57,6 +58,7 @@ def get_visualization(name, **kwargs):
         'mono_depth_estimation': visualize_mono_depth_result,
         'multiple_object_tracking': visualize_tracking_result,
         'face_landmark_detection': visualize_face_landmarks_result,
+        'landmark_detection': visualize_hand_landmarks_result,
         'lane_detection': visualize_lane_detection_result,
         '3d_detection': visualize_3d_detection_result,
         'face_landmark_detection_3d': visualize_face_landmarks_3d_result,
@@ -88,6 +90,7 @@ def get_postprocessing(name, flip=False):
         'pose_estimation': pose_estimation_postprocessing,
         'mono_depth_estimation': mono_depth_estimation_postprocessing,
         'face_verification': facenet_postprocessing,
+        'landmark_detection': hand_landmarks_postprocessing,
         'face_landmark_detection': face_landmarks_postprocessing,
         'instance_segmentation': instance_segmentation_postprocessing,
         'super_resolution': super_resolution_postprocessing,

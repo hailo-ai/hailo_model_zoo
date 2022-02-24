@@ -1570,8 +1570,6 @@ parser:
     - 1.0
     - 1.0
     - 1.0
-info:
-  source: https://github.com/rwightman/pytorch-image-models/
 preprocessing:
   network_type: classification
   meta_arch: resmlp
@@ -1579,3 +1577,16 @@ preprocessing:
   - 224
   - 224
   - 3
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 3.02G
+  parameters: 15.77M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 75.266
+  source: https://github.com/rwightman/pytorch-image-models/
+  license_url: https://github.com/rwightman/pytorch-image-models/blob/master/LICENSE

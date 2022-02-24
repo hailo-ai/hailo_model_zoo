@@ -14,7 +14,7 @@ postprocessing:
 network:
   network_name: ssd_mobilenet_v1_visdrone
 allocation:
-  required_fps: 570
+  required_fps: 1200
 paths:
   alls_script: ssd_mobilenet_v1_visdrone.alls
   network_path:

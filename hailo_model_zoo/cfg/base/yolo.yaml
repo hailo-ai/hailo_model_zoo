@@ -17,7 +17,6 @@ postprocessing:
   score_threshold: 0.01
   meta_arch: yolo_v5
   anchors:
-    fpn: false
     strides:
     - 8
     - 16

@@ -15,6 +15,7 @@ def confusion_matrix(y_true, y_pred, N):
 
 class SegmentationEval(Eval):
     def __init__(self, *, labels_map=None, **kwargs):
+        self._labels_offset = kwargs['labels_offset']
         self._channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
         self._labels_map = np.array(labels_map, dtype=np.uint8) if labels_map else None
         if self._channels_remove:
@@ -37,7 +38,7 @@ class SegmentationEval(Eval):
         if self._labels_map is not None:
             idx = np.where(mask != 255)
             mask[idx] = self._labels_map[mask.astype(np.uint8)[idx]]
-        return np.clip(mask, 0, self._classes)
+        return np.clip(mask, 0, self._classes) - self._labels_offset
 
     def _parse_net_output(self, net_output):
         return net_output['predictions']

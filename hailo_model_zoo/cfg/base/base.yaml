@@ -46,7 +46,13 @@ parser:
     std_list: null
 postprocessing:
   anchors:
+    scale_factors:
+    - 10.0
+    - 10.0
+    - 5.0
+    - 5.0
     sizes: null
+    type: default
   meta_arch: null
   score_threshold: null
   nms_iou_thresh: null
@@ -59,6 +65,7 @@ postprocessing:
     max_finder: false
   postprocess_config_json: null
 evaluation:
+  data_set: null
   labels_offset: 0
   limit_num_images: 1000000000.0
   infer_type: tf_infer

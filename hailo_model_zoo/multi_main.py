@@ -76,6 +76,7 @@ def main(cfg_path):
         mapping_timeout=1200,
         allocator_script_filename=alls_script
     )
+    runner.save_har(results_dir / f'{final_name}.har')
 
     with open(results_dir / f"{final_name}.hef", "wb") as f:
         f.write(hef)

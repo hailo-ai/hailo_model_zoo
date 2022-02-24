@@ -11,6 +11,8 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
     - [Face Detection](#face-detection)
     - [Instance Segmentation](#instance-segmentation)
     - [Depth Estimation](#depth-estimation)
+    - [Face Landmark](#face-landmark)
+    - [Hand Landmark](#hand-landmark)
 
 <br>
 
@@ -80,7 +82,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | yolox_s_leaky | 37.42 | 640x640x3 | 8.96 | 	26.69 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_s_wide_leaky | 42.31 | 640x640x3 | 20.12 | 	29.73 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
 | yolox_l_leaky | 48.64 | 640x640x3 | 54.17 | 	77.74 |  [**link**](https://github.com/Megvii-BaseDetection/YOLOX) |
-| nanodet_repvgg | 27.1 | 416x416x3 | 6.74 | 5.64 |  [**link**](https://github.com/RangiLyu/nanodet) |
+| nanodet_repvgg | 29.26 | 416x416x3 | 6.74 | 5.64 |  [**link**](https://github.com/RangiLyu/nanodet) |
 
 ### VisDrone
 
@@ -89,6 +91,12 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | ssd_mobilenet_v1_visdrone | 2.376	 | 300x300x3 | 5.64	| 1.15 | [**link**](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md) |
 
 \* Trained without the SPP block
+
+### Palm Detection
+
+| Network Name | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
+| -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
+| palm_detection_lite | 192x192x3 | 1.01 | 0.31	| [**link**](https://github.com/google/mediapipe) |
 
 <br>
 
@@ -109,6 +117,11 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | deeplab_v3_mobilenet_v2 | 71.51 | 513x513x3 | 2.10 | 	3.21 | 32 | [**link**](https://github.com/tensorflow/models/tree/master/research/deeplab) |
 | deeplab_v3_mobilenet_v2_dilation | 76.02 | 513x513x3 | 2.10 | 8.91 | 16 | [**link**](https://github.com/tensorflow/models/tree/master/research/deeplab) |
 
+### Oxford-IIIT Pet
+| Network Name | mIoU | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Output Stride | Source |
+| -------------- | ------------------------- | ------------------------ | ---------- | --------- | ------------ | ---- |
+| unet_mobilenet_v2 | 77.297 | 256x256x3 | 10.08 | 	28.85 | 32 | [**link**](https://www.tensorflow.org/tutorials/images/segmentation) |
+
 <br>
 
 ## Pose Estimation
@@ -117,7 +130,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 
 | Network Name | AP | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
 | -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
-| centerpose_repvgg_a0 | 39.16 | 416x416x3 |  | 	| [**link**](https://github.com/tensorboy/centerpose) |
+| centerpose_repvgg_a0 | 39.16 | 416x416x3 | 11.71 | 14.15	| [**link**](https://github.com/tensorboy/centerpose) |
 | centerpose_regnetx_800mf | 44.4 | 512x512x3 | 12.31 | 43.06	| [**link**](https://github.com/tensorboy/centerpose) |
 | centerpose_regnetx_1.6gf_fpn:star: | 53.9 | 640x640x3 | 14.36 | 32.71 |  [**link**](https://github.com/tensorboy/centerpose) |
 
@@ -137,7 +150,7 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | Network Name | mIoU | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
 | -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
 | yolact_mobilenet_v1 | 17.79 | 512x512x3 | 19.11 | 51.92	| [**link**](https://github.com/dbolya/yolact) |
-| yolact_regnetx_800mf_20classes | 22.73 | 512x512x3 | 21.97 | 51.47	| [**link**](https://github.com/dbolya/yolact) |
+| yolact_regnetx_800mf_20classes | 22.8 | 512x512x3 | 21.97 | 51.47	| [**link**](https://github.com/dbolya/yolact) |
 
 ### D2S
 | Network Name | mIoU | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
@@ -150,3 +163,16 @@ Here, we give the full list of models supported by the Hailo Model Zoo.
 | Network Name | RMSE | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
 | -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
 | fast_depth | 0.604 | 224x224x3 | 1.35 | 0.37	| [**link**](https://github.com/dwofk/fast-depth) |
+
+## Face Landmark
+
+### AFLW2k3d
+| Network Name | NME | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
+| -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
+| tddfa_mobilenet_v1 | 3.68 | 120x120x3 | 3.26 | 0.18	| [**link**](https://github.com/cleardusk/3DDFA_V2) |
+
+## Hand Landmark
+
+| Network Name | Input Resolution (HxWxC) | Params (M) | FLOPs (G) | Source |
+| -------------- | ------------------------- | ------------------------ | ---------- | --------- | ---- |
+| hand_landmark_lite | 224x224x3 | 1.01 | 0.15	| [**link**](https://github.com/google/mediapipe) |

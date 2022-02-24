@@ -4,23 +4,25 @@ network:
   network_name: fcn8_resnet_v1_18
 allocation:
   required_fps: 33
+parser:
+  nodes:
+  - null
+  - null
 paths:
   alls_script: fcn8_resnet_v1_18.alls
   network_path:
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/resnet18_fcn8.ckpt.meta
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/resnet18_fcn8.ckpt.index
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/resnet18_fcn8.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2021-07-11/fcn8_resnet_v1_18.zip
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2022-02-09/fcn8_resnet18_fhd.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2022-02-09/fcn8_resnet_v1_18.zip
 info:
   task: semantic segmentation
   input_shape: 1024x1920x3
   output_shape: 1024x1920x1
   operations: 71.51G
   parameters: 11.20M
-  framework: gluoncv
+  framework: pytorch
   training_data: cityscapes train
   validation_data: cityscapes val
   eval_metric: mIoU
-  full_precision_result: 66.26
-  source: https://cv.gluon.ai/model_zoo/segmentation.html
+  full_precision_result: 68.75
+  source: https://mmsegmentation.readthedocs.io/en/latest
   license_url: https://www.apache.org/licenses/LICENSE-2.0

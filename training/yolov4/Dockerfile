@@ -5,11 +5,11 @@ FROM $base_image
 ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone
 
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install git build-essential python3-opencv wget
+    apt-get -y --no-install-recommends install git build-essential python3-opencv wget vim
 RUN pip install gdown
 
-RUN git clone https://github.com/Tianxiaomo/pytorch-YOLOv4.git && \
-    git clone https://github.com/AlexeyAB/darknet.git
+RUN git clone -b hailo_ai https://github.com/hailo-ai/pytorch-YOLOv4.git && \
+    git clone https://github.com/hailo-ai/darknet.git
 
 ENV PYTHONPATH=/workspace/darknet
 WORKDIR /workspace/darknet
@@ -24,7 +24,3 @@ RUN cd /workspace/darknet && wget https://github.com/AlexeyAB/darknet/releases/d
     wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights -q && \
     gdown https://drive.google.com/uc?id=1C4w_2loEpi-MznqMgKo16oZD7BcvgsCF -O ./cfg/yolov4-leaky.cfg -q && \
     gdown https://drive.google.com/uc?id=1dW-Sd70aTmXuFvYspiY85SwWdn0cr447 -O yolov4-leaky.weights -q
-COPY export.patch /workspace/pytorch-YOLOv4
-RUN cd /workspace/pytorch-YOLOv4/ && \
-    git checkout 4ccef0e && \
-    git apply export.patch && rm export.patch

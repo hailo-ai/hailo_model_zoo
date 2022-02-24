@@ -8,12 +8,6 @@ except ModuleNotFoundError:
     raise ModuleNotFoundError("hailo_sdk_client was not installed or you are not "
                               "in the right virtualenv.\n"
                               "In case you are not an Hailo customer please visit us at https://hailo.ai/")
-try:
-    import hailo_platform  # noqa F401
-except ModuleNotFoundError:
-    raise ModuleNotFoundError("hailo_platform was not installed or you are not "
-                              "in the right virtualenv.\n"
-                              "In case you are not an Hailo customer please visit us at https://hailo.ai/")
 
 
 def main():
@@ -35,7 +29,7 @@ def main():
             'detection-tools==0.3',
             'scikit-image==0.17.2']
 
-    model_zoo_version = "1.4.0"
+    model_zoo_version = "1.5.0"
 
     package_data = {
         "hailo_model_zoo": [

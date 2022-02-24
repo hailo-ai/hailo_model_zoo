@@ -7,8 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone
 RUN apt-get update && \
     apt-get -y --no-install-recommends install git build-essential python3-opencv wget
 
-RUN git clone https://github.com/Tianxiaomo/pytorch-YOLOv4.git
-RUN git clone https://github.com/AlexeyAB/darknet.git
+RUN git clone -b hailo_ai https://github.com/hailo-ai/pytorch-YOLOv4.git && \
+    git clone https://github.com/hailo-ai/darknet.git
 
 ENV PYTHONPATH=/workspace/darknet
 WORKDIR /workspace/darknet
@@ -23,8 +23,3 @@ COPY ./src/obj.names ./data
 COPY ./src/obj.data ./data
 COPY ./src/tiny_yolov4_license_plates.cfg ./cfg
 ADD https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plate/2021-11-30/tiny_yolov4_license_plates.weights .
-
-COPY ./src/export.patch /workspace/pytorch-YOLOv4/
-RUN cd /workspace/pytorch-YOLOv4/ && \
-    git checkout 4ccef0e && \
-    git apply export.patch && rm export.patch

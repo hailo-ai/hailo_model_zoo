@@ -442,8 +442,8 @@ allocation:
 paths:
   alls_script: yolact_regnetx_800mf_20classes.alls
   network_path:
-  - models_files/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2021-03-03/yolact_regnetx_800MF_fpn_opset11.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2021-03-03/yolact_regnetx_800mf.zip
+  - models_files/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2022-02-08/yolact.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2022-02-08/yolact_regnetx_800mf.zip
 parser:
   start_node_shape:
   - 1
@@ -452,22 +452,22 @@ parser:
   - 512
   nodes:
   - Conv_0
-  - - Relu_215
-    - Conv_219
-    - Conv_235
-    - Conv_227
-    - Conv_246
-    - Conv_262
-    - Conv_254
-    - Conv_273
-    - Conv_289
-    - Conv_281
-    - Conv_300
-    - Conv_316
-    - Conv_308
-    - Conv_327
-    - Conv_343
-    - Conv_335
+  - - Relu_162
+    - Conv_166
+    - Conv_182
+    - Conv_174
+    - Conv_193
+    - Conv_209
+    - Conv_201
+    - Conv_220
+    - Conv_236
+    - Conv_228
+    - Conv_247
+    - Conv_263
+    - Conv_255
+    - Conv_274
+    - Conv_290
+    - Conv_282
 info:
   task: instance segmentation
   input_shape: 512x512x3
@@ -479,6 +479,6 @@ info:
   training_data: coco instances train2017
   validation_data: coco instances val2017
   eval_metric: mAP
-  full_precision_result: 22.73
+  full_precision_result: 22.8
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT

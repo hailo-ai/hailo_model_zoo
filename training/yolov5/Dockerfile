@@ -5,7 +5,7 @@ FROM $base_image
 ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone
 
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install git build-essential python3-opencv wget
+    apt-get -y --no-install-recommends install git build-essential python3-opencv wget vim
 
 RUN git clone https://github.com/ultralytics/yolov5.git --branch v2.0 && \
     cd yolov5 && \

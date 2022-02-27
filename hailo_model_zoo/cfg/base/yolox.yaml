@@ -11,7 +11,6 @@ postprocessing:
   score_threshold: 0.01
   meta_arch: yolox
   anchors:
-    fpn: false
     strides:
     - 32
     - 16

@@ -13,6 +13,7 @@ export HMZ_DATA=/new/path/for/storage/
 - [D2S augmented dataset](#d2s-augmented-dataset)
 - [NYU Depth V2](#nyu-depth-v2)
 - [300W-LP & AFLW2k3d](#300w-lp-and-aflw2k3d)
+- [Hand Landmark](#hand-landmark)
 
 <br>
 
@@ -379,4 +380,25 @@ python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/
 4. Run the following:
 ```
 python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py --dir /path/to/aflw2k3d_tddfa
+```
+
+## Hand Landmark
+Run the creation script:
+```
+python hailo_model_zoo/datasets/create_hand_landmark_tfrecord.py
+```
+
+### Manual Download (Optional)
+1. Download the dataset from [**here**](https://drive.google.com/u/0/uc?id=1KcMYcNJgtK1zZvfl_9sTqnyBUTri2aP2&export=download) and extract.
+Expected structure:
+```
+Hands               00  000
+├── Hand_0011695.jpg
+├── Hand_0011696.jpg
+├── Hand_0011697.jpg
+└── ...
+```
+2. Run 
+```
+python hailo_model_zoo/datasets/create_hand_landmark_tfrecord.py --img /path/to/Hands
 ```

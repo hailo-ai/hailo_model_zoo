@@ -1,31 +1,25 @@
 #!/usr/bin/env python
 import argparse
-from pathlib import Path
 
-from hailo_platform.drivers.hw_object import PcieDevice
+from pathlib import Path
 
 # we try to minize imports to make 'main.py --help' responsive. So we only import definitions.
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
-from hailo_sdk_common.targets.inference_targets import SdkNative, SdkPartialNumeric
 
 from hailo_model_zoo.utils import path_resolver
-
-TARGETS = {
-    'hailo8': PcieDevice,
-    'full_precision': SdkNative,
-    'emulator': SdkPartialNumeric
-}
+from hailo_model_zoo.utils.hw_utils import TARGETS
 
 
 def _make_parsing_base():
     parsing_base_parser = argparse.ArgumentParser(add_help=False)
-    add_model_name_arg(parsing_base_parser)
+    config_group = parsing_base_parser.add_mutually_exclusive_group()
+    add_model_name_arg(config_group, optional=True)
+    config_group.add_argument(
+        '--yaml', type=str, default=None, dest='yaml_path',
+        help='Path to YAML for network configuration. By default using the default configuration')
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
-    parsing_base_parser.add_argument(
-        '--yaml', type=str, default=None, dest='yaml_path',
-        help='Path to YAML for network configuration. By default using the default configuration')
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
@@ -60,7 +54,6 @@ def _make_profiling_base():
 
 def _make_evaluation_base():
     evaluation_base_parser = argparse.ArgumentParser(add_help=False)
-
     targets = list(TARGETS.keys())
     evaluation_base_parser.add_argument(
         '--target', type=str, choices=targets, metavar='', default='full_precision',
@@ -100,11 +93,12 @@ def _make_info_base():
     return info_base_parser
 
 
-def add_model_name_arg(parser_):
+def add_model_name_arg(parser, optional=False):
     network_names = list(path_resolver.get_network_names())
     # Setting empty metavar in order to prevent listing the models twice
-    parser_.add_argument('model_name', type=str, choices=network_names, metavar='model_name',
-                         help='Which network to run. Choices: ' + ', '.join(network_names))
+    nargs = '?' if optional else None
+    parser.add_argument('model_name', type=str, nargs=nargs, choices=network_names, metavar='model_name',
+                        help='Which network to run. Choices: ' + ', '.join(network_names))
 
 
 def _create_args_parser():

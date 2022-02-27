@@ -37,10 +37,13 @@ parser:
     - 255
     - 255
 info:
+  task: Depth Estimation
   input_shape: 224x224x3
   output_shape: 224x224x1
   MACS: 0.37G
+  operations: 0.37G
   num_params: 1.35M
+  parameters: 1.35M
   framework: pytorch
   training_data: nyu_depth_v2 train
   validation_data: nyu_depth_v2 validation

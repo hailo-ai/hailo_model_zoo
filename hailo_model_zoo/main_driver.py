@@ -1,6 +1,10 @@
 import io
 
-from hailo_platform.drivers.hailort.pyhailort import HEF
+try:
+    from hailo_platform.drivers.hailort.pyhailort import HEF
+    HEF_EXISTS = True
+except ModuleNotFoundError:
+    HEF_EXISTS = False
 
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner
@@ -9,8 +13,8 @@ from hailo_sdk_client.tools.profiler.report_generator import ReportGenerator
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
                                              quantize_model, infer_model, compile_model, get_hef_path, info_model,
                                              resolve_alls_path)
+from hailo_model_zoo.utils.hw_utils import TARGETS
 from hailo_model_zoo.utils.logger import get_logger
-from hailo_model_zoo.main import TARGETS
 
 
 def _ensure_quantized(runner, logger, args, network_info):
@@ -56,7 +60,8 @@ def _str_to_profiling_mode(name):
 def parse(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
-    logger.info('Start run for network {} ...'.format(args.model_name))
+    model_name = network_info.network.network_name
+    logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
@@ -67,7 +72,8 @@ def parse(args):
 def quantize(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
-    logger.info('Start run for network {} ...'.format(args.model_name))
+    model_name = network_info.network.network_name
+    logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
@@ -83,7 +89,8 @@ def quantize(args):
 def compile(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
-    logger.info('Start run for network {} ...'.format(args.model_name))
+    model_name = network_info.network.network_name
+    logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
@@ -105,7 +112,8 @@ def profile(args):
             "hef is not used when profiling in pre_placement mode. use --mode post_placement for profiling with a hef.")
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
-    logger.info('Start run for network {} ...'.format(args.model_name))
+    model_name = network_info.network.network_name
+    logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
@@ -122,12 +130,11 @@ def profile(args):
 
     alls_script_path = resolve_alls_path(network_info.paths.alls_script) \
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
-    stats, csv_data = runner.profile_hn_model(network_info.allocation.required_fps,
-                                              profiling_mode=profile_mode,
-                                              hef_filename=args.hef_path,
-                                              allocator_script=alls_script_path)
+    stats, csv_data = runner.profile_hn_model(
+        network_info.allocation.required_fps, profiling_mode=profile_mode,
+        hef_filename=args.hef_path, allocator_script=alls_script_path)
     mem_file = io.StringIO()
-    outpath = args.results_dir / f'{args.model_name}.html'
+    outpath = args.results_dir / f'{model_name}.html'
     report_generator = ReportGenerator(mem_file, csv_data, outpath, stats, hw_arch='hailo8')
     csv_data = report_generator.create_report(should_open_web_browser=False)
     logger.info(f'Profiler report generated in {outpath}')
@@ -136,6 +143,10 @@ def profile(args):
 
 
 def evaluate(args):
+    if args.target == 'hailo8' and not HEF_EXISTS:
+        raise ModuleNotFoundError(
+            f"HailoRT is not avilable, in case you want to run on {args.target} you should install it HailoRT first")
+
     if args.hef_path and args.target != 'hailo8':
         raise ValueError(
             f"hef is not used when evaluating with {args.target}. use --target hailo8 for evaluating with a hef.")
@@ -146,6 +157,10 @@ def evaluate(args):
 
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
+
+    if args.data_path is None and network_info.evaluation.data_set is None:
+        raise ValueError(
+            "Cannot run evaluation without dataset. use --data-path to provide external dataset.")
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 
@@ -175,6 +190,7 @@ def evaluate(args):
 
 def info(args):
     logger = get_logger()
-    logger.info('Printing {} Information'.format(args.model_name))
     network_info = get_network_info(args.model_name)
-    info_model(args.model_name, network_info, logger)
+    model_name = network_info.network.network_name
+    logger.info(f'Start run for network {model_name} ...')
+    info_model(model_name, network_info, logger)

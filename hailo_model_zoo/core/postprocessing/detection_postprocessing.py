@@ -77,6 +77,11 @@ def visualize_detection_result(logits, image, threshold=0.2, image_info=None, us
         labels = {0: {'name': 'vehicle'}}
     elif 'license_plates' in dataset_name:
         labels = {0: {'name': 'plate'}}
+    elif 'hand_detection' in dataset_name:
+        labels = {1: {'name': 'hand'}}
+    else:
+        raise Exception('No Labels for dataset {}'.format(dataset_name))
+
     return visualize_boxes_and_labels_on_image_array(image[0],
                                                      boxes,
                                                      logits['detection_classes'][0],

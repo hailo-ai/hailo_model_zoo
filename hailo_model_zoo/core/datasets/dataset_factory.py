@@ -11,9 +11,12 @@ def get_dataset_parse_func(ds_name):
         image_info: dictionary that contains other information of the image (e.g., the label)
     """
     return {
+        'hand_detection': parse_landmarks.parse_hand_record,
+        'hand_landmark': parse_landmarks.parse_hand_record,
         'imagenet': parse_imagenet.parse_record,
         'coco_segmentation': parse_coco.parse_segmentation_record,
         'cityscapes': parse_coco.parse_segmentation_record,
+        'oxford_pet': parse_coco.parse_segmentation_record,
         'facenet': parse_facenet.parse_facenet_record,
         'face_landmarks': parse_landmarks.parse_record,
         'kitti_depth': parse_kitti_depth.parse_record,

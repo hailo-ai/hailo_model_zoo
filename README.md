@@ -16,6 +16,30 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 ## Change Log
 
 <details>
+<summary> V1.5 </summary>
+
+- Remove HailoRT installation dependency. 
+- Retraining Dockers
+  - yolov3
+  - NanoDet
+  - CenterPose
+  - Yolact
+- New models:
+  - unet_mobilenet_v2
+- Support Oxford-IIIT Pet Dataset
+- New mutli-network example: detection_pose_estimation which combines the following networks:
+  - yolov5m_wo_spp_60p
+  - centerpose_repvgg_a0
+- Improvements:
+  - nanodet_repvgg mAP increased by 2%
+- New Tasks:
+  - hand_landmark_lite from MediaPipe
+  - palm_detection_lite from MediaPipe
+  Both tasks are without evaluation module.
+
+</details>
+
+<details>
 <summary> V1.4 </summary>
 
 - Update to use Dataflow Compiler v3.14.0 ([developer-zone](https://hailo.ai/developer-zone/))
@@ -136,7 +160,8 @@ In order to reproduce the measurements please refer to the following [**page**](
 
 ## Usage
   ### Quick Start Guide  
-  * Install the Hailo Dataflow Compiler, HailoRT and enter the virtualenv. In case you are not Hailo     customer     please contact [**hailo.ai**](https://hailo.ai/contact-us/)
+  * Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact [**hailo.ai**](https://hailo.ai/contact-us/)
+  * Install HailoRT - required only if you want to run on Hailo-8. In case you are not Hailo customer please contact [**hailo.ai**](https://hailo.ai/contact-us/)
   * Clone the Hailo Model Zoo
      ```
      git clone https://github.com/hailo-ai/hailo_model_zoo.git

@@ -3,7 +3,6 @@ base:
 postprocessing:
   meta_arch: yolox
   anchors:
-    fpn: false
     strides:
     - 32
     - 16

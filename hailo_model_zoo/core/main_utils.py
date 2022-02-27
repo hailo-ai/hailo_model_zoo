@@ -70,6 +70,8 @@ def get_network_info(model_name, read_only=False, yaml_path=None):
     Return:
         OmegaConf object that represent network configuration.
     '''
+    if model_name is None and yaml_path is None:
+        raise ValueError("Either model_name or yaml_path must be given")
     net = f'networks/{model_name}.yaml'
     cfg_path = Path(yaml_path) if yaml_path is not None else path_resolver.resolve_cfg_path(net)
     if not cfg_path.is_file():

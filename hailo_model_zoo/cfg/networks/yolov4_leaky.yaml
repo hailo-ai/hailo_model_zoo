@@ -7,7 +7,6 @@ postprocessing:
     - 8
     - 16
     - 32
-    fpn: false
     sizes:
     - - 12
       - 16

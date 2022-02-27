@@ -8,7 +8,7 @@ This document provides install instructions and basic usage examples of the Hail
 
 - Ubuntu 18.04, Python 3.6
 - Hailo Dataflow Compiler v3.14 (Obtain from [**hailo.ai**](http://hailo.ai))
-- HailoRT 4.3.0 (Obtain from [**hailo.ai**](http://hailo.ai))
+- HailoRT 4.3.0 (Obtain from [**hailo.ai**](http://hailo.ai)) - required only for inference on Hailo-8.
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 
 <br>
@@ -16,7 +16,7 @@ This document provides install instructions and basic usage examples of the Hail
 ## Install Instructions
 
 1. Install the Hailo Dataflow compiler and enter the virtualenv (visit [**hailo.ai**](http://hailo.ai) for further instructions).
-2. Install the HailoRT (visit [**hailo.ai**](http://hailo.ai) for further instructions).
+2. Install the HailoRT - required only for inference on Hailo-8 (visit [**hailo.ai**](http://hailo.ai) for further instructions).
 3. Clone this repo:
 ```
 git clone https://github.com/hailo-ai/hailo_model_zoo.git

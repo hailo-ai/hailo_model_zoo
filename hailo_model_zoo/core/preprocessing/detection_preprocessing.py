@@ -123,6 +123,8 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
         # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
+    else:  # else statement is not mandatory. We can cast this regardless of the if-statement above
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
 
     return image, image_info
 
@@ -148,14 +150,15 @@ def yolo_v5(image, image_info=None, height=None, width=None,
 
     image_info['img_orig'] = tf.cast(image, tf.uint8)
     if image_info and 'num_boxes' in image_info.keys():
-        image_info = _cast_image_info_types(image_info, image)
-        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, is_normalized=True)
+        maxpad = kwargs.get('max_pad', MAX_PADDING_LENGTH)
+        image_info = _cast_image_info_types(image_info, image, max_padding_length=maxpad)
+        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, max_padding_length=maxpad, is_normalized=True)
         w = xmax - xmin
         h = ymax - ymin
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['height'] = image_height
         image_info['width'] = image_width
-        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
+        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], maxpad), axis=1)
         image_info['letterbox_height'] = new_height
         image_info['letterbox_width'] = new_width
         image_info['horizontal_pad'] = width - new_width

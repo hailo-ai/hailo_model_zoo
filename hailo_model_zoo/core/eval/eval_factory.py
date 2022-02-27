@@ -45,6 +45,7 @@ def get_evaluation(name):
         'instance_segmentation': InstanceSegmentationEval,
         'mono_depth_estimation': DepthEstimationEval,
         'super_resolution': SuperResolutionEval,
+        'landmark_detection': EmptyEval,
         'face_landmark_detection': FaceLandmarkEval,
         'face_landmark_detection_3d': FaceLandmark3DEval,
         'head_pose_estimation': HeadPoseEstimationEval,

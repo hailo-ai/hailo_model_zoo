@@ -22,7 +22,7 @@ postprocessing:
     - 16
     - 8
     - 4
-    fpn: true
+    type: fpn
     interpolated_scale_aspect_ratio: 1
     num_layers: 5
     scales:

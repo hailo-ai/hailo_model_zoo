@@ -385,6 +385,9 @@ Choose the corresponding YAML from our networks configuration directory, i.e. <c
 
 The compiled model can be used in the [**Hailo TAPPAS**](https://hailo.ai/developer-zone/tappas-apps-toolkit/) to generate a full application.  <br>
 </details>
+
+<br>
+
 ## Semantic Segmentation
 <details>
     <summary>FCN</summary>

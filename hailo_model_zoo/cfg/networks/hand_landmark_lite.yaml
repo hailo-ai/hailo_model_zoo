@@ -1,0 +1,47 @@
+base:
+- base/base.yaml
+evaluation:
+  dataset_name: hand_landmark
+  network_type: landmark_detection
+preprocessing:
+  network_type: landmark_detection
+  meta_arch: face_landmark_cnn
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+quantization:
+  calib_set:
+  - models_files/hands/2022-01-23/hands_calib.tfrecord
+  calib_set_size: 128
+paths:
+  network_path:
+  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.meta
+  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.index
+  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.zip
+allocation:
+  required_fps: 3000
+network:
+  network_name: hand_landmark_lite
+info:
+  task: hand landmark detection
+  input_shape: 224x224x3
+  output_shape: 1x1, 1x1, 1x63, 1x63
+  operations: 0.15G
+  parameters: 1.01M
+  framework: tflite
+  training_data: internal
+  validation_data: internal
+  validation_data_set: N/A
+  eval_metric: MNAE
+  full_precision_result: 12.02
+  source: https://github.com/google/mediapipe
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

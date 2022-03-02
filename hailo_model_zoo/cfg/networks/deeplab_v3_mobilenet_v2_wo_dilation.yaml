@@ -1,0 +1,49 @@
+base:
+- base/pascal.yaml
+allocation:
+  required_fps: 135
+network:
+  network_name: deeplab_v3_mobilenet_v2_wo_dilation
+paths:
+  alls_script: deeplab_v3_mobilenet_v2_wo_dilation.alls
+  network_path:
+  - models_files/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2021-08-12/model.pb
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2021-08-12/deeplab_v3_mobilenet_v2.zip
+parser:
+  nodes:
+  - import/MobilenetV2/MobilenetV2/input
+  - import/ArgMax
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+postprocessing:
+  device_pre_post_layers:
+    max_finder: false
+    bilinear: true
+    argmax: true
+    softmax: false
+preprocessing:
+  network_type: segmentation
+  meta_arch: fcn_resnet
+quantization:
+  quantization_batch_size: 1
+info:
+  task: semantic segmentation
+  input_shape: 513x513x3
+  output_shape: 513x513x1
+  operations: 1.64G
+  parameters: 2.10M
+  framework: tensorflow
+  training_data: pascal voc train2012
+  validation_data: pascal voc val2012
+  eval_metric: mIoU
+  full_precision_result: 71.512
+  source: https://github.com/tensorflow/models/tree/master/research/deeplab
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

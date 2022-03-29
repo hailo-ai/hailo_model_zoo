@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from glob import glob
 from setuptools import find_packages, setup
 
 try:
@@ -42,6 +43,13 @@ def main():
         ]
     }
 
+    # Get a list of all directories that contain a markdown file:
+    md_locs = list(set(['/'.join(path.split('/')[:-1]) for path in glob('./**/*.md', recursive=True)]))
+    # Create a data_files structure for all markdowns:
+    # This is a list of tuples of the form (output_dir, [path/to/file_1, path/to/file_2, ...])
+    doc_dir = 'hailo_model_zoo_doc'
+    data_files = [(f'{doc_dir}/{md_loc}', glob(f'{md_loc}/*.md')) for md_loc in md_locs if "venv" not in md_loc]
+
     setup(
         name='hailo_model_zoo',
         version=model_zoo_version,
@@ -54,7 +62,8 @@ def main():
         packages=find_packages(),
         install_requires=reqs,
         zip_safe=False,
-        package_data=package_data
+        package_data=package_data,
+        data_files=data_files
     )
 
 

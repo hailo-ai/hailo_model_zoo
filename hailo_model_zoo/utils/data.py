@@ -89,7 +89,7 @@ class TFRecordFeed(DataFeed):
         dataset = tf.data.TFRecordDataset([str(tfrecord_file)]).map(parse_func)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 def _dataset_from_folder(folder_path):
@@ -111,7 +111,7 @@ class ImageFeed(DataFeed):
         dataset = _dataset_from_folder(folder_path).map(_open_image_file)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 class RegionProposalFeed(DataFeed):
@@ -122,7 +122,7 @@ class RegionProposalFeed(DataFeed):
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
         dataset = dataset.apply(tf.data.experimental.unbatch())
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 class VideoFeed(DataFeed):
@@ -133,4 +133,4 @@ class VideoFeed(DataFeed):
         dataset = dataset.map(_parse_video_frame)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)

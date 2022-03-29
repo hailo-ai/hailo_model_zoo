@@ -1,5 +1,4 @@
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
 # pre_quantization_optimization commands
 pre_quantization_optimization(equalization, policy=disabled)
 
-compilation_param({conv*}, balance_output_multisplit=False)
-ddr0 = ddr(conv35, concat1)

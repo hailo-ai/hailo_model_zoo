@@ -1,11 +1,7 @@
 base:
 - base/retinaface.yaml
-quantization:
-  quantization_batch_size: 4
 network:
   network_name: retinaface_mobilenet_v1
-allocation:
-  required_fps: 114
 paths:
   alls_script: retinaface_mobilenet_v1.alls
   network_path:

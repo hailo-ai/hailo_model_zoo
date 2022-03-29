@@ -437,8 +437,6 @@ hn_editor:
       - 0
 network:
   network_name: yolact_regnetx_800mf_20classes
-allocation:
-  required_fps: 40
 paths:
   alls_script: yolact_regnetx_800mf_20classes.alls
   network_path:

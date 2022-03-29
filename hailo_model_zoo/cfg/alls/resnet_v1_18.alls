@@ -1,8 +1,3 @@
-# pre_quantization_optimization commands
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 pre_quantization_optimization(equalization, policy=disabled)
 
-# These defuses are to help easy allocation- without them
-# each defuse has 8 subclusters with 40 L3 weight cuts.
-conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_d4, conv18_dc = defuse(conv18, 5)
-conv19_d0, conv19_d1, conv19_d2, conv19_d3, conv19_d4, conv19_dc = defuse(conv19, 5)
-conv20_d0, conv20_d1, conv20_d2, conv20_d3, conv20_d4, conv20_dc = defuse(conv20, 5)

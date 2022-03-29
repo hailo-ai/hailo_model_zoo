@@ -226,31 +226,21 @@ def make_calibset_callback(network_info, batch_size, preproc_callback, override_
     dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
     data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path, dataset_name)
-    return data_feed_cb()._dataset.unbatch()
+    dataset = data_feed_cb()._dataset if batch_size is None else data_feed_cb()._dataset.unbatch()
+    return dataset
 
 
 def quantize_model(runner, logger, network_info, calib_path, results_dir):
-    quant_batch_size = network_info.quantization.quantization_batch_size
 
-    logger.info('Using batch size of {} for quantization'.format(quant_batch_size))
+    logger.info('Preparing calibration data...')
     preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_callback = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
-    batch_size = network_info.quantization.quantization_batch_size
-    calib_set_size = network_info.quantization.calib_set_size
+    calib_feed_callback = make_calibset_callback(network_info, batch_size=None,
+                                                 preproc_callback=preproc_callback,
+                                                 override_path=calib_path)
 
-    calib_num_batch = calib_set_size // batch_size
-    if calib_set_size % batch_size != 0:
-        raise ValueError(
-            "Using only {} images for calibration instead of {}, because {} is not an integer product "
-            "of the batch size {}".format(batch_size * calib_num_batch, calib_set_size, calib_set_size, batch_size)
-        )
-
-    max_elementwise_feed_repeat = network_info.allocation.max_elementwise_feed_repeat
     quantization_script_filename = resolve_alls_path(network_info.paths.alls_script)
 
-    runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch,
-                    batch_size=batch_size,
-                    max_elementwise_feed_repeat=max_elementwise_feed_repeat,
+    runner.quantize(calib_feed_callback,
                     model_script=quantization_script_filename,
                     work_dir=None)
 

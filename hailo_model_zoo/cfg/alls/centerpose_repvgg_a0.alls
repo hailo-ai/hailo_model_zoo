@@ -1,2 +1,3 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=2048)
 allocator_param(merge_min_layer_utilization=0.1)
 reshape1 = format_conversion(centerpose_repvgg_a0/input_layer1, tf_rgb_to_hailo_rgb)

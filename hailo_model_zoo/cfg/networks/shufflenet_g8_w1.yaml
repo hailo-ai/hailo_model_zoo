@@ -1,11 +1,7 @@
 base:
 - base/resnet.yaml
-quantization:
-  calib_set_size: 64
 network:
   network_name: shufflenet_g8_w1
-allocation:
-  required_fps: 1029
 paths:
   alls_script: shufflenet_g8_w1.alls
   network_path:

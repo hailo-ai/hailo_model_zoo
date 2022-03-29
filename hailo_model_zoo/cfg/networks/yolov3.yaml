@@ -29,8 +29,6 @@ hn_editor:
     - yolov3/conv91
     - yolov3/conv98
     split_output: true
-quantization:
-  quantization_batch_size: 2
 allocation:
   required_fps: 100
 preprocessing:

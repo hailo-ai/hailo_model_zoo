@@ -1,0 +1,5 @@
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+
+compilation_param({*}, resources_allocation_strategy=min_l3_mem_match_fps)
+compilation_param({conv*}, balance_output_multisplit=False)
+

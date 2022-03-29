@@ -9,6 +9,7 @@ class LayerSplitter(object):
                               'yolov3_416',
                               'yolov3_gluon_416',
                               'yolov4_leaky',
+                              'yolov4_1_3_512_512_static',
                               'tiny_yolov4',
                               'tiny_yolov4_license_plates',
                               'polylanenet_resnet_v1_34',

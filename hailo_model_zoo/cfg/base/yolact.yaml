@@ -1,10 +1,8 @@
 base:
 - base/base.yaml
 quantization:
-  calib_set_size: 64
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  quantization_batch_size: 4
 preprocessing:
   network_type: instance_segmentation
   meta_arch: mobilenet_ssd

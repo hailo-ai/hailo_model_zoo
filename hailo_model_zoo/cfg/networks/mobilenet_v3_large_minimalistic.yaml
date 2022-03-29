@@ -3,7 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/imagenet/2019-12-22/imagenet_train.tfrecord.000
-  calib_set_size: 128
 network:
   network_name: mobilenet_v3_large_minimalistic
 allocation:

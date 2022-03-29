@@ -1,7 +1,5 @@
 base:
 - base/nanodet.yaml
-quantization:
-  quantization_batch_size: 4
 allocation:
   required_fps: 1000
 preprocessing:

@@ -3,6 +3,8 @@ base:
 evaluation:
   dataset_name: hand_landmark
   network_type: landmark_detection
+  data_set: null
+  validation_data_set: null
 preprocessing:
   network_type: landmark_detection
   meta_arch: face_landmark_cnn
@@ -18,10 +20,9 @@ parser:
     - 255.0
     - 255.0
 quantization:
-  calib_set:
-  - models_files/hands/2022-01-23/hands_calib.tfrecord
-  calib_set_size: 128
+  calib_set: null
 paths:
+  alls_script: hand_landmark_lite.alls
   network_path:
   - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.meta
   - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.index

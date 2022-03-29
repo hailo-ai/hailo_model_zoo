@@ -2,8 +2,6 @@ base:
 - base/mobilenet.yaml
 network:
   network_name: mobilenet_v2_1.4
-allocation:
-  required_fps: 1000
 paths:
   alls_script: mobilenet_v2_1.4.alls
   network_path:

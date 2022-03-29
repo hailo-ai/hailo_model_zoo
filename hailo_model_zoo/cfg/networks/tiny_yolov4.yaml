@@ -33,8 +33,6 @@ hn_editor:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  calib_set_size: 64
-  quantization_batch_size: 8
 allocation:
   required_fps: 1385
 network:

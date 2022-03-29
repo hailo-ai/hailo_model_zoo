@@ -1,7 +1,5 @@
 base:
 - base/resnet.yaml
-quantization:
-  calib_set_size: 64
 network:
   network_name: regnety_200mf
 allocation:

@@ -1,6 +1,5 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 ### Auto generated allocation script ###
-
-allocator_param(split_aware_optimize_buffers=True)
 
 # post_quantization_optimization commands
 post_quantization_optimization(bias_correction, policy=enabled)
@@ -40,6 +39,7 @@ quantization_param(conv33, bias_mode=double_scale_initialization)
 quantization_param(conv34, bias_mode=double_scale_initialization)
 quantization_param(conv35, bias_mode=double_scale_initialization)
 quantization_param(fc1, bias_mode=double_scale_initialization)
+allocator_param(enable_partial_row_buffers=disabled)
 
 conv1_d0, conv1_d1, conv1_dc = defuse(conv1, 2)
 dw1_d0, dw1_d1, dw1_d2, dw1_d3, dw1_d4, dw1_dc = defuse(dw1, 5)

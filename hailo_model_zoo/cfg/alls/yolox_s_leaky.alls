@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 compilation_param(conv17, balance_output_multisplit=False)
 compilation_param(conv27, balance_output_multisplit=False)
 compilation_param(conv36, balance_output_multisplit=False)

@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=4, calibset_size=2048)
 # pre_quantization_optimization commands
 pre_quantization_optimization(activation_clipping, layers=[conv27], mode=manual, clipping_values=[0.0, 125])
 

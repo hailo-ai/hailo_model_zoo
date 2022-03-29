@@ -5,13 +5,8 @@ preprocessing:
   meta_arch: mobilenet_ssd_ar
 postprocessing:
   nms_iou_thresh: 0.5
-quantization:
-  quantization_batch_size: 1
-  calib_set_size: 32
 network:
   network_name: ssd_mobilenet_v1_hd
-allocation:
-  required_fps: 132
 paths:
   alls_script: ssd_mobilenet_v1_hd.alls
   network_path:

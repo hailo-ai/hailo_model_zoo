@@ -1,7 +1,8 @@
 from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_facenet, parse_afw, parse_kitti_depth,
                                            parse_widerface, parse_utkfaces, parse_mot, parse_tusimple, parse_landmarks,
                                            parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
-                                           parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa)
+                                           parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
+                                           parse_lp_ocr)
 
 
 def get_dataset_parse_func(ds_name):
@@ -40,4 +41,5 @@ def get_dataset_parse_func(ds_name):
         'vehicle_detection': parse_coco.parse_detection_record,
         '300w-lp_tddfa': parse_300w_lp_tddfa.parse_record,
         'license_plates': parse_coco.parse_detection_record,
+        'lp_ocr': parse_lp_ocr.parse_lp_ocr_record,
     }[ds_name]

@@ -1,3 +1,1 @@
-conv18_1, conv18_2, conv18_3, conv18_dc = defuse(conv18, 3)
-conv19_1, conv19_2, conv19_3, conv19_dc = defuse(conv19, 3)
-conv20_1, conv20_2, conv20_3, conv20_dc = defuse(conv20, 3)
+model_optimization_config(calibration, batch_size=8, calibset_size=64)

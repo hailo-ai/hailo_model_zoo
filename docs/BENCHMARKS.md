@@ -16,7 +16,7 @@ After building the HEF you will be able to measure the performance of the model 
 hailortcli benchmark resnet_v1_50.hef
 ```
 
-Example output: 
+Example output:
 ```
 =======
 Summary
@@ -27,4 +27,16 @@ Latency (hw)                      = 2.93646 ms
 Power in streaming mode (average) = 3.19395 W
                         (max)     = 3.20456 W
 
+```
+
+<br>
+
+## Using Datasets from the Hailo Model Zoo
+To use datasets from the Hailo Model Zoo, you can use the command:
+```
+python hailo_model_zoo/tools/conversion_tool.py /path/to/tfrecord_file resnet_v1_50
+```
+which will generate a bin file with serialized images. This bin file can be used inside the HailoRT:
+```
+hailortcli benchmark resnet_v1_50.hef --input-files tfrecord_file.bin
 ```

@@ -228,7 +228,8 @@ def regnet_detection(image, image_info=None, height=None, width=None,
         # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
-
+    else:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
     return image, image_info
 
 

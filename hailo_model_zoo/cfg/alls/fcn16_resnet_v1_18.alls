@@ -1,17 +1,2 @@
-## Allocator Script Version 1.0
-
-# post_quantization_optimization commands
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
 post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv22], loss_types=[l2])
-
-allocator_param(optimize_buffers=False)
-
-shortcut0 = shortcut(maxpool1, [conv2, conv3])
-compilation_param(shortcut0, balance_output_multisplit=False)
-
-# compilation_params commands
-compilation_param({conv*}, balance_output_multisplit=False)
-
-conv17_d0, conv17_d1, conv17_dcv = defuse(conv17, 2)
-conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_dc = defuse(conv18, 4)
-conv19_d0, conv19_d1, conv19_d2, conv19_d3, conv19_dc = defuse(conv19, 4)
-conv20_d0, conv20_d1, conv20_d2, conv20_d3, conv20_dc = defuse(conv20, 4)

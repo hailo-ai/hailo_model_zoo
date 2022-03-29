@@ -1,5 +1,3 @@
-quantization:
-  calib_set_size: 32
 preprocessing:
   network_type: detection
   meta_arch: mobilenet_ssd

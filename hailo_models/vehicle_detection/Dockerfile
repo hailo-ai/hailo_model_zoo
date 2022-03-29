@@ -19,4 +19,4 @@ WORKDIR /workspace/yolov5
 RUN cd /workspace/yolov5
 COPY ./src/vehicle_detector.yaml ./models
 COPY ./src/vehicles.yaml ./data
-ADD https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2021-11-16/yolov5m_vehicles.pt ./weights
+ADD https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2022-02-23/yolov5m_vehicles.pt ./weights

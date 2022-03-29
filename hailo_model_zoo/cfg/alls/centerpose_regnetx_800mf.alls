@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=2048)
 allocator_param(seed=3)
 compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
 compilation_param({deconv*}, resources_allocation_strategy=min_l3_mem_match_fps)

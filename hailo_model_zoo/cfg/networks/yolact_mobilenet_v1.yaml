@@ -1,8 +1,5 @@
 base:
 - base/yolact.yaml
-quantization:
-  quantization_batch_size: 1
-  calib_set_size: 64
 hn_editor:
   output_scheme:
     change_activations:
@@ -28,8 +25,6 @@ postprocessing:
     - - 357
 network:
   network_name: yolact_mobilenet_v1
-allocation:
-  required_fps: 40
 paths:
   alls_script: yolact_mobilenet_v1.alls
   network_path:

@@ -1,26 +1,41 @@
 <p align="left">
-  <img src="docs/images/logo.svg" />
-</p>  
-
+  <img src="docs/images/logo.png" />
+</p>
 
 # Hailo Model Zoo #
 
-The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo-8 device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The models are optimized for high accuracy on public datasets and can be used to benchmark the Hailo quantization scheme.
-
-<p align="center">
-  <img src="docs/images/tasks.jpg" />
-</p>
+The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo-8 device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
 
 <br>
 
-## Change Log
+<details>
+<summary> Changelog </summary>
 
 <details>
-<summary> V1.5 </summary>
+<summary> v2.0 </summary>
 
-- Remove HailoRT installation dependency. 
+- Updated to use Dataflow Compiler v3.16 ([developer-zone](https://hailo.ai/developer-zone/)) with TF version 2.5 which require CUDA11.2
+- Updated to use HailoRT 4.6 ([developer-zone](https://hailo.ai/developer-zone/))
+- Retraining Dockers - each retraining docker has a corresponding README file near it. New retraining dockers:
+  - SSD
+  - YOLOX
+  - FCN
+- New models:
+  - yolov5l
+- Introducing Hailo Models, in-house pretrained networks with compatible Dockerfile for retraining
+  - yolov5m_vehicles (vehicle detection)
+  - tiny_yolov4_license_plates (license plate detection)
+  - lprnet (license plate recognition)
+- Added new documentation to the [YAML structure](docs/YAML.md)
+
+</details>
+
+<details>
+<summary> v1.5 </summary>
+
+- Remove HailoRT installation dependency.
 - Retraining Dockers
-  - yolov3
+  - YOLOv3
   - NanoDet
   - CenterPose
   - Yolact
@@ -28,19 +43,19 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
   - unet_mobilenet_v2
 - Support Oxford-IIIT Pet Dataset
 - New mutli-network example: detection_pose_estimation which combines the following networks:
-  - yolov5m
+  - yolov5m_wo_spp_60p
   - centerpose_repvgg_a0
 - Improvements:
   - nanodet_repvgg mAP increased by 2%
 - New Tasks:
   - hand_landmark_lite from MediaPipe
   - palm_detection_lite from MediaPipe
-  - Both tasks are without evaluation module.
+  Both tasks are without evaluation module.
 
 </details>
 
 <details>
-<summary> V1.4 </summary>
+<summary> v1.4 </summary>
 
 - Update to use Dataflow Compiler v3.14.0 ([developer-zone](https://hailo.ai/developer-zone/))
 - Update to use HailoRT 4.3.0 ([developer-zone](https://hailo.ai/developer-zone/))
@@ -60,7 +75,7 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 </details>
 
 <details>
-<summary> V1.3 </summary>
+<summary> v1.3 </summary>
 
 - Update to use Dataflow Compiler v3.12.0 ([developer-zone](https://hailo.ai/developer-zone/))
 - New task: indoor depth estimation
@@ -70,8 +85,8 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
   - resmlp12 - new architecture support ([paper](https://arxiv.org/abs/2105.03404))
   - yolox_l_leaky
 - Improvements:
-  - ssd_mobilenet_v1 - in-chip NMS optimitzation (de-fusing)
-- Model Optimitzation API Changes
+  - ssd_mobilenet_v1 - in-chip NMS optimization (de-fusing)
+- Model Optimization API Changes
   - Model Optimization parameters can be updated using the networks' model script files (*.alls)
   - Deprecated: quantization params in YAMLs
 - Training Guide: new training guide for yolov5 with compatible Dockerfile
@@ -79,7 +94,7 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 
 
 <details>
-<summary> V1.2 </summary>
+<summary> v1.2 </summary>
 
 - New features:
   - YUV to RGB on core can be added through YAML configuration.
@@ -106,7 +121,7 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 </details>
 
 <details>
-<summary> V1.1 </summary>
+<summary> v1.1 </summary>
 
 - Support VisDrone Dataset
 - New task: pose estimation
@@ -126,28 +141,28 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 </details>
 
 <details>
-<summary> V1.0 </summary>
+<summary> v1.0 </summary>
 
 - Initial release
 - Support for object detection, semantic segmentation and classification networks
 </details>
 
-<br>
-
-## Public Models
-
-Full list of pre-trained models can be found [**here**](docs/MODELS.md).
+</details>
 
 <br>
 
-## Retrain on Custom Dataset
+## Models
 
-To retrain a network from the Hailo Model Zoo with your custom dataset please refer to the following [**guide**](docs/RETRAIN_ON_CUSTOM_DATASET.md).
+Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo-8 device.
+The models are divided to:
+* [**PUBLIC MODELS**](docs/PUBLIC_MODELS.md) which were trained on publicly available datasets.
+* [**HAILO MODELS**](docs/HAILO_MODELS.md) which were trained in-house for specific use-cases on internal datasets. Each Hailo Model is accompanied with retraining instructions.
 
 <br>
 
-## Hailo Models<br>
-Full list of Hailo Models trained in-house for specific applications can be found [**here**](docs/HAILO_MODELS.md)
+## Retraining
+
+Hailo also provides [**RETRAINING INSTRUCTIONS**](docs/RETRAIN_ON_CUSTOM_DATASET.md) to train a network from the Hailo Model Zoo with custom dataset.
 
 <br>
 
@@ -159,9 +174,9 @@ In order to reproduce the measurements please refer to the following [**page**](
 <br>
 
 ## Usage
-  ### Quick Start Guide  
+  ### Quick Start Guide
   * Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact [**hailo.ai**](https://hailo.ai/contact-us/)
-  * Install HailoRT - required only if you want to run on Hailo-8. In case you are not Hailo customer please contact [**hailo.ai**](https://hailo.ai/contact-us/)
+  * Install HailoRT (optional). Required only if you want to run on Hailo-8. In case you are not Hailo customer please contact [**hailo.ai**](https://hailo.ai/contact-us/)
   * Clone the Hailo Model Zoo
      ```
      git clone https://github.com/hailo-ai/hailo_model_zoo.git
@@ -170,25 +185,28 @@ In order to reproduce the measurements please refer to the following [**page**](
     ```
     cd hailo_model_zoo; pip install -e .
     ```
-  * Run the Hailo Model Zoo. For example, to parse the ResNet V1 50  model:
+  * Run the Hailo Model Zoo. For example, print the information of the MobileNet-v1 model:
     ```
-    python hailo_model_zoo/main.py parse resnet_v1_50
+    python hailo_model_zoo/main.py info mobilenet_v1
     ```
-    
+> **_NOTE:_** In case you are using the Hailo Software Suite please use the following path \(\<version> means 3.6/3.7/3.8): <br><virtualenv_dir>/lib/python\<version>/site-packages/hailo_model_zoo/main.py</br>
+
   ### Getting Started
-    
-  For further functionality please see the [**GETTING_STARTED**](docs/GETTING_STARTED.md) page (full install instructions and usage examples). The Hailo Model Zoo is using the Hailo Dataflow Compiler for parsing, model optimization, emulation and compilation of the deep learning models. Full functionality includes:
+
+  For full functionality please see the [**GETTING STARTED**](docs/GETTING_STARTED.md) page (full install instructions and usage examples). The Hailo Model Zoo is using the Hailo Dataflow Compiler for parsing, model optimization, emulation and compilation of the deep learning models. Full functionality includes:
   * Parse: model translation of the input model into Hailo's internal representation.
-  * Profiler: generate profiler report of the model. The report contains information about your model     and expected performance on the Hailo hardware.
-  * Quantize: optimize the deep learning model for inference and generate a numeric translation of     the input model into a compressed integer representation. For further information please see     [**OPTIMIZATION**](docs/OPTIMIZATION.md).
-  * Compile: run the Hailo compiler to generate the Hailo Executable Format file (HEF) which can be     executed on the Hailo hardware.
-  * Evaluate: infer the model using the Hailo Emulator or the Hailo hardware and produce the model     accuracy.
-    
-  For further information about the Hailo Dataflow Compiler please contact [**hailo.ai**](https://    hailo.ai/contact-us/).
-    
+  * Profiler: generate profiler report of the model. The report contains information about your model and expected performance on the Hailo hardware.
+  * Quantize: optimize the deep learning model for inference and generate a numeric translation of the input model into a compressed integer representation. For further information please see our [**OPTIMIZATION**](docs/OPTIMIZATION.md) page.
+  * Compile: run the Hailo compiler to generate the Hailo Executable Format file (HEF) which can be executed on the Hailo hardware.
+  * Evaluate: infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy. 
+
+For further information about the Hailo Dataflow Compiler please contact [**hailo.ai**](https://hailo.ai/contact-us/).
+
   <p align="center">
-    <img src="docs/images/diagram.jpg" />
+    <img src="docs/images/usage_flow.svg" />
   </p>
+
+<br>
 
 ## License
 

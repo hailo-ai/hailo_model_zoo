@@ -1,6 +1,4 @@
 quantization:
-  quantization_batch_size: 8
-  calib_set_size: 64
   calib_set_name: null
   calib_batch_size: null
 hn_editor:
@@ -30,8 +28,7 @@ preprocessing:
   padding_color: 114
 allocation:
   allocation_timeout: null
-  max_elementwise_feed_repeat: 4
-  required_fps: 1
+  required_fps: null
 parser:
   ew_add_policy: fused_conv_and_add
   nodes:

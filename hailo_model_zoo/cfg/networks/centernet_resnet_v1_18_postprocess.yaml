@@ -8,8 +8,6 @@ postprocessing:
     bilinear: false
     argmax: false
     softmax: false
-quantization:
-  calib_set_size: 2048
 network:
   network_name: centernet_resnet_v1_18_postprocess
 paths:

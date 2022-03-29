@@ -1,7 +1,5 @@
 base:
 - base/pascal.yaml
-allocation:
-  required_fps: 135
 network:
   network_name: deeplab_v3_mobilenet_v2_wo_dilation
 paths:
@@ -32,8 +30,6 @@ postprocessing:
 preprocessing:
   network_type: segmentation
   meta_arch: fcn_resnet
-quantization:
-  quantization_batch_size: 1
 info:
   task: semantic segmentation
   input_shape: 513x513x3

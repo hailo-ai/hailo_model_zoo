@@ -63,7 +63,7 @@ def _make_evaluation_base():
         '--eval-batch-size', type=int, default=8,
         help='Batch size for INFERENCE (evaluation and pre-quant stats collection) only '
         '(feel free to increase to whatever your GPU can handle). '
-        ' the quant-aware optimizers s.a. QFT & IBC use the <quantization_batch_size> field from yaml'
+        ' the quant-aware optimizers s.a. QFT & IBC use the calibration batch size parameter from the ALLS'
     )
 
     evaluation_base_parser.add_argument(

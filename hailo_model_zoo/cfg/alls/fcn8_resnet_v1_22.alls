@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
 #print_buffers()
 allocator_param(seed=1000, validate=False)
 

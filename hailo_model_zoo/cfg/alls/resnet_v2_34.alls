@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 conv30_1, conv30_2, conv30_3, conv30_dc = defuse(conv30, 3)
 conv32_1, conv32_2, conv32_3, conv32_dc = defuse(conv32, 3)
 conv33_1, conv33_2, conv33_3, conv33_dc = defuse(conv33, 3)

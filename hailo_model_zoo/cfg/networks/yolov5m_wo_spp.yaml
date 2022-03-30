@@ -3,7 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  quantization_batch_size: 4
 hn_editor:
   output_scheme:
     change_activations:

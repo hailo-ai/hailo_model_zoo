@@ -1,8 +1,5 @@
 base:
 - base/tddfa.yaml
-quantization:
-  calib_set_size: 64
-  quantization_batch_size: 2
 allocation:
   required_fps: 1000
 network:

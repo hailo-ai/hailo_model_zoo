@@ -3,10 +3,8 @@ base:
 info:
   source: internal
 quantization:
-  calib_set_size: 64
   calib_set:
   - models_files/cityscapes/2021-06-21/cityscapes_calib.tfrecord
-  quantization_batch_size: 1
 preprocessing:
   network_type: segmentation
   meta_arch: fcn_resnet

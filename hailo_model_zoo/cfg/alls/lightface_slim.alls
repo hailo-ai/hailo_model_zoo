@@ -1,8 +1,1 @@
-# This pyramid helps allocation converge, because conv2 has 7 outputs with large accumulated
-# memory. This shortcut helps spread this over several network edges.
-dw2_d0, dw2_d1, dw2_d2, dw2_d3, dw2_d4, dw2_d5, dw2_d6, dw2_dc = defuse(dw2, 7)
-s0 = shortcut(conv2, [dw2_d0, dw2_d1, dw2_d2, dw2_d3])
-s1 = shortcut(s0, [dw2_d0, dw2_d1])
-s2 = shortcut(s0, [dw2_d2, dw2_d3])
-
-reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
+model_optimization_config(calibration, batch_size=8, calibset_size=16)

@@ -93,7 +93,6 @@ class YoloPostProc(object):
 
             # detection_boxes is a [BS, num_detections, 1, 4] tensor, detection_scores is a
             # [BS, num_detections, num_classes] tensor
-            detection_boxes = detection_boxes / H_input  # normalization of box coordinates to 1
             BS = endnodes[0].shape[0]
             H = H_input // stride
             W = W_input // stride
@@ -180,12 +179,12 @@ class YoloPostProc(object):
         detection_boxes = np.reshape(bbox, (BS, -1, 1, 4))  # dim [N, num_detections, 1, 4]
         detection_scores = np.reshape(class_score, (BS, -1, num_classes))  # dim [N, num_detections, 80]
 
-        # switching scheme from xmin, ymin, xmanx, ymax to ymin, xmin, ymax, xmax:
+        # switching scheme from xmin, ymin, xmanx, ymax to ymin, xmin, ymax, xmax and normalize to 1:
         detection_boxes_tmp = np.zeros(detection_boxes.shape)
-        detection_boxes_tmp[:, :, :, 0] = detection_boxes[:, :, :, 1]
-        detection_boxes_tmp[:, :, :, 1] = detection_boxes[:, :, :, 0]
-        detection_boxes_tmp[:, :, :, 2] = detection_boxes[:, :, :, 3]
-        detection_boxes_tmp[:, :, :, 3] = detection_boxes[:, :, :, 2]
+        detection_boxes_tmp[:, :, :, 0] = detection_boxes[:, :, :, 1] / self._image_dims[0]
+        detection_boxes_tmp[:, :, :, 1] = detection_boxes[:, :, :, 0] / self._image_dims[1]
+        detection_boxes_tmp[:, :, :, 2] = detection_boxes[:, :, :, 3] / self._image_dims[0]
+        detection_boxes_tmp[:, :, :, 3] = detection_boxes[:, :, :, 2] / self._image_dims[1]
 
         detection_boxes = detection_boxes_tmp  # now scheme is: ymin, xmin, ymax, xmax
         return detection_boxes.astype(np.float32), detection_scores.astype(np.float32)

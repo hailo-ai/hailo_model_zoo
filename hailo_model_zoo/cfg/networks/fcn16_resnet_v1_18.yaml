@@ -4,8 +4,6 @@ postprocessing:
   ext_upsample: 16
 network:
   network_name: fcn16_resnet_v1_18
-allocation:
-  required_fps: 16.2
 parser:
   nodes:
   - null

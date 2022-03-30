@@ -21,8 +21,6 @@ parser:
     - Conv_339
     - Sigmoid_341
     - Sigmoid_342
-quantization:
-  quantization_batch_size: 2
 info:
   task: object detection
   input_shape: 640x640x3

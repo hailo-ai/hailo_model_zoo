@@ -9,7 +9,7 @@ except ModuleNotFoundError:
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
-from hailo_sdk_client.tools.profiler.report_generator import ReportGenerator
+from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
                                              quantize_model, infer_model, compile_model, get_hef_path, info_model,
                                              resolve_alls_path)
@@ -75,6 +75,10 @@ def quantize(args):
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 
+    if args.calib_path is None and network_info.quantization.calib_set is None:
+        raise ValueError(
+            "Cannot run optimization without dataset. use --calib-path to provide external dataset.")
+
     logger.info('Initializing the runner...')
     runner = ClientRunner()
 
@@ -130,16 +134,20 @@ def profile(args):
 
     alls_script_path = resolve_alls_path(network_info.paths.alls_script) \
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
-    stats, csv_data = runner.profile_hn_model(
-        network_info.allocation.required_fps, profiling_mode=profile_mode,
-        hef_filename=args.hef_path, allocator_script=alls_script_path)
+
+    stats, csv_data, latency_data = runner.profile_hn_model(fps=network_info.allocation.required_fps,
+                                                            profiling_mode=profile_mode,
+                                                            should_use_logical_layers=True,
+                                                            allocator_script=alls_script_path,
+                                                            hef_filename=args.hef_path)
+
     mem_file = io.StringIO()
     outpath = args.results_dir / f'{model_name}.html'
-    report_generator = ReportGenerator(mem_file, csv_data, outpath, stats, hw_arch='hailo8')
+    report_generator = ReactReportGenerator(mem_file, csv_data, latency_data, outpath, stats, 'hailo8')
     csv_data = report_generator.create_report(should_open_web_browser=False)
     logger.info(f'Profiler report generated in {outpath}')
 
-    return stats, csv_data
+    return stats, csv_data, latency_data
 
 
 def evaluate(args):

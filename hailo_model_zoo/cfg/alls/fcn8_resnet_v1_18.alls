@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
 ## Allocator Script Version 1.0
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])

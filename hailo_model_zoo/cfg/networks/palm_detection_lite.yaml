@@ -4,6 +4,8 @@ evaluation:
   dataset_name: hand_detection
   network_type: landmark_detection
   classes: 0
+  data_set: null
+  validation_data_set: null
 postprocessing:
   meta_arch: ssd
   nms_iou_thresh: 0.6
@@ -43,9 +45,7 @@ parser:
     - 255.0
     - 255.0
 quantization:
-  calib_set:
-  - models_files/hands/2022-01-23/hands_calib.tfrecord
-  calib_set_size: 128
+  calib_set: null
 paths:
   alls_script: palm_detection_lite.alls
   network_path:

@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
 # New quantization params
 post_quantization_optimization(bias_correction, policy=disabled)
 pre_quantization_optimization(equalization, policy=enabled)

@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
 
 # post_quantization_optimization commands

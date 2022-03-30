@@ -3,7 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/widerface/2020-03-23/widerfacecalibration_set.tfrecord
-  calib_set_size: 16
 preprocessing:
   network_type: face_detection
   max_pad: 2048

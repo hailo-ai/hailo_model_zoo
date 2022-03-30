@@ -8,14 +8,10 @@ preprocessing:
   network_type: fast_depth
   meta_arch: fast_depth
 quantization:
-  quantization_batch_size: 8
-  calib_set_size: 128
   calib_set:
   - models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_calib.tfrecord
 network:
   network_name: fast_depth
-allocation:
-  required_fps: 1000
 paths:
   alls_script: fast_depth.alls
   network_path:

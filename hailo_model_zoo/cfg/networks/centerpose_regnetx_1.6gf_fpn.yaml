@@ -1,8 +1,5 @@
 base:
 - base/centerpose.yaml
-quantization:
-  quantization_batch_size: 4
-  calib_set_size: 32
 hn_editor:
   output_scheme:
     change_activations:
@@ -47,18 +44,18 @@ network:
   network_name: centerpose_regnetx_1.6gf_fpn
 paths:
   network_path:
-  - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centerpose_regnet.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centerpose_regnetx_1.6gf_fpn.zip
+  - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centerpose_regnet.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip
   alls_script: centerpose_regnetx_1.6gf_fpn.alls
 parser:
   nodes:
   - input.1
-  - - Conv_232
-    - Conv_235
-    - Conv_238
-    - Conv_241
-    - Conv_244
-    - Conv_247
+  - - Conv_164
+    - Conv_167
+    - Conv_170
+    - Conv_173
+    - Conv_176
+    - Conv_179
 info:
   task: pose estimation
   input_shape: 640x640x3
@@ -69,6 +66,6 @@ info:
   training_data: coco keypoints train2017
   validation_data: coco keypoints val2017
   eval_metric: AP
-  full_precision_result: 53.547
+  full_precision_result: 53.537
   source: https://github.com/tensorboy/centerpose
   license_url: https://opensource.org/licenses/MIT

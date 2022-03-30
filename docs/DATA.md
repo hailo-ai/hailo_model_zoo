@@ -173,7 +173,7 @@ widerface/
 
 3. Run the creation scripts
 ```
-python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split 
+python hailo_model_zoo/datasets/create_widerface_tfrecord.py calib --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split
 python hailo_model_zoo/datasets/create_widerface_tfrecord.py val --img /path/to/widerface --gt_mat_path /path/to/wider_face_split --hard_mat_path /path/to/wider_face_split
 ```
 
@@ -316,8 +316,8 @@ python hailo_model_zoo/datasets/create_nyu_depth_v2_tfrecord.py val --data ./nyu
 ## 300W-LP and AFLW2k3d
 Run the creation scripts:
 ```
-python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py 
-python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py 
+python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py
+python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py
 ```
 
 ### Manual Download (Optional)
@@ -335,7 +335,7 @@ train_aug_120x120
 ├── AFW_AFW_1051618982_1_0_4.jpg
 └── ...
 ```
-2. Run 
+2. Run
 ```
 python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/train_aug_120x120
 ```
@@ -348,7 +348,7 @@ python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/
       - AFLW2000-3D.pts68.npy
       - AFLW2000-3D-Reannotated.pts68.npy
       - AFLW2000-3D_crop.roi_box.npy
-   
+
        The expected structure:
        ```
     aflw2k3d_tddfa
@@ -366,7 +366,7 @@ python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/
            |   ├── image00004.jpg
            |   ├── image00004.mat
            |   └── ...
-           ├── AFLW2000-3D_crop 
+           ├── AFLW2000-3D_crop
            |   ├── image00002.jpg
            |   ├── image00004.jpg
            |   ├── image00006.jpg
@@ -398,7 +398,7 @@ Hands               00  000
 ├── Hand_0011697.jpg
 └── ...
 ```
-2. Run 
+2. Run
 ```
 python hailo_model_zoo/datasets/create_hand_landmark_tfrecord.py --img /path/to/Hands
 ```

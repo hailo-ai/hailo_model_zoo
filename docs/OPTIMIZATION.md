@@ -6,7 +6,7 @@ Model optimization is the stage of converting a full precision model to an optim
 
 <center>
 
-| Precision        | Top-1 | 
+| Precision        | Top-1 |
 | ---------------- | ------|
 | Full precision   | 68.85 |
 | 8-bit (emulator) | 68.54 |

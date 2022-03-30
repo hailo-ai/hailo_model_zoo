@@ -3,7 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  quantization_batch_size: 4
 hn_editor:
   output_scheme:
     change_activations:
@@ -18,7 +17,7 @@ hn_editor:
 network:
   network_name: yolov5m
 allocation:
-  required_fps: 50
+  required_fps: 150
 paths:
   alls_script: yolov5m.alls
   network_path:

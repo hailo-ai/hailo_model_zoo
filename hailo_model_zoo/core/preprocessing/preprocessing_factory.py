@@ -79,7 +79,8 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'smoke': detection_preprocessing.centernet_resnet_v1_18_detection,
         'face_landmark_cnn_3d': face_landmarks_preprocessing.face_landmark_cnn,
         'resmlp': classification_preprocessing.resmlp,
-        'fast_depth': fast_depth_preprocessing.fast_depth
+        'fast_depth': fast_depth_preprocessing.fast_depth,
+        'lprnet': classification_preprocessing.lprnet,
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)

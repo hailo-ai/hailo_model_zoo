@@ -2,8 +2,6 @@ base:
 - base/fcn.yaml
 network:
   network_name: fcn8_resnet_v1_18
-allocation:
-  required_fps: 33
 parser:
   nodes:
   - null

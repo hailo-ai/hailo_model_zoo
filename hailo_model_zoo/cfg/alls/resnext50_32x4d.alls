@@ -1,7 +1,8 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
+pre_quantization_optimization(equalization, policy=disabled)
 ### Auto generated allocation script ###
 
-allocator_param(agent=melg, builder_exit_point=post-compilation, clk_freq=400000000, cluster_timeout=1200, defuse_by_validator=True, enable_fixer=True, enable_macros=True, network_fps=400, max_cluster_util=1.0, seed=10, strategy=blind_search, timeout=1200, validate=True)
-resources_param(strategy=legacy)
+allocator_param(cluster_timeout=1200, defuse_by_validator=True, enable_fixer=True, seed=10, timeout=1200, validate=True)
 
 conv4_sd0, conv4_sd1, conv4_sdc = defuse(conv4, 2, defuse_type=SPATIAL)
 conv7_sd0, conv7_sd1, conv7_sdc = defuse(conv7, 2, defuse_type=SPATIAL)
@@ -195,13 +196,3 @@ buffers(avgpool1, fc1_d0, 1)
 buffers(avgpool1, fc1_d1, 1)
 buffers(fc1_d1, fc1_dc, 1)
 buffers(fc1_d0, fc1_dc, 1)
-
-place(0, [conv17, conv18, conv28, conv33, conv34, conv36, conv37, conv38, conv40])
-place(1, [conv1, conv6, conv29, conv30, conv31, conv41, conv42, conv46, conv7_sd0, conv7_sd1, conv7_sdc, conv50_d0])
-place(2, [conv32, conv43, conv44, conv47_d1, conv47_dc])
-place(3, [maxpool1, conv3, conv5, conv8, conv9, conv19, conv47_d0, fc1_d0, fc1_d1, fc1_dc])
-place(4, [conv2, conv20, conv4_sd0, conv4_sd1, conv4_sdc, conv45_d0, conv45_d1, conv45_dc, conv50_dc, conv53_d0])
-place(5, [conv11, conv12, conv13, conv14, conv15, avgpool1, conv48_d0, conv48_d1, conv50_d1, conv53_dc])
-place(6, [conv23, conv24, conv25, conv26, conv27, conv52, conv10_sd0, conv10_sd1, conv10_sdc, conv48_dc, conv53_d1])
-place(7, [conv16, conv21, conv22, conv35, conv39, conv49, conv51_d0, conv51_d1, conv51_dc])
-

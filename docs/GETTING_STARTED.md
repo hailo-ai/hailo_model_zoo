@@ -6,14 +6,20 @@ This document provides install instructions and basic usage examples of the Hail
 
 ## System Requirements
 
-- Ubuntu 18.04, Python 3.6
-- Hailo Dataflow Compiler v3.14 (Obtain from [**hailo.ai**](http://hailo.ai))
-- HailoRT 4.3.0 (Obtain from [**hailo.ai**](http://hailo.ai)) - required only for inference on Hailo-8.
+- Ubuntu 18.04 and Python 3.6 or Ubuntu 20.04 and Python 3.8
+- Hailo Dataflow Compiler v3.16.0 (Obtain from [**hailo.ai**](http://hailo.ai))
+- HailoRT 4.6.0 (Obtain from [**hailo.ai**](http://hailo.ai)) - required only for inference on Hailo-8.
 - The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 
 <br>
 
 ## Install Instructions
+
+### Hailo Software Suite
+
+The [**Hailo Software Suite**](https://hailo.ai/developer-zone/sw-downloads/) includes all of Hailo's SW components and insures compatibility across products versions. The Hailo Model Zoo is already installed and ready to be used within the virtualenv of it.
+
+### Manual Installation
 
 1. Install the Hailo Dataflow compiler and enter the virtualenv (visit [**hailo.ai**](http://hailo.ai) for further instructions).
 2. Install the HailoRT - required only for inference on Hailo-8 (visit [**hailo.ai**](http://hailo.ai) for further instructions).
@@ -21,7 +27,7 @@ This document provides install instructions and basic usage examples of the Hail
 ```
 git clone https://github.com/hailo-ai/hailo_model_zoo.git
 ```
-4. run the setup script:
+4. Run the setup script:
 ```
 cd hailo_model_zoo; pip install -e .
 ```
@@ -35,18 +41,32 @@ Expected output:
 (hailo) Running command 'fw-control' with 'hailortcli'
 Identifying board
 Control Protocol Version: 2
-Firmware Version: 4.3.0 (release,app)
+Firmware Version: 4.6.0 (release,app)
 Logger Version: 0
 Board Name: Hailo-8
 Device Architecture: HAILO8_B0
-Serial Number: 0000000000000000
-Part Number: HEV18B1C4GA
-Product Name: HAILO-8 AI ACCELERATOR EVB
+Serial Number: HLUTM20204900071
+Part Number: HM218B1C2FA
+Product Name: HAILO-8 AI ACCELERATOR M.2 MODULE
+```
+
+### Upgrade Instructions
+
+If you want to upgrade to a specific Hailo Model Zoo version within a suite or on top of a previous installation not in the suite.
+1. Pull the specific repo branch:
+```
+git clone -b v2.0 https://github.com/hailo-ai/hailo_model_zoo.git
+```
+2. Run the setup script:
+```
+cd hailo_model_zoo; pip install -e .
 ```
 
 <br>
 
 ## Usage
+
+> **_NOTE:_**  In case you are using the Hailo Software Suite please use the following path \(\<version> means 3.6/3.7/3.8): <br><virtualenv_dir>/lib/python\<version>/site-packages/hailo_model_zoo/main.py</br>
 
 ### Flow Diagram
 
@@ -56,7 +76,7 @@ The following scheme shows high-level view of the model-zoo evaluation process, 
   <img src="images/usage_flow.svg" />
 </p>
 
-By default, each stage executes all of its previously necessary stages according to the above diagram. The post-parsing stages also have an option to start from the product of previous stages (i.e., the Hailo Archive (HAR) file), as explained below.
+By default, each stage executes all of its previously necessary stages according to the above diagram. The post-parsing stages also have an option to start from the product of previous stages (i.e., the Hailo Archive (HAR) file), as explained below. The operations are configured through a YAML file that exist for each model in the cfg folder. For a description of the YAML structure please see [**YAML.md**](YAML.md).
 ### Parsing
 
 The pre-trained models are stored on AWS S3 and will be downloaded automatically when running the model zoo. To parse models into Hailo's internal representation and generate the Hailo Archive (HAR) file:
@@ -86,6 +106,10 @@ To optimize the model starting from a previously generated HAR file:
 ```
 python hailo_model_zoo/main.py quantize <model_name> --har /path/to/model.har
 ```
+You can use your own images by giving a directory path to the optimization process, with the following supported formats (.jpg,.jpeg,.png):
+```
+python hailo_model_zoo/main.py quantize <model_name> --calib-path /path/to/calibration/imgs/dir/
+```
 \* This step requires data for calibration. For additional information please see [**OPTIMIZATION.md**](OPTIMIZATION.md).
 
 ### Compile
@@ -104,7 +128,7 @@ To evaluate models in full precision:
 ```
 python hailo_model_zoo/main.py eval <model_name>
 ```
-To evaluate models starting from a previosly generated Hailo Archive (HAR) file:
+To evaluate models starting from a previously generated Hailo Archive (HAR) file:
 ```
 python hailo_model_zoo/main.py eval <model_name> --har /path/to/model.har
 ```
@@ -138,7 +162,7 @@ python hailo_model_zoo/main.py eval <model_name> --visualize --video-outpath /pa
 
 ### Info
 
-You can easily print information of any network exists in the model zoo, to get a sense of its input/output shape, parameters, oprerations, framework etc.
+You can easily print information of any network exists in the model zoo, to get a sense of its input/output shape, parameters, operations, framework etc.
 
 To print a model-zoo network information:
 ```
@@ -152,7 +176,7 @@ python hailo_model_zoo/main.py info mobilenet_v1
 Expected output:
 ```
 <Hailo Model Zoo Info> Printing mobilenet_v1 Information
-<Hailo Model Zoo Info> 
+<Hailo Model Zoo Info>
         task:                    classification
         input_shape:             224x224x3
         output_shape:            1x1x1001
@@ -170,7 +194,13 @@ Expected output:
 
 ### Compile multiple networks together
 We can use multiple disjoint models in the same binary.
-This is useful for running several small models on the device. 
+This is useful for running several small models on the device.
 ```
 python hailo_model_zoo/multi_main.py <config_name>
+```
+
+### TFRecord to NPY conversion
+In some situations you might want to convert the tfrecord file to npy file (for example, when explicitly using the Dataflow Compiler for quantization). In order to do so, run the command:
+```
+python hailo_model_zoo/tools/conversion_tool.py /path/to/tfrecord_file resnet_v1_50 --npy
 ```

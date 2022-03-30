@@ -1,4 +1,3 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 ## Allocator Script Version 1.0
-
-allocator_param(optimize_buffers=False)
 maxpool1_d0, maxpool1_d1, maxpool1_d2, maxpool1_d3, maxpool1_dc = defuse(maxpool1, 4)

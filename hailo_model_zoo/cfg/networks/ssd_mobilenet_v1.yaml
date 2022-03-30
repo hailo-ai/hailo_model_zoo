@@ -1,8 +1,6 @@
 base:
 - base/coco.yaml
 - base/ssd.yaml
-quantization:
-  calib_set_size: 64
 postprocessing:
   device_pre_post_layers:
     argmax: false

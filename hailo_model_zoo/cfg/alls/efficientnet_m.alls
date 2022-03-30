@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=True, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=True, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=True, enable_fixer=True, enable_swapper=True, max_auto_defuse=8, max_auto_merge_depth=2, merge_min_layer_utilization=1.0, seed=0, timeout=1200, validate=True)
 
 conv2_d0, conv2_d1, conv2_d2, conv2_d3, conv2_dc = defuse(conv2, 4)

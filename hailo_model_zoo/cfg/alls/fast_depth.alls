@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=128)
 # post_quantization_optimization commands
 post_quantization_optimization(bias_correction, policy=enabled)
 # quantizing last layer to 16b

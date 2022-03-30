@@ -5,6 +5,7 @@ import logging
 from functools import partial
 import tensorflow as tf
 from pathlib import Path
+import numpy as np
 
 from hailo_sdk_client import ClientRunner, HailoNN
 from hailo_model_zoo.core.main_utils import get_network_info
@@ -49,8 +50,7 @@ def _init_dataset(runner, tf_path, network_info):
 
 def create_args_parser():
     parser = argparse.ArgumentParser()
-    parser.description = '''The tool used to convert tf_record into buffer of images,
-                            which can be used as an input file for the benchmark flow of the HailoRTcli tool'''
+    parser.description = '''Conversion tool for serialization of preprocessed input images as bin/npy file'''
     parser.add_argument('tfrecord_file',
                         help='''The tfrecord file to be processed''',
                         type=str)
@@ -64,6 +64,9 @@ def create_args_parser():
                         help='The number of images to export from the input',
                         default=None,
                         type=int)
+    parser.add_argument('--npy',
+                        action='store_true',
+                        help='Output NPY format instead of bin')
     return parser
 
 
@@ -99,7 +102,8 @@ def convert_tf_record_to_bin_file(hef_path: Path,
                                   output_file_name,
                                   num_of_images,
                                   har_path: Path = None,
-                                  hn_path: Path = None):
+                                  hn_path: Path = None,
+                                  npy: bool = False):
     '''By default uses hailo archive file, otherwise uses hn'''
 
     # Extract the network name from the hef_path:
@@ -125,11 +129,17 @@ def convert_tf_record_to_bin_file(hef_path: Path,
     _logger.info('Initializing the dataset ...')
     data_feed_callback = _init_dataset(runner, tf_record_path, network_info)
 
-    bin_file = open(output_file_name, 'wb')
-
-    callback_part = partial(_save_pre_processed_image_callback, file_to_append=bin_file)
+    if npy:
+        list_of_images = []
+        callback_part = partial(_save_pre_processed_image_npy_callback, images_list=list_of_images)
+    else:
+        bin_file = open(output_file_name, 'wb')
+        callback_part = partial(_save_pre_processed_image_callback, file_to_append=bin_file)
 
     numn_of_processed_images = _tf_preprocess(data_feed_callback, callback_part, num_of_images=num_of_images)
+
+    if npy:
+        np.save(output_file_name.with_suffix('.npy'), np.squeeze(list_of_images, axis=1))
 
     _logger.info('Conversion is done')
     _logger.info(f'File {output_file_name} created with {numn_of_processed_images} images')
@@ -138,6 +148,11 @@ def convert_tf_record_to_bin_file(hef_path: Path,
 def _save_pre_processed_image_callback(preprocessed_image, file_to_append):
     '''Callback function which used to get a pre-processed image from the dataset'''
     file_to_append.write(preprocessed_image.tobytes())
+
+
+def _save_pre_processed_image_npy_callback(preprocessed_image, images_list):
+    '''Callback function which used to get a pre-processed image from the dataset'''
+    images_list.append(preprocessed_image)
 
 
 if __name__ == '__main__':
@@ -153,4 +168,5 @@ if __name__ == '__main__':
                                   output_path,
                                   args.num_of_images,
                                   har_path,
-                                  hn_path)
+                                  hn_path,
+                                  args.npy)

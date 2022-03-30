@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: resnet_v1_18
-allocation:
-  required_fps: 1961
 paths:
   alls_script: resnet_v1_18.alls
   network_path:

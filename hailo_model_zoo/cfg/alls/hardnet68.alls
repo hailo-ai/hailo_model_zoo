@@ -1,2 +1,3 @@
-context_switch_param(mode=automatic)
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
+context_switch_param(mode=enabled)
 resources_param(strategy=greedy, max_compute_utilization=0.85, max_control_utilization=0.70)

@@ -1,3 +1,4 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
 conv4_d0, conv4_d1, conv4_dc = defuse(conv4, 2, defuse_type=SPATIAL)
 
 # pre_quantization_optimization commands

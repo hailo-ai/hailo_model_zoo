@@ -34,8 +34,6 @@ postprocessing:
 preprocessing:
   network_type: segmentation
   meta_arch: fcn_resnet
-quantization:
-  quantization_batch_size: 1
 info:
   task: semantic segmentation
   input_shape: 513x513x3

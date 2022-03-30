@@ -8,11 +8,11 @@
 
   Hailo's license detection network (*tiny_yolov4_license_plates*) is based on Tiny-YOLOv4 and was trained in-house using Darknet with a single class. It expects a single vehicle and can work under various weather and lighting conditions, on different vehicle types and numerous camera angles.
 
-  
+
   ## Model Details
-  
+
   ### Architecture
-  * Tiny-YOLOv4 
+  * Tiny-YOLOv4
   * Number of parameters: 5.87M
   * GMACS: 3.4
   * Accuracy<sup>*</sup>: 73.45 mAP
@@ -27,7 +27,7 @@
   - Each output contains 3 anchors that hold the following information:
     - Bounding box coordinates ((x,y) centers, height, width)
     - Box objectness confidence score
-    - Class probablity confidence score
+    - Class probability confidence score
   - The above 6 values per anchor are concatenated into the 18 output channels
 
 <br>

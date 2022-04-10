@@ -12,7 +12,7 @@
       <code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/yolov3</span>
 
-      docker build --build-arg timezone=`cat /etc/timezone` -t yolov3:v0 .
+      docker build --build-arg timezone=\`cat /etc/timezone\` -t yolov3:v0 .
       </code>
 
       the following optional arguments can be passed via --build-arg:

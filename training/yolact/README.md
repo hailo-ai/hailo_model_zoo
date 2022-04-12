@@ -4,7 +4,7 @@
 ## Prerequisites
   * docker ([installation instructions](https://docs.docker.com/engine/install/ubuntu/))
   * nvidia-docker2 ([installation instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
-  > **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside this docker.
+  > **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside of this docker.
 ## Environment Preparations
 1. Build the docker image:
 	

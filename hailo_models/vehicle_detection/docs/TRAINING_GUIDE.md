@@ -58,7 +58,6 @@ Export the model to ONNX using the following command:
 ## Compile the Model using Hailo Model Zoo<br>
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model. In order to do so you need a working model-zoo environment.
 Choose the model YAML from our networks configuration directory, i.e. `hailo_model_zoo/cfg/networks/yolov5m_vehicles.yaml`, and run compilation using the model zoo:
-> **_NOTE:_** The following command should be run outside the docker
 ```
 python hailo_model_zoo/main.py compile --ckpt yolov5m_vehicles.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml yolov5m_vehicles.yaml
 ```

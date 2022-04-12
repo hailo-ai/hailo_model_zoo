@@ -7,7 +7,7 @@ This document describes how to view the Hailo Model Zoo documentation locally.
 Have a copy of the Hailo Model Zoo locally.
 This can be done by either:
 
-1. Cloning the Hailo Model Zoo.
+1. cloning the Hailo Model Zoo.
     ```
     git clone https://github.com/hailo-ai/hailo_model_zoo.git
     ```

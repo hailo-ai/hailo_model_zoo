@@ -5,7 +5,7 @@
 ## Prerequisites
   * docker ([installation instructions](https://docs.docker.com/engine/install/ubuntu/))
   * nvidia-docker2 ([installation instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
-  > **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside this docker.
+  > **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside of this docker.
 ## Environment Preparations
 1. Build the docker image:
     
@@ -69,12 +69,7 @@
     Start training with the following command:
     
     <code stage="retrain">
-    python object_detection/model_main.py \
-    --pipeline_config_path=/home/tensorflow/models/research/pipeline.config \
-    --model_dir=ssd_mobilenet_v1_training \
-    --num_train_steps=<span val="iterations">200000</span> \
-    --sample_1_of_n_eval_examples=3 \
-    --alsologtostderr
+    python object_detection/model_main.py --pipeline_config_path=/home/tensorflow/models/research/pipeline.config --model_dir=ssd_mobilenet_v1_training --num_train_steps=<span val="iterations">200000</span> --sample_1_of_n_eval_examples=3 --alsologtostderr
     </code>
 
     * <code>--pipeline_config_path</code> - path to your training configuration file.

@@ -93,8 +93,8 @@ def lane_detection_postprocessing(endnodes, device_pre_post_layers=None, img_w=1
     lane_detection_postproc.img_w = img_w
     lane_detection_postproc.img_h = img_h
     if output_scheme and output_scheme.get('split_output', False):
-        endnodes = tf.compat.v1.py_func(lane_detection_postproc.recombine_split_endnodes, endnodes, [tf.float32])
-    decoded = tf.compat.v1.py_func(lane_detection_postproc.decode, [endnodes], [tf.float32])
-    postprocessed = tf.compat.v1.py_func(lane_detection_postproc.polynomize_pred,
-                                         [decoded], [tf.float32])  # network always returns 5 lane predictions.
+        endnodes = tf.py_function(lane_detection_postproc.recombine_split_endnodes, endnodes, [tf.float32])
+    decoded = tf.py_function(lane_detection_postproc.decode, [endnodes], [tf.float32])
+    postprocessed = tf.py_function(lane_detection_postproc.polynomize_pred,
+                                   [decoded], [tf.float32])  # network always returns 5 lane predictions.
     return {'predictions': postprocessed[0]}

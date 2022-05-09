@@ -73,7 +73,6 @@ def main(cfg_path):
     alls_script = None if not cfg.alls_script else str(MULTI_NETWORKS_DIR.joinpath(cfg_dir, cfg.alls_script))
     hef = runner.get_hw_representation(
         fps=cfg.fps,
-        mapping_timeout=1200,
         allocator_script_filename=alls_script
     )
     runner.save_har(results_dir / f'{final_name}.har')

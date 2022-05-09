@@ -74,4 +74,4 @@ info:
   parameters: 5.87M
   framework: darknet
   eval_metric: mAP
-  full_precision_result: 73.456
+  full_precision_result: 74.1

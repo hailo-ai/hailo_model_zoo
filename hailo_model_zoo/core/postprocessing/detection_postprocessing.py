@@ -79,6 +79,8 @@ def visualize_detection_result(logits, image, threshold=0.2, image_info=None, us
         labels = {0: {'name': 'plate'}}
     elif 'hand_detection' in dataset_name:
         labels = {1: {'name': 'hand'}}
+    elif 'personface_detection' in dataset_name:
+        labels = {1: {'name': 'person'}, 2: {'name': 'face'}}
     else:
         raise Exception('No Labels for dataset {}'.format(dataset_name))
 

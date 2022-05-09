@@ -1,8 +1,9 @@
+import tempfile
+
 from hailo_sdk_client import ClientRunner, JoinAction
 from hailo_sdk_client.runner.client_runner import InvalidArgumentsException
 from hailo_model_zoo.utils.parse_utils import translate_model
-from hailo_model_zoo.utils.path_resolver import resolve_model_path
-from hailo_sdk_client.tools.hn_modifications import transpose_hn_height_width
+from hailo_model_zoo.utils.path_resolver import resolve_model_path, resolve_alls_path
 
 
 def _apply_scope(layer_name, scope):
@@ -39,6 +40,8 @@ def _translate_model(runner, network_info, tensor_shapes):
 def _adjust_output_order(runner, chained_runner, original_output_order):
     new_hn = runner.get_hn_model()
     params = runner.get_params()
+    script = runner.model_script
+
     chained_runner_outputs = chained_runner.get_hn_model().net_params.output_layers_order
     runner_outputs = new_hn.net_params.output_layers_order
     missing_outputs = set(original_output_order) - set(runner_outputs)
@@ -51,8 +54,14 @@ def _adjust_output_order(runner, chained_runner, original_output_order):
         runner_outputs[insert_index:-len(chained_runner_outputs)]
 
     new_hn.net_params.output_layers_order = adjusted_runner_outputs
-    runner.set_hn(new_hn)
-    runner.load_params(params)
+
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.alls') as script_file:
+        script_file.write(script)
+        script_file.seek(0)
+
+        runner.set_hn(new_hn)
+        runner.load_params(params)
+        runner.load_model_script(script_file.name)
 
 
 def integrate_postprocessing(runner, integrated_postprocessing_info):
@@ -81,8 +90,10 @@ def integrate_postprocessing(runner, integrated_postprocessing_info):
         chained_runner = ClientRunner()
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
 
-        if hn.net_params.transposed_net:
-            transpose_hn_height_width(chained_runner)
+        if chain.paths.alls_script is not None:
+            model_script = resolve_alls_path(chain.paths.alls_script)
+            chained_runner.load_model_script(model_script)
+            chained_runner.apply_model_modification_commands()
 
         chained_name = chained_runner.get_hn()['name']
         scope = hn.net_params.net_scopes[0] if hn.net_params.net_scopes else hn.name

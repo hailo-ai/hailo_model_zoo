@@ -1,3 +1,4 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=15, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=0.95, seed=0, timeout=1200, validate=True)
 buffer_calc_param(buffer_calc_fps=0.0, optimize_buffers=True, save_latency_timeline=False, split_aware_optimize_buffers=True)

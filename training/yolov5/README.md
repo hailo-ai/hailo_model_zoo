@@ -50,7 +50,8 @@
         python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt --cfg models/yolov5s.yaml
         </code>
 
-        * <code>yolov5s.pt</code> - pretrained weights. You can find the pretrained weights for *yolov5s*, *yolov5m*, *yolov5l*, *yolov5x* in your working directory.
+        * <code>yolov5s.pt</code> - pretrained weights. You can find the pretrained weights for *yolov5s*, *yolov5m*, *yolov5l*, *yolov5x* and *yolov5m_wo_spp* in your working directory.
+          > __*Note*__: We recommend to use <code>yolov5m_wo_spp</code> for best performance on Hailo-8
         * <code>models/yolov5s.yaml</code> - configuration file of the yolov5 variant you would like to train. In order to change the number of classes make sure you update this file.
   <br>
 

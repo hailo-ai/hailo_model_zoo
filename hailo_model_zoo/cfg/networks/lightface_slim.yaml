@@ -71,6 +71,6 @@ info:
   training_data: wider train
   validation_data: wider val
   eval_metric: mAP
-  full_precision_result: 38.99
+  full_precision_result: 39.7
   source: https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB
   license_url: https://opensource.org/licenses/MIT

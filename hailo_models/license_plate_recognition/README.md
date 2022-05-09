@@ -18,7 +18,7 @@
     - More details can be found [**here**](https://github.com/hailo-ai/LPRNet_Pytorch)
   * Number of parameters: 7.14M
   * GMACS: 18.29
-  * Accuracy<sup>*</sup>: 53.82%
+  * Accuracy<sup>*</sup>: 99.96%
 <br>\* Evaluated on internal dataset containing 1178 images
 
   ### Inputs

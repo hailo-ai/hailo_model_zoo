@@ -44,4 +44,4 @@ info:
   parameters: 7.14M
   framework: pytorch
   eval_metric: Accuracy
-  full_precision_result: 53.82
+  full_precision_result: 99.86

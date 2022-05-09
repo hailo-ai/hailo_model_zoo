@@ -3,7 +3,7 @@
 ## Prerequisites
 * docker ([installation instructions](https://docs.docker.com/engine/install/ubuntu/))
 * nvidia-docker2 ([installation instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
-> **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside this docker.
+> **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside of this docker.
 
 ## Environment Preparations
 
@@ -59,7 +59,7 @@ Once the docker is started, you can train the license plate detector on your cus
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model. In order to do so you need a working model-zoo environment.
 Choose the model YAML from our networks configuration directory, i.e. `hailo_model_zoo/cfg/networks/tiny_yolov4_license_plates.yaml`, and run compilation using the model zoo:
 ```
-python hailo_model_zoo/main.py compile --ckpt tiny_yolov4_license_plates.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml tiny_yolov4_license_plates.yaml
+hailomz compile --ckpt tiny_yolov4_license_plates.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml tiny_yolov4_license_plates.yaml
 ```
 
 * <code>--ckpt</code> - path to your ONNX file.

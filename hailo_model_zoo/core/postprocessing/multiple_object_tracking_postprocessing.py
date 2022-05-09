@@ -17,7 +17,7 @@ def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=Non
                                                              **kwargs)
 
     re_id_values = tf.nn.l2_normalize(endnodes[0], axis=-1)
-    top_indices = tf.compat.v1.py_func(_get_top_indices, [re_id_values, detection_dict['top_k_indices']], [tf.int64])
+    top_indices = tf.py_function(_get_top_indices, [re_id_values, detection_dict['top_k_indices']], [tf.int64])
     detection_dict['re_id_values'] = tf.gather_nd(re_id_values, top_indices)
     return dict(**detection_dict)
 

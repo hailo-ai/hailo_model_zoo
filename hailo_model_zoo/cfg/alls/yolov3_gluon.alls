@@ -1,3 +1,4 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])

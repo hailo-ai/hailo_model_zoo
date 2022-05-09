@@ -43,7 +43,7 @@ def centernet_resnet_v1_18_detection(image, image_info=None, height=None, width=
     image = tf.cast(image, tf.float32)
     if height and width:
         # Resize the image to the specified height and width.
-        image = tf.compat.v1.image.resize_image_with_pad(image, height, width)
+        image = tf.image.resize_with_pad(image, height, width)
 
     if image_info and 'num_boxes' in image_info.keys():
         image_info = _cast_image_info_types(image_info, image)
@@ -104,11 +104,11 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
 
         def resize_shrink_or_other(image, height, width):
             return tf.cond(is_shrink,
-                           lambda: tf.compat.v1.image.resize_area(image, [height, width], align_corners=True),
-                           lambda: tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=True))
+                           lambda: tf.image.resize(image, [height, width], method='area'),
+                           lambda: tf.image.resize(image, [height, width], method='bilinear'))
 
         image = tf.cond(is_enlarge,
-                        lambda: tf.compat.v1.image.resize_bicubic(image, [height, width], align_corners=True),
+                        lambda: tf.image.resize(image, [height, width], method='bicubic'),
                         lambda: resize_shrink_or_other(image, height, width))
         image = tf.clip_by_value(image, 0.0, 255.0)
         image = tf.squeeze(image, [0])
@@ -139,7 +139,7 @@ def yolo_v5(image, image_info=None, height=None, width=None,
         image_shape = tf.shape(image)
         image_height = image_shape[0]
         image_width = image_shape[1]
-        image, new_width, new_height = tf.compat.v1.py_func(
+        image, new_width, new_height = tf.numpy_function(
             lambda image, height, width: letterbox(image, height, width, color=[padding_color] * 3,
                                                    centered=kwargs["centered"]),
             [image, height, width], [tf.uint8, tf.int64, tf.int64])
@@ -192,7 +192,7 @@ def resnet_v1_18_detection(image, image_info=None, height=None, width=None,
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info and 'num_boxes' in image_info.keys():
@@ -215,7 +215,7 @@ def regnet_detection(image, image_info=None, height=None, width=None,
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=True)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info and 'num_boxes' in image_info.keys():
@@ -236,8 +236,7 @@ def regnet_detection(image, image_info=None, height=None, width=None,
 def _resize_bilinear_tf(image, height, width):
     shape = tf.shape(image)
     image_height, image_width = shape[0], shape[1]
-    result = tf.squeeze(tf.compat.v1.image.resize_bilinear(tf.expand_dims(image, [0]),
-                                                           [height, width], align_corners=False), [0])
+    result = tf.squeeze(tf.image.resize(tf.expand_dims(image, [0]), [height, width], method='bilinear'), [0])
     return result, image_height, image_width
 
 
@@ -294,7 +293,7 @@ def faster_rcnn_stage2(featuremap, image_info, height=None, width=None,
     image_id = image_info.pop('image_id')
     image_info['image_name'] = tf.repeat(image_name, repeats=[num_proposals], axis=0)
     image_info['image_id'] = tf.repeat(image_id, repeats=[num_proposals], axis=0)
-    featuremaps = tf.compat.v1.py_func(roi_align, [featuremap, rpn_boxes], [tf.float32])
+    featuremaps = tf.numpy_function(roi_align, [featuremap, rpn_boxes], [tf.float32])
     featuremaps = tf.squeeze(featuremaps)
     return featuremaps, image_info
 
@@ -327,7 +326,7 @@ def _ar_preserving_resize_and_crop(image, height, width):
                                   lambda: target_height_float / image_height_float)
     new_height = tf.cast(aspect_ratio_factor * image_height_float, dtype=tf.int32)
     new_width = tf.cast(aspect_ratio_factor * image_width_float, dtype=tf.int32)
-    image_resized = tf.compat.v1.image.resize_bilinear(img_expanded, [new_height, new_width], align_corners=False)
+    image_resized = tf.image.resize(img_expanded, [new_height, new_width], method='bilinear')
     padding_h = height - new_height
     padding_w = width - new_width
     padded_image = tf.pad(image_resized, [[0, 0], [0, padding_h], [0, padding_w], [0, 0]],
@@ -357,7 +356,7 @@ def face_ssd(image, image_info=None, height=None, width=None,
         new_width = width
 
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info:
@@ -410,7 +409,7 @@ def letterbox(img, height=608, width=1088, centered=True,
               color=(127.5, 127.5, 127.5)):  # resize a rectangular image to a padded rectangular
     shape = img.shape[:2]  # shape = [height, width]
     ratio = min(float(height) / shape[0], float(width) / shape[1])
-    new_shape = (round(shape[1] * ratio), round(shape[0] * ratio))  # new_shape = [width, height]
+    new_shape = (int(shape[1] * ratio), int(shape[0] * ratio))  # new_shape = [width, height]
     new_width = new_shape[0]
     dw = (width - new_width) / 2 if centered else (width - new_width)  # width padding
     new_height = new_shape[1]
@@ -422,7 +421,8 @@ def letterbox(img, height=608, width=1088, centered=True,
         top, bottom = 0, dh
         left, right = 0, dw
     img = img[:, :, ::-1]
-    img = cv2.resize(img, new_shape, interpolation=cv2.INTER_AREA)  # resized, no border
+    img = cv2.resize(img, new_shape,
+                     interpolation=(cv2.INTER_AREA if ratio < 1.0 else cv2.INTER_LINEAR))  # resized, no border
     img = cv2.copyMakeBorder(img, int(top), int(bottom), int(left), int(right), cv2.BORDER_CONSTANT,
                              value=color)  # padded rectangular
     img = img[:, :, ::-1]
@@ -435,7 +435,7 @@ def fair_mot(image, image_info=None, height=None, width=None,
         image_shape = tf.shape(image)
         image_height = image_shape[0]
         image_width = image_shape[1]
-        image, new_width, new_height = tf.compat.v1.py_func(
+        image, new_width, new_height = tf.numpy_function(
             letterbox, [image, height, width], [tf.uint8, tf.int64, tf.int64])
         image.set_shape((height, width, 3))
     if image.dtype == tf.uint8:

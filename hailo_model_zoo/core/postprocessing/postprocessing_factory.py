@@ -35,6 +35,8 @@ from hailo_model_zoo.core.postprocessing.fast_depth_postprocessing import (
 from hailo_model_zoo.core.postprocessing.ocr_postprocessing import (
     ocr_postprocessing, visualize_ocr_result
 )
+from hailo_model_zoo.core.postprocessing.person_reid_postprocessing import (
+    person_reid_postprocessing)
 
 
 def get_visualization(name, **kwargs):
@@ -107,6 +109,7 @@ def get_postprocessing(name, flip=False):
         'face_landmark_detection_3d': face_landmarks_3d_postprocessing,
         'fast_depth': fast_depth_postprocessing,
         'ocr': ocr_postprocessing,
+        'person_reid': person_reid_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

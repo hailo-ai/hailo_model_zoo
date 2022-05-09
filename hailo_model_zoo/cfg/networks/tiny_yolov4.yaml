@@ -49,6 +49,8 @@ parser:
   - detector/yolo-v4-tiny/Pad
   - - detector/yolo-v4-tiny/Conv_17/BiasAdd
     - detector/yolo-v4-tiny/Conv_20/BiasAdd
+  normalization_params:
+    fold_normalization: true
 info:
   task: object detection
   input_shape: 416x416x3

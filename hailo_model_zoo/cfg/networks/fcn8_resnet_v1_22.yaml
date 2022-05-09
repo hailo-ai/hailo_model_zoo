@@ -34,6 +34,6 @@ info:
   training_data: cityscapes train
   validation_data: cityscapes val
   eval_metric: mIoU
-  full_precision_result: 68.11
+  full_precision_result: 67.54
   source: https://cv.gluon.ai/model_zoo/segmentation.html
   license_url: https://www.apache.org/licenses/LICENSE-2.0

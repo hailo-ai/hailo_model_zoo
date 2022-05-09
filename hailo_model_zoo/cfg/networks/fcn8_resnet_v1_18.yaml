@@ -11,6 +11,8 @@ paths:
   network_path:
   - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2022-02-09/fcn8_resnet18_fhd.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2022-02-09/fcn8_resnet_v1_18.zip
+allocation:
+  required_fps: 33
 info:
   task: semantic segmentation
   input_shape: 1024x1920x3

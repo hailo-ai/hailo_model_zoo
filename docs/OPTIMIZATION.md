@@ -30,24 +30,24 @@ Both steps may degrade the model accuracy, therefore, evaluation is needed to ve
   <img src="images/quant_flow.svg" />
 </p>
 
-1. First stage includes full precision validation. This stage is important for making sure parsing was successful and we built the pre/post processing and evaluation of the model correctly. In the Hailo Model Zoo, we can execute the following which will infer a specific model in full precision to verify accuracy is correct:
+1. First step includes full precision validation. This step is important to make sure parsing was successful and we built the pre/post processing and evaluation of the model correctly. In the Hailo Model Zoo, we can execute the following which will infer a specific model in full precision to verify that the accuracy is correct:
   ```
-  python hailo_model_zoo/main.py eval <model_name>
-  ```
-
-2. Next, we can call the model optimization API to generate an optimized model. Without fine-tune which will be described in the next item, this step requires a small amount of images for calibration. This step should be used as a starting point for any model unless you are using 4-bit weights compression. It is fast (even on a CPU) and you can easily validate its performance using the Hailo emulator. For example, running ResNet V1 50:
-  ```
-  python hailo_model_zoo/main.py eval resnet_v1_50 --target emulator
+  hailomz eval <model_name>
   ```
 
-3. Lastly, in cases where we are using 4-bit weights or just would like to further optimize the accuracy, we can leverage back-propagation to optimize the quantize model using knowledge distillation. This step is called fine-tune and it is executed by setting a specific field in the model optimization API. Fine-tune requires more data, without labeling, for training and runs on GPU. For example, evaluating YOLOv5m with fine-tune (which include 4-bit weights):
+2. Next, we call the model optimization API to generate an optimized model. Note, it is recommended to run this step on a GPU machine.
   ```
-  python hailo_model_zoo/main.py eval yolov5m --target emulator
+  hailomz quantize <model_name>
+  ```
+
+3. Lastly, we verify the accuracy of the optimized model. In case the results are not good enough we should repeat the process with different configurations, such as: IBC or QFT.
+  ```
+  hailomz eval <model_name> --target emulator --har <model_name>.har
   ```
 
 Once optimization is finished and met our accuracy requirements, we can compile the optimized model. For example:
 ```
-python hailo_model_zoo/main.py compile yolov5m --har yolov5m.har
+hailomz compile <model_name> --har <model_name>.har
 ```
 
 <br>

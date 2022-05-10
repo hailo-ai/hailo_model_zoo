@@ -1,0 +1,53 @@
+base:
+- base/yolov5.yaml
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv70
+        activation: sigmoid
+      - layer_name: conv63
+        activation: sigmoid
+      - layer_name: conv55
+        activation: sigmoid
+network:
+  network_name: yolov5s_personface
+paths:
+  alls_script: yolov5s_personface.alls
+  network_path:
+  - models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.zip
+parser:
+  nodes:
+  - images
+  - - Conv_234
+    - Conv_218
+    - Conv_202
+preprocessing:
+  max_pad: 500
+postprocessing:
+  nms_iou_thresh: 0.65
+quantization:
+  calib_set: null
+allocation:
+  required_fps: 375
+evaluation:
+  labels_offset: 1
+  classes: 2
+  dataset_name: personface_detection
+  data_set: null
+  validation_data_set: null
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x21, 40x40x21, 20x20x21
+  operations: 8.38G
+  parameters: 7.25M
+  framework: pytorch
+  training_data: Hailo internal
+  validation_data: Hailo internal
+  eval_metric: mAP
+  full_precision_result: 47.58
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

@@ -7,7 +7,7 @@ from pathlib import Path
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 
 from hailo_model_zoo.utils import path_resolver
-from hailo_model_zoo.utils.hw_utils import TARGETS
+from hailo_model_zoo.utils.hw_utils import TARGETS, DEVICE_NAMES
 
 
 def _make_parsing_base():
@@ -20,6 +20,10 @@ def _make_parsing_base():
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
+    parsing_base_parser.add_argument(
+        '--model-script', type=str, default=None, dest='model_script_path',
+        help='Path to model script to use. By default using the model script specified'
+        ' in the network YAML configuration')
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
@@ -55,9 +59,11 @@ def _make_profiling_base():
 def _make_evaluation_base():
     evaluation_base_parser = argparse.ArgumentParser(add_help=False)
     targets = list(TARGETS.keys())
+    devices = ', '.join(DEVICE_NAMES)
     evaluation_base_parser.add_argument(
         '--target', type=str, choices=targets, metavar='', default='full_precision',
-        help='Which target to run: full_precision (GPU) / emulator (GPU) / hailo8 (PCIe)')
+        help='Which target to run: full_precision (GPU) / emulator (GPU) / hailo8 (PCIe).\n'
+        f'A specific hailo8 device may be specified. Available devices: {devices}')
 
     evaluation_base_parser.add_argument(
         '--eval-batch-size', type=int, default=8,

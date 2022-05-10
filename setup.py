@@ -30,7 +30,7 @@ def main():
             'detection-tools==0.3',
             'scikit-image==0.17.2']
 
-    model_zoo_version = "2.0.0"
+    model_zoo_version = "2.1.0"
 
     package_data = {
         "hailo_model_zoo": [
@@ -57,7 +57,7 @@ def main():
         url='https://hailo.ai/',
         author='Hailo team',
         author_email='hailo_model_zoo@hailo.ai',
-        entry_points={},
+        entry_points={"console_scripts": ["hailomz=hailo_model_zoo.main:main"]},
         license='MIT',
         packages=find_packages(),
         install_requires=reqs,

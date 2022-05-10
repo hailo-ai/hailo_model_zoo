@@ -9,8 +9,11 @@ class LayerSplitter(object):
                               'yolov3_416',
                               'yolov3_gluon_416',
                               'yolov4_leaky',
+                              'yolov4_leaky_yuy2',
+                              'yolov4',
                               'tiny_yolov4',
                               'tiny_yolov4_license_plates',
+                              'tiny_yolov4_license_plates_yuy2',
                               'polylanenet_resnet_v1_34',
                               'smoke_regnetx_800mf']
         self._runner = runner

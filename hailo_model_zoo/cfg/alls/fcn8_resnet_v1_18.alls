@@ -1,11 +1,10 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 ## Allocator Script Version 1.0
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])
 
-allocator_param(automatic_l4_portals=False)
-
-reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
+allocator_param(automatic_l4_portals=False, automatic_ddr=disabled)
 
 shortcut0 = shortcut(maxpool1, [conv2, conv3])
 compilation_param(shortcut0, balance_output_multisplit=False)

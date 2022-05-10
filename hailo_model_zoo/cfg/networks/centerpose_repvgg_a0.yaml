@@ -19,6 +19,7 @@ hn_editor:
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.meta
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.index
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+          alls_script: null
         parser:
           nodes:
           - input_1
@@ -32,6 +33,7 @@ hn_editor:
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.meta
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.index
           - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+          alls_script: null
         parser:
           nodes:
           - input_1

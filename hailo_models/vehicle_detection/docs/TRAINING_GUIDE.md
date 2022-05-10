@@ -3,7 +3,7 @@
 ## Prerequisites
 * docker ([installation instructions](https://docs.docker.com/engine/install/ubuntu/))
 * nvidia-docker2 ([installation instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))
-> **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside this docker.
+> **_NOTE:_**  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside of this docker.
 
 ## Environment Preparations
 
@@ -59,7 +59,7 @@ Export the model to ONNX using the following command:
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model. In order to do so you need a working model-zoo environment.
 Choose the model YAML from our networks configuration directory, i.e. `hailo_model_zoo/cfg/networks/yolov5m_vehicles.yaml`, and run compilation using the model zoo:
 ```
-python hailo_model_zoo/main.py compile --ckpt yolov5m_vehicles.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml yolov5m_vehicles.yaml
+hailomz compile --ckpt yolov5m_vehicles.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml yolov5m_vehicles.yaml
 ```
 
 * <code>--ckpt</code> - path to your ONNX file.

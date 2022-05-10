@@ -81,7 +81,7 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
             logits = endnodes
         else:
             size = np.array(endnodes.shape[1:3]) * kwargs['ext_upsample']
-            logits = tf.compat.v1.image.resize_bilinear(endnodes, size=size.tolist(), align_corners=True)
+            logits = tf.image.resize(endnodes, size=size.tolist(), method='bilinear')
         predictions = tf.cast(tf.argmax(logits, axis=-1), tf.float32)
     return {'predictions': predictions}
 

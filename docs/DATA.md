@@ -14,6 +14,7 @@ export HMZ_DATA=/new/path/for/storage/
 - [NYU Depth V2](#nyu-depth-v2)
 - [300W-LP & AFLW2k3d](#300w-lp-and-aflw2k3d)
 - [Hand Landmark](#hand-landmark)
+- [Market1501](#market1501)
 
 <br>
 
@@ -401,4 +402,43 @@ Hands               00  000
 2. Run
 ```
 python hailo_model_zoo/datasets/create_hand_landmark_tfrecord.py --img /path/to/Hands
+```
+
+## Market1501
+Run the creation scripts:
+```
+python hailo_model_zoo/datasets/create_market_tfrecord.py val
+python hailo_model_zoo/datasets/create_market_tfrecord.py calib
+```
+
+### Manual Download (Optional)
+1. Download the dataset from [**here**](http://zheng-lab.cecs.anu.edu.au/Project/project_reid.html) and extract.
+Expected structure:
+```
+Market-1501-v15.09.15
+├── bounding_box_test
+    ├── 0000_c1s1_000151_01.jpg
+    ├── 0000_c1s1_000376_03.jpg
+    ├── ...
+├── bounding_box_train
+    ├── 0002_c1s1_000451_03.jpg
+    ├── 0002_c1s1_000551_01.jpg
+    ├── ...
+├── gt_bbox
+    ├── 0001_c1s1_001051_00.jpg
+    ├── 0001_c1s1_002301_00.jpg
+    ├──...
+├── gt_query
+    ├── 0001_c1s1_001051_00_good.mat
+    ├── 0001_c1s1_001051_00_junk.mat
+    ├──...
+├── query
+    ├── 0001_c1s1_001051_00.jpg
+    ├── 0001_c2s1_000301_00.jpg
+    ├──...
+```
+2. Run 
+```
+python hailo_model_zoo/datasets/create_market_tfrecord.py val --img path/to/Market-1501-v15.09.15/
+python hailo_model_zoo/datasets/create_market_tfrecord.py calib --img path/to/Market-1501-v15.09.15/bounding_box_train/
 ```

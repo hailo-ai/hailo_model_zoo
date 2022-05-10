@@ -17,6 +17,7 @@ from hailo_model_zoo.core.eval.detection_3d_evaluation import Detection3DEval
 from hailo_model_zoo.core.eval.faster_rcnn_evaluation import FasterRCNNEval
 from hailo_model_zoo.core.eval.fast_depth_evaluation import FastDepthEval
 from hailo_model_zoo.core.eval.ocr_evaluation import OCREval
+from hailo_model_zoo.core.eval.person_reid_evaluation import PersonReidEval
 
 
 class EmptyEval():
@@ -59,6 +60,7 @@ def get_evaluation(name):
         'faster_rcnn_stage2': FasterRCNNEval,
         'fast_depth': FastDepthEval,
         'ocr': OCREval,
+        'person_reid': PersonReidEval,
     }
 
     if name not in evaluation_map:

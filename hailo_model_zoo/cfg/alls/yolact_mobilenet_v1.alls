@@ -1,3 +1,4 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 # quantization params
 quantization_param([conv1, conv18, conv19, deconv1], bias_mode=single_scale_decomposition)

@@ -24,22 +24,17 @@ VSCode has out of the box support for Markdown files - [Markdown Preview](https:
 
 ### Grip
 
-The below describes local setup for linux, but can be adapted for other OS.
+> The below describes local setup for linux, but can be adapted for other OS.
 
 1. Install `grip`:
-    ```
-    pip install grip
-    ```
+```
+pip install grip
+```
 
 2. Launch the grip server:
-    ```
-    cd <DOCUMENTATION_FOLDER>
-    env "PATH=$PATH" grip 8080
-    ```
-    <DOCUMENTATION_FOLDER> is where OFFLINE_README.md resides:
-
-- When using the Git repo: ``Main cloned folder``.
-- When using .whl installation (part of the Hailo SW Suite): ``HAILO_VIRTUALENV_FOLDER/hailo_model_zoo_doc``
-
+```
+cd hailo_model_zoo
+env "PATH=$PATH" grip 8080
+```
 
 3. Open browser and enter the following url:  `http://localhost:8080`

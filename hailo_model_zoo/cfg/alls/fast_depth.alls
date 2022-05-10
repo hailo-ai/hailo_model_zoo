@@ -7,3 +7,11 @@ quantization_param(output_layer1, precision_mode=a16_w16)
 # pre_quantization_optimization commands
 # setting conv20 layer manually
 pre_quantization_optimization(activation_clipping, layers=[conv20], mode=manual, clipping_values=[0, 15])
+
+allocator_param(automatic_ddr=disabled)
+
+portal_conv2_ew_add3 = portal(conv2, ew_add3, buffer_in_l4=True)
+portal_portal_conv2_ew_add3_ew_add3 = portal(portal_conv2_ew_add3, ew_add3, buffer_in_l4=True)
+buffers(conv2, portal_conv2_ew_add3, 28)
+buffers(portal_conv2_ew_add3, portal_portal_conv2_ew_add3_ew_add3, 56)
+buffers(portal_portal_conv2_ew_add3_ew_add3, ew_add3, 28)

@@ -1,6 +1,6 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 ## Allocator Script Version 1.0
 ### Auto generated allocation script ###
-reshape1 = format_conversion(input_layer1, tf_rgb_to_hailo_rgb)
 
 # Compiled originally in branch SDK-16012-benchmarks-to-develop-mobilenet-ssd-nms commit 419896c512213f17e9fd5ab4a1a934a8d804e493
 

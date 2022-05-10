@@ -1,3 +1,4 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [128.0, 128.0, 128.0])
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 pre_quantization_optimization(equalization, policy=disabled)
 portal0 = portal(conv19, concat1)

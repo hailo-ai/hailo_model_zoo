@@ -122,7 +122,7 @@ class SSDPostProc(object):
 
     @staticmethod
     def expanded_shape(orig_shape, start_dim, num_dims):
-        with tf.compat.v1.name_scope('ExpandedShape'):
+        with tf.name_scope('ExpandedShape'):
             start_dim = tf.expand_dims(start_dim, 0)  # scalar to rank-1
             before = tf.slice(orig_shape, [0], start_dim)
             add_shape = tf.ones(tf.reshape(num_dims, [1]), dtype=tf.int32)
@@ -132,7 +132,7 @@ class SSDPostProc(object):
 
     @staticmethod
     def meshgrid(x, y):
-        with tf.compat.v1.name_scope('Meshgrid'):
+        with tf.name_scope('Meshgrid'):
             x = tf.convert_to_tensor(x)
             y = tf.convert_to_tensor(y)
             x_exp_shape = SSDPostProc.expanded_shape(tf.shape(x), 0, tf.rank(y))
@@ -148,7 +148,7 @@ class SSDPostProc(object):
 
     @staticmethod
     def feature_map_shapes_tensor(endnodes):
-        with tf.compat.v1.name_scope('FeatureMapShapes'):
+        with tf.name_scope('FeatureMapShapes'):
             return [tf.slice(tf.shape(output_branch), [1], [3]) for output_branch in endnodes[0::2]]
 
     def extract_anchors(self, endnodes):
@@ -219,17 +219,17 @@ class SSDPostProc(object):
         return tf.transpose(tf.stack([ymin, xmin, ymax, xmax]))
 
     def tf_preproc(self, startnode, size=[300, 300]):
-        with tf.compat.v1.name_scope('Preprocessor'):
+        with tf.name_scope('Preprocessor'):
             image_tensor_resized = tf.image.resize(startnode,
                                                    size=size,
-                                                   method=tf.image.ResizeMethod.BILINEAR,
+                                                   method='bicubic',
                                                    align_corners=True)
             image_tensor_resized = tf.add(tf.multiply(image_tensor_resized, tf.constant(2. / 255)), tf.constant(-1.))
             return image_tensor_resized
 
     def tf_postproc(self, endnodes):
 
-        with tf.compat.v1.name_scope('Postprocessor'):
+        with tf.name_scope('Postprocessor'):
             # Collect all output branches into Boxes/classes objects
             box_predictions, classes_predictions = \
                 collect_box_class_predictions(endnodes, self._num_classes, self._anchors._type)

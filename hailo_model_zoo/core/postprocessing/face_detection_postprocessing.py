@@ -80,7 +80,7 @@ class FaceDetectionPostProc(object):
         return new_boxes
 
     def tf_postproc(self, endnodes):
-        with tf.compat.v1.name_scope('Postprocessor'):
+        with tf.name_scope('Postprocessor'):
             box_predictions, classes_predictions, landmarks_predictors = self.collect_box_class_predictions(endnodes)
             additional_fields = {}
             classes_predictions_softmax = tf.nn.softmax(classes_predictions, axis=2)
@@ -206,7 +206,7 @@ class LibFaceDetectionPostProc(object):
         return new_boxes
 
     def tf_postproc(self, endnodes):
-        with tf.compat.v1.name_scope('Postprocessor'):
+        with tf.name_scope('Postprocessor'):
             (box_predictions, classes_predictions,
              landmarks_predictors, iou_predictors) = self.collect_box_class_predictions(endnodes)
             additional_fields = {}

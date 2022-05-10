@@ -9,6 +9,7 @@ Each architecture has its own README which describes how to:
 > **Important**:  
     Retraining is not available inside the docker version of Hailo Software Suite. In case you use it, clone the hailo_model_zoo outside of the docker, and perform the retraining there:  
     ```git clone https://github.com/hailo-ai/hailo_model_zoo.git``` 
+
 <br>
 
 ## Object Detection

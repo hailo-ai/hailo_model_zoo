@@ -4,11 +4,9 @@ import tensorflow as tf
 def _resize(image, new_height, new_width, is_mask):
     image = tf.expand_dims(image, 0)
     if is_mask:
-        resized_image = tf.compat.v1.image.resize_nearest_neighbor(image, [new_height, new_width],
-                                                                   align_corners=True)
+        resized_image = tf.image.resize(image, [new_height, new_width], method='nearest')
     else:
-        resized_image = tf.compat.v1.image.resize_bilinear(image, [new_height, new_width],
-                                                           align_corners=True)
+        resized_image = tf.image.resize(image, [new_height, new_width], method='bilinear')
     resized_image = tf.squeeze(resized_image)
     return resized_image
 

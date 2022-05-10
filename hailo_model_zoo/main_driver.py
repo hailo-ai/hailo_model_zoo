@@ -23,14 +23,16 @@ def _ensure_quantized(runner, logger, args, network_info):
     if runner.state != States.HAILO_MODEL:
         return
 
-    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir)
+    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir,
+                   model_script_path=args.model_script_path)
 
 
 def _ensure_parsed(runner, logger, network_info, args):
     if runner.state != States.UNINITIALIZED:
         return
 
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
+    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger,
+                model_script_path=args.model_script_path)
 
 
 def _ensure_runnable_state(args, logger, network_info, runner, target):
@@ -50,7 +52,7 @@ def _ensure_runnable_state(args, logger, network_info, runner, target):
         if runner.state == States.COMPILED_MODEL:
             return
         logger.info("Compiling the model (without inference) ...")
-        compile_model(runner, network_info, args.results_dir)
+        compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
 
 
 def _str_to_profiling_mode(name):
@@ -65,8 +67,8 @@ def parse(args):
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
-
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
+    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger,
+                model_script_path=args.model_script_path)
 
 
 def quantize(args):
@@ -87,7 +89,8 @@ def quantize(args):
 
     _ensure_parsed(runner, logger, network_info, args)
 
-    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir)
+    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir,
+                   model_script_path=args.model_script_path)
 
 
 def compile(args):
@@ -104,7 +107,7 @@ def compile(args):
 
     _ensure_quantized(runner, logger, args, network_info)
 
-    compile_model(runner, network_info, args.results_dir)
+    compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
 
     logger.info(f'HEF file written to {get_hef_path(args.results_dir, network_info.network.network_name)}')
 
@@ -132,7 +135,8 @@ def profile(args):
         # Quantize the model so profile_hn_model could compile & profile it
         _ensure_quantized(runner, logger, args, network_info)
 
-    alls_script_path = resolve_alls_path(network_info.paths.alls_script) \
+    alls_script_path = (args.model_script_path if args.model_script_path else
+                        resolve_alls_path(network_info.paths.alls_script)) \
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
 
     stats, csv_data, latency_data = runner.profile_hn_model(fps=network_info.allocation.required_fps,
@@ -143,7 +147,10 @@ def profile(args):
 
     mem_file = io.StringIO()
     outpath = args.results_dir / f'{model_name}.html'
-    report_generator = ReactReportGenerator(mem_file, csv_data, latency_data, outpath, stats, 'hailo8')
+    report_generator = ReactReportGenerator(mem_file=mem_file, csv_data=csv_data, latency_data=latency_data,
+                                            runtime_data=latency_data["runtime_data"], out_path=outpath,
+                                            stats=stats, hw_arch="hailo8")
+
     csv_data = report_generator.create_report(should_open_web_browser=False)
     logger.info(f'Profiler report generated in {outpath}')
 

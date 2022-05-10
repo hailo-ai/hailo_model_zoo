@@ -1,3 +1,5 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+transpose()
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 #print_buffers()
 allocator_param(seed=1000, validate=False)

@@ -36,7 +36,7 @@ def resnet(hr_image, image_info=None, height=136, width=260, **kwargs):
             hr_image_blurred = _blur_image(hr_image, size=BLUR_SIZE, mean=BLUR_MEAN, std=BLUR_STD)
     else:
         hr_image_blurred = hr_image
-    lr_image = tf.compat.v1.image.resize_bicubic(hr_image_blurred, [height, width], align_corners=False)
+    lr_image = tf.image.resize(hr_image_blurred, [height, width], method='bicubic')
 
     lr_image = tf.clip_by_value(lr_image, 0, 255)
     lr_image = tf.squeeze(lr_image)

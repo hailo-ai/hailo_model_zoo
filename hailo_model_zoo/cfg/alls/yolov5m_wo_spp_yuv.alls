@@ -1,16 +1,19 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+yuv_to_rgb1 = yuv_to_rgb(input_layer1)
+resize_input1 = resize_input([720, 1280], input_layer1)
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 quantization_param(conv45, precision_mode=a8_w4)
 quantization_param(conv46, precision_mode=a8_w4)
 quantization_param(conv50, precision_mode=a8_w4)
 quantization_param(conv52, precision_mode=a8_w4)
-quantization_param(conv84, precision_mode=a8_w4)
+quantization_param(conv83, precision_mode=a8_w4)
 quantization_param(conv88, precision_mode=a8_w4)
 quantization_param(conv90, precision_mode=a8_w4)
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv93, conv83, conv73])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv93, conv84, conv74])
 
-allocator_param(timeout=100000, cluster_timeout=100000)
+allocator_param(timeout=100000, cluster_timeout=100000, automatic_ddr=disabled)
 portal0 = portal(conv27, concat7, buffer_in_l4=True)
 portal1 = portal(conv30, concat3, buffer_in_l4=True)
 portal2 = portal(conv44, concat5, buffer_in_l4=True)

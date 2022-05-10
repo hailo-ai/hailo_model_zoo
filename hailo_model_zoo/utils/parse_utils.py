@@ -1,4 +1,3 @@
-from hailo_sdk_common.preprocessing import Normalization
 from hailo_sdk_common.hailo_nn.hn_definitions import EWAddPolicy, DEFAULT_EW_ADD_POLICY
 
 
@@ -27,22 +26,15 @@ def translate_model(runner, network_info, ckpt_path, *, tensor_shapes=None):
     if type(end_node) == str:
         end_node = [end_node]
 
-    normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
-    normalization_obj = None
-    if normalize_in_net and not network_info.parser.normalization_params.fold_normalization:
-        normalization_obj = Normalization(mean=mean_list, std=std_list)
-
     ckpt_path = str(ckpt_path)
     if ckpt_path.endswith('.onnx'):
         runner.translate_onnx_model(ckpt_path, model_name,
-                                    integrated_preprocess=normalization_obj,
                                     start_node_name=start_node,
                                     end_node_names=end_node,
                                     net_input_shape=tensor_shapes,
                                     ew_add_policy=ew_add_policy)
     else:
         runner.translate_tf_model(ckpt_path, model_name,
-                                  integrated_preprocess=normalization_obj,
                                   start_node_name=start_node,
                                   end_node_names=end_node,
                                   tensor_shapes=tensor_shapes,

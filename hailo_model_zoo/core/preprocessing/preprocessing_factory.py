@@ -12,6 +12,7 @@ from hailo_model_zoo.core.preprocessing import mono_depth_estimation_preprocessi
 from hailo_model_zoo.core.preprocessing import lane_detection_preprocessing
 from hailo_model_zoo.core.preprocessing import face_landmarks_preprocessing
 from hailo_model_zoo.core.preprocessing import fast_depth_preprocessing
+from hailo_model_zoo.core.preprocessing import person_reid_preprocessing
 
 
 def convert_rgb_to_yuv(image):
@@ -25,7 +26,7 @@ def convert_rgb_to_yuv(image):
 
 def image_resize(image, shape):
     image = tf.expand_dims(image, 0)
-    image = tf.compat.v1.image.resize_bilinear(image, tuple(shape), align_corners=True)
+    image = tf.image.resize(image, tuple(shape), method='bilinear')
     return tf.squeeze(image, [0])
 
 
@@ -81,6 +82,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'resmlp': classification_preprocessing.resmlp,
         'fast_depth': fast_depth_preprocessing.fast_depth,
         'lprnet': classification_preprocessing.lprnet,
+        'repvgg_a0_person_reid': person_reid_preprocessing.repvgga0,
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)

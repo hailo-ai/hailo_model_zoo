@@ -2,7 +2,7 @@ from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_fac
                                            parse_widerface, parse_utkfaces, parse_mot, parse_tusimple, parse_landmarks,
                                            parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
                                            parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
-                                           parse_lp_ocr)
+                                           parse_lp_ocr, parse_market)
 
 
 def get_dataset_parse_func(ds_name):
@@ -42,4 +42,6 @@ def get_dataset_parse_func(ds_name):
         '300w-lp_tddfa': parse_300w_lp_tddfa.parse_record,
         'license_plates': parse_coco.parse_detection_record,
         'lp_ocr': parse_lp_ocr.parse_lp_ocr_record,
+        'market1501': parse_market.parse_market_record,
+        'personface_detection': parse_coco.parse_detection_record,
     }[ds_name]

@@ -29,8 +29,8 @@ def _openpose_preproc(img, desired_height, desired_width):
 
 
 def openpose_tf_preproc(img, image_info, desired_height, desired_width, **kwargs):
-    res_tens, pad = tf.compat.v1.py_func(_openpose_preproc,
-                                         [img, desired_height, desired_width], (tf.float32, tf.int64))
+    res_tens, pad = tf.numpy_function(_openpose_preproc,
+                                      [img, desired_height, desired_width], (tf.float32, tf.int64))
     image_info["pad"] = pad
     image_info["orig_shape"] = tf.shape(img)
     return (tf.cast(res_tens, tf.float32), image_info)

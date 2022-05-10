@@ -12,6 +12,21 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 <summary> Changelog </summary>
 
 <details>
+<summary> v2.1 </summary>
+
+- Updated to use Dataflow Compiler v3.17 ([developer-zone](https://hailo.ai/developer-zone/))
+- Parser commands were moved into model scripts
+- Support Market-1501 Dataset
+- Support a new model zoo task - ReID
+- New models:
+  - yolov5s_personface - person and face detector
+  - repvgg_a0_person_reid_512 / repvgg_a0_person_reid_2048 - ReID networks which outputs a person embedding
+    These models were trained in-house as part of our upcoming new application
+  - stdc1 - Segmentation architecture for Cityscapes
+
+</details>
+
+<details>
 <summary> v2.0 </summary>
 
 - Updated to use Dataflow Compiler v3.16 ([developer-zone](https://hailo.ai/developer-zone/)) with TF version 2.5 which require CUDA11.2
@@ -187,9 +202,9 @@ In order to reproduce the measurements please refer to the following [**page**](
     ```
   * Run the Hailo Model Zoo. For example, print the information of the MobileNet-v1 model:
     ```
-    python hailo_model_zoo/main.py info mobilenet_v1
+    hailomz info mobilenet_v1
     ```
-> **_NOTE:_** In case you are using the Hailo Software Suite please use the following path \(\<version> means 3.6/3.7/3.8): <br><virtualenv_dir>/lib/python\<version>/site-packages/hailo_model_zoo/main.py</br>
+
 
   ### Getting Started
 

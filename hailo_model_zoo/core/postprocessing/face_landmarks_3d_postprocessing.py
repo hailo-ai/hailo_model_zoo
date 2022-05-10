@@ -151,9 +151,9 @@ def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, i
     face_3dmm_params = endnodes * TDDFA_RESCALE_PARAMS['std'] + TDDFA_RESCALE_PARAMS['mean']
     roi_box = gt_images.get('roi_box',
                             tf.tile([[0, 0, img_dims[1], img_dims[0]]], (batch_size, 1)))
-    ptds3d = tf.compat.v1.py_func(face_3dmm_to_landmarks_batch,
-                                  [face_3dmm_params, img_dims, roi_box],
-                                  tf.float32)
+    ptds3d = tf.numpy_function(face_3dmm_to_landmarks_batch,
+                               [face_3dmm_params, img_dims, roi_box],
+                               tf.float32)
     return {'predictions': ptds3d}
 
 

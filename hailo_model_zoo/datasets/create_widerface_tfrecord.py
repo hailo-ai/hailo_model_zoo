@@ -18,7 +18,7 @@ from hailo_model_zoo.utils.downloader import download_to_file, download_from_dri
 
 
 CALIB_SET_OFFSET = 999
-CALIB_SET_LENGTH = 128
+CALIB_SET_LENGTH = 1024
 DOWNLOAD_URL = {
     'calib': 'https://drive.google.com/uc?id=15hGDLhsx8bLgLcIRD5DhYt5iBxnjNF1M&export=download',
     'val': 'https://drive.google.com/uc?id=1GUCogbp16PMGa39thoMMeWxp7Rp5oM8Q&export=download',
@@ -44,7 +44,7 @@ GT_MAT_NAME = {
     'val': 'wider_face_val.mat',
 }
 
-CALIB_LOCATION = "models_files/widerface/2020-03-23/widerfacecalibration_set.tfrecord"
+CALIB_LOCATION = "models_files/widerface/2022-06-14/widerfacecalibration_set.tfrecord"
 VAL_LOCATION = "models_files/widerface/2020-03-23/widerfaceval.tfrecord"
 TFRECORD_LOCATION = {
     'calib': CALIB_LOCATION,

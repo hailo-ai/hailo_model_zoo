@@ -37,6 +37,6 @@ info:
   training_data: coco keypoints train2017
   validation_data: coco keypoints val2017
   eval_metric: AP
-  full_precision_result: 44.074
+  full_precision_result: 44.07
   source: https://github.com/tensorboy/centerpose
   license_url: https://opensource.org/licenses/MIT

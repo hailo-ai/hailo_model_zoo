@@ -1,0 +1,18 @@
+base:
+- base/base.yaml
+quantization:
+  calib_set:
+  - models_files/market1501/2022-06-22/market1501_calib.tfrecord
+evaluation:
+  labels_offset: 0
+  classes: 750
+  dataset_name: market1501
+  data_set: models_files/market1501/2022-06-22/market1501_val.tfrecord
+  validation_data_set: models_files/market1501/2022-06-22/market1501_val.tfrecord
+preprocessing:
+  meta_arch: person_reid
+  network_type: person_reid
+  input_shape:
+  - 256
+  - 128
+  - 3

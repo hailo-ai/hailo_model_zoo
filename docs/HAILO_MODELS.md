@@ -8,6 +8,7 @@ Each model is accompanied with its own README, retraining docker and retraining 
     - [Object Detection](#object-detection)
     - [Person & Face Detection](#object-detection)
     - [License Plate Recognition](#license-plate-recognition)
+    - [Person Re-Identification](#person-re-id)
 
 > **Important**:  
     Retraining is not available inside the docker version of Hailo Software Suite. In case you use it, clone the hailo_model_zoo outside of the docker, and perform the retraining there:  
@@ -32,3 +33,15 @@ Network Name | Accuracy<sup>*</sup> | Input Resolution (HxWxC) | Params (M) | FL
 [lprnet](../hailo_models/license_plate_recognition/README.md) | 99.96|  75x300x3 | 7.14 | 18.29 |
 
 \* Evaluated on internal dataset
+
+<br>
+
+## Person Re-ID
+
+Network Name | Accuracy<sup>*</sup> | Input Resolution (HxWxC) | Params (M) | FLOPs (G) |
+--- | --- | --- | --- | --- |
+[repvgg_a0_person_reid_512](../hailo_models/reid/README.md) | 89.9 | 256x128x3 | 7.68 | 0.89 |
+[repvgg_a0_person_reid_2048](../hailo_models/reid/README.md) | 90.02 |  256x128x3 | 9.65 | 0.89 |
+
+\* Evaluated on Market-1501
+

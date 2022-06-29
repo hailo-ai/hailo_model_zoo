@@ -23,7 +23,7 @@ def visualize_face_landmarks_result(logits, image, **kwargs):
 def visualize_hand_landmarks_result(logits, image, **kwargs):
     logits = logits['predictions'][0]
     img = image[0]
-    pts = [x for i, x in enumerate(logits) if (i + 1) % 3 != 0]
+    pts = [int(x) for i, x in enumerate(logits) if (i + 1) % 3 != 0]
     for i in range(len(pts)):
         if i % 2 == 0:
             continue

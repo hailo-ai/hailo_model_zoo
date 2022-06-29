@@ -95,7 +95,6 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
 
-        # the original: image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
         # following gluon's preprocess for yolo v3:
         is_enlarge = tf.math.logical_and(tf.math.greater(height, image_info['height']),
                                          tf.math.greater(width, image_info['width']))
@@ -246,6 +245,7 @@ def ssd_base(image, image_info, resize_function, height=None, width=None,
     if height and width:
         # Resize the image to the specified height and width.
         image, target_height, target_width = resize_function(image, height, width)
+        image.set_shape((height, width, 3))
 
     _cast_image_info_types(image_info, image, max_pad)
     if image_info and 'num_boxes' in image_info:

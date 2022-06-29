@@ -21,6 +21,6 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
-  full_precision_result: 77.07
+  full_precision_result: 77.05
   source: https://github.com/facebookresearch/pycls
   license_url: https://opensource.org/licenses/MIT

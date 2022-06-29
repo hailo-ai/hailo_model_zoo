@@ -71,7 +71,7 @@ def create_args_parser():
 
 
 def _tf_preprocess(data_feed_callback, process_callback, num_of_images=None):
-    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+    # tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR) # TODO: Amit -- Not sure what to do with that
     with tf.Graph().as_default():
         _logger.info('Building preprocess...')
         iterator = data_feed_callback()

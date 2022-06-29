@@ -52,8 +52,7 @@ class CenternetPostProc(object):
             endnodes.append(probs_maxima_values)
             # we discard the 0 element in the endnodes list. This is the probabilities tensor.
             # Instead we pass the sparse probabilities tensor probs_maxima_values:
-
-        bb_probs, bb_classes, bb_boxes, num_detections, top_k_indices = tf.compat.v1.py_func(
+        bb_probs, bb_classes, bb_boxes, num_detections, top_k_indices = tf.numpy_function(
             self._centernet_postprocessing, endnodes[1:], ['float32', 'int32', 'float32', 'int32', 'int64'],
             name='centernet_postprocessing')
         bb_dict['detection_scores'] = bb_probs

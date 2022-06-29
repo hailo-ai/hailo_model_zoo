@@ -1,19 +1,9 @@
 base:
-- base/base.yaml
-quantization:
-  calib_set:
-  - models_files/market1501/market1501_calib.tfrecord
+- base/market1501.yaml
 network:
   network_name: repvgg_a0_person_reid_2048
 allocation:
   required_fps: 300
-preprocessing:
-  meta_arch: repvgg_a0_person_reid
-  network_type: person_reid
-  input_shape:
-  - 256
-  - 128
-  - 3
 paths:
   alls_script: repvgg_a0_person_reid_2048.alls
   network_path:
@@ -26,19 +16,13 @@ parser:
   normalization_params:
     normalize_in_net: true
     mean_list:
-    - 0.4364566
-    - 0.40887514
-    - 0.4093984
+    - 111.296
+    - 104.263
+    - 104.396
     std_list:
-    - 0.25174066
-    - 0.24528353
-    - 0.23656533
-evaluation:
-  labels_offset: 0
-  classes: 750
-  dataset_name: market1501
-  data_set: models_files/market1501/market1501_val.tfrecord
-  validation_data_set: models_files/market1501/market1501_val.tfrecord
+    - 64.193
+    - 62.547
+    - 60.324
 info:
   task: person re-id
   input_shape: 256x128x3
@@ -49,6 +33,6 @@ info:
   training_data: market1501 train
   validation_data: market1501 val
   eval_metric: rank1
-  full_precision_result: 90.0
+  full_precision_result: 90.02
   source: https://github.com/DingXiaoH/RepVGG
   license_url: https://opensource.org/licenses/MIT

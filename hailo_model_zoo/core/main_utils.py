@@ -252,10 +252,13 @@ def make_visualize_callback(network_info):
     network_type = network_info.preprocessing.network_type
     dataset_name = network_info.evaluation.dataset_name
     channels_remove = network_info.hn_editor.channels_remove
+    labels_offset = network_info.evaluation.labels_offset
     visualize_function = postprocessing_factory.get_visualization(network_type)
 
     def visualize_callback(logits, image, **kwargs):
-        return visualize_function(logits, image, dataset_name=dataset_name, channels_remove=channels_remove, **kwargs)
+        return visualize_function(logits, image, dataset_name=dataset_name,
+                                  channels_remove=channels_remove,
+                                  labels_offset=labels_offset, **kwargs)
     return visualize_callback
 
 

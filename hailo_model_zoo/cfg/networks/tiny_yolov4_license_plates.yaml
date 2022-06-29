@@ -48,7 +48,7 @@ hn_editor:
 quantization:
   calib_set: null
 allocation:
-  required_fps: 1385
+  required_fps: 1290
 network:
   network_name: tiny_yolov4_license_plates
 paths:

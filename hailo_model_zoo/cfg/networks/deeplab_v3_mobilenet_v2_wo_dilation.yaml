@@ -40,6 +40,6 @@ info:
   training_data: pascal voc train2012
   validation_data: pascal voc val2012
   eval_metric: mIoU
-  full_precision_result: 71.512
+  full_precision_result: 71.46
   source: https://github.com/tensorflow/models/tree/master/research/deeplab
   license_url: https://www.apache.org/licenses/LICENSE-2.0

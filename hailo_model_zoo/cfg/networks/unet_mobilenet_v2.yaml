@@ -43,6 +43,6 @@ info:
   training_data: oxford-IIIT pets
   validation_data: oxford-IIIT pets
   eval_metric: mIoU
-  full_precision_result: 77.297
+  full_precision_result: 77.32
   source: https://www.tensorflow.org/tutorials/images/segmentation
   license_url: https://www.apache.org/licenses/LICENSE-2.0

@@ -4,6 +4,7 @@ model_optimization_config(calibration, batch_size=1, calibset_size=64)
 pre_quantization_optimization(equalization, policy=disabled)
 
 # post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=0.95, seed=0, timeout=86400, validate=True)

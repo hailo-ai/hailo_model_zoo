@@ -1,5 +1,7 @@
 base:
 - base/fcn.yaml
+inference:
+  emulator_batch_size: 4
 postprocessing:
   device_pre_post_layers:
     softmax: false

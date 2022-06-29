@@ -30,6 +30,6 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
-  full_precision_result: 75.266
+  full_precision_result: 75.26
   source: https://github.com/rwightman/pytorch-image-models/
   license_url: https://github.com/rwightman/pytorch-image-models/blob/master/LICENSE

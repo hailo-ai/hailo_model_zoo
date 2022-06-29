@@ -1,8 +1,5 @@
 base:
-- base/base.yaml
-quantization:
-  calib_set:
-  - models_files/widerface/2020-03-23/widerfacecalibration_set.tfrecord
+- base/widerface.yaml
 preprocessing:
   network_type: face_detection
   max_pad: 2048
@@ -24,12 +21,6 @@ postprocessing:
       - 128
     - - 256
       - 512
-evaluation:
-  labels_offset: 1
-  classes: 1
-  dataset_name: widerface
-  data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
-  validation_data_set: models_files/widerface/2020-03-23/widerfaceval.tfrecord
 info:
   source: https://github.com/biubug6/Pytorch_Retinaface
 parser:

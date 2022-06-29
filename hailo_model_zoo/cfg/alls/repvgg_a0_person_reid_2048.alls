@@ -1,4 +1,4 @@
-normalization1 = normalization([0.4364566 , 0.40887514, 0.4093984], [0.25174066, 0.24528353, 0.23656533])
+normalization1 = normalization([111.296 , 104.263, 104.396], [64.193 , 62.547, 60.324])
 pre_quantization_optimization(activation_clipping, layers=[conv2], mode=percentile, clipping_values=[0, 99.25])
 pre_quantization_optimization(activation_clipping, layers=[conv9], mode=percentile, clipping_values=[0, 99.25])
 pre_quantization_optimization(activation_clipping, layers=[conv20], mode=percentile, clipping_values=[0, 99.45])

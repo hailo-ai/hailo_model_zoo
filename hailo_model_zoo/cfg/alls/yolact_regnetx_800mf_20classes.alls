@@ -1,4 +1,4 @@
 normalization1 = normalization([123.68, 116.78, 103.94], [58.4, 57.12, 57.38])
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 
-quantization_param([conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9, conv10, conv11, conv12, conv13, conv14, conv15, conv16, conv17, conv18, conv19, conv20, conv21, conv22, conv23, conv24, conv25, conv26, conv27, conv28, conv29, conv30, conv31, conv32, conv33, conv34, conv35, conv36, conv37, conv38, conv39, conv40, conv41, conv42, conv43, conv44, conv45, conv46, conv47, conv48, conv49, conv50, conv51, conv52, conv53, conv54, conv55, conv56, conv57, conv58, conv59, conv60, conv61, conv62, conv63, conv64, conv65, conv66, conv67, conv68, conv69, conv70, conv71, conv72, conv73, conv74, conv75, conv76, conv77, conv78, conv79, conv80, conv81, conv82, conv83, conv84, conv85, conv86], bias_mode=double_scale_initialization)
+compilation_param([conv15, conv37], balance_output_multisplit=False)

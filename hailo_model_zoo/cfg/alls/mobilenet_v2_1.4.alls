@@ -2,4 +2,5 @@ normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 model_optimization_config(calibration, batch_size=8, calibset_size=64)
 
 # post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)

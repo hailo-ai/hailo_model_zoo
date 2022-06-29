@@ -1,5 +1,7 @@
 base:
 - base/fcn.yaml
+inference:
+  emulator_batch_size: 4
 postprocessing:
   ext_upsample: 16
 network:
@@ -23,6 +25,6 @@ info:
   training_data: cityscapes train
   validation_data: cityscapes val
   eval_metric: mIoU
-  full_precision_result: 66.82
+  full_precision_result: 66.83
   source: https://mmsegmentation.readthedocs.io/en/latest
   license_url: https://www.apache.org/licenses/LICENSE-2.0

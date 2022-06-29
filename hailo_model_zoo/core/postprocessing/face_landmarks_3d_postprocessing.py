@@ -163,7 +163,8 @@ def visualize_face_landmarks_3d_result(logits, image, **kwargs):
     box = kwargs.get('img_info', {}).get('roi_box')
 
     for landmark in logits[0, :, :2]:
-        img = cv2.circle(img, tuple(landmark), 1, (255, 0, 255), -1)
+        landmark_as_int = tuple(int(x) for x in landmark)
+        img = cv2.circle(img, landmark_as_int, 1, (255, 0, 255), -1)
 
     if box is not None:
         img = cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), color=(0, 255, 0), thickness=1)

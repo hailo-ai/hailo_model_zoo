@@ -69,4 +69,5 @@ def srgan(image, image_info, height, width, **kwargs):
                 hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
-    return {'input_layer1': image, 'input_layer1_new': image}, image_info
+    # return {'input_layer1': image, 'input_layer1_new': image}, image_info # removed due to hn_editor in srgan
+    return image, image_info

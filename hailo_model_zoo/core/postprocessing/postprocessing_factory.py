@@ -110,6 +110,7 @@ def get_postprocessing(name, flip=False):
         'fast_depth': fast_depth_postprocessing,
         'ocr': ocr_postprocessing,
         'person_reid': person_reid_postprocessing,
+        'person_attr': classification_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

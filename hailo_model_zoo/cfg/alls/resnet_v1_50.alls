@@ -3,6 +3,8 @@ model_optimization_config(calibration, batch_size=8, calibset_size=64)
 # quantization_param({conv*}, max_elementwise_feed_repeat=1)
 quantization_param([conv5, conv8, conv11, conv15, conv18, conv21, conv24, conv28, conv31, conv34, conv37, conv40, conv43, conv47, conv50, conv53], max_elementwise_feed_repeat=1)
 
+post_quantization_optimization(finetune, policy=disabled)
+
 allocator_param(automatic_ddr=disabled, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, cluster_timeout=300, defuse_by_validator=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=1.0, seed=0, timeout=3600, validate=True)
 buffer_calc_param(buffer_calc_fps=0.0, optimize_buffers=True, split_aware_optimize_buffers=True)
 context_switch_param(max_compute_utilization=0.75, max_control_utilization=0.75, max_memory_utilization=0.75, max_utilization=1.0, mode=allowed)

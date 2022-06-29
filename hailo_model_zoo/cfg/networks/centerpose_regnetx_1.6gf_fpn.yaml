@@ -16,9 +16,9 @@ hn_editor:
           network_name: center_nms
         paths:
           network_path:
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.meta
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.index
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.data-00000-of-00001
           alls_script: centerpose_regnetx_1.6gf_fpn_center_nms.alls
         parser:
           nodes:
@@ -30,9 +30,9 @@ hn_editor:
           network_name: joint_nms
         paths:
           network_path:
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.meta
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.index
-          - models_files/centerpose_regnetx_1.6gf_fpn/2021-02-01/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.data-00000-of-00001
           alls_script: centerpose_regnetx_1.6gf_fpn_joint_nms.alls
         parser:
           nodes:
@@ -68,6 +68,6 @@ info:
   training_data: coco keypoints train2017
   validation_data: coco keypoints val2017
   eval_metric: AP
-  full_precision_result: 53.537
+  full_precision_result: 53.54
   source: https://github.com/tensorboy/centerpose
   license_url: https://opensource.org/licenses/MIT

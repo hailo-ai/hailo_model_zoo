@@ -1,3 +1,218 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="633px" height="604px" viewBox="-0.5 -0.5 633 604" content="&lt;mxfile host=&quot;www.diagrameditor.com&quot; modified=&quot;2021-07-05T08:46:11.951Z&quot; agent=&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot; etag=&quot;GdJykkwHLxcIHyBXphV5&quot; version=&quot;12.1.3&quot; pages=&quot;1&quot;&gt;&lt;diagram id=&quot;lWbLuIBhLlMb44czWhYG&quot; name=&quot;Page-1&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;"><defs/><g><path d="M 279.9 124.2 L 204.63 124.2" fill="none" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><path d="M 199.91 124.2 L 206.21 121.05 L 204.63 124.2 L 206.21 127.35 Z" fill="#004b66" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><rect x="279.9" y="97.2" width="108" height="54" rx="8.1" ry="8.1" fill="#0098c4" stroke="#006eaf" pointer-events="none"/><g transform="translate(310.5,115.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="50" height="19" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; vertical-align: top; width: 50px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><b><font style="font-size: 18px">Parse</font></b></div></div></foreignObject><text x="25" y="16" fill="#ffffff" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 333.9 16.2 L 333.9 91.47" fill="none" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 333.9 96.19 L 330.75 89.89 L 333.9 91.47 L 337.05 89.89 Z" fill="#43464c" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 333.9 151.2 L 333.9 208.47" fill="none" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><path d="M 333.9 213.19 L 330.75 206.89 L 333.9 208.47 L 337.05 206.89 Z" fill="#004b66" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><rect x="279.9" y="214.2" width="108" height="54" rx="8.1" ry="8.1" fill="#0098c4" stroke="#006eaf" pointer-events="none"/><g transform="translate(299.5,232.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="76" height="19" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; vertical-align: top; width: 78px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><b><font style="font-size: 18px">Quantize</font></b></div></div></foreignObject><text x="38" y="16" fill="#ffffff" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><rect x="279.9" y="331.2" width="108" height="54" rx="8.1" ry="8.1" fill="#0098c4" stroke="#006eaf" pointer-events="none"/><g transform="translate(301.5,349.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="72" height="19" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; vertical-align: top; width: 72px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><b><font style="font-size: 18px">Compile</font></b></div></div></foreignObject><text x="36" y="16" fill="#ffffff" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 333.9 268.2 L 333.9 325.47" fill="none" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><path d="M 333.9 330.19 L 330.75 323.89 L 333.9 325.47 L 337.05 323.89 Z" fill="#004b66" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><rect x="279.9" y="448.2" width="108" height="54" rx="8.1" ry="8.1" fill="#d4d6d9" stroke="#000000" pointer-events="none"/><g transform="translate(316.5,466.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="38" height="19" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 38px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><font style="font-size: 18px"><b>Eval</b></font></div></div></foreignObject><text x="19" y="16" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 333 385.2 L 333 442.47" fill="none" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><path d="M 333 447.19 L 329.85 440.89 L 333 442.47 L 336.15 440.89 Z" fill="#004b66" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(347.5,45.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="68" height="14" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 68px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><font style="font-size: 14px">ckpt / onnx</font></div></div></foreignObject><text x="34" y="13" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(344.5,170.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="31" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 32px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HAR<sub>1</sub></div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(128.5,233.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="31" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 32px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HAR<sub>1</sub></div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 189.9 241.2 L 274.17 241.2" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="2.7 2.7" pointer-events="none"/><path d="M 278.89 241.2 L 272.59 244.35 L 274.17 241.2 L 272.59 238.05 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 189.9 357.75 L 274.17 357.75" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="2.7 2.7" pointer-events="none"/><path d="M 278.89 357.75 L 272.59 360.9 L 274.17 357.75 L 272.59 354.6 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(128.5,350.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="31" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 32px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HAR<sub>2</sub></div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(344.5,289.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="1" height="12" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 1px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><span style="font-family: &quot;helvetica&quot; , &quot;arial&quot; , sans-serif ; font-size: 0px ; white-space: nowrap">%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22HAR%22%20style%3D%22text%3Bhtml%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3Balign%3Dleft%3BverticalAlign%3Dmiddle%3BwhiteSpace%3Dwrap%3Brounded%3D0%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22380%22%20y%3D%22180%22%20width%3D%2280%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E</span></div></div></foreignObject><text x="0" y="12" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">&lt;span style="font-family: "helvetica" , "arial" , sans-serif ; font-size: 0px ; white-space: nowrap"&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22HAR%22%20style%3D%22text%3Bhtml%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3Balign%3Dleft%3BverticalAlign%3Dmiddle%3BwhiteSpace%3Dwrap%3Brounded%3D0%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22380%22%20y%3D%22180%22%20width%3D%2280%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;</text></switch></g><path d="M 522.9 203.4 C 522.9 169.8 621.9 169.8 621.9 203.4 L 621.9 279 C 621.9 312.6 522.9 312.6 522.9 279 Z" fill="#d4d6d9" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><path d="M 522.9 203.4 C 522.9 228.6 621.9 228.6 621.9 203.4" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(542.5,250.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="66" height="19" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 66px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><font style="font-size: 18px"><b>Dataset</b></font></div></div></foreignObject><text x="33" y="16" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 522.9 241.2 L 393.63 241.2" fill="none" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 388.91 241.2 L 395.21 238.05 L 393.63 241.2 L 395.21 244.35 Z" fill="#43464c" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 572.4 304.2 L 572.4 466.2 Q 572.4 475.2 563.4 475.2 L 393.63 475.2" fill="none" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 388.91 475.2 L 395.21 472.05 L 393.63 475.2 L 395.21 478.35 Z" fill="#43464c" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(416.5,217.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="79" height="12" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 80px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Calibration Set</div></div></foreignObject><text x="40" y="12" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">Calibration Set</text></switch></g><g transform="translate(434.5,451.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="73" height="12" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 74px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Validation Set</div></div></foreignObject><text x="37" y="12" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">Validation Set</text></switch></g><g transform="translate(344.5,287.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="31" height="15" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 32px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HAR<sub>2</sub></div></div></foreignObject><text x="16" y="14" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(344.5,410.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="24" height="12" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 25px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HEF</div></div></foreignObject><text x="12" y="12" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">HEF</text></switch></g><path d="M 333.9 502.2 L 333.9 541.47" fill="none" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><path d="M 333.9 546.19 L 330.75 539.89 L 333.9 541.47 L 337.05 539.89 Z" fill="#43464c" stroke="#43464c" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(298.5,555.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="78" height="30" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 78px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><font style="font-size: 14px">Evaluation Results</font></div></div></foreignObject><text x="39" y="21" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><path d="M 126.9 124.2 L 69.63 124.2" fill="none" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><path d="M 64.91 124.2 L 71.21 121.05 L 69.63 124.2 L 71.21 127.35 Z" fill="#004b66" stroke="#004b66" stroke-miterlimit="10" pointer-events="none"/><rect x="126.9" y="101.7" width="72" height="45" rx="6.75" ry="6.75" fill="#0098c4" stroke="#006eaf" pointer-events="none"/><g transform="translate(142.5,117.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="44" height="14" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(255, 255, 255); line-height: 1.2; vertical-align: top; width: 44px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;"><b><font style="font-size: 14px">Profile</font></b></div></div></foreignObject><text x="22" y="13" fill="#ffffff" text-anchor="middle" font-size="12px" font-family="Helvetica">[Not supported by viewer]</text></switch></g><g transform="translate(10.5,112.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="58" height="26" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 58px; white-space: nowrap; overflow-wrap: normal; text-align: center;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">Profiler Report</div></div></foreignObject><text x="29" y="19" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">Profiler Report</text></switch></g><path d="M 189.9 474.75 L 274.17 474.75" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-dasharray="2.7 2.7" pointer-events="none"/><path d="M 278.89 474.75 L 272.59 477.9 L 274.17 474.75 L 272.59 471.6 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="none"/><g transform="translate(128.5,469.5)scale(0.9)"><switch><foreignObject style="overflow:visible;" pointer-events="none" width="24" height="12" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 25px; white-space: nowrap; overflow-wrap: normal; text-align: left;"><div xmlns="http://www.w3.org/1999/xhtml" style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">HEF</div></div></foreignObject><text x="12" y="12" fill="#000000" text-anchor="middle" font-size="12px" font-family="Helvetica">HEF</text></switch></g></g></svg>
+<!-- Generated by Microsoft Visio, SVG Export usage_flow.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="6.41809in" height="4.48839in"
+		viewBox="0 0 462.102 323.164" xml:space="preserve" color-interpolation-filters="sRGB" class="st14">
+	<v:documentProperties v:langID="8192" v:metric="true" v:viewMarkup="false">
+		<v:userDefs>
+			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#0098c4;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st2 {fill:#ffffff;font-family:Arial;font-size:0.833336em}
+		.st3 {marker-end:url(#mrkr4-9);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st4 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st5 {fill:#ffffff;stroke:none;stroke-linecap:butt;stroke-width:7.2}
+		.st6 {fill:#7f7f7f;font-family:Arial;font-size:0.833336em;font-weight:bold}
+		.st7 {font-size:0.599989em}
+		.st8 {fill:#acb0b6;stroke:#a5a5a5;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st9 {fill:#000000;font-family:Arial;font-size:0.833336em}
+		.st10 {font-size:1em}
+		.st11 {marker-end:url(#mrkr4-9);stroke:#000000;stroke-dasharray:7,5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st12 {fill:#acb0b6}
+		.st13 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st14 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Markers">
+		<g id="lend4">
+			<path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr4-9" class="st4" v:arrowType="4" v:arrowSize="2" v:setback="7.04" refX="-7.04" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(-3.52,-3.52) "/>
+		</marker>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Page-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="Connector" v:index="0"/>
+		<v:layer v:name="Flowchart" v:index="1"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(203.157,-240.6)">
+			<title>Rectangle.6</title>
+			<desc>Parse</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="308.991" width="113.39" height="28.3465"/>
+			<rect x="0" y="294.818" width="113.386" height="28.3465" class="st1"/>
+			<text x="43.63" y="311.99" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Parse</text>		</g>
+		<g id="shape2-4" v:mID="2" v:groupContext="shape" v:layerMember="0" transform="translate(252.764,-297.293)">
+			<title>Dynamic connector.1034</title>
+			<desc>CKPT / ONNX</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="325.999" width="75.24" height="20.0036"/>
+			<path d="M7.09 323.16 L7.09 344.47" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="10.2954" y="319.999" width="64.4485" height="12.0001" class="st5"/>
+			<text x="10.3" y="329" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>CKPT / ONNX</text>		</g>
+		<g id="shape3-12" v:mID="3" v:groupContext="shape" v:layerMember="0" transform="translate(252.764,-240.6)">
+			<title>Dynamic connector.3</title>
+			<desc>HAR1</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.3465" cy="337.337" width="50" height="20.0036"/>
+			<path d="M7.09 323.16 L7.09 344.47" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="15.8456" y="331.338" width="25.0016" height="12.0001" class="st5"/>
+			<text x="15.85" y="340.34" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HAR<tspan class="st7">1</tspan></text>		</g>
+		<g id="shape4-20" v:mID="4" v:groupContext="shape" transform="translate(203.157,-183.907)">
+			<title>Rectangle.4</title>
+			<desc>Optimize</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="308.991" width="113.39" height="28.3465"/>
+			<rect x="0" y="294.818" width="113.386" height="28.3465" class="st1"/>
+			<text x="36.97" y="311.99" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Optimize</text>		</g>
+		<g id="shape6-23" v:mID="6" v:groupContext="shape" v:layerMember="0" transform="translate(252.764,-183.907)">
+			<title>Dynamic connector.6</title>
+			<desc>HAR2</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.3465" cy="337.337" width="50" height="20.0036"/>
+			<path d="M7.09 323.16 L7.09 344.47" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="15.8456" y="331.338" width="25.0016" height="12.0001" class="st5"/>
+			<text x="15.85" y="340.34" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HAR<tspan class="st7">2</tspan></text>		</g>
+		<g id="shape7-31" v:mID="7" v:groupContext="shape" transform="translate(203.157,-127.214)">
+			<title>Rectangle.7</title>
+			<desc>Compile</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="308.991" width="113.39" height="28.3465"/>
+			<rect x="0" y="294.818" width="113.386" height="28.3465" class="st1"/>
+			<text x="38.35" y="311.99" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Compile</text>		</g>
+		<g id="shape8-34" v:mID="8" v:groupContext="shape" v:layerMember="0" transform="translate(252.764,-127.214)">
+			<title>Dynamic connector.8</title>
+			<desc>HEF</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.3465" cy="337.337" width="50" height="20.0036"/>
+			<path d="M7.09 323.16 L7.09 344.47" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="18.3464" y="331.338" width="20.0001" height="12.0001" class="st5"/>
+			<text x="18.35" y="340.34" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HEF</text>		</g>
+		<g id="shape10-41" v:mID="10" v:groupContext="shape" transform="translate(203.157,-70.5215)">
+			<title>Rectangle</title>
+			<desc>Eval</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="308.991" width="113.39" height="28.3465"/>
+			<rect x="0" y="294.818" width="113.386" height="28.3465" class="st8"/>
+			<text x="46.97" y="311.99" class="st9" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Eval</text>		</g>
+		<g id="shape11-44" v:mID="11" v:groupContext="shape" v:layerMember="0" transform="translate(252.764,-70.5215)">
+			<title>Dynamic connector.11</title>
+			<desc>Evaluation Results</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.08661" cy="365.684" width="99.7" height="20.0036"/>
+			<path d="M7.09 323.16 L7.09 344.47" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="-37.6476" y="359.684" width="89.4683" height="12.0001" class="st5"/>
+			<text x="-37.65" y="368.68" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Evaluation Results</text>		</g>
+		<g id="shape12-51" v:mID="12" v:groupContext="shape" transform="translate(68.5118,-240.6)">
+			<title>Rectangle.12</title>
+			<desc>Profile</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="56.6929" cy="308.991" width="113.39" height="28.3465"/>
+			<rect x="0" y="294.818" width="113.386" height="28.3465" class="st1"/>
+			<text x="42.52" y="311.99" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Profile</text>		</g>
+		<g id="shape13-54" v:mID="13" v:groupContext="shape" v:layerMember="0" transform="translate(203.157,-247.687)">
+			<title>Dynamic connector.13</title>
+			<path d="M0 316.08 L-14.22 316.08" class="st3"/>
+		</g>
+		<g id="shape14-59" v:mID="14" v:groupContext="shape" v:layerMember="0" transform="translate(68.5118,-247.687)">
+			<title>Dynamic connector.14</title>
+			<desc>Profiler Report</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-25.5118" cy="294.818" width="50" height="32.0037"/>
+			<path d="M0 316.08 L-14.22 316.08" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="-43.0169" y="282.818" width="35.0101" height="23.9999" class="st5"/>
+			<text x="-43.02" y="291.82" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Profiler <v:newlineChar/><tspan
+						x="-41.62" dy="1.2em" class="st10">Report</tspan></text>		</g>
+		<g id="shape15-67" v:mID="15" v:groupContext="shape" v:layerMember="0" transform="translate(125.205,-190.994)">
+			<title>Dynamic connector.15</title>
+			<desc>HAR1</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="14.1732" cy="308.991" width="50" height="20.0036"/>
+			<path d="M0 316.08 L70.91 316.08" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="1.67237" y="302.991" width="25.0016" height="12.0001" class="st5"/>
+			<text x="1.67" y="311.99" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HAR<tspan class="st7">1</tspan></text>		</g>
+		<g id="shape18-75" v:mID="18" v:groupContext="shape" v:layerMember="0" transform="translate(125.205,-134.301)">
+			<title>Dynamic connector.18</title>
+			<desc>HAR2</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="14.1732" cy="308.991" width="50" height="20.0036"/>
+			<path d="M0 316.08 L70.91 316.08" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="1.67237" y="302.991" width="25.0016" height="12.0001" class="st5"/>
+			<text x="1.67" y="311.99" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HAR<tspan class="st7">2</tspan></text>		</g>
+		<g id="shape19-83" v:mID="19" v:groupContext="shape" v:layerMember="0" transform="translate(125.205,-77.6081)">
+			<title>Dynamic connector.19</title>
+			<desc>HEF</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="14.1732" cy="308.991" width="50" height="20.0036"/>
+			<path d="M0 316.08 L70.91 316.08" class="st11"/>
+			<rect v:rectContext="textBkgnd" x="4.17314" y="302.991" width="20.0001" height="12.0001" class="st5"/>
+			<text x="4.17" y="311.99" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>HEF</text>		</g>
+		<g id="shape20-90" v:mID="20" v:groupContext="shape" v:layerMember="1" transform="translate(373.236,-169.734)">
+			<title>Disk storage</title>
+			<desc>Dataset</desc>
+			<v:custProps>
+				<v:cp v:nameU="Cost" v:lbl="Cost" v:type="7" v:format="@" v:langID="1033"/>
+				<v:cp v:nameU="Duration" v:lbl="Duration" v:type="2" v:langID="1033"/>
+				<v:cp v:nameU="Resources" v:lbl="Resources" v:langID="1033"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="35.4331" cy="305.448" width="70.87" height="35.4331"/>
+			<path d="M0 273.56 L0 316.08 A35.4331 7.08661 -180 1 0 70.87 316.08 L70.87 273.56 A35.4331 7.08661 -180 1 0 -0 273.56
+						 Z" class="st12"/>
+			<path d="M0 273.56 L0 316.08 A35.4331 7.08661 -180 1 0 70.87 316.08 L70.87 273.56 A35.4331 7.08661 -180 1 0 -0 273.56"
+					class="st13"/>
+			<path d="M0 273.56 A35.4331 7.08661 -180 1 0 70.87 273.56" class="st13"/>
+			<path d="M0 277.1 A35.4331 7.08661 -180 1 0 70.87 277.1" class="st13"/>
+			<text x="18.2" y="308.45" class="st9" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Dataset</text>		</g>
+		<g id="shape21-96" v:mID="21" v:groupContext="shape" v:layerMember="0" transform="translate(373.236,-190.994)">
+			<title>Dynamic connector.21</title>
+			<desc>Calibration Data</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-28.3465" cy="298.503" width="63.01" height="32.0037"/>
+			<path d="M0 316.08 L-49.65 316.08" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="-54.4599" y="286.503" width="52.2268" height="23.9999" class="st5"/>
+			<text x="-54.46" y="295.5" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Calibration<v:newlineChar/><tspan
+						x="-39.18" dy="1.2em" class="st10">Data</tspan></text>		</g>
+		<g id="shape22-104" v:mID="22" v:groupContext="shape" v:layerMember="0" transform="translate(408.669,-169.734)">
+			<title>Dynamic connector.22</title>
+			<desc>Validation Data</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="-61.648" cy="394.03" width="58.57" height="32.0037"/>
+			<path d="M0 323.16 L0 408.2 L-85.09 408.2" class="st3"/>
+			<rect v:rectContext="textBkgnd" x="-85.5399" y="382.031" width="47.7837" height="23.9999" class="st5"/>
+			<text x="-85.54" y="391.03" class="st6" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Validation<v:newlineChar/><tspan
+						x="-72.49" dy="1.2em" class="st10">Data</tspan></text>		</g>
+	</g>
+</svg>

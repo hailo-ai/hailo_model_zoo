@@ -33,6 +33,6 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 26.373
+  full_precision_result: 26.29
   source: https://cv.gluon.ai/model_zoo/detection.html
   license_url: https://www.apache.org/licenses/LICENSE-2.0

@@ -23,4 +23,4 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
-  full_precision_result: 80.47
+  full_precision_result: 80.46

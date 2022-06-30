@@ -23,6 +23,6 @@ info:
   training_data: cityscapes train
   validation_data: cityscapes val
   eval_metric: mIoU
-  full_precision_result: 74.55
+  full_precision_result: 74.57
   source: https://mmsegmentation.readthedocs.io/en/latest
   license_url: https://www.apache.org/licenses/LICENSE-2.0

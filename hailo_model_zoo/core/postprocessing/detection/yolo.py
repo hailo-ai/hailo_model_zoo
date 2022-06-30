@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 from .centernet import COCO_2017_TO_2014_TRANSLATION
+from .detection_common import translate_coco_2017_to_2014
 from tensorflow.image import combined_non_max_suppression
 
 
@@ -30,6 +31,9 @@ class YoloPostProc(object):
             "yolo_v5": YoloPostProc._yolo5_decode,
             "yolox": YoloPostProc._yolox_decode,
         }
+        self._nms_on_device = False
+        if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
+            self._nms_on_device = True
 
     @staticmethod
     def _yolo3_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
@@ -58,7 +62,27 @@ class YoloPostProc(object):
         box_scales = (np.exp(raw_box_scales) * stride)  # dim [N, HxW, 3, 2]
         return box_centers, box_scales, objness, class_pred
 
-    def postprocessing(self, endnodes, **kwargs):
+    def iou_nms(self, endnodes):
+        endnodes = tf.transpose(endnodes, [0, 3, 1, 2])
+        detection_boxes = endnodes[:, :, :, :4]
+        detection_scores = tf.squeeze(endnodes[:, :, :, 4:], axis=3)
+
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
+            combined_non_max_suppression(boxes=detection_boxes,
+                                         scores=detection_scores,
+                                         score_threshold=self.score_threshold,
+                                         iou_threshold=self._nms_iou_thresh,
+                                         max_output_size_per_class=100,
+                                         max_total_size=100)
+
+        nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
+        [nmsed_classes] = tf.py_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        return {'detection_boxes': nmsed_boxes,
+                'detection_scores': nmsed_scores,
+                'detection_classes': nmsed_classes,
+                'num_detections': num_detections}
+
+    def yolo_postprocessing(self, endnodes, **kwargs):
         """
         endnodes is a list of 3 output tensors:
         endnodes[0] - stride 32 of input
@@ -234,3 +258,9 @@ class YoloPostProc(object):
             else:
                 full_concat_array = np.concatenate([full_concat_array, partial_concat], 3)
         return full_concat_array
+
+    def postprocessing(self, endnodes, **kwargs):
+        if self._nms_on_device:
+            return self.iou_nms(endnodes)
+        else:
+            return self.yolo_postprocessing(endnodes, **kwargs)

@@ -71,7 +71,7 @@ def tf_infer(runner, target, logger, eval_num_examples, print_num_examples,
         video_writer = None
         with sdk_export.session.as_default(), runner.hef_infer_context(sdk_export):
 
-            sdk_export.session.run([iterator.initializer, tf.compat.v1.local_variables_initializer()])
+            sdk_export.session.run([iterator.initializer])
             if isinstance(target, SdkFineTune):
                 sdk_export.session.run(
                     [delta.initializer for delta in sdk_export.kernels_delta + sdk_export.biases_delta])

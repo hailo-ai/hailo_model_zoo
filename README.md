@@ -1,3 +1,11 @@
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Generic badge](https://img.shields.io/badge/Tensorflow-2.5.2-blue.svg)](https://hailo.ai/contact-us/)
+[![Generic badge](https://img.shields.io/badge/CUDA-11.2-blue.svg)](https://hailo.ai/contact-us/)
+[![Generic badge](https://img.shields.io/badge/Hailo&nbsp;Dataflow&nbsp;Compiler-3.18-<COLOR>.svg)](https://hailo.ai/contact-us/)
+[![Generic badge](https://img.shields.io/badge/(optional)HailoRT-4.8-<COLOR>.svg)](https://hailo.ai/contact-us/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+
 <p align="left">
   <img src="docs/images/logo.png" />
 </p>
@@ -10,6 +18,28 @@ The Hailo Model Zoo provides pre-trained models for high-performance deep learni
 
 <details>
 <summary> Changelog </summary>
+
+<details>
+<summary> v2.2 </summary>
+
+- Updated to use Dataflow Compiler v3.18 ([developer-zone](https://hailo.ai/developer-zone/))
+- CLI change:
+  - Hailo model zoo CLI is now working with an entry point - hailomz
+  - quantize sub command was changed to optimize
+  - Hailo model zoo data directory by default will be <code>~/.hailomz</code>
+- New models:
+  - yolov5xs_wo_spp_nms - a model which contains bbox decoding and confidence thresholding on Hailo-8
+  - osnet_x1_0 - person ReID network
+  - yolov5m_6.1 - yolov5m network from the latest tag of the repo (6.1) including silu activation
+- New tasks:
+  - person_attr_resnet_v1_18 - person attribute recognition
+- ReID training docker for the Hailo model repvgg_a0_person_reid_512/2048
+
+  Note: Ubuntu 18.04 will be deprecated in Hailo Model Zoo future version
+  Note: Python 3.6 will be deprecated in Hailo Model Zoo future version
+
+</details>
+
 
 <details>
 <summary> v2.1 </summary>
@@ -208,10 +238,10 @@ In order to reproduce the measurements please refer to the following [**page**](
 
   ### Getting Started
 
-  For full functionality please see the [**GETTING STARTED**](docs/GETTING_STARTED.md) page (full install instructions and usage examples). The Hailo Model Zoo is using the Hailo Dataflow Compiler for parsing, model optimization, emulation and compilation of the deep learning models. Full functionality includes:
+  For full functionality please see the [**INSTALLATION GUIDE**](docs/GETTING_STARTED.md) page (full install instructions and usage examples). The Hailo Model Zoo is using the Hailo Dataflow Compiler for parsing, model optimization, emulation and compilation of the deep learning models. Full functionality includes:
   * Parse: model translation of the input model into Hailo's internal representation.
   * Profiler: generate profiler report of the model. The report contains information about your model and expected performance on the Hailo hardware.
-  * Quantize: optimize the deep learning model for inference and generate a numeric translation of the input model into a compressed integer representation. For further information please see our [**OPTIMIZATION**](docs/OPTIMIZATION.md) page.
+  * Optimize: optimize the deep learning model for inference and generate a numeric translation of the input model into a compressed integer representation. For further information please see our [**OPTIMIZATION**](docs/OPTIMIZATION.md) page.
   * Compile: run the Hailo compiler to generate the Hailo Executable Format file (HEF) which can be executed on the Hailo hardware.
   * Evaluate: infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy. 
 
@@ -225,7 +255,7 @@ For further information about the Hailo Dataflow Compiler please contact [**hail
 
 ## License
 
-The Hailo Model Zoo is released under the MIT license. Please see the [**LICENSE**](./LICENSE) file for more information.
+The Hailo Model Zoo is released under the MIT license. Please see the [**LICENSE**](LICENSE) file for more information.
 
 <br>
 

@@ -61,6 +61,6 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 19.01
+  full_precision_result: 18.98
   source: https://github.com/Tianxiaomo/pytorch-YOLOv4
   license_url: https://www.apache.org/licenses/LICENSE-2.0

@@ -62,6 +62,6 @@ info:
   training_data: coco2017
   validation_data: coco2017
   eval_metric: mAP
-  full_precision_result: 37.62
+  full_precision_result: 38.42
   source: https://github.com/AlexeyAB/darknet
   license_url: https://github.com/AlexeyAB/darknet/blob/master/LICENSE

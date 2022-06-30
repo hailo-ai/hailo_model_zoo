@@ -1,3 +1,6 @@
+inference:
+  full_precision_batch_size: 8
+  emulator_batch_size: 8
 quantization:
   calib_set_name: null
   calib_batch_size: null

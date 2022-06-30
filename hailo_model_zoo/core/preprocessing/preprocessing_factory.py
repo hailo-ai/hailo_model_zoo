@@ -82,7 +82,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'resmlp': classification_preprocessing.resmlp,
         'fast_depth': fast_depth_preprocessing.fast_depth,
         'lprnet': classification_preprocessing.lprnet,
-        'repvgg_a0_person_reid': person_reid_preprocessing.repvgga0,
+        'person_reid': person_reid_preprocessing.market1501,
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)

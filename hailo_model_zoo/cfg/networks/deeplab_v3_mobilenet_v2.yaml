@@ -44,6 +44,6 @@ info:
   training_data: pascal voc train2012
   validation_data: pascal voc val2012
   eval_metric: mIoU
-  full_precision_result: 76.029
+  full_precision_result: 76.04
   source: https://github.com/bonlime/keras-deeplab-v3-plus
   license_url: https://opensource.org/licenses/MIT

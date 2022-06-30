@@ -23,6 +23,6 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy
-  full_precision_result: 75.484
+  full_precision_result: 75.47
   source: https://github.com/PingoLH/Pytorch-HarDNet
   license_url: https://opensource.org/licenses/MIT

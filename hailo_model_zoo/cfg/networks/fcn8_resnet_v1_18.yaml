@@ -1,5 +1,7 @@
 base:
 - base/fcn.yaml
+inference:
+  emulator_batch_size: 4
 network:
   network_name: fcn8_resnet_v1_18
 parser:

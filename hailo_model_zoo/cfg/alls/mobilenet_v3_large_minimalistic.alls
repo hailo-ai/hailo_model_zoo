@@ -9,4 +9,5 @@ pre_quantization_optimization(activation_clipping, layers=[conv3], mode=percenti
 pre_quantization_optimization(activation_clipping, layers=[dw2], mode=percentile, clipping_values=[0, 99.5])
 
 # post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)

@@ -68,7 +68,7 @@
 	python train.py --config=yolact_regnetx_800MF_config
 	</code>
 
-	* <code>yolact_regnetx_800MF_config</code> - configuration using the regnetx_800MF backbone. Two other available options are <code>yolact_regnetx_600MF_config</code> and <code>yolact_regnetx_1600MF_config</code>.
+	* <code>yolact_regnetx_800MF_config</code> - configuration using the regnetx_800MF backbone.
   
 3. Export to ONNX:
 	In orded to export your trained YOLACT model to ONNX run the following script:

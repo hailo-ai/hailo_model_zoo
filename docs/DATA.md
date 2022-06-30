@@ -1,20 +1,35 @@
 # Datasets
 
-The Hailo Model Zoo works with TFRecord files which store the images and labels of the dataset for evaluation and calibration. The instructions on how to create the TFRecord files are given below. Datasets are stored on the current directory, to change the default location you can use:
+The Hailo Model Zoo works with TFRecord files which store the images and labels of the dataset for evaluation and calibration. The instructions on how to create the TFRecord files are given below. By default, datasets are stored in the following path:
+```
+~/.hailomz
+```
+We recommend to define the data directory path yourself, by setting the <code>HMZ_DATA</code> environment variable.
 ```
 export HMZ_DATA=/new/path/for/storage/
 ```
-- [ImageNet](#imagenet)
-- [COCO2017](#coco2017)
-- [Cityscapes](#cityscapes)
-- [WIDERFACE](#widerface)
-- [VisDrone](#visdrone)
-- [Pascal VOC augmented dataset](#pascal-voc-augmented-dataset)
-- [D2S augmented dataset](#d2s-augmented-dataset)
-- [NYU Depth V2](#nyu-depth-v2)
-- [300W-LP & AFLW2k3d](#300w-lp-and-aflw2k3d)
-- [Hand Landmark](#hand-landmark)
-- [Market1501](#market1501)
+- [Datasets](#datasets)
+  - [ImageNet](#imagenet)
+  - [COCO2017](#coco2017)
+    - [Manual Download (Optional)](#manual-download-optional)
+  - [Cityscapes](#cityscapes)
+  - [WIDERFACE](#widerface)
+    - [Manual Download (Optional)](#manual-download-optional-1)
+  - [VisDrone](#visdrone)
+    - [Manual Download (Optional)](#manual-download-optional-2)
+  - [Pascal VOC augmented dataset](#pascal-voc-augmented-dataset)
+    - [Manual Download (Optional)](#manual-download-optional-3)
+  - [D2S augmented dataset](#d2s-augmented-dataset)
+    - [Manual Download (Optional)](#manual-download-optional-4)
+  - [NYU Depth V2](#nyu-depth-v2)
+    - [Manual Download (Optional)](#manual-download-optional-5)
+  - [300W-LP and AFLW2k3d](#300w-lp-and-aflw2k3d)
+    - [Manual Download (Optional)](#manual-download-optional-6)
+  - [Hand Landmark](#hand-landmark)
+    - [Manual Download (Optional)](#manual-download-optional-7)
+  - [Market1501](#market1501)
+    - [Manual Download (Optional)](#manual-download-optional-8)
+  - [PETA](#peta)
 
 <br>
 
@@ -442,3 +457,22 @@ Market-1501-v15.09.15
 python hailo_model_zoo/datasets/create_market_tfrecord.py val --img path/to/Market-1501-v15.09.15/
 python hailo_model_zoo/datasets/create_market_tfrecord.py calib --img path/to/Market-1501-v15.09.15/bounding_box_train/
 ```
+
+## PETA
+To evaluate/optimize/compile the person attribute models of the Hailo Model Zoo you should generate the PETA TFRecord files (manual download is required).
+
+1. Download the PETA dataset from [**here**](https://github.com/dangweili/pedestrian-attribute-recognition-pytorch). The expected dataset structure:
+
+```
+PETA
+|_ images
+|  |_ 00001.png
+|  |_ ...
+|  |_ 19000.png
+|_ PETA.mat
+```
+
+2. Run the create TFRecord scripts:
+```
+python hailo_model_zoo/datasets/create_peta_tfrecord.py test --data /path/to/PETA/
+python hailo_model_zoo/datasets/create_peta_tfrecord.py train --data /path/to/PETA/

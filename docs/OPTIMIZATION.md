@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Model optimization is the stage of converting a full precision model to an optimized model which will be compiled to the Hailo device. This stage includes numeric translation of the input model into a compressed integer representation as well as optimizing the model architecture to best fit the Hailo hardware. Compressing deep learning model induce degradation for the model's accuracy. For example, in the following table we compare the accuracy of full precision ResNet V1 18 with the compressed 8-bits weights and activation representation:
+Model optimization is the stage of converting a full precision model to an optimized model which will be compiled to the Hailo device. This stage includes numeric translation of the input model into a compressed integer representation as well as optimizing the model architecture to best fit the Hailo hardware. Compressing deep learning model induce degradation for the model's accuracy. For example, in the following table we compare the accuracy of full precision ResNet V1 18 with the compressed 8-bits weights and activation representation on ImageNet-1K:
 
 <center>
 
@@ -21,8 +21,8 @@ The main goal of the model optimization step is to prepare the model for compila
 
 The model optimization has two main steps: full precision optimization and quantization optimization.
 
-- Full precision optimization includes any changes to the model in the floating point precision domain, for example, Equalization (Meller2019), TSE (Vosco2021) and pruning.
-- Quantization includes compressing the model from floating point to integer representation of the weights and activations (4/8/16 bits) and algorithms to improve the model's accuracy, such as IBC (Finkelstein2019) and QFT.
+- Full precision optimization includes any changes to the model in the floating point precision domain, for example, Equalization ([Meller2019](#citations)), TSE ([Vosco2021](#citations)) and pruning.
+- Quantization includes compressing the model from floating point to integer representation of the weights and activations (4/8/16 bits) and algorithms to improve the model's accuracy, such as IBC ([Finkelstein2019](#citations)) and QFT.
 
 Both steps may degrade the model accuracy, therefore, evaluation is needed to verify the model accuracy. This workflow is depicted in the following diagram:
 
@@ -30,17 +30,17 @@ Both steps may degrade the model accuracy, therefore, evaluation is needed to ve
   <img src="images/quant_flow.svg" />
 </p>
 
-1. First step includes full precision validation. This step is important to make sure parsing was successful and we built the pre/post processing and evaluation of the model correctly. In the Hailo Model Zoo, we can execute the following which will infer a specific model in full precision to verify that the accuracy is correct:
+1. First step includes full precision validation. This step is important to make sure parsing was successful and we built the pre/post processing and evaluation of the model correctly. In the Hailo Model Zoo, we can execute the following which will infer a specific model in full precision to verify that the accuracy is correct (this will be our baseline for measuring degradation):
   ```
   hailomz eval <model_name>
   ```
 
-2. Next, we call the model optimization API to generate an optimized model. Note, it is recommended to run this step on a GPU machine.
+2. Next, we call the model optimization API to generate an optimized model. Note, it is recommended to run this step on a GPU machine with dataset size of at least 1024 images.
   ```
-  hailomz quantize <model_name>
+  hailomz optimize <model_name>
   ```
 
-3. Lastly, we verify the accuracy of the optimized model. In case the results are not good enough we should repeat the process with different configurations, such as: IBC or QFT.
+3. Lastly, we verify the accuracy of the optimized model. In case the results are not good enough we should repeat the process with different configurations of the optimization/compression levels:
   ```
   hailomz eval <model_name> --target emulator --har <model_name>.har
   ```

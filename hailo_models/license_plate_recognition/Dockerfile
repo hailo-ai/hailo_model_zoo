@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN git clone https://github.com/hailo-ai/LPRNet_Pytorch.git && \
     cd LPRNet_Pytorch && \
     pip install --upgrade pip && \
-    pip install -U 'imutils==0.5.4' 'opencv-python>=4.5.5' 'imgaug==0.4.0' 'tensorboard==2.7.0' 'torchsummary' 'pandas==1.3.5' 'strsimpy==0.2.1' 'numpy==1.19.2' 'jupyter'
+    pip install -U 'imutils==0.5.4' 'opencv-python>=4.5.5' 'imgaug==0.4.0' 'tensorboard==2.7.0' 'torchsummary' 'pandas==1.3.5' 'strsimpy==0.2.1' 'numpy==1.19.2' 'jupyter' 'protobuf==3.20.1'
 
 WORKDIR /workspace/LPRNet_Pytorch/
 RUN cd /workspace/LPRNet_Pytorch/ && \

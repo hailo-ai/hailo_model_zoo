@@ -1,5 +1,6 @@
 model_optimization_config(calibration, batch_size=8, calibset_size=128)
 # post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 # quantizing last layer to 16b
 quantization_param(output_layer1, precision_mode=a16_w16)
@@ -8,10 +9,11 @@ quantization_param(output_layer1, precision_mode=a16_w16)
 # setting conv20 layer manually
 pre_quantization_optimization(activation_clipping, layers=[conv20], mode=manual, clipping_values=[0, 15])
 
-allocator_param(automatic_ddr=disabled)
+allocator_param(automatic_ddr=disabled, automatic_l4_portals=disabled)
 
+l4_portal_conv4_to_ew_add2 = l4_portal(conv4, ew_add2)
 portal_conv2_ew_add3 = portal(conv2, ew_add3, buffer_in_l4=True)
 portal_portal_conv2_ew_add3_ew_add3 = portal(portal_conv2_ew_add3, ew_add3, buffer_in_l4=True)
-buffers(conv2, portal_conv2_ew_add3, 28)
-buffers(portal_conv2_ew_add3, portal_portal_conv2_ew_add3_ew_add3, 56)
-buffers(portal_portal_conv2_ew_add3_ew_add3, ew_add3, 28)
+buffers(conv2, portal_conv2_ew_add3, 80)
+buffers(portal_conv2_ew_add3, portal_portal_conv2_ew_add3_ew_add3, 97)
+buffers(portal_portal_conv2_ew_add3_ew_add3, ew_add3, 80)

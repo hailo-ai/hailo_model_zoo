@@ -18,6 +18,7 @@ from hailo_model_zoo.core.eval.faster_rcnn_evaluation import FasterRCNNEval
 from hailo_model_zoo.core.eval.fast_depth_evaluation import FastDepthEval
 from hailo_model_zoo.core.eval.ocr_evaluation import OCREval
 from hailo_model_zoo.core.eval.person_reid_evaluation import PersonReidEval
+from hailo_model_zoo.core.eval.person_attr_evaluation import PersonAttrEval
 
 
 class EmptyEval():
@@ -61,6 +62,7 @@ def get_evaluation(name):
         'fast_depth': FastDepthEval,
         'ocr': OCREval,
         'person_reid': PersonReidEval,
+        'person_attr': PersonAttrEval,
     }
 
     if name not in evaluation_map:

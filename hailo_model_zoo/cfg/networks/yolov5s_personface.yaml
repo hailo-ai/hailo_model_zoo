@@ -48,6 +48,6 @@ info:
   training_data: Hailo internal
   validation_data: Hailo internal
   eval_metric: mAP
-  full_precision_result: 47.58
+  full_precision_result: 47.7
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

@@ -13,6 +13,9 @@ RUN apt-get update && \
     # solve mpi conflicts
     { which mpirun && apt-get remove -y libopenmpi3 || true ; } 
 
+# workaround broken opencv-python 4.6
+RUN pip install opencv-python==4.5.5.64
+
 ARG repo=https://github.com/hailo-ai/YOLOX
 RUN mkdir /workspace/data && \
     git clone $repo && \
@@ -22,10 +25,10 @@ ENV YOLOX_DATADIR=/workspace/data
 
 WORKDIR /workspace/YOLOX
 
-RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.pth -q
-RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_m.pth -q
-RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_l.pth -q
-RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_x.pth -q
+RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.pth -q; \
+    wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_m.pth -q; \
+    wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_l.pth -q; \
+    wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_x.pth -q
 
 ARG user=hailo
 ARG group=hailo

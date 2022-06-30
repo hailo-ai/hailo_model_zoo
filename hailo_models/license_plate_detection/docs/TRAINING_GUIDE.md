@@ -46,7 +46,17 @@ Once the docker is started, you can train the license plate detector on your cus
         ```
         ./darknet detector train data/obj.data ./cfg/tiny_yolov4_license_plates.cfg tiny_yolov4_license_plates.weights -map
         ```
-
+    > **_NOTE:_** If during training you get an error similar to
+    > ```
+    > cuDNN status Error in: file: ./src/convolutional_kernels.cu : () : line: 543 : build time: Jun 21 2022 - 20:09:28
+    >
+    > cuDNN Error: CUDNN_STATUS_BAD_PARAM
+    > Darknet error location: ./src/dark_cuda.c, cudnn_check_error, line #204
+    > cuDNN Error: CUDNN_STATUS_BAD_PARAM: Success
+    > ```
+    > then please try changing `subdivisions` in the `.cfg` file (e.g., from 16 to 32).<br>
+    > For further information, please see discussion [here](https://github.com/AlexeyAB/darknet/issues/7153#issuecomment-965272028).
+    <br>
 2. **Export to ONNX**<br>
     Export the model to ONNX using the following command:
     ```

@@ -1,11 +1,12 @@
 import io
 
 try:
-    from hailo_platform.drivers.hailort.pyhailort import HEF
+    from hailo_platform import HEF, PcieDevice
     HEF_EXISTS = True
 except ModuleNotFoundError:
     HEF_EXISTS = False
 
+from hailo_sdk_common.targets.inference_targets import SdkNative, SdkPartialNumeric
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
@@ -13,8 +14,15 @@ from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGe
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
                                              quantize_model, infer_model, compile_model, get_hef_path, info_model,
                                              resolve_alls_path)
-from hailo_model_zoo.utils.hw_utils import TARGETS
+from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS
 from hailo_model_zoo.utils.logger import get_logger
+
+
+def _ensure_compiled(runner, logger, args, network_info):
+    if runner.state == States.COMPILED_MODEL:
+        return
+    logger.info("Compiling the model (without inference) ...")
+    compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
 
 
 def _ensure_quantized(runner, logger, args, network_info):
@@ -36,23 +44,23 @@ def _ensure_parsed(runner, logger, network_info, args):
 
 
 def _ensure_runnable_state(args, logger, network_info, runner, target):
-    if target.name == 'sdk_native':
-        _ensure_parsed(runner, logger, network_info, args)
-        return
-
-    if not target.is_hardware:
-        _ensure_quantized(runner, logger, args, network_info)
-        return
+    _ensure_parsed(runner, logger, network_info, args)
+    if isinstance(target, SdkNative):
+        return None
 
     if args.hef_path:
-        # we already have hef, just need .hn
-        _ensure_parsed(runner, logger, network_info, args)
-    else:
-        _ensure_quantized(runner, logger, args, network_info)
-        if runner.state == States.COMPILED_MODEL:
-            return
-        logger.info("Compiling the model (without inference) ...")
-        compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
+        hef = HEF(args.hef_path)
+        network_groups = target.configure(hef)
+        return network_groups
+
+    _ensure_quantized(runner, logger, args, network_info)
+
+    if isinstance(target, SdkPartialNumeric):
+        return None
+
+    assert isinstance(target, PcieDevice)
+    _ensure_compiled(runner, logger, args, network_info)
+    return None
 
 
 def _str_to_profiling_mode(name):
@@ -71,7 +79,7 @@ def parse(args):
                 model_script_path=args.model_script_path)
 
 
-def quantize(args):
+def optimize(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     model_name = network_info.network.network_name
@@ -160,9 +168,15 @@ def profile(args):
 def evaluate(args):
     if args.target == 'hailo8' and not HEF_EXISTS:
         raise ModuleNotFoundError(
-            f"HailoRT is not avilable, in case you want to run on {args.target} you should install it HailoRT first")
+            f"HailoRT is not available, in case you want to run on {args.target} you should install HailoRT first")
 
-    if args.hef_path and args.target != 'hailo8':
+    if args.hef_path and not HEF_EXISTS:
+        raise ModuleNotFoundError(
+            "HailoRT is not available, in case you want to evaluate with hef you should install HailoRT first")
+
+    hardware_targets = set(DEVICE_NAMES)
+    hardware_targets.add('hailo8')
+    if args.hef_path and args.target not in hardware_targets:
         raise ValueError(
             f"hef is not used when evaluating with {args.target}. use --target hailo8 for evaluating with a hef.")
 
@@ -189,14 +203,11 @@ def evaluate(args):
     logger.info(f'Chosen target is {args.target}')
     hailo_target = TARGETS[args.target]
     with hailo_target() as target:
-        if args.hef_path:
-            hef = HEF(args.hef_path)
-            network_groups = target.configure(hef)
+        network_groups = _ensure_runnable_state(args, logger, network_info, runner, target)
 
-        _ensure_runnable_state(args, logger, network_info, runner, target)
-
+        batch_size = args.eval_batch_size or __get_batch_size(network_info, target)
         result = infer_model(runner, network_info, target, logger,
-                             args.eval_num_examples, args.data_path, args.eval_batch_size,
+                             args.eval_num_examples, args.data_path, batch_size,
                              args.print_num_examples, args.visualize_results, args.video_outpath,
                              dump_results=False, network_groups=network_groups)
 
@@ -209,3 +220,9 @@ def info(args):
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
     info_model(model_name, network_info, logger)
+
+
+def __get_batch_size(network_info, target):
+    if target.name == 'sdk_native':
+        return network_info.inference.full_precision_batch_size
+    return network_info.inference.emulator_batch_size

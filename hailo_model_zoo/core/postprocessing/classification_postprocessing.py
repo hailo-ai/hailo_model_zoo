@@ -37,12 +37,13 @@ def _get_imagenet_labels():
     return imagenet_names[1:]
 
 
-def visualize_classification_result(logits, img, label_offset=0, **kwargs):
+def visualize_classification_result(logits, img, **kwargs):
     logits = logits['predictions']
+    labels_offset = kwargs.get('labels_offset', 0)
     top1 = np.argmax(logits, axis=1)
     conf = np.squeeze(logits[0, top1])
     imagenet_labels = _get_imagenet_labels()
     img_orig = Image.fromarray(img[0])
-    ImageDraw.Draw(img_orig).text((0, 0), "{} ({:.2f})".format(imagenet_labels[int(top1[0] - label_offset)],
+    ImageDraw.Draw(img_orig).text((0, 0), "{} ({:.2f})".format(imagenet_labels[int(top1[0] - labels_offset)],
                                                                conf), (255, 0, 0))
     return np.array(img_orig, np.uint8)

@@ -18,6 +18,6 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
-  full_precision_result: 73.1
+  full_precision_result: 73.07
   source: https://github.com/onnx/models/tree/master/vision/classification/resnet
   license_url: https://www.apache.org/licenses/LICENSE-2.0

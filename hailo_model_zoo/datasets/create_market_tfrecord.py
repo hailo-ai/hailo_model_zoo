@@ -10,8 +10,8 @@ import numpy as np
 import random
 
 TF_RECORD_TYPE = 'calib', 'val'
-TF_RECORD_LOC = {'val': 'models_files/market1501/market1501_val.tfrecord',
-                 'calib': 'models_files/market1501/market1501_calib.tfrecord'}
+TF_RECORD_LOC = {'val': 'models_files/market1501/2022-06-22/market1501_val.tfrecord',
+                 'calib': 'models_files/market1501/2022-06-22/market1501_calib.tfrecord'}
 
 
 def _int64_feature(values):
@@ -63,8 +63,8 @@ def _get_files_and_labels_list(dataset_dir, type):
 
 
 def download_dataset(type):
-    dataset_dir = path_resolver.resolve_data_path('market1501')
-
+    dataset_dir = Path.cwd()
+    dataset_dir = dataset_dir / 'market1501'
     # create the libraries if needed
     dataset_dir.mkdir(parents=True, exist_ok=True)
 

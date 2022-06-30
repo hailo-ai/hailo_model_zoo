@@ -72,6 +72,6 @@ info:
   training_data: coco instances train2017
   validation_data: coco instances val2017
   eval_metric: mAP
-  full_precision_result: 17.79
+  full_precision_result: 17.78
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT

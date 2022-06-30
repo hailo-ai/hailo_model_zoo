@@ -4,4 +4,5 @@ model_optimization_config(calibration, batch_size=1, calibset_size=64)
 quantization_param([conv1, conv18, conv19, deconv1], bias_mode=single_scale_decomposition)
 
 # post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)

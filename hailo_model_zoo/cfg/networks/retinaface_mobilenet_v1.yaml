@@ -32,6 +32,6 @@ info:
   training_data: wider train
   validation_data: wider val
   eval_metric: mAP
-  full_precision_result: 81.24
+  full_precision_result: 81.27
   source: https://github.com/biubug6/Pytorch_Retinaface
   license_url: https://opensource.org/licenses/MIT

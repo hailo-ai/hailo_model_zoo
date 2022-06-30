@@ -395,6 +395,6 @@ info:
   training_data: d2s augemented train
   validation_data: d2s val
   eval_metric: mAP
-  full_precision_result: 61.7458
+  full_precision_result: 61.69
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT

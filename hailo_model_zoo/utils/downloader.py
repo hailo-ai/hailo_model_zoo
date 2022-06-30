@@ -88,7 +88,7 @@ def _get_auth_token(response: Response):
     for k, v in response.cookies.items():
         if k.startswith('download_warning'):
             return v
-    raise ValueError("download_warning cookie not found in request")
+    return 't'
 
 
 def download_from_drive(url: str, fp: IO, desc: Optional[str] = None):

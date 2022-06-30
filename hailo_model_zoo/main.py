@@ -66,7 +66,7 @@ def _make_evaluation_base():
         f'A specific hailo8 device may be specified. Available devices: {devices}')
 
     evaluation_base_parser.add_argument(
-        '--eval-batch-size', type=int, default=8,
+        '--eval-batch-size', type=int,
         help='Batch size for INFERENCE (evaluation and pre-quant stats collection) only '
         '(feel free to increase to whatever your GPU can handle). '
         ' the quant-aware optimizers s.a. QFT & IBC use the calibration batch size parameter from the ALLS'
@@ -124,8 +124,9 @@ def _create_args_parser():
     subparsers.add_parser('parse', parents=[parsing_base_parser],
                           help="model translation of the input model into Hailo's internal representation.")
 
-    subparsers.add_parser('quantize', parents=[parsing_base_parser, quantization_base_parser],
-                          help="numeric translation of the input model into a compressed integer representation.")
+    subparsers.add_parser('optimize', parents=[parsing_base_parser, quantization_base_parser],
+                          help="run model optimization which includes numeric translation of \
+                                the input model into a compressed integer representation.")
 
     compile_help = ("run the Hailo compiler to generate the Hailo Executable Format file (HEF)"
                     " which can be executed on the Hailo hardware.")
@@ -149,10 +150,10 @@ def _create_args_parser():
 
 
 def run(args):
-    from hailo_model_zoo.main_driver import parse, quantize, compile, profile, evaluate, info
+    from hailo_model_zoo.main_driver import parse, optimize, compile, profile, evaluate, info
     handlers = {
         'parse': parse,
-        'quantize': quantize,
+        'optimize': optimize,
         'compile': compile,
         'profile': profile,
         'eval': evaluate,

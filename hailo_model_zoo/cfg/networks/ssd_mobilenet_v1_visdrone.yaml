@@ -47,6 +47,6 @@ info:
   training_data: visdrone train2019
   validation_data: visdrone val2019
   eval_metric: mAP
-  full_precision_result: 2.376
+  full_precision_result: 2.18
   source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
   license_url: https://www.apache.org/licenses/LICENSE-2.0

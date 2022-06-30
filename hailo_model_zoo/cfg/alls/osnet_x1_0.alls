@@ -1,0 +1,11 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_config(calibration, batch_size=8, calibset_size=1024)
+
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)
+pre_quantization_optimization(activation_clipping, layers=[dw51], mode=percentile, clipping_values=[0, 99.75])
+pre_quantization_optimization(activation_clipping, layers=[conv79], mode=percentile, clipping_values=[0, 99.75])
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)

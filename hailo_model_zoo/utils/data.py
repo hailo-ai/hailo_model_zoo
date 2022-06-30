@@ -11,7 +11,7 @@ from hailo_model_zoo.utils.video_utils import VideoCapture
 def _open_image_file(img_path):
     image = tf.io.read_file(img_path)
     image = tf.cast(tf.image.decode_jpeg(image, channels=3), tf.uint8)
-    image_name = tf.compat.v1.string_split([img_path], os.path.sep).values[-1]
+    image_name = tf.strings.split([img_path], os.path.sep).values[-1]
     return image, {
         'img_orig': image,
         'image_name': image_name,
@@ -32,8 +32,8 @@ def _read_npz(item):
 
 def _open_featuremap(img_path):
     featuremap, rpn_boxes, num_rpn_boxes, \
-        image_name, image_id = tf.compat.v1.py_func(_read_npz, [img_path], [tf.float32, tf.float32,
-                                                                            tf.int64, tf.string, tf.int32])
+        image_name, image_id = tf.numpy_function(_read_npz, [img_path], [tf.float32, tf.float32,
+                                                                         tf.int64, tf.string, tf.int32])
     return featuremap, {"rpn_proposals": rpn_boxes,
                         "num_rpn_boxes": num_rpn_boxes,
                         "image_name": image_name,

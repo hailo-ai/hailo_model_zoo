@@ -23,6 +23,6 @@ info:
   training_data: imagenet train
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
-  full_precision_result: 66.296
+  full_precision_result: 66.3
   source: https://github.com/osmr/imgclsmob/tree/master/pytorch
   license_url: https://opensource.org/licenses/MIT

@@ -1,4 +1,9 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_config(calibration, batch_size=8, calibset_size=32)
 ## Allocator Script Version 1.0
 quantization_param({conv*}, bias_mode=single_scale_decomposition)
-allocator_param(optimize_buffers=true, split_aware_optimize_buffers=true)
-concat0 = concat([proposal_generator0, proposal_generator1], proposal_generator0_concat)
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)
+allocator_param(automatic_ddr=disabled)

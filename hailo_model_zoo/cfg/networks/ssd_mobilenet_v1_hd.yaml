@@ -5,21 +5,14 @@ preprocessing:
   meta_arch: mobilenet_ssd_ar
 postprocessing:
   nms_iou_thresh: 0.5
-quantization:
-  quantization_batch_size: 1
-  should_equalize: true
-  should_ibc: true
-  calib_set_size: 32
 network:
   network_name: ssd_mobilenet_v1_hd
-allocation:
-  required_fps: 132
 paths:
   alls_script: ssd_mobilenet_v1_hd.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/ssd_mobilenet_v1_hd.zip
 parser:
   nodes:
@@ -36,3 +29,17 @@ parser:
     - BoxPredictor_4/ClassPredictor/BiasAdd
     - BoxPredictor_5/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_5/ClassPredictor/BiasAdd
+info:
+  task: object detection
+  input_shape: 720x1280x3
+  output_shape: 45x80x12, 45x80x273, 23x40x24, 23x40x546, 12x20x24, 12x20x546, 6x10x24,
+    6x10x546, 3x5x24, 3x5x546, 2x3x24, 2x3x546
+  operations: 12.26G
+  parameters: 6.81M
+  framework: tensorflow
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 17.66
+  source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

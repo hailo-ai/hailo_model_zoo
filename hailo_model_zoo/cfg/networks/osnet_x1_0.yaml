@@ -1,0 +1,38 @@
+base:
+- base/market1501.yaml
+network:
+  network_name: osnet_x1_0
+allocation:
+  required_fps: 300
+paths:
+  alls_script: osnet_x1_0.alls
+  network_path:
+  - models_files/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip
+parser:
+  nodes:
+  - test_input
+  - - test_output
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+info:
+  task: person re-id
+  input_shape: 256x128x3
+  output_shape: 1x512
+  operations: 0.99G
+  parameters: 2.19M
+  framework: pytorch
+  training_data: market1501 train
+  validation_data: market1501 val
+  eval_metric: rank1
+  full_precision_result: 94.3
+  source: https://github.com/KaiyangZhou/deep-person-reid
+  license_url: https://opensource.org/licenses/MIT

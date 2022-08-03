@@ -1,0 +1,38 @@
+base:
+- base/market1501.yaml
+network:
+  network_name: repvgg_a0_person_reid_512
+allocation:
+  required_fps: 300
+paths:
+  alls_script: repvgg_a0_person_reid_512.alls
+  network_path:
+  - models_files/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip
+parser:
+  nodes:
+  - test_input
+  - - test_output
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 111.296
+    - 104.263
+    - 104.396
+    std_list:
+    - 64.193
+    - 62.547
+    - 60.324
+info:
+  task: person re-id
+  input_shape: 256x128x3
+  output_shape: 1x512
+  operations: 0.89G
+  parameters: 7.68M
+  framework: pytorch
+  training_data: market1501 train
+  validation_data: market1501 val
+  eval_metric: rank1
+  full_precision_result: 89.9
+  source: https://github.com/DingXiaoH/RepVGG
+  license_url: https://opensource.org/licenses/MIT

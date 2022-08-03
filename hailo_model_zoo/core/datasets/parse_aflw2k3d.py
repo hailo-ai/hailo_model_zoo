@@ -7,9 +7,9 @@ def parse_record(serialized_example):
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'image': tf.FixedLenFeature([], tf.string),
-            'landmarks_68_3d_xy_normalized': tf.FixedLenFeature([68, 2], tf.float32),
-            'landmarks_68_3d_z': tf.FixedLenFeature([68, 1], tf.float32),
+            'image': tf.io.FixedLenFeature([], tf.string),
+            'landmarks_68_3d_xy_normalized': tf.io.FixedLenFeature([68, 2], tf.float32),
+            'landmarks_68_3d_z': tf.io.FixedLenFeature([68, 1], tf.float32),
         })
     image = tf.cast(tf.image.decode_jpeg(features['image'], channels=3), tf.uint8)
     image = tf.reshape(image, (450, 450, 3))

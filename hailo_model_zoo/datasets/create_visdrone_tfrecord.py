@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 
-import os
 import argparse
 import io
-import tensorflow as tf
+import shutil
+import tempfile
+import zipfile
+from pathlib import Path
+
 import numpy as np
 import PIL
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.INFO)
+import tensorflow as tf
+from tqdm import tqdm
+
+from hailo_model_zoo.utils import path_resolver
+from hailo_model_zoo.utils.downloader import download_from_drive
 
 CLASS_MAPS = {
     1: 1,
@@ -33,6 +40,17 @@ CATEGORY_INDEX_MAP = {
     9: 'bus',
     10: 'motor',
     11: 'others',
+}
+
+VAL_LOCATION = "models_files/visdrone/2020-05-25/visdrone_val.tfrecord"
+CALIB_LOCATION = "models_files/visdrone/2021-07-25/visdrone_train.tfrecord"
+TFRECORD_LOCATION = {
+    'val': VAL_LOCATION,
+    'train': CALIB_LOCATION
+}
+DOWNLOAD_URL = {
+    'train': 'https://drive.google.com/uc?export=download&id=1a2oHjcEcwXP8oUF95qiwrqzACb2YlUhn',
+    'val': 'https://drive.google.com/uc?export=download&id=1bxK5zgLn0_L8x276eKkuYA_FzwCIjb59',
 }
 
 
@@ -71,15 +89,14 @@ def create_tf_example(file_basename,
     Raises:
       ValueError: if the image pointed to by data['filename'] is not a valid JPEG
     """
-    img_full_path = os.path.join(image_dir, file_basename + ".jpg")
+    img_full_path = image_dir.joinpath(file_basename).with_suffix('.jpg')
 
-    with tf.io.gfile.GFile(img_full_path, 'rb') as fid:
+    with open(img_full_path, 'rb') as fid:
         encoded_jpg = fid.read()
-    encoded_jpg_io = io.BytesIO(encoded_jpg)
-    image = PIL.Image.open(encoded_jpg_io)
+    image = PIL.Image.open(io.BytesIO(encoded_jpg))
 
     image_width, image_height = image.size
-    filename = file_basename + ".jpg"
+    filename = img_full_path.name
 
     xmin = []
     xmax = []
@@ -144,76 +161,81 @@ def _create_tf_record_from_visdrone_annotations(annotations_dir, image_dir, outp
       category_index_file: Path to category json file
       num_shards: number of output file shards.
     """
-    writer = tf.io.TFRecordWriter(output_path)
-    images = [f for f in os.listdir(image_dir) if os.path.isfile(os.path.join(image_dir, f)) and f[-3:] == 'jpg']
+    images = sorted(list(image_dir.glob('*.jpg')))
 
     overall_annotations = 0
     missing_annotation_count = 0
     total_num_annotations_skipped = 0
-    for idx, image_filename in enumerate(images):
-        if idx % 100 == 0:
-            tf.compat.v1.logging.info('On image %d of %d', idx, len(images))
-        file_basename = image_filename[:-4]
-        annotation_filename = file_basename + ".txt"
-        if not os.path.exists(os.path.join(annotations_dir, annotation_filename)):
-            missing_annotation_count += 1
-            tf.compat.v1.logging.info('{} missing annotations.'.format(annotation_filename))
-            continue
 
-        annotation_full_path = os.path.join(annotations_dir, file_basename + ".txt")
-        with open(annotation_full_path, 'r') as f:
-            annotation_file = f.read().splitlines()
-        annotations = []
-        for ann_str in annotation_file:
-            try:
-                line_str = [i for i in ann_str.split(",")]
-                x, y, w, h, category_id = (int(line_str[0]), int(line_str[1]),
-                                           int(line_str[2]), int(line_str[3]),
-                                           int(line_str[5]))
-            except IndexError:
-                print("problem with {0}".format(image_filename))
-            annotations.append([x, y, w, h, category_id])
+    progress_bar = tqdm(images)
+    with tf.io.TFRecordWriter(output_path) as writer:
+        for idx, image_filename in enumerate(progress_bar):
+            file_basename = image_filename.with_suffix('').name
+            annotation_filename = f"{file_basename}.txt"
+            annotation_full_path = annotations_dir / annotation_filename
+            if not annotation_full_path.is_file():
+                missing_annotation_count += 1
+                print(f'{annotation_filename} missing annotations.')
+                continue
 
-        tf_example, num_annotations_skipped, image_overall_annotations =\
-            create_tf_example(file_basename, image_dir, annotations, idx)
-        overall_annotations += image_overall_annotations
-        total_num_annotations_skipped += num_annotations_skipped
-        writer.write(tf_example.SerializeToString())
+            with open(annotation_full_path, 'r') as f:
+                annotation_file = f.read().splitlines()
+            annotations = []
+            for ann_str in annotation_file:
+                try:
+                    line_str = [int(i) for i in ann_str.rstrip(',').split(",")]
+                    x, y, w, h, category_id = (line_str[0], line_str[1],
+                                               line_str[2], line_str[3],
+                                               line_str[5])
+                except IndexError:
+                    print(f"problem with {image_filename}")
+                    raise
+                annotations.append([x, y, w, h, category_id])
 
-    tf.compat.v1.logging.info('Finished writing, skipped %d annotations.', total_num_annotations_skipped)
-    tf.compat.v1.logging.info('%d Annotations Found.', overall_annotations)
-    tf.compat.v1.logging.info('%d images are missing annotations.', missing_annotation_count)
-    writer.close()
+            tf_example, num_annotations_skipped, image_overall_annotations =\
+                create_tf_example(file_basename, image_dir, annotations, idx)
+            overall_annotations += image_overall_annotations
+            total_num_annotations_skipped += num_annotations_skipped
+            writer.write(tf_example.SerializeToString())
+
+    print(f'Finished writing, skipped {total_num_annotations_skipped} annotations.')
+    print(f'{overall_annotations} Annotations Found.')
+    print(f'{missing_annotation_count} images are missing annotations.')
+
+
+def _download_dataset(name, dataset_dir):
+    if dataset_dir.is_dir():
+        return
+    dataset_root = dataset_dir.parent
+    print(f'{dataset_dir} not found. Downloading...')
+    with tempfile.NamedTemporaryFile() as outfile:
+        out_filename = f'VisDrone2019-DET-{name}.zip'
+        download_from_drive(DOWNLOAD_URL[name], outfile, desc=out_filename)
+
+        with zipfile.ZipFile(outfile, 'r') as zip_ref:
+            zip_ref.extractall(str(dataset_root))
+
+
+def run(args):
+    tfrecord_path = path_resolver.resolve_data_path(TFRECORD_LOCATION[args.name])
+    if tfrecord_path.exists():
+        print(f'tfrecord already exists at {tfrecord_path}. Skipping...')
+        return
+    output_path = f"visdrone_{args.name}.tfrecord"
+    dataset_path = Path(args.dir or f'VisDrone2019-DET-{args.name}')
+    _download_dataset(args.name, dataset_path)
+    _create_tf_record_from_visdrone_annotations(
+        dataset_path / 'annotations',
+        dataset_path / 'images',
+        output_path)
+    tfrecord_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.move(output_path, tfrecord_path)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--img', '-img', help="images directory", type=str,
-                        default='/local/data/datasets/visDrone/VisDrone2019-DET-val/images/')
-    parser.add_argument('--det', '-det', help="detection annotations dir", type=str,
-                        default='/local/data/datasets/visDrone/VisDrone2019-DET-val/annotations')
-    parser.add_argument('--output-dir', help="output directory", type=str, default='')
-    parser.add_argument('--name', '-name', help="file name suffix", type=str, default='val')
+    parser.add_argument('--dir', '-d', help="Path to dataset root", type=str)
+    parser.add_argument('name', help="Which set to download",
+                        type=str, default='val', choices=['train', 'val'])
     args = parser.parse_args()
-    output_path = os.path.join(args.output_dir, "visdrone_" + args.name + ".tfrecord")
-    _create_tf_record_from_visdrone_annotations(
-        args.det,
-        args.img,
-        output_path)
-"""
-----------------------------------------------------------------------------
-CMD used to create a visdrone_val.tfrecord for the VisDrone validation dataset:
-----------------------------------------------------------------------------
-python create_visdrone_tfrecord.py
---img /local/data/datasets/visDrone/VisDrone2019-DET-val/images/
---det /local/data/datasets/visDrone/VisDrone2019-DET-val/annotations
---name val
-
-----------------------------------------------------------------------------
-CMD used to create visdrone_train.tfrecord for the VisDrone training dataset:
-----------------------------------------------------------------------------
-python create_visdrone_tfrecord.py
---img /local/data/datasets/visDrone/VisDrone2019-DET-train/images/
---det /local/data/datasets/visDrone/VisDrone2019-DET-train/annotations
---name train
-"""
+    run(args)

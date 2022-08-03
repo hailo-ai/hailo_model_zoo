@@ -1,14 +1,9 @@
-import yaml
 from omegaconf import OmegaConf
 from pathlib import Path
 from functools import lru_cache
 
 from hailo_sdk_common.targets.inference_targets import ParamsKinds
-
-from hailo_sdk_client.exposed_definitions import CalibrationDataType
 from hailo_sdk_client.tools.core_postprocess.core_postprocess_api import MetaArchitectures, add_nms_postprocess
-from hailo_sdk_client.tools.hn_modifications import transpose_hn_height_width
-from hailo_sdk_client.quantization.tools.quant_aware_fine_tune import FineTuneConfigurator
 
 from hailo_model_zoo.core.infer import infer_factory
 from hailo_model_zoo.core.eval import eval_factory
@@ -20,6 +15,7 @@ from hailo_model_zoo.core.hn_editor.channel_remove import channel_remove
 from hailo_model_zoo.core.hn_editor.channel_transpose import bgr2rgb
 from hailo_model_zoo.core.hn_editor.layer_splitter import LayerSplitter
 from hailo_model_zoo.core.hn_editor.network_chainer import integrate_postprocessing
+from hailo_model_zoo.core.hn_editor.normalization_folding import fold_normalization
 from hailo_model_zoo.core.hn_editor.remove_skip_connection import skip_connection
 
 from hailo_model_zoo.utils import data, downloader, path_resolver
@@ -30,7 +26,7 @@ def _get_input_shape(runner, network_info):
     return (network_info.preprocessing.input_shape or runner.get_hn_model().get_input_layers()[0].output_shape[1:])
 
 
-def _resolve_alls_path(path):
+def resolve_alls_path(path):
     if not path:
         return None
 
@@ -56,22 +52,28 @@ def _apply_output_scheme(runner, network_info):
     if activation_changes and activation_changes.enabled:
         change_activations(runner, activation_changes)
 
+
+def _add_postprocess(runner, network_info):
+    output_scheme = network_info.hn_editor.output_scheme
     integrated_postprocessing = output_scheme.integrated_postprocessing
     if integrated_postprocessing and integrated_postprocessing.enabled:
         integrate_postprocessing(runner, integrated_postprocessing)
 
 
-def get_network_info(model_name, read_only=False):
+def get_network_info(model_name, read_only=False, yaml_path=None):
     '''
     Args:
         model_name: The network name to load.
         read_only: If set return read-only object.
                    The read_only mode save run-time and memroy.
+        yaml_path: Path to external YAML file for network configuration
     Return:
         OmegaConf object that represent network configuration.
     '''
+    if model_name is None and yaml_path is None:
+        raise ValueError("Either model_name or yaml_path must be given")
     net = f'networks/{model_name}.yaml'
-    cfg_path = path_resolver.resolve_cfg_path(net)
+    cfg_path = Path(yaml_path) if yaml_path is not None else path_resolver.resolve_cfg_path(net)
     if not cfg_path.is_file():
         raise ValueError('cfg file is missing in {}'.format(cfg_path))
     cfg = _load_cfg(cfg_path)
@@ -114,7 +116,7 @@ def download_model(network_info, logger):
     return ckpt_path
 
 
-def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), logger=None):
+def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), logger=None, model_script_path=None):
     """Parses TF or ONNX model and saves as <results_dir>/<model_name>.(hn|npz)"""
     start_node_shape = network_info.parser.start_node_shape
 
@@ -124,12 +126,8 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     model_name = translate_model(runner, network_info, ckpt_path, tensor_shapes=start_node_shape)
 
-    # hn editing
-    hn_editor = network_info.hn_editor
-    flip = hn_editor.flip
-    channels_remove = hn_editor.channels_remove
-    bgr_to_rgb = hn_editor.bgr2rgb
-    skip_connection_remove = hn_editor.skip_connection_remove
+    _apply_output_scheme(runner, network_info)
+
     postprocess_config_json = network_info.postprocessing.postprocess_config_json
     if postprocess_config_json and postprocess_config_json.endswith('.json'):
         config_json = path_resolver.resolve_data_path(postprocess_config_json)
@@ -139,16 +137,30 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
             meta_arch=MetaArchitectures[network_info.postprocessing.meta_arch.upper()],
             params_kind=ParamsKinds.NATIVE,
         )
-    if flip:
-        transpose_hn_height_width(runner)
-    if channels_remove.enabled and any([x is not None for x in channels_remove.values()]):
+
+    model_script = model_script_path if model_script_path else resolve_alls_path(network_info.paths.alls_script)
+    runner.load_model_script(model_script)
+    runner.apply_model_modification_commands()
+
+    # hn editing
+    if network_info.parser.normalization_params.fold_normalization:
+        normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
+        assert normalize_in_net, f"fold_normalization implies normalize_in_net==true, but got {normalize_in_net}"
+        fold_normalization(runner, mean_list, std_list)
+
+    hn_editor = network_info.hn_editor
+    channels_remove = hn_editor.channels_remove
+    bgr_to_rgb = hn_editor.bgr2rgb
+    skip_connection_remove = hn_editor.skip_connection_remove
+
+    if channels_remove.enabled and any(x is not None for x in channels_remove.values()):
         channel_remove(runner, channels_remove)
     if skip_connection_remove:
         skip_connection(runner, skip_connection_remove)
     if bgr_to_rgb:
         bgr2rgb(runner)
 
-    _apply_output_scheme(runner, network_info)
+    _add_postprocess(runner, network_info)
 
     # save model
     runner.save_har(results_dir / f'{model_name}.har')
@@ -160,17 +172,20 @@ def load_model(runner, har_path, logger):
 
 
 def make_preprocessing(runner, network_info):
-    model_arch = network_info.preprocessing.meta_arch
-    max_pad = network_info.preprocessing.max_pad
+    preprocessing_args = network_info.preprocessing
+    meta_arch = preprocessing_args.get('meta_arch')
     hn_editor = network_info.hn_editor
     flip = hn_editor.flip
+    yuv2rgb = hn_editor.yuv2rgb
+    input_resize = hn_editor.input_resize
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
     height, width, _ = _get_input_shape(runner, network_info)
 
     preproc_callback = preprocessing_factory.get_preprocessing(
-        model_arch, height=height, width=width, flip=flip, max_pad=max_pad,
-        normalization_params=normalization_params)
+        meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
+        input_resize=input_resize, normalization_params=normalization_params,
+        **preprocessing_args)
 
     return preproc_callback
 
@@ -191,57 +206,43 @@ def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch
         func = data.ImageFeed
     else:
         func = data.VideoFeed
+    return lambda: func(*args)
 
-    return lambda: func(*args).iterator
 
-
-def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path):
-    dataset_name = network_info.evaluation.dataset_name
+def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path, dataset_name):
     two_stage_arch = network_info.evaluation.two_stage_arch
     return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch, preproc_callback)
 
 
 def make_evalset_callback(network_info, batch_size, preproc_callback, override_path):
+    dataset_name = network_info.evaluation.dataset_name
     resolved_data_path = override_path or path_resolver.resolve_data_path(network_info.evaluation.data_set)
-    return _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path, dataset_name)
+    return lambda: data_feed_cb().iterator
 
 
 def make_calibset_callback(network_info, batch_size, preproc_callback, override_path):
+    dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
-    return _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path)
+    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path, dataset_name)
+    dataset = data_feed_cb()._dataset if batch_size is None else data_feed_cb()._dataset.unbatch()
+    return dataset
 
 
-def quantize_model(runner, network_info, calib_feed_callback, results_dir):
-    batch_size = network_info.quantization.quantization_batch_size
-    should_equalize = network_info.quantization.should_equalize
-    should_ibc = network_info.quantization.should_ibc
-    should_finetune = network_info.quantization.should_finetune
-    calib_set_size = network_info.quantization.calib_set_size
-    fast_ibc = network_info.quantization.fast_ibc
+def quantize_model(runner, logger, network_info, calib_path, results_dir, model_script_path=None):
 
-    calib_num_batch = calib_set_size // batch_size
-    if calib_set_size % batch_size != 0:
-        raise ValueError(
-            "Using only {} images for calibration instead of {}, because {} is not an integer product "
-            "of the batch size {}".format(batch_size * calib_num_batch, calib_set_size, calib_set_size, batch_size)
-        )
+    logger.info('Preparing calibration data...')
+    preproc_callback = make_preprocessing(runner, network_info)
+    calib_feed_callback = make_calibset_callback(network_info, batch_size=None,
+                                                 preproc_callback=preproc_callback,
+                                                 override_path=calib_path)
 
-    if should_finetune:
-        # Finetune currently expects dicts & lists.
-        # Casting OmegaConf types back to python builtin types.
-        ft_dict = yaml.safe_load(OmegaConf.to_yaml(network_info.quantization.finetune_scheme))
-        ft_cfg = FineTuneConfigurator(ft_dict,)
-    else:
-        ft_cfg = None
+    quantization_script_filename = model_script_path if model_script_path \
+        else resolve_alls_path(network_info.paths.alls_script)
 
-    max_elementwise_feed_repeat = network_info.allocation.max_elementwise_feed_repeat
-    quantization_script_filename = _resolve_alls_path(network_info.paths.alls_script)
-
-    runner.quantize(calib_feed_callback, calib_num_batch=calib_num_batch, equalize=should_equalize,
-                    ibc=should_ibc, finetune=should_finetune, ft_cfg=ft_cfg, batch_size=batch_size,
-                    max_elementwise_feed_repeat=max_elementwise_feed_repeat, ft_batch_size=batch_size,
-                    model_script=quantization_script_filename, fast_ibc=fast_ibc,
-                    work_dir=None, data_type=CalibrationDataType.data_feed)
+    runner.quantize(calib_feed_callback,
+                    model_script=quantization_script_filename,
+                    work_dir=None)
 
     model_name = network_info.network.network_name
     runner.save_har(results_dir / f'{model_name}.har')
@@ -251,10 +252,13 @@ def make_visualize_callback(network_info):
     network_type = network_info.preprocessing.network_type
     dataset_name = network_info.evaluation.dataset_name
     channels_remove = network_info.hn_editor.channels_remove
+    labels_offset = network_info.evaluation.labels_offset
     visualize_function = postprocessing_factory.get_visualization(network_type)
 
     def visualize_callback(logits, image, **kwargs):
-        return visualize_function(logits, image, dataset_name=dataset_name, channels_remove=channels_remove, **kwargs)
+        return visualize_function(logits, image, dataset_name=dataset_name,
+                                  channels_remove=channels_remove,
+                                  labels_offset=labels_offset, **kwargs)
     return visualize_callback
 
 
@@ -299,6 +303,7 @@ def make_eval_callback(network_info):
         channels_remove=network_info.hn_editor.channels_remove,
         dataset_name=network_info.evaluation.dataset_name,
         gt_json_path=gt_json_path,
+        centered=network_info.preprocessing.centered,
         nms_iou_thresh=network_info.postprocessing.nms_iou_thresh,
         score_threshold=network_info.postprocessing.score_threshold,
         input_shape=network_info.preprocessing.input_shape,
@@ -343,10 +348,11 @@ def get_hef_path(results_dir, model_name):
     return results_dir.joinpath(f"{model_name}.hef")
 
 
-def compile_model(runner, network_info, results_dir):
+def compile_model(runner, network_info, results_dir, model_script_path=None):
     fps = network_info.allocation.required_fps
     model_name = network_info.network.network_name
-    allocator_script_filename = _resolve_alls_path(network_info.paths.alls_script)
+    allocator_script_filename = model_script_path if model_script_path \
+        else resolve_alls_path(network_info.paths.alls_script)
     mapping_timeout = network_info.allocation.allocation_timeout
     hef = runner.get_hw_representation(
         fps=fps,
@@ -360,5 +366,20 @@ def compile_model(runner, network_info, results_dir):
     runner.save_har(results_dir / f'{model_name}.har')
 
 
-def get_network_names():
-    return sorted([name.with_suffix('').name for name in path_resolver.NETWORK_CFG_DIR.glob('*.yaml')])
+def info_model(model_name, network_info, logger):
+
+    def build_dict(info):
+        keys_list = ['task', 'input_shape', 'output_shape', 'operations', 'parameters',
+                     'framework', 'training_data', 'validation_data', 'eval_metric',
+                     'full_precision_result', 'source', 'license_url']
+        info_vals = [info[key_curr] for key_curr in keys_list]
+        info_dict = dict(zip(keys_list, info_vals))
+        return keys_list, info_dict
+
+    keys_list, info_dict = build_dict(network_info['info'])
+    msgs_list = list()
+    for key_curr in keys_list:
+        msg = "\t{0:<25}{1}".format(key_curr + ':', info_dict[key_curr])
+        msgs_list.append(msg)
+    msg_w_line = '\033[0m\n' + "\n".join(msgs_list)
+    logger.info(msg_w_line)

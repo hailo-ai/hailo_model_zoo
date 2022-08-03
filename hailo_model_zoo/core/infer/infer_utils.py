@@ -1,26 +1,5 @@
 import numpy as np
-import tensorflow as tf
 import os
-
-
-def create_calib_set(calib_feed_callback, eval_num_examples, calib_filename):
-    calibation_set = []
-    with tf.Graph().as_default():
-        iterator = calib_feed_callback()
-        [preprocessed_data, _] = iterator.get_next()
-        with tf.Session() as sess:
-            sess.run([iterator.initializer])
-            num_of_images = 0
-            try:
-                while num_of_images < eval_num_examples:
-                    calib_data = sess.run(preprocessed_data)
-                    calibation_set.append(calib_data)
-                    num_of_images += len(calib_data)
-            except tf.errors.OutOfRangeError:
-                pass
-    calibation_set = np.concatenate(calibation_set, axis=0)
-    np.savez(calib_filename, calibation_set)
-    return num_of_images
 
 
 def save_image(img, image_name):
@@ -68,7 +47,7 @@ def log_degradation(logger, accuracies_output, accuracies_output_native):
         diff_coeff = 1 if result_native.is_bigger_better else -1.0
         diff = (result_native.value - result_quantized.value)
         deg = diff * diff_coeff
-        log += ' {}={:.2f}'.format(result_native.name, norm_coeff * deg)
+        log += ' {}={:.3f}'.format(result_native.name, norm_coeff * deg)
     logger.info(log)
     return log
 
@@ -77,6 +56,6 @@ def log_accuracy(logger, num_of_images, accuracies_output):
     log = 'Done {} images'.format(num_of_images)
     for result in accuracies_output:
         norm_coeff = 100.0 if result.is_percentage else 1.0
-        log += ' {}={:.2f}'.format(result.name, norm_coeff * result.value)
+        log += ' {}={:.3f}'.format(result.name, norm_coeff * result.value)
     logger.info(log)
     return log

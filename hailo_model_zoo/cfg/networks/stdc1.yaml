@@ -1,0 +1,28 @@
+base:
+- base/fcn.yaml
+network:
+  network_name: stdc1
+allocation:
+  required_fps: null
+parser:
+  nodes:
+  - null
+  - null
+paths:
+  alls_script: stdc1.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/stdc1/pretrained/2022-03-17/stdc1.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/stdc1/pretrained/2022-03-17/stdc1.zip
+info:
+  task: semantic segmentation
+  input_shape: 1024x1920x3
+  output_shape: 1024x1920x1
+  operations: 63.34G
+  parameters: 8.27M
+  framework: pytorch
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 74.57
+  source: https://mmsegmentation.readthedocs.io/en/latest
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

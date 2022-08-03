@@ -1,0 +1,2 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=8, calibset_size=128)

@@ -1,17 +1,8 @@
 base:
 - base/base.yaml
 quantization:
-  should_equalize: true
-  should_ibc: false
-  should_finetune: false
-  finetune_scheme:
-    learning_rate: 0.0002
-    epochs: 8
-    dataset_size: 2048
-  calib_set_size: 64
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  quantization_batch_size: 4
 preprocessing:
   network_type: detection
   input_shape:
@@ -24,7 +15,6 @@ postprocessing:
   score_threshold: 0.01
   meta_arch: yolo_v5
   anchors:
-    fpn: false
     strides:
     - 8
     - 16
@@ -49,7 +39,7 @@ postprocessing:
       - 373
       - 326
 info:
-  network_source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
 parser:
   normalization_params:
     normalize_in_net: true

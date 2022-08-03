@@ -13,7 +13,7 @@ def polylanenet(image, image_info=None, height=None, width=None, **kwargs):
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         # this is the working line. gave 91.44% when we expect 91.3%
         image = tf.squeeze(image, [0])
         image = image[..., ::-1]  # swapping rgb/bgr

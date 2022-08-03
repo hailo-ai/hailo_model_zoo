@@ -1,0 +1,73 @@
+base:
+- base/yolo.yaml
+postprocessing:
+  meta_arch: yolox
+  anchors:
+    strides:
+    - 32
+    - 16
+    - 8
+    sizes:
+    - - 1
+      - 1
+    - - 1
+      - 1
+    - - 1
+      - 1
+preprocessing:
+  centered: false
+  meta_arch: yolo_v5
+  input_shape:
+  - 416
+  - 416
+  - 3
+network:
+  network_name: yolox_tiny_leaky
+allocation:
+  required_fps: 400
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_tiny_leaky/pretrained/2021-08-12/yolox_tiny_leaky.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_tiny_leaky/pretrained/2021-08-12/yolox_tiny_leaky.zip
+  alls_script: yolox_tiny_leaky.alls
+parser:
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+  nodes:
+  - null
+  - - Conv_197
+    - Sigmoid_199
+    - Sigmoid_200
+    - Conv_213
+    - Sigmoid_215
+    - Sigmoid_216
+    - Conv_229
+    - Sigmoid_231
+    - Sigmoid_232
+  start_node_shape:
+  - 1
+  - 3
+  - 416
+  - 416
+info:
+  task: object detection
+  input_shape: 416x416x3
+  output_shape: 52x52x4, 52x52x1, 52x52x80, 26x26x4, 26x26x1, 26x26x80, 13x13x4, 13x13x1,
+    13x13x80
+  operations: 3.22G
+  parameters: 5.05M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 30.27
+  source: https://github.com/Megvii-BaseDetection/YOLOX
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

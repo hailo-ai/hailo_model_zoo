@@ -3,15 +3,28 @@ base:
 network:
   network_name: mobilenet_v2_1.0
 allocation:
-  required_fps: 2613
+  required_fps: 2614
 paths:
   alls_script: mobilenet_v2_1.0.alls
   network_path:
-  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.meta
-  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.index
-  - models_files/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1_0_224.ckpt.data-00000-of-00001
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/mobilenet_v2_1_0_224.ckpt.meta
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/mobilenet_v2_1_0_224.ckpt.index
+  - models_files/Classification/mobilenet_v2_1.0/pretrained/mobilenet_v2_1_0_224.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1.0.zip
 parser:
   nodes:
   - input_image
   - MobilenetV2/Predictions/Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1001'
+  operations: 0.31G
+  parameters: 3.49M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 71.78
+  source: https://github.com/tensorflow/models/tree/v1.13.0/research/slim
+  license_url: https://github.com/tensorflow/models/blob/v1.13.0/LICENSE

@@ -4,6 +4,8 @@ import logging
 import subprocess
 import errno
 
+from hailo_model_zoo.utils import path_resolver
+
 
 ID_TYPE_CONVERSION = {
     0: 'Car',
@@ -55,9 +57,11 @@ def do_kitti_detection_evaluation(dataset,
         generate_kitti_3d_detection(prediction, predict_txt)
 
     logger.info("Evaluate on KITTI dataset")
-    output_dir = os.path.expanduser('.')
-    label_dir = os.path.expanduser('models_files/kitti_3d/label')
-    command = "models_files/smoke/smoke_regnet800/evaluate_object_3d_offline_adk {} {}".format(label_dir, output_dir)
+    MODELS_FILES_DIR = path_resolver.resolve_data_path('')
+    EVAL_PATH = str(MODELS_FILES_DIR / 'models_files/'
+                    'smoke/smoke_regnet800/kitti_3d/evaluate_object_3d_offline_adk')
+    label_dir = str(MODELS_FILES_DIR / 'models_files/kitti_3d/label/')
+    command = "{} {} {}".format(EVAL_PATH, label_dir, output_folder)
     output = subprocess.check_output(command, shell=True, universal_newlines=True).strip()
 
     car_bev_AP_e_m_h = output.split('car_detection_ground AP: ')[1][:24].split(' ')

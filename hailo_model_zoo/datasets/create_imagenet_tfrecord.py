@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
-import random
 import argparse
 import os
+import random
 import re
+from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from pathlib import Path
+from tqdm import tqdm
 
 from hailo_model_zoo.utils import path_resolver
 
@@ -33,27 +34,23 @@ def _create_tfrecord(filenames, name, num_images):
     """
     tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC[name])
     (tfrecords_filename.parent).mkdir(parents=True, exist_ok=True)
-    writer = tf.io.TFRecordWriter(str(tfrecords_filename))
 
-    i = 0
-    for img_path, label_index in filenames:
-        img_jpeg = open(img_path, 'rb').read()
-        img = np.array(Image.open(img_path))
-        height = img.shape[0]
-        width = img.shape[1]
-        print("converting image number " + str(i) + " from " + name + " : " + img_path, end='\r')
-        example = tf.train.Example(features=tf.train.Features(feature={
-            'height': _int64_feature(height),
-            'width': _int64_feature(width),
-            'label_index': _int64_feature(label_index),
-            'image_name': _bytes_feature(str.encode(os.path.basename(img_path))),
-            'image_jpeg': _bytes_feature(img_jpeg)}))
-        writer.write(example.SerializeToString())
-        i += 1
-        if i >= num_images:
-            break
-    writer.close()
-    return i
+    progress_bar = tqdm(filenames[:num_images])
+    with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
+        for i, (img_path, label_index) in enumerate(progress_bar):
+            img_jpeg = open(img_path, 'rb').read()
+            img = np.array(Image.open(img_path))
+            height = img.shape[0]
+            width = img.shape[1]
+            progress_bar.set_description(f"{name} #{i}: {img_path}")
+            example = tf.train.Example(features=tf.train.Features(feature={
+                'height': _int64_feature(height),
+                'width': _int64_feature(width),
+                'label_index': _int64_feature(label_index),
+                'image_name': _bytes_feature(str.encode(os.path.basename(img_path))),
+                'image_jpeg': _bytes_feature(img_jpeg)}))
+            writer.write(example.SerializeToString())
+    return i + 1
 
 
 def _get_files_and_labels_list(dataset_dir):

@@ -1,23 +1,28 @@
+import tempfile
+
 from hailo_sdk_client import ClientRunner, JoinAction
 from hailo_sdk_client.runner.client_runner import InvalidArgumentsException
 from hailo_model_zoo.utils.parse_utils import translate_model
-from hailo_model_zoo.utils.path_resolver import resolve_model_path
+from hailo_model_zoo.utils.path_resolver import resolve_model_path, resolve_alls_path
 
 
 def _apply_scope(layer_name, scope):
     return layer_name if '/' in layer_name else f'{scope}/{layer_name}'
 
 
-def _make_tensor_shapes(hn, ports, start_node_name):
+def _make_tensor_shapes(hn, ports, start_node_name, is_onnx):
     tensor_shapes = {}
-    for port_source_layer, port_dest_layer in ports.items():
+    for port_source_layer, _ in ports.items():
         shape = hn.get_layer_by_name(port_source_layer).output_shape
         # hn lists batch dimension as -1 which isn't supported by the parser
         shape[0] = 1
-
         # FUTURE maybe work with original names? This should be port_original_dest_layer_name
-        tensor_name = "{}:0".format(start_node_name)
-        tensor_shapes[tensor_name] = shape
+        tensor_name = "{}".format(start_node_name)
+        if is_onnx:
+            tensor_shapes = None
+        else:
+            tensor_name += ":0"
+            tensor_shapes[tensor_name] = shape
 
     return tensor_shapes
 
@@ -35,6 +40,8 @@ def _translate_model(runner, network_info, tensor_shapes):
 def _adjust_output_order(runner, chained_runner, original_output_order):
     new_hn = runner.get_hn_model()
     params = runner.get_params()
+    script = runner.model_script
+
     chained_runner_outputs = chained_runner.get_hn_model().net_params.output_layers_order
     runner_outputs = new_hn.net_params.output_layers_order
     missing_outputs = set(original_output_order) - set(runner_outputs)
@@ -47,8 +54,14 @@ def _adjust_output_order(runner, chained_runner, original_output_order):
         runner_outputs[insert_index:-len(chained_runner_outputs)]
 
     new_hn.net_params.output_layers_order = adjusted_runner_outputs
-    runner.set_hn(new_hn)
-    runner.load_params(params)
+
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.alls') as script_file:
+        script_file.write(script)
+        script_file.seek(0)
+
+        runner.set_hn(new_hn)
+        runner.load_params(params)
+        runner.load_model_script(script_file.name)
 
 
 def integrate_postprocessing(runner, integrated_postprocessing_info):
@@ -64,10 +77,24 @@ def integrate_postprocessing(runner, integrated_postprocessing_info):
             fixed_ports = {_apply_scope(source, scope): dest for source, dest in ports.items()}
         else:
             fixed_ports = ports
-        tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name)
+        tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name,
+                                            integrated_postprocessing_info.
+                                            chains[0]['paths']['network_path'][0].endswith('.onnx'))
 
+        # If the first network is transposed, the chained network must also be trasnposed.
+        # So we first parse it with original input shapes and then "flip" it
+        if hn.net_params.transposed_net:
+            for k, v in tensor_shapes.items():
+                v[1], v[2] = v[2], v[1]
+                tensor_shapes[k] = v
         chained_runner = ClientRunner()
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
+
+        if chain.paths.alls_script is not None:
+            model_script = resolve_alls_path(chain.paths.alls_script)
+            chained_runner.load_model_script(model_script)
+            chained_runner.apply_model_modification_commands()
+
         chained_name = chained_runner.get_hn()['name']
         scope = hn.net_params.net_scopes[0] if hn.net_params.net_scopes else hn.name
 

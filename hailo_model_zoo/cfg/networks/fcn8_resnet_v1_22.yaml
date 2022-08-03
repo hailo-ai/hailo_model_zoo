@@ -1,19 +1,7 @@
 base:
 - base/fcn.yaml
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    dataset_size: 1000
-    epochs: 4
-    learning_rate: 0.0001
-    loss_layer_names:
-    - conv33
-    loss_types:
-    - l2
-info:
-  network_source: internal
+inference:
+  emulator_batch_size: 4
 postprocessing:
   device_pre_post_layers:
     softmax: false
@@ -30,11 +18,24 @@ allocation:
 paths:
   alls_script: fcn8_resnet_v1_22.alls
   network_path:
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.meta
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.index
-  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet22_fhd_dilation.ckpt.data-00000-of-00001
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/fcn8_resnet22_fhd_dilation.ckpt.meta
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/fcn8_resnet22_fhd_dilation.ckpt.index
+  - models_files/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/fcn8_resnet22_fhd_dilation.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet_v1_22.zip
 parser:
   nodes:
   - base_fe_scope/resnet_v1_18/Pad
   - add_1
+info:
+  task: semantic segmentation
+  input_shape: 1920x1024x3
+  output_shape: 1920x1024x1
+  operations: 150.04G
+  parameters: 15.12M
+  framework: gluoncv
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 67.54
+  source: https://cv.gluon.ai/model_zoo/segmentation.html
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

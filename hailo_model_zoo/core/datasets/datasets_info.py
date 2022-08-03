@@ -49,6 +49,15 @@ CLASS_NAMES_D2S = ('adelholzener_alpenquelle_classic_075', 'adelholzener_alpenqu
 
 D2S_LABEL_MAP = dict([(i + 1, i + 1) for i in range(len(CLASS_NAMES_D2S))])
 
+CLASS_NAMES_D2S_FRUITS = ('apple', 'avocado',
+                          'banana_single',
+                          'clementine_single',
+                          'kiwi',
+                          'orange_single', 'pear',
+                          'cucumber', 'carrot')
+
+D2S_FRUITS_LABEL_MAP = dict([(i + 1, i + 1) for i in range(len(CLASS_NAMES_D2S_FRUITS))])
+
 
 class DatasetInfo(object):
     def __init__(self, class_names, label_map):
@@ -67,11 +76,13 @@ class DatasetInfo(object):
 class BasicDatasetsEnum(Enum):
     COCO = 'coco_detection'
     D2S = 'd2s_detection'
+    D2S_FRUITS = 'd2s_fruits_detection'
 
 
 DATASETS_INFO = {
     BasicDatasetsEnum.COCO.value: DatasetInfo(class_names=CLASS_NAMES_COCO, label_map=COCO_LABEL_MAP),
     BasicDatasetsEnum.D2S.value: DatasetInfo(class_names=CLASS_NAMES_D2S, label_map=D2S_LABEL_MAP),
+    BasicDatasetsEnum.D2S_FRUITS.value: DatasetInfo(class_names=CLASS_NAMES_D2S_FRUITS, label_map=D2S_FRUITS_LABEL_MAP),
 }
 
 

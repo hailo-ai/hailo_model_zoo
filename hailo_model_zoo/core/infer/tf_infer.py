@@ -71,18 +71,19 @@ def tf_infer(runner, target, logger, eval_num_examples, print_num_examples,
         video_writer = None
         with sdk_export.session.as_default(), runner.hef_infer_context(sdk_export):
 
-            sdk_export.session.run([iterator.initializer, tf.compat.v1.local_variables_initializer()])
+            sdk_export.session.run([iterator.initializer])
             if isinstance(target, SdkFineTune):
                 sdk_export.session.run(
                     [delta.initializer for delta in sdk_export.kernels_delta + sdk_export.biases_delta])
             num_of_images = 0
             try:
-                with tqdm(total=None, desc="Images Processed",
+                with tqdm(total=None, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
                     while num_of_images < eval_num_examples:
                         logits_batch, img_info = sdk_export.session.run([probs, image_info])
                         # Try to get the actual batch size from img_info (since last batch could be smaller)
-                        num_of_images += len(img_info['img_orig']) if 'img_orig' in img_info else batch_size
+                        current_batch_size = len(img_info['img_orig']) if 'img_orig' in img_info else batch_size
+                        num_of_images += current_batch_size
                         if not visualize_callback and not dump_results:
                             eval_metric.update_op(logits_batch, img_info)
                             if num_of_images % print_num_examples == 0:
@@ -94,7 +95,7 @@ def tf_infer(runner, target, logger, eval_num_examples, print_num_examples,
                                                           visualize_callback, video_outpath, video_writer)
                             if dump_results:
                                 write_results(logits_batch, img_info, results_path)
-                        pbar.update(batch_size)
+                        pbar.update(current_batch_size)
             except tf.errors.OutOfRangeError:
                 pass
             finally:

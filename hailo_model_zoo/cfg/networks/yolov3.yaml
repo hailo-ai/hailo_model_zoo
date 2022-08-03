@@ -25,45 +25,10 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv83
-    - conv91
-    - conv98
+    - yolov3/conv83
+    - yolov3/conv91
+    - yolov3/conv98
     split_output: true
-info:
-  network_source: https://cv.gluon.ai/model_zoo/detection.html
-quantization:
-  quantization_batch_size: 2
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 0.0001
-    loss_types:
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
 allocation:
   required_fps: 100
 preprocessing:
@@ -77,23 +42,26 @@ network:
 paths:
   alls_script: yolov3.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolo3_darknet53_coco.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-07-11/yolov3.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-08-16/yolov3_1_3_608_608_static.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-08-16/yolov3.zip
 parser:
+  ew_add_policy: fused_conv_and_add_identity_fallback
   nodes:
-  - zero_padding2d/Pad
-  - - yolov30_yolooutputv30_conv0/BiasAdd
-    - yolov30_yolooutputv31_conv0/BiasAdd
-    - yolov30_yolooutputv32_conv0/BiasAdd
-  normalization_params:
-    std_list:
-    - 58.395
-    - 57.12
-    - 57.375
-    normalize_in_net: true
-    mean_list:
-    - 123.675
-    - 116.28
-    - 103.53
+  - input
+  - - Conv_865
+    - Conv_502
+    - Conv_139
+info:
+  task: object detection
+  input_shape: 608x608x3
+  output_shape: 19x19x6, 19x19x6, 19x19x3, 19x19x240, 38x38x6, 38x38x6, 38x38x3, 38x38x240,
+    76x76x6, 76x76x6, 76x76x3, 76x76x240
+  operations: 79.17G
+  parameters: 68.79M
+  framework: darknet
+  training_data: coco2017
+  validation_data: coco2017
+  eval_metric: mAP
+  full_precision_result: 38.42
+  source: https://github.com/AlexeyAB/darknet
+  license_url: https://github.com/AlexeyAB/darknet/blob/master/LICENSE

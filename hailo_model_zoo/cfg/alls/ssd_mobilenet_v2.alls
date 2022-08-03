@@ -1,7 +1,8 @@
-optimize_buffers()
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_config(calibration, batch_size=8, calibset_size=32)
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)
+
 compilation_param({*}, resources_allocation_strategy=min_l3_mem_match_fps)
 compilation_param({conv*}, balance_output_multisplit=False)
-
-quantization_param({conv*}, bias_mode=double_scale_initialization)
-
-

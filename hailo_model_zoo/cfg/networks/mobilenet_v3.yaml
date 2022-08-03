@@ -6,13 +6,24 @@ allocation:
   required_fps: 1500
 paths:
   network_path:
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.meta
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.index
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.data-00000-of-00001
+  - models_files/Classification/mobilenet_v3/pretrained/mobilenet_v3_edgetpu.ckpt.meta
+  - models_files/Classification/mobilenet_v3/pretrained/mobilenet_v3_edgetpu.ckpt.index
+  - models_files/Classification/mobilenet_v3/pretrained/mobilenet_v3_edgetpu.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3.zip
+  alls_script: mobilenet_v3.alls
 parser:
   nodes:
   - MobilenetEdgeTPU/Conv/Conv2D
   - MobilenetEdgeTPU/Predictions/Softmax
-quantization:
-  fast_ibc: false
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1001'
+  operations: 1.00G
+  parameters: 4.07M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 72.21
+  source: https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet

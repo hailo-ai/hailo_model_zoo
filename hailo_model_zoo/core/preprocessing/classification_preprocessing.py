@@ -5,6 +5,13 @@ import tensorflow as tf
 
 RESIZE_SIDE = 256
 MOBILENET_CENTRAL_FRACTION = 0.875
+RESMLP_CENTRAL_FRACTION = 0.875
+MEAN_IMAGENET = [123.675, 116.28, 103.53]
+STD_IMAGENET = [58.395, 57.12, 57.375]
+
+
+class PatchifyException(Exception):
+    """Patchify exception."""
 
 
 def mobilenet_v1(image, image_info=None, height=None, width=None, **kwargs):
@@ -18,7 +25,7 @@ def mobilenet_v1(image, image_info=None, height=None, width=None, **kwargs):
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     # retrieve a 0-255 that was implicitely changed by tf.image.convert_image_dtype:
@@ -44,7 +51,7 @@ def _smallest_size_at_least(height, width, smallest_side):
     return new_height, new_width
 
 
-def _aspect_preserving_resize(image, smallest_side):
+def _aspect_preserving_resize(image, smallest_side, **kwargs):
     smallest_side = tf.convert_to_tensor(smallest_side, dtype=tf.int32)
 
     shape = tf.shape(image)
@@ -52,8 +59,11 @@ def _aspect_preserving_resize(image, smallest_side):
     width = shape[1]
     new_height, new_width = _smallest_size_at_least(height, width, smallest_side)
     image = tf.expand_dims(image, 0)
-    resized_image = tf.compat.v1.image.resize_bilinear(image, [new_height, new_width],
-                                                       align_corners=False)
+    if ("method" in kwargs) and (kwargs['method'] is not None):
+        resized_image = tf.image.resize(image, [new_height, new_width], method=kwargs["method"],
+                                        antialias=True)
+    else:
+        resized_image = tf.image.resize(image, [new_height, new_width], method='bilinear')
     resized_image = tf.squeeze(resized_image)
     resized_image.set_shape([None, None, 3])
     return resized_image
@@ -112,7 +122,6 @@ def resnet_v1_18_34(image, image_info=None, output_height=None, output_width=Non
     image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE)
     if image_info:
         image_info['img_orig'] = tf.cast(image, tf.uint8)
-
     return image, image_info
 
 
@@ -124,9 +133,33 @@ def efficientnet(image, image_info=None, output_height=None, output_width=None, 
     offset_width = ((shape[1] - padded_center_crop_size) + 1) // 2
     image_crop = tf.image.crop_to_bounding_box(
         image, offset_height, offset_width, padded_center_crop_size, padded_center_crop_size)
-    image_resize = tf.compat.v1.image.resize_bicubic([image_crop], [output_height, output_width])[0]
+    image_resize = tf.image.resize([image_crop], [output_height, output_width], method='bicubic')[0]
 
     if image_info:
-        image_info['img_orig'] = tf.cast(tf.compat.v1.image.resize_bicubic(
-            [image], [output_height, output_width])[0], tf.uint8)
+        image_info['img_orig'] = tf.cast(tf.image.resize(
+            [image], [output_height, output_width], method='bicubic')[0], tf.uint8)
     return tf.cast(image_resize, tf.float32), image_info
+
+
+def resmlp(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
+    '''
+    This version of preprocessing runs the base ResMLP preprocess (Resize + CenterCrop).
+    The patchify is done on-chip
+    '''
+    if output_height is not None:
+        assert output_width is not None
+        image = _aspect_preserving_resize(image, RESIZE_SIDE, method='bicubic')
+        image = _central_crop([image], output_height, output_width)[0]
+        image.set_shape([output_height, output_width, 3])
+    image = tf.cast(image, tf.float32)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info
+
+
+def lprnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
+    image = tf.image.resize([image], [output_height, output_width], method='bicubic')[0]
+    image = tf.squeeze(image)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info

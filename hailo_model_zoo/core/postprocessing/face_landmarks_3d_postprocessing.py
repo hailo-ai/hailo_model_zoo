@@ -54,8 +54,10 @@ def _to_ctype(arr):
 class BFMModel(object):
     def __init__(self, shape_dim=40, exp_dim=10):
         # FUTURE these should be downloaded lazily
-        bfm_path = resolve_data_path("models_files/tddfa_mb1_120x120/2021-03-04/bfm_noneck_v3.pkl")
-        tri_path = resolve_data_path("models_files/tddfa_mb1_120x120/2021-03-04/tri.pkl")
+        bfm_path = resolve_data_path(
+            "models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/bfm_noneck_v3.pkl")
+        tri_path = resolve_data_path(
+            "models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tri.pkl")
         with open(bfm_path, 'rb') as f:
             bfm = pickle.load(f)
         self._u = bfm.get('u').astype(np.float32)  # fix bug
@@ -144,12 +146,14 @@ def face_3dmm_to_landmarks_np(face_3dmm_params, img_dims, roi_box):
 
 def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, img_dims=None, gt_images=None, **kwargs):
     assert img_dims[0] == img_dims[1], "Assumes square input"
-    endnodes = tf.squeeze(endnodes)
+    batch_size = tf.shape(endnodes)[0]
+    endnodes = tf.reshape(endnodes, [batch_size, -1])
     face_3dmm_params = endnodes * TDDFA_RESCALE_PARAMS['std'] + TDDFA_RESCALE_PARAMS['mean']
-
-    ptds3d = tf.py_func(face_3dmm_to_landmarks_batch,
-                        [face_3dmm_params, img_dims, gt_images['roi_box']],
-                        tf.float32)
+    roi_box = gt_images.get('roi_box',
+                            tf.tile([[0, 0, img_dims[1], img_dims[0]]], (batch_size, 1)))
+    ptds3d = tf.numpy_function(face_3dmm_to_landmarks_batch,
+                               [face_3dmm_params, img_dims, roi_box],
+                               tf.float32)
     return {'predictions': ptds3d}
 
 
@@ -159,7 +163,8 @@ def visualize_face_landmarks_3d_result(logits, image, **kwargs):
     box = kwargs.get('img_info', {}).get('roi_box')
 
     for landmark in logits[0, :, :2]:
-        img = cv2.circle(img, tuple(landmark), 1, (255, 0, 255), -1)
+        landmark_as_int = tuple(int(x) for x in landmark)
+        img = cv2.circle(img, landmark_as_int, 1, (255, 0, 255), -1)
 
     if box is not None:
         img = cv2.rectangle(img, (box[0], box[1]), (box[2], box[3]), color=(0, 255, 0), thickness=1)

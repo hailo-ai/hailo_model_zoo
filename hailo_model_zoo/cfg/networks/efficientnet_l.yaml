@@ -2,16 +2,25 @@ base:
 - base/efficientnet.yaml
 network:
   network_name: efficientnet_l
-allocation:
-  required_fps: 150
 paths:
   alls_script: efficientnet_l.alls
   network_path:
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.meta
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.index
-  - models_files/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet-L.ckpt.data-00000-of-00001
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.meta
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.index
+  - models_files/Classification/efficientnet_l/pretrained/efficientnet-L.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_l/pretrained/2021-07-11/efficientnet_l.zip
 parser:
   nodes:
   - efficientnet-edgetpu-L/model/stem/conv2d/Conv2D
   - Softmax
+info:
+  task: classification
+  input_shape: 300x300x3
+  output_shape: 1x1x1001
+  operations: 9.70G
+  parameters: 10.55M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 80.46

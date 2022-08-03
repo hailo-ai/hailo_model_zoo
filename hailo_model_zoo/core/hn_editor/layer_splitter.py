@@ -5,8 +5,15 @@ import copy
 class LayerSplitter(object):
     def __init__(self, runner, network_info, split_fc=False):
         supported_networks = ['yolov3',
+                              'yolov3_gluon',
                               'yolov3_416',
+                              'yolov3_gluon_416',
+                              'yolov4_leaky',
+                              'yolov4_leaky_yuy2',
                               'yolov4',
+                              'tiny_yolov4',
+                              'tiny_yolov4_license_plates',
+                              'tiny_yolov4_license_plates_yuy2',
                               'polylanenet_resnet_v1_34',
                               'smoke_regnetx_800mf']
         self._runner = runner
@@ -42,6 +49,9 @@ class LayerSplitter(object):
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_polylanenet_hn_layer(layer)
             elif 'yolo' in self._split_type:
+                output_layer_ordinals = list(range(0, self._max_layers))
+                split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
+            elif 'tiny_yolov4' in self._split_type:
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
             elif 'smoke' in self._split_type:
@@ -133,7 +143,7 @@ class LayerSplitter(object):
         split_kernel_shapes.append(depth_kernel_shape)
 
         """adding conv68 although it's not split because it needs to secure an output layer:"""
-        self._hn_modified["net_params"]["output_layers_order"].append('conv68')
+        self._hn_modified["net_params"]["output_layers_order"].append(f'{self._get_network_name()}/conv68')
 
         offset_name = layer + "_offset"
         offset_kernel_shape = kernel_shape[:3]
@@ -165,7 +175,7 @@ class LayerSplitter(object):
         return split_names, split_kernel_shapes
 
     def _add_layer_to_hn(self, name, shape, orig_layer, output_index):
-        output_layer_name = "output_layer{}".format(output_index)
+        output_layer_name = "{}/output_layer{}".format(self._get_network_name(), output_index)
         self._hn_modified["layers"][name] = copy.deepcopy(self._hn_modified["layers"][orig_layer])
         self._hn_modified["layers"][name]["output"] = [output_layer_name]
         self._hn_modified["layers"][name]["output_shapes"][0][-1] = shape[-1]
@@ -200,7 +210,7 @@ class LayerSplitter(object):
                          self._hn_modified["layers"][layer]["type"] == "output_layer"]
         if layer_list:
             for layer in output_layers:
-                if layer not in ['output_layer' + str(ind) for ind in layer_list]:
+                if layer not in [f'{self._get_network_name()}/output_layer{ind}' for ind in layer_list]:
                     output_layers.remove(layer)
 
         while len(output_layers) > 0:
@@ -226,11 +236,11 @@ class LayerSplitter(object):
 
     def _split_layer_in_npz(self, layer):
         """replacing a layer entry in the npz with 4 layers"""
-        net_name = self._get_network_name()
-        layer = net_name + '/' + layer
         if 'polylanenet' in self._split_type:
             self._remodel_polylanenet_weights_and_biases_for_layer(layer)
         elif 'yolo' in self._split_type:
+            self._remodel_yolov3_weights_and_biases_for_layer(layer)
+        elif 'tiny_yolov4' in self._split_type:
             self._remodel_yolov3_weights_and_biases_for_layer(layer)
         elif 'smoke' in self._split_type:
             self._remodel_smoke_weights_and_biases_for_layer(layer)

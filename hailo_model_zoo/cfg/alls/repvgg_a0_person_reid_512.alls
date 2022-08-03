@@ -1,0 +1,5 @@
+normalization1 = normalization([111.296 , 104.263, 104.396], [64.193 , 62.547, 60.324])
+pre_quantization_optimization(activation_clipping, layers=[conv2], mode=percentile, clipping_values=[0, 99.25])
+pre_quantization_optimization(activation_clipping, layers=[conv9], mode=percentile, clipping_values=[0, 99.25])
+pre_quantization_optimization(activation_clipping, layers=[conv20], mode=percentile, clipping_values=[0, 99.45])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=8000, loss_factors=[1.0], loss_types=[L2REL])

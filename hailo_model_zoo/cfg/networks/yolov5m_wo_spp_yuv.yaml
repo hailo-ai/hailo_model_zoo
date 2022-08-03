@@ -1,0 +1,20 @@
+base:
+- networks/yolov5m_wo_spp.yaml
+hn_editor:
+  yuv2rgb: true
+  input_resize:
+    enabled: true
+    input_shape:
+    - 720
+    - 1280
+network:
+  network_name: yolov5m_wo_spp_yuv
+allocation:
+  required_fps: 100
+paths:
+  alls_script: yolov5m_wo_spp_yuv.alls
+info:
+  input_shape: 720x1280x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255
+  operations: 26.50G
+  parameters: 22.67M

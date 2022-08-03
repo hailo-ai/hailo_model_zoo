@@ -1,0 +1,4 @@
+centerpose_repvgg_a0/normalization1 = normalization([104.04, 113.985, 119.85], [73.695, 69.87, 70.89], centerpose_repvgg_a0/input_layer1)
+model_optimization_config(calibration, batch_size=8, calibset_size=2048)
+allocator_param(merge_min_layer_utilization=0.1)
+allocator_param(automatic_ddr=disabled)

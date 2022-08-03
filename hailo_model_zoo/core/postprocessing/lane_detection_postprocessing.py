@@ -73,7 +73,9 @@ def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs)
         points = [[ypoints[j], xpoints[j]] for j in range(len(xpoints))]
         for current_point in points:
             if current_point[1] > 0 and current_point[1] < im.shape[1]:
-                overlay = cv2.circle(overlay, (current_point[1], current_point[0]), radius=2, color=color, thickness=2)
+                overlay = cv2.circle(overlay,
+                                     (int(current_point[1]), int(current_point[0])),
+                                     radius=2, color=color, thickness=2)
         cv2.putText(overlay,
                     str('{:.1f}'.format(lane_confidence)),
                     (int(xpoints[ypoints == lane_horizon_y]), int(lane_horizon_y)),
@@ -93,8 +95,8 @@ def lane_detection_postprocessing(endnodes, device_pre_post_layers=None, img_w=1
     lane_detection_postproc.img_w = img_w
     lane_detection_postproc.img_h = img_h
     if output_scheme and output_scheme.get('split_output', False):
-        endnodes = tf.py_func(lane_detection_postproc.recombine_split_endnodes, endnodes, [tf.float32])
-    decoded = tf.py_func(lane_detection_postproc.decode, [endnodes], [tf.float32])
-    postprocessed = tf.py_func(lane_detection_postproc.polynomize_pred,
-                               [decoded], [tf.float32])  # network always returns 5 lane predictions.
+        endnodes = tf.py_function(lane_detection_postproc.recombine_split_endnodes, endnodes, [tf.float32])
+    decoded = tf.py_function(lane_detection_postproc.decode, [endnodes], [tf.float32])
+    postprocessed = tf.py_function(lane_detection_postproc.polynomize_pred,
+                                   [decoded], [tf.float32])  # network always returns 5 lane predictions.
     return {'predictions': postprocessed[0]}

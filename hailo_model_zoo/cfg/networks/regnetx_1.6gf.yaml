@@ -1,16 +1,26 @@
 base:
 - base/resnet.yaml
-info:
-  network_source: https://github.com/facebookresearch/pycls
 network:
   network_name: regnetx_1.6gf
-allocation:
-  required_fps: 686
 paths:
   network_path:
-  - models_files/Classification/regnetx_1.6gf/pretrained/2021-07-11/RegNetX-1.6GF_dds_8gpu.onnx
+  - models_files/Classification/regnetx_1.6gf/pretrained/RegNetX-1.6GF_dds_8gpu.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnetx_1.6gf/pretrained/2021-07-11/regnetx_1.6gf.zip
+  alls_script: regnetx_1.6gf.alls
 parser:
   nodes:
   - input
   - Gemm_202
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 1.61G
+  parameters: 9.17M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 77.05
+  source: https://github.com/facebookresearch/pycls
+  license_url: https://opensource.org/licenses/MIT

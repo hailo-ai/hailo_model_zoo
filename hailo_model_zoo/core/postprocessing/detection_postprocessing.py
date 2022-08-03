@@ -1,22 +1,26 @@
 import json
 import os
 
-from object_detection.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
+from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
+from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.core.postprocessing.detection.efficientdet import EfficientDetPostProc
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage1_postprocessing import FasterRCNNStage1
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage2_postprocessing import FasterRCNNStage2
+from hailo_model_zoo.core.postprocessing.detection.nanodet import NanoDetPostProc
 
 
 DETECTION_ARCHS = {
     "ssd": SSDPostProc,
+    "resnet34": SSDMLPerfPostProc,
     "yolo": YoloPostProc,
     "centernet": CenternetPostProc,
     "efficientdet": EfficientDetPostProc,
     "faster_rcnn_stage1": FasterRCNNStage1,
-    "faster_rcnn_stage2": FasterRCNNStage2
+    "faster_rcnn_stage2": FasterRCNNStage2,
+    "nanodet": NanoDetPostProc,
 }
 
 
@@ -71,6 +75,17 @@ def visualize_detection_result(logits, image, threshold=0.2, image_info=None, us
         labels = {1: {'name': 'person', 'id': 1}},
     elif 'widerface' in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
+    elif 'vehicle_detection' in dataset_name:
+        labels = {0: {'name': 'vehicle'}}
+    elif 'license_plates' in dataset_name:
+        labels = {0: {'name': 'plate'}}
+    elif 'hand_detection' in dataset_name:
+        labels = {1: {'name': 'hand'}}
+    elif 'personface_detection' in dataset_name:
+        labels = {1: {'name': 'person'}, 2: {'name': 'face'}}
+    else:
+        raise Exception('No Labels for dataset {}'.format(dataset_name))
+
     return visualize_boxes_and_labels_on_image_array(image[0],
                                                      boxes,
                                                      logits['detection_classes'][0],

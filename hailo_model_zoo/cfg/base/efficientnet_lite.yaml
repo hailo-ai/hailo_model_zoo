@@ -2,12 +2,10 @@ base:
 - base/imagenet.yaml
 evaluation:
   labels_offset: 0
-quantization:
-  should_ibc: true
 preprocessing:
   meta_arch: efficientnet
 info:
-  network_source: https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet"
+  source: https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
 parser:
   normalization_params:
     normalize_in_net: true

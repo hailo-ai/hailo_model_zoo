@@ -2,16 +2,25 @@ base:
 - base/resnet.yaml
 network:
   network_name: resnet_v1_34
-allocation:
-  required_fps: 956
 paths:
   alls_script: resnet_v1_34.alls
   network_path:
-  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.meta
-  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.index
-  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.data-00000-of-00001
+  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.meta
+  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.index
+  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.zip
 parser:
   nodes:
   - resnet_v1_34/conv1/Pad
   - resnet_v1_34/predictions/Softmax
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 3.67G
+  parameters: 21.79M
+  framework: tensorflow
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 72.7

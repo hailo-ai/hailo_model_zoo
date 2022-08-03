@@ -1,10 +1,62 @@
 #!/usr/bin/env python
-
 import os
 import argparse
+import shutil
+import tarfile
+import tempfile
+from collections import namedtuple
+from pathlib import Path
+
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+from scipy.io import loadmat
+from tqdm import tqdm
+
+from hailo_model_zoo.utils import path_resolver
+from hailo_model_zoo.utils.downloader import download_to_file
+
+Dataset = namedtuple('Dataset', ['download_url', 'tfrecord_location', 'default_root',
+                     'dataset_dir', 'annotations_dir', 'split_name', 'split_dir', 'path_in_tar', 'mask_extension'])
+VOC = Dataset(
+    download_url="http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar",
+    tfrecord_location={
+        'calib': 'models_files/pascal_voc/2021-08-15/pascal_voc_train.tfrecord',
+        'val': 'models_files/pascal_voc/2021-08-15/pascal_voc_val.tfrecord'
+    },
+    default_root='VOCdevkit/VOC2012',
+    dataset_dir='JPEGImages',
+    annotations_dir='SegmentationClass',
+    split_name={
+        'calib': 'train',
+        'val': 'val'
+    },
+    split_dir='ImageSets/Segmentation',
+    path_in_tar='VOCdevkit/VOC2012',
+    mask_extension='.png'
+)
+AUG = Dataset(
+    download_url='http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/semantic_contours/benchmark.tgz',
+    tfrecord_location={
+        'calib': 'models_files/pascal_aug/2021-08-15/pascal_aug_train.tfrecord',
+        'val': 'models_files/pascal_aug/2021-08-15/pascal_aug_val.tfrecord'
+    },
+    default_root='benchmark_RELEASE/dataset',
+    dataset_dir='img',
+    annotations_dir='cls',
+    split_name={
+        'calib': 'train',
+        'val': 'val'
+    },
+    split_dir='.',
+    path_in_tar='benchmark_RELEASE/dataset',
+    mask_extension='.mat'
+)
+
+DATASETS = {
+    'aug': AUG,
+    'voc': VOC
+}
 
 
 def _int64_feature(values):
@@ -17,33 +69,48 @@ def _bytes_feature(values):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[values]))
 
 
-def _create_tfrecord(filenames, calib, name='val'):
+def _download_dataset(dataset, name, root_dir):
+    if not root_dir.is_dir():
+        print(f'Image directory not found in {root_dir}. Downloading...')
+        with tempfile.NamedTemporaryFile() as outfile, tempfile.TemporaryDirectory() as temp_dir:
+            download_to_file(dataset.download_url, outfile)
+
+            with tarfile.open(outfile.name) as tar_ref:
+                tar_ref.extractall(temp_dir)
+            shutil.move(Path(temp_dir) / dataset.path_in_tar, root_dir)
+
+
+def _create_tfrecord(filenames, name='val'):
     """Loop over all the images in filenames and create the TFRecord
     """
-    tfrecords_filename = 'pascal_' + name + '.tfrecord'
-    writer = tf.io.TFRecordWriter(tfrecords_filename)
+    tfrecords_filename = f'pascal_{name}.tfrecord'
+    filenames = list(filenames)
+    progress_bar = tqdm(filenames)
+    filenames_iterator = enumerate(progress_bar)
 
-    i = 0
-    for img_path, mask_path in filenames:
-        img = open(img_path, "rb").read()
-        img_pil = np.array(Image.open(img_path))
-        image_height = img_pil.shape[0]
-        image_width = img_pil.shape[1]
-        mask = np.array(Image.open(mask_path), np.uint8)
+    with tf.io.TFRecordWriter(tfrecords_filename) as writer:
+        for i, (img_path, mask_path) in filenames_iterator:
+            img = open(img_path, "rb").read()
+            img_pil = np.array(Image.open(img_path))
+            image_height = img_pil.shape[0]
+            image_width = img_pil.shape[1]
+            if mask_path.endswith('.png'):
+                mask = np.array(Image.open(mask_path), np.uint8)
+            else:
+                assert mask_path.endswith('.mat')
+                mask = loadmat(mask_path)['GTcls']['Segmentation'][0][0]
 
-        print("converting image number " + str(i) + ": " + img_path, end='\r')
-        example = tf.train.Example(features=tf.train.Features(feature={
-            'height': _int64_feature(image_height),
-            'width': _int64_feature(image_width),
-            'image_name': _bytes_feature(str.encode(os.path.basename(img_path))),
-            'mask': _bytes_feature(mask.tostring()),
-            'image_jpeg': _bytes_feature(img)}))
-        writer.write(example.SerializeToString())
-        i += 1
-        if calib and i > 127:
-            break
-    writer.close()
-    return i
+            progress_bar.set_description(f"#{i}: {img_path}")
+            example = tf.train.Example(features=tf.train.Features(feature={
+                'height': _int64_feature(image_height),
+                'width': _int64_feature(image_width),
+                'image_name': _bytes_feature(str.encode(os.path.basename(img_path))),
+                'mask': _bytes_feature(mask.tostring()),
+                'image_jpeg': _bytes_feature(img)}))
+            writer.write(example.SerializeToString())
+    images_num = i + 1
+    print('\nDone converting {} images'.format(images_num))
+    return tfrecords_filename
 
 
 def get_images_list(val_images):
@@ -52,57 +119,41 @@ def get_images_list(val_images):
     return data.split('\n')[:-1]
 
 
-def get_img_labels_list(dataset_dir, seg_dir, val_images):
+def get_img_labels_list(dataset_dir, seg_dir, val_images, mask_extension):
     image_file_names, mask_file_names = [], []
     img_val_list = get_images_list(val_images)
     for img in os.listdir(dataset_dir):
         if os.path.splitext(img)[0] in img_val_list:
             image_file_names.append(os.path.join(dataset_dir, img))
-            mask_file_names.append(os.path.join(seg_dir, img.replace('.jpg', '.png')))
+            mask_file_names.append(os.path.join(seg_dir, img.replace('.jpg', mask_extension)))
     return zip(image_file_names, mask_file_names)
 
 
-def run(dataset_dir, seg_dir, val_images, calib, name='val'):
-    assert dataset_dir != '', 'no dataset directory'
-    assert seg_dir != '', 'no segmentation directory'
-    assert val_images != '', 'no validation file'
-    if calib and name != 'calib':
-        print("Calibration set creation is chosen but file name suffix is {}... "
-              "Setting it to 'calib'...".format(name))
-        name = 'calib'
-    img_labels_list = get_img_labels_list(dataset_dir, seg_dir, val_images)
-    images_num = _create_tfrecord(img_labels_list, calib, name)
-    print('\nDone converting {} images'.format(images_num))
+def run(dataset_name, name, root):
+    dataset = DATASETS[dataset_name]
+    root = Path(root or dataset.default_root)
+    tfrecord_path = path_resolver.resolve_data_path(dataset.tfrecord_location[name])
+    if tfrecord_path.exists():
+        print(f'tfrecord already exists at {tfrecord_path}. Skipping...')
+        return
+    _download_dataset(dataset, name, root)
+    dataset_dir = str(root / dataset.dataset_dir)
+    seg_dir = str(root / dataset.annotations_dir)
+    set_name = dataset.split_name[name]
+    val_images = str(root / dataset.split_dir / f'{set_name}.txt')
+    img_labels_list = get_img_labels_list(dataset_dir, seg_dir, val_images, dataset.mask_extension)
+    result_tfrecord_path = _create_tfrecord(img_labels_list, name)
+    tfrecord_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.move(result_tfrecord_path, tfrecord_path)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--img', help="images directory", type=str,
-                        default='/local/data/pascal_seg/benchmark_RELEASE/dataset/img')
-    parser.add_argument('--seg', help="segmentation directory", type=str,
-                        default='/local/data/pascal_seg/benchmark_RELEASE/dataset/cls_png')
-    parser.add_argument('--val', help="validation text file", type=str,
-                        default='/local/data/pascal_seg/benchmark_RELEASE/dataset/val.txt')
-    parser.add_argument('--calib', help="create calibration set", action='store_true')
-    parser.add_argument('--name', '-name', help="file name suffix", type=str, default='val')
+    parser.add_argument('type', help="TFRecord of which dataset to create", type=str,
+                        choices=['calib', 'val'])
+    parser.add_argument('dataset', help="Which variant of the dataset to create", type=str,
+                        choices=['voc', 'aug'], default='aug', nargs='?')
+    parser.add_argument('--root', help="dataset root directory", type=str,
+                        default=None)
     args = parser.parse_args()
-    run(args.img, args.seg, args.val, args.calib, args.name)
-"""
-----------------------------------------------------------------------------
-CMD used to create a pascal_train.tfrecord of the Pascal VOC training dataset:
-----------------------------------------------------------------------------
-python create_pascal_tfrecord.py
---img /local/data/pascal_seg/benchmark_RELEASE/dataset/img
---seg /local/data/pascal_seg/benchmark_RELEASE/dataset/cls_png
---val /local/data/pascal_seg/benchmark_RELEASE/dataset/train.txt
---name train
-
-----------------------------------------------------------------------------
-CMD used to create a pascal_val.tfrecord of the Pascal VOC validation dataset:
-----------------------------------------------------------------------------
-python create_pascal_tfrecord.py
---img /local/data/pascal_seg/benchmark_RELEASE/dataset/img
---seg /local/data/pascal_seg/benchmark_RELEASE/dataset/cls_png
---val /local/data/pascal_seg/benchmark_RELEASE/dataset/val.txt
---name val
-"""
+    run(args.dataset, args.type, args.root)

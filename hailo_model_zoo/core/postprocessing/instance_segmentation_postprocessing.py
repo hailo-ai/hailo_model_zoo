@@ -386,7 +386,7 @@ def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, 
     mask2 = np.reshape(mask2, [mask2.shape[0], -1, 32])
     mask3 = np.reshape(mask3, [mask3.shape[0], -1, 32])
     mask4 = np.reshape(mask4, [mask4.shape[0], -1, 32])
-    mask = np.tanh(np.concatenate([mask0, mask1, mask2, mask3, mask4], axis=-2))
+    mask = np.concatenate([mask0, mask1, mask2, mask3, mask4], axis=-2)
     detect = Detect(num_classes, bkg_label=0, top_k=200, conf_thresh=kwargs['score_threshold'],
                     nms_thresh=kwargs['nms_iou_thresh'])
     return {'predictions': detect(loc, proto, conf, mask, priors)}

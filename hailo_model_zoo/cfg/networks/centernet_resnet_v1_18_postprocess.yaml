@@ -8,15 +8,13 @@ postprocessing:
     bilinear: false
     argmax: false
     softmax: false
-quantization:
-  calib_set_size: 2048
 network:
   network_name: centernet_resnet_v1_18_postprocess
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/2021-07-11/centernet_res18_with_postprocess.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/2021-07-11/centernet_res18_with_postprocess.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/2021-07-11/centernet_res18_with_postprocess.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/centernet_res18_with_postprocess.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/centernet_res18_with_postprocess.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/centernet_res18_with_postprocess.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_18/pretrained/2021-07-11/centernet_resnet_v1_18.zip
   alls_script: centernet_resnet_v1_18_postprocess.alls
 parser:
@@ -25,3 +23,16 @@ parser:
   - - threshold_confidence/threshold_activation/threshold_confidence/re_lu/Relu
     - centernet0_conv3/BiasAdd
     - centernet0_conv5/BiasAdd
+info:
+  task: object detection
+  input_shape: 512x512x3
+  output_shape: 128x128x80, 128x128x2, 128x128x2
+  operations: 15.63G
+  parameters: 14.22M
+  framework: gluoncv
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 26.29
+  source: https://cv.gluon.ai/model_zoo/detection.html
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

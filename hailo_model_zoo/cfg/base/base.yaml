@@ -1,13 +1,13 @@
+inference:
+  full_precision_batch_size: 8
+  emulator_batch_size: 8
 quantization:
-  quantization_batch_size: 8
-  calib_set_size: 64
-  should_equalize: true
-  should_ibc: false
-  should_finetune: false
-  fast_ibc: true
-  finetune_scheme: {}
+  calib_set_name: null
   calib_batch_size: null
 hn_editor:
+  yuv2rgb: false
+  input_resize:
+    enabled: false
   channels_remove:
     enabled: false
   flip: false
@@ -24,21 +24,35 @@ paths:
   alls_script: null
   hailo_archive_path: null
 preprocessing:
+  meta_arch: null
+  centered: true
   input_shape: null
   max_pad: 100
+  padding_color: 114
 allocation:
-  allocation_timeout: 1200
-  max_elementwise_feed_repeat: 4
-  required_fps: 1
+  allocation_timeout: null
+  required_fps: null
 parser:
+  ew_add_policy: fused_conv_and_add
   nodes:
   - null
   - null
   start_node_shape: null
   is_tf2_saved_model: false
+  normalization_params:
+    normalize_in_net: false
+    fold_normalization: false
+    mean_list: null
+    std_list: null
 postprocessing:
   anchors:
+    scale_factors:
+    - 10.0
+    - 10.0
+    - 5.0
+    - 5.0
     sizes: null
+    type: default
   meta_arch: null
   score_threshold: null
   nms_iou_thresh: null
@@ -51,6 +65,7 @@ postprocessing:
     max_finder: false
   postprocess_config_json: null
 evaluation:
+  data_set: null
   labels_offset: 0
   limit_num_images: 1000000000.0
   infer_type: tf_infer
@@ -62,3 +77,15 @@ evaluation:
 info:
   client_or_rnd: r&d
   standard_or_customized: standard
+  task: N/A
+  input_shape: N/A
+  output_shape: N/A
+  operations: N/A
+  parameters: N/A
+  framework: N/A
+  training_data: N/A
+  validation_data: N/A
+  eval_metric: N/A
+  full_precision_result: null
+  source: N/A
+  license_url: N/A

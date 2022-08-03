@@ -37,7 +37,7 @@ def tf_infer_second_stage(runner, target, logger, eval_num_examples, print_num_e
         # Can't initialize video_writer here because we don't know the image width/height until the first session.run
         video_writer = None
         with sdk_export.session.as_default(), runner.hef_infer_context(sdk_export):
-            sdk_export.session.run([iterator.initializer, tf.compat.v1.local_variables_initializer()])
+            sdk_export.session.run([iterator.initializer])
             number_proposals = 0
             try:
                 print_num_examples = 100

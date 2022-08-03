@@ -1,6 +1,3 @@
-quantization:
-  should_ibc: true
-  calib_set_size: 32
 preprocessing:
   network_type: detection
   meta_arch: mobilenet_ssd
@@ -20,9 +17,8 @@ postprocessing:
     min_scale: 0.2
     scales: []
     num_layers: 6
-    fpn: false
 info:
-  network_source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+  source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
 parser:
   normalization_params:
     normalize_in_net: true

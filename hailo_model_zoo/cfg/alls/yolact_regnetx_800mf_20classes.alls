@@ -1,0 +1,4 @@
+normalization1 = normalization([123.68, 116.78, 103.94], [58.4, 57.12, 57.38])
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+
+compilation_param([conv15, conv37], balance_output_multisplit=False)

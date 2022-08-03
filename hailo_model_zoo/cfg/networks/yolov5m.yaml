@@ -1,47 +1,44 @@
 base:
-- base/yolo.yaml
+- base/yolov5.yaml
 quantization:
-  should_equalize: true
-  should_ibc: false
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-  quantization_batch_size: 4
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 1.0
-    - 1.0
-    dataset_size: 4000
-    epochs: 4
-    learning_rate: 0.0001
-    loss_types:
-    - l2rel
-    - l2rel
-    - l2rel
 hn_editor:
   output_scheme:
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv107
+      - layer_name: conv94
         activation: sigmoid
-      - layer_name: conv97
+      - layer_name: conv85
         activation: sigmoid
-      - layer_name: conv87
+      - layer_name: conv75
         activation: sigmoid
 network:
   network_name: yolov5m
 allocation:
-  required_fps: 191
+  required_fps: 150
 paths:
   alls_script: yolov5m.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolo-v5m.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2021-07-11/yolov5m.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.zip
 parser:
   nodes:
   - images
-  - - Conv_307
-    - Conv_286
-    - Conv_265
+  - - Conv_289
+    - Conv_273
+    - Conv_257
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255
+  operations: 26.14G
+  parameters: 21.78M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 42.59
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

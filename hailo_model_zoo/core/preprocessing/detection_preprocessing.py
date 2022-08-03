@@ -1,7 +1,6 @@
 """Provides utilities to preprocess images for the Detection networks."""
 import cv2
 import tensorflow as tf
-from functools import partial
 
 from hailo_model_zoo.core.preprocessing.roi_align_wrapper import ROIAlignWrapper
 
@@ -11,7 +10,6 @@ MAX_PADDING_LENGTH = 100
 def _extract_box_from_image_info(image_info, max_padding_length=MAX_PADDING_LENGTH, is_normalized=True):
     horizontal_scale = tf.cast(image_info['width'], tf.float32) if is_normalized else 1
     vertical_scale = tf.cast(image_info['height'], tf.float32) if is_normalized else 1
-
     xmin = tf.expand_dims(
         _pad_tensor(image_info.pop('xmin') * horizontal_scale, max_padding_length), axis=1)
     xmax = tf.expand_dims(
@@ -45,7 +43,7 @@ def centernet_resnet_v1_18_detection(image, image_info=None, height=None, width=
     image = tf.cast(image, tf.float32)
     if height and width:
         # Resize the image to the specified height and width.
-        image = tf.compat.v1.image.resize_image_with_pad(image, height, width)
+        image = tf.image.resize_with_pad(image, height, width)
 
     if image_info and 'num_boxes' in image_info.keys():
         image_info = _cast_image_info_types(image_info, image)
@@ -97,7 +95,6 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
 
-        # the original: image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
         # following gluon's preprocess for yolo v3:
         is_enlarge = tf.math.logical_and(tf.math.greater(height, image_info['height']),
                                          tf.math.greater(width, image_info['width']))
@@ -106,11 +103,11 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
 
         def resize_shrink_or_other(image, height, width):
             return tf.cond(is_shrink,
-                           lambda: tf.compat.v1.image.resize_area(image, [height, width], align_corners=True),
-                           lambda: tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=True))
+                           lambda: tf.image.resize(image, [height, width], method='area'),
+                           lambda: tf.image.resize(image, [height, width], method='bilinear'))
 
         image = tf.cond(is_enlarge,
-                        lambda: tf.compat.v1.image.resize_bicubic(image, [height, width], align_corners=True),
+                        lambda: tf.image.resize(image, [height, width], method='bicubic'),
                         lambda: resize_shrink_or_other(image, height, width))
         image = tf.clip_by_value(image, 0.0, 255.0)
         image = tf.squeeze(image, [0])
@@ -125,12 +122,14 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
         # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
+    else:  # else statement is not mandatory. We can cast this regardless of the if-statement above
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
 
     return image, image_info
 
 
 def yolo_v5(image, image_info=None, height=None, width=None,
-            scope=None, color=(114, 114, 114), **kwargs):
+            scope=None, padding_color=114, **kwargs):
     """
     This is the preprocessing used by ultralytics
     - Normalize the image from [0,255] to [0,1]
@@ -139,9 +138,10 @@ def yolo_v5(image, image_info=None, height=None, width=None,
         image_shape = tf.shape(image)
         image_height = image_shape[0]
         image_width = image_shape[1]
-        yolo_v5_letterbox = partial(letterbox, color=color)
-        image, new_width, new_height = tf.py_func(yolo_v5_letterbox, [image, height, width],
-                                                  [tf.uint8, tf.int64, tf.int64])
+        image, new_width, new_height = tf.numpy_function(
+            lambda image, height, width: letterbox(image, height, width, color=[padding_color] * 3,
+                                                   centered=kwargs["centered"]),
+            [image, height, width], [tf.uint8, tf.int64, tf.int64])
         image.set_shape((height, width, 3))
 
     if image.dtype == tf.uint8:
@@ -149,18 +149,38 @@ def yolo_v5(image, image_info=None, height=None, width=None,
 
     image_info['img_orig'] = tf.cast(image, tf.uint8)
     if image_info and 'num_boxes' in image_info.keys():
-        image_info = _cast_image_info_types(image_info, image)
-        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, is_normalized=True)
+        maxpad = kwargs.get('max_pad', MAX_PADDING_LENGTH)
+        image_info = _cast_image_info_types(image_info, image, max_padding_length=maxpad)
+        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, max_padding_length=maxpad, is_normalized=True)
         w = xmax - xmin
         h = ymax - ymin
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['height'] = image_height
         image_info['width'] = image_width
-        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
+        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], maxpad), axis=1)
         image_info['letterbox_height'] = new_height
         image_info['letterbox_width'] = new_width
         image_info['horizontal_pad'] = width - new_width
         image_info['vertical_pad'] = height - new_height
+
+    # This is used for internal research with tracking working with MOT dataset
+    if image_info and 'person_id' in image_info.keys():
+        max_pad = MAX_PADDING_LENGTH
+        image_info = _cast_image_info_types(image_info, image, max_pad)
+        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, max_pad, is_normalized=False)
+        w = xmax - xmin
+        h = ymax - ymin
+        image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
+
+        image_info['height'] = height
+        image_info['width'] = width
+        image_info['original_height'] = image_height
+        image_info['original_width'] = image_width
+        image_info['horizontal_pad'] = width - new_width
+        image_info['vertical_pad'] = height - new_height
+        image_info['person_id'] = _pad_tensor(image_info['person_id'], max_pad)
+        image_info['label'] = _pad_tensor(image_info['label'], max_pad)
+        image_info['is_ignore'] = _pad_tensor(image_info['is_ignore'], max_pad)
 
     return image, image_info
 
@@ -171,7 +191,7 @@ def resnet_v1_18_detection(image, image_info=None, height=None, width=None,
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info and 'num_boxes' in image_info.keys():
@@ -194,7 +214,7 @@ def regnet_detection(image, image_info=None, height=None, width=None,
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=True)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info and 'num_boxes' in image_info.keys():
@@ -207,34 +227,28 @@ def regnet_detection(image, image_info=None, height=None, width=None,
         # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area']), axis=1)
-
+    else:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
-def mobilenet_ssd(image, image_info, height=None, width=None,
-                  max_pad=MAX_PADDING_LENGTH, **kwargs):
-    img_orig = image
-    if image.dtype != tf.float32:
-        # The following operation also changes the data range to 0-1.
-        image = tf.image.convert_image_dtype(image, dtype=tf.float32)
+def _resize_bilinear_tf(image, height, width):
+    shape = tf.shape(image)
+    image_height, image_width = shape[0], shape[1]
+    result = tf.squeeze(tf.image.resize(tf.expand_dims(image, [0]), [height, width], method='bilinear'), [0])
+    return result, image_height, image_width
 
+
+def ssd_base(image, image_info, resize_function, height=None, width=None,
+             max_pad=MAX_PADDING_LENGTH, **kwargs):
+    image = tf.cast(image, tf.float32)
     if height and width:
         # Resize the image to the specified height and width.
-        image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
-        img_orig = tf.compat.v1.image.resize_bilinear(tf.expand_dims(img_orig, 0),
-                                                      [height, width], align_corners=False)
-        image = tf.squeeze(image, [0])
+        image, target_height, target_width = resize_function(image, height, width)
+        image.set_shape((height, width, 3))
 
-    # retrieving range 0-255 for a hostless interface
-    image = image * 255
-
-    if image_info and 'num_boxes' in image_info.keys():
-        image_info['img_orig'] = tf.cast(tf.squeeze(img_orig, [0]), tf.uint8)
-        image_info['num_boxes'] = tf.cast(image_info['num_boxes'], tf.int32)
-        image_info['category_id'] = _pad_tensor(image_info['category_id'], max_tensor_padding=max_pad)
-        image_info['is_crowd'] = _pad_tensor(image_info['is_crowd'], max_tensor_padding=max_pad)
-
+    _cast_image_info_types(image_info, image, max_pad)
+    if image_info and 'num_boxes' in image_info:
         xmin = tf.expand_dims(_pad_tensor(image_info.pop('xmin') * tf.cast(image_info['width'], tf.float32),
                                           max_tensor_padding=max_pad), axis=1)
         xmax = tf.expand_dims(_pad_tensor(image_info.pop('xmax') * tf.cast(image_info['width'], tf.float32),
@@ -247,9 +261,16 @@ def mobilenet_ssd(image, image_info, height=None, width=None,
         w = xmax - xmin
         h = ymax - ymin
 
+        image_info['height'] = target_height
+        image_info['width'] = target_width
         # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], max_tensor_padding=max_pad), axis=1)
+    return image, image_info
+
+
+def mobilenet_ssd(image, image_info, height, width, **kwargs):
+    image, image_info = ssd_base(image, image_info, _resize_bilinear_tf, height, width, **kwargs)
     return image, image_info
 
 
@@ -272,50 +293,24 @@ def faster_rcnn_stage2(featuremap, image_info, height=None, width=None,
     image_id = image_info.pop('image_id')
     image_info['image_name'] = tf.repeat(image_name, repeats=[num_proposals], axis=0)
     image_info['image_id'] = tf.repeat(image_id, repeats=[num_proposals], axis=0)
-    featuremaps = tf.py_func(roi_align, [featuremap, rpn_boxes], [tf.float32])
+    featuremaps = tf.numpy_function(roi_align, [featuremap, rpn_boxes], [tf.float32])
     featuremaps = tf.squeeze(featuremaps)
     return featuremaps, image_info
 
 
+def _resize_ar_preserving(image, height, width):
+    image, height_factor, width_factor, _, _ = _ar_preserving_resize_and_crop(image, height, width)
+    return image, height_factor, width_factor
+
+
 def mobilenet_ssd_ar_preserving(image, image_info=None, height=None, width=None,
                                 max_pad=MAX_PADDING_LENGTH, **kwargs):
-    if height and width:
-        (aspect_ratio_factor, image, image_height, image_height_float, image_width, image_width_float, new_height,
-            new_width) = _ar_preserving_resize_and_crop(
-            height, image, width)
-
-    if image.dtype == tf.uint8:
-        image = tf.cast(image, tf.float32)
-
-    if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
-        image_info['num_boxes'] = tf.cast(image_info['num_boxes'], tf.int32)
-        image_info['category_id'] = _pad_tensor(image_info['category_id'], max_tensor_padding=max_pad)
-        image_info['is_crowd'] = _pad_tensor(image_info['is_crowd'], max_tensor_padding=max_pad)
-
-        xmin = tf.expand_dims(_pad_tensor(image_info.pop('xmin') * aspect_ratio_factor * image_width_float,
-                                          max_tensor_padding=max_pad), axis=1)
-        xmax = tf.expand_dims(_pad_tensor(image_info.pop('xmax') * aspect_ratio_factor * image_width_float,
-                                          max_tensor_padding=max_pad), axis=1)
-        ymin = tf.expand_dims(_pad_tensor(image_info.pop('ymin') * aspect_ratio_factor * image_height_float,
-                                          max_tensor_padding=max_pad), axis=1)
-        ymax = tf.expand_dims(_pad_tensor(image_info.pop('ymax') * aspect_ratio_factor * image_height_float,
-                                          max_tensor_padding=max_pad), axis=1)
-
-        w = xmax - xmin
-        h = ymax - ymin
-
-        # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
-        image_info['height'] = height
-        image_info['width'] = width
-        image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
-        if 'area' in image_info:
-            image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], max_tensor_padding=max_pad), axis=1)
-
+    image, image_info = ssd_base(image, image_info, _resize_ar_preserving,
+                                 height, width, max_pad=max_pad, **kwargs)
     return image, image_info
 
 
-def _ar_preserving_resize_and_crop(height, image, width):
+def _ar_preserving_resize_and_crop(image, height, width):
     image_shape = tf.shape(image)
     image_height = image_shape[0]
     image_width = image_shape[1]
@@ -331,12 +326,23 @@ def _ar_preserving_resize_and_crop(height, image, width):
                                   lambda: target_height_float / image_height_float)
     new_height = tf.cast(aspect_ratio_factor * image_height_float, dtype=tf.int32)
     new_width = tf.cast(aspect_ratio_factor * image_width_float, dtype=tf.int32)
-    image_resized = tf.compat.v1.image.resize_bilinear(img_expanded, [new_height, new_width], align_corners=False)
-    padded_image = tf.pad(image_resized, [[0, 0], [0, height - new_height], [0, width - new_width], [0, 0]],
+    image_resized = tf.image.resize(img_expanded, [new_height, new_width], method='bilinear')
+    padding_h = height - new_height
+    padding_w = width - new_width
+    padded_image = tf.pad(image_resized, [[0, 0], [0, padding_h], [0, padding_w], [0, 0]],
                           mode='CONSTANT', constant_values=0)
     image = tf.squeeze(padded_image, [0])
-    return (aspect_ratio_factor, image, image_height, image_height_float, image_width, image_width_float, new_height,
-            new_width)
+    image_height_float = tf.cast(image_height, tf.float32)
+    image_width_float = tf.cast(image_width, tf.float32)
+
+    # We need to scale the predictions by the amount we padded
+    padding_ratio_h = target_height_float / tf.cast(new_height, tf.float32)
+    padding_ratio_w = target_width_float / tf.cast(new_width, tf.float32)
+    return (image,
+            image_height_float * padding_ratio_h,
+            image_width_float * padding_ratio_w,
+            padding_h,
+            padding_w)
 
 
 def face_ssd(image, image_info=None, height=None, width=None,
@@ -350,7 +356,7 @@ def face_ssd(image, image_info=None, height=None, width=None,
         new_width = width
 
         image = tf.expand_dims(image, 0)
-        image = tf.compat.v1.image.resize_bilinear(image, [height, width], align_corners=False)
+        image = tf.image.resize(image, [height, width], method='bilinear')
         image = tf.squeeze(image, [0])
 
     if image_info:
@@ -374,13 +380,12 @@ def face_ssd(image, image_info=None, height=None, width=None,
 
 def retinaface(image, image_info=None, height=None, width=None,
                max_pad=2048, **kwargs):
+    shape = tf.shape(image)
+    original_height, original_width = shape[0], shape[1]
     if image.dtype == tf.uint8:
         image = tf.cast(image, tf.float32)
     if height and width:
-        (aspect_ratio_factor, image, image_height, image_height_float, image_width, image_width_float,
-            new_height,
-            new_width) = _ar_preserving_resize_and_crop(
-            height, image, width)
+        image, _, _, vertical_pad, horizontal_pad = _ar_preserving_resize_and_crop(image, height, width)
     if image_info:
         image_info = _cast_image_info_types(image_info, image, max_pad)
         if 'num_boxes' in image_info.keys() and 'xmin' in image_info:
@@ -390,29 +395,34 @@ def retinaface(image, image_info=None, height=None, width=None,
             # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
             image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
 
+        image_info['original_height'] = original_height
+        image_info['original_width'] = original_width
         image_info['height'] = height
         image_info['width'] = width
-        image_info['original_height'] = image_height
-        image_info['original_width'] = image_width
-        image_info['horizontal_pad'] = width - new_width
-        image_info['vertical_pad'] = height - new_height
+        image_info['horizontal_pad'] = horizontal_pad
+        image_info['vertical_pad'] = vertical_pad
 
     return image, image_info
 
 
-def letterbox(img, height=608, width=1088,
+def letterbox(img, height=608, width=1088, centered=True,
               color=(127.5, 127.5, 127.5)):  # resize a rectangular image to a padded rectangular
     shape = img.shape[:2]  # shape = [height, width]
     ratio = min(float(height) / shape[0], float(width) / shape[1])
-    new_shape = (round(shape[1] * ratio), round(shape[0] * ratio))  # new_shape = [width, height]
+    new_shape = (int(shape[1] * ratio), int(shape[0] * ratio))  # new_shape = [width, height]
     new_width = new_shape[0]
-    dw = (width - new_width) / 2  # width padding
+    dw = (width - new_width) / 2 if centered else (width - new_width)  # width padding
     new_height = new_shape[1]
-    dh = (height - new_height) / 2  # height padding
-    top, bottom = round(dh - 0.1), round(dh + 0.1)
-    left, right = round(dw - 0.1), round(dw + 0.1)
+    dh = (height - new_height) / 2 if centered else (height - new_height)  # height padding
+    if centered:
+        top, bottom = round(dh - 0.1), round(dh + 0.1)
+        left, right = round(dw - 0.1), round(dw + 0.1)
+    else:
+        top, bottom = 0, dh
+        left, right = 0, dw
     img = img[:, :, ::-1]
-    img = cv2.resize(img, new_shape, interpolation=cv2.INTER_AREA)  # resized, no border
+    img = cv2.resize(img, new_shape,
+                     interpolation=(cv2.INTER_AREA if ratio < 1.0 else cv2.INTER_LINEAR))  # resized, no border
     img = cv2.copyMakeBorder(img, int(top), int(bottom), int(left), int(right), cv2.BORDER_CONSTANT,
                              value=color)  # padded rectangular
     img = img[:, :, ::-1]
@@ -425,7 +435,8 @@ def fair_mot(image, image_info=None, height=None, width=None,
         image_shape = tf.shape(image)
         image_height = image_shape[0]
         image_width = image_shape[1]
-        image, new_width, new_height = tf.py_func(letterbox, [image, height, width], [tf.uint8, tf.int64, tf.int64])
+        image, new_width, new_height = tf.numpy_function(
+            letterbox, [image, height, width], [tf.uint8, tf.int64, tf.int64])
         image.set_shape((height, width, 3))
     if image.dtype == tf.uint8:
         image = tf.cast(image, tf.float32)

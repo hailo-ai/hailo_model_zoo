@@ -1,0 +1,77 @@
+base:
+- base/yolact.yaml
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv48
+        activation: tanh
+      - layer_name: conv41
+        activation: tanh
+      - layer_name: conv34
+        activation: tanh
+      - layer_name: conv29
+        activation: tanh
+      - layer_name: conv24
+        activation: tanh
+postprocessing:
+  anchors:
+    scales:
+    - - 22
+    - - 44
+    - - 89
+    - - 178
+    - - 357
+network:
+  network_name: yolact_mobilenet_v1
+paths:
+  alls_script: yolact_mobilenet_v1.alls
+  network_path:
+  - models_files/yolact_mobilenet_v1_fpn/2021-01-12/yolact_mobilenet_v1_fpn.ckpt.meta
+  - models_files/yolact_mobilenet_v1_fpn/2021-01-12/yolact_mobilenet_v1_fpn.ckpt.index
+  - models_files/yolact_mobilenet_v1_fpn/2021-01-12/yolact_mobilenet_v1_fpn.ckpt.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_mobilenet_v1/pretrained/2021-01-12/yolact_mobilenet_v1.zip
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+  nodes:
+  - backbone/_preconv/0/CONSTANT
+  - - proto_net/10/conv2d/Relu
+    - prediction_layers/0/bbox_layer/conv2d/BiasAdd
+    - prediction_layers/0/mask_layer/conv2d/BiasAdd
+    - prediction_layers/0/conf_layer/conv2d/BiasAdd
+    - prediction_layers/0_1/bbox_layer/conv2d/BiasAdd
+    - prediction_layers/0_1/mask_layer/conv2d/BiasAdd
+    - prediction_layers/0_1/conf_layer/conv2d/BiasAdd
+    - prediction_layers/0_2/bbox_layer/conv2d/BiasAdd
+    - prediction_layers/0_2/mask_layer/conv2d/BiasAdd
+    - prediction_layers/0_2/conf_layer/conv2d/BiasAdd
+    - prediction_layers/0_3/bbox_layer/conv2d/BiasAdd
+    - prediction_layers/0_3/mask_layer/conv2d/BiasAdd
+    - prediction_layers/0_3/conf_layer/conv2d/BiasAdd
+    - prediction_layers/0_4/bbox_layer/conv2d/BiasAdd
+    - prediction_layers/0_4/mask_layer/conv2d/BiasAdd
+    - prediction_layers/0_4/conf_layer/conv2d/BiasAdd
+info:
+  task: instance segmentation
+  input_shape: 512x512x3
+  output_shape: 128x128x32, 64x64x12, 64x64x96, 64x64x243, 32x32x12, 32x32x96, 32x32x243,
+    16x16x12, 16x16x96, 16x16x243, 8x8x12, 8x8x96, 8x8x243, 4x4x12, 4x4x96, 4x4x243
+  operations: 51.92G
+  parameters: 19.11M
+  framework: pytorch
+  training_data: coco instances train2017
+  validation_data: coco instances val2017
+  eval_metric: mAP
+  full_precision_result: 17.78
+  source: https://github.com/dbolya/yolact
+  license_url: https://opensource.org/licenses/MIT

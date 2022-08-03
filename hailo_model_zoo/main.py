@@ -1,41 +1,29 @@
 #!/usr/bin/env python
 import argparse
-import io
+
 from pathlib import Path
 
-
-from hailo_platform.drivers.hailort.pyhailort import HEF
-from hailo_platform.drivers.hw_object import HailoPcieObject
-
-from hailo_sdk_common.states.states import States
+# we try to minize imports to make 'main.py --help' responsive. So we only import definitions.
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
-from hailo_sdk_client import ClientRunner, SdkNative, SdkPartialNumeric
-from hailo_sdk_client.tools.profiler.report_generator import ReportGenerator
-from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
-                                             make_preprocessing, make_calibset_callback,
-                                             quantize_model, infer_model, compile_model, get_hef_path,
-                                             get_network_names)
-from hailo_model_zoo.utils.logger import get_logger
 
-
-EXCLUDED_PROFILING_MODES = set([ProfilerModes.INITIAL])
-
-TARGETS = {
-    'hailo8': HailoPcieObject,
-    'full_precision': SdkNative,
-    'emulator': SdkPartialNumeric
-}
+from hailo_model_zoo.utils import path_resolver
+from hailo_model_zoo.utils.hw_utils import TARGETS, DEVICE_NAMES
 
 
 def _make_parsing_base():
     parsing_base_parser = argparse.ArgumentParser(add_help=False)
-    network_names = list(get_network_names())
-    # Setting empty metavar in order to prevent listing the models twice
-    parsing_base_parser.add_argument('model_name', type=str, choices=network_names, metavar='model_name',
-                                     help='Which network to run. Choices: ' + ', '.join(network_names))
+    config_group = parsing_base_parser.add_mutually_exclusive_group()
+    add_model_name_arg(config_group, optional=True)
+    config_group.add_argument(
+        '--yaml', type=str, default=None, dest='yaml_path',
+        help='Path to YAML for network configuration. By default using the default configuration')
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
+    parsing_base_parser.add_argument(
+        '--model-script', type=str, default=None, dest='model_script_path',
+        help='Path to model script to use. By default using the model script specified'
+        ' in the network YAML configuration')
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
@@ -59,30 +47,29 @@ def _make_hef_base():
 
 
 def _make_profiling_base():
-    def str_to_profiling_mode(name):
-        return ProfilerModes[name.upper()]
-
     profile_base_parser = argparse.ArgumentParser(add_help=False)
+    profiler_mode_names = {profiler_mode.value for profiler_mode in ProfilerModes}
     profile_base_parser.add_argument(
         '--mode', help='Profiling mode', dest='profile_mode',
-        type=str_to_profiling_mode, default=ProfilerModes.PRE_PLACEMENT,
-        choices=set(ProfilerModes) - EXCLUDED_PROFILING_MODES)
+        type=str, default=ProfilerModes.PRE_PLACEMENT.value,
+        choices=profiler_mode_names)
     return profile_base_parser
 
 
 def _make_evaluation_base():
     evaluation_base_parser = argparse.ArgumentParser(add_help=False)
-
     targets = list(TARGETS.keys())
+    devices = ', '.join(DEVICE_NAMES)
     evaluation_base_parser.add_argument(
         '--target', type=str, choices=targets, metavar='', default='full_precision',
-        help='Which target to run: full_precision (GPU) / emulator (GPU) / hailo8 (PCIe)')
+        help='Which target to run: full_precision (GPU) / emulator (GPU) / hailo8 (PCIe).\n'
+        f'A specific hailo8 device may be specified. Available devices: {devices}')
 
     evaluation_base_parser.add_argument(
-        '--eval-batch-size', type=int, default=8,
+        '--eval-batch-size', type=int,
         help='Batch size for INFERENCE (evaluation and pre-quant stats collection) only '
         '(feel free to increase to whatever your GPU can handle). '
-        ' the quant-aware optimizers s.a. QFT & IBC use the <quantization_batch_size> field from yaml'
+        ' the quant-aware optimizers s.a. QFT & IBC use the calibration batch size parameter from the ALLS'
     )
 
     evaluation_base_parser.add_argument(
@@ -106,159 +93,18 @@ def _make_evaluation_base():
     return evaluation_base_parser
 
 
-def _ensure_quantized(runner, logger, args, network_info):
-    _ensure_parsed(runner, logger, network_info, args)
-
-    if runner.state != States.HAILO_MODEL:
-        return
-
-    _quantization(runner, logger, network_info, args.calib_path, args.results_dir)
+def _make_info_base():
+    info_base_parser = argparse.ArgumentParser(add_help=False)
+    add_model_name_arg(info_base_parser)
+    return info_base_parser
 
 
-def _ensure_parsed(runner, logger, network_info, args):
-    if runner.state != States.UNINITIALIZED:
-        return
-
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
-
-
-def _quantization(runner, logger, network_info, calib_path, results_dir):
-    quant_batch_size = network_info.quantization.quantization_batch_size
-
-    logger.info('Using batch size of {} for quantization'.format(quant_batch_size))
-    preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_callback = make_calibset_callback(network_info, quant_batch_size, preproc_callback, calib_path)
-    quantize_model(runner, network_info, calib_feed_callback, results_dir)
-
-
-def _ensure_runnable_state(args, logger, network_info, runner, target):
-    if target.name == 'sdk_native':
-        _ensure_parsed(runner, logger, network_info, args)
-        return
-
-    if not target.is_hardware:
-        _ensure_quantized(runner, logger, args, network_info)
-        return
-
-    if args.hef_path:
-        # we already have hef, just need .hn
-        _ensure_parsed(runner, logger, network_info, args)
-    else:
-        _ensure_quantized(runner, logger, args, network_info)
-        if runner.state == States.COMPILED_MODEL:
-            return
-        logger.info("Compiling the model (without inference) ...")
-        compile_model(runner, network_info, args.results_dir)
-
-
-def parse(args):
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    logger.info('Start run for network {} ...'.format(args.model_name))
-
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
-
-
-def quantize(args):
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    logger.info('Start run for network {} ...'.format(args.model_name))
-
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    _ensure_parsed(runner, logger, network_info, args)
-
-    _quantization(runner, logger, network_info, args.calib_path, args.results_dir)
-
-
-def compile(args):
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    logger.info('Start run for network {} ...'.format(args.model_name))
-
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    _ensure_quantized(runner, logger, args, network_info)
-
-    compile_model(runner, network_info, args.results_dir)
-
-    logger.info(f'HEF file written to {get_hef_path(args.results_dir, network_info.network.network_name)}')
-
-
-def profile(args):
-    if args.hef_path and args.profile_mode is ProfilerModes.PRE_PLACEMENT:
-        raise ValueError(
-            "hef is not used when profiling in pre_placement mode. use --mode post_placement for profiling with a hef.")
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    logger.info('Start run for network {} ...'.format(args.model_name))
-
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    if args.hef_path or args.profile_mode is ProfilerModes.PRE_PLACEMENT:
-        # we already have hef (or don't need one), just need .hn
-        _ensure_parsed(runner, logger, network_info, args)
-    else:
-        # Quantize the model so profile_hn_model could compile & profile it
-        _ensure_quantized(runner, logger, args, network_info)
-
-    stats, csv_data = runner.profile_hn_model(
-        network_info.allocation.required_fps, profiling_mode=args.profile_mode, hef_filename=args.hef_path)
-    mem_file = io.StringIO()
-    outpath = args.results_dir / f'{args.model_name}.html'
-    report_generator = ReportGenerator(mem_file, csv_data, outpath, stats, hw_arch='hailo8')
-    csv_data = report_generator.create_report(should_open_web_browser=False)
-
-    logger.info(f'Profiler report generated in {outpath}')
-
-
-def evaluate(args):
-    if args.hef_path and args.target != 'hailo8':
-        raise ValueError(
-            f"hef is not used when evaluating with {args.target}. use --target hailo8 for evaluating with a hef.")
-
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    model_name = network_info.network.network_name
-    logger.info(f'Start run for network {model_name} ...')
-
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-    network_groups = None
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    logger.info(f'Chosen target is {args.target}')
-    hailo_target = TARGETS[args.target]
-    with hailo_target() as target:
-        if args.hef_path:
-            hef = HEF(args.hef_path)
-            network_groups = target.configure(hef)
-
-        _ensure_runnable_state(args, logger, network_info, runner, target)
-
-        result = infer_model(runner, network_info, target, logger,
-                             args.eval_num_examples, args.data_path, args.eval_batch_size,
-                             args.print_num_examples, args.visualize_results, args.video_outpath,
-                             dump_results=False, network_groups=network_groups)
-
-        return result
+def add_model_name_arg(parser, optional=False):
+    network_names = list(path_resolver.get_network_names())
+    # Setting empty metavar in order to prevent listing the models twice
+    nargs = '?' if optional else None
+    parser.add_argument('model_name', type=str, nargs=nargs, choices=network_names, metavar='model_name',
+                        help='Which network to run. Choices: ' + ', '.join(network_names))
 
 
 def _create_args_parser():
@@ -268,36 +114,64 @@ def _create_args_parser():
     hef_base_parser = _make_hef_base()
     profile_base_parser = _make_profiling_base()
     evaluation_base_parser = _make_evaluation_base()
+    information_base_parser = _make_info_base()
 
     # --- create per action subparser
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers()
-    parse_parser = subparsers.add_parser('parse', parents=[parsing_base_parser])
-    parse_parser.set_defaults(func=parse)
+    parser = argparse.ArgumentParser(epilog='Example: main.py parse resnet_v1_50')
+    # can't set the entry point for each subparser as it forces us to add imports which slow down the startup time.
+    # instead we'll check the 'command' argument after parsing
+    subparsers = parser.add_subparsers(dest='command')
+    subparsers.add_parser('parse', parents=[parsing_base_parser],
+                          help="model translation of the input model into Hailo's internal representation.")
 
-    quantize_parser = subparsers.add_parser('quantize', parents=[parsing_base_parser, quantization_base_parser])
-    quantize_parser.set_defaults(func=quantize)
+    subparsers.add_parser('optimize', parents=[parsing_base_parser, quantization_base_parser],
+                          help="run model optimization which includes numeric translation of \
+                                the input model into a compressed integer representation.")
 
-    compile_parser = subparsers.add_parser('compile', parents=[parsing_base_parser, quantization_base_parser])
-    compile_parser.set_defaults(func=compile)
+    compile_help = ("run the Hailo compiler to generate the Hailo Executable Format file (HEF)"
+                    " which can be executed on the Hailo hardware.")
+    subparsers.add_parser('compile', parents=[parsing_base_parser, quantization_base_parser],
+                          help=compile_help)
 
-    profile_parser = subparsers.add_parser('profile', parents=[
-        parsing_base_parser, quantization_base_parser, hef_base_parser, profile_base_parser])
-    profile_parser.set_defaults(func=profile)
+    profile_help = ("generate profiler report of the model."
+                    " The report contains information about your model and expected performance on the Hailo hardware.")
+    subparsers.add_parser('profile', parents=[
+        parsing_base_parser, quantization_base_parser, hef_base_parser, profile_base_parser],
+        help=profile_help)
 
-    eval_parser = subparsers.add_parser('eval', parents=[
-        parsing_base_parser, quantization_base_parser, hef_base_parser, evaluation_base_parser])
-    eval_parser.set_defaults(func=evaluate)
+    subparsers.add_parser('eval', parents=[
+        parsing_base_parser, quantization_base_parser, hef_base_parser, evaluation_base_parser],
+        help="infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.")
 
-    # --- parse and run
-    parser.set_defaults(func=lambda args: parser.print_help())
+    subparsers.add_parser('info', parents=[information_base_parser],
+                          help="Print model information.")
+
     return parser
+
+
+def run(args):
+    from hailo_model_zoo.main_driver import parse, optimize, compile, profile, evaluate, info
+    handlers = {
+        'parse': parse,
+        'optimize': optimize,
+        'compile': compile,
+        'profile': profile,
+        'eval': evaluate,
+        'info': info,
+    }
+
+    return handlers[args.command](args)
 
 
 def main():
     parser = _create_args_parser()
     args = parser.parse_args()
-    args.func(args)
+    if not args.command:
+        parser.print_help()
+        return
+
+    # from this point we can import heavy modules
+    run(args)
 
 
 if __name__ == '__main__':

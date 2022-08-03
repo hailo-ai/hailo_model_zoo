@@ -1,16 +1,13 @@
 base:
 - base/centerpose.yaml
-quantization:
-  quantization_batch_size: 4
-  calib_set_size: 32
 hn_editor:
   output_scheme:
     change_activations:
       enabled: true
       changes:
-      - layer_name: conv82
+      - layer_name: conv79
         activation: sigmoid
-      - layer_name: conv78
+      - layer_name: conv75
         activation: sigmoid
     integrated_postprocessing:
       enabled: true
@@ -19,9 +16,10 @@ hn_editor:
           network_name: center_nms
         paths:
           network_path:
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.meta
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.index
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_1_classes.ckpt.data-00000-of-00001
+          alls_script: centerpose_regnetx_1.6gf_fpn_center_nms.alls
         parser:
           nodes:
           - input_1
@@ -32,9 +30,10 @@ hn_editor:
           network_name: joint_nms
         paths:
           network_path:
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.meta
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.index
-          - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.meta
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.index
+          - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centernet_postproc_17_classes.ckpt.data-00000-of-00001
+          alls_script: centerpose_regnetx_1.6gf_fpn_joint_nms.alls
         parser:
           nodes:
           - input_1
@@ -42,20 +41,33 @@ hn_editor:
         ports:
           output_layer5: input_layer1
 allocation:
-  required_fps: 119
+  required_fps: 130
 network:
   network_name: centerpose_regnetx_1.6gf_fpn
 paths:
-  alls_script: centerpose_regnetx_1.6gf_fpn.alls
   network_path:
-  - models_files/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centerpose_regnet.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2021-07-11/centerpose_regnetx_1.6gf_fpn.zip
+  - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centerpose_regnet.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip
+  alls_script: centerpose_regnetx_1.6gf_fpn.alls
 parser:
   nodes:
   - input.1
-  - - Conv_232
-    - Conv_235
-    - Conv_238
-    - Conv_241
-    - Conv_244
-    - Conv_247
+  - - Conv_164
+    - Conv_167
+    - Conv_170
+    - Conv_173
+    - Conv_176
+    - Conv_179
+info:
+  task: pose estimation
+  input_shape: 640x640x3
+  output_shape: 160x160x1, 160x160x2, 160x160x34, 160x160x2, 160x160x17, 160x160x2
+  operations: 32.38G
+  parameters: 14.28M
+  framework: pytorch
+  training_data: coco keypoints train2017
+  validation_data: coco keypoints val2017
+  eval_metric: AP
+  full_precision_result: 53.54
+  source: https://github.com/tensorboy/centerpose
+  license_url: https://opensource.org/licenses/MIT

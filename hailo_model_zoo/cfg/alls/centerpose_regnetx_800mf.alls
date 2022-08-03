@@ -1,3 +1,5 @@
+normalization1 = normalization([104.04, 113.985, 119.85], [73.695, 69.87, 70.89])
+model_optimization_config(calibration, batch_size=8, calibset_size=2048)
 allocator_param(seed=3)
 compilation_param({conv*}, resources_allocation_strategy=min_l3_mem_match_fps)
 compilation_param({deconv*}, resources_allocation_strategy=min_l3_mem_match_fps)
@@ -17,3 +19,6 @@ deconv3_conv, deconv3_fi = defuse(deconv3, 1)
 deconv3_d0, deconv3_d1, bla3, bla4, deconv3_dc = defuse(deconv3_conv, 4)
 
 quantization_param(output_layer1, precision_mode=a16_w16)
+
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0, 0.25, 0.25, 0.25, 0.25, 0.25], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2])

@@ -24,7 +24,7 @@ class FaceDetectionEval(Eval):
         pass
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output
 
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)

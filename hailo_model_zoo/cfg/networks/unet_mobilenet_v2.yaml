@@ -1,0 +1,48 @@
+base:
+- base/oxford_pet.yaml
+evaluation:
+  labels_offset: 1
+allocation:
+  required_fps: null
+network:
+  network_name: unet_mobilenet_v2
+paths:
+  alls_script: unet_mobilenet_v2.alls
+  network_path:
+  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/saved_model.pb
+  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/variables/variables.index
+  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/variables/variables.data-00000-of-00001
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet_mobilenet_v2.zip
+parser:
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+postprocessing:
+  device_pre_post_layers:
+    max_finder: false
+    bilinear: true
+    argmax: false
+    softmax: false
+preprocessing:
+  network_type: segmentation
+  meta_arch: fcn_resnet
+info:
+  task: semantic segmentation
+  input_shape: 256x256x3
+  output_shape: 256x256x3
+  operations: 14.44G
+  parameters: 10.08M
+  framework: TF2
+  training_data: oxford-IIIT pets
+  validation_data: oxford-IIIT pets
+  eval_metric: mIoU
+  full_precision_result: 77.32
+  source: https://www.tensorflow.org/tutorials/images/segmentation
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

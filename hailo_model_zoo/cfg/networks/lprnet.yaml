@@ -1,0 +1,47 @@
+base:
+- base/base.yaml
+hn_editor:
+  bgr2rgb: true
+preprocessing:
+  network_type: ocr
+  meta_arch: lprnet
+quantization:
+  calib_set: null
+network:
+  network_name: lprnet
+allocation:
+  required_fps: 330
+paths:
+  alls_script: lprnet.alls
+  network_path:
+  - models_files/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet_300x75_4M.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.zip
+parser:
+  nodes:
+  - input
+  - - Conv_61
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 128.0
+    - 128.0
+    - 128.0
+evaluation:
+  infer_type: np_infer
+  labels_offset: 0
+  classes: 10
+  dataset_name: lp_ocr
+  data_set: null
+  validation_data_set: null
+info:
+  input_shape: 75x300x3
+  output_shape: 5x19x11
+  operations: 18.29G
+  parameters: 7.14M
+  framework: pytorch
+  eval_metric: Accuracy
+  full_precision_result: 99.86

@@ -15,6 +15,10 @@ from hailo_model_zoo.core.eval.lane_detection_evaluation import LaneDetectionEva
 from hailo_model_zoo.core.eval.face_landmark_evaluation import FaceLandmarkEval, FaceLandmark3DEval
 from hailo_model_zoo.core.eval.detection_3d_evaluation import Detection3DEval
 from hailo_model_zoo.core.eval.faster_rcnn_evaluation import FasterRCNNEval
+from hailo_model_zoo.core.eval.fast_depth_evaluation import FastDepthEval
+from hailo_model_zoo.core.eval.ocr_evaluation import OCREval
+from hailo_model_zoo.core.eval.person_reid_evaluation import PersonReidEval
+from hailo_model_zoo.core.eval.person_attr_evaluation import PersonAttrEval
 
 
 class EmptyEval():
@@ -44,6 +48,7 @@ def get_evaluation(name):
         'instance_segmentation': InstanceSegmentationEval,
         'mono_depth_estimation': DepthEstimationEval,
         'super_resolution': SuperResolutionEval,
+        'landmark_detection': EmptyEval,
         'face_landmark_detection': FaceLandmarkEval,
         'face_landmark_detection_3d': FaceLandmark3DEval,
         'head_pose_estimation': HeadPoseEstimationEval,
@@ -54,6 +59,10 @@ def get_evaluation(name):
         '3d_detection': Detection3DEval,
         'empty': EmptyEval,
         'faster_rcnn_stage2': FasterRCNNEval,
+        'fast_depth': FastDepthEval,
+        'ocr': OCREval,
+        'person_reid': PersonReidEval,
+        'person_attr': PersonAttrEval,
     }
 
     if name not in evaluation_map:

@@ -5,7 +5,7 @@ from tensorflow.image import combined_non_max_suppression
 from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 
-def collect_box_class_predictions(output_branches, num_classes):
+def collect_box_class_predictions(output_branches, num_classes, type):
     # RESHAPING AND CONCAT RESULTS BEFORE RUNNING THROUGH POST PROCESSING STAGE:
     box_predictors_list = []
     class_predictors_list = []
@@ -14,6 +14,15 @@ def collect_box_class_predictions(output_branches, num_classes):
         num_of_batches, branch_h, branch_w, branch_features = tf.unstack(tf.shape(BoxTensor))
         # Odd locations are the box predictors
         if i % 2 == 0:
+            if type == 'palm':
+                # Extract only the box features (remaining features are 7 key points (x,y))
+                key_points_size = 18
+                # reorder [y, x, h, w] to [x, y, w, h]
+                indices = sum([[key_points_size * x + 1, key_points_size * x,
+                                key_points_size * x + 3, key_points_size * x + 2]
+                              for x in range(BoxTensor.shape[-1] // key_points_size)], [])
+                BoxTensor = tf.gather(BoxTensor, tf.constant(indices, tf.int32), axis=-1)
+                num_of_batches, branch_h, branch_w, branch_features = tf.unstack(tf.shape(BoxTensor))
             reshaped_tensor = tf.reshape(BoxTensor,
                                          shape=[num_of_batches,
                                                 branch_h * branch_w * tf.cast(branch_features / 4, tf.int32),
@@ -40,12 +49,13 @@ class BoxSpecsCreator(object):
         if predefined_anchors_flag:
             pass
         else:
-            self._fpn = anchors['fpn']
+            self._type = anchors['type']
             self._scales = anchors['scales']
             self._num_layers = anchors['num_layers']
             self._aspect_ratios = anchors['aspect_ratios']
+            self._scale_factors = anchors['scale_factors']
 
-            if self._fpn:
+            if self._type == 'fpn':
                 self._scales_per_octave = anchors['scales_per_octave']
             else:
                 self._min_scale = anchors['min_scale']
@@ -54,7 +64,24 @@ class BoxSpecsCreator(object):
 
     def create_box_specs_list(self):
         self._box_specs_list = []
-        if not self._fpn:
+        if self._type == 'fpn':
+            for scale in self._scales:
+                layer_box_specs = []
+                for aspect in self._aspect_ratios:
+                    for octave in range(self._scales_per_octave):
+                        layer_box_specs.append((scale * np.sqrt(2**octave), aspect))
+                self._box_specs_list.append(layer_box_specs)
+        elif self._type == 'palm':
+            if self._scales is None or not self._scales:
+                self._scales = [self._min_scale + (self._max_scale - self._min_scale) * i / (self._num_layers - 1)
+                                for i in range(self._num_layers)] + [1.0]
+            for layer, scale, scale_next in zip(range(self._num_layers), self._scales[:-1], self._scales[1:]):
+                layer_box_specs = []
+                layer_box_specs.append((scale, self._aspect_ratios[0]))
+                layer_box_specs.append((np.sqrt(scale * scale_next),
+                                        self._interpolated_scale_aspect_ratio))
+                self._box_specs_list.append(layer_box_specs)
+        else:
             if self._scales is None or not self._scales:
                 self._scales = [self._min_scale + (self._max_scale - self._min_scale) * i / (self._num_layers - 1)
                                 for i in range(self._num_layers)] + [1.0]
@@ -72,19 +99,11 @@ class BoxSpecsCreator(object):
                         layer_box_specs.append((np.sqrt(scale * scale_next),
                                                 self._interpolated_scale_aspect_ratio))
                 self._box_specs_list.append(layer_box_specs)
-        elif self._fpn:
-            for scale in self._scales:
-                layer_box_specs = []
-                for aspect in self._aspect_ratios:
-                    for octave in range(self._scales_per_octave):
-                        layer_box_specs.append((scale * np.sqrt(2**octave), aspect))
-                self._box_specs_list.append(layer_box_specs)
         return self._box_specs_list
 
 
 class SSDPostProc(object):
     # The following params are corresponding to those used for training the model
-    scale_factors = [10., 10., 5., 5.]
     label_offset = 1
 
     def __init__(self, img_dims=(300, 300), nms_iou_thresh=0.6,
@@ -170,6 +189,9 @@ class SSDPostProc(object):
             bbox_centers = tf.reshape(bbox_centers, [-1, 2])
             bbox_sizes = tf.reshape(bbox_sizes, [-1, 2])
             bboxes_tensor = tf.concat([bbox_centers, bbox_sizes], axis=1)
+            if self._anchors._type == 'palm' and feature_map_index == 0:
+                # first output is duplicated by 3
+                bboxes_tensor = tf.repeat(bboxes_tensor, 3, axis=0)
             bboxes_list.append(bboxes_tensor)
         anchors_tensor = tf.concat(bboxes_list, axis=0, name='Anchors')
 
@@ -180,11 +202,12 @@ class SSDPostProc(object):
         ycenter_a, xcenter_a, ha, wa = tf.unstack(tf.transpose(anchors))
 
         ty, tx, th, tw = tf.unstack(tf.transpose(rel_codes))
-        if self.scale_factors:
-            ty /= self.scale_factors[0]  # 10.0
-            tx /= self.scale_factors[1]  # 10.0
-            th /= self.scale_factors[2]  # 5.0
-            tw /= self.scale_factors[3]  # 5.0
+        if self._anchors._scale_factors:
+            # default factors: [10., 10., 5., 5.]
+            ty /= self._anchors._scale_factors[0]
+            tx /= self._anchors._scale_factors[1]
+            th /= self._anchors._scale_factors[2]
+            tw /= self._anchors._scale_factors[3]
         w = tf.exp(tw) * wa
         h = tf.exp(th) * ha
         ycenter = ty * ha + ycenter_a
@@ -199,7 +222,7 @@ class SSDPostProc(object):
         with tf.name_scope('Preprocessor'):
             image_tensor_resized = tf.image.resize(startnode,
                                                    size=size,
-                                                   method=tf.image.ResizeMethod.BILINEAR,
+                                                   method='bicubic',
                                                    align_corners=True)
             image_tensor_resized = tf.add(tf.multiply(image_tensor_resized, tf.constant(2. / 255)), tf.constant(-1.))
             return image_tensor_resized
@@ -208,14 +231,15 @@ class SSDPostProc(object):
 
         with tf.name_scope('Postprocessor'):
             # Collect all output branches into Boxes/classes objects
-            box_predictions, classes_predictions = collect_box_class_predictions(endnodes, self._num_classes)
+            box_predictions, classes_predictions = \
+                collect_box_class_predictions(endnodes, self._num_classes, self._anchors._type)
             # Score Conversion using Sigmoid function
-            # TODO: Add a score_fn (for now use sigmoid as in the training process)
-            classes_predictions_sigmoid = tf.sigmoid(classes_predictions)
+            detection_scores = tf.sigmoid(classes_predictions)
 
             # detection_scores = tf.identity(classes_predictions_sigmoid, 'raw_box_scores')
-            # Slicing Background class score
-            detection_scores = tf.slice(classes_predictions_sigmoid, [0, 0, 1], [-1, -1, -1])
+            # Slicing Background class score (for a single class no need to slice)
+            if self._num_classes > 0:
+                detection_scores = tf.slice(detection_scores, [0, 0, 1], [-1, -1, -1])
 
             batch_size, num_proposals = tf.unstack(tf.slice(tf.shape(box_predictions), [0], [2]))
 

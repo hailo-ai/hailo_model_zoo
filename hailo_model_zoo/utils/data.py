@@ -11,12 +11,11 @@ from hailo_model_zoo.utils.video_utils import VideoCapture
 def _open_image_file(img_path):
     image = tf.io.read_file(img_path)
     image = tf.cast(tf.image.decode_jpeg(image, channels=3), tf.uint8)
-    image_name = tf.string_split([img_path], os.path.sep).values[-1]
-    return image, {'label_index': tf.cast(0, tf.float32),
-                   'img_orig': image,
-                   'image_name': image_name,
-                   'is_same': tf.cast(0, tf.float32),
-                   'mask': tf.image.rgb_to_grayscale(image)}
+    image_name = tf.strings.split([img_path], os.path.sep).values[-1]
+    return image, {
+        'img_orig': image,
+        'image_name': image_name,
+    }
 
 
 def _read_npz(item):
@@ -33,8 +32,8 @@ def _read_npz(item):
 
 def _open_featuremap(img_path):
     featuremap, rpn_boxes, num_rpn_boxes, \
-        image_name, image_id = tf.py_func(_read_npz, [img_path], [tf.float32, tf.float32,
-                                                                  tf.int64, tf.string, tf.int32])
+        image_name, image_id = tf.numpy_function(_read_npz, [img_path], [tf.float32, tf.float32,
+                                                                         tf.int64, tf.string, tf.int32])
     return featuremap, {"rpn_proposals": rpn_boxes,
                         "num_rpn_boxes": num_rpn_boxes,
                         "image_name": image_name,
@@ -80,7 +79,7 @@ class DataFeed(object):
 
     @property
     def iterator(self):
-        return self._dataset.make_initializable_iterator()
+        return tf.compat.v1.data.make_initializable_iterator(self._dataset)
 
 
 class TFRecordFeed(DataFeed):
@@ -90,14 +89,14 @@ class TFRecordFeed(DataFeed):
         dataset = tf.data.TFRecordDataset([str(tfrecord_file)]).map(parse_func)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 def _dataset_from_folder(folder_path):
     all_files = []
     for root, dirs, files in os.walk(folder_path, topdown=False):
         for name in files:
-            if os.path.splitext(name)[-1] in ['.jpg', '.jpeg', '.png', '.npz']:
+            if os.path.splitext(name)[-1].lower() in ['.jpg', '.jpeg', '.png', '.npz']:
                 all_files.append(os.path.join(root, name))
     all_files.sort()
     all_files = tf.convert_to_tensor(all_files, dtype=tf.string)
@@ -112,7 +111,7 @@ class ImageFeed(DataFeed):
         dataset = _dataset_from_folder(folder_path).map(_open_image_file)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 class RegionProposalFeed(DataFeed):
@@ -123,7 +122,7 @@ class RegionProposalFeed(DataFeed):
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
         dataset = dataset.apply(tf.data.experimental.unbatch())
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)
 
 
 class VideoFeed(DataFeed):
@@ -134,4 +133,4 @@ class VideoFeed(DataFeed):
         dataset = dataset.map(_parse_video_frame)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)
-        self._dataset = dataset.batch(self._batch_size)
+        self._dataset = dataset if batch_size is None else dataset.batch(self._batch_size)

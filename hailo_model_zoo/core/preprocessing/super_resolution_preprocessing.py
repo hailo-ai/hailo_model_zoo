@@ -36,7 +36,7 @@ def resnet(hr_image, image_info=None, height=136, width=260, **kwargs):
             hr_image_blurred = _blur_image(hr_image, size=BLUR_SIZE, mean=BLUR_MEAN, std=BLUR_STD)
     else:
         hr_image_blurred = hr_image
-    lr_image = tf.compat.v1.image.resize_bicubic(hr_image_blurred, [height, width], align_corners=False)
+    lr_image = tf.image.resize(hr_image_blurred, [height, width], method='bicubic')
 
     lr_image = tf.clip_by_value(lr_image, 0, 255)
     lr_image = tf.squeeze(lr_image)
@@ -63,8 +63,11 @@ def srgan(image, image_info, height, width, **kwargs):
         image = tf.cast(tf.squeeze(image, axis=0), tf.float32)
         if image_info:
             image_info['img_orig'] = image
-            hr_img = tf.expand_dims(image_info['hr_img'], axis=0)
-            hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
-            hr_img = tf.squeeze(hr_img, axis=0)
-            image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
-    return {'input_layer1': image, 'input_layer1_new': image}, image_info
+            hr_img = image_info.get('hr_img')
+            if hr_img is not None:
+                hr_img = tf.expand_dims(hr_img, axis=0)
+                hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
+                hr_img = tf.squeeze(hr_img, axis=0)
+                image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
+    # return {'input_layer1': image, 'input_layer1_new': image}, image_info # removed due to hn_editor in srgan
+    return image, image_info

@@ -1,0 +1,10 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+# post_quantization_optimization commands
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv69, conv61, conv53])
+
+buffers(proposal_generator0, proposal_generator0_concat, 2, FULL_ROW)
+buffers(proposal_generator1, proposal_generator0_concat, 2, FULL_ROW)
+buffers(proposal_generator2, proposal_generator0_concat, 2, FULL_ROW)
+buffers(proposal_generator0_concat, nms1, 2)
+context_switch_param(mode=disabled)

@@ -3,7 +3,8 @@ base:
 preprocessing:
   meta_arch: basic_resnet
 info:
-  network_source: https://github.com/tensorflow/models/tree/master/research/slim
+  source: https://github.com/tensorflow/models/tree/master/research/slim
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
 parser:
   normalization_params:
     normalize_in_net: true

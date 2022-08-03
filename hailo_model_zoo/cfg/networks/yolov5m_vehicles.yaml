@@ -1,0 +1,49 @@
+base:
+- base/yolov5.yaml
+quantization:
+  calib_set: null
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: conv94
+        activation: sigmoid
+      - layer_name: conv85
+        activation: sigmoid
+      - layer_name: conv75
+        activation: sigmoid
+  input_resize:
+    enabled: true
+    input_shape:
+    - 1080
+    - 1920
+network:
+  network_name: yolov5m_vehicles
+allocation:
+  required_fps: 80
+paths:
+  alls_script: yolov5m_vehicles.alls
+  network_path:
+  - models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2022-02-23/yolov5m_vehicles.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2022-02-23/yolov5m_vehicles.zip
+parser:
+  nodes:
+  - images
+  - - Conv_289
+    - Conv_273
+    - Conv_257
+evaluation:
+  labels_offset: 0
+  classes: 1
+  dataset_name: vehicle_detection
+  data_set: null
+  validation_data_set: null
+info:
+  input_shape: 1080x1920x3
+  output_shape: 20x20x18, 40x40x18, 80x80x18
+  operations: 25.63G
+  parameters: 21.47M
+  framework: pytorch
+  eval_metric: mAP
+  full_precision_result: 46.05

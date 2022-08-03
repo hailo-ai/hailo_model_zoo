@@ -165,5 +165,4 @@ def centerpose_postprocessing(endnodes, device_pre_post_layers=None, gt_images=N
                                                               gt_images["center"], gt_images["scale"]],
                                                              [tf.float32, tf.float32, tf.float32, tf.float32],
                                                              name='centerpose_postprocessing')
-
     return [bboxes, scores, keypoints, joint_scores]

@@ -21,6 +21,7 @@ class DetectionEval(Eval):
         self._metric_names = ['AP', 'AP50', 'AP75', 'APs', 'APm', 'APl', 'ARmax1',
                               'ARmax10', 'ARmax100', 'ARs', 'ARm', 'ARl']
         self._metrics_vals = [0, 0]
+        self._centered = kwargs["centered"]
         self._channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
         if self._channels_remove:
             self._cls_mapping, self._filtered_classes = self._create_class_mapping()
@@ -53,17 +54,23 @@ class DetectionEval(Eval):
         self.category_ids = set()
 
     def _convert_letterbox_detections(self, img_dets, img_info, img_index):
+        # fix latterbox preprocessing for either centered in the middle of the input frame (symmetric padding)
+        # or aligned to the top left
         img_dets[:, 1] *= (img_info['horizontal_pad'][img_index] + img_info['letterbox_width'][img_index])
-        img_dets[:, 1] -= img_info['horizontal_pad'][img_index] / 2
+        if self._centered:
+            img_dets[:, 1] -= img_info['horizontal_pad'][img_index] / 2
         img_dets[:, 1] /= (img_info['letterbox_width'][img_index])
         img_dets[:, 3] *= (img_info['horizontal_pad'][img_index] + img_info['letterbox_width'][img_index])
-        img_dets[:, 3] -= img_info['horizontal_pad'][img_index] / 2
+        if self._centered:
+            img_dets[:, 3] -= img_info['horizontal_pad'][img_index] / 2
         img_dets[:, 3] /= (img_info['letterbox_width'][img_index])
         img_dets[:, 0] *= (img_info['vertical_pad'][img_index] + img_info['letterbox_height'][img_index])
-        img_dets[:, 0] -= img_info['vertical_pad'][img_index] / 2
+        if self._centered:
+            img_dets[:, 0] -= img_info['vertical_pad'][img_index] / 2
         img_dets[:, 0] /= (img_info['letterbox_height'][img_index])
         img_dets[:, 2] *= (img_info['vertical_pad'][img_index] + img_info['letterbox_height'][img_index])
-        img_dets[:, 2] -= img_info['vertical_pad'][img_index] / 2
+        if self._centered:
+            img_dets[:, 2] -= img_info['vertical_pad'][img_index] / 2
         img_dets[:, 2] /= (img_info['letterbox_height'][img_index])
         return img_dets
 

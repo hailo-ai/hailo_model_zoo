@@ -6,9 +6,8 @@ from hailo_model_zoo.core.eval.kitti_eval import kitti_evaluation
 
 class Detection3DEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['car_bev_AP_h', 'car_3d_AP_h',
-                              'car_bev_AP_m', 'car_3d_AP_m',
-                              'car_bev_AP_e', 'car_3d_AP_e']
+        self._metric_names = ['car_bev_AP_e', 'car_bev_AP_m', 'car_bev_AP_h',
+                              'car_3d_AP_e', 'car_3d_AP_m', 'car_3d_AP_h']
         self._metrics_vals = len(self._metric_names) * [0.]
         self._channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
         if self._channels_remove:

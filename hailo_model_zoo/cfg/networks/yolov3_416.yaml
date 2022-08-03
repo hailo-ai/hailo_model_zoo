@@ -25,44 +25,10 @@ postprocessing:
 hn_editor:
   output_scheme:
     outputs_to_split:
-    - conv83
-    - conv91
-    - conv98
+    - yolov3_416/conv60
+    - yolov3_416/conv68
+    - yolov3_416/conv75
     split_output: true
-info:
-  network_source: https://cv.gluon.ai/model_zoo/detection.html
-quantization:
-  should_finetune: true
-  finetune_scheme:
-    loss_factors:
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    - 1.0
-    - 2.0
-    - 0.25
-    - 0.125
-    dataset_size: 4000
-    epochs: 8
-    learning_rate: 0.0001
-    loss_types:
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
-    - l2
 allocation:
   required_fps: 200
 preprocessing:
@@ -76,23 +42,25 @@ network:
 paths:
   alls_script: yolov3_416.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-07-11/yolov3_416.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-08-16/yolov3_1_3_416_416_static.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_416/pretrained/2021-08-16/yolov3_416.zip
 parser:
   nodes:
-  - zero_padding2d/Pad
-  - - yolov30_yolooutputv30_conv0/BiasAdd
-    - yolov30_yolooutputv31_conv0/BiasAdd
-    - yolov30_yolooutputv32_conv0/BiasAdd
-  normalization_params:
-    std_list:
-    - 58.395
-    - 57.12
-    - 57.375
-    normalize_in_net: true
-    mean_list:
-    - 123.675
-    - 116.28
-    - 103.53
+  - input
+  - - Conv_865
+    - Conv_502
+    - Conv_139
+info:
+  task: object detection
+  input_shape: 416x416x3
+  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x240, 26x26x6, 26x26x6, 26x26x3, 26x26x240,
+    52x52x6, 52x52x6, 52x52x3, 52x52x240
+  operations: 32.97G
+  parameters: 61.92M
+  framework: darknet
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 37.73
+  source: https://github.com/AlexeyAB/darknet
+  license_url: https://github.com/AlexeyAB/darknet/blob/master/LICENSE

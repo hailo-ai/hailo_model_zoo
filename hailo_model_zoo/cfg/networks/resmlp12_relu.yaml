@@ -1,0 +1,35 @@
+base:
+- base/resnet.yaml
+network:
+  network_name: resmlp12_relu
+allocation:
+  required_fps: 1431
+paths:
+  alls_script: resmlp12_relu.alls
+  network_path:
+  - models_files/Classification/resmlp12_relu/pretrained/2022-03-03/resmlp_12_224_bn_relu.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resmlp12_relu/pretrained/2022-03-03/resmlp12_relu.zip
+parser:
+  nodes:
+  - input.1
+  - '404'
+preprocessing:
+  network_type: classification
+  meta_arch: resmlp
+  input_shape:
+  - 224
+  - 224
+  - 3
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 3.02G
+  parameters: 15.77M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 75.26
+  source: https://github.com/rwightman/pytorch-image-models/
+  license_url: https://github.com/rwightman/pytorch-image-models/blob/master/LICENSE

@@ -1,0 +1,2 @@
+allocator_param(merge_min_layer_utilization=0.7)
+allocator_param(automatic_ddr=disabled)

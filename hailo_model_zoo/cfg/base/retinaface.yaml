@@ -1,0 +1,36 @@
+base:
+- base/widerface.yaml
+preprocessing:
+  network_type: face_detection
+  max_pad: 2048
+  meta_arch: retinaface
+hn_editor:
+  bgr2rgb: true
+postprocessing:
+  nms_iou_thresh: 0.4
+  score_threshold: 0.02
+  anchors:
+    steps:
+    - 8
+    - 16
+    - 32
+    min_sizes:
+    - - 16
+      - 32
+    - - 64
+      - 128
+    - - 256
+      - 512
+info:
+  source: https://github.com/biubug6/Pytorch_Retinaface
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123
+    - 117
+    - 104
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0

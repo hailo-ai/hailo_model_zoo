@@ -1,10 +1,9 @@
-quantization_param({conv*}, bias_mode=double_scale_initialization)
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)
 
-optimize_buffers()
 compilation_param({conv*}, balance_output_multisplit=False)
+compilation_param(conv1, balance_output_multisplit=True)
 
-#shortcut1 = shortcut(conv23, concat7)
-#shortcut2 = shortcut(shortcut1, concat7)
-#shortcut3 = shortcut(shortcut2, concat7)
-#shortcut4 = shortcut(shortcut3, concat7)
-#portal1 = portal(shortcut4, concat7, buffer_in_l4=True)
+allocator_param(automatic_ddr=disabled)

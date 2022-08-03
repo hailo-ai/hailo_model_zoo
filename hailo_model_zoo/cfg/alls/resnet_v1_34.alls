@@ -1,1 +1,4 @@
-allocator_param(cluster_timeout=40)
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
+
+quantization_param({*}, max_elementwise_feed_repeat=1)

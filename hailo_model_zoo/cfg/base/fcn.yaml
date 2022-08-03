@@ -1,12 +1,10 @@
 base:
 - base/base.yaml
 info:
-  network_source: internal
+  source: internal
 quantization:
-  calib_set_size: 64
   calib_set:
-  - models_files/cityscapes/2021-06-21/cityscapes_calib.tfrecord
-  quantization_batch_size: 1
+  - models_files/cityscapes/2022-05-15/cityscapes_calib.tfrecord
 preprocessing:
   network_type: segmentation
   meta_arch: fcn_resnet
@@ -34,5 +32,5 @@ parser:
 evaluation:
   classes: 19
   dataset_name: cityscapes
-  data_set: models_files/cityscapes/2021-06-21/cityscapes_val.tfrecord
-  validation_data_set: models_files/cityscapes/2021-06-21/cityscapes_val.tfrecord
+  data_set: models_files/cityscapes/2022-05-15/cityscapes_val.tfrecord
+  validation_data_set: models_files/cityscapes/2022-05-15/cityscapes_val.tfrecord

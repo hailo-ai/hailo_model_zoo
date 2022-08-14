@@ -2,14 +2,12 @@ base:
 - base/resnet.yaml
 network:
   network_name: squeezenet_v1.1
-allocation:
-  required_fps: 1784
 paths:
   alls_script: squeezenet_v1.1.alls
   network_path:
-  - models_files/Classification/squeezenet_v1.1/pretrained/squeezenet_v1_1.ckpt.meta
-  - models_files/Classification/squeezenet_v1.1/pretrained/squeezenet_v1_1.ckpt.index
-  - models_files/Classification/squeezenet_v1.1/pretrained/squeezenet_v1_1.ckpt.data-00000-of-00001
+  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.meta
+  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.index
+  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1.1.zip
 parser:
   nodes:

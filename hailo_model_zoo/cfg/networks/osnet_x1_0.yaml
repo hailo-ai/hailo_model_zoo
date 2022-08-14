@@ -2,8 +2,6 @@ base:
 - base/market1501.yaml
 network:
   network_name: osnet_x1_0
-allocation:
-  required_fps: 300
 paths:
   alls_script: osnet_x1_0.alls
   network_path:

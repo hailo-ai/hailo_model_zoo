@@ -5,9 +5,9 @@ network:
 paths:
   alls_script: resnet_v1_34.alls
   network_path:
-  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.meta
-  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.index
-  - models_files/Classification/resnet_v1_34/pretrained/resnet_v1_34.ckpt.data-00000-of-00001
+  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.meta
+  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.index
+  - models_files/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.zip
 parser:
   nodes:

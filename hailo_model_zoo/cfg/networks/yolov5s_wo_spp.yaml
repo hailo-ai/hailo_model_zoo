@@ -3,6 +3,8 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+allocation:
+  required_fps: 300
 hn_editor:
   output_scheme:
     change_activations:
@@ -16,12 +18,10 @@ hn_editor:
         activation: sigmoid
 network:
   network_name: yolov5s_wo_spp
-allocation:
-  required_fps: 300
 paths:
   alls_script: yolov5s_wo_spp.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/yolo-v5s.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/2021-07-11/yolo-v5s.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/2021-07-11/yolov5s.zip
 parser:
   nodes:

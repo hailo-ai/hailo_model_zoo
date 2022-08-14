@@ -22,13 +22,6 @@ postprocessing:
       - 373
       - 326
   meta_arch: yolo_v3
-hn_editor:
-  output_scheme:
-    outputs_to_split:
-    - yolov3/conv83
-    - yolov3/conv91
-    - yolov3/conv98
-    split_output: true
 allocation:
   required_fps: 100
 preprocessing:
@@ -48,14 +41,13 @@ parser:
   ew_add_policy: fused_conv_and_add_identity_fallback
   nodes:
   - input
-  - - Conv_865
+  - - Conv_139
     - Conv_502
-    - Conv_139
+    - Conv_865
 info:
   task: object detection
   input_shape: 608x608x3
-  output_shape: 19x19x6, 19x19x6, 19x19x3, 19x19x240, 38x38x6, 38x38x6, 38x38x3, 38x38x240,
-    76x76x6, 76x76x6, 76x76x3, 76x76x240
+  output_shape: 19x19x255, 38x38x255, 76x76x255
   operations: 79.17G
   parameters: 68.79M
   framework: darknet

@@ -10,7 +10,7 @@ from hailo_sdk_client.exposed_definitions import States
 from hailo_model_zoo.core.main_utils import (
     parse_model,
     get_network_info,
-    quantize_model,
+    optimize_model,
     load_model
 )
 from hailo_model_zoo.utils.logger import get_logger
@@ -30,7 +30,7 @@ def get_quantized_model(model_name, network_info, results_dir):
     parse_model(runner, network_info, results_dir=results_dir, logger=logger)
 
     logger.info("Initializing the dataset ...")
-    quantize_model(runner, logger, network_info, calib_path=None, results_dir=results_dir)
+    optimize_model(runner, logger, network_info, calib_path=None, results_dir=results_dir)
     return runner
 
 
@@ -89,7 +89,7 @@ def main(cfg_path, har_path=None):
     with open(results_dir / f"{final_name}.hef", "wb") as f:
         f.write(hef)
 
-    return cfg, cfg_dir, runner
+    return cfg, cfg_dir, runner, final_name
 
 
 def get_argparser():

@@ -5,9 +5,9 @@ network:
 paths:
   alls_script: efficientnet_lite1.alls
   network_path:
-  - models_files/Classification/efficientnet_lite1/pretrained/efficientnet_lite1.ckpt.meta
-  - models_files/Classification/efficientnet_lite1/pretrained/efficientnet_lite1.ckpt.index
-  - models_files/Classification/efficientnet_lite1/pretrained/efficientnet_lite1.ckpt.data-00000-of-00001
+  - models_files/Classification/efficientnet_lite1/pretrained/2021-07-11/efficientnet_lite1.ckpt.meta
+  - models_files/Classification/efficientnet_lite1/pretrained/2021-07-11/efficientnet_lite1.ckpt.index
+  - models_files/Classification/efficientnet_lite1/pretrained/2021-07-11/efficientnet_lite1.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite1/pretrained/2021-07-11/efficientnet_lite1.zip
 info:
   task: classification

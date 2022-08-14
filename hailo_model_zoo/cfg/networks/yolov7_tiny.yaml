@@ -1,0 +1,69 @@
+base:
+- base/yolo.yaml
+inference:
+  emulator_batch_size: 4
+hn_editor:
+  output_scheme:
+    change_activations:
+      enabled: true
+      changes:
+      - layer_name: yolov7_tiny/conv58
+        activation: sigmoid
+      - layer_name: yolov7_tiny/conv51
+        activation: sigmoid
+      - layer_name: yolov7_tiny/conv43
+        activation: sigmoid
+postprocessing:
+  meta_arch: yolo_v5
+  anchors:
+    strides:
+    - 8
+    - 16
+    - 32
+    sizes:
+    - - 12
+      - 16
+      - 19
+      - 36
+      - 40
+      - 28
+    - - 36
+      - 75
+      - 76
+      - 55
+      - 72
+      - 146
+    - - 142
+      - 110
+      - 192
+      - 243
+      - 459
+      - 401
+allocation:
+  required_fps: null
+network:
+  network_name: yolov7_tiny
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov7_tiny/pretrained/2022-07-10/yolov7_tiny.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov7_tiny/pretrained/2022-07-10/yolov7_tiny.zip
+  alls_script: yolov7_tiny.alls
+parser:
+  nodes:
+  - null
+  - - Conv_166
+    - Conv_150
+    - Conv_134
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x255, 40x40x255, 20x20x255
+  operations: 6.87G
+  parameters: 6.22M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 36.491
+  source: https://github.com/WongKinYiu/yolov7
+  license_url: https://github.com/WongKinYiu/yolov7/blob/main/LICENSE.md

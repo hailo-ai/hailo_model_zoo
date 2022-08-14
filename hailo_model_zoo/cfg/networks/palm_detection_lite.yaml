@@ -53,8 +53,6 @@ paths:
   - models_files/ObjectDetection/Detection-Palm/2022-02-07/palm_detection_lite.ckpt.index
   - models_files/ObjectDetection/Detection-Palm/2022-02-07/palm_detection_lite.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-Palm/palm_detection_lite/pretrained/palm_detection_lite.zip
-allocation:
-  required_fps: 25
 network:
   network_name: palm_detection_lite
 info:

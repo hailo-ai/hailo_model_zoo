@@ -14,6 +14,8 @@ RUN apt-get update && \
 
 # workaround broken opencv-python 4.6
 RUN pip install opencv-python==4.5.5.64
+#newer pytorch-lightning do not include ProgressBar
+RUN pip install pytorch-lightning==1.6.5
 
 ARG repo=https://github.com/hailo-ai/nanodet.git
 RUN git clone $repo && \

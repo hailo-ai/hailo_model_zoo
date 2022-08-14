@@ -14,6 +14,8 @@ postprocessing:
       - 1
     - - 1
       - 1
+allocation:
+  required_fps: 400
 preprocessing:
   centered: false
   meta_arch: yolo_v5
@@ -23,8 +25,6 @@ preprocessing:
   - 3
 network:
   network_name: yolox_tiny_leaky
-allocation:
-  required_fps: 400
 paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolox_tiny_leaky/pretrained/2021-08-12/yolox_tiny_leaky.onnx

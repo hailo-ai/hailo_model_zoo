@@ -33,27 +33,6 @@ hn_editor:
     - yolov4_leaky/conv103
     - yolov4_leaky/conv95
     split_output: true
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv110_centers
-        activation: sigmoid
-      - layer_name: conv110_obj
-        activation: sigmoid
-      - layer_name: conv110_probs
-        activation: sigmoid
-      - layer_name: conv103_centers
-        activation: sigmoid
-      - layer_name: conv103_obj
-        activation: sigmoid
-      - layer_name: conv103_probs
-        activation: sigmoid
-      - layer_name: conv95_centers
-        activation: sigmoid
-      - layer_name: conv95_obj
-        activation: sigmoid
-      - layer_name: conv95_probs
-        activation: sigmoid
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
@@ -78,6 +57,8 @@ parser:
   - - Conv_946
     - Conv_585
     - Conv_224
+inference:
+  emulator_batch_size: 4
 info:
   task: object detection
   input_shape: 512x512x3

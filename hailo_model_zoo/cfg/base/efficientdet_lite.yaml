@@ -1,0 +1,33 @@
+base:
+- base/base.yaml
+- base/coco.yaml
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.0
+    - 127.0
+    - 127.0
+    std_list:
+    - 128.0
+    - 128.0
+    - 128.0
+preprocessing:
+  network_type: detection
+  meta_arch: mobilenet_ssd_ar
+  padding_color: 127
+postprocessing:
+  score_threshold: 0.001
+  nms_iou_thresh: 0.5
+  meta_arch: efficientdet
+evaluation:
+  labels_offset: 1
+  classes: 89
+info:
+  task: object detection
+  framework: tensorflow
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  source: https://github.com/google/automl/tree/master/efficientdet
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

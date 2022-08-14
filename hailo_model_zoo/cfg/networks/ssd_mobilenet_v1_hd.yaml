@@ -10,9 +10,9 @@ network:
 paths:
   alls_script: ssd_mobilenet_v1_hd.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/mobilenet_ssd_h720xw1280_AR_90classes.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/ssd_mobilenet_v1_hd.zip
 parser:
   nodes:

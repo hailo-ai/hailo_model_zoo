@@ -37,6 +37,10 @@ from hailo_model_zoo.core.postprocessing.ocr_postprocessing import (
 )
 from hailo_model_zoo.core.postprocessing.person_reid_postprocessing import (
     person_reid_postprocessing)
+from hailo_model_zoo.core.postprocessing.face_attr_postprocessing import face_attr_postprocessing
+from hailo_model_zoo.core.postprocessing.mspn_postprocessing import (
+    mspn_postprocessing, visualize_single_person_pose_estimation_result
+)
 
 
 def get_visualization(name, **kwargs):
@@ -69,6 +73,7 @@ def get_visualization(name, **kwargs):
         'face_landmark_detection_3d': visualize_face_landmarks_3d_result,
         'fast_depth': visualize_fast_depth_result,
         'ocr': visualize_ocr_result,
+        'single_person_pose_estimation': visualize_single_person_pose_estimation_result,
     }
     if name not in visualization_fn_map:
         raise ValueError('Visualization name [%s] was not recognized' % name)
@@ -111,6 +116,8 @@ def get_postprocessing(name, flip=False):
         'ocr': ocr_postprocessing,
         'person_reid': person_reid_postprocessing,
         'person_attr': classification_postprocessing,
+        'face_attr': face_attr_postprocessing,
+        'single_person_pose_estimation': mspn_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

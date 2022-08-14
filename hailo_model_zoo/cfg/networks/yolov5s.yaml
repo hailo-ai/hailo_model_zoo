@@ -11,10 +11,10 @@ hn_editor:
         activation: sigmoid
       - layer_name: conv55
         activation: sigmoid
-network:
-  network_name: yolov5s
 allocation:
   required_fps: 375
+network:
+  network_name: yolov5s
 paths:
   alls_script: yolov5s.alls
   network_path:

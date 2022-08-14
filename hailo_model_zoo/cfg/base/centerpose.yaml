@@ -1,5 +1,7 @@
 base:
 - base/base.yaml
+hn_editor:
+  bgr2rgb: true
 postprocessing:
   meta_arch: centerpose
 evaluation:

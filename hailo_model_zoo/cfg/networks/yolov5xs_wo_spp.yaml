@@ -22,7 +22,7 @@ allocation:
   required_fps: 900
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/yolov5s512.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2021-07-11/yolov5s512.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2021-07-11/yolov5xs.zip
   alls_script: yolov5xs_wo_spp.alls
 parser:

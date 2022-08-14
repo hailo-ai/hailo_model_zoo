@@ -76,10 +76,9 @@ def download(url: str, dst_dir: Union[str, Path], logger: logging.Logger) -> str
     else:
         logger.debug(f'{dst.name} already exists inside {dst_dir}. Skipping download')
 
-    if len(list(Path('/'.join(dst.parts[:-1])).iterdir())) == 1:
-        logger.debug(f'unzipping {dst} into {dst_dir}')
-        with zipfile.ZipFile(dst, 'r') as zip_fp:
-            zip_fp.extractall(dst_dir)
+    logger.debug(f'unzipping {dst} into {dst_dir}')
+    with zipfile.ZipFile(dst, 'r') as zip_fp:
+        zip_fp.extractall(dst_dir)
 
     return dst.name
 

@@ -10,6 +10,7 @@ preprocessing:
   - 640
   - 3
   meta_arch: yolo_v5
+  padding_color: 114
 postprocessing:
   nms_iou_thresh: 0.45
   score_threshold: 0.01

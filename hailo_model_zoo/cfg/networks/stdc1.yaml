@@ -7,7 +7,7 @@ allocation:
 parser:
   nodes:
   - null
-  - null
+  - ArgMax_149
 paths:
   alls_script: stdc1.alls
   network_path:

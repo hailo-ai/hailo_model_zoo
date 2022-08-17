@@ -3,14 +3,12 @@ base:
 - base/ssd.yaml
 network:
   network_name: ssd_resnet_v1_18
-allocation:
-  required_fps: 731
 paths:
   alls_script: ssd_resnet_v1_18.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/resnet_v1_18_ssd_300x300.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/resnet_v1_18_ssd_300x300.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/resnet_v1_18_ssd_300x300.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/resnet_v1_18_ssd_300x300.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_resnet_v1_18/pretrained/2021-07-11/ssd_resnet_v1_18.zip
 preprocessing:
   meta_arch: resnet_ssd

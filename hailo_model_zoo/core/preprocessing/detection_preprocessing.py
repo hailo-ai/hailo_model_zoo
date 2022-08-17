@@ -232,7 +232,7 @@ def regnet_detection(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
-def _resize_bilinear_tf(image, height, width):
+def _resize_bilinear_tf(image, height, width, **kwargs):
     shape = tf.shape(image)
     image_height, image_width = shape[0], shape[1]
     result = tf.squeeze(tf.image.resize(tf.expand_dims(image, [0]), [height, width], method='bilinear'), [0])
@@ -244,7 +244,7 @@ def ssd_base(image, image_info, resize_function, height=None, width=None,
     image = tf.cast(image, tf.float32)
     if height and width:
         # Resize the image to the specified height and width.
-        image, target_height, target_width = resize_function(image, height, width)
+        image, target_height, target_width = resize_function(image, height, width, **kwargs)
         image.set_shape((height, width, 3))
 
     _cast_image_info_types(image_info, image, max_pad)
@@ -298,8 +298,8 @@ def faster_rcnn_stage2(featuremap, image_info, height=None, width=None,
     return featuremaps, image_info
 
 
-def _resize_ar_preserving(image, height, width):
-    image, height_factor, width_factor, _, _ = _ar_preserving_resize_and_crop(image, height, width)
+def _resize_ar_preserving(image, height, width, **kwargs):
+    image, height_factor, width_factor, _, _ = _ar_preserving_resize_and_crop(image, height, width, **kwargs)
     return image, height_factor, width_factor
 
 
@@ -310,7 +310,7 @@ def mobilenet_ssd_ar_preserving(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
-def _ar_preserving_resize_and_crop(image, height, width):
+def _ar_preserving_resize_and_crop(image, height, width, **kwargs):
     image_shape = tf.shape(image)
     image_height = image_shape[0]
     image_width = image_shape[1]
@@ -329,8 +329,9 @@ def _ar_preserving_resize_and_crop(image, height, width):
     image_resized = tf.image.resize(img_expanded, [new_height, new_width], method='bilinear')
     padding_h = height - new_height
     padding_w = width - new_width
+    padding_color = kwargs.get('padding_color', 0)
     padded_image = tf.pad(image_resized, [[0, 0], [0, padding_h], [0, padding_w], [0, 0]],
-                          mode='CONSTANT', constant_values=0)
+                          mode='CONSTANT', constant_values=padding_color)
     image = tf.squeeze(padded_image, [0])
     image_height_float = tf.cast(image_height, tf.float32)
     image_width_float = tf.cast(image_width, tf.float32)

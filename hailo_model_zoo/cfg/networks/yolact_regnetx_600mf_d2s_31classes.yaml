@@ -353,12 +353,10 @@ hn_editor:
       - 0
 network:
   network_name: yolact_regnetx_600mf_d2s_31classes
-allocation:
-  required_fps: 40
 paths:
   network_path:
-  - models_files/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2020-12-10/yolact_regnetx_600MF_fpn_d2s-opset11.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2020-12-10/yolact_regnetx_600mf.zip
+  - models_files/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2022-07-19/yolact_regnetx_600mf_d2s.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2022-07-19/yolact_regnetx_600mf_d2s.zip
   alls_script: yolact_regnetx_600mf_d2s_31classes.alls
 parser:
   start_node_shape:
@@ -368,22 +366,22 @@ parser:
   - 512
   nodes:
   - Conv_0
-  - - Relu_215
-    - Conv_219
-    - Conv_235
-    - Conv_227
-    - Conv_246
-    - Conv_262
-    - Conv_254
-    - Conv_273
-    - Conv_289
-    - Conv_281
-    - Conv_300
-    - Conv_316
-    - Conv_308
-    - Conv_327
-    - Conv_343
-    - Conv_335
+  - - Relu_162
+    - Conv_166
+    - Conv_182
+    - Conv_174
+    - Conv_193
+    - Conv_209
+    - Conv_201
+    - Conv_220
+    - Conv_236
+    - Conv_228
+    - Conv_247
+    - Conv_263
+    - Conv_255
+    - Conv_274
+    - Conv_290
+    - Conv_282
 info:
   task: instance segmentation
   input_shape: 512x512x3

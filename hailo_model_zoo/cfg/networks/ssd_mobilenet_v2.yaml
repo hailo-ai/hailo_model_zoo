@@ -7,7 +7,7 @@ postprocessing:
     softmax: false
     bilinear: false
     nms: true
-  postprocess_config_json: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/mobilenet_v2_ssd_nms_postprocess_config.json
+  postprocess_config_json: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/mobilenet_v2_ssd_nms_postprocess_config.json
   meta_arch: ssd
   anchors:
     predefined: true
@@ -18,9 +18,9 @@ allocation:
 paths:
   alls_script: ssd_mobilenet_v2.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/model.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/model.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/model.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/model.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/model.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/model.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/ssd_mobilenet_v2.zip
 parser:
   nodes:

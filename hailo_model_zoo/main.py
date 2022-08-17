@@ -117,7 +117,7 @@ def _create_args_parser():
     information_base_parser = _make_info_base()
 
     # --- create per action subparser
-    parser = argparse.ArgumentParser(epilog='Example: main.py parse resnet_v1_50')
+    parser = argparse.ArgumentParser(epilog='Example: hailomz parse resnet_v1_50')
     # can't set the entry point for each subparser as it forces us to add imports which slow down the startup time.
     # instead we'll check the 'command' argument after parsing
     subparsers = parser.add_subparsers(dest='command')

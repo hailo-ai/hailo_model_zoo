@@ -4,6 +4,7 @@ from past.utils import old_div
 import tensorflow as tf
 
 RESIZE_SIDE = 256
+VIT_RESIZE_SIDE = 248
 MOBILENET_CENTRAL_FRACTION = 0.875
 RESMLP_CENTRAL_FRACTION = 0.875
 MEAN_IMAGENET = [123.675, 116.28, 103.53]
@@ -160,6 +161,18 @@ def resmlp(image, image_info=None, output_height=None, output_width=None, **kwar
 def lprnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.image.resize([image], [output_height, output_width], method='bicubic')[0]
     image = tf.squeeze(image)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info
+
+
+def vit_tiny(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
+    if output_height is not None:
+        assert output_width is not None
+        image = _aspect_preserving_resize(image, VIT_RESIZE_SIDE, method=kwargs.get('resize_method'))
+        image = _central_crop([image], output_height, output_width)[0]
+        image.set_shape([output_height, output_width, 3])
+    image = tf.cast(image, tf.float32)
     if image_info:
         image_info['img_orig'] = tf.cast(image, tf.uint8)
     return image, image_info

@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: hardnet68
-allocation:
-  required_fps: 388
 paths:
   alls_script: hardnet68.alls
   network_path:

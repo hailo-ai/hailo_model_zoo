@@ -5,7 +5,7 @@ network:
 paths:
   alls_script: resnet_v2_18.alls
   network_path:
-  - models_files/Classification/resnet_v2_18/pretrained/resnet_v2_18.onnx
+  - models_files/Classification/resnet_v2_18/pretrained/2021-07-11/resnet_v2_18.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v2_18/pretrained/2021-07-11/resnet_v2_18.zip
 info:
   task: classification

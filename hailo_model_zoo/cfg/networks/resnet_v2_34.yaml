@@ -2,12 +2,10 @@ base:
 - base/resnet.yaml
 network:
   network_name: resnet_v2_34
-allocation:
-  required_fps: 900
 paths:
   alls_script: resnet_v2_34.alls
   network_path:
-  - models_files/Classification/resnet_v2_34/pretrained/resnet_v2_34.onnx
+  - models_files/Classification/resnet_v2_34/pretrained/2021-07-11/resnet_v2_34.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v2_34/pretrained/2021-07-11/resnet_v2_34.zip
 info:
   task: classification

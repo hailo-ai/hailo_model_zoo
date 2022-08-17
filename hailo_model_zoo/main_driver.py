@@ -12,7 +12,7 @@ from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
 from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
-                                             quantize_model, infer_model, compile_model, get_hef_path, info_model,
+                                             optimize_model, infer_model, compile_model, get_hef_path, info_model,
                                              resolve_alls_path)
 from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS
 from hailo_model_zoo.utils.logger import get_logger
@@ -31,7 +31,7 @@ def _ensure_quantized(runner, logger, args, network_info):
     if runner.state != States.HAILO_MODEL:
         return
 
-    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir,
+    optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
                    model_script_path=args.model_script_path)
 
 
@@ -46,6 +46,7 @@ def _ensure_parsed(runner, logger, network_info, args):
 def _ensure_runnable_state(args, logger, network_info, runner, target):
     _ensure_parsed(runner, logger, network_info, args)
     if isinstance(target, SdkNative):
+        runner.apply_model_modification_commands()
         return None
 
     if args.hef_path:
@@ -97,7 +98,7 @@ def optimize(args):
 
     _ensure_parsed(runner, logger, network_info, args)
 
-    quantize_model(runner, logger, network_info, args.calib_path, args.results_dir,
+    optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
                    model_script_path=args.model_script_path)
 
 

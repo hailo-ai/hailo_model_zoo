@@ -1,5 +1,5 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-model_optimization_config(calibration, batch_size=4, calibset_size=64)
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
 # post_quantization_optimization commands
 post_quantization_optimization(bias_correction, policy=disabled)
 pre_quantization_optimization(equalization, policy=enabled)

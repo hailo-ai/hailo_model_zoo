@@ -1,0 +1,38 @@
+base:
+- base/celeba.yaml
+network:
+  network_name: face_attr_resnet_v1_18
+paths:
+  alls_script: face_attr_resnet_v1_18.alls
+  network_path:
+  - models_files/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip
+parser:
+  nodes:
+  - null
+  - - Gemm_59
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+preprocessing:
+  network_type: face_attr
+  meta_arch: lprnet
+info:
+  task: face attribute
+  input_shape: 218x178x3
+  output_shape: 1x80
+  operations: 1.5G
+  parameters: 11.74M
+  framework: pytorch
+  training_data: celeba train
+  validation_data: celeba test
+  eval_metric: Mean Accuracy
+  full_precision_result: 81.188
+  source: https://github.com/d-li14/face-attribute-prediction

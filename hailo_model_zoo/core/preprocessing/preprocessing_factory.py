@@ -13,6 +13,7 @@ from hailo_model_zoo.core.preprocessing import lane_detection_preprocessing
 from hailo_model_zoo.core.preprocessing import face_landmarks_preprocessing
 from hailo_model_zoo.core.preprocessing import fast_depth_preprocessing
 from hailo_model_zoo.core.preprocessing import person_reid_preprocessing
+from hailo_model_zoo.core.preprocessing import mspn_preprocessing
 
 
 def convert_rgb_to_yuv(image):
@@ -83,6 +84,8 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'fast_depth': fast_depth_preprocessing.fast_depth,
         'lprnet': classification_preprocessing.lprnet,
         'person_reid': person_reid_preprocessing.market1501,
+        'mspn': mspn_preprocessing.mspn,
+        'vit': classification_preprocessing.vit_tiny,
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)

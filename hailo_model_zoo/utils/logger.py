@@ -1,18 +1,30 @@
 import sys
 import logging
-from termcolor import colored
 from hailo_sdk_common.logger.logger import create_custom_logger
 
 _g_logger = None
 
 
 class HailoExamplesFormatter(logging.Formatter):
-    def __init__(self):
-        logging.Formatter.__init__(self, colored('<Hailo Model Zoo %(levelname)s> %(message)s', 'cyan'))
+    COLOR_PREFIX = '\x1b['
+    COLOR_SUFFIX = '\x1b[0m'
+    COLORS = {
+        logging.DEBUG: '34m',  # blue
+        logging.INFO: '36m',  # Cyan
+        logging.WARNING: '33;1m',  # bold yellow
+        logging.ERROR: '31;1m',  # bold red
+        logging.CRITICAL: '41;1m',  # bold white on red
+    }
 
     def format(self, record):
-        record.levelname = record.levelname.title()
-        return logging.Formatter.format(self, record)
+        # record.levelname = record.levelname.title()
+        level_name = record.levelname
+        level_no = record.levelno
+        message = '%(message)s'
+        level_fmt = f'{self.COLOR_PREFIX}{self.COLORS[level_no]}<Hailo Model Zoo '\
+                    f'{level_name}> {message}{self.COLOR_SUFFIX}'
+        formatter = logging.Formatter(f'{level_fmt}')
+        return formatter.format(record)
 
 
 def get_logger():

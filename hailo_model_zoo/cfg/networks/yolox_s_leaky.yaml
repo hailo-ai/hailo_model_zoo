@@ -4,8 +4,6 @@ hn_editor:
   bgr2rgb: true
 network:
   network_name: yolox_s_leaky
-allocation:
-  required_fps: 300
 paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_leaky/pretrained/2021-09-12/yolox_s_leaky.onnx

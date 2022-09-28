@@ -24,3 +24,4 @@ quantization_param(conv44, precision_mode=a8_w4)
 compilation_param({conv*}, balance_output_multisplit=False)
 
 optimize_buffers()
+performance_param(fps=90)

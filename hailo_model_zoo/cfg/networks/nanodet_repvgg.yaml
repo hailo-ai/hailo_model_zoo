@@ -1,7 +1,5 @@
 base:
 - base/nanodet.yaml
-allocation:
-  required_fps: 1000
 preprocessing:
   input_shape:
   - 416

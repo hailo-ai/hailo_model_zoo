@@ -1,20 +1,6 @@
 base:
 - base/yolact.yaml
 hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv83
-        activation: tanh
-      - layer_name: conv75
-        activation: tanh
-      - layer_name: conv63
-        activation: tanh
-      - layer_name: conv66
-        activation: tanh
-      - layer_name: conv69
-        activation: tanh
   channels_remove:
     enabled: true
     layer_name:

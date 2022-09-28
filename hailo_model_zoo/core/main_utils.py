@@ -1,9 +1,6 @@
-from omegaconf import OmegaConf
 from pathlib import Path
-from functools import lru_cache
 
-from hailo_sdk_common.targets.inference_targets import ParamsKinds
-from hailo_sdk_client.tools.core_postprocess.core_postprocess_api import MetaArchitectures, add_nms_postprocess
+from hailo_model_zoo.core.info_utils import get_network_info  # noqa (F401) - exports this function for backwards compat
 
 from hailo_model_zoo.core.infer import infer_factory
 from hailo_model_zoo.core.eval import eval_factory
@@ -16,7 +13,6 @@ from hailo_model_zoo.core.hn_editor.channel_transpose import bgr2rgb
 from hailo_model_zoo.core.hn_editor.layer_splitter import LayerSplitter
 from hailo_model_zoo.core.hn_editor.network_chainer import integrate_postprocessing
 from hailo_model_zoo.core.hn_editor.normalization_folding import fold_normalization
-from hailo_model_zoo.core.hn_editor.remove_skip_connection import skip_connection
 
 from hailo_model_zoo.utils import data, downloader, path_resolver
 from hailo_model_zoo.utils.parse_utils import translate_model, get_normalization_params
@@ -53,54 +49,15 @@ def _apply_output_scheme(runner, network_info):
         change_activations(runner, activation_changes)
 
 
-def _add_postprocess(runner, network_info):
+def _get_integrated_postprocessing(network_info):
     output_scheme = network_info.hn_editor.output_scheme
-    integrated_postprocessing = output_scheme.integrated_postprocessing
+    return output_scheme.integrated_postprocessing
+
+
+def _add_postprocess(runner, network_info):
+    integrated_postprocessing = _get_integrated_postprocessing(network_info)
     if integrated_postprocessing and integrated_postprocessing.enabled:
-        integrate_postprocessing(runner, integrated_postprocessing)
-
-
-def get_network_info(model_name, read_only=False, yaml_path=None):
-    '''
-    Args:
-        model_name: The network name to load.
-        read_only: If set return read-only object.
-                   The read_only mode save run-time and memroy.
-        yaml_path: Path to external YAML file for network configuration
-    Return:
-        OmegaConf object that represent network configuration.
-    '''
-    if model_name is None and yaml_path is None:
-        raise ValueError("Either model_name or yaml_path must be given")
-    net = f'networks/{model_name}.yaml'
-    cfg_path = Path(yaml_path) if yaml_path is not None else path_resolver.resolve_cfg_path(net)
-    if not cfg_path.is_file():
-        raise ValueError('cfg file is missing in {}'.format(cfg_path))
-    cfg = _load_cfg(cfg_path)
-    if read_only:
-        OmegaConf.set_readonly(cfg, True)
-        return cfg
-    else:
-        cfg_copy = cfg.copy()
-        OmegaConf.set_readonly(cfg_copy, False)
-        return cfg_copy
-
-
-@lru_cache()
-def _load_cfg(cfg_file):
-    cfg = OmegaConf.load(cfg_file)
-    base = cfg.get('base')
-    if not base:
-        return cfg
-    del cfg['base']
-    # if extension exists make a recursive call for each extension
-    config = OmegaConf.create()
-    for f in base:
-        cfg_path = path_resolver.resolve_cfg_path(f)
-        config = OmegaConf.merge(config, _load_cfg(cfg_path))
-    # override with cfg fields
-    config = OmegaConf.merge(config, cfg)
-    return config
+        integrate_postprocessing(runner, integrated_postprocessing, network_info)
 
 
 def download_model(network_info, logger):
@@ -116,7 +73,7 @@ def download_model(network_info, logger):
     return ckpt_path
 
 
-def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), logger=None, model_script_path=None):
+def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), logger=None):
     """Parses TF or ONNX model and saves as <results_dir>/<model_name>.(hn|npz)"""
     start_node_shape = network_info.parser.start_node_shape
 
@@ -128,37 +85,20 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     _apply_output_scheme(runner, network_info)
 
-    postprocess_config_json = network_info.postprocessing.postprocess_config_json
-    if postprocess_config_json and postprocess_config_json.endswith('.json'):
-        config_json = path_resolver.resolve_data_path(postprocess_config_json)
-        add_nms_postprocess(
-            runner,
-            config_json_path=str(config_json),
-            meta_arch=MetaArchitectures[network_info.postprocessing.meta_arch.upper()],
-            params_kind=ParamsKinds.NATIVE,
-        )
+    hn_editor = network_info.hn_editor
+    channels_remove = hn_editor.channels_remove
+    bgr_to_rgb = hn_editor.bgr2rgb
 
-    model_script = model_script_path if model_script_path else resolve_alls_path(network_info.paths.alls_script)
-    runner.load_model_script(model_script)
-    runner.apply_model_modification_commands()
+    if channels_remove.enabled and any(x is not None for x in channels_remove.values()):
+        channel_remove(runner, channels_remove)
+    if bgr_to_rgb:
+        bgr2rgb(runner)
 
     # hn editing
     if network_info.parser.normalization_params.fold_normalization:
         normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
         assert normalize_in_net, f"fold_normalization implies normalize_in_net==true, but got {normalize_in_net}"
         fold_normalization(runner, mean_list, std_list)
-
-    hn_editor = network_info.hn_editor
-    channels_remove = hn_editor.channels_remove
-    bgr_to_rgb = hn_editor.bgr2rgb
-    skip_connection_remove = hn_editor.skip_connection_remove
-
-    if channels_remove.enabled and any(x is not None for x in channels_remove.values()):
-        channel_remove(runner, channels_remove)
-    if skip_connection_remove:
-        skip_connection(runner, skip_connection_remove)
-    if bgr_to_rgb:
-        bgr2rgb(runner)
 
     _add_postprocess(runner, network_info)
 
@@ -175,12 +115,12 @@ def make_preprocessing(runner, network_info):
     preprocessing_args = network_info.preprocessing
     meta_arch = preprocessing_args.get('meta_arch')
     hn_editor = network_info.hn_editor
-    flip = hn_editor.flip
     yuv2rgb = hn_editor.yuv2rgb
     input_resize = hn_editor.input_resize
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
     height, width, _ = _get_input_shape(runner, network_info)
+    flip = runner.get_native_hn_model().is_transposed()
 
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
@@ -193,7 +133,7 @@ def make_preprocessing(runner, network_info):
 def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch, preproc_callback):
     data_path = Path(data_path)
     if not data_path.exists():
-        raise FileNotFoundError(f"Couldn't find dataset in {data_path}. Please refer to docs/DATA.md.")
+        raise FileNotFoundError(f"Couldn't find dataset in {data_path}. Please refer to docs/DATA.rst.")
     data_tf = True if data_path.is_file() and data_path.suffix in [".tfrecord", ".000"] else False
     args = (preproc_callback, batch_size, data_path)
 
@@ -229,7 +169,7 @@ def make_calibset_callback(network_info, batch_size, preproc_callback, override_
     return dataset
 
 
-def quantize_model(runner, logger, network_info, calib_path, results_dir, model_script_path=None):
+def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script_path=None):
 
     logger.info('Preparing calibration data...')
     preproc_callback = make_preprocessing(runner, network_info)
@@ -237,12 +177,9 @@ def quantize_model(runner, logger, network_info, calib_path, results_dir, model_
                                                  preproc_callback=preproc_callback,
                                                  override_path=calib_path)
 
-    quantization_script_filename = model_script_path if model_script_path \
-        else resolve_alls_path(network_info.paths.alls_script)
-
-    runner.quantize(calib_feed_callback,
-                    model_script=quantization_script_filename,
-                    work_dir=None)
+    model_script = model_script_path if model_script_path else resolve_alls_path(network_info.paths.alls_script)
+    runner.load_model_script(model_script)
+    runner.optimize(calib_feed_callback)
 
     model_name = network_info.network.network_name
     runner.save_har(results_dir / f'{model_name}.har')
@@ -349,37 +286,18 @@ def get_hef_path(results_dir, model_name):
 
 
 def compile_model(runner, network_info, results_dir, model_script_path=None):
-    fps = network_info.allocation.required_fps
     model_name = network_info.network.network_name
+    use_legacy = network_info.allocation.legacy
     allocator_script_filename = model_script_path if model_script_path \
         else resolve_alls_path(network_info.paths.alls_script)
-    mapping_timeout = network_info.allocation.allocation_timeout
-    hef = runner.get_hw_representation(
-        fps=fps,
-        mapping_timeout=mapping_timeout,
-        allocator_script_filename=allocator_script_filename
-    )
+    runner.load_model_script(allocator_script_filename)
+    # TODO: SDK-31381 (internal params related compiler bug needs to fixed)
+    if use_legacy:
+        hef = runner.get_hw_representation(allocator_script_filename=allocator_script_filename)
+    else:
+        hef = runner.compile()
 
     with open(get_hef_path(results_dir, model_name), "wb") as hef_out_file:
         hef_out_file.write(hef)
 
     runner.save_har(results_dir / f'{model_name}.har')
-
-
-def info_model(model_name, network_info, logger):
-
-    def build_dict(info):
-        keys_list = ['task', 'input_shape', 'output_shape', 'operations', 'parameters',
-                     'framework', 'training_data', 'validation_data', 'eval_metric',
-                     'full_precision_result', 'source', 'license_url']
-        info_vals = [info[key_curr] for key_curr in keys_list]
-        info_dict = dict(zip(keys_list, info_vals))
-        return keys_list, info_dict
-
-    keys_list, info_dict = build_dict(network_info['info'])
-    msgs_list = list()
-    for key_curr in keys_list:
-        msg = "\t{0:<25}{1}".format(key_curr + ':', info_dict[key_curr])
-        msgs_list.append(msg)
-    msg_w_line = '\033[0m\n' + "\n".join(msgs_list)
-    logger.info(msg_w_line)

@@ -1,31 +1,9 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000, loss_factors=[1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125, 1.0, 2.0, 0.25, 0.125], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000)
 
-allocator_param(automatic_l4_portals=False, timeout=10800, seed=0)
-
-resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=0.9, max_memory_utilization=0.7)
-hef_param(params_load_time_compression=True, should_use_sequencer_interleave=True, should_run_full_validation=False)
-context_switch_param(mode=enabled)
-
-output_mux_conv68_obj_conv68_probs = output_mux([conv68_obj, conv68_probs])
-output_mux_conv68_scales_conv68_centers = output_mux([conv68_scales, conv68_centers])
-output_mux_conv68_obj_conv68_probs_conv68_scales_conv68_centers = output_mux([output_mux_conv68_obj_conv68_probs, output_mux_conv68_scales_conv68_centers])
-
-#context_1
-conv44_d0, conv44_d1, conv44_d2, conv44_d3, conv44_d4, conv44_d5, conv44_dc = defuse(conv44, 6)
-conv46_d0, conv46_d1, conv46_d2, conv46_d3, conv46_d4, conv46_d5, conv46_dc = defuse(conv46, 6)
-
-#context_2
-conv48_d0, conv48_d1, conv48_d2, conv48_d3, conv48_d4, conv48_d5, conv48_d6, conv48_d7, conv48_dc = defuse(conv48, 8)
-ew_add21_d0, ew_add21_d1, ew_add21_d2, ew_add21_d3, ew_add21_dc = defuse(ew_add21, 4)
-conv50_d0, conv50_d1, conv50_d2, conv50_d3, conv50_d4, conv50_d5, conv50_d6, conv50_d7, conv50_dc = defuse(conv50, 8)
-ew_add22_d0, ew_add22_d1, ew_add22_d2, ew_add22_d3, ew_add22_dc = defuse(ew_add22, 4)
-conv52_d0, conv52_d1, conv52_d2, conv52_d3, conv52_d4, conv52_d5, conv52_d6, conv52_d7, conv52_dc = defuse(conv52, 8)
-ew_add23_d0, ew_add23_d1, ew_add23_d2, ew_add23_d3, ew_add23_dc = defuse(ew_add23, 4)
-
-#context_3
-conv54_d0, conv54_d1, conv54_d2, conv54_d3, conv54_d4, conv54_d5, conv54_d6, conv54_d7, conv54_dc = defuse(conv54, 8)
-conv56_d0, conv56_d1, conv56_d2, conv56_d3, conv56_d4, conv56_d5, conv56_d6, conv56_d7, conv56_dc = defuse(conv56, 8)
-conv59_d0, conv59_d1, conv59_d2, conv59_d3, conv59_d4, conv59_d5, conv59_d6, conv59_d7, conv59_dc = defuse(conv59, 8)
+quantization_param(output_layer1, precision_mode=a16_w16)
+quantization_param(output_layer2, precision_mode=a16_w16)
+quantization_param(output_layer3, precision_mode=a16_w16)
+performance_param(fps=None)

@@ -20,23 +20,27 @@ def _make_parsing_base():
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
-    parsing_base_parser.add_argument(
-        '--model-script', type=str, default=None, dest='model_script_path',
-        help='Path to model script to use. By default using the model script specified'
-        ' in the network YAML configuration')
+
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
 
-def _make_quantization_base():
-    quantization_base_parser = argparse.ArgumentParser(add_help=False)
-    quantization_base_parser.add_argument(
+def _make_optimization_base():
+    optimization_base_parser = argparse.ArgumentParser(add_help=False)
+    optimization_base_parser.add_argument(
         '--har', type=str, default=None, help='Use external har file', dest='har_path')
-    quantization_base_parser.add_argument(
+    optimization_base_parser.add_argument(
         '--calib-path', type=Path,
         help='Path to external tfrecord for calibration',
     )
-    return quantization_base_parser
+    optimization_base_parser.add_argument(
+        '--model-script', type=str, default=None, dest='model_script_path',
+        help='Path to model script to use. By default using the model script specified'
+        ' in the network YAML configuration')
+    optimization_base_parser.add_argument(
+        '--hw-arch', type=str, default='hailo8', metavar='', choices=['hailo8', 'hailo8l'],
+        help='Which hw arch to run: hailo8 / hailo8l')
+    return optimization_base_parser
 
 
 def _make_hef_base():
@@ -89,7 +93,7 @@ def _make_evaluation_base():
         help='Path to external tfrecord for evaluation',
     )
     evaluation_base_parser.set_defaults(print_num_examples=1e9,
-                                        required_fps=None, visualize_results=False)
+                                        visualize_results=False)
     return evaluation_base_parser
 
 
@@ -110,37 +114,37 @@ def add_model_name_arg(parser, optional=False):
 def _create_args_parser():
     # --- create shared arguments parsers
     parsing_base_parser = _make_parsing_base()
-    quantization_base_parser = _make_quantization_base()
+    optimization_base_parser = _make_optimization_base()
     hef_base_parser = _make_hef_base()
     profile_base_parser = _make_profiling_base()
     evaluation_base_parser = _make_evaluation_base()
     information_base_parser = _make_info_base()
 
     # --- create per action subparser
-    parser = argparse.ArgumentParser(epilog='Example: main.py parse resnet_v1_50')
+    parser = argparse.ArgumentParser(epilog='Example: hailomz parse resnet_v1_50')
     # can't set the entry point for each subparser as it forces us to add imports which slow down the startup time.
     # instead we'll check the 'command' argument after parsing
     subparsers = parser.add_subparsers(dest='command')
     subparsers.add_parser('parse', parents=[parsing_base_parser],
                           help="model translation of the input model into Hailo's internal representation.")
 
-    subparsers.add_parser('optimize', parents=[parsing_base_parser, quantization_base_parser],
+    subparsers.add_parser('optimize', parents=[parsing_base_parser, optimization_base_parser],
                           help="run model optimization which includes numeric translation of \
                                 the input model into a compressed integer representation.")
 
     compile_help = ("run the Hailo compiler to generate the Hailo Executable Format file (HEF)"
                     " which can be executed on the Hailo hardware.")
-    subparsers.add_parser('compile', parents=[parsing_base_parser, quantization_base_parser],
+    subparsers.add_parser('compile', parents=[parsing_base_parser, optimization_base_parser],
                           help=compile_help)
 
     profile_help = ("generate profiler report of the model."
                     " The report contains information about your model and expected performance on the Hailo hardware.")
     subparsers.add_parser('profile', parents=[
-        parsing_base_parser, quantization_base_parser, hef_base_parser, profile_base_parser],
+        parsing_base_parser, optimization_base_parser, hef_base_parser, profile_base_parser],
         help=profile_help)
 
     subparsers.add_parser('eval', parents=[
-        parsing_base_parser, quantization_base_parser, hef_base_parser, evaluation_base_parser],
+        parsing_base_parser, optimization_base_parser, hef_base_parser, evaluation_base_parser],
         help="infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.")
 
     subparsers.add_parser('info', parents=[information_base_parser],
@@ -150,14 +154,17 @@ def _create_args_parser():
 
 
 def run(args):
-    from hailo_model_zoo.main_driver import parse, optimize, compile, profile, evaluate, info
+    if args.command == 'info':
+        from hailo_model_zoo.info_main import info
+        return info(args)
+
+    from hailo_model_zoo.main_driver import parse, optimize, compile, profile, evaluate
     handlers = {
         'parse': parse,
         'optimize': optimize,
         'compile': compile,
         'profile': profile,
         'eval': evaluate,
-        'info': info,
     }
 
     return handlers[args.command](args)

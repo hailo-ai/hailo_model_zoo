@@ -10,6 +10,9 @@ NETWORK_CFG_DIR = BASE_CFG_DIR / 'networks'
 ALLS_DIR = BASE_CFG_DIR / 'alls'
 MULTI_NETWORKS_DIR = BASE_CFG_DIR / 'multi-networks'
 
+# ensure env var HMZ_DATA exists
+os.environ['HMZ_DATA'] = os.environ.get('HMZ_DATA', str(_DATA_DEFAULT_DIRECTORY))
+
 
 def resolve_alls_path(path):
     return ALLS_DIR / path
@@ -21,7 +24,7 @@ def resolve_cfg_path(path):
 
 def resolve_model_path(path_list):
     path = Path(path_list[0])
-    if path.suffix in ['.onnx', '.pb']:
+    if path.suffix in ['.onnx', '.pb', '.tflite']:
         return resolve_data_path(path)
 
     # ckpt files have strange extensions, but we want up to .ckpt

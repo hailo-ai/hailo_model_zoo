@@ -1,5 +1,6 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+
 post_quantization_optimization(finetune, policy=disabled)
 allocator_param(enable_partial_row_buffers=disabled)
 
+performance_param(fps=1384)

@@ -9,8 +9,6 @@ hn_editor:
     - 1280
 network:
   network_name: yolov5m_wo_spp_yuv
-allocation:
-  required_fps: 100
 paths:
   alls_script: yolov5m_wo_spp_yuv.alls
 info:

@@ -1,0 +1,63 @@
+base:
+- base/efficientdet_lite.yaml
+network:
+  network_name: efficientdet_lite1
+paths:
+  alls_script: efficientdet_lite1.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite1/pretrained/2022-06-26/efficientdet-lite1.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite1/pretrained/2022-06-26/efficientdet-lite1.zip
+parser:
+  nodes:
+  - efficientnet-lite1/stem/Relu6;efficientnet-lite1/stem/tpu_batch_normalization/FusedBatchNormV3;efficientnet-lite1/blocks_0/tpu_batch_normalization/FusedBatchNormV3;efficientnet-lite1/blocks_0/depthwise_conv2d/depthwise;efficientnet-lite1/stem/conv2d/Conv2D
+  - - box_net/box-predict/BiasAdd;box_net/box-predict_4/separable_conv2d;box_net/box-predict/separable_conv2d;box_net/box-predict/bias
+    - class_net/class-predict/BiasAdd;class_net/class-predict_4/separable_conv2d;class_net/class-predict/separable_conv2d;class_net/class-predict/bias
+    - box_net/box-predict_1/BiasAdd;box_net/box-predict_4/separable_conv2d;box_net/box-predict_1/separable_conv2d;box_net/box-predict/bias
+    - class_net/class-predict_1/BiasAdd;class_net/class-predict_4/separable_conv2d;class_net/class-predict_1/separable_conv2d;class_net/class-predict/bias
+    - box_net/box-predict_2/BiasAdd;box_net/box-predict_4/separable_conv2d;box_net/box-predict_2/separable_conv2d;box_net/box-predict/bias
+    - class_net/class-predict_2/BiasAdd;class_net/class-predict_4/separable_conv2d;class_net/class-predict_2/separable_conv2d;class_net/class-predict/bias
+    - box_net/box-predict_3/BiasAdd;box_net/box-predict_4/separable_conv2d;box_net/box-predict_3/separable_conv2d;box_net/box-predict/bias
+    - class_net/class-predict_3/BiasAdd;class_net/class-predict_4/separable_conv2d;class_net/class-predict_3/separable_conv2d;class_net/class-predict/bias
+    - box_net/box-predict_4/BiasAdd;box_net/box-predict_4/separable_conv2d;box_net/box-predict/bias1
+    - class_net/class-predict_4/BiasAdd;class_net/class-predict_4/separable_conv2d;class_net/class-predict/bias1
+preprocessing:
+  input_shape:
+  - 384
+  - 384
+  - 3
+postprocessing:
+  anchors:
+    aspect_ratios:
+    - 1.0
+    - 0.5
+    - 2.0
+    sizes:
+    - 24
+    - 48
+    - 96
+    - 192
+    - 384
+    strides:
+    - 8
+    - 16
+    - 32
+    - 64
+    - 128
+    scales:
+    - 1.0
+    - 1.2599211
+    - 1.587401
+info:
+  task: object detection
+  input_shape: 384x384x3
+  output_shape: 48x48x36, 48x48x810, 24x24x36, 24x24x810, 12x12x36, 12x12x810, 6x6x36,
+    6x6x810, 3x3x36, 3x3x810
+  operations: 2G
+  parameters: 4.73M
+  framework: tensorflow
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 32.458
+  source: https://github.com/google/automl/tree/master/efficientdet
+  license_url: https://www.apache.org/licenses/LICENSE-2.0

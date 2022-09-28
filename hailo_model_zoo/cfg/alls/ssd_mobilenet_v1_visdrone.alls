@@ -1,4 +1,5 @@
 normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2021-07-11/mobilenet_ssd_nms_visdrone_postprocess_config.json", ssd)
 model_optimization_config(calibration, batch_size=8, calibset_size=32)
 ## Allocator Script Version 1.0
 quantization_param({conv*}, bias_mode=single_scale_decomposition)
@@ -7,3 +8,4 @@ quantization_param({conv*}, bias_mode=single_scale_decomposition)
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 allocator_param(automatic_ddr=disabled)
+performance_param(fps=1200)

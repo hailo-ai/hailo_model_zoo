@@ -9,7 +9,7 @@ network:
 parser:
   nodes:
   - null
-  - null
+  - ArgMax_69
 paths:
   alls_script: fcn16_resnet_v1_18.alls
   network_path:

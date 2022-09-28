@@ -1,4 +1,5 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 # New quantization params
 post_quantization_optimization(bias_correction, policy=disabled)
@@ -64,7 +65,7 @@ yolov5m_wo_spp_60p/merged_layer_concat8_batch_norm6 = merge(yolov5m_wo_spp_60p/c
 yolov5m_wo_spp_60p/merged_layer_conv75_conv77 = merge(yolov5m_wo_spp_60p/conv75, yolov5m_wo_spp_60p/conv77)
 yolov5m_wo_spp_60p/merged_layer_concat10_batch_norm7 = merge(yolov5m_wo_spp_60p/concat10, yolov5m_wo_spp_60p/batch_norm7)
 yolov5m_wo_spp_60p/merged_layer_concat12_batch_norm8 = merge(yolov5m_wo_spp_60p/concat12, yolov5m_wo_spp_60p/batch_norm8)
-yolov5m_wo_spp_60p/l4_portal_from_portal0_to_concat7 = portal(yolov5m_wo_spp_60p/portal0, yolov5m_wo_spp_60p/concat7, buffer_in_l4=True)
+yolov5m_wo_spp_60p/l4_portal_from_portal0_to_concat7 = l4_portal(yolov5m_wo_spp_60p/portal0, yolov5m_wo_spp_60p/concat7)
 
 compilation_param(yolov5m_wo_spp_60p/normalization1, balance_output_multisplit=enabled, buffer_in_l4=False, defuse_num_layers=1, defuse_spatial_w=False, enable_ew_add_optimization=allowed, layer_output_buffers_format=consecutive, mixed_mem=allowed, no_contexts=disabled, number_of_apus=1, number_of_input_aligners=1, number_of_subclusters=1, parallel_activation=disabled, resize_bilinear_streaming=disabled, resources_allocation_strategy=manual_scs_selection, use_16x4_sc=allowed)
 compilation_param(yolov5m_wo_spp_60p/space_to_depth1, balance_output_multisplit=enabled, buffer_in_l4=False, defuse_num_layers=1, defuse_spatial_w=False, enable_ew_add_optimization=allowed, layer_output_buffers_format=consecutive, mixed_mem=allowed, no_contexts=allowed, number_of_apus=1, number_of_input_aligners=1, number_of_subclusters=1, parallel_activation=disabled, resize_bilinear_streaming=disabled, resources_allocation_strategy=manual_scs_selection, use_16x4_sc=allowed)
@@ -371,3 +372,4 @@ place(4, [yolov5m_wo_spp_60p/concat7, yolov5m_wo_spp_60p/conv10, yolov5m_wo_spp_
 place(5, [yolov5m_wo_spp_60p/conv26, yolov5m_wo_spp_60p/conv37, yolov5m_wo_spp_60p/conv89, yolov5m_wo_spp_60p/conv90, yolov5m_wo_spp_60p/conv91, yolov5m_wo_spp_60p/ew_add4, yolov5m_wo_spp_60p/ew_add5, yolov5m_wo_spp_60p/ew_add6, yolov5m_wo_spp_60p/ew_add7, yolov5m_wo_spp_60p/ew_add8, yolov5m_wo_spp_60p/merged_layer_conv16_conv17, yolov5m_wo_spp_60p/merged_layer_conv18_conv19, yolov5m_wo_spp_60p/merged_layer_conv20_conv21, yolov5m_wo_spp_60p/merged_layer_conv22_conv23, yolov5m_wo_spp_60p/merged_layer_conv24_conv25, yolov5m_wo_spp_60p/portal0, yolov5m_wo_spp_60p/portal2])
 place(6, [yolov5m_wo_spp_60p/batch_norm1, yolov5m_wo_spp_60p/conv46_d1, yolov5m_wo_spp_60p/conv66, yolov5m_wo_spp_60p/conv72, yolov5m_wo_spp_60p/conv74, yolov5m_wo_spp_60p/conv73, yolov5m_wo_spp_60p/conv81, yolov5m_wo_spp_60p/conv92, yolov5m_wo_spp_60p/conv93, yolov5m_wo_spp_60p/merged_layer_concat10_batch_norm7, yolov5m_wo_spp_60p/merged_layer_concat8_batch_norm6, yolov5m_wo_spp_60p/merged_layer_conv47_conv49, yolov5m_wo_spp_60p/merged_layer_conv65_conv67, yolov5m_wo_spp_60p/merged_layer_conv68_conv69, yolov5m_wo_spp_60p/merged_layer_conv70_conv71])
 place(7, [yolov5m_wo_spp_60p/concat9, yolov5m_wo_spp_60p/conv45_d0, yolov5m_wo_spp_60p/conv45_dc, yolov5m_wo_spp_60p/conv46_d0, yolov5m_wo_spp_60p/conv46_dc, yolov5m_wo_spp_60p/conv5, yolov5m_wo_spp_60p/conv76, yolov5m_wo_spp_60p/conv78, yolov5m_wo_spp_60p/conv79, yolov5m_wo_spp_60p/conv8, yolov5m_wo_spp_60p/conv80, yolov5m_wo_spp_60p/conv85, yolov5m_wo_spp_60p/conv87, yolov5m_wo_spp_60p/conv88, yolov5m_wo_spp_60p/merged_layer_conv75_conv77])
+performance_param(fps=216)

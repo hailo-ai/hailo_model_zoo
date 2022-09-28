@@ -17,3 +17,4 @@ pre_quantization_optimization(activation_clipping, layers=[conv130], mode=percen
 
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.125, 2, 0.25, 0.125, 2, 0.25, 0.125, 2, 0.25], dataset_size=4000, epochs=8, learning_rate=1e-05, loss_layer_names=[conv94, conv95, conv96, conv112, conv113, conv114, conv129, conv130, conv131], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2])
+performance_param(fps=None)

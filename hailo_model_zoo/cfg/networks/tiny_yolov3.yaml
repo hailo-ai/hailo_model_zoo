@@ -24,14 +24,12 @@ postprocessing:
       - 169
       - 344
       - 319
-allocation:
-  required_fps: 1009
 network:
   network_name: tiny_yolov3
 paths:
   alls_script: tiny_yolov3.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/frozen_tiny_yolo_v3.pb
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2021-07-11/frozen_tiny_yolo_v3.pb
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2021-07-11/tiny_yolov3.zip
 parser:
   nodes:

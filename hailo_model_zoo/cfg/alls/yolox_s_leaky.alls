@@ -1,3 +1,3 @@
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+allocator_param(timeout=1800)
 post_quantization_optimization(finetune, policy=disabled)
-
+performance_param(fps=250)

@@ -5,6 +5,11 @@ BLUR_SIZE = 5
 BLUR_MEAN = 1.0
 BLUR_STD = 0.66
 
+RGB2YUV_mat = [[0.25678824, -0.14822353, 0.43921569],
+               [0.50412941, -0.29099216, -0.36778824],
+               [0.09790588, 0.43921569, -0.07142745]]
+RGB2YUV_offset = [16, 128, 128]
+
 
 def _gaussian_kernel(size=5, mean=1.0, std=0.66):
     """Makes 2D gaussian Kernel for convolution."""
@@ -70,4 +75,43 @@ def srgan(image, image_info, height, width, **kwargs):
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
     # return {'input_layer1': image, 'input_layer1_new': image}, image_info # removed due to hn_editor in srgan
+    return image, image_info
+
+
+def espcn(image, image_info, height, width, **kwargs):
+    if width and height:
+
+        image_orig = image
+        # Verify input is landscape
+        if tf.shape(image)[0] > tf.shape(image)[1]:
+            image = tf.squeeze(tf.transpose(tf.expand_dims(image, axis=0), [0, 2, 1, 3]), axis=0)
+        image_orig = tf.image.resize_with_pad(image, height, width)
+        # RGB ==> YUV
+        image = tf.cast(image, tf.float32)
+        image = tf.matmul(image, RGB2YUV_mat)
+        image = tf.add(image, RGB2YUV_offset)
+
+        # Taking luminance channel only
+        image = tf.expand_dims(tf.expand_dims(image[..., 0], axis=-1), axis=0)
+        image = tf.image.resize_with_pad(image, height, width)
+        image = tf.cast(tf.squeeze(image, axis=0), tf.float32)
+
+        if image_info:
+            image_info['img_orig'] = image_orig
+            upscale_factor = image_info.get('upscale_factor')
+            hr_img = image_info.get('hr_img')
+            if hr_img is not None:
+                # Verify input is landscape
+                if tf.shape(hr_img)[0] > tf.shape(hr_img)[1]:
+                    hr_img = tf.squeeze(tf.transpose(tf.expand_dims(hr_img, axis=0), [0, 2, 1, 3]), axis=0)
+                # RGB ==> YUV
+                hr_img = tf.cast(hr_img, tf.float32)
+                hr_img = tf.matmul(hr_img, RGB2YUV_mat)
+                hr_img = tf.add(hr_img, RGB2YUV_offset)
+                hr_img /= 255.  # Normalization
+                # Taking luminance channel only
+                hr_img = tf.expand_dims(tf.expand_dims(hr_img[..., 0], axis=-1), axis=0)
+                hr_img = tf.image.resize_with_pad(hr_img, upscale_factor * height, upscale_factor * width)
+                hr_img = tf.squeeze(hr_img, axis=0)
+                image_info['hr_img'] = tf.cast(hr_img, tf.float32)
     return image, image_info

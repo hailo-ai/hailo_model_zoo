@@ -1,0 +1,25 @@
+base:
+- base/arcface.yaml
+network:
+  network_name: arcface_mobilefacenet
+paths:
+  network_path:
+  - models_files/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/mbf.onnx
+  alls_script: arcface_mobilefacenet.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip
+parser:
+  nodes:
+  - null
+  - null
+info:
+  framework: pytorch
+  training_data: ms1mv3
+  validation_data: lfw
+  eval_metric: lfw verification accuracy
+  full_precision_result: 99.43
+  task: face recognition
+  input_shape: 112x112x3
+  output_shape: '512'
+  operations: 0.44G
+  parameters: 2.04M
+  license_url: https://opensource.org/licenses/MIT

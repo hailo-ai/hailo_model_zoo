@@ -12,12 +12,12 @@ parser:
   - null
   - null
 info:
+  task: face recognition
   framework: pytorch
   training_data: ms1mv3
   validation_data: lfw
   eval_metric: lfw verification accuracy
   full_precision_result: 99.43
-  task: face recognition
   input_shape: 112x112x3
   output_shape: '512'
   operations: 0.44G

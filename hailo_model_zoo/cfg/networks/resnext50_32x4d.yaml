@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: resnext50_32x4d
-allocation:
-  required_fps: 300
 paths:
   alls_script: resnext50_32x4d.alls
   network_path:

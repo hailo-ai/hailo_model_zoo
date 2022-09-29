@@ -101,12 +101,18 @@ Compile the Model using Hailo Model Zoo
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">repvgg_a0_person_reid_512.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">repvgg_a0_person_reid_512.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">repvgg_a0_person_reid_512.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/repvgg_a0_person_reid_512.yaml</span>
    </code>
 
 
-* | ``--ckpt`` - path to your ONNX file.
-* | ``--calib-path`` - path to a directory with your calibration images in JPEG format
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-| The model zoo will take care of adding the input normalization to be part of the model.
+.. note::
+  - Since it’s an Hailo model, calibration set must be manually supplied. 
+  - On `market1501.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/market1501.yaml>`_,
+    change ``preprocessing.input_shape`` if changed on retraining
+  
+  More details about YAML files are presented `here <../../../docs/YAML.rst>`_.

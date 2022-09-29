@@ -1,16 +1,5 @@
 base:
 - base/yolov5.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv70
-        activation: sigmoid
-      - layer_name: conv63
-        activation: sigmoid
-      - layer_name: conv55
-        activation: sigmoid
 network:
   network_name: yolov5s_personface
 paths:
@@ -30,8 +19,6 @@ postprocessing:
   nms_iou_thresh: 0.65
 quantization:
   calib_set: null
-allocation:
-  required_fps: 375
 evaluation:
   labels_offset: 1
   classes: 2

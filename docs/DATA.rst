@@ -32,6 +32,8 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `Market1501`_
   * `PETA`_
   * `CelebA`_
+  * `LFW`_
+  * `BSD100`_
 
 .. _ImageNet:
 
@@ -647,3 +649,82 @@ Hailo Model Zoo you should generate the CelebA TFRecord files
 
       python hailo_model_zoo/datasets/create_celeba_tfrecord.py val --data /path/to/CelebA/
       python hailo_model_zoo/datasets/create_celeba_tfrecord.py train --data /path/to/CelebA/
+
+.. _LFW:
+
+LFW
+------
+
+To evaluate/optimize/compile the face recognition models of the
+Hailo Model Zoo you should generate the arcface_lfw TFRecord files
+
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py calib
+    python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py val
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download LFW dataset from `here <http://vis-www.cs.umass.edu/lfw/lfw.tgz>`_
+#. Download LFW pairs file from `here <http://vis-www.cs.umass.edu/lfw/pairs.txt>`
+#. Run the scripts:
+
+    .. code-block::
+        
+        python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py calib --tgz /path/to/lfw.tgz --pairs /path/to/pairs.txt
+        python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py val --tgz /path/to/lfw.tgz --pairs /path/to/pairs.txt
+
+.. _BSD100:
+
+BSD100
+------
+
+To evaluate/optimize/compile the super resolution models of the 
+Hailo Model Zoo you should generate the BSD100 TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_bsd100_tfrecord.py val
+    python hailo_model_zoo/datasets/create_bsd100_tfrecord.py calib
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1oOqJHTu2JIUz0qyEmVuSI_Nye36nioYX">`_ and extract. 
+   The expected dataset structure:
+
+   .. code-block::
+
+      BSD100
+      |_ GTmod12
+      |  |_ 101085.png
+      |  |_ ...
+      |  |_ 97033.png
+      |_ GTmod16
+      |  |_ ...
+      |_ LRbicx8
+      |  |_ ...
+      |_ LRbicx4
+      |  |_ ...
+      |_ LRbicx3
+      |  |_ ...
+      |_ LRbicx2
+      |  |_ ...
+      |_ LRbicx16
+      |  |_ ...
+      |_ original
+      |  |_ ...
+
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py val --lr /path/to/LRbicx4 --hr /path/to/GTmod12
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py calib --lr /path/to/LRbicx4 --hr /path/to/GTmod12

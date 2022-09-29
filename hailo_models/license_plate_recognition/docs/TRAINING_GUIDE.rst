@@ -116,11 +116,15 @@ Choose the model YAML from our networks configuration directory, i.e. ``hailo_mo
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">lprnet.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">lprnet.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">lprnet.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/lprnet.yaml</span>
    </code>
 
-* ``--ckpt`` - path to your ONNX file.
-* ``--calib-path`` - path to a directory with your calibration images in JPEG/PNG format
-* ``--yaml`` - path to your configuration YAML file.
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-The model zoo will take care of adding the input normalization to be part of the model.
+.. note::
+  - Since it’s an Hailo model, calibration set must be manually supplied. 
+  
+  More details about YAML files are presented `here <../../../docs/YAML.rst>`_.

@@ -2,8 +2,6 @@ base:
 - base/mobilenet.yaml
 network:
   network_name: mobilenet_v2_1.0
-allocation:
-  required_fps: 2614
 paths:
   alls_script: mobilenet_v2_1.0.alls
   network_path:
@@ -15,6 +13,8 @@ parser:
   nodes:
   - input_image
   - MobilenetV2/Predictions/Softmax
+allocation:
+  legacy: true
 info:
   task: classification
   input_shape: 224x224x3

@@ -1,4 +1,5 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 quantization_param(conv45, precision_mode=a8_w4)
 quantization_param(conv46, precision_mode=a8_w4)
@@ -11,17 +12,13 @@ quantization_param(conv91, precision_mode=a8_w4)
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv94, conv85, conv75])
 
-portal0 = l4_portal(conv27, concat8)
-portal0_1 = l4_portal(portal0, concat8)
-portal1 = portal(conv30, concat3, buffer_in_l4=True)
-portal2 = portal(conv44, concat6, buffer_in_l4=True)
-portal3 = portal(conv56, concat12, buffer_in_l4=True)
-portal4 = portal(conv65, concat10, buffer_in_l4=True)
 
-buffers(portal0, portal0_1, 50, 1)
-buffers(portal0_1, concat8, 50, 1)
-
-buffers(conv44, portal2, 4)
 allocator_param(merge_min_layer_utilization=0.1, automatic_ddr=disabled)
 
+portal0 = l4_portal(conv27, concat8)
+portal1 = l4_portal(portal0, concat8)
+buffers(portal0, portal1, 50, 1)
+buffers(portal1, concat8, 50, 1)
+
 conv45_d0, conv45_d1, conv45_dc = defuse(conv45, 2)
+performance_param(fps=150)

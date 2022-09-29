@@ -387,6 +387,7 @@ def retinaface(image, image_info=None, height=None, width=None,
         image = tf.cast(image, tf.float32)
     if height and width:
         image, _, _, vertical_pad, horizontal_pad = _ar_preserving_resize_and_crop(image, height, width)
+        image.set_shape((height, width, 3))
     if image_info:
         image_info = _cast_image_info_types(image_info, image, max_pad)
         if 'num_boxes' in image_info.keys() and 'xmin' in image_info:
@@ -457,5 +458,40 @@ def fair_mot(image, image_info=None, height=None, width=None,
         image_info['person_id'] = _pad_tensor(image_info['person_id'], max_pad)
         image_info['label'] = _pad_tensor(image_info['label'], max_pad)
         image_info['is_ignore'] = _pad_tensor(image_info['is_ignore'], max_pad)
+
+    return image, image_info
+
+
+def detr(image, image_info=None, height=800, width=800, **kwargs):
+    image = tf.cast(image, tf.float32)
+    shape = tf.shape(image)
+    original_height, original_width = shape[0], shape[1]
+
+    # TF resize to 800x800 ARP
+    image = tf.expand_dims(image, 0)
+    image = tf.image.resize(image, [height, width], preserve_aspect_ratio=False, antialias=False, name=None)
+    image = tf.squeeze(image, [0])
+    image.set_shape((height, width, 3))
+
+    max_pad = 100
+    _cast_image_info_types(image_info, image, max_pad)
+    if image_info and 'num_boxes' in image_info:
+        xmin = tf.expand_dims(_pad_tensor(image_info.pop('xmin') * tf.cast(image_info['width'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        xmax = tf.expand_dims(_pad_tensor(image_info.pop('xmax') * tf.cast(image_info['width'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        ymin = tf.expand_dims(_pad_tensor(image_info.pop('ymin') * tf.cast(image_info['height'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        ymax = tf.expand_dims(_pad_tensor(image_info.pop('ymax') * tf.cast(image_info['height'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+
+        w = xmax - xmin
+        h = ymax - ymin
+
+        image_info['height'] = original_height
+        image_info['width'] = original_width
+        # Arrange bbox as [xmin, ymin, w, h] to match the input needed for
+        image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
+        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], max_tensor_padding=max_pad), axis=1)
 
     return image, image_info

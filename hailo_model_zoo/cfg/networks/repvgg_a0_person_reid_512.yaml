@@ -2,8 +2,6 @@ base:
 - base/market1501.yaml
 network:
   network_name: repvgg_a0_person_reid_512
-allocation:
-  required_fps: 300
 paths:
   alls_script: repvgg_a0_person_reid_512.alls
   network_path:

@@ -1,7 +1,7 @@
 stdc1/normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 
-post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv33], loss_types=[l2])
+post_quantization_optimization(finetune, policy=disabled)
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, automatic_reshapes=allowed, cluster_timeout=300, defuse_by_validator=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=0.95, seed=0, splitter_timeout=600, timeout=1200, validate=True)
 buffer_calc_param(buffer_calc_fps=0.0, optimize_buffers=True, save_latency_timeline=False, split_aware_optimize_buffers=True)
 context_switch_param(goal_network_compute_utilization=1.0, goal_network_control_utilization=1.0, goal_network_memory_utilization=1.0, goal_network_weights_utilization=1.0, max_compute_utilization=0.3, max_control_utilization=0.3, max_memory_utilization=0.3, max_utilization=1.0, mode=disabled)
@@ -283,3 +283,4 @@ place(4, [stdc1/avgpool3, stdc1/avgpool6, stdc1/concat6, stdc1/conv19_d1, stdc1/
 place(5, [stdc1/concat4, stdc1/conv1, stdc1/conv17, stdc1/conv18, stdc1/conv19_d0, stdc1/conv19_dc, stdc1/conv27, stdc1/conv2_sd0, stdc1/conv2_sd1, stdc1/conv2_sdc, stdc1/conv4, stdc1/dw2])
 place(6, [stdc1/argmax1, stdc1/avgpool7, stdc1/concat7, stdc1/conv29, stdc1/conv30_sd0, stdc1/conv30_sd1, stdc1/conv30_sdc, stdc1/conv31, stdc1/ew_add2, stdc1/ew_mult3, stdc1/fc4, stdc1/fc5, stdc1/resize4, stdc1/resize5, stdc1/resize6, stdc1/shortcut_from_shortcut_from_ew_add3_to_conv32_sd0-3_to_conv32_sd2-3])
 place(7, [stdc1/concat_from_conv32_sd0-2_to_conv32_sdc, stdc1/conv32_sd0, stdc1/conv32_sd2, stdc1/conv32_sd3, stdc1/conv32_sd4, stdc1/conv32_sdc, stdc1/conv33, stdc1/ew_add1, stdc1/ew_add3, stdc1/resize7_input_reshape, stdc1/shortcut_from_ew_add3_to_conv32_sd0-3, stdc1/shortcut_from_shortcut_from_ew_add3_to_conv32_sd0-3_to_conv32_sd0-1])
+performance_param(fps=None)

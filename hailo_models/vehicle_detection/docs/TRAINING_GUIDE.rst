@@ -105,11 +105,24 @@ Compile the Model using Hailo Model Zoo
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">yolov5m_vehicles.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">yolov5m_vehicles.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">yolov5m_vehicles.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/yolov5m_vehicles.yaml</span>
    </code>
 
-* | ``--ckpt`` - path to your ONNX file.
-* | ``--calib-path`` - path to a directory with your calibration images in JPEG format
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-| The model zoo will take care of adding the input normalization to be part of the model.
+.. note::
+  - Since it’s an Hailo model, calibration set must be manually supplied.
+  - This model has an on-chip resize from the video input [1080x1920] to the model’s input ([640x640], the resolution
+    the model is trained with). Model Zoo automatically adds the resize for this model using a model script command on 
+    `yolov5m_vehicles.alls <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/alls/yolov5m_vehicles.alls>`_.
+    Therefore, the ``input_resize`` command should be updated if the video input resolution is different (or even removed if it is
+    equal to the resolution the model is trained with).
+  - On `yolov5m_vehicles.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov5m_vehicles.yaml>`_,
+    change ``input_resize`` field to match the input_resize command on the model script.
+  - On `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_,
+    change ``preprocessing.input_shape`` if the network is trained on other resolution.
+  
+  More details about YAML files are presented `here <../../../docs/YAML.rst>`_.

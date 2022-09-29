@@ -126,15 +126,17 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
    :name:validation
 
    <code stage="compile">
-   hailomz compile <span val="replace_none">yolact</span> --ckpt <span val="local_path_to_onnx">yolact.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">yolact_regnetx_800mf_20classes.yaml</span>
+   hailomz compile <span val="replace_none">yolact</span> --ckpt <span val="local_path_to_onnx">yolact.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/yolact_regnetx_800mf_20classes.yaml</span>
    </code>
 
-**NOTE:**\ The yolact_regnetx_800mf_20classes is an example yaml where some of the classes were removed. In case you want to remove classes you can remove them in tha yaml file, under *channel_remove*.
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-
-* | ``--ckpt`` - path to your ONNX file.
-* | ``--calib-path`` - path to a directory with your calibration images in JPEG format
-* | ``--yaml`` - path to your configuration YAML file. In case you have made some changes in the model, you might need to update its start/end nodes names / number of classes and so on.
-  | The model zoo will take care of adding the input normalization to be part of the model.
-
-
+.. note::
+  - The `yolact_regnetx_800mf_20classes.yaml<https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolact_regnetx_800mf_20classes.yaml>`_ 
+    is an example yaml where some of the classes (out of 80) were removed. If you wish to change the number of classes, the easiest way is to retrain with the exact number
+    of classes, erase the ``channels_remove`` section (lines 18 to 437), and update ``parser.start_node_shape`` to fit your input resolution
+  
+  More details about YAML files are presented `here <../../docs/YAML.rst>`_.

@@ -2,8 +2,6 @@ base:
 - base/oxford_pet.yaml
 evaluation:
   labels_offset: 1
-allocation:
-  required_fps: null
 network:
   network_name: unet_mobilenet_v2
 paths:

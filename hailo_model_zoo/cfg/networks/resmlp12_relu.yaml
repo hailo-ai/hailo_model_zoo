@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: resmlp12_relu
-allocation:
-  required_fps: 1431
 paths:
   alls_script: resmlp12_relu.alls
   network_path:

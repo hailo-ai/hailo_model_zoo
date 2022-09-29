@@ -8,8 +8,6 @@ postprocessing:
   meta_arch: mspn
 network:
   network_name: mspn_regnetx_800mf
-allocation:
-  required_fps: null
 paths:
   alls_script: mspn_regnetx_800mf.alls
   network_path:
@@ -33,6 +31,7 @@ evaluation:
   network_type: single_person_pose_estimation
   infer_type: np_infer
 info:
+  task: single person pose estimation
   input_shape: 256x192x3
   output_shape: 64x48x17
   operations: 1.47G

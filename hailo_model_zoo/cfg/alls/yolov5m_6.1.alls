@@ -1,5 +1,9 @@
 yolov5m_6_1/normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 
+change_output_activation(yolov5m_6_1/conv82, sigmoid)
+change_output_activation(yolov5m_6_1/conv74, sigmoid)
+change_output_activation(yolov5m_6_1/conv65, sigmoid)
+
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, automatic_reshapes=allowed, cluster_timeout=300, defuse_by_validator=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=0.1, seed=0, splitter_timeout=600, timeout=1200, validate=True)
 buffer_calc_param(buffer_calc_fps=0.0, optimize_buffers=True, save_latency_timeline=False, split_aware_optimize_buffers=True)
 context_switch_param(goal_network_compute_utilization=1.0, goal_network_control_utilization=1.0, goal_network_memory_utilization=1.0, goal_network_weights_utilization=1.0, max_compute_utilization=0.3, max_control_utilization=0.3, max_memory_utilization=0.3, max_utilization=1.0, mode=disabled)
@@ -306,3 +310,4 @@ place(4, [yolov5m_6_1/conv24, yolov5m_6_1/conv25, yolov5m_6_1/conv26, yolov5m_6_
 place(5, [yolov5m_6_1/concat10, yolov5m_6_1/concat7, yolov5m_6_1/conv28, yolov5m_6_1/conv30, yolov5m_6_1/conv31, yolov5m_6_1/conv32, yolov5m_6_1/conv33, yolov5m_6_1/conv34, yolov5m_6_1/conv38_d0, yolov5m_6_1/conv50, yolov5m_6_1/conv53, yolov5m_6_1/conv54, yolov5m_6_1/conv55, yolov5m_6_1/ew_add10, yolov5m_6_1/ew_add11, yolov5m_6_1/ew_add9])
 place(6, [yolov5m_6_1/concat1, yolov5m_6_1/concat5, yolov5m_6_1/concat6, yolov5m_6_1/conv1_defuse_1x1, yolov5m_6_1/conv1_defuse_reshape_hxf_to_w_transposed, yolov5m_6_1/conv1_defuse_width_feature_reshape, yolov5m_6_1/conv2, yolov5m_6_1/conv3, yolov5m_6_1/conv45, yolov5m_6_1/conv46, yolov5m_6_1/conv49, yolov5m_6_1/conv51, yolov5m_6_1/conv52, yolov5m_6_1/normalization1, yolov5m_6_1/resize1])
 place(7, [yolov5m_6_1/concat3, yolov5m_6_1/concat4, yolov5m_6_1/conv21, yolov5m_6_1/conv23, yolov5m_6_1/conv37, yolov5m_6_1/conv38_dc, yolov5m_6_1/conv39, yolov5m_6_1/conv40, yolov5m_6_1/conv41, yolov5m_6_1/conv43, yolov5m_6_1/conv44, yolov5m_6_1/conv5, yolov5m_6_1/ew_add12, yolov5m_6_1/ew_add13, yolov5m_6_1/ew_add14])
+performance_param(fps=None)

@@ -8,7 +8,7 @@ nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/ssd/ssd_m
 quantization_param({conv*}, bias_mode=single_scale_decomposition)
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])
 
 allocator_param(automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, cluster_timeout=300, defuse_by_validator=True, enable_axis_upsize=True, enable_fixer=True, enable_swapper=True, max_auto_defuse=8, seed=74, timeout=30000, validate=True, automatic_l4_portals=False)
 
@@ -332,3 +332,4 @@ place(5, [normalization1, conv1, conv17_linear0, bbox_decoder17, conv29_exp1, co
 place(6, [conv5, conv6, conv10, conv13_linear0, dw5_d0, dw5_d1, dw5_d2, dw5_dc, dw8_d2, dw8_dc, dw10_d0, dw10_d1, dw10_d2, dw10_dc, dw11_d1, shortcut_from_conv12_to_conv13_exp1_conv13_linear0_conv14_dw12_d0])
 place(7, [dw6, conv7, conv8, conv11, conv12, proposal_generator0_concat, dw3_d4, dw3_dc, dw7_d0, dw7_d1, dw7_d2, dw7_dc, dw8_d0, dw11_d0, dw11_d2, dw11_dc])
 
+performance_param(fps=1196)

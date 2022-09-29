@@ -1,20 +1,7 @@
 base:
 - base/yolov5.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv82
-        activation: sigmoid
-      - layer_name: conv74
-        activation: sigmoid
-      - layer_name: conv65
-        activation: sigmoid
 network:
   network_name: yolov5m_6.1
-allocation:
-  required_fps: null
 paths:
   alls_script: yolov5m_6.1.alls
   network_path:

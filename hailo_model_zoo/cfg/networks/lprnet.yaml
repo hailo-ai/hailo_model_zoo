@@ -9,8 +9,6 @@ quantization:
   calib_set: null
 network:
   network_name: lprnet
-allocation:
-  required_fps: 330
 paths:
   alls_script: lprnet.alls
   network_path:

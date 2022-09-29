@@ -8,8 +8,6 @@ parser:
   nodes:
   - null
   - ArgMax_73
-allocation:
-  required_fps: 33
 paths:
   alls_script: fcn8_resnet_v1_18.alls
   network_path:

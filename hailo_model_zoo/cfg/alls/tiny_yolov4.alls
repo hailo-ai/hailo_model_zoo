@@ -13,3 +13,4 @@ quantization_param(output_layer2, precision_mode=a16_w16)
 
 allocator_param(enable_partial_row_buffers=disabled)
 
+performance_param(fps=1385)

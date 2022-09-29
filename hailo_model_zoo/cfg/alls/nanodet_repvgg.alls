@@ -2,3 +2,4 @@ normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 
 allocator_param(merge_min_layer_utilization=0.1)
+performance_param(fps=None)

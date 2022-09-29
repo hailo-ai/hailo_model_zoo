@@ -4,7 +4,6 @@ network:
   network_name: resnet_v1_50
 allocation:
   allocation_timeout: 1200
-  required_fps: 1331
 paths:
   alls_script: resnet_v1_50.alls
   network_path:

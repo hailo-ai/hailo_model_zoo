@@ -4,8 +4,6 @@ network:
   network_name: ssd_mobilenet_v1_no_alls
 paths:
   alls_script: ssd_mobilenet_v1_no_alls.alls
-allocation:
-  required_fps: 50
 info:
   task: object detection
   input_shape: 300x300x3

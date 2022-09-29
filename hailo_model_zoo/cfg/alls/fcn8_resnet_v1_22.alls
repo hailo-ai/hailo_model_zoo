@@ -10,3 +10,4 @@ conv20_defuse_0, conv20_defuse_1, conv20_defuse_2, conv20_defuse_3, conv20_defus
 conv22_defuse_0, conv22_defuse_1, conv22_defuse_2, conv22_defuse_3, conv22_defuse_concat = defuse(conv22, 4)
 conv24_defuse_0, conv24_defuse_1, conv24_defuse_2, conv24_defuse_3, conv24_defuse_concat = defuse(conv24, 4)
 
+performance_param(fps=10)

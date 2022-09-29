@@ -7,8 +7,6 @@ paths:
   - models_files/hardnet39ds/2021-07-20/hardnet39ds.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/hardnet39ds/pretrained/2021-07-20/hardnet39ds.zip
   alls_script: hardnet39ds.alls
-allocation:
-  required_fps: 2000
 parser:
   nodes:
   - null

@@ -2,17 +2,6 @@ base:
 - base/yolo.yaml
 inference:
   emulator_batch_size: 4
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: yolov7/conv92
-        activation: sigmoid
-      - layer_name: yolov7/conv82
-        activation: sigmoid
-      - layer_name: yolov7/conv70
-        activation: sigmoid
 postprocessing:
   meta_arch: yolo_v5
   anchors:
@@ -39,8 +28,6 @@ postprocessing:
       - 243
       - 459
       - 401
-allocation:
-  required_fps: null
 network:
   network_name: yolov7
 paths:

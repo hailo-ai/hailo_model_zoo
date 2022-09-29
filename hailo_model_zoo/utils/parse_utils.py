@@ -25,17 +25,19 @@ def translate_model(runner, network_info, ckpt_path, *, tensor_shapes=None):
 
     if type(end_node) == str:
         end_node = [end_node]
+    if type(start_node) == str:
+        start_node = [start_node]
 
     ckpt_path = str(ckpt_path)
     if ckpt_path.endswith('.onnx'):
         runner.translate_onnx_model(ckpt_path, model_name,
-                                    start_node_name=start_node,
+                                    start_node_names=start_node,
                                     end_node_names=end_node,
                                     net_input_shape=tensor_shapes,
                                     ew_add_policy=ew_add_policy)
     else:
         runner.translate_tf_model(ckpt_path, model_name,
-                                  start_node_name=start_node,
+                                  start_node_names=start_node,
                                   end_node_names=end_node,
                                   tensor_shapes=tensor_shapes,
                                   ew_add_policy=ew_add_policy)

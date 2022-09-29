@@ -1,6 +1,32 @@
 Changelog
 =========
 
+**v2.4**
+
+* Updated to use Dataflow Compiler v3.20 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Required FPS was moved from models YAML into the models scripts
+* Model scripts use new change activation syntax
+* New models:
+
+  * Face Detection - scrfd_500m / scrfd_2.5g / scrfd_10g
+  
+* New tasks: 
+
+  1. Super-Resolution
+
+    * Added support for BSD100 dataset
+    * The following models were added: espcn_x2 / espcn_x3 / espcn_x4
+  2.  Face Recognition
+
+    * Support for LFW dataset
+    * The following models were added:
+
+      #. arcface_r50
+      #. arcface_mobilefacenet
+    * Retraining docker for arcface architecture
+
+* Added support for new hw-arch - hailo8l 
+
 **v2.3**
 
 * Updated to use Dataflow Compiler v3.19 (`developer-zone <https://hailo.ai/developer-zone/>`_)

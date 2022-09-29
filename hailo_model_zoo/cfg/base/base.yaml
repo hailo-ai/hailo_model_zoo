@@ -30,7 +30,7 @@ preprocessing:
   padding_color: 0
 allocation:
   allocation_timeout: null
-  required_fps: null
+  legacy: false
 parser:
   ew_add_policy: fused_conv_and_add
   nodes:

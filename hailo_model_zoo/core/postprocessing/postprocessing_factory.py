@@ -16,7 +16,8 @@ from hailo_model_zoo.core.postprocessing.pose_estimation_postprocessing import (
 from hailo_model_zoo.core.postprocessing.mono_depth_estimation_postprocessing import (
     mono_depth_estimation_postprocessing, visualize_mono_depth_result)
 from hailo_model_zoo.core.postprocessing.super_resolution_postprocessing import (super_resolution_postprocessing,
-                                                                                 visualize_super_resolution_result)
+                                                                                 visualize_super_resolution_result,
+                                                                                 visualize_srgan_result)
 from hailo_model_zoo.core.postprocessing.head_pose_estimation_postprocessing import (
     head_pose_estimation_postprocessing, visualize_head_pose_result)
 from hailo_model_zoo.core.postprocessing.lane_detection_postprocessing import (lane_detection_postprocessing,
@@ -61,6 +62,7 @@ def get_visualization(name, **kwargs):
         'face_verification': visualize_face_result,
         'instance_segmentation': visualize_instance_segmentation_result,
         'super_resolution': visualize_super_resolution_result,
+        'super_resolution_srgan': visualize_srgan_result,
         'head_pose_estimation': visualize_head_pose_result,
         'age_gender': visualize_age_gender_result,
         'face_detection': visualize_detection_result,
@@ -105,6 +107,7 @@ def get_postprocessing(name, flip=False):
         'face_landmark_detection': face_landmarks_postprocessing,
         'instance_segmentation': instance_segmentation_postprocessing,
         'super_resolution': super_resolution_postprocessing,
+        'super_resolution_srgan': super_resolution_postprocessing,
         'head_pose_estimation': head_pose_estimation_postprocessing,
         'face_detection': face_detection_postprocessing,
         'age_gender': age_gender_postprocessing,

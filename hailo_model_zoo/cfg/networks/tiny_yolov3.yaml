@@ -24,8 +24,6 @@ postprocessing:
       - 169
       - 344
       - 319
-allocation:
-  required_fps: 1009
 network:
   network_name: tiny_yolov3
 paths:

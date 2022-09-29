@@ -1,7 +1,5 @@
 base:
 - base/pascal.yaml
-allocation:
-  required_fps: 110
 network:
   network_name: deeplab_v3_mobilenet_v2
 paths:

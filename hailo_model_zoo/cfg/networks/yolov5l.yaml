@@ -3,21 +3,8 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv139
-        activation: sigmoid
-      - layer_name: conv128
-        activation: sigmoid
-      - layer_name: conv116
-        activation: sigmoid
 network:
   network_name: yolov5l
-allocation:
-  required_fps: null
 paths:
   network_path:
   - models_files/yolov5/yolov5l_spp/2021-02-04/yolov5l.onnx

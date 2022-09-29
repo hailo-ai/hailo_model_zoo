@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: regnetx_800mf
-allocation:
-  required_fps: 3500
 paths:
   alls_script: regnetx_800mf.alls
   network_path:

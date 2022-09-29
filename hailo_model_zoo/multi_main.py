@@ -80,10 +80,8 @@ def main(cfg_path, har_path=None):
     final_name = runner.model_name
 
     alls_script = None if not cfg.alls_script else str(MULTI_NETWORKS_DIR.joinpath(cfg_dir, cfg.alls_script))
-    hef = runner.get_hw_representation(
-        fps=cfg.fps,
-        allocator_script_filename=alls_script
-    )
+    runner.load_model_script(alls_script)
+    hef = runner.compile()
     runner.save_har(results_dir / f'{final_name}.har')
 
     with open(results_dir / f"{final_name}.hef", "wb") as f:

@@ -2,8 +2,6 @@ base:
 - base/fcn.yaml
 network:
   network_name: stdc1
-allocation:
-  required_fps: null
 parser:
   nodes:
   - null

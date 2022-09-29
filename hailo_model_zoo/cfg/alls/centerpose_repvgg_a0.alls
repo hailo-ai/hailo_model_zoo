@@ -2,3 +2,4 @@ centerpose_repvgg_a0/normalization1 = normalization([119.85, 113.985, 104.04], [
 model_optimization_config(calibration, batch_size=8, calibset_size=2048)
 allocator_param(merge_min_layer_utilization=0.1)
 allocator_param(automatic_ddr=disabled)
+performance_param(fps=500)

@@ -1,18 +1,5 @@
 base:
 - base/yolo.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv93
-        activation: sigmoid
-      - layer_name: conv84
-        activation: sigmoid
-      - layer_name: conv74
-        activation: sigmoid
-allocation:
-  required_fps: 216
 network:
   network_name: yolov5m_wo_spp_60p
 paths:

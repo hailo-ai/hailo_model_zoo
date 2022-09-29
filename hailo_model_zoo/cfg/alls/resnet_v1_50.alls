@@ -222,3 +222,4 @@ place(4, [avgpool1, conv15, conv16, conv18, conv19, conv1_sd0, conv46_d0, conv52
 place(5, [conv1_sd1, conv20, conv44, conv45_d1, conv45_d2, conv45_dc, conv52_d0, normalization1])
 place(6, [conv10, conv11, conv12, conv13, conv14, conv26, conv28, conv45_d0, conv52_d1, fc1_dc, maxpool2])
 place(7, [conv17, conv23, conv24, conv25, conv27, conv29, conv33, conv46_dc, conv51, maxpool3])
+performance_param(fps=1331)

@@ -41,3 +41,4 @@ pre_quantization_optimization(equalization, policy=disabled)
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
+performance_param(fps=None)

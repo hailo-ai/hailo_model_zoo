@@ -13,8 +13,6 @@ postprocessing:
     predefined: true
 network:
   network_name: ssd_mobilenet_v2
-allocation:
-  required_fps: 452
 paths:
   alls_script: ssd_mobilenet_v2.alls
   network_path:

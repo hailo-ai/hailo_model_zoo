@@ -2,37 +2,7 @@ normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 ## Allocator Script Version 1.0
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0], dataset_size=1000, epochs=4, learning_rate=0.0001, loss_layer_names=[conv23], loss_types=[l2])
+post_quantization_optimization(finetune, policy=disabled)
 
-allocator_param(automatic_l4_portals=False, automatic_ddr=disabled)
-
-shortcut0 = shortcut(maxpool1, [conv2, conv3])
-compilation_param(shortcut0, balance_output_multisplit=False)
-
-# compilation_params commands
-compilation_param({conv*}, balance_output_multisplit=False)
-
-conv3_d0, conv3_d1, conv3_dc = defuse(conv3, 2)
-
-conv8_d0, conv8_d1, conv8_dc = defuse(conv8, 2)
-conv10_d0, conv10_d1, conv10_dc = defuse(conv10, 2)
-
-
-conv15_d0, conv15_d1, conv15_dc = defuse(conv15, 2)
-
-conv17_d0, conv17_d1, conv17_dcv = defuse(conv17, 2)
-conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_dc = defuse(conv18, 4)
-conv19_d0, conv19_d1, conv19_d2, conv19_d3, conv19_dc = defuse(conv19, 4)
-conv20_d0, conv20_d1, conv20_d2, conv20_d3, conv20_dc = defuse(conv20, 4)
-
-portal_conv10_conv23 = portal(conv10_dc, conv23)
-compilation_param(portal_conv10_conv23, buffer_in_l4=True)
-portal_portal_conv10_conv23_conv23 = portal(portal_conv10_conv23, conv23)
-
-buffers(conv10_dc, portal_conv10_conv23, 19)
-buffers(portal_conv10_conv23, portal_portal_conv10_conv23_conv23, 38)
-buffers(portal_portal_conv10_conv23_conv23, conv23, 19)
-
-portal_conv15_conv22 = portal(conv15_dc, conv22)
-buffers(conv15_dc, portal_conv15_conv22, 14)
-buffers(portal_conv15_conv22, conv22, 14)
+allocator_param(automatic_ddr=disabled)
+performance_param(fps=33)

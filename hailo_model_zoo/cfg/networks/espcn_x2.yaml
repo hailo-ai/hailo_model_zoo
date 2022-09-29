@@ -1,0 +1,35 @@
+base:
+- base/espcn.yaml
+- base/bsd100_x2.yaml
+preprocessing:
+  meta_arch: espcn
+network:
+  network_name: espcn_x2
+paths:
+  alls_script: espcn_x2.alls
+  network_path:
+  - models_files/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2_156x240.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip
+parser:
+  nodes:
+  - input.1
+  - - '12'
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0
+    std_list:
+    - 255
+info:
+  task: super resolution
+  input_shape: 156x240x1
+  output_shape: 312x480x1
+  operations: 0.8G
+  parameters: 0.02M
+  framework: pytorch
+  training_data: T91
+  validation_data: BSD100
+  eval_metric: PSNR
+  full_precision_result: 31.398
+  source: https://github.com/Lornatang/ESPCN-PyTorch
+  license_url: https://github.com/Lornatang/ESPCN-PyTorch/blob/master/LICENSE

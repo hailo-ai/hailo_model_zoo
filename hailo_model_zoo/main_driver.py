@@ -11,9 +11,9 @@ from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
-from hailo_model_zoo.core.main_utils import (get_network_info, parse_model, load_model,
-                                             optimize_model, infer_model, compile_model, get_hef_path, info_model,
-                                             resolve_alls_path)
+from hailo_model_zoo.core.main_utils import (get_network_info, parse_model,
+                                             optimize_model, infer_model, compile_model, get_hef_path,
+                                             resolve_alls_path, _get_integrated_postprocessing)
 from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS
 from hailo_model_zoo.utils.logger import get_logger
 
@@ -25,8 +25,13 @@ def _ensure_compiled(runner, logger, args, network_info):
     compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
 
 
-def _ensure_quantized(runner, logger, args, network_info):
+def _ensure_optimized(runner, logger, args, network_info):
     _ensure_parsed(runner, logger, network_info, args)
+
+    integrated_postprocessing = _get_integrated_postprocessing(network_info)
+    if integrated_postprocessing and integrated_postprocessing.enabled and args.model_script_path is not None:
+        raise ValueError(f"Network {network_info.network.network_name} joins several networks together\n"
+                         "and cannot get a user model script")
 
     if runner.state != States.HAILO_MODEL:
         return
@@ -36,17 +41,27 @@ def _ensure_quantized(runner, logger, args, network_info):
 
 
 def _ensure_parsed(runner, logger, network_info, args):
+    _hailo8l_warning(args.hw_arch, logger)
+
     if runner.state != States.UNINITIALIZED:
         return
 
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger,
-                model_script_path=args.model_script_path)
+    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
 def _ensure_runnable_state(args, logger, network_info, runner, target):
     _ensure_parsed(runner, logger, network_info, args)
     if isinstance(target, SdkNative):
-        runner.apply_model_modification_commands()
+        if runner.state == States.HAILO_MODEL:
+            integrated_postprocessing = _get_integrated_postprocessing(network_info)
+            if integrated_postprocessing and integrated_postprocessing.enabled:
+                runner.apply_model_modification_commands()
+                return None
+
+            model_script = args.model_script_path if args.model_script_path \
+                else resolve_alls_path(network_info.paths.alls_script)
+            runner.load_model_script(model_script)
+            runner.apply_model_modification_commands()
         return None
 
     if args.hef_path:
@@ -54,7 +69,7 @@ def _ensure_runnable_state(args, logger, network_info, runner, target):
         network_groups = target.configure(hef)
         return network_groups
 
-    _ensure_quantized(runner, logger, args, network_info)
+    _ensure_optimized(runner, logger, args, network_info)
 
     if isinstance(target, SdkPartialNumeric):
         return None
@@ -68,6 +83,11 @@ def _str_to_profiling_mode(name):
     return ProfilerModes[name.upper()]
 
 
+def _hailo8l_warning(hw_arch, logger):
+    if hw_arch == "hailo8l":
+        logger.warning("Hailo8L support is currently at Preview on Hailo Model Zoo")
+
+
 def parse(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
@@ -76,8 +96,7 @@ def parse(args):
 
     logger.info('Initializing the runner...')
     runner = ClientRunner()
-    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger,
-                model_script_path=args.model_script_path)
+    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
 def optimize(args):
@@ -90,11 +109,8 @@ def optimize(args):
         raise ValueError(
             "Cannot run optimization without dataset. use --calib-path to provide external dataset.")
 
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
+    logger.info(f'Initializing the {args.hw_arch} runner...')
+    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
 
     _ensure_parsed(runner, logger, network_info, args)
 
@@ -108,13 +124,10 @@ def compile(args):
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
+    logger.info(f'Initializing the {args.hw_arch} runner...')
+    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
 
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    _ensure_quantized(runner, logger, args, network_info)
+    _ensure_optimized(runner, logger, args, network_info)
 
     compile_model(runner, network_info, args.results_dir, model_script_path=args.model_script_path)
 
@@ -131,25 +144,28 @@ def profile(args):
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 
-    logger.info('Initializing the runner...')
-    runner = ClientRunner()
+    logger.info(f'Initializing the {args.hw_arch} runner...')
+    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
 
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
-
-    if args.hef_path or profile_mode is ProfilerModes.PRE_PLACEMENT:
+    if profile_mode is ProfilerModes.PRE_PLACEMENT:
+        _ensure_parsed(runner, logger, network_info, args)
+    elif args.hef_path:
         # we already have hef (or don't need one), just need .hn
         _ensure_parsed(runner, logger, network_info, args)
+        if runner.state == States.HAILO_MODEL:
+            model_script = args.model_script_path if args.model_script_path \
+                else resolve_alls_path(network_info.paths.alls_script)
+            runner.load_model_script(model_script)
+            runner.apply_model_modification_commands()
     else:
-        # Quantize the model so profile_hn_model could compile & profile it
-        _ensure_quantized(runner, logger, args, network_info)
+        # Optimize the model so profile_hn_model could compile & profile it
+        _ensure_optimized(runner, logger, args, network_info)
 
     alls_script_path = (args.model_script_path if args.model_script_path else
                         resolve_alls_path(network_info.paths.alls_script)) \
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
 
-    stats, csv_data, latency_data = runner.profile_hn_model(fps=network_info.allocation.required_fps,
-                                                            profiling_mode=profile_mode,
+    stats, csv_data, latency_data = runner.profile_hn_model(profiling_mode=profile_mode,
                                                             should_use_logical_layers=True,
                                                             allocator_script=alls_script_path,
                                                             hef_filename=args.hef_path)
@@ -195,11 +211,8 @@ def evaluate(args):
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
-    runner = ClientRunner()
+    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
     network_groups = None
-
-    if args.har_path:
-        load_model(runner, args.har_path, logger=logger)
 
     logger.info(f'Chosen target is {args.target}')
     hailo_target = TARGETS[args.target]
@@ -213,14 +226,6 @@ def evaluate(args):
                              dump_results=False, network_groups=network_groups)
 
         return result
-
-
-def info(args):
-    logger = get_logger()
-    network_info = get_network_info(args.model_name)
-    model_name = network_info.network.network_name
-    logger.info(f'Start run for network {model_name} ...')
-    info_model(model_name, network_info, logger)
 
 
 def __get_batch_size(network_info, target):

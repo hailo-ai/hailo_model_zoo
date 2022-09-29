@@ -5,21 +5,8 @@ preprocessing:
   - 512
   - 512
   - 3
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv69
-        activation: sigmoid
-      - layer_name: conv61
-        activation: sigmoid
-      - layer_name: conv53
-        activation: sigmoid
 network:
   network_name: yolov5xs_wo_spp
-allocation:
-  required_fps: 900
 paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2021-07-11/yolov5s512.onnx

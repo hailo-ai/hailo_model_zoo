@@ -9,6 +9,7 @@ from hailo_model_zoo.core.eval.pose_estimation_evaluation import PoseEstimationE
 from hailo_model_zoo.core.eval.instance_segmentation_evaluation import InstanceSegmentationEval
 from hailo_model_zoo.core.eval.depth_estimation_evaluation import DepthEstimationEval
 from hailo_model_zoo.core.eval.super_resolution_evaluation import SuperResolutionEval
+from hailo_model_zoo.core.eval.srgan_evaluation import SRGANEval
 from hailo_model_zoo.core.eval.head_pose_estimation_evaluation import HeadPoseEstimationEval
 from hailo_model_zoo.core.eval.multiple_object_tracking_evaluation import MultipleObjectTrackingEval
 from hailo_model_zoo.core.eval.lane_detection_evaluation import LaneDetectionEval
@@ -48,7 +49,7 @@ def get_evaluation(name):
         'face_verification': FaceVerificationEval,
         'instance_segmentation': InstanceSegmentationEval,
         'mono_depth_estimation': DepthEstimationEval,
-        'super_resolution': SuperResolutionEval,
+        'srgan': SRGANEval,
         'landmark_detection': EmptyEval,
         'face_landmark_detection': FaceLandmarkEval,
         'face_landmark_detection_3d': FaceLandmark3DEval,
@@ -66,6 +67,7 @@ def get_evaluation(name):
         'person_attr': PersonAttrEval,
         'face_attr': PersonAttrEval,
         'single_person_pose_estimation': SinglePersonPoseEstimationEval,
+        'super_resolution': SuperResolutionEval,
     }
 
     if name not in evaluation_map:

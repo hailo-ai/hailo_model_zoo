@@ -1,14 +1,5 @@
 base:
 - base/centerpose.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv64
-        activation: sigmoid
-      - layer_name: conv60
-        activation: sigmoid
 network:
   network_name: centerpose_regnetx_800mf
 paths:

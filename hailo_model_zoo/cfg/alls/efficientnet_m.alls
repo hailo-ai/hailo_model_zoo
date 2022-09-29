@@ -26,3 +26,4 @@ shortcut_from_conv5_to_conv6_d0_conv6_d1_conv6_d2_conv6_d3 = shortcut(conv5, [co
 concat_from_conv6_d0_conv6_d1_conv6_d2_conv6_d3_to_conv6_dc = concat([conv6_d0, conv6_d1, conv6_d2, conv6_d3], conv6_dc)
 
 
+performance_param(fps=891)

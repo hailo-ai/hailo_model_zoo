@@ -36,7 +36,9 @@ def _translate_model(runner, network_info, tensor_shapes):
         translate_model(runner, network_info, ckpt_path)
 
 
-def integrate_postprocessing(runner, integrated_postprocessing_info):
+def integrate_postprocessing(runner, integrated_postprocessing_info, network_info):
+    model_script = resolve_alls_path(network_info.paths.alls_script)
+    runner.load_model_script(model_script)
     for chain in integrated_postprocessing_info.chains:
         hn = runner.get_hn_model()
         ports = chain.ports

@@ -6,3 +6,4 @@ quantization_param([conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 allocator_param(automatic_ddr=disabled)
+performance_param(fps=None)

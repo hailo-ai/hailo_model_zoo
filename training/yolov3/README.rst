@@ -125,7 +125,12 @@ Compile the Model using Hailo Model Zoo
   hailomz compile  yolov3_416 --ckpt <span val="local_path_to_onnx">yolov3_1_416_416.onnx</span>  --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span>
   </code>
 
-* ``--ckpt`` - path to your ONNX  file.
-* ``--calib-path`` - path to a  directory with your calibration images in  JPEG format
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-| The model zoo will take care of adding  the input normalization to be part of the  model.
+.. note::
+  - On your desired YOLOv3 YAML, make sure ``preprocessing.input_shape`` fits your model's resolution.
+  - For TAPPAS, retrain the model with a resolution of 608x608, and on compilation use ``yolov3_gluon.yaml``.
+
+  More details about YAML files are presented `here <../../docs/YAML.rst>`_.

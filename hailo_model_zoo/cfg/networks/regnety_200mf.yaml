@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: regnety_200mf
-allocation:
-  required_fps: 1876
 paths:
   alls_script: regnety_200mf.alls
   network_path:

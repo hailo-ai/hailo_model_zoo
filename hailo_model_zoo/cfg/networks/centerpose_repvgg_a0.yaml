@@ -40,8 +40,6 @@ hn_editor:
           - null
         ports:
           output_layer5: input_layer1
-allocation:
-  required_fps: 500
 network:
   network_name: centerpose_repvgg_a0
 paths:

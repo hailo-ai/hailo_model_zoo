@@ -7,3 +7,4 @@ post_quantization_optimization(finetune, policy=enabled, use_acceleras=disabled,
 
 context_switch_param(max_memory_utilization=0.45, max_control_utilization=0.45, max_compute_utilization=0.45)
 resources_param(max_control_utilization=0.7, max_memory_utilization=0.7, max_compute_utilization=0.75)
+performance_param(fps=150)

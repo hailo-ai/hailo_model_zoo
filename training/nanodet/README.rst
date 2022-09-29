@@ -138,11 +138,15 @@ Compile the Model using Hailo Model Zoo
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">nanodet.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">nanodet_repvgg.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">nanodet.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/nanodet_repvgg.yaml</span>
    </code>
 
-* | ``--ckpt`` - path to your ONNX file.
-* | ``--calib-path`` - path to a directory with your calibration images in JPEG format
-* | ``--yaml`` - path to your configuration YAML file. In case you have made some changes in the model, you might need to update its start/end nodes names / number of classes and so on.
-  | The model zoo will take care of adding the input normalization to be part of the model.
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
+.. note::
+  - On your desired YAML file, change ``preprocessing.input_shape`` if changed on retraining.
+  
+  More details about YAML files are presented `here <../../docs/YAML.rst>`_.

@@ -116,11 +116,20 @@ Compile the Model using Hailo Model Zoo
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">yolov4_1_3_512_512.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/</span> --yaml <span val="yaml_file_path">yolov4_leaky.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">yolov4_1_3_512_512.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/</span> --yaml <span val="yaml_file_path">path/to/yolov4_leaky.yaml</span>
    </code>
 
-* | ``--ckpt`` - path to your  ONNX file.
-* | ``--calib-path`` - path to a  directory with your calibration images  in JPEG format
-* | ``--yaml`` - path to your  configuration YAML file. In case you  have made some changes in the model, you  might need to update its start/end nodes  names / number of classes and so on.
-  | The model zoo will take care of adding  the input normalization to be part of  the model.
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
+
+.. note::
+  - On your desired YOLOv4 YAML, update ``postprocessing.anchors.sizes`` property if anchors changed, and ``preprocessing.input_shape`` if the network is 
+    trained on other resolution.
+  - On `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_,
+    change ``evaluation.classes`` if classes amount is changed.
+  
+  More details about YAML files are presented `here <../../docs/YAML.rst>`_.
+
 

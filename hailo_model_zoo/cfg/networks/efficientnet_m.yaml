@@ -2,8 +2,6 @@ base:
 - base/efficientnet.yaml
 network:
   network_name: efficientnet_m
-allocation:
-  required_fps: 891
 paths:
   alls_script: efficientnet_m.alls
   network_path:

@@ -158,14 +158,21 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
   :name:validation
 
   <code stage="compile">
-  hailomz compile --ckpt  <span val="local_path_to_onnx">ssd_mobilenet_v1.ckpt</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">ssd_mobilenet_v1.yaml</span>
+  hailomz compile --ckpt  <span val="local_path_to_onnx">ssd_mobilenet_v1.ckpt</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/ssd_mobilenet_v1.yaml</span>
   </code>
 
-* ``--ckpt`` - path to your ckpt files.
-* ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
-* | ``--yaml`` - path to your configuration YAML file. In case you have made some changes in the model, you might need to update its start/end nodes names / number of classes and so on.
-  | The model zoo will take care of adding the input normalization to be part of the model.
+* | ``--ckpt`` - path to  your ckpt file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.
+* | The model zoo will take care of adding the input normalization to be part of the model.
 
-**NOTE**\ : SSD postprocessing, including the box decoding and NMS, can be offloaded to the Hailo device. To do so, we use another JSON file which configures the Hailo Data Flow Compiler to add the neccessery layers. To edit this file check ``models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/mobilenet_ssd_nms_postprocess_config.json``\ , which is downloaded automatically when testing ssd_mobilenet_v1.
+.. note::
+  - This model uses on-chip NMS capabilities. Therefore, the on-chip NMS parameters should be updated if they have changed:
 
-
+    - Set ModelZoo data folder location: ``export HMZ_DATA=/local/workspace/data``
+    - Use ``hailomz parse ssd_mobilenet_v1`` so the model is downloaded
+    - ``cd $HMZ_DATA/models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/``
+    - Update the ``mobilenet_ssd_nms_postprocess_config.json`` file to match the updated NMS post-process configuration.
+    - Run the command from above.
+  
+  More details about YAML files are presented `here <../../docs/YAML.rst>`_.

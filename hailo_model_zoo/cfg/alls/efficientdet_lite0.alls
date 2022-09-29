@@ -1,3 +1,5 @@
 normalization1 = normalization([127.0, 127.0, 127.0], [128.0, 128.0, 128.0])
+model_optimization_config(calibration, use_acceleras=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 post_quantization_optimization(finetune, policy=disabled)
+performance_param(fps=None)

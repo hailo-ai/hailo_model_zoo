@@ -1,0 +1,34 @@
+base:
+- base/scrfd.yaml
+network:
+  network_name: scrfd_10g
+paths:
+  alls_script: scrfd_10g.alls
+  network_path:
+  - models_files/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g_bnkps.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g.zip
+parser:
+  nodes:
+  - null
+  - - Mul_113
+    - Conv_111
+    - Conv_114
+    - Mul_139
+    - Conv_137
+    - Conv_140
+    - Mul_165
+    - Conv_163
+    - Conv_166
+info:
+  task: face detection
+  input_shape: 640x640x3
+  output_shape: 80x80x2, 80x80x8, 80x80x10, 40x40x2, 40x40x8, 40x40x10, 20x20x2, 20x20x8,
+    20x20x10
+  operations: 13.37G
+  parameters: 4.23M
+  framework: pytorch
+  training_data: wider train
+  validation_data: wider val
+  eval_metric: mAP
+  full_precision_result: 82.13
+  license_url: https://opensource.org/licenses/MIT

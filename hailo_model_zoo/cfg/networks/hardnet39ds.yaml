@@ -2,8 +2,6 @@ base:
 - base/resnet.yaml
 network:
   network_name: hardnet39ds
-allocation:
-  required_fps: 2000
 paths:
   network_path:
   - models_files/hardnet39ds/2021-07-20/hardnet39ds.onnx

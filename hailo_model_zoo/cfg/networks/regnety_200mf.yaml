@@ -2,12 +2,10 @@ base:
 - base/resnet.yaml
 network:
   network_name: regnety_200mf
-allocation:
-  required_fps: 1876
 paths:
   alls_script: regnety_200mf.alls
   network_path:
-  - models_files/Classification/regnety_200mf/pretrained/RegNetY-200MF_dds_8gpu.onnx
+  - models_files/Classification/regnety_200mf/pretrained/2021-07-11/RegNetY-200MF_dds_8gpu.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnety_200mf/pretrained/2021-07-11/regnety_200mf.zip
 parser:
   nodes:

@@ -1,1 +1,2 @@
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+model_optimization_flavor(optimization_level=1, compression_level=1)
+performance_param(fps=None)

@@ -2,7 +2,10 @@ from itertools import product
 
 import numpy as np
 import tensorflow as tf
+
 from detection_tools.core.post_processing import batch_multiclass_non_max_suppression
+
+from hailo_model_zoo.core.postprocessing.face_detection.scrfd import SCRFDPostProc
 
 
 class FaceDetectionPostProc(object):
@@ -258,6 +261,7 @@ class LibFaceDetectionPostProc(object):
 META_ARCH_TO_CLASS = {
     "libfacedetection": LibFaceDetectionPostProc,
     "retinaface": FaceDetectionPostProc,
+    "scrfd": SCRFDPostProc,
 }
 DEFAULT_CLASS = FaceDetectionPostProc
 

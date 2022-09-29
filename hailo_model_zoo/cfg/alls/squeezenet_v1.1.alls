@@ -1,4 +1,5 @@
 normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+
 ## Allocator Script Version 1.0
 maxpool1_d0, maxpool1_d1, maxpool1_d2, maxpool1_d3, maxpool1_dc = defuse(maxpool1, 4)
+performance_param(fps=None)

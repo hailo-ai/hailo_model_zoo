@@ -1,20 +1,5 @@
 base:
 - base/yolact.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv48
-        activation: tanh
-      - layer_name: conv41
-        activation: tanh
-      - layer_name: conv34
-        activation: tanh
-      - layer_name: conv29
-        activation: tanh
-      - layer_name: conv24
-        activation: tanh
 postprocessing:
   anchors:
     scales:

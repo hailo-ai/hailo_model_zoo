@@ -1,5 +1,5 @@
 normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+
 pre_quantization_optimization(equalization, policy=disabled)
 ### Auto generated allocation script ###
 
@@ -197,3 +197,4 @@ buffers(avgpool1, fc1_d0, 1)
 buffers(avgpool1, fc1_d1, 1)
 buffers(fc1_d1, fc1_dc, 1)
 buffers(fc1_d0, fc1_dc, 1)
+performance_param(fps=300)

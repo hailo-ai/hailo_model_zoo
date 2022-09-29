@@ -3,21 +3,8 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv93
-        activation: sigmoid
-      - layer_name: conv84
-        activation: sigmoid
-      - layer_name: conv74
-        activation: sigmoid
 network:
   network_name: yolov5m_wo_spp
-allocation:
-  required_fps: 191
 paths:
   alls_script: yolov5m_wo_spp.alls
   network_path:

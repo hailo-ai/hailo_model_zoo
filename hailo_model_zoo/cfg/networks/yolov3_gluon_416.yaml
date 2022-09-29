@@ -22,15 +22,6 @@ postprocessing:
       - 373
       - 326
   meta_arch: yolo_v3
-hn_editor:
-  output_scheme:
-    outputs_to_split:
-    - yolov3_gluon_416/conv60
-    - yolov3_gluon_416/conv68
-    - yolov3_gluon_416/conv75
-    split_output: true
-allocation:
-  required_fps: 200
 preprocessing:
   input_shape:
   - 416
@@ -65,8 +56,7 @@ parser:
 info:
   task: object detection
   input_shape: 416x416x3
-  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x240, 26x26x6, 26x26x6, 26x26x3, 26x26x240,
-    52x52x6, 52x52x6, 52x52x3, 52x52x240
+  output_shape: 13x13x255, 26x26x255, 52x52x255
   operations: 32.97G
   parameters: 61.92M
   framework: gluoncv

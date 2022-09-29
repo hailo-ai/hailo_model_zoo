@@ -1,4 +1,4 @@
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=disabled)
 
@@ -315,3 +315,4 @@ place(5, [yolox_s_wide_leaky/concat13, yolox_s_wide_leaky/conv1, yolox_s_wide_le
 place(6, [yolox_s_wide_leaky/concat12, yolox_s_wide_leaky/conv12, yolox_s_wide_leaky/conv23, yolox_s_wide_leaky/conv24, yolox_s_wide_leaky/conv25, yolox_s_wide_leaky/conv26, yolox_s_wide_leaky/conv55, yolox_s_wide_leaky/conv61, yolox_s_wide_leaky/conv62, yolox_s_wide_leaky/conv63, yolox_s_wide_leaky/conv64, yolox_s_wide_leaky/conv67, yolox_s_wide_leaky/conv69, yolox_s_wide_leaky/conv70, yolox_s_wide_leaky/ew_add6, yolox_s_wide_leaky/ew_add7])
 place(7, [yolox_s_wide_leaky/conv13, yolox_s_wide_leaky/conv28_d1, yolox_s_wide_leaky/conv28_dc, yolox_s_wide_leaky/conv53_d0, yolox_s_wide_leaky/conv53_d1, yolox_s_wide_leaky/conv53_dc, yolox_s_wide_leaky/conv56, yolox_s_wide_leaky/conv66, yolox_s_wide_leaky/conv68, yolox_s_wide_leaky/conv77, yolox_s_wide_leaky/conv78, yolox_s_wide_leaky/conv79, yolox_s_wide_leaky/conv81])
 
+performance_param(fps=160)

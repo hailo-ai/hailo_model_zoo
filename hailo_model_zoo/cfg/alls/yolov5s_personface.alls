@@ -1,7 +1,6 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-model_optimization_config(calibration, batch_size=8, calibset_size=64)
+change_output_activation(sigmoid)
+
 # post_quantization_optimization commands
 post_quantization_optimization(finetune, policy=enabled, use_acceleras=disabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv70, conv63, conv55])
-
-compilation_param({conv*}, balance_output_multisplit=False)
-compilation_param(conv1, balance_output_multisplit=True)
+performance_param(fps=375)

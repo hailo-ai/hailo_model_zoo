@@ -47,8 +47,6 @@ hn_editor:
         activation: sigmoid
 quantization:
   calib_set: null
-allocation:
-  required_fps: 1290
 network:
   network_name: tiny_yolov4_license_plates
 paths:
@@ -69,9 +67,9 @@ evaluation:
   validation_data_set: null
 info:
   input_shape: 416x416x3
-  output_shape: 13x13x18, 26x26x18
+  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x3, 26x26x6, 26x26x6, 26x26x3, 26x26x3
   operations: 3.4G
   parameters: 5.87M
   framework: darknet
   eval_metric: mAP
-  full_precision_result: 74.1
+  full_precision_result: 74.083

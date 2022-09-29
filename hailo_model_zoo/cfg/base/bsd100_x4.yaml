@@ -1,0 +1,7 @@
+quantization:
+  calib_set:
+  - models_files/espcn/2022-08-02/bsd100_x4_calib.tfrecord
+evaluation:
+  dataset_name: bsd100
+  data_set: models_files/espcn/2022-08-02/bsd100_x4_val.tfrecord
+  validation_data_set: models_files/espcn/2022-08-02/bsd100_x4_val.tfrecord

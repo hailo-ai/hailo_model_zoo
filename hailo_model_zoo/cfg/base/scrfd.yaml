@@ -1,0 +1,35 @@
+base:
+- base/widerface.yaml
+preprocessing:
+  network_type: face_detection
+  max_pad: 2048
+  meta_arch: retinaface
+postprocessing:
+  nms_iou_thresh: 0.4
+  score_threshold: 0.02
+  anchors:
+    steps:
+    - 8
+    - 16
+    - 32
+    min_sizes:
+    - - 16
+      - 32
+    - - 64
+      - 128
+    - - 256
+      - 512
+  meta_arch: scrfd
+info:
+  source: https://github.com/deepinsight/insightface
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 128.0
+    - 128.0
+    - 128.0

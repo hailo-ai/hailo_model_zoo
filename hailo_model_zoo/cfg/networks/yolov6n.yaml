@@ -1,0 +1,46 @@
+base:
+- base/yolox.yaml
+network:
+  network_name: yolov6n
+paths:
+  alls_script: yolov6n.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2022-06-28/yolov6n.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2022-06-28/yolov6n.zip
+parser:
+  nodes:
+  - null
+  - - Conv_102
+    - Sigmoid_104
+    - Sigmoid_105
+    - Conv_158
+    - Sigmoid_160
+    - Sigmoid_161
+    - Conv_214
+    - Sigmoid_216
+    - Sigmoid_217
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+    fold_normalization: true
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x4, 80x80x1, 80x80x80, 40x40x4, 40x40x1, 40x40x80, 20x20x4, 20x20x1,
+    20x20x80
+  operations: 5.57G
+  parameters: 4.32M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  source: https://github.com/meituan/YOLOv6/releases/tag/0.1.0
+  license_url: https://github.com/meituan/YOLOv6/blob/main/LICENSE
+  full_precision_result: 34.29

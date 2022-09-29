@@ -1,22 +1,11 @@
 base:
 - base/centerpose.yaml
-hn_editor:
-  output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv64
-        activation: sigmoid
-      - layer_name: conv60
-        activation: sigmoid
-allocation:
-  required_fps: 132
 network:
   network_name: centerpose_regnetx_800mf
 paths:
   alls_script: centerpose_regnetx_800mf.alls
   network_path:
-  - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/centerpose_regnet.onnx
+  - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnet.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip
 parser:
   nodes:

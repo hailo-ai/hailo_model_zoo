@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 import cv2
 
+from hailo_model_zoo.core.preprocessing.super_resolution_preprocessing import RGB2YUV_mat, RGB2YUV_offset
+
 """
 properties of patch for image visualization:
 """
@@ -10,6 +12,10 @@ properties of patch for image visualization:
 THICKNESS = 3
 NORMALIZATION_VALUE = 127.5
 
+YUV2RGB_mat = [[1.16438355, 1.16438355, 1.16438355],
+               [0., -0.3917616, 2.01723105],
+               [1.59602715, -0.81296805, 0.]]
+
 
 def super_resolution_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs['meta_arch'].lower()
@@ -17,6 +23,8 @@ def super_resolution_postprocessing(endnodes, device_pre_post_layers=None, **kwa
         endnodes = tf.clip_by_value(endnodes * 255, 0, 255)
     elif 'srgan' in meta_arch:
         endnodes = tf.cast(tf.clip_by_value(endnodes * NORMALIZATION_VALUE + NORMALIZATION_VALUE, 0, 255), tf.uint8)
+    elif 'espcn' in meta_arch:
+        endnodes = tf.cast(tf.clip_by_value(endnodes, 0, 1), tf.float32)
     else:
         raise Exception("Super resolution postprocessing {} is not supported".format(meta_arch))
     return {'predictions': endnodes}
@@ -60,7 +68,7 @@ def focus_on_patch(image, h_center, w_center, width):
     return image[h_min:h_max, w_min:w_max, :]
 
 
-def visualize_super_resolution_result(logits, img, **kwargs):
+def visualize_srgan_result(logits, img, **kwargs):
     """
     Visualizing the output of the Super-Res network compared with a naive upscaling.
     Args:
@@ -89,3 +97,48 @@ def visualize_super_resolution_result(logits, img, **kwargs):
         draw_patch(small_input, int(h_center / 4), int(w_center / 4), int(width / 4))
     mosaic_image = create_mosaic_real_ratio(combined_images, small_input_with_patch_drawn)
     return mosaic_image
+
+
+def visualize_super_resolution_result(logits, img, **kwargs):
+    """
+    Visualizing the output of the Super-Res network compared with a naive upscaling.
+    Args:
+        logits: Numpy array. The sr network output (sr image batch)
+        img: Numpy array, The sr network input (low-res image batch)
+    Returns:
+        combined_image: Numpy array. An image composed of a naive bicubic upsampling (right part),
+        and a super-resolution upsampling (left part).
+    """
+
+    transpose = False
+    if 'img_info' in kwargs and 'height' in kwargs['img_info']:
+        transpose = kwargs['img_info']['height'] > kwargs['img_info']['width']
+
+    if transpose:
+        img = np.transpose(img, axes=[0, 2, 1, 3])
+    logits = logits['predictions']
+    img_yuv = np.matmul(img[0], RGB2YUV_mat) + RGB2YUV_offset
+
+    input_resized = np.clip(cv2.resize(img[0],
+                            logits.shape[1:3] if transpose else logits.shape[1:3][::-1],
+                            interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
+
+    img_yuv_resized = np.clip(cv2.resize(img_yuv,
+                              logits.shape[1:3] if transpose else logits.shape[1:3][::-1],
+                              interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
+    img_sr = logits[0] * 255  # Un-normalize
+    img_sr = np.transpose(img_sr, axes=[1, 0, 2]) if transpose else img_sr
+    if img_sr.shape[-1] == 1:
+        img_sr = np.concatenate([img_sr, img_yuv_resized[..., 1:]], axis=2)
+
+    white_patch = np.array(255 * np.ones((50, img_sr.shape[1], 3))).astype(np.uint8)
+    img_sr = np.clip(np.matmul(img_sr - RGB2YUV_offset, YUV2RGB_mat), 0, 255).astype(np.uint8)  # YUV ==> RGB
+    img_sr = np.concatenate([white_patch, img_sr], axis=0)
+    img_sr = cv2.putText(img_sr, 'SR', (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+    input_resized = np.concatenate([white_patch, input_resized], axis=0)
+    input_resized = cv2.putText(input_resized, 'Bicubic Resize', (5, 40),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+
+    combined_image = np.concatenate([img_sr, input_resized], axis=1)
+
+    return combined_image

@@ -5,9 +5,9 @@ network:
 paths:
   alls_script: mobilenet_v2_1.4.alls
   network_path:
-  - models_files/Classification/mobilenet_v2_1.4/pretrained/mobilenet_v2_1.4_224.ckpt.meta
-  - models_files/Classification/mobilenet_v2_1.4/pretrained/mobilenet_v2_1.4_224.ckpt.index
-  - models_files/Classification/mobilenet_v2_1.4/pretrained/mobilenet_v2_1.4_224.ckpt.data-00000-of-00001
+  - models_files/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4_224.ckpt.meta
+  - models_files/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4_224.ckpt.index
+  - models_files/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4_224.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4.zip
 parser:
   nodes:

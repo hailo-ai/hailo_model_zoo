@@ -2,7 +2,7 @@ from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_fac
                                            parse_widerface, parse_utkfaces, parse_mot, parse_tusimple, parse_landmarks,
                                            parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
                                            parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
-                                           parse_lp_ocr, parse_market, parse_peta)
+                                           parse_lp_ocr, parse_market, parse_peta, parse_bsd100)
 
 
 def get_dataset_parse_func(ds_name):
@@ -28,6 +28,7 @@ def get_dataset_parse_func(ds_name):
         'd2s_fruits_detection': parse_coco.parse_detection_record,
         'coco_2017_detection': parse_coco.parse_detection_record,
         'cocopose': parse_coco.parse_pose_estimation_record,
+        'cocopose_single_person': parse_coco.parse_single_person_pose_estimation_record,
         'afw': parse_afw.parse_record,
         'widerface': parse_widerface.parse_detection_record,
         'utkfaces': parse_utkfaces.parse_age_gender_record,
@@ -45,4 +46,6 @@ def get_dataset_parse_func(ds_name):
         'market1501': parse_market.parse_market_record,
         'personface_detection': parse_coco.parse_detection_record,
         'peta': parse_peta.parse_classification_record,
+        'celeba': parse_peta.parse_classification_record,
+        'bsd100': parse_bsd100.parse_record,
     }[ds_name]

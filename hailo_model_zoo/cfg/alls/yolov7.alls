@@ -1,0 +1,6 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+model_optimization_config(calibration, batch_size=4, calibset_size=512)
+pre_quantization_optimization(activation_clipping, layers={*}, mode=percentile, clipping_values=[0, 99.99])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=6, dataset_size=4000)
+performance_param(fps=None)

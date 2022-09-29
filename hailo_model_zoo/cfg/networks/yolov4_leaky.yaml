@@ -57,8 +57,6 @@ hn_editor:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-allocation:
-  required_fps: 150
 preprocessing:
   input_shape:
   - 512
@@ -78,6 +76,8 @@ parser:
   - - Conv_946
     - Conv_585
     - Conv_224
+inference:
+  emulator_batch_size: 4
 info:
   task: object detection
   input_shape: 512x512x3

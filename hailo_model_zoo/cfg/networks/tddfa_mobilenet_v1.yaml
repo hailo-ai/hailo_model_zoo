@@ -1,7 +1,5 @@
 base:
 - base/tddfa.yaml
-allocation:
-  required_fps: 1000
 network:
   network_name: tddfa_mobilenet_v1
 paths:

@@ -42,3 +42,4 @@ buffers(resmlp12_relu/mul_and_add12, resmlp12_relu/conv36, 0, PARTIAL_ROW)
 buffers(resmlp12_relu/mul_and_add12, resmlp12_relu/conv37, 0, PARTIAL_ROW)
 buffers(resmlp12_relu/conv36, resmlp12_relu/conv37, 0, PARTIAL_ROW)
 
+performance_param(fps=1431)

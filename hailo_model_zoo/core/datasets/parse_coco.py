@@ -1,6 +1,43 @@
 import tensorflow as tf
 
 
+def parse_single_person_pose_estimation_record(serialized_example):
+    """Parse serialized example of TfRecord and extract dictionary of all the information
+    """
+    features = tf.io.parse_single_example(
+        serialized_example,
+        features={
+            'height': tf.io.FixedLenFeature([], tf.int64),
+            'width': tf.io.FixedLenFeature([], tf.int64),
+            'xmin': tf.io.VarLenFeature(tf.float32),
+            'xmax': tf.io.VarLenFeature(tf.float32),
+            'ymin': tf.io.VarLenFeature(tf.float32),
+            'ymax': tf.io.VarLenFeature(tf.float32),
+            'image_id': tf.io.FixedLenFeature([], tf.int64),
+            'image_name': tf.io.FixedLenFeature([], tf.string),
+            'image_jpeg': tf.io.FixedLenFeature([], tf.string),
+        })
+    height = tf.cast(features['height'], tf.int32)
+    width = tf.cast(features['width'], tf.int32)
+
+    xmin = tf.sparse.to_dense(features['xmin'], default_value=0)
+    xmax = tf.sparse.to_dense(features['xmax'], default_value=0)
+    ymin = tf.sparse.to_dense(features['ymin'], default_value=0)
+    ymax = tf.sparse.to_dense(features['ymax'], default_value=0)
+    bbox = tf.transpose(tf.stack([xmin, xmax, ymin, ymax]))
+
+    image_id = tf.cast(features['image_id'], tf.int32)
+    image_name = tf.cast(features['image_name'], tf.string)
+    image = tf.image.decode_jpeg(features['image_jpeg'], channels=3)
+    image_shape = tf.stack([height, width, 3])
+    image = tf.cast(tf.reshape(image, image_shape), tf.uint8)
+    image_info = {'image_id': image_id,
+                  'image_name': image_name,
+                  'bbox': bbox}
+
+    return [image, image_info]
+
+
 def parse_pose_estimation_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """
@@ -18,7 +55,6 @@ def parse_pose_estimation_record(serialized_example):
     image_id = tf.cast(features['image_id'], tf.int32)
     image_name = tf.cast(features['image_name'], tf.string)
     image = tf.image.decode_jpeg(features['image_jpeg'], channels=3)
-    image = image[..., ::-1]
     image_shape = tf.stack([height, width, 3])
     image = tf.cast(tf.reshape(image, image_shape), tf.uint8)
     image_info = {'image_id': image_id, 'image_name': image_name}

@@ -24,25 +24,17 @@ postprocessing:
       - 169
       - 344
       - 319
-hn_editor:
-  output_scheme:
-    outputs_to_split:
-    - tiny_yolov4/conv18
-    - tiny_yolov4/conv21
-    split_output: true
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-allocation:
-  required_fps: 1385
 network:
   network_name: tiny_yolov4
 paths:
   alls_script: tiny_yolov4.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/yolov4-tiny.ckpt.data-00000-of-00001
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.meta
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.index
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/yolov4-tiny.ckpt.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov4/pretrained/2021-07-11/tiny_yolov4.zip
 parser:
   nodes:
@@ -54,13 +46,13 @@ parser:
 info:
   task: object detection
   input_shape: 416x416x3
-  output_shape: 13x13x6, 13x13x6, 13x13x3, 13x13x240, 26x26x6, 26x26x6, 26x26x3, 26x26x240
+  output_shape: 13x13x255, 26x26x255, 26x26x255
   operations: 3.46G
   parameters: 6.05M
   framework: pytorch
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 18.98
+  full_precision_result: 19.177
   source: https://github.com/Tianxiaomo/pytorch-YOLOv4
   license_url: https://www.apache.org/licenses/LICENSE-2.0

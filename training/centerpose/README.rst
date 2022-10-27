@@ -24,11 +24,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/centerpose</span>
-
-      docker build -t centerpose:v0 --build-arg timezone=\`cat /etc/timezone\` .
-      </code>
+      docker build -t centerpose:v0 --build-arg timezone=`cat /etc/timezone` .
+      </code></pre>
 
    | the following optional arguments can be passed via --build-arg:
  
@@ -93,11 +92,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="retrain">
+      <pre><code stage="retrain">
       cd /workspace/centerpose/tools
-
       python -m torch.distributed.launch --nproc_per_node <span val="gpu_num">4</span> train.py --cfg ../experiments/regnet_fpn.yaml
-      </code>
+      </code></pre>
   
    | Where 4 is the number of GPUs used for training.
    | If using a different number, update both this and the used gpus in the .yaml configuration.
@@ -107,11 +105,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="export">
+      <pre><code stage="export">
       cd /workspace/centerpose/tools
-
       python export.py --cfg ../experiments/regnet_fpn.yaml --TESTMODEL /workspace/out/regnet1_6/<span val="model_best_to_last">model_best.pth</span>
-      </code>
+      </code></pre>
 
 ----
 

@@ -23,17 +23,16 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/nanodet</span>
-
-      docker build -t nanodet:v0 --build-arg timezone=\`cat /etc/timezone\` .
-      </code>
+      docker build -t nanodet:v0 --build-arg timezone=`cat /etc/timezone` .
+      </code></pre>
 
    | the following optional arguments can be passed via --build-arg:
 
    * ``timezone`` - a string for setting up timezone. E.g. "Asia/Jerusalem"
    * ``user`` - username for a local non-root user. Defaults to 'hailo'.
-   * ``group`` - default group for a local non-root user. Defaults to 'hailo'.
+   * ``group`` - default group for a local non-root user. Defaults to 'hailo'.co 
    * ``uid`` - user id for a local non-root user.
    * ``gid`` - group id for a local non-root user.
   
@@ -88,11 +87,11 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="retrain">
+      <pre><code stage="retrain">
       <span val="replace_none">cd /workspace/nanodet</span>
       ln -s /workspace/data/coco/ /coco
       python tools/train.py ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml
-      </code>
+      </code></pre>
    
    | In case you want to use the pretrained nanodet-RepVGG-A0_416.ckpt, which was predownloaded into your docker modify your configurationf file:
 
@@ -117,10 +116,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="export">
+      <pre><code stage="export">
       pip install onnx onnxruntime
       python tools/export_onnx.py --cfg_path ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml --model_path /workspace/nanodet/workspace/RepVGG-A0-416/model_last.ckpt
-      </code>
+      </code></pre>
 
 **NOTE:**  Your trained model will be found under the following path: /workspace/nanodet/workspace/<backbone-name> /model_last.ckpt, and exported onnx will be written to /workspace/nanodet/nanodet.onnx
  

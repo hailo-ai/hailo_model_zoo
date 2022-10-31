@@ -32,7 +32,7 @@ Environment Preparations
 
    * ``timezone`` - a string for setting up timezone. E.g. "Asia/Jerusalem"
    * ``user`` - username for a local non-root user. Defaults to 'hailo'.
-   * ``group`` - default group for a local non-root user. Defaults to 'hailo'. 
+   * ``group`` - default group for a local non-root user. Defaults to 'hailo'.
    * ``uid`` - user id for a local non-root user.
    * ``gid`` - group id for a local non-root user.
   

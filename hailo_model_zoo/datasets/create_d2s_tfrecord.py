@@ -122,14 +122,52 @@ def download_dataset(name):
     if not dataset_images.is_dir():
         filename = downloader.download_file(DOWNLOAD_URL['dataset'])  # 'd2s_images_v1.tar.xz'  #
         with tarfile.open(filename, 'r') as tar:
-            tar.extractall(str(dataset_dir))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, str(dataset_dir))
         Path(filename).unlink()
 
     # download annotations if needed
     if not dataset_annotations.is_dir():
         filename = downloader.download_file(DOWNLOAD_URL['annotations'])
         with tarfile.open(filename, 'r') as tar:
-            tar.extractall(str(dataset_dir))
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, str(dataset_dir))
 
     anno_filename = JSON_NAME[name]
     anno_dest_file = dataset_annotations / anno_filename

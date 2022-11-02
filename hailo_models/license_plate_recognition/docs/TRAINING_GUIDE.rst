@@ -24,11 +24,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/hailo_models/license_plate_recognition/</span>
-
-      docker build  --build-arg timezone=\`cat /etc/timezone\` -t license_plate_recognition:v0 .
-      </code>
+      docker build  --build-arg timezone=`cat /etc/timezone` -t license_plate_recognition:v0 .
+      </code></pre>
 
    * This command will build the docker image with the necessary requirements using the Dockerfile that exists in this directory.
 

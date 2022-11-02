@@ -21,11 +21,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/hailo_models/reid/</span>
-
       docker build  --build-arg timezone=`cat /etc/timezone` -t person_reid:v0 .
-      </code>
+      </code></pre>
 
    | the following optional arguments can be passed via --build-arg:
 

@@ -36,3 +36,7 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 **Instance Segmentation**
 
 * `YOLACT <../training/yolact/README.rst>`_
+
+**Face Recognition**
+
+* `ArcFace <../training/arcface/README.rst>`_

@@ -1,7 +1,5 @@
 base:
 - base/base.yaml
-hn_editor:
-  bgr2rgb: true
 preprocessing:
   network_type: ocr
   meta_arch: lprnet

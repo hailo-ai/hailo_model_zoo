@@ -3,8 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-hn_editor:
-  bgr2rgb: true
 preprocessing:
   network_type: detection
   meta_arch: yolo_v5

@@ -11,6 +11,16 @@ parser:
   nodes:
   - null
   - null
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
 info:
   task: face recognition
   framework: pytorch

@@ -1,4 +1,6 @@
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
+input_conversion = input_conversion(bgr_to_rgb)
+
 context_switch_param(mode=enabled)
 compilation_param(conv33, balance_output_multisplit=False)
 compilation_param(conv55, balance_output_multisplit=False)

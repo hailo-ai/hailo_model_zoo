@@ -23,11 +23,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/fcn</span>
-
-      docker build -t fcn:v0 --build-arg timezone=\`cat /etc/timezone\` .
-      </code>
+      docker build -t fcn:v0 --build-arg timezone=`cat /etc/timezone` .
+      </code></pre>
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -100,11 +99,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="retrain">
+      <pre><code stage="retrain">
       cd /workspace/mmsegmentation
-
       ./tools/dist_train.sh configs/fcn/fcn8_r18_hailo.py <span val="gpu_num">2</span>
-      </code>
+      </code></pre>
 
    | Where 2 is the number of GPUs used for training.
 
@@ -115,11 +113,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="export">
+      <pre><code stage="export">
       cd /workspace/mmsegmentation
-      
       python ./tools/pytorch2onnx.py configs/fcn/fcn_r18_hailo.py --opset-version 11 --checkpoint ./work_dirs/fcn8_r18_hailo/latest.pth --shape 1024 1920 --output-file fcn.onnx
-      </code>
+      </code></pre>
 
 
 ----

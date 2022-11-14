@@ -2,7 +2,7 @@
 Arface Retraining
 ================
 
-* To learn more about arcface look `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch>`_
+* To learn more about arcface look `here <https://github.com/hailo-ai/insightface/tree/master/recognition/arcface_torch>`_
 
 ----------------------------------------------------------------------------------------
 
@@ -24,11 +24,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/arcface</span>
-
-      docker build --build-arg timezone=\`cat /etc/timezone\` -t arcface:v0 .
-      </code>
+      docker build --build-arg timezone=`cat /etc/timezone` -t arcface:v0 .
+      </code></pre>
 
    | the following optional arguments can be   passed via --build-arg:
 
@@ -41,7 +40,7 @@ Environment Preparations
 #. | Start your docker:
 
    .. raw:: html
- 484593870fae     :name:validation
+      :name:validation
 
       <code stage="docker_run">
       docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all <span val="replace_none">-u "username"</span> --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> arcface:v0
@@ -63,31 +62,31 @@ Training and exporting to ONNX
    | For more information on obtraining datasets `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch#download-datasets-or-prepare-datasets>`_
    | The repository supports the following formats:
 
-##. | ImageFolder dataset - each class (person) has its own directory
-    | Validation data is packed .bin files
+   #. | ImageFolder dataset - each class (person) has its own directory
+      | Validation data is packed .bin files
 
-    <code>
-    data_dir/
-    ├── agedb_30.bin
-    ├── cfp_fp.bin
-    ├── lfw.bin
-    ├── person0/
-    ├── person1/
-    ├── ...
-    └── personlast/
-    </code>
+      .. code-block::
 
-##. | MxNetRecord - train.rec and train.idx files. This is the format of insightface datasets.
-    | Validation data is packed .bin files
+         data_dir/
+         ├── agedb_30.bin
+         ├── cfp_fp.bin
+         ├── lfw.bin
+         ├── person0/
+         ├── person1/
+         ├── ...
+         └── personlast/
 
-    <code>
-    data_dir/
-    ├── agedb_30.bin
-    ├── cfp_fp.bin
-    ├── lfw.bin
-    ├── train.idx
-    └── train.rec
-    </code>
+   #. | MxNetRecord - train.rec and train.idx files. This is the format of insightface datasets.
+      | Validation data is packed .bin files
+   
+      .. code-block::
+
+         data_dir/
+         ├── agedb_30.bin
+         ├── cfp_fp.bin
+         ├── lfw.bin
+         ├── train.idx
+         └── train.rec
 
 #. | Training:
 
@@ -123,7 +122,7 @@ Compile the Model using Hailo Model Zoo
 
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
-Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:  
+Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:
 
 .. raw:: html
    :name:validation
@@ -140,4 +139,3 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
 
 .. note::
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.
-

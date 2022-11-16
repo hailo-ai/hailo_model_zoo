@@ -20,11 +20,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/mspn</span>
-
-      docker build -t mspn:v0 --build-arg timezone=\`cat /etc/timezone\` .
-      </code>
+      docker build -t mspn:v0 --build-arg timezone=`cat /etc/timezone` .
+      </code></pre>
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -90,10 +89,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="retrain">
+      <pre><code stage="retrain">
       cd /workspace/mmpose
       ./tools/dist_train.sh ./configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/regnetx_800mf_256x192.py <span val="gpu_num">4</span> --work-dir exp0
-      </code>
+      </code></pre>
 
    Where 4 is the number of GPUs used for training. In this example, the trained model will be saved under ``exp0`` directory.
 
@@ -104,11 +103,10 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="export">
+      <pre><code stage="export">
       cd /workspace/mmpose
-
       python tools/deployment/pytorch2onnx.py ./configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/regnetx_800mf_256x192.py <span val="docker_trained_path">exp0/best_AP_epoch_310.pth</span> --output-file mspn_regnetx_800mf.onnx
-      </code> 
+      </code></pre>
 
    where ``exp0/best_AP_epoch_310.pth`` should be replaced by the trained model file path.     
 

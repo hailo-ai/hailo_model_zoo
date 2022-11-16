@@ -1,7 +1,5 @@
 base:
 - base/yolox.yaml
-hn_editor:
-  bgr2rgb: true
 network:
   network_name: yolox_l_leaky
 paths:

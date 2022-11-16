@@ -23,11 +23,10 @@ Environment Preparations
    .. raw:: html
       :name:validation
 
-      <code stage="docker_build">
+      <pre><code stage="docker_build">
       cd <span val="dockerfile_path">hailo_model_zoo/training/yolact</span>
-
-      docker build --build-arg timezone=\`cat /etc/timezone\` -t yolact:v0 .
-      </code>
+      docker build --build-arg timezone=`cat /etc/timezone` -t yolact:v0 .
+      </code></pre>
 
 
 
@@ -92,11 +91,11 @@ Training and exporting to ONNX
    .. raw:: html
       :name:validation
 
-      <code stage="retrain">
+      <pre><code stage="retrain">
       cd /workspace/yolact
       ln -s /workspace/data/coco data/coco
       python train.py --config=yolact_regnetx_800MF_config
-      </code>
+      </code></pre>
 
    * ``yolact_regnetx_800MF_config`` - configuration using the regnetx_800MF backbone.
 

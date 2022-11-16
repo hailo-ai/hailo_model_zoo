@@ -1,1 +1,2 @@
 model_optimization_config(calibration, batch_size=8, calibset_size=2048)
+input_conversion = input_conversion(bgr_to_rgb)

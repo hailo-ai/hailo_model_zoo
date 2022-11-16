@@ -2,7 +2,7 @@ Changelog
 =========
 
 **v2.5**
-
+* Update to ues Dataflow Compiler v3.20.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * Model scripts use new bgr to rgb conversion
 * New Yolact variants - with all COCO classes:
 

@@ -1,6 +1,17 @@
 Changelog
 =========
 
+**v2.5**
+
+* Update to use Dataflow Compiler v3.20.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Model scripts use new bgr to rgb conversion
+* New Yolact variants - with all COCO classes:
+
+  * yolact_regnetx_800mf
+  * yolact_regnetx_1.6gf
+  
+* Bug fixes 
+
 **v2.4**
 
 * Updated to use Dataflow Compiler v3.20 (`developer-zone <https://hailo.ai/developer-zone/>`_)

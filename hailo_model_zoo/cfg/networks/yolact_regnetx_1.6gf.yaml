@@ -1,0 +1,49 @@
+base:
+- base/yolact.yaml
+preprocessing:
+  meta_arch: regnet_detection
+network:
+  network_name: yolact_regnetx_1.6gf
+paths:
+  alls_script: yolact_regnetx_1.6gf.alls
+  network_path:
+  - models_files/InstanceSegmentation/coco/yolact_regnetx_1.6gf/pretrained/2022-07-19/yolact_regnetx_1.6gf.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_1.6gf/pretrained/2022-07-19/yolact_regnetx_1.6gf.zip
+parser:
+  start_node_shape:
+  - 1
+  - 3
+  - 512
+  - 512
+  nodes:
+  - Conv_0
+  - - Relu_176
+    - Conv_180
+    - Conv_196
+    - Conv_188
+    - Conv_207
+    - Conv_223
+    - Conv_215
+    - Conv_234
+    - Conv_250
+    - Conv_242
+    - Conv_261
+    - Conv_277
+    - Conv_269
+    - Conv_288
+    - Conv_304
+    - Conv_296
+info:
+  task: instance segmentation
+  input_shape: 512x512x3
+  output_shape: 128x128x32, 64x64x36, 64x64x288, 64x64x729, 32x32x36, 32x32x288, 32x32x729,
+    16x16x36, 16x16x288, 16x16x729, 8x8x36, 8x8x288, 8x8x729, 4x4x36, 4x4x288, 4x4x729
+  operations: 62.67G
+  parameters: 30.09M
+  framework: pytorch
+  training_data: coco instances train2017
+  validation_data: coco instances val2017
+  eval_metric: mAP
+  full_precision_result: 30.259
+  source: https://github.com/dbolya/yolact
+  license_url: https://opensource.org/licenses/MIT

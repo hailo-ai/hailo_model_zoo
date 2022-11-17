@@ -3,4 +3,6 @@ model_optimization_config(calibration, batch_size=2, calibset_size=64)
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
 allocator_param(automatic_ddr=disabled)
+input_conversion = input_conversion(bgr_to_rgb)
+
 performance_param(fps=1000)

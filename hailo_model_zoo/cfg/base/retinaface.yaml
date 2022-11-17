@@ -4,8 +4,6 @@ preprocessing:
   network_type: face_detection
   max_pad: 2048
   meta_arch: retinaface
-hn_editor:
-  bgr2rgb: true
 postprocessing:
   nms_iou_thresh: 0.4
   score_threshold: 0.02

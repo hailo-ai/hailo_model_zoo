@@ -5,28 +5,43 @@ from hailo_model_zoo.utils import path_resolver
 
 class DetrPostProc(object):
     def __init__(self, **kwargs):
+        path = []
+        self.parameters = {}
         if kwargs['meta_arch'] == 'detr_resnet_v1_50_bn_wo_heads':
             path = ('models_files/ObjectDetection/Detection-COCO/detr/detr_r50/detr_resnet_v1_50/2022-08-28/'
                     'detr_resnet_v1_50_bn_postproc_params.pkl')
         elif kwargs['meta_arch'] == 'detr_resnet_v1_18_bn_wo_heads':
             path = ('models_files/ObjectDetection/Detection-COCO/detr/detr_r18/detr_resnet_v1_18/2022-08-29/'
                     'detr_resnet_v1_18_bn_postproc_params.pkl')
-        with open(path_resolver.resolve_data_path(path), 'rb') as fp:
-            parameters = pkl.load(fp)
-        self.parameters = {}
-        self.parameters['class_embed_weight'] = tf.convert_to_tensor(parameters['class_embed.weight'])
-        self.parameters['class_embed_bias'] = tf.convert_to_tensor(parameters['class_embed.bias'])
-        self.parameters['bbox_embed_layers_0_weight'] = tf.convert_to_tensor(parameters['bbox_embed.layers.0.weight'])
-        self.parameters['bbox_embed_layers_0_bias'] = tf.convert_to_tensor(parameters['bbox_embed.layers.0.bias'])
-        self.parameters['bbox_embed_layers_1_weight'] = tf.convert_to_tensor(parameters['bbox_embed.layers.1.weight'])
-        self.parameters['bbox_embed_layers_1_bias'] = tf.convert_to_tensor(parameters['bbox_embed.layers.1.bias'])
-        self.parameters['bbox_embed_layers_2_weight'] = tf.convert_to_tensor(parameters['bbox_embed.layers.2.weight'])
-        self.parameters['bbox_embed_layers_2_bias'] = tf.convert_to_tensor(parameters['bbox_embed.layers.2.bias'])
+        if path:
+            with open(path_resolver.resolve_data_path(path), 'rb') as fp:
+                parameters = pkl.load(fp)
+            self.parameters['class_embed_weight'] = \
+                tf.convert_to_tensor(parameters['class_embed.weight'])
+            self.parameters['class_embed_bias'] = \
+                tf.convert_to_tensor(parameters['class_embed.bias'])
+            self.parameters['bbox_embed_layers_0_weight'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.0.weight'])
+            self.parameters['bbox_embed_layers_0_bias'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.0.bias'])
+            self.parameters['bbox_embed_layers_1_weight'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.1.weight'])
+            self.parameters['bbox_embed_layers_1_bias'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.1.bias'])
+            self.parameters['bbox_embed_layers_2_weight'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.2.weight'])
+            self.parameters['bbox_embed_layers_2_bias'] = \
+                tf.convert_to_tensor(parameters['bbox_embed.layers.2.bias'])
 
     def detr_postprocessing(self, endnodes, **kwargs):
-        # endnoes = [batch, 1, 100, 256]
-        x = tf.squeeze(endnodes, [1])               # [batch, 1, 100, 256] -> [batch, 100, 256]
-        boxes, logits = self.boxes_logits_heads(x)  # boxes = [batch, 100, 4], logits = [batch, 100, 92]
+        if self.parameters:
+            # endnoes = [batch, 1, 100, 256] wo output heads
+            x = tf.squeeze(endnodes, [1])               # [batch, 1, 100, 256] -> [batch, 100, 256]
+            boxes, logits = self.boxes_logits_heads(x)  # boxes = [batch, 100, 4], logits = [batch, 100, 92]
+        else:
+            # endnodes[0] = [batch, 1, 100, 92] & endnodes[1] = [batch, 1, 100, 4]
+            logits = tf.squeeze(endnodes[0], [1])  # [batch, 1, 100, 92] -> [batch, 100, 92]
+            boxes = tf.squeeze(endnodes[1], [1])   # [batch, 1, 100, 4] -> [batch, 100, 4]
 
         # SoftMax to get scores and class predictions
         probs = tf.nn.softmax(logits, axis=-1)                   # [batch, queries, 92]

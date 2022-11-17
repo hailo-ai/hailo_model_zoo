@@ -1,8 +1,8 @@
 Hailo Model Zoo
 ===============
 
-.. |python| image:: https://img.shields.io/badge/python-3.6-blue.svg
-   :target: https://www.python.org/downloads/release/python-360/
+.. |python| image:: https://img.shields.io/badge/python-3.8-blue.svg
+   :target: https://www.python.org/downloads/release/python-380/
    :alt: Python 3.6
    :width: 70
 
@@ -19,13 +19,13 @@ Hailo Model Zoo
    :width: 70
 
 
-.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.19-<COLOR>.svg
+.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.20.1-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 180
 
 
-.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.8.1-<COLOR>.svg
+.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.10.0-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 100

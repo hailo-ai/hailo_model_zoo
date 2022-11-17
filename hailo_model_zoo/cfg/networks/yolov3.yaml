@@ -1,12 +1,5 @@
 base:
 - base/yolo.yaml
-hn_editor:
-  output_scheme:
-    outputs_to_split:
-    - yolov3/conv83
-    - yolov3/conv91
-    - yolov3/conv98
-    split_output: true
 postprocessing:
   anchors:
     sizes:

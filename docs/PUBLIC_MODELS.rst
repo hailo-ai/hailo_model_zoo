@@ -19,7 +19,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
   * `Object Detection`_
   * `Semantic Segmentation`_
   * `Pose Estimation`_
-  * `Single Person`_
+  * `Single Person Pose Estimation`_
   * `Face Detection`_
   * `Instance Segmentation`_
   * `Depth Estimation`_
@@ -480,8 +480,8 @@ COCO
      - `link <https://cv.gluon.ai/model_zoo/detection.html>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.5.0/yolov3_gluon_416.hef>`_
    * - yolov4_leaky  |star|
-     - 48.32
-     - 46.96
+     - 42.37
+     - 41.13
      - 512x512x3
      - 64.33
      - 45.60
@@ -526,7 +526,7 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.5.0/yolov5s.hef>`_
    * - yolov5s_personface
      - 47.7
-     - 45.75
+     - 45.55
      - 640x640x3
      - 7.25
      - 8.38
@@ -562,7 +562,7 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.5.0/yolov6n.hef>`_
    * - yolov7
      - 49.72
-     - 46.92
+     - 47.06
      - 640x640x3
      - 36.91
      - 52.34
@@ -809,7 +809,7 @@ COCO
      - `link <https://github.com/tensorboy/centerpose>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.5.0/centerpose_repvgg_a0.hef>`_
 
-.. _Single Person:
+.. _Single Person Pose Estimation:
 
 Single Person Pose Estimation
 -----------------------------

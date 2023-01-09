@@ -11,7 +11,8 @@ from hailo_model_zoo.core.main_utils import (
     parse_model,
     get_network_info,
     optimize_model,
-    load_model
+    load_model,
+    resolve_alls_path
 )
 from hailo_model_zoo.utils.logger import get_logger
 from hailo_model_zoo.utils.path_resolver import MULTI_NETWORKS_DIR
@@ -29,8 +30,10 @@ def get_quantized_model(model_name, network_info, results_dir):
 
     parse_model(runner, network_info, results_dir=results_dir, logger=logger)
 
-    logger.info("Initializing the dataset ...")
-    optimize_model(runner, logger, network_info, calib_path=None, results_dir=results_dir)
+    logger.info("Start Optimization...")
+    model_script = resolve_alls_path(network_info.paths.alls_script, performance="base")
+    optimize_model(runner, logger, network_info, calib_path=None, results_dir=results_dir,
+                   model_script=model_script)
     return runner
 
 

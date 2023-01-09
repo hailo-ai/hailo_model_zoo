@@ -1,3 +1,0 @@
-normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-model_optimization_config(calibration, batch_size=2, calibset_size=64)
-model_optimization_flavor(compression_level=3)

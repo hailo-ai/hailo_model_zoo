@@ -116,3 +116,18 @@ Compile the Model using Hailo Model Zoo
     change ``preprocessing.input_shape`` if changed on retraining
   
   More details about YAML files are presented `here <../../../docs/YAML.rst>`_.
+
+Anchors Extraction
+------------------
+
+| The training flow will automatically try to find more fitting anchors values then the default anchors. In our TAPPAS environment we use the default anchors, but you should be aware that the resulted anchors might be different.
+| The model anchors can be retrieved from the trained model using the following snnipet:
+
+.. raw:: html
+   :name:validation
+
+   <pre><code stage="anchors">
+   m = torch.load("last.pt")["model"]
+   detect = list(m.children())[0][-1]
+   print(detect.anchor_grid)
+   </code></pre>

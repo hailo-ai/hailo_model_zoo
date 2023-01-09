@@ -1,0 +1,64 @@
+base:
+- base/yolov5.yaml
+network:
+  network_name: yolov5s6_6.1
+preprocessing:
+  input_shape:
+  - 1280
+  - 1280
+  - 3
+postprocessing:
+  anchors:
+    strides:
+    - 8
+    - 16
+    - 32
+    - 64
+    sizes:
+    - - 19
+      - 27
+      - 44
+      - 40
+      - 38
+      - 94
+    - - 96
+      - 68
+      - 86
+      - 152
+      - 180
+      - 137
+    - - 140
+      - 301
+      - 303
+      - 264
+      - 238
+      - 542
+    - - 436
+      - 615
+      - 739
+      - 380
+      - 925
+      - 792
+paths:
+  alls_script: yolov5s6_6.1.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2022-04-12/yolov5s6.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2022-04-12/yolov5s6.zip
+parser:
+  nodes:
+  - images
+  - - Conv_410
+    - Conv_360
+    - Conv_310
+    - Conv_260
+info:
+  input_shape: 1280x1280x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255, 160x160x255
+  operations: 33.70G
+  parameters: 12.61M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  source: https://github.com/ultralytics/yolov5/releases/tag/v6.1
+  full_precision_result: 44.17

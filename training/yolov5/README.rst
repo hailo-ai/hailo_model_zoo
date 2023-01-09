@@ -68,6 +68,7 @@ Training and exporting to ONNX
 
      * ``dataset.yaml`` configuration file
      * Labels - each image should have labels in YOLO format with corresponding txt file for each image.  
+     * Make sure to include number of classes field in the yaml, for example: ``nc: 80``
 
    * | Start training - The following command is an example for training a *yolov5s* model.  
 
@@ -116,7 +117,21 @@ Compile the Model using Hailo Model Zoo
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::
-  - Make sure to also update ``preprocessing.input_shape`` field on 
-    `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_, if it was changed on retraining.
+  - Make sure to also update ``preprocessing.input_shape`` field on `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_, if it was changed on retraining.
   
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.
+
+Anchors Extraction
+------------------
+
+| The training flow will automatically try to find more fitting anchors values then the default anchors. In our TAPPAS environment we use the default anchors, but you should be aware that the resulted anchors might be different.
+| The model anchors can be retrieved from the trained model using the following snippet:
+
+.. raw:: html
+   :name:validation
+
+   <pre><code stage="anchors">
+   m = torch.load("last.pt")["model"]
+   detect = list(m.children())[0][-1]
+   print(detect.anchor_grid)
+   </code></pre>

@@ -1,0 +1,3 @@
+normalization1 = normalization([127, 127, 127], [128, 128, 128])
+allocator_param(automatic_ddr=False)
+performance_param(fps=891)

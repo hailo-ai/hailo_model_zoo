@@ -81,6 +81,10 @@ class DataFeed(object):
     def iterator(self):
         return tf.compat.v1.data.make_initializable_iterator(self._dataset)
 
+    @property
+    def dataset(self):
+        return self._dataset
+
 
 class TFRecordFeed(DataFeed):
     def __init__(self, preprocessing_callback, batch_size, tfrecord_file, dataset_name):

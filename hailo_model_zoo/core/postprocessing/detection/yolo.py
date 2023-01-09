@@ -47,8 +47,11 @@ class YoloPostProc(object):
     def _yolo4_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride,
                       scale_x_y=1.05):
         box_scales = (np.exp(raw_box_scales) * anchors_for_stride)  # dim [N, HxW, 3, 2]
-        box_centers = (raw_box_centers * scale_x_y - 0.5 * (scale_x_y - 1) + offsets) * stride  # dim [N, HxW, 3, 2]
-        return box_centers, box_scales, objness, class_pred
+        box_centers = (sigmoid(raw_box_centers) * scale_x_y
+                       - 0.5 * (scale_x_y - 1) + offsets) * stride  # dim [N, HxW, 3, 2]
+        confidence = sigmoid(objness)  # dim [N, HxW, 3, 1]
+        class_pred = sigmoid(class_pred)
+        return box_centers, box_scales, confidence, class_pred
 
     @staticmethod
     def _yolo5_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
@@ -146,7 +149,7 @@ class YoloPostProc(object):
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
         [nmsed_classes] = tf.py_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
-        nmsed_classes.set_shape((1, 100))
+        nmsed_classes.set_shape((BS, 100))
 
         return {'detection_boxes': nmsed_boxes,
                 'detection_scores': nmsed_scores,

@@ -1,6 +1,7 @@
 base:
 - base/centerpose.yaml
 hn_editor:
+  bgr2rgb: true
   output_scheme:
     change_activations:
       enabled: true

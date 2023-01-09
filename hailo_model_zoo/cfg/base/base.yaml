@@ -36,7 +36,7 @@ parser:
   nodes:
   - null
   - null
-  start_node_shape: null
+  start_node_shapes: null
   is_tf2_saved_model: false
   normalization_params:
     normalize_in_net: false
@@ -62,6 +62,7 @@ postprocessing:
     bilinear: false
     nms: false
     max_finder: false
+    sigmoid: false
   postprocess_config_json: null
 evaluation:
   data_set: null

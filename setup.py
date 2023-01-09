@@ -2,12 +2,32 @@
 
 from setuptools import find_packages, setup
 
-try:
-    import hailo_sdk_client  # noqa F401
-except ModuleNotFoundError:
+
+import subprocess
+check_dfc_installed = subprocess.run(
+    "pip show hailo-dataflow-compiler".split(),
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+)
+if check_dfc_installed.stderr:
     raise ModuleNotFoundError("hailo_sdk_client was not installed or you are not "
                               "in the right virtualenv.\n"
                               "In case you are not an Hailo customer please visit us at https://hailo.ai/")
+
+
+try:
+    import cpuinfo
+    cpu_flags = cpuinfo.get_cpu_info()['flags']
+except Exception:
+    cpu_flags = None
+    print("Warning! Unable to query CPU for the list of supported features.")
+
+if cpu_flags is not None and 'avx' not in cpu_flags:
+    print("""
+        This CPU does not support `avx` instructions, and they are needed to run Tensorflow.
+        It is recommended to run the Dataflow Compiler on another host.
+        Another option is to compile Tensorflow from sources without `avx` instructions.
+    """)
 
 
 def main():
@@ -27,13 +47,14 @@ def main():
             'omegaconf==2.1.0',
             'pillow==8.1.2',
             'detection-tools==0.3',
-            'scikit-image==0.17.2']
+            'scikit-image==0.19.3']
 
-    model_zoo_version = "2.4.0"
+    model_zoo_version = "2.6.0"
 
     package_data = {
         "hailo_model_zoo": [
-            "cfg/base/*.yaml", "cfg/networks/*.yaml", "cfg/alls/*.alls", "datasets/*",
+            "cfg/base/*.yaml", "cfg/networks/*.yaml",
+            "cfg/alls/*/*.alls", "datasets/*",
             "cfg/multi-networks/*.yaml", "cfg/multi-networks/*.yaml",
             "core/postprocessing/*.json",
             "core/postprocessing/src/*.cc",

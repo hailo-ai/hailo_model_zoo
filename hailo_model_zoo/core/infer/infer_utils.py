@@ -3,7 +3,9 @@ import os
 
 
 def save_image(img, image_name):
-    img_name = os.path.splitext(image_name.decode("utf-8"))[0]
+    if isinstance(image_name, bytes):
+        image_name = image_name.decode("utf-8")
+    img_name = os.path.splitext(image_name)[0]
     img_name = img_name.replace('/', '_')
     img.save('./{}_out.png'.format(img_name))
 
@@ -59,3 +61,17 @@ def log_accuracy(logger, num_of_images, accuracies_output):
         log += ' {}={:.3f}'.format(result.name, norm_coeff * result.value)
     logger.info(log)
     return log
+
+
+def get_logits_per_image(logits):
+    if type(logits) is np.ndarray:
+        # (BATCH, someshape) -> (BATCH, 1, someshape)
+        return np.expand_dims(logits, axis=1)
+
+    if type(logits) is list:
+        return zip(*[get_logits_per_image(logit) for logit in logits])
+
+    if type(logits) is dict:
+        return [dict(zip(logits, t)) for t in get_logits_per_image(list(logits.values()))]
+
+    raise ValueError("Unsupported type {} for logits".format(type(logits)))

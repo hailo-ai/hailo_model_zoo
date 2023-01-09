@@ -31,12 +31,16 @@ def _make_optimization_base():
         '--har', type=str, default=None, help='Use external har file', dest='har_path')
     optimization_base_parser.add_argument(
         '--calib-path', type=Path,
-        help='Path to external tfrecord for calibration',
+        help='Path to external tfrecord for calibration or a directory containing \
+            images in jpg or png format',
     )
     optimization_base_parser.add_argument(
         '--model-script', type=str, default=None, dest='model_script_path',
         help='Path to model script to use. By default using the model script specified'
         ' in the network YAML configuration')
+    optimization_base_parser.add_argument(
+        '--performance', action='store_true',
+        help='Enable flag for benchmark performance')
     optimization_base_parser.add_argument(
         '--hw-arch', type=str, default='hailo8', metavar='', choices=['hailo8', 'hailo8l'],
         help='Which hw arch to run: hailo8 / hailo8l')
@@ -70,14 +74,14 @@ def _make_evaluation_base():
         f'A specific hailo8 device may be specified. Available devices: {devices}')
 
     evaluation_base_parser.add_argument(
-        '--eval-batch-size', type=int,
+        '--batch-size', type=int,
         help='Batch size for INFERENCE (evaluation and pre-quant stats collection) only '
         '(feel free to increase to whatever your GPU can handle). '
         ' the quant-aware optimizers s.a. QFT & IBC use the calibration batch size parameter from the ALLS'
     )
 
     evaluation_base_parser.add_argument(
-        '--eval-num', type=int, default=2 ** 20, dest='eval_num_examples',
+        '--data-count', type=int, default=None, dest='eval_num_examples',
         help='Maximum number of images to use for evaluation')
 
     evaluation_base_parser.add_argument(
@@ -90,7 +94,8 @@ def _make_evaluation_base():
     )
     evaluation_base_parser.add_argument(
         '--data-path', type=Path,
-        help='Path to external tfrecord for evaluation',
+        help='Path to external tfrecord for evaluation. In case you use --visualize \
+            you can give a directory of images in jpg or png format',
     )
     evaluation_base_parser.set_defaults(print_num_examples=1e9,
                                         visualize_results=False)

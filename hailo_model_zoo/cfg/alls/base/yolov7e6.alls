@@ -1,0 +1,4 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+post_quantization_optimization(finetune, policy=enabled, batch_size=1)

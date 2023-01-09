@@ -1,0 +1,23 @@
+base:
+- base/yolov5.yaml
+preprocessing:
+  network_type: instance_segmentation
+postprocessing:
+  meta_arch: yolov5_seg
+evaluation:
+  infer_type: np_infer
+  dataset_name: coco_detection
+  gt_json_path: models_files/coco/2021-06-18/instances_val2017.json
+inference:
+  emulator_batch_size: 2
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0
+    - 0
+    - 0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0

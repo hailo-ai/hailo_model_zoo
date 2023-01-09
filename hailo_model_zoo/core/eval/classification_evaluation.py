@@ -12,7 +12,11 @@ class ClassificationEval(Eval):
         self.reset()
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        x = net_output['predictions']
+        # TODO: SDK-32906 (wrong shape for classifiers) remove this when sdk is fixed
+        if len(x.shape) == 4:
+            x = x.squeeze((1, 2))
+        return x
 
     def update_op(self, net_output, img_info):
         net_output = self._parse_net_output(net_output)

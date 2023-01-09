@@ -1,5 +1,8 @@
 base:
 - base/yolact.yaml
+inference:
+  full_precision_batch_size: 4
+  emulator_batch_size: 4
 evaluation:
   labels_offset: 0
   classes: 61
@@ -345,13 +348,8 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/d2s/yolact_regnetx_600mf/pretrained/2022-07-19/yolact_regnetx_600mf_d2s.zip
   alls_script: yolact_regnetx_600mf_d2s_31classes.alls
 parser:
-  start_node_shape:
-  - 1
-  - 3
-  - 512
-  - 512
   nodes:
-  - Conv_0
+  - null
   - - Relu_162
     - Conv_166
     - Conv_182
@@ -378,7 +376,7 @@ info:
   framework: pytorch
   training_data: d2s augemented train
   validation_data: d2s val
-  eval_metric: mAP
-  full_precision_result: 61.69
+  eval_metric: mAP-segmentation
+  full_precision_result: 62.477
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT

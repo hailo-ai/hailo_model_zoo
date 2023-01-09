@@ -7,14 +7,9 @@ System Requirements
 -------------------
 
 
-* Ubuntu 18.04 and Python 3.6 or Ubuntu 20.04 and Python 3.8
-
-**NOTE:** Ubuntu 18.04 will be deprecated in Hailo Model Zoo future version
-
-**NOTE:** Python 3.6 will be deprecated in Hailo Model Zoo future version
-
-* Hailo Dataflow Compiler v3.19.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 4.8.1 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* Ubuntu 20.04 and Python 3.8
+* Hailo Dataflow Compiler v3.22.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.12.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
 * The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 470
@@ -81,7 +76,7 @@ If you want to upgrade to a specific Hailo Model Zoo version within a suite or o
 
    .. code-block::
 
-      git clone -b v2.2 https://github.com/hailo-ai/hailo_model_zoo.git
+      git clone -b v2.6 https://github.com/hailo-ai/hailo_model_zoo.git
 
 #. Run the setup script:
 
@@ -153,6 +148,15 @@ You can use your own images by giving a directory path to the optimization proce
 
 * This step requires data for calibration. For additional information please see `OPTIMIZATION <OPTIMIZATION.rst>`_.
 
+In order to achieve highest performance, one could use the performance flag:
+
+.. code-block::
+
+    hailomz optimize <model_name> --performance
+
+The flag will be ignored on models that do not support this feature.
+The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
+
 Compile
 -------
 
@@ -167,6 +171,15 @@ To generate the HEF starting from a previously generated HAR file:
 .. code-block::
 
    hailomz compile <model_name> --har /path/to/model.har
+
+In order to achieve highest performance, one could use the performance flag:
+
+.. code-block::
+
+    hailomz optimize <model_name> --performance
+
+The flag will be ignored on models that do not support this feature.
+The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
 
 Evaluation
 ----------
@@ -208,7 +221,7 @@ To limit the number of images for evaluation use the following flag:
 
 .. code-block::
 
-   hailomz eval <model_name> --eval-num <num-images>
+   hailomz eval <model_name> --data-count <num-images>
 
 To explore other options (for example: changing the default batch-size) use:
 

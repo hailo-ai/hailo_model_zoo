@@ -10,8 +10,10 @@ RUN apt-get update && \
 RUN git clone --depth 1 https://github.com/hailo-ai/deep-person-reid.git && \
     cd deep-person-reid && \
     python3 -m pip install --upgrade Pillow && \
+    pip install -U 'numpy==1.19.2' 'scipy==1.9.1' && \
     pip install -r requirements.txt && \
-    python setup.py develop
+    python setup.py develop && \
+    pip install -U 'numpy==1.19.2' 'scipy==1.9.1'
 
 ENV PYTHONPATH=/workspace/deep-person-reid
 WORKDIR /workspace/deep-person-reid

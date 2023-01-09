@@ -43,6 +43,7 @@ paths:
   alls_script: yolov5n6_6.1.alls
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5n6_6.1/pretrained/2022-04-12/yolov5n6.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5n6_6.1/pretrained/2022-04-12/yolov5n6.zip
 parser:
   nodes:
   - images

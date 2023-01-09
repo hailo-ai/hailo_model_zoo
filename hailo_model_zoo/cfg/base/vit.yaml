@@ -1,0 +1,15 @@
+base:
+- base/imagenet.yaml
+preprocessing:
+  meta_arch: vit
+parser:
+  normalization_params:
+    normalize_in_net: false
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5

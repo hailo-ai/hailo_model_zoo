@@ -1,0 +1,2 @@
+input_conversion = input_conversion(bgr_to_rgb)
+post_quantization_optimization(finetune, policy=disabled)

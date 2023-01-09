@@ -113,7 +113,7 @@ Compile the Model using Hailo Model Zoo
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov3_416.yaml`` (for the default YOLOv3 model).
 |
-| Align the corresponding alls, i.e. ``hailo_model_zoo/cfg/networks/yolov3_416.alls`` with the size of the calibration set using ``dataset_size=<number_of_jpgs_in_folder>`` parameter.
+| Align the corresponding alls, i.e. ``hailo_model_zoo/cfg/alls/base/yolov3_416.alls`` with the size of the calibration set using ``dataset_size=<number_of_jpgs_in_folder>`` parameter.
 |
 | Run compilation using the model zoo:
 

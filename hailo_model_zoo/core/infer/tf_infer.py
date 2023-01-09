@@ -4,26 +4,12 @@ import tensorflow as tf
 from tqdm import tqdm
 from PIL import Image
 
-from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, save_image
+from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, save_image, get_logits_per_image
 from hailo_sdk_client import SdkFineTune
 
 
-def _logits_per_image(logits):
-    if type(logits) is np.ndarray:
-        # (BATCH, someshape) -> (BATCH, 1, someshape)
-        return np.expand_dims(logits, axis=1)
-
-    if type(logits) is list:
-        return zip(*[_logits_per_image(logit) for logit in logits])
-
-    if type(logits) is dict:
-        return [dict(zip(logits, t)) for t in _logits_per_image(list(logits.values()))]
-
-    raise ValueError("Unsupported type {} for logits".format(type(logits)))
-
-
 def _visualize(logits_batch, img_info, num_of_images, visualize_callback, video_outpath, video_writer):
-    logits_per_image = _logits_per_image(logits_batch)
+    logits_per_image = get_logits_per_image(logits_batch)
     batch_size = len(logits_per_image)
     image_names = img_info.get('image_name',
                                ['image{}'.format(num_of_images - batch_size + i).encode('utf8')
@@ -77,9 +63,11 @@ def tf_infer(runner, target, logger, eval_num_examples, print_num_examples,
                     [delta.initializer for delta in sdk_export.kernels_delta + sdk_export.biases_delta])
             num_of_images = 0
             try:
-                with tqdm(total=None, desc="Processed", unit="images",
+                with tqdm(total=eval_num_examples, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
-                    while num_of_images < eval_num_examples:
+                    while True:
+                        if eval_num_examples is not None and num_of_images >= eval_num_examples:
+                            break
                         logits_batch, img_info = sdk_export.session.run([probs, image_info])
                         # Try to get the actual batch size from img_info (since last batch could be smaller)
                         current_batch_size = len(img_info['img_orig']) if 'img_orig' in img_info else batch_size

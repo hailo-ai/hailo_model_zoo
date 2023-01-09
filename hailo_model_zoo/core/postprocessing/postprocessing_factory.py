@@ -42,6 +42,11 @@ from hailo_model_zoo.core.postprocessing.face_attr_postprocessing import face_at
 from hailo_model_zoo.core.postprocessing.mspn_postprocessing import (
     mspn_postprocessing, visualize_single_person_pose_estimation_result
 )
+try:
+    # THIS CODE IS EXPERIMENTAL AND IN USE ONLY FOR TAPPAS VALIDATION
+    from hailo_model_zoo.core.postprocessing.tappas_postprocessing import tappas_postprocessing
+except ModuleNotFoundError:
+    tappas_postprocessing = None
 
 
 def get_visualization(name, **kwargs):
@@ -121,6 +126,7 @@ def get_postprocessing(name, flip=False):
         'person_attr': classification_postprocessing,
         'face_attr': face_attr_postprocessing,
         'single_person_pose_estimation': mspn_postprocessing,
+        'tappas_postprocessing': tappas_postprocessing
     }
 
     if name not in postprocessing_fn_map:

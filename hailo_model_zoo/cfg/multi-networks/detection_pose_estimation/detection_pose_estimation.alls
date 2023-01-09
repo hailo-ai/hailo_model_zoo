@@ -1,3 +1,0 @@
-context_switch_param(mode=enabled)
-allocator_param(merge_min_layer_utilization=0.1, timeout=3600)
-performance_param(fps=50)

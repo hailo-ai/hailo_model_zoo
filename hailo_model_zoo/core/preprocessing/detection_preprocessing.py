@@ -45,8 +45,9 @@ def centernet_resnet_v1_18_detection(image, image_info=None, height=None, width=
         # Resize the image to the specified height and width.
         image = tf.image.resize_with_pad(image, height, width)
 
+    image_info = _cast_image_info_types(image_info, image)
+
     if image_info and 'num_boxes' in image_info.keys():
-        image_info = _cast_image_info_types(image_info, image)
         h = tf.cast(image_info['height'], tf.float32)
         w = tf.cast(image_info['width'], tf.float32)
         H = tf.cast(height, tf.float32)
@@ -422,12 +423,12 @@ def letterbox(img, height=608, width=1088, centered=True,
     else:
         top, bottom = 0, dh
         left, right = 0, dw
-    img = img[:, :, ::-1]
     img = cv2.resize(img, new_shape,
                      interpolation=(cv2.INTER_AREA if ratio < 1.0 else cv2.INTER_LINEAR))  # resized, no border
+    # cv2 uses bgr format, need to switch the color
+    color_bgr = color[::-1]
     img = cv2.copyMakeBorder(img, int(top), int(bottom), int(left), int(right), cv2.BORDER_CONSTANT,
-                             value=color)  # padded rectangular
-    img = img[:, :, ::-1]
+                             value=color_bgr)  # padded rectangular
     return img, new_width, new_height
 
 
@@ -494,4 +495,38 @@ def detr(image, image_info=None, height=800, width=800, **kwargs):
         image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
         image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], max_tensor_padding=max_pad), axis=1)
 
+    return image, image_info
+
+
+def retinanet_resnext50(image, image_info=None, height=800, width=800, flip=False, image_mean=[0.485, 0.456, 0.406],
+                        image_std=[0.229, 0.224, 0.225], **kwargs):
+    shape = tf.shape(image)
+    original_height, original_width = shape[0], shape[1]
+    orig_image = tf.cast(image, tf.float32)
+    normalized_img = (orig_image - tf.reshape(255.0 * tf.convert_to_tensor(image_mean, dtype=tf.float32),
+                      (1, 1, 3))) / tf.reshape(255.0 * tf.convert_to_tensor(image_std, dtype=tf.float32), (1, 1, 3))
+    image = tf.image.resize(normalized_img, size=[height, width], method=tf.image.ResizeMethod.BILINEAR)
+
+    max_pad = 1000
+    _cast_image_info_types(image_info, tf.image.resize(
+        orig_image, size=[height, width], method=tf.image.ResizeMethod.BILINEAR), max_pad)
+    if image_info and 'num_boxes' in image_info:
+        xmin = tf.expand_dims(_pad_tensor(image_info.pop('xmin') * tf.cast(image_info['width'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        xmax = tf.expand_dims(_pad_tensor(image_info.pop('xmax') * tf.cast(image_info['width'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        ymin = tf.expand_dims(_pad_tensor(image_info.pop('ymin') * tf.cast(image_info['height'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+        ymax = tf.expand_dims(_pad_tensor(image_info.pop('ymax') * tf.cast(image_info['height'], tf.float32),
+                                          max_tensor_padding=max_pad), axis=1)
+
+        w = xmax - xmin
+        h = ymax - ymin
+
+        image_info['height'] = original_height
+        image_info['width'] = original_width
+        image_info['original_height'] = original_height
+        image_info['original_width'] = original_width
+        image_info['bbox'] = tf.concat([xmin, ymin, w, h], axis=1)
+        image_info['area'] = tf.expand_dims(_pad_tensor(image_info['area'], max_tensor_padding=max_pad), axis=1)
     return image, image_info

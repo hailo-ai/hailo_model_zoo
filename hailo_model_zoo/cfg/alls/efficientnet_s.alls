@@ -1,2 +1,0 @@
-model_optimization_flavor(optimization_level=1, compression_level=1)
-performance_param(fps=None)

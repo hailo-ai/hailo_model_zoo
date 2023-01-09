@@ -1,0 +1,7 @@
+normalization1 = normalization([127.0, 127.0, 127.0], [128.0, 128.0, 128.0])
+model_optimization_config(calibration, batch_size=8, calibset_size=16)
+allocator_param(automatic_ddr=disabled)
+
+yuv_to_rgb1 = yuv_to_rgb()
+reshape_yuy2 = input_conversion(lightface_slim_yuy2/input_layer1, yuy2_to_hailo_yuv)
+

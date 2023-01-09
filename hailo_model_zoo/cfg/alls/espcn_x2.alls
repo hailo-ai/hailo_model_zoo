@@ -1,3 +1,0 @@
-normalization1 = normalization([0.], [255.])
-model_optimization_config(calibration, calibset_size=32)
-performance_param(fps=None)

@@ -1,0 +1,5 @@
+normalization1 = normalization([127.0, 127.0, 127.0], [128.0, 128.0, 128.0])
+model_optimization_config(calibration, batch_size=8, calibset_size=16)
+post_quantization_optimization(finetune, policy=disabled)
+allocator_param(automatic_ddr=disabled)
+

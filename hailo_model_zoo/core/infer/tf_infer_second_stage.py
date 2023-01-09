@@ -1,21 +1,6 @@
-import numpy as np
 import tensorflow as tf
 
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy
-
-
-def _logits_per_image(logits):
-    if type(logits) is np.ndarray:
-        # (BATCH, someshape) -> (BATCH, 1, someshape)
-        return np.expand_dims(logits, axis=1)
-
-    if type(logits) is list:
-        return zip(*[_logits_per_image(logit) for logit in logits])
-
-    if type(logits) is dict:
-        return [dict(zip(logits, t)) for t in _logits_per_image(list(logits.values()))]
-
-    raise ValueError("Unsupported type {} for logits".format(type(logits)))
 
 
 def tf_infer_second_stage(runner, target, logger, eval_num_examples, print_num_examples,
@@ -42,7 +27,9 @@ def tf_infer_second_stage(runner, target, logger, eval_num_examples, print_num_e
             try:
                 print_num_examples = 100
                 overall_processed_images = 0
-                while eval_metric.num_evaluated_images < eval_num_examples:
+                while True:
+                    if eval_num_examples is not None and eval_metric.num_evaluated_images >= eval_num_examples:
+                        break
                     logits_batch, img_info = sdk_export.session.run([probs, image_info])
                     # Try to get the actual batch size from img_info (since last batch could be smaller)
                     number_proposals += batch_size

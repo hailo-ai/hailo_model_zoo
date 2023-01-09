@@ -13,8 +13,6 @@ parser:
   nodes:
   - input_image
   - MobilenetV2/Predictions/Softmax
-allocation:
-  legacy: true
 info:
   task: classification
   input_shape: 224x224x3

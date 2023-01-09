@@ -1,0 +1,25 @@
+base:
+- base/vit.yaml
+network:
+  network_name: vit_tiny
+paths:
+  network_path:
+  - models_files/Classification/vit_tiny/pretrained/2022-08-08/vit_tiny_bn_ffnbn_relu_patch16_224.onnx
+  alls_script: vit_tiny.alls
+parser:
+  nodes:
+  - input.1
+  - '845'
+evaluation:
+  infer_type: runner_infer
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 2.36G
+  parameters: 5.41M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 68.02

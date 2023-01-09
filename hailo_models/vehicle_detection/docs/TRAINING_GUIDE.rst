@@ -116,7 +116,7 @@ Compile the Model using Hailo Model Zoo
   - Since it’s an Hailo model, calibration set must be manually supplied.
   - This model has an on-chip resize from the video input [1080x1920] to the model’s input ([640x640], the resolution
     the model is trained with). Model Zoo automatically adds the resize for this model using a model script command on 
-    `yolov5m_vehicles.alls <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/alls/yolov5m_vehicles.alls>`_.
+    `yolov5m_vehicles.alls <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/alls/base/yolov5m_vehicles.alls>`_.
     Therefore, the ``input_resize`` command should be updated if the video input resolution is different (or even removed if it is
     equal to the resolution the model is trained with).
   - On `yolov5m_vehicles.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov5m_vehicles.yaml>`_,
@@ -125,3 +125,18 @@ Compile the Model using Hailo Model Zoo
     change ``preprocessing.input_shape`` if the network is trained on other resolution.
   
   More details about YAML files are presented `here <../../../docs/YAML.rst>`_.
+
+Anchors Extraction
+------------------
+
+| The training flow will automatically try to find more fitting anchors values then the default anchors. In our TAPPAS environment we use the default anchors, but you should be aware that the resulted anchors might be different.
+| The model anchors can be retrieved from the trained model using the following snnipet:
+
+.. raw:: html
+   :name:validation
+
+   <pre><code stage="anchors">
+   m = torch.load("last.pt")["model"]
+   detect = list(m.children())[0][-1]
+   print(detect.anchor_grid)
+   </code></pre>

@@ -27,9 +27,11 @@ def np_infer(runner, target, logger, eval_num_examples, print_num_examples,
                     [delta.initializer for delta in sdk_export.kernels_delta + sdk_export.biases_delta])
             num_of_images = 0
             try:
-                with tqdm(total=None, desc="Processed", unit="images",
+                with tqdm(total=eval_num_examples, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
-                    while num_of_images < eval_num_examples:
+                    while True:
+                        if eval_num_examples is not None and num_of_images >= eval_num_examples:
+                            break
                         logits_batch, img_info = sdk_export.session.run([sdk_export.output_tensors, image_info])
                         num_of_images += batch_size
                         probs = postprocessing_callback(logits_batch, image_info=img_info)

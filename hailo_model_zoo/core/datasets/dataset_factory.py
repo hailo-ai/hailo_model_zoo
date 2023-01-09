@@ -23,6 +23,7 @@ def get_dataset_parse_func(ds_name):
         'kitti_depth': parse_kitti_depth.parse_record,
         'kitti_3d': parse_kitti_3d.parse_record,
         'coco_detection': parse_coco.parse_detection_record,
+        'open_images': parse_coco.parse_detection_record,
         'visdrone_detection': parse_coco.parse_detection_record,
         'd2s_detection': parse_coco.parse_detection_record,
         'd2s_fruits_detection': parse_coco.parse_detection_record,

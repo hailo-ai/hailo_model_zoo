@@ -1,4 +1,5 @@
 from pathlib import Path
+from omegaconf.listconfig import ListConfig
 
 from hailo_model_zoo.core.info_utils import get_network_info  # noqa (F401) - exports this function for backwards compat
 
@@ -22,11 +23,10 @@ def _get_input_shape(runner, network_info):
     return (network_info.preprocessing.input_shape or runner.get_hn_model().get_input_layers()[0].output_shape[1:])
 
 
-def resolve_alls_path(path):
+def resolve_alls_path(path, performance=False):
     if not path:
         return None
-
-    return path_resolver.resolve_alls_path(path)
+    return path_resolver.resolve_alls_path(Path("base" if not performance else "performance") / path)
 
 
 def _apply_output_scheme(runner, network_info):
@@ -75,13 +75,15 @@ def download_model(network_info, logger):
 
 def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), logger=None):
     """Parses TF or ONNX model and saves as <results_dir>/<model_name>.(hn|npz)"""
-    start_node_shape = network_info.parser.start_node_shape
+    start_node_shapes = network_info.parser.start_node_shapes
+    if isinstance(start_node_shapes, ListConfig):
+        start_node_shapes = list(start_node_shapes)
 
     # we don't try to download the file in case the ckpt_path is overridden by the user
     if ckpt_path is None:
         ckpt_path = download_model(network_info, logger)
 
-    model_name = translate_model(runner, network_info, ckpt_path, tensor_shapes=start_node_shape)
+    model_name = translate_model(runner, network_info, ckpt_path, tensor_shapes=start_node_shapes)
 
     _apply_output_scheme(runner, network_info)
 
@@ -120,7 +122,7 @@ def make_preprocessing(runner, network_info):
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
     height, width, _ = _get_input_shape(runner, network_info)
-    flip = runner.get_native_hn_model().is_transposed()
+    flip = runner.get_hn_model().is_transposed()
 
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
@@ -154,10 +156,12 @@ def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_
     return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch, preproc_callback)
 
 
-def make_evalset_callback(network_info, batch_size, preproc_callback, override_path):
+def make_evalset_callback(network_info, batch_size, preproc_callback, override_path, return_dataset=False):
     dataset_name = network_info.evaluation.dataset_name
     resolved_data_path = override_path or path_resolver.resolve_data_path(network_info.evaluation.data_set)
     data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path, dataset_name)
+    if return_dataset:
+        return data_feed_cb().dataset
     return lambda: data_feed_cb().iterator
 
 
@@ -169,7 +173,7 @@ def make_calibset_callback(network_info, batch_size, preproc_callback, override_
     return dataset
 
 
-def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script_path=None):
+def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script):
 
     logger.info('Preparing calibration data...')
     preproc_callback = make_preprocessing(runner, network_info)
@@ -177,7 +181,6 @@ def optimize_model(runner, logger, network_info, calib_path, results_dir, model_
                                                  preproc_callback=preproc_callback,
                                                  override_path=calib_path)
 
-    model_script = model_script_path if model_script_path else resolve_alls_path(network_info.paths.alls_script)
     runner.load_model_script(model_script)
     runner.optimize(calib_feed_callback)
 
@@ -187,6 +190,7 @@ def optimize_model(runner, logger, network_info, calib_path, results_dir, model_
 
 def make_visualize_callback(network_info):
     network_type = network_info.preprocessing.network_type
+    meta_arch = network_info.postprocessing.meta_arch
     dataset_name = network_info.evaluation.dataset_name
     channels_remove = network_info.hn_editor.channels_remove
     labels_offset = network_info.evaluation.labels_offset
@@ -195,7 +199,8 @@ def make_visualize_callback(network_info):
     def visualize_callback(logits, image, **kwargs):
         return visualize_function(logits, image, dataset_name=dataset_name,
                                   channels_remove=channels_remove,
-                                  labels_offset=labels_offset, **kwargs)
+                                  labels_offset=labels_offset,
+                                  meta_arch=meta_arch, **kwargs)
     return visualize_callback
 
 
@@ -217,9 +222,9 @@ def get_postprocessing_callback(runner, network_info):
 
     postproc_callback = postprocessing_factory.get_postprocessing(network_type, flip=flip)
 
-    def postprocessing_callback(endnodes, gt_images=None, image_info=None):
+    def postprocessing_callback(endnodes, gt_images=None, image_info=None, **kwargs):
         probs = postproc_callback(endnodes=endnodes, device_pre_post_layers=device_pre_post_layers,
-                                  gt_images=gt_images, image_info=image_info, **postproc_info)
+                                  gt_images=gt_images, image_info=image_info, **postproc_info, **kwargs)
         return probs
 
     return postprocessing_callback
@@ -227,10 +232,12 @@ def get_postprocessing_callback(runner, network_info):
 
 def make_eval_callback(network_info):
     network_type = network_info.evaluation.network_type or network_info.preprocessing.network_type
+    net_name = network_info.network.network_name
     gt_json_path = network_info.evaluation.gt_json_path
     gt_json_path = path_resolver.resolve_data_path(gt_json_path) if gt_json_path else None
 
     eval_args = dict(
+        net_name=net_name,
         network_type=network_type,
         labels_offset=network_info.evaluation.labels_offset,
         labels_map=network_info.evaluation.labels_map,
@@ -257,15 +264,50 @@ def make_eval_callback(network_info):
 def infer_model(runner, network_info, target, logger, eval_num_examples,
                 data_path, batch_size, print_num_examples=256, visualize_results=False,
                 video_outpath=None, dump_results=False, network_groups=None):
+    infer_type = network_info.evaluation.infer_type
+    if infer_type == 'runner_infer':
+        return infer_model_tf2(runner, network_info, target, logger, eval_num_examples, data_path,
+                               batch_size, print_num_examples, visualize_results, video_outpath,
+                               dump_results, network_groups)
+
+    return infer_model_tf1(runner, network_info, target, logger, eval_num_examples, data_path,
+                           batch_size, print_num_examples, visualize_results, video_outpath,
+                           dump_results, network_groups)
+
+
+def infer_model_tf2(runner, network_info, target, logger, eval_num_examples,
+                    data_path, batch_size, print_num_examples=256, visualize_results=False,
+                    video_outpath=None, dump_results=False, network_groups=None):
+    logger.info('Initializing the dataset ...')
+    preproc_callback = make_preprocessing(runner, network_info)
+    # we do not pass batch_size, batching is now done in infer_callback
+    dataset = make_evalset_callback(network_info, None, preproc_callback, data_path, return_dataset=True)
+    # TODO refactor
+    postprocessing_callback = get_postprocessing_callback(runner, network_info)
+    eval_callback = make_eval_callback(network_info)
+    visualize_callback = make_visualize_callback(network_info) if visualize_results else None
+
+    infer_type = network_info.evaluation.infer_type
+    infer_callback = infer_factory.get_infer(infer_type)
+
+    return infer_callback(runner, target, logger, eval_num_examples, print_num_examples, batch_size,
+                          dataset, postprocessing_callback, eval_callback,
+                          visualize_callback, video_outpath, dump_results, results_path=None)
+
+
+def infer_model_tf1(runner, network_info, target, logger, eval_num_examples,
+                    data_path, batch_size, print_num_examples=256, visualize_results=False,
+                    video_outpath=None, dump_results=False, network_groups=None):
     logger.info('Initializing the dataset ...')
     preproc_callback = make_preprocessing(runner, network_info)
     data_feed_callback = make_evalset_callback(network_info, batch_size, preproc_callback, data_path)
 
-    def tf_graph_callback(preprocessed_data):
+    def tf_graph_callback(preprocessed_data, rescale_output=None):
         sdk_export = runner.get_tf_graph(
             target, preprocessed_data,
             use_preloaded_compilation=True,
-            network_groups=network_groups)
+            network_groups=network_groups,
+            rescale_output=rescale_output)
 
         return sdk_export
 
@@ -285,17 +327,10 @@ def get_hef_path(results_dir, model_name):
     return results_dir.joinpath(f"{model_name}.hef")
 
 
-def compile_model(runner, network_info, results_dir, model_script_path=None):
+def compile_model(runner, network_info, results_dir, allocator_script_filename):
     model_name = network_info.network.network_name
-    use_legacy = network_info.allocation.legacy
-    allocator_script_filename = model_script_path if model_script_path \
-        else resolve_alls_path(network_info.paths.alls_script)
     runner.load_model_script(allocator_script_filename)
-    # TODO: SDK-31381 (internal params related compiler bug needs to fixed)
-    if use_legacy:
-        hef = runner.get_hw_representation(allocator_script_filename=allocator_script_filename)
-    else:
-        hef = runner.compile()
+    hef = runner.compile()
 
     with open(get_hef_path(results_dir, model_name), "wb") as hef_out_file:
         hef_out_file.write(hef)

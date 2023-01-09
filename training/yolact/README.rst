@@ -75,12 +75,13 @@ Training and exporting to ONNX
                |   |-- person_keypoints_train2017.json
                |   |-- person_keypoints_val2017.json
                |   |-- image_info_test-dev2017.json
-               |---|-- train2017
-               |---|---|-- *.jpg
-               |---|-- val2017
-               |---|---|-- *.jpg
-               |---|-- test2017
-               `---|---|-- *.jpg
+               |-- images
+                   |-- train2017
+                       |-- *.jpg
+                   |-- val2017
+                       |-- *.jpg
+                   |-- test2017
+                   `   |-- *.jpg
 
    | For training on custom datasets see `here <https://github.com/hailo-ai/yolact/tree/Model-Zoo-1.5#custom-datasets>`_
 
@@ -136,6 +137,6 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
 .. note::
   - The `yolact_regnetx_800mf_20classes.yaml<https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolact_regnetx_800mf_20classes.yaml>`_ 
     is an example yaml where some of the classes (out of 80) were removed. If you wish to change the number of classes, the easiest way is to retrain with the exact number
-    of classes, erase the ``channels_remove`` section (lines 18 to 437), and update ``parser.start_node_shape`` to fit your input resolution
+    of classes, erase the ``channels_remove`` section (lines 18 to 437).
   
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.

@@ -1,14 +1,15 @@
 import tensorflow as tf
 from tqdm import tqdm
-from PIL import Image
 
-from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, save_image
+from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results
 
 
 def facenet_infer(runner, target, logger, eval_num_examples, print_num_examples,
                   batch_size, data_feed_callback, tf_graph_callback, postprocessing_callback,
                   eval_callback, visualize_callback, video_outpath, dump_results, results_path):
     with tf.Graph().as_default():
+        if visualize_callback:
+            raise ValueError('Visualization is currently not supported for face verification')
         logger.info('Building preprocess...')
         iterator = data_feed_callback()
         [preprocessed_data, image_info] = iterator.get_next()
@@ -30,7 +31,9 @@ def facenet_infer(runner, target, logger, eval_num_examples, print_num_examples,
             try:
                 with tqdm(total=None, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
-                    while num_of_images < eval_num_examples:
+                    while True:
+                        if eval_num_examples is not None and num_of_images >= eval_num_examples:
+                            break
                         logits_batch, img_info = sdk_export.session.run([probs, image_info])
                         logits_batch = logits_batch['predictions']
                         num_of_images += int(logits_batch.shape[0])
@@ -40,9 +43,7 @@ def facenet_infer(runner, target, logger, eval_num_examples, print_num_examples,
                                 eval_metric.evaluate()
                                 log_accuracy(logger, num_of_images, eval_metric.get_accuracy())
                         else:
-                            if visualize_callback:
-                                save_image(Image.fromarray(visualize_callback(logits_batch, img_info['img_orig'])),
-                                           img_info['image_name'][0])
+
                             if dump_results:
                                 write_results(logits_batch, img_info, results_path)
                         pbar.update(batch_size)

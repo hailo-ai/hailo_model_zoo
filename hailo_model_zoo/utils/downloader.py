@@ -70,7 +70,7 @@ def download(url: str, dst_dir: Union[str, Path], logger: logging.Logger) -> str
     dst_dir.mkdir(parents=True, exist_ok=True)
     dst = Path(dst_dir) / Path(url).name
 
-    if not(dst.exists() and dst.is_file()):
+    if not (dst.exists() and dst.is_file()):
         logger.debug(f'downloading {url} into {dst_dir}')
         download_file(url, dst)
     else:

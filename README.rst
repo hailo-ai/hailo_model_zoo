@@ -1,14 +1,14 @@
 Hailo Model Zoo
 ===============
 
-.. |python| image:: https://img.shields.io/badge/python-3.6-blue.svg
-   :target: https://www.python.org/downloads/release/python-360/
-   :alt: Python 3.6
+.. |python| image:: https://img.shields.io/badge/python-3.8-blue.svg
+   :target: https://www.python.org/downloads/release/python-380/
+   :alt: Python 3.8
    :width: 70
 
 
-.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.5.2-blue.svg
-   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.5.2
+.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.9.2-blue.svg
+   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.9.2
    :alt: Generic badge
    :width: 90
 
@@ -19,13 +19,13 @@ Hailo Model Zoo
    :width: 70
 
 
-.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.19-<COLOR>.svg
+.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.22.0-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 180
 
 
-.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.8.1-<COLOR>.svg
+.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.12.0-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 100

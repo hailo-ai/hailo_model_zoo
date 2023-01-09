@@ -3,14 +3,14 @@ base:
 evaluation:
   infer_type: facenet_infer
   dataset_name: facenet
-  data_set: models_files/arcface_lfw/2022-08-28/arcface_lfw_pairs_val.tfrecord
-  validation_data_set: models_files/arcface_lfw/2022-08-28/arcface_lfw_pairs_val.tfrecord
+  data_set: models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_val.tfrecord
+  validation_data_set: models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_val.tfrecord
 preprocessing:
   network_type: face_verification
   meta_arch: mobilenet
 quantization:
   calib_set:
-  - models_files/arcface_lfw/2022-08-28/arcface_lfw_pairs_calib.tfrecord
+  - models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_calib.tfrecord
 info:
   source: https://github.com/deepinsight/insightface
 parser:

@@ -3,8 +3,6 @@ base:
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-hn_editor:
-  bgr2rgb: true
 preprocessing:
   network_type: detection
   meta_arch: yolo_v5
@@ -14,6 +12,9 @@ postprocessing:
   score_threshold: 0.05
   meta_arch: nanodet
   anchors:
+    scale_factors:
+    - 0.5
+    - 0.5
     regression_length: 10
     strides:
     - 8

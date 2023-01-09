@@ -8,6 +8,7 @@ _DATA_DEFAULT_DIRECTORY = _USER_DATA_DIR / 'data'
 BASE_CFG_DIR = _MODEL_ZOO_ROOT / 'cfg'
 NETWORK_CFG_DIR = BASE_CFG_DIR / 'networks'
 ALLS_DIR = BASE_CFG_DIR / 'alls'
+ALLS_PERFORMANCE_DIR = ALLS_DIR / 'performance'
 MULTI_NETWORKS_DIR = BASE_CFG_DIR / 'multi-networks'
 
 # ensure env var HMZ_DATA exists
@@ -15,7 +16,12 @@ os.environ['HMZ_DATA'] = os.environ.get('HMZ_DATA', str(_DATA_DEFAULT_DIRECTORY)
 
 
 def resolve_alls_path(path):
-    return ALLS_DIR / path
+    alls_path = ALLS_DIR / path
+    if alls_path.exists():
+        return alls_path
+    else:
+        alls_path = ALLS_DIR / Path("base") / alls_path.name
+    return alls_path
 
 
 def resolve_cfg_path(path):
@@ -38,3 +44,7 @@ def resolve_data_path(path):
 
 def get_network_names():
     return sorted([name.with_suffix('').name for name in NETWORK_CFG_DIR.glob('*.yaml')])
+
+
+def get_network_peformance():
+    return sorted([name.with_suffix('').name for name in ALLS_PERFORMANCE_DIR.glob('*.alls')])

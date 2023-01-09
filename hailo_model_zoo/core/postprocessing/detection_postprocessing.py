@@ -11,6 +11,7 @@ from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage1_postproces
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage2_postprocessing import FasterRCNNStage2
 from hailo_model_zoo.core.postprocessing.detection.nanodet import NanoDetPostProc
 from hailo_model_zoo.core.postprocessing.detection.detr import DetrPostProc
+from hailo_model_zoo.core.postprocessing.detection.retinanet_mlperf import retinanet_postproc
 
 
 DETECTION_ARCHS = {
@@ -22,7 +23,8 @@ DETECTION_ARCHS = {
     "faster_rcnn_stage1": FasterRCNNStage1,
     "faster_rcnn_stage2": FasterRCNNStage2,
     "nanodet": NanoDetPostProc,
-    "detr": DetrPostProc
+    "detr": DetrPostProc,
+    "retinanet_mlperf": retinanet_postproc
 }
 
 
@@ -47,6 +49,12 @@ def _get_coco_labels():
     return coco_names
 
 
+def _get_open_images_labels():
+    open_images_names = json.load(open(os.path.join(os.path.dirname(__file__), 'open_images_names.json')))
+    open_images_names = {int(k): {'id': int(k), 'name': str(v)} for (k, v) in open_images_names.items()}
+    return open_images_names
+
+
 def _get_visdrone_labels():
     visdrone_names = json.load(open(os.path.join(os.path.dirname(__file__), 'visdrone_names.json')))
     visdrone_names = {int(k): {'id': int(k), 'name': str(v)} for (k, v) in visdrone_names.items()}
@@ -67,10 +75,13 @@ def _get_face_detection_visualization_data(logits):
 
 def visualize_detection_result(logits, image, threshold=0.2, image_info=None, use_normalized_coordinates=True,
                                max_boxes_to_draw=20, dataset_name='coco', **kwargs):
+
     boxes = logits['detection_boxes'][0]
     keypoints = None
     if 'coco' in dataset_name:
         labels = _get_coco_labels()
+    elif 'open_images' in dataset_name:
+        labels = _get_open_images_labels()
     elif 'visdrone' in dataset_name:
         labels = _get_visdrone_labels()
     elif 'mot' in dataset_name:

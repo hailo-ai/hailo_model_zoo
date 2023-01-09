@@ -2,7 +2,7 @@
 Arface Retraining
 ================
 
-* To learn more about arcface look `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch>`_
+* To learn more about arcface look `here <https://github.com/hailo-ai/insightface/tree/master/recognition/arcface_torch>`_
 
 ----------------------------------------------------------------------------------------
 
@@ -122,7 +122,7 @@ Compile the Model using Hailo Model Zoo
 
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
-Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:  
+Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:
 
 .. raw:: html
    :name:validation
@@ -139,4 +139,3 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
 
 .. note::
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.
-

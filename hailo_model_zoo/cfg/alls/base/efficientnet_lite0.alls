@@ -1,0 +1,3 @@
+normalization1 = normalization([127, 127, 127], [128, 128, 128])
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)

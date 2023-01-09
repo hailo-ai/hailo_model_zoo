@@ -7,7 +7,7 @@ from .centernet import COCO_2017_TO_2014_TRANSLATION
 
 class NanoDetPostProc:
     def __init__(self, img_dims=(416, 416), nms_iou_thresh=0.6, labels_offset=0,
-                 score_threshold=0.3, anchors=None, classes=80, **kwargs):
+                 score_threshold=0.3, anchors=None, classes=80, meta_arch='nanodet', **kwargs):
         self._num_classes = classes
         self._image_dims = img_dims
         self._nms_iou_thresh = nms_iou_thresh
@@ -15,28 +15,54 @@ class NanoDetPostProc:
         self._strides = anchors.strides
         self.reg_max = anchors.regression_length
         self._labels_offset = labels_offset
+        # since scale factors don't make sense in nanodet we abuse it to store the offsets
+        self._offset_factors = anchors.scale_factors
+        self._network_arch = meta_arch
+        self._decode = {
+            'nanodet': self.nanodet_decode,
+            'nanodet_split': self.split_decode,
+        }
 
-    def _get_scores_boxes(self, endnodes):
+    @staticmethod
+    def nanodet_decode(endnodes, reg_max, num_classes):
         scores, boxes = [], []
         for node in endnodes:
             fm_size_h, fm_size_w = node.shape[1:3]
-            scores.append(tf.reshape(node[:, :, :, :self._num_classes],
-                                     [-1, fm_size_h * fm_size_w, self._num_classes]))
-            boxes.append(tf.reshape(node[:, :, :, self._num_classes:],
-                                    [-1, fm_size_h * fm_size_w, 4, (self.reg_max + 1)]))
+            scores.append(tf.reshape(node[:, :, :, :num_classes],
+                                     [-1, fm_size_h * fm_size_w, num_classes]))
+            boxes.append(tf.reshape(node[:, :, :, num_classes:],
+                                    [-1, fm_size_h * fm_size_w, 4, (reg_max + 1)]))
         return tf.concat(scores, axis=1), boxes
+
+    @staticmethod
+    def split_decode(endnodes, reg_max, num_classes):
+        scores, boxes = [], []
+        for node in endnodes[::2]:
+            fm_size_h, fm_size_w = node.shape[1:3]
+            box = tf.reshape(node, (-1, fm_size_h * fm_size_w, 4, (reg_max + 1)))
+            boxes.append(box)
+        for node in endnodes[1::2]:
+            fm_size_h, fm_size_w = node.shape[1:3]
+            score = tf.reshape(node, (-1, fm_size_h * fm_size_w, num_classes + 1))
+            score = score[:, :, :num_classes]
+            scores.append(score)
+
+        return tf.concat(scores, axis=1), boxes
+
+    def _get_scores_boxes(self, endnodes):
+        return self._decode[self._network_arch](endnodes, self.reg_max, self._num_classes)
 
     def _box_decoding(self, raw_boxes):
         boxes = None
         for box_distribute, stride in zip(raw_boxes, self._strides):
-
             # create grid
             shape = [int(x / stride) for x in self._image_dims]
             grid_x = np.arange(shape[1])
             grid_y = np.arange(shape[0])
             grid_x, grid_y = np.meshgrid(grid_x, grid_y)
-            ct_row = (grid_y.flatten() + 0.5) * stride
-            ct_col = (grid_x.flatten() + 0.5) * stride
+            x_offset, y_offset = self._offset_factors
+            ct_row = (grid_y.flatten() + x_offset) * stride
+            ct_col = (grid_x.flatten() + y_offset) * stride
             center = np.stack((ct_col, ct_row, ct_col, ct_row), axis=1)
 
             # box distribution to distance
@@ -60,12 +86,12 @@ class NanoDetPostProc:
             boxes = decode_box if boxes is None else tf.concat([boxes, decode_box], axis=1)
         return tf.expand_dims(boxes, axis=2)
 
-    def postprocessing(self, endnodes, **kwargs):
-
+    def postprocessing(self, endnodes, *, device_pre_post_layers, **kwargs):
         scores, raw_boxes = self._get_scores_boxes(endnodes)
 
         # decode score/class
-        scores = tf.sigmoid(scores)
+        if not device_pre_post_layers.sigmoid:
+            scores = tf.sigmoid(scores)
 
         # decode boxes
         boxes = self._box_decoding(raw_boxes)

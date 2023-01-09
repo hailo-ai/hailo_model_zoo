@@ -11,7 +11,7 @@ RUN git clone https://github.com/hailo-ai/yolov5.git --branch v2.0 && \
     cd yolov5 && \
     pip install --upgrade pip && \
     pip install -r requirements.txt && \
-    pip install -U 'coremltools>=4.1' 'onnx>=1.9.0' 'scikit-learn==0.19.2'
+    pip install -U 'coremltools>=4.1' 'onnx>=1.9.0' 'scikit-learn==0.19.2' 'scipy==1.9.1' 'numpy==1.19.2'
 
 ENV PYTHONPATH=/workspace/yolov5
 WORKDIR /workspace/yolov5

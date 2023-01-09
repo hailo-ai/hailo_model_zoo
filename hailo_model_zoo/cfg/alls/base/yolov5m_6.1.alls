@@ -1,0 +1,8 @@
+yolov5m_6_1/normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+
+change_output_activation(yolov5m_6_1/conv82, sigmoid)
+change_output_activation(yolov5m_6_1/conv74, sigmoid)
+change_output_activation(yolov5m_6_1/conv65, sigmoid)
+
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+

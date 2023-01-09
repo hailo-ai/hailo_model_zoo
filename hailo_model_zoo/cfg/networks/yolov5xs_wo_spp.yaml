@@ -18,11 +18,6 @@ parser:
   - - Conv_252
     - Conv_235
     - Conv_218
-  start_node_shape:
-  - 1
-  - 3
-  - 512
-  - 512
 info:
   task: object detection
   input_shape: 512x512x3

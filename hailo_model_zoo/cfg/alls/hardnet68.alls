@@ -1,5 +1,0 @@
-normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-
-context_switch_param(mode=enabled)
-resources_param(strategy=greedy, max_compute_utilization=0.85, max_control_utilization=0.70)
-performance_param(fps=None)

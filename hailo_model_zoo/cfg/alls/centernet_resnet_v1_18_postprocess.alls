@@ -1,7 +1,0 @@
-normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(calibration, batch_size=4, calibset_size=2048)
-# pre_quantization_optimization commands
-pre_quantization_optimization(activation_clipping, layers=[conv27], mode=manual, clipping_values=[0.0, 125])
-# post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=disabled)
-performance_param(fps=None)

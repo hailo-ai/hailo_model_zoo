@@ -32,7 +32,7 @@ Environment Preparations
 
    * ``timezone`` - a string for setting up timezone. E.g. "Asia/Jerusalem"
    * ``user`` - username for a local non-root user. Defaults to 'hailo'.
-   * ``group`` - default group for a local non-root user. Defaults to 'hailo'.co 
+   * ``group`` - default group for a local non-root user. Defaults to 'hailo'.
    * ``uid`` - user id for a local non-root user.
    * ``gid`` - group id for a local non-root user.
   
@@ -117,7 +117,7 @@ Training and exporting to ONNX
       :name:validation
 
       <pre><code stage="export">
-      pip install onnx onnxruntime
+      pip install -U onnx onnxruntime
       python tools/export_onnx.py --cfg_path ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml --model_path /workspace/nanodet/workspace/RepVGG-A0-416/model_last.ckpt
       </code></pre>
 

@@ -31,7 +31,9 @@ def facenet_infer(runner, target, logger, eval_num_examples, print_num_examples,
             try:
                 with tqdm(total=None, desc="Processed", unit="images",
                           disable=None if not print_num_examples < 1e9 else True) as pbar:
-                    while num_of_images < eval_num_examples:
+                    while True:
+                        if eval_num_examples is not None and num_of_images >= eval_num_examples:
+                            break
                         logits_batch, img_info = sdk_export.session.run([probs, image_info])
                         logits_batch = logits_batch['predictions']
                         num_of_images += int(logits_batch.shape[0])

@@ -56,7 +56,7 @@ info:
   framework: pytorch
   training_data: coco instances train2017
   validation_data: coco instances val2017
-  eval_metric: mAP
-  full_precision_result: 17.78
+  eval_metric: mAP-segmentation
+  full_precision_result: 14.982
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT

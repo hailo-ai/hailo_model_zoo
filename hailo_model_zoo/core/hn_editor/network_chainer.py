@@ -37,7 +37,7 @@ def _translate_model(runner, network_info, tensor_shapes):
 
 
 def integrate_postprocessing(runner, integrated_postprocessing_info, network_info):
-    model_script = resolve_alls_path(network_info.paths.alls_script)
+    model_script = resolve_alls_path("base/" + network_info.paths.alls_script)
     runner.load_model_script(model_script)
     for chain in integrated_postprocessing_info.chains:
         hn = runner.get_hn_model()
@@ -58,7 +58,7 @@ def integrate_postprocessing(runner, integrated_postprocessing_info, network_inf
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
 
         if chain.paths.alls_script is not None:
-            model_script = resolve_alls_path(chain.paths.alls_script)
+            model_script = resolve_alls_path("base/" + chain.paths.alls_script)
             chained_runner.load_model_script(model_script)
 
         chained_name = chained_runner.get_hn()['name']

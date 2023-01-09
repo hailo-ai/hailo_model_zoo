@@ -39,6 +39,9 @@ def _get_imagenet_labels():
 
 def visualize_classification_result(logits, img, **kwargs):
     logits = logits['predictions']
+    # TODO: SDK-32906 (wrong shape for classifiers) remove this when sdk is fixed
+    if len(logits.shape) == 4:
+        logits = logits.squeeze((1, 2))
     labels_offset = kwargs.get('labels_offset', 0)
     top1 = np.argmax(logits, axis=1)
     conf = np.squeeze(logits[0, top1])

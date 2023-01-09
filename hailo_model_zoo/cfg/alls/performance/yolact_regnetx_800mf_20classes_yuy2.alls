@@ -1,0 +1,14 @@
+normalization1 = normalization([123.68, 116.78, 103.94], [58.4, 57.12, 57.38])
+change_output_activation(yolact_regnetx_800mf_20classes_yuy2/conv83, tanh)
+change_output_activation(yolact_regnetx_800mf_20classes_yuy2/conv75, tanh)
+change_output_activation(yolact_regnetx_800mf_20classes_yuy2/conv63, tanh)
+change_output_activation(yolact_regnetx_800mf_20classes_yuy2/conv66, tanh)
+change_output_activation(yolact_regnetx_800mf_20classes_yuy2/conv69, tanh)
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+
+compilation_param([conv15, conv37], balance_output_multisplit=False)
+
+yuv_to_rgb1 = yuv_to_rgb()
+reshape_yuy2 = input_conversion(input_layer1, yuy2_to_hailo_yuv)
+
+

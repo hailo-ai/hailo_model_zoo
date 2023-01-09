@@ -1,6 +1,28 @@
 Changelog
 =========
 
+**v2.6**
+
+* Update to use Dataflow Compiler v3.22.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Updated to use HailoRT 4.12.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* ViT (`Vision Transformer <https://arxiv.org/pdf/2010.11929.pdf>`_) - new classification network with transformers-encoder based architecture 
+* New instance segmentation variants:
+
+  * yolov5n_seg
+  * yolov5s_seg
+  * yolov5m_seg
+  
+* New object detecion variants for high resolution images:
+
+  * yolov7e6
+  * yolov5n6_6.1
+  * yolov5s6_6.1
+  * yolov5m6_6.1
+  
+* New flag ``--performance`` to reproduce highest performance for a subset of networks
+* Hailo model-zoo log is now written into ``sdk_virtualenv/etc/hailo/modelzoo/hailo_examples.log``
+* Bug fixes 
+
 **v2.5**
 
 * Update to use Dataflow Compiler v3.20.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)

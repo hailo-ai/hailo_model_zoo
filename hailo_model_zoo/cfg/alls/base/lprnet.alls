@@ -1,0 +1,2 @@
+lprnet/normalization1 = normalization([127.5, 127.5, 127.5], [128.0, 128.0, 128.0])
+input_conversion = input_conversion(bgr_to_rgb)

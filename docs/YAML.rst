@@ -32,7 +32,7 @@ Properties
     * | **std_list** *(['array', 'null'])*\ : Used only in case normalize_in_net=false: The MZ automatically performs normalization to the calibration set, so the network receives already-normalized
         input (saves the user the need to normalize the dataset). Default: ``None``.
 
-  * | **start_node_shape** *(['array', 'null'])*\ : Dict for setting input shape of supported models that does not explicitly use it.
+  * | **start_node_shapes** *(['array', 'null'])*\ : Dict for setting input shape of supported models that does not explicitly use it.
     | For example, models with input shape of [?, ?, ?, 3] can be set with {"Preprocessor/sub:0": [1, 512, 512, 3]}. Default: ``None``.
 
 * | **preprocessing**

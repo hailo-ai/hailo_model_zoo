@@ -1,3 +1,0 @@
-input_conversion = input_conversion(bgr_to_rgb)
-model_optimization_config(calibration, batch_size=4, calibset_size=32)
-pre_quantization_optimization(equalization, policy=disabled)

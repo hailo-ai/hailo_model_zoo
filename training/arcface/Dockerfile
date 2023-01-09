@@ -21,7 +21,8 @@ RUN mkdir /workspace/data && \
     git clone $repo && \
     cd insightface/recognition/arcface_torch && \
     pip install -r requirement.txt && \
-    pip install onnxruntime onnxsim
+    pip install onnxruntime onnxsim && \
+    pip install numpy==1.22.0
 WORKDIR /workspace/insightface/recognition/arcface_torch
 
 ARG user=hailo

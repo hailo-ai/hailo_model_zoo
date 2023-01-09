@@ -60,7 +60,7 @@ class LayerSplitter(object):
             for split_name, split_kernel_shape in zip(split_names, split_kernel_shapes):
                 output_index += 1
                 self._add_layer_to_hn(split_name, split_kernel_shape, layer, output_layer_ordinals[output_index])
-            del(self._hn_modified["layers"][layer])
+            del (self._hn_modified["layers"][layer])
 
     def split_polylanenet_hn_layer(self, layer):
         kernel_shape = self._hn_modified["layers"][layer]["params"]["kernel_shape"]
@@ -215,7 +215,7 @@ class LayerSplitter(object):
 
         while len(output_layers) > 0:
             output_layer = output_layers.pop()
-            del(self._hn_modified["layers"][output_layer])
+            del (self._hn_modified["layers"][output_layer])
 
     def _clear_names_and_shapes_of_prev_layer_outputs(self):
         for layer in self._layer_names:
@@ -245,8 +245,8 @@ class LayerSplitter(object):
         elif 'smoke' in self._split_type:
             self._remodel_smoke_weights_and_biases_for_layer(layer)
 
-        del(self._npz_modified[layer + '/kernel:0'])
-        del(self._npz_modified[layer + '/bias:0'])
+        del (self._npz_modified[layer + '/kernel:0'])
+        del (self._npz_modified[layer + '/bias:0'])
 
     def _remodel_polylanenet_weights_and_biases_for_layer(self, layer):
         """remodeling a single output layer"""

@@ -1,4 +1,4 @@
-from hailo_sdk_common.targets.inference_targets import SdkNative, SdkPartialNumeric
+from hailo_sdk_common.targets.inference_targets import SdkPartialNumeric, SdkFPOptimized
 
 try:
     from hailo_platform import PcieDevice
@@ -7,7 +7,7 @@ except ModuleNotFoundError:
     PLATFORM_AVAILABLE = False
 
 TARGETS = {'hailo8': PcieDevice if PLATFORM_AVAILABLE else None,
-           'full_precision': SdkNative,
+           'full_precision': SdkFPOptimized,
            'emulator': SdkPartialNumeric,
            }
 DEVICE_NAMES = set()

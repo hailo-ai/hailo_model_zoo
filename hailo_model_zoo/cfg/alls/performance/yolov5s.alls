@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+pre_quantization_optimization(equalization, policy=disabled)
+performance_param(fps=375)

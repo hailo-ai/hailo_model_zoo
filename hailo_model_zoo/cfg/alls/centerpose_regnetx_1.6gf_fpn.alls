@@ -1,6 +1,0 @@
-normalization1 = normalization([104.04, 113.985, 119.85], [73.695, 69.87, 70.89], centerpose_regnetx_1_6gf_fpn/input_layer1)
-input_conversion = input_conversion(bgr_to_rgb)
-model_optimization_config(calibration, batch_size=4, calibset_size=32)
-# pre_quantization_optimization commands
-pre_quantization_optimization(equalization, policy=disabled)
-performance_param(fps=130)

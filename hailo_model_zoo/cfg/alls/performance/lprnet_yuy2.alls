@@ -1,0 +1,9 @@
+reshape_yuy2 = input_conversion(lprnet_yuy2/input_layer1, yuy2_to_hailo_yuv)
+input_conversion = input_conversion(bgr_to_rgb)
+normalization1 = normalization([127.5, 127.5, 127.5], [128.0, 128.0, 128.0])
+yuv_to_rgb1 = yuv_to_rgb()
+model_optimization_config(calibration, batch_size=4, calibset_size=64)
+pre_quantization_optimization(equalization, policy=disabled)
+
+allocator_param(automatic_ddr=disabled)
+performance_param(fps=330)

@@ -1,0 +1,4 @@
+normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
+# quantization_param({conv*}, max_elementwise_feed_repeat=1)
+quantization_param([conv5, conv8, conv11, conv15, conv18, conv21, conv24, conv28, conv31, conv34, conv37, conv40, conv43, conv47, conv50, conv53], max_elementwise_feed_repeat=1)
+post_quantization_optimization(finetune, policy=disabled)

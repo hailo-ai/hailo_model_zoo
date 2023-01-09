@@ -1,4 +1,0 @@
-normalization1 = normalization([103.53, 116.28, 123.675], [57.375, 57.12, 58.395])
-input_conversion = input_conversion(bgr_to_rgb)
-allocator_param(merge_min_layer_utilization=0.1)
-performance_param(fps=None)

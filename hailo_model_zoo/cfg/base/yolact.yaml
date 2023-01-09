@@ -7,6 +7,7 @@ preprocessing:
   network_type: instance_segmentation
   meta_arch: mobilenet_ssd
 postprocessing:
+  meta_arch: yolact
   nms_iou_thresh: 0.5
   score_threshold: 0.05
   anchors:

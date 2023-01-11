@@ -14,6 +14,7 @@ parser:
     - Conv_321
     - Conv_271
 info:
+  task: object detection
   input_shape: 640x640x3
   output_shape: 20x20x255, 40x40x255, 80x80x255,
   operations: 24.48G

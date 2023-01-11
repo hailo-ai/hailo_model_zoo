@@ -323,8 +323,8 @@ ImageNet
      - 224x224x3
      - 5.41
      - 2.36
-     - `link <>`_
-     - `link <N/A>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny/pretrained/2022-08-08/vit_tiny.zip>`_
+     - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/vit_tiny.hef>`_
 
 .. _Object Detection:
@@ -429,15 +429,15 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1_hd/pretrained/2021-07-11/ssd_mobilenet_v1_hd.zip>`_
      - `link <https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/ssd_mobilenet_v1_hd.hef>`_
-   * - ssd_mobilenet_v2
-     - 24.15
-     - 23.07
+   * - ssd_mobilenet_v2_wo_nms
+     - 24.21
+     - 23.2
      - 300x300x3
-     - 4.46
+     - 4.48
      - 0.76
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2021-07-11/ssd_mobilenet_v2.zip>`_
      - `link <https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md>`_
-     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/ssd_mobilenet_v2.hef>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/ssd_mobilenet_v2_wo_nms.hef>`_
    * - tiny_yolov3
      - 14.36
      - 13.45
@@ -519,6 +519,24 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.zip>`_
      - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5m.hef>`_
+   * - yolov5m6_6.1
+     - 50.68
+     - 48.74
+     - 1280x1280x3
+     - 35.70
+     - 100.02
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m6_6.1/pretrained/2022-04-12/yolov5m6.zip>`_
+     - `link <https://github.com/ultralytics/yolov5/releases/tag/v6.1>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5m6_6.1.hef>`_
+   * - yolov5m_6.1
+     - 44.81
+     - 43.38
+     - 640x640x3
+     - 21.17
+     - 24.48
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_6.1/pretrained/2022-03-24/yolov5m_6.1.zip>`_
+     - `link <https://github.com/ultralytics/yolov5/releases/tag/v6.1>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5m_6.1.hef>`_
    * - yolov5m_wo_spp |rocket|
      - 42.46
      - 40.43
@@ -528,6 +546,15 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2022-04-19/yolov5m_wo_spp.zip>`_
      - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5m_wo_spp_60p.hef>`_
+   * - yolov5n6_6.1
+     - 35.63
+     - 33.68
+     - 1280x1280x3
+     - 3.24
+     - 9.17
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5n6_6.1/pretrained/2022-04-12/yolov5n6.zip>`_
+     - `link <https://github.com/ultralytics/yolov5/releases/tag/v6.1>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5n6_6.1.hef>`_
    * - yolov5s |star|
      - 35.33
      - 34.25
@@ -537,6 +564,15 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_spp/pretrained/2022-01-02/yolov5s.zip>`_
      - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5s.hef>`_
+   * - yolov5s6_6.1
+     - 44.17
+     - 41.74
+     - 1280x1280x3
+     - 12.61
+     - 33.70
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2022-04-12/yolov5s6.zip>`_
+     - `link <https://github.com/ultralytics/yolov5/releases/tag/v6.1>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov5s6_6.1.hef>`_
    * - yolov5s_personface |star|
      - 47.7
      - 45.75
@@ -591,6 +627,15 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov7_tiny/pretrained/2022-07-10/yolov7_tiny.zip>`_
      - `link <https://github.com/WongKinYiu/yolov7>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov7_tiny.hef>`_
+   * - yolov7e6
+     - 55.37
+     - 53.17
+     - 1280x1280x3
+     - 97.20
+     - 257.56
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov7e6/pretrained/2022-10-19/yolov7-e6.zip>`_
+     - `link <https://github.com/WongKinYiu/yolov7>`_
+     - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/yolov7e6.hef>`_
    * - yolox_l_leaky |star| |bomb|
      - 48.68
      - 47.18
@@ -852,7 +897,6 @@ COCO
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_
      - `link <https://github.com/open-mmlab/mmpose>`_
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.6.0/mspn_regnetx_800mf.hef>`_
-
 
 .. _Face Detection:
 

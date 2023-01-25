@@ -15,7 +15,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 * Network available in `Hailo Benchmark <https://hailo.ai/developer-zone/benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
-* Networks available in `Hailo Recommended </>`_ are marked with |bomb|
+* Networks available in Hailo Recommended are marked with |bomb|
 * Benchmark, TAPPAS and Recommended networks run in performance mode
 * Supported tasks:
 

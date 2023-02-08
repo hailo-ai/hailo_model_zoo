@@ -49,7 +49,7 @@ def main():
             'detection-tools==0.3',
             'scikit-image==0.19.3']
 
-    model_zoo_version = "2.6.0"
+    model_zoo_version = "2.6.1"
 
     package_data = {
         "hailo_model_zoo": [

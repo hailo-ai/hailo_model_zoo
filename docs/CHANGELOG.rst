@@ -1,6 +1,10 @@
 Changelog
 =========
 
+**v2.6.1**
+
+* Bug fixes
+
 **v2.6**
 
 * Update to use Dataflow Compiler v3.22.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

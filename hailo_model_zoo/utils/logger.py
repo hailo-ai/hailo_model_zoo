@@ -1,11 +1,11 @@
 import sys
 import logging
 from logging.handlers import RotatingFileHandler
+from pathlib import Path
 from hailo_sdk_common.logger.logger import create_custom_logger, DFC_FOLDER_PATH
-import os
 
 _g_logger = None
-MZ_FOLDER_PATH = os.path.join(DFC_FOLDER_PATH, '..', 'modelzoo')
+MZ_FOLDER_PATH = str(Path(DFC_FOLDER_PATH, '..', 'modelzoo'))
 
 
 class HailoExamplesFormatter(logging.Formatter):
@@ -38,8 +38,7 @@ def get_logger():
     global _g_logger
     if _g_logger is None:
         # setting console to False to set a custom console logger
-        if os.path.exists(MZ_FOLDER_PATH) is False:
-            os.mkdir(MZ_FOLDER_PATH)
+        Path(MZ_FOLDER_PATH).mkdir(parents=True, exist_ok=True)
         log_file_name = MZ_FOLDER_PATH + '/hailo_examples.log'
         _g_logger = create_custom_logger('hailo_examples.log', fmt=None, console=False)
         rotate_handler = RotatingFileHandler(log_file_name, maxBytes=10000000, backupCount=10)

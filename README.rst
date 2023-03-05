@@ -19,13 +19,13 @@ Hailo Model Zoo
    :width: 70
 
 
-.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.22.0-<COLOR>.svg
+.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.22.1-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 180
 
 
-.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.12.0-<COLOR>.svg
+.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.12.1-<COLOR>.svg
    :target: https://hailo.ai/contact-us/
    :alt: Generic badge
    :width: 100

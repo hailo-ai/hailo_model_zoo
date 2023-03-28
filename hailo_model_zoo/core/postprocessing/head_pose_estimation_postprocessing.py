@@ -13,13 +13,16 @@ def head_pose_estimation_postprocessing(endnodes, device_pre_post_layers, **kwar
     pitch_predicted = tf.reduce_sum(probs[0] * idx_tensor, 1) * 3 - 99
     roll_predicted = tf.reduce_sum(probs[1] * idx_tensor, 1) * 3 - 99
     yaw_predicted = tf.reduce_sum(probs[2] * idx_tensor, 1) * 3 - 99
-    return {'predictions': [pitch_predicted, roll_predicted, yaw_predicted]}
+    return {
+        'pitch': pitch_predicted,
+        'roll': roll_predicted,
+        'yaw': yaw_predicted,
+    }
 
 
 def visualize_head_pose_result(net_output, img, **kwargs):
-    net_output = net_output['predictions']
     img = img[0]
-    pitch, roll, yaw = net_output[0][0], net_output[1][0], net_output[2][0]
+    pitch, roll, yaw = net_output['pitch'][0], net_output['roll'][0], net_output['yaw'][0]
     pitch = pitch * np.pi / 180
     yaw = -(yaw * np.pi / 180)
     roll = roll * np.pi / 180

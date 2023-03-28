@@ -11,7 +11,6 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5l_spp/pretrained/2022-02-03/yolov5l.zip
   alls_script: yolov5l.alls
 parser:
-  ew_add_policy: fused_conv_and_add_identity_fallback
   nodes:
   - null
   - - Conv_406

@@ -1,45 +1,51 @@
 Hailo Model Zoo
 ===============
 
-.. |python| image:: https://img.shields.io/badge/python-3.8-blue.svg
+.. |python| image:: https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue.svg
    :target: https://www.python.org/downloads/release/python-380/
    :alt: Python 3.8
-   :width: 70
+   :width: 150
+   :height: 20
 
 
 .. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.9.2-blue.svg
    :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.9.2
-   :alt: Generic badge
-   :width: 90
+   :alt: Tensorflow
+   :width: 110
+   :height: 20
 
 
 .. |cuda| image:: https://img.shields.io/badge/CUDA-11.2-blue.svg
    :target: https://developer.nvidia.com/cuda-toolkit
-   :alt: Generic badge
-   :width: 70
+   :alt: Cuda
+   :width: 80
+   :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/HailoDataflow;Compiler-3.22.1-<COLOR>.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.23.0-brightgreen.svg
    :target: https://hailo.ai/contact-us/
-   :alt: Generic badge
+   :alt: Hailo Dataflow Compiler
    :width: 180
+   :height: 20
 
 
-.. |badge| image:: https://img.shields.io/badge/(optional)HailoRT-4.12.1-<COLOR>.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.13.0-brightgreen.svg
    :target: https://hailo.ai/contact-us/
-   :alt: Generic badge
-   :width: 100
+   :alt: HailoRT
+   :width: 170
+   :height: 20
 
 
 .. |license| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://github.com/hailo-ai/hailo_model_zoo/blob/master/LICENSE
    :alt: License: MIT
-   :width: 70
+   :width: 80
+   :height: 20
 
 
 .. image:: docs/images/logo.png
   
-|python| |tensorflow| |cuda| |compiler| |badge| |license|
+|python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
 
 The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo-8 device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
@@ -127,4 +133,4 @@ Please visit `hailo.ai <https://hailo.ai/>`_ for support / requests / issues.
 Changelog
 ---------
 
-For further information please see our `CHANGLOGE <docs/CHANGELOG.rst>`_ page.
+For further information please see our `CHANGELOG <docs/CHANGELOG.rst>`_ page.

@@ -4,6 +4,7 @@ import numpy as np
 from .centernet import COCO_2017_TO_2014_TRANSLATION
 from .detection_common import translate_coco_2017_to_2014
 from tensorflow.image import combined_non_max_suppression
+from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 
 def sigmoid(x):
@@ -34,6 +35,7 @@ class YoloPostProc(object):
         self._nms_on_device = False
         if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
             self._nms_on_device = True
+        self.hpp = kwargs.get("hpp", False)  # not needed once SDK change the output shape of emulator
 
     @staticmethod
     def _yolo3_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
@@ -262,7 +264,30 @@ class YoloPostProc(object):
                 full_concat_array = np.concatenate([full_concat_array, partial_concat], 3)
         return full_concat_array
 
+    def hpp_detection_postprocess(self, endnodes):
+        '''
+        input endnodes from HPP in the following format (Batch, 1, 6, MAX_PROPOSALS)
+        '''
+        endnodes = tf.transpose(endnodes, [0, 1, 3, 2])
+        detection_boxes = endnodes[:, 0, :, :4]  # (B, 100, 4)
+        detection_scores = endnodes[:, 0, :, 4]  # (B, 100)
+        detection_classes = endnodes[:, 0, :, 5]  # (B, 100)
+
+        def translate_coco_2017_to_2014(nmsed_classes):
+            return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
+
+        num_detections = tf.reduce_sum(tf.cast(detection_scores > 0, dtype=tf.int32), axis=1)
+        nmsed_classes = tf.cast(tf.add(detection_classes, self._labels_offset), tf.int16)
+        [nmsed_classes] = tf.py_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+
+        return {'detection_boxes': detection_boxes,
+                'detection_scores': detection_scores,
+                'detection_classes': nmsed_classes,
+                'num_detections': num_detections}
+
     def postprocessing(self, endnodes, **kwargs):
+        if self.hpp:
+            return tf_postproc_nms(endnodes, score_threshold=0.0, coco_2017_to_2014=True)
         if self._nms_on_device:
             return self.iou_nms(endnodes)
         else:

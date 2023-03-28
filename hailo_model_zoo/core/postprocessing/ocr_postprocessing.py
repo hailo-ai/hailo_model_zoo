@@ -9,7 +9,7 @@ CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-']
 
 
 def ocr_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    logits = np.mean(endnodes[0], axis=1)
+    logits = np.mean(endnodes, axis=1)
     # probs = _softmax(logits)
     return {'predictions': np.argmax(logits, axis=2)}
 

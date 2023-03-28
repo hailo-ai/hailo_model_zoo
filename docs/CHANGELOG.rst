@@ -1,11 +1,33 @@
 Changelog
 =========
 
+**v2.7**
+
+* Update to use Dataflow Compiler v3.23.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Updated to use HailoRT 4.13.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Inference flow was moved to new high-level APIs
+* New object detection variants:
+
+  * yolov8: yolov8n / yolov8s / yolov8m / yolov8l / yolov8x
+  * damoyolo: damoyolo_tinynasL20_T / damoyolo_tinynasL25_S / damoyolo_tinynasL35_M
+  
+* New transformers based models:
+
+  * vit_base - classification model
+  * yolov5s_c3tr - object detection model with a self-attention block
+  
+* Examples for using HailoRT-pp - support for seamless integration of models and their corresponding postprocessing
+
+  * yolov5m_hpp
+  * ssd_mobilenet_v1_hpp
+  
+* Configuration YAMLs and model-scripts for networks with YUY2 input format
+* DAMO-YOLO retraining docker
+* Bug fixes
+
 **v2.6.1**
 
 * Bug fixes
-* Update to use Dataflow Compiler v3.22.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Updated to use HailoRT 4.12.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 **v2.6**
 
@@ -17,6 +39,7 @@ Changelog
   * yolov5n_seg
   * yolov5s_seg
   * yolov5m_seg
+  * yolov5l_seg
   
 * New object detecion variants for high resolution images:
 

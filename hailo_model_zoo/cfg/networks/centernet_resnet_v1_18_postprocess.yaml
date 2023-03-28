@@ -18,9 +18,9 @@ paths:
 parser:
   nodes:
   - zero_padding2d/Pad
-  - - threshold_confidence/threshold_activation/threshold_confidence/re_lu/Relu
-    - centernet0_conv3/BiasAdd
+  - - centernet0_conv3/BiasAdd
     - centernet0_conv5/BiasAdd
+    - threshold_confidence/threshold_activation/threshold_confidence/re_lu/Relu
 info:
   task: object detection
   input_shape: 512x512x3

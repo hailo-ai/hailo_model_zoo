@@ -1,0 +1,38 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Hailo Model Zoo
+message: >-
+  If you use Hailo in your research, please cite this
+  repository using these metadata.
+type: software
+authors:
+  - given-names: Tamir
+    family-names: Tapuhi
+    email: tamirt@hailo.ai
+  - given-names: Shachar
+    family-names: Gluska
+    email: shacharg@hailo.ai
+  - given-names: Amit
+    family-names: Klinger
+    email: amitk@hailo.ai
+  - given-names: Nadiv
+    family-names: Dharan
+    email: nadivd@hailo.ai
+  - given-names: Omer
+    family-names: Sholev
+    email: omersh@hailo.ai
+  - given-names: Yuval
+    family-names: Zelig
+    email: yuvalz@hailo.ai
+  - given-names: Niv
+    family-names: Vosco
+    email: nivv@hailo.ai
+repository-code: 'https://github.com/hailo-ai/hailo_model_zoo'
+url: 'https://hailo.ai/products/hailo-software-suite/model-zoo/'
+abstract: >-
+  The Hailo Model Zoo includes pre-trained models and a full
+  building and evaluation environment
+license: MIT
+date-released: '2021-07-01'

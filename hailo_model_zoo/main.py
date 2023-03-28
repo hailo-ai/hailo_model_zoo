@@ -1,13 +1,23 @@
 #!/usr/bin/env python
 import argparse
+import importlib
 
 from pathlib import Path
 
+import hailo_model_zoo.plugin
 # we try to minize imports to make 'main.py --help' responsive. So we only import definitions.
-from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 
-from hailo_model_zoo.utils import path_resolver
-from hailo_model_zoo.utils.hw_utils import TARGETS, DEVICE_NAMES
+from hailo_model_zoo.utils.cli_utils import add_model_name_arg, HMZ_COMMANDS
+from hailo_model_zoo.utils.constants import TARGETS, DEVICE_NAMES, PROFILER_MODE_NAMES
+
+from hailo_model_zoo.utils.plugin_utils import iter_namespace
+
+
+discovered_plugins = {
+    name: importlib.import_module(name)
+    for finder, name, ispkg
+    in iter_namespace(hailo_model_zoo.plugin)
+}
 
 
 def _make_parsing_base():
@@ -56,17 +66,16 @@ def _make_hef_base():
 
 def _make_profiling_base():
     profile_base_parser = argparse.ArgumentParser(add_help=False)
-    profiler_mode_names = {profiler_mode.value for profiler_mode in ProfilerModes}
     profile_base_parser.add_argument(
         '--mode', help='Profiling mode', dest='profile_mode',
-        type=str, default=ProfilerModes.PRE_PLACEMENT.value,
-        choices=profiler_mode_names)
+        type=str, default='pre_placement',
+        choices=PROFILER_MODE_NAMES)
     return profile_base_parser
 
 
 def _make_evaluation_base():
     evaluation_base_parser = argparse.ArgumentParser(add_help=False)
-    targets = list(TARGETS.keys())
+    targets = TARGETS
     devices = ', '.join(DEVICE_NAMES)
     evaluation_base_parser.add_argument(
         '--target', type=str, choices=targets, metavar='', default='full_precision',
@@ -102,20 +111,6 @@ def _make_evaluation_base():
     return evaluation_base_parser
 
 
-def _make_info_base():
-    info_base_parser = argparse.ArgumentParser(add_help=False)
-    add_model_name_arg(info_base_parser)
-    return info_base_parser
-
-
-def add_model_name_arg(parser, optional=False):
-    network_names = list(path_resolver.get_network_names())
-    # Setting empty metavar in order to prevent listing the models twice
-    nargs = '?' if optional else None
-    parser.add_argument('model_name', type=str, nargs=nargs, choices=network_names, metavar='model_name',
-                        help='Which network to run. Choices: ' + ', '.join(network_names))
-
-
 def _create_args_parser():
     # --- create shared arguments parsers
     parsing_base_parser = _make_parsing_base()
@@ -123,7 +118,6 @@ def _create_args_parser():
     hef_base_parser = _make_hef_base()
     profile_base_parser = _make_profiling_base()
     evaluation_base_parser = _make_evaluation_base()
-    information_base_parser = _make_info_base()
 
     # --- create per action subparser
     parser = argparse.ArgumentParser(epilog='Example: hailomz parse resnet_v1_50')
@@ -152,17 +146,20 @@ def _create_args_parser():
         parsing_base_parser, optimization_base_parser, hef_base_parser, evaluation_base_parser],
         help="infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.")
 
-    subparsers.add_parser('info', parents=[information_base_parser],
-                          help="Print model information.")
-
+    # add parsers for plugins
+    for command in HMZ_COMMANDS:
+        command_parser = command.parser_fn()
+        subparsers.add_parser(command.name, parents=[command_parser], help=command_parser.description)
     return parser
 
 
 def run(args):
-    if args.command == 'info':
-        from hailo_model_zoo.info_main import info
-        return info(args)
+    # search for commands from plugins
+    command_to_handler = {command.name: command.fn for command in HMZ_COMMANDS}
+    if args.command in command_to_handler:
+        return command_to_handler[args.command](args)
 
+    # we make sure to only import these now to keep loading & plugins fast
     from hailo_model_zoo.main_driver import parse, optimize, compile, profile, evaluate
     handlers = {
         'parse': parse,

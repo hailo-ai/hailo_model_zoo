@@ -157,14 +157,14 @@ def _get_default_bbox(batch_size):
 
 
 def mspn_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    image_info = kwargs['image_info']
+    image_info = kwargs['gt_images']
     height, width = image_info['img_resized'].shape[1:3]
     aspect_ratio = width / height
 
     # Get box info if exists, otherwise assume box spans the entire image
-    bbox = image_info.get('bbox', _get_default_bbox(endnodes[0].shape[0]))
+    bbox = image_info.get('bbox', _get_default_bbox(endnodes.shape[0]))
     center, scale = bbox_xyxy2cs(bbox, image_info['orig_height'], image_info['orig_width'], aspect_ratio)
-    heatmaps = np.transpose(endnodes[0], axes=[0, 3, 1, 2])
+    heatmaps = np.transpose(endnodes, axes=[0, 3, 1, 2])
 
     heatmaps = _gaussian_blur(heatmaps, kernel=5)
     N, K, H, W = heatmaps.shape
@@ -199,9 +199,7 @@ def visualize_single_person_pose_estimation_result(probs, image, kpt_score_thr=0
                                                    radius=8, thickness=2, **kwargs):
 
     idx = 0
-    # decode image
-    img = cv2.imdecode(np.fromstring(image[idx], dtype=np.uint8), cv2.IMREAD_UNCHANGED)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img = cv2.cvtColor(image[idx], cv2.COLOR_BGR2RGB)
     img_h, img_w, _ = img.shape
     probs = probs['predictions'][idx]
     kpts = np.array(probs, copy=False)

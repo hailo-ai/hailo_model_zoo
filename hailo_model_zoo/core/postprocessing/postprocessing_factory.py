@@ -59,6 +59,14 @@ def get_visualization(name, **kwargs):
         Raises:
             ValueError: If visualization `name` is not recognized.
     """
+    unsupported_visualizations = {
+        'face_verification',
+        'person_reid',
+    }
+
+    if name in unsupported_visualizations:
+        raise ValueError(f'Visualization is currently not supported for {name}')
+
     visualization_fn_map = {
         'classification': visualize_classification_result,
         'segmentation': visualize_segmentation_result,

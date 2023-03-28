@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone
 
 RUN apt-get update && \
     apt-get -y --no-install-recommends install git build-essential python3-opencv wget vim
-RUN pip install gdown
+RUN pip install gdown==4.6.0
 
 RUN git clone -b hailo_ai https://github.com/hailo-ai/pytorch-YOLOv4.git && \
     git clone https://github.com/hailo-ai/darknet.git

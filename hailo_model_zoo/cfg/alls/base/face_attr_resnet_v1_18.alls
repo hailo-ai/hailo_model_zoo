@@ -1,2 +1,2 @@
 normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_flavor(optimization_level=1, compression_level=2)
+model_optimization_flavor(optimization_level=2, compression_level=2)

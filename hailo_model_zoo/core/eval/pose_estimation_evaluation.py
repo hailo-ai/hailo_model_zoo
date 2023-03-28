@@ -33,14 +33,15 @@ class PoseEstimationEval(Eval):
         return net_output['predictions']
 
     def update_op(self, net_output, img_info):
-        net_output = self._parse_net_output(net_output)
         if "center" not in img_info:
             # OpenPose Evaluation
+            net_output = self._parse_net_output(net_output)
             self._coco_result += net_output
             return
 
         # CenterPose evaluation
-        bboxes, scores, keypoints, joint_scores = net_output
+        bboxes, scores, keypoints, joint_scores = (
+            net_output['bboxes'], net_output['scores'], net_output['keypoints'], net_output['joint_scores'])
 
         batch_size = bboxes.shape[0]
         for batch_index in range(batch_size):

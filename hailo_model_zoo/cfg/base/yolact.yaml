@@ -10,6 +10,7 @@ postprocessing:
   meta_arch: yolact
   nms_iou_thresh: 0.5
   score_threshold: 0.05
+  mask_threshold: 0.5
   anchors:
     aspect_ratios:
     - 1.0
@@ -54,7 +55,8 @@ parser:
     - 57.12
     - 57.38
 evaluation:
-  infer_type: np_infer
+  meta_arch: yolact
+  infer_type: np_infer_lite
   labels_offset: 0
   classes: 81
   gt_json_path: models_files/coco/2021-06-18/instances_val2017.json

@@ -2,17 +2,19 @@ base:
 - networks/yolov5m_wo_spp.yaml
 hn_editor:
   yuv2rgb: true
+  yuy2: true
   input_resize:
     enabled: true
     input_shape:
     - 720
     - 1280
 network:
-  network_name: yolov5m_wo_spp_yuv
+  network_name: yolov5m_wo_spp_yuy2
 paths:
-  alls_script: yolov5m_wo_spp_yuv.alls
+  alls_script: yolov5m_wo_spp_yuy2.alls
 info:
-  input_shape: 720x1280x3
+  task: pipeline
+  input_shape: 720x1280x2
   output_shape: 20x20x255, 40x40x255, 80x80x255
   operations: 26.50G
   parameters: 22.67M

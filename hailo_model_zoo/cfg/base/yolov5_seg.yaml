@@ -4,8 +4,10 @@ preprocessing:
   network_type: instance_segmentation
 postprocessing:
   meta_arch: yolov5_seg
+  mask_threshold: 0.5
 evaluation:
-  infer_type: np_infer
+  meta_arch: yolov5_seg
+  infer_type: np_infer_lite
   dataset_name: coco_detection
   gt_json_path: models_files/coco/2021-06-18/instances_val2017.json
 inference:

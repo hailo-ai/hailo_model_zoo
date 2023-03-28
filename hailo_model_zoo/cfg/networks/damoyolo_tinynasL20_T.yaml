@@ -1,0 +1,25 @@
+base:
+- base/damoyolo.yaml
+network:
+  network_name: damoyolo_tinynasL20_T
+paths:
+  alls_script: damoyolo_tinynasL20_T.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/damoyolo_tinynasL20_T/pretrained/2022-12-19/damoyolo_tinynasL20_T.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/damoyolo_tinynasL20_T/pretrained/2022-12-19/damoyolo_tinynasL20_T.zip
+parser:
+  nodes:
+  - null
+  - - Mul_224
+    - Sigmoid_244
+    - Mul_264
+    - Sigmoid_284
+    - Mul_304
+    - Sigmoid_324
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x68, 80x80x81, 40X40X68, 40X40X81, 20X20X68, 20X20X81
+  operations: 9.03G
+  parameters: 11.35M
+  full_precision_result: 42.8

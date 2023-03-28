@@ -1,0 +1,2 @@
+pre_quantization_optimization(equalization, policy=disabled)
+post_quantization_optimization(finetune, policy=enabled, batch_size=4, loss_layer_names =  [conv81, conv95, conv109, output_layer1, output_layer2, output_layer3, output_layer4, output_layer5, output_layer6], loss_factors = [1,1,1,2,2,2,2,2,2])

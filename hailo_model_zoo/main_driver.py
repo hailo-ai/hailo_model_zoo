@@ -1,4 +1,5 @@
 import io
+from pathlib import Path
 
 try:
     from hailo_platform import HEF, PcieDevice
@@ -6,16 +7,19 @@ try:
 except ModuleNotFoundError:
     HEF_EXISTS = False
 
+from hailo_sdk_client import InferenceContext
 from hailo_sdk_common.targets.inference_targets import SdkFPOptimized, SdkPartialNumeric
 from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
-from hailo_model_zoo.core.main_utils import (get_network_info, parse_model,
-                                             optimize_model, infer_model, compile_model, get_hef_path,
-                                             resolve_alls_path, _get_integrated_postprocessing)
+from hailo_model_zoo.core.main_utils import (
+    get_network_info, parse_model, optimize_model,
+    compile_model, get_hef_path,
+    infer_model_tf1, infer_model_tf2,
+    resolve_alls_path, get_integrated_postprocessing)
 from hailo_model_zoo.utils.path_resolver import get_network_peformance
-from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS
+from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS, INFERENCE_TARGETS, DEVICES
 from hailo_model_zoo.utils.logger import get_logger
 
 
@@ -25,16 +29,20 @@ def _ensure_performance(model_name, model_script, performance, logger):
         logger.info(f'Running {model_name} with default model script.\n\
                       To obtain maximum performance use --performance:\n\
                       hailomz <command> {model_name} --performance')
-    if performance and model_script and model_script.parent.name == "base":
-        logger.info(f'Using base alls script found in {model_script} because there is no performance alls')
+    if performance and model_script:
+        if model_script.parent.name == "base":
+            logger.info(f'Using base alls script found in {model_script} because there is no performance alls')
+        elif model_script.parent.name != "performance" and model_name in get_network_peformance():
+            logger.info('Using alls script {model_script}')
 
 
 def _extract_model_script_path(networks_alls_script, model_script_path, performance):
-    return model_script_path if model_script_path else resolve_alls_path(networks_alls_script, performance=performance)
+    return Path(model_script_path) if model_script_path \
+        else resolve_alls_path(networks_alls_script, performance=performance)
 
 
 def _ensure_compiled(runner, logger, args, network_info):
-    if runner.state == States.COMPILED_MODEL:
+    if runner.state == States.COMPILED_MODEL or runner.hef:
         return
     logger.info("Compiling the model (without inference) ...")
     compile_model(runner, network_info, args.results_dir, allocator_script_filename=args.model_script_path)
@@ -43,7 +51,7 @@ def _ensure_compiled(runner, logger, args, network_info):
 def _ensure_optimized(runner, logger, args, network_info):
     _ensure_parsed(runner, logger, network_info, args)
 
-    integrated_postprocessing = _get_integrated_postprocessing(network_info)
+    integrated_postprocessing = get_integrated_postprocessing(network_info)
     if integrated_postprocessing and integrated_postprocessing.enabled and args.model_script_path is not None:
         raise ValueError(f"Network {network_info.network.network_name} joins several networks together\n"
                          "and cannot get a user model script")
@@ -67,14 +75,26 @@ def _ensure_parsed(runner, logger, network_info, args):
     parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
-def _ensure_runnable_state(args, logger, network_info, runner, target):
+def configure_hef_tf1(hef_path, target):
+    hef = HEF(hef_path)
+    network_groups = target.configure(hef)
+    return network_groups
+
+
+def configure_hef_tf2(runner, hef_path):
+    if hef_path:
+        runner.hef = hef_path
+    return
+
+
+def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
     _ensure_parsed(runner, logger, network_info, args)
-    if isinstance(target, SdkFPOptimized):
+    if isinstance(target, SdkFPOptimized) or (isinstance(target, PcieDevice) and args.hef_path is not None):
         if runner.state == States.HAILO_MODEL:
-            integrated_postprocessing = _get_integrated_postprocessing(network_info)
+            integrated_postprocessing = get_integrated_postprocessing(network_info)
             if integrated_postprocessing and integrated_postprocessing.enabled:
-                runner.apply_model_modification_commands()
-                return None
+                runner.optimize_full_precision()
+                return None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
             # We intenionally use base model script and assume its modifications
             # compatible to the performance model script
             model_script = _extract_model_script_path(network_info.paths.alls_script,
@@ -82,13 +102,12 @@ def _ensure_runnable_state(args, logger, network_info, runner, target):
                                                       False)
 
             runner.load_model_script(model_script)
-            runner.apply_model_modification_commands()
-        return None
+            runner.optimize_full_precision()
+
+        return None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
 
     if args.hef_path:
-        hef = HEF(args.hef_path)
-        network_groups = target.configure(hef)
-        return network_groups
+        return configure_hef_tf1(args.hef_path, target)
 
     _ensure_optimized(runner, logger, args, network_info)
 
@@ -98,6 +117,41 @@ def _ensure_runnable_state(args, logger, network_info, runner, target):
     assert isinstance(target, PcieDevice)
     _ensure_compiled(runner, logger, args, network_info)
     return None
+
+
+def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
+    _ensure_parsed(runner, logger, network_info, args)
+    if target == InferenceContext.SDK_FP_OPTIMIZED or \
+            (target == InferenceContext.SDK_HAILO_HW and args.hef_path is not None):
+        if runner.state != States.HAILO_MODEL:
+            configure_hef_tf2(runner, args.hef_path)
+            return
+
+        integrated_postprocessing = get_integrated_postprocessing(network_info)
+        if integrated_postprocessing and integrated_postprocessing.enabled:
+            runner.optimize_full_precision()
+            configure_hef_tf2(runner, args.hef_path)
+            return
+        # We intenionally use base model script and assume its modifications
+        # compatible to the performance model script
+        model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                                  args.model_script_path,
+                                                  False)
+
+        runner.load_model_script(model_script)
+        runner.optimize_full_precision()
+        configure_hef_tf2(runner, args.hef_path)
+        return
+
+    configure_hef_tf2(runner, args.hef_path)
+
+    _ensure_optimized(runner, logger, args, network_info)
+
+    if target == InferenceContext.SDK_QUANTIZED:
+        return
+
+    _ensure_compiled(runner, logger, args, network_info)
+    return
 
 
 def _str_to_profiling_mode(name):
@@ -185,7 +239,7 @@ def profile(args):
                                                       args.performance)
             _ensure_performance(model_name, model_script, args.performance, logger)
             runner.load_model_script(model_script)
-            runner.apply_model_modification_commands()
+            runner.optimize_full_precision()
     else:
         # Optimize the model so profile_hn_model could compile & profile it
         _ensure_optimized(runner, logger, args, network_info)
@@ -194,10 +248,9 @@ def profile(args):
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
     _ensure_performance(model_name, alls_script_path, args.performance, logger)
 
-    stats, csv_data, latency_data, accuracy_data = runner.profile_hn_model(profiling_mode=profile_mode,
-                                                                           should_use_logical_layers=True,
-                                                                           allocator_script=alls_script_path,
-                                                                           hef_filename=args.hef_path)
+    stats, csv_data, latency_data, accuracy_data = runner.profile(profiling_mode=profile_mode,
+                                                                  should_use_logical_layers=True,
+                                                                  hef_filename=args.hef_path)
 
     mem_file = io.StringIO()
     outpath = args.results_dir / f'{model_name}.html'
@@ -246,20 +299,32 @@ def evaluate(args):
     network_groups = None
 
     logger.info(f'Chosen target is {args.target}')
-    hailo_target = TARGETS[args.target]
-    with hailo_target() as target:
-        network_groups = _ensure_runnable_state(args, logger, network_info, runner, target)
+    batch_size = args.batch_size or __get_batch_size(network_info, args.target)
+    infer_type = network_info.evaluation.infer_type
+    # legacy tf1 inference flow
+    if infer_type not in ['runner_infer', 'model_infer', 'np_infer', 'facenet_infer',
+                          'np_infer_lite', 'model_infer_lite']:
+        hailo_target = TARGETS[args.target]
+        with hailo_target() as target:
+            network_groups = _ensure_runnable_state_tf1(args, logger, network_info, runner, target)
+            return infer_model_tf1(runner, network_info, target, logger,
+                                   args.eval_num_examples, args.data_path, batch_size,
+                                   args.print_num_examples, args.visualize_results, args.video_outpath,
+                                   dump_results=False, network_groups=network_groups)
 
-        batch_size = args.batch_size or __get_batch_size(network_info, target)
-        result = infer_model(runner, network_info, target, logger,
-                             args.eval_num_examples, args.data_path, batch_size,
-                             args.print_num_examples, args.visualize_results, args.video_outpath,
-                             dump_results=False, network_groups=network_groups)
+    else:
+        # new tf2 inference flow
+        target = INFERENCE_TARGETS[args.target]
+        _ensure_runnable_state_tf2(args, logger, network_info, runner, target)
 
-        return result
+        device_info = DEVICES.get(args.target)
+        context = runner.infer_context(target, device_info)
+        return infer_model_tf2(runner, network_info, context, logger, args.eval_num_examples, args.data_path,
+                               batch_size, args.print_num_examples, args.visualize_results, args.video_outpath,
+                               dump_results=False)
 
 
 def __get_batch_size(network_info, target):
-    if target.name == 'sdk_fp_optimized':
+    if target == 'full_precision':
         return network_info.inference.full_precision_batch_size
     return network_info.inference.emulator_batch_size

@@ -75,6 +75,8 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
     device_pre_post_layers = device_pre_post_layers if device_pre_post_layers is not None else {
         'bilinear': False, 'argmax': False}
     if device_pre_post_layers['argmax']:
+        if len(endnodes.shape) == 4:
+            endnodes = tf.squeeze(endnodes, axis=-1)
         predictions = endnodes
     else:
         if device_pre_post_layers['bilinear']:

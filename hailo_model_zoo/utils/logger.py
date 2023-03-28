@@ -2,10 +2,8 @@ import sys
 import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-from hailo_sdk_common.logger.logger import create_custom_logger, DFC_FOLDER_PATH
 
 _g_logger = None
-MZ_FOLDER_PATH = str(Path(DFC_FOLDER_PATH, '..', 'modelzoo'))
 
 
 class HailoExamplesFormatter(logging.Formatter):
@@ -35,6 +33,11 @@ def namer(name):
 
 
 def get_logger():
+
+    # for faster loading
+    from hailo_sdk_common.logger.logger import create_custom_logger, DFC_FOLDER_PATH
+    MZ_FOLDER_PATH = str(Path(DFC_FOLDER_PATH, '..', 'modelzoo'))
+
     global _g_logger
     if _g_logger is None:
         # setting console to False to set a custom console logger

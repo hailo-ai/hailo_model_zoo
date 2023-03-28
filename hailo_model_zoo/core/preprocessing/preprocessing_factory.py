@@ -1,7 +1,6 @@
 """Contains a factory for image preprocessing."""
 import numpy as np
 import tensorflow as tf
-
 from hailo_model_zoo.core.preprocessing import classification_preprocessing
 from hailo_model_zoo.core.preprocessing import segmentation_preprocessing
 from hailo_model_zoo.core.preprocessing import detection_preprocessing
@@ -23,6 +22,15 @@ def convert_rgb_to_yuv(image):
     image = tf.matmul(image, transition_matrix)
     image += [16, 128, 128]
     return image
+
+
+def convert_yuv_to_yuy2(image):
+    y_img = image[..., 0]
+    uv_img = image[..., 1:]
+    uv_subsampled = uv_img[:, ::2, :]
+    uv_unrolled = tf.reshape(uv_subsampled, (image.shape[-3], image.shape[-2]))
+    yuy2_img = tf.stack([y_img, uv_unrolled], axis=-1)
+    return yuy2_img
 
 
 def image_resize(image, shape):
@@ -89,12 +97,14 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'vit': classification_preprocessing.vit_tiny,
         'espcn': super_resolution_preprocessing.espcn,
         'retinanet_resnext50': detection_preprocessing.retinanet_resnext50,
-        'sparseinst': segmentation_preprocessing.sparseinst
+        'sparseinst': segmentation_preprocessing.sparseinst,
+        'resnet_pruned': classification_preprocessing.resnet_pruned,
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)
     flip = kwargs.pop('flip', False)
     yuv2rgb = kwargs.pop('yuv2rgb', False)
+    yuy2 = kwargs.pop('yuy2', False)
     input_resize = kwargs.pop('input_resize', {})
     if flip:
         height, width = width, height
@@ -103,9 +113,11 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         image, image_info = preprocessing_fn_map[name](image, image_info, height, width, flip=flip, **kwargs)
         if normalization_params:
             image = normalize(image, normalization_params)
-        if yuv2rgb:
-            image = convert_rgb_to_yuv(image)
         if input_resize.get('enabled', False):
             image = image_resize(image, input_resize.input_shape)
+        if yuv2rgb:
+            image = convert_rgb_to_yuv(image)
+        if yuy2:
+            image = convert_yuv_to_yuy2(image)
         return image, image_info
     return preprocessing_fn

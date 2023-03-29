@@ -10,17 +10,16 @@ Changelog
 
   * yolov8: yolov8n / yolov8s / yolov8m / yolov8l / yolov8x
   * damoyolo: damoyolo_tinynasL20_T / damoyolo_tinynasL25_S / damoyolo_tinynasL35_M
-  
+
 * New transformers based models:
 
   * vit_base - classification model
   * yolov5s_c3tr - object detection model with a self-attention block
-  
+
 * Examples for using HailoRT-pp - support for seamless integration of models and their corresponding postprocessing
 
   * yolov5m_hpp
-  * ssd_mobilenet_v1_hpp
-  
+
 * Configuration YAMLs and model-scripts for networks with YUY2 input format
 * DAMO-YOLO retraining docker
 * Bug fixes
@@ -33,24 +32,24 @@ Changelog
 
 * Update to use Dataflow Compiler v3.22.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * Updated to use HailoRT 4.12.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* ViT (`Vision Transformer <https://arxiv.org/pdf/2010.11929.pdf>`_) - new classification network with transformers-encoder based architecture 
+* ViT (`Vision Transformer <https://arxiv.org/pdf/2010.11929.pdf>`_) - new classification network with transformers-encoder based architecture
 * New instance segmentation variants:
 
   * yolov5n_seg
   * yolov5s_seg
   * yolov5m_seg
   * yolov5l_seg
-  
+
 * New object detecion variants for high resolution images:
 
   * yolov7e6
   * yolov5n6_6.1
   * yolov5s6_6.1
   * yolov5m6_6.1
-  
+
 * New flag ``--performance`` to reproduce highest performance for a subset of networks
 * Hailo model-zoo log is now written into ``sdk_virtualenv/etc/hailo/modelzoo/hailo_examples.log``
-* Bug fixes 
+* Bug fixes
 
 **v2.5**
 
@@ -60,8 +59,8 @@ Changelog
 
   * yolact_regnetx_800mf
   * yolact_regnetx_1.6gf
-  
-* Bug fixes 
+
+* Bug fixes
 
 **v2.4**
 
@@ -71,8 +70,8 @@ Changelog
 * New models:
 
   * Face Detection - scrfd_500m / scrfd_2.5g / scrfd_10g
-  
-* New tasks: 
+
+* New tasks:
 
   1. Super-Resolution
 
@@ -87,7 +86,7 @@ Changelog
       #. arcface_mobilefacenet
     * Retraining docker for arcface architecture
 
-* Added support for new hw-arch - hailo8l 
+* Added support for new hw-arch - hailo8l
 
 **v2.3**
 
@@ -98,7 +97,7 @@ Changelog
   * yolov7 / yolov7-tiny
   * nanodet_repvgg_a1_640
   * efficientdet_lite0 / efficientdet_lite1 / efficientdet_lite2
-  
+
 * New tasks:
 
   * mspn_regnetx_800mf - single person pose estimation
@@ -117,13 +116,13 @@ Changelog
   * Hailo model zoo data directory by default will be ``~/.hailomz``
 
 * New models:
-  
+
   * yolov5xs_wo_spp_nms - a model which contains bbox decoding and confidence thresholding on Hailo-8
   * osnet_x1_0 - person ReID network
   * yolov5m_6.1 - yolov5m network from the latest tag of the repo (6.1) including silu activation
 
 * New tasks:
-  
+
   * person_attr_resnet_v1_18 - person attribute recognition
 
 * ReID training docker for the Hailo model repvgg_a0_person_reid_512/2048
@@ -144,7 +143,7 @@ Changelog
   * | repvgg_a0_person_reid_512 / repvgg_a0_person_reid_2048 - ReID networks which outputs a person embedding
     | These models were trained in-house as part of our upcoming new application
   * | stdc1 - Segmentation architecture for Cityscapes
-      
+
 **v2.0**
 
 * Updated to use Dataflow Compiler v3.16 (`developer-zone <https://hailo.ai/developer-zone/>`_) with TF version 2.5 which require CUDA11.2
@@ -167,7 +166,7 @@ Changelog
 
 * Added new documentation to the `YAML structure <YAML.rst>`_
 
-   
+
 **v1.5**
 
 * Remove HailoRT installation dependency.
@@ -196,7 +195,7 @@ Changelog
 
   * | hand_landmark_lite from MediaPipe
   * | palm_detection_lite from MediaPipe
-  
+
   | Both tasks are without evaluation module.
 
 
@@ -244,7 +243,7 @@ Changelog
 * Model Optimization API Changes
 
   * Model Optimization parameters can be updated using the networks' model script files (\*.alls)
-  
+
   * Deprecated: quantization params in YAMLs
 
 * Training Guide: new training guide for yolov5 with compatible Dockerfile
@@ -284,25 +283,25 @@ Changelog
 
 **v1.1**
 
-* Support VisDrone Dataset 
-* New task: pose estimation 
+* Support VisDrone Dataset
+* New task: pose estimation
 
-  * centerpose_regnetx_200mf_fpn 
-  * centerpose_regnetx_800mf 
-  * centerpose_regnetx_1.6gf_fpn 
+  * centerpose_regnetx_200mf_fpn
+  * centerpose_regnetx_800mf
+  * centerpose_regnetx_1.6gf_fpn
 
-* New task: face detection 
+* New task: face detection
 
-  * lightfaceslim 
-  * retinaface_mobilenet_v1 
+  * lightfaceslim
+  * retinaface_mobilenet_v1
 
-* New models: 
+* New models:
 
-  * hardnet39ds 
-  * hardnet68 
-  * yolox_tiny_leaky 
-  * yolox_s_leaky 
-  * deeplab_v3_mobilenet_v2 
+  * hardnet39ds
+  * hardnet68
+  * yolox_tiny_leaky
+  * yolox_s_leaky
+  * deeplab_v3_mobilenet_v2
 
 * Use your own network manual for YOLOv3, YOLOv4_leaky and YOLOv5.
 

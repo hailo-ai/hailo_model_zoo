@@ -828,7 +828,7 @@ Cityscapes
    * - fcn8_resnet_v1_22
      - 67.55
      - 67.39
-     - 1920x1024x3
+     - 1024x1920x3
      - 15.12
      - 150.04
      - `link <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_22/pretrained/2021-07-11/fcn8_resnet_v1_22.zip>`_
@@ -1065,7 +1065,7 @@ COCO
    :header-rows: 1
 
    * - Network Name
-     - mAP
+     - mAP-segmentation
      - Quantized
      - Input Resolution (HxWxC)
      - Params (M)

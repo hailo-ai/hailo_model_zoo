@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 
+from hailo_model_zoo.core.infer.infer_utils import to_numpy
 from hailo_model_zoo.utils.path_resolver import resolve_data_path
 
 
@@ -68,7 +69,7 @@ class BFMModel(object):
             self._tri = pickle.load(f)  # this tri/face is re-built for bfm_noneck_v3
 
         self._tri = _to_ctype(self._tri.T).astype(np.int32)
-        self._keypoints = bfm.get('keypoints').astype(np.long)  # fix bug
+        self._keypoints = bfm.get('keypoints').astype(int)  # fix bug
         w = np.concatenate((self._w_shp, self._w_exp), axis=1)
         self._w_norm = np.linalg.norm(w, axis=0)
 
@@ -159,8 +160,8 @@ def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, i
 
 def visualize_face_landmarks_3d_result(logits, image, **kwargs):
     logits = logits['predictions']
-    img = kwargs.get('img_info', {}).get('uncropped_image', image[0])
-    box = kwargs.get('img_info', {}).get('roi_box')
+    img = to_numpy(kwargs.get('img_info', {}).get('uncropped_image', image[0]))
+    box = to_numpy(kwargs.get('img_info', {}).get('roi_box'))
 
     for landmark in logits[0, :, :2]:
         landmark_as_int = tuple(int(x) for x in landmark)

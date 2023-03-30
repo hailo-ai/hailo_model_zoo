@@ -119,6 +119,7 @@ class SSDPostProc(object):
         self._nms_on_device = False
         if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
             self._nms_on_device = True
+        self.hpp = kwargs.get("hpp", False)
 
     @staticmethod
     def expanded_shape(orig_shape, start_dim, num_dims):
@@ -155,7 +156,7 @@ class SSDPostProc(object):
         # base_anchor_size = np.array([1., 1.])
         bboxes_list = []
         im_height, im_width = self._image_dims
-        min_im_shape = np.float(min(im_height, im_width))
+        min_im_shape = float(min(im_height, im_width))
         scale_height = min_im_shape / im_height
         scale_width = min_im_shape / im_width
         box_specs_list = self._anchors.create_box_specs_list()
@@ -276,7 +277,7 @@ class SSDPostProc(object):
                 'num_detections': num_detections}
 
     def postprocessing(self, endnodes, **kwargs):
-        if self._nms_on_device:
+        if self._nms_on_device or self.hpp:
             return tf_postproc_nms(endnodes, self._score_threshold, False)
         else:
             return self.tf_postproc(endnodes)

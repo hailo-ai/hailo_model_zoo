@@ -45,11 +45,11 @@ def main():
             'lap==0.4.0',
             'motmetrics==1.2.5',
             'omegaconf==2.1.0',
-            'pillow==8.1.2',
+            'pillow<=9.2.0',
             'detection-tools==0.3',
             'scikit-image==0.19.3']
 
-    model_zoo_version = "2.6.1"
+    model_zoo_version = "2.7.0"
 
     package_data = {
         "hailo_model_zoo": [

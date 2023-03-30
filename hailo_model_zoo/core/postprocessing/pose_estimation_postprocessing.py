@@ -21,12 +21,12 @@ JOINT_PAIRS = [[0, 1], [1, 3], [0, 2], [2, 4],
 
 def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     if kwargs.get('meta_arch') == 'centerpose':
-        return {'predictions': centerpose_postprocessing(endnodes,
-                                                         device_pre_post_layers=None,
-                                                         **kwargs)}
+        return centerpose_postprocessing(endnodes,
+                                         device_pre_post_layers=None,
+                                         **kwargs)
     coco_result_list = []
     for i in range(len(endnodes)):
-        image_info = kwargs['image_info']
+        image_info = kwargs['gt_images']
         heatmaps, pafs, image_id, pad, orig_shape = endnodes[0][i], endnodes[1][i], \
             int(image_info['image_id'][i]), image_info['pad'][i], image_info['orig_shape'][i][:2]
         total_keypoints_num = 0
@@ -57,15 +57,19 @@ def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwar
 
 def visualize_pose_estimation_result(results, img, dataset_name, *, detection_threshold=0.5,
                                      joint_threshold=0.5, **kwargs):
-    results = results['predictions']
     assert dataset_name == 'cocopose'
-    bboxes, scores, keypoints, joint_scores = results
+    if 'predictions' in results:
+        results = results['predictions']
+        bboxes, scores, keypoints, joint_scores = results
+    else:
+        bboxes, scores, keypoints, joint_scores = (
+            results['bboxes'], results['scores'], results['keypoints'], results['joint_scores'])
 
     batch_size = bboxes.shape[0]
     assert batch_size == 1
 
     box, score, keypoint, keypoint_score = bboxes[0], scores[0], keypoints[0], joint_scores[0]
-    image = img[0]
+    image = cv2.cvtColor(img[0], cv2.COLOR_BGR2RGB)
 
     for detection_box, detection_score, detection_keypoints, detection_keypoints_score in (
             zip(box, score, keypoint, keypoint_score)):

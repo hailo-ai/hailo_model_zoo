@@ -15,7 +15,7 @@ RUN apt-get update && \
 ARG repo=https://github.com/hailo-ai/mmsegmentation.git
 RUN git clone $repo && \
     cd mmsegmentation && \
-    pip install mmcv-full==1.4.5 onnxruntime && \
+    pip install mmcv-full==1.4.5 onnxruntime==1.13.1 && \
     pip install -e .
 WORKDIR /workspace/mmsegmentation
 

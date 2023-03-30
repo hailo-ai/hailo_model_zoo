@@ -34,7 +34,9 @@ def np_infer(runner, target, logger, eval_num_examples, print_num_examples,
                             break
                         logits_batch, img_info = sdk_export.session.run([sdk_export.output_tensors, image_info])
                         num_of_images += batch_size
-                        probs = postprocessing_callback(logits_batch, image_info=img_info)
+                        if len(logits_batch) == 1:
+                            logits_batch = logits_batch[0]
+                        probs = postprocessing_callback(logits_batch, gt_images=img_info)
                         if not visualize_callback and not dump_results:
                             eval_metric.update_op(probs, img_info)
                             if num_of_images % print_num_examples == 0:

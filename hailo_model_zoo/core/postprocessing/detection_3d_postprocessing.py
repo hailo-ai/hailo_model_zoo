@@ -268,12 +268,12 @@ class SMOKEPostProcess(object):
 
         if flip_mask is not None:
             fm = flip_mask.flatten()
-            rotys_flip = np.float(fm) * rotys
+            rotys_flip = float(fm) * rotys
             rotys_flip_pos_idx = rotys_flip > 0
             rotys_flip_neg_idx = rotys_flip < 0
             rotys_flip[rotys_flip_pos_idx] -= np.pi
             rotys_flip[rotys_flip_neg_idx] += np.pi
-            rotys_all = np.float(fm) * rotys_flip + (1 - np.float(fm)) * rotys
+            rotys_all = float(fm) * rotys_flip + (1 - float(fm)) * rotys
             return rotys_all
         else:
             return rotys, alphas

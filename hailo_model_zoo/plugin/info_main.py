@@ -1,4 +1,7 @@
+import argparse
+
 from hailo_model_zoo.core.info_utils import get_network_info
+from hailo_model_zoo.utils.cli_utils import register_command, add_model_name_arg
 from hailo_model_zoo.utils.logger import get_logger
 
 
@@ -21,6 +24,13 @@ def info_model(model_name, network_info, logger):
     logger.info(msg_w_line)
 
 
+def make_info_base():
+    info_base_parser = argparse.ArgumentParser(add_help=False, description="Print model information.")
+    add_model_name_arg(info_base_parser)
+    return info_base_parser
+
+
+@register_command(make_info_base)
 def info(args):
     logger = get_logger()
     network_info = get_network_info(args.model_name)

@@ -15,16 +15,16 @@ def _channel_remove(db, layer, mask, orig_shape, npz):
             if layer in k:
                 if len(npz[k].shape) == 1:
                     # bias
-                    npz[k] = v[np.array(mask, np.bool)]
+                    npz[k] = v[np.array(mask, bool)]
                 elif len(npz[k].shape) == 4:
                     # kernel
                     sh = db['layers'][layer]['params']['kernel_shape']
                     if sh[2] == orig_shape:
-                        tmp = v[:, :, :, np.array(mask, np.bool)]
-                        npz[k] = tmp[:, :, np.array(mask, np.bool), :]
+                        tmp = v[:, :, :, np.array(mask, bool)]
+                        npz[k] = tmp[:, :, np.array(mask, bool), :]
                         db['layers'][layer]['params']['kernel_shape'] = [sh[0], sh[1], int(sum(mask)), int(sum(mask))]
                     else:
-                        npz[k] = v[:, :, :, np.array(mask, np.bool)]
+                        npz[k] = v[:, :, :, np.array(mask, bool)]
                         db['layers'][layer]['params']['kernel_shape'] = [sh[0], sh[1], sh[2], int(sum(mask))]
 
 

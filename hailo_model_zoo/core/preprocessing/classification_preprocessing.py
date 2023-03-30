@@ -108,11 +108,11 @@ def _central_crop(image_list, crop_height, crop_width):
     return outputs
 
 
-def _resnet_base_preprocessing(image, output_height=None, output_width=None, resize_side=None):
+def _resnet_base_preprocessing(image, output_height=None, output_width=None, resize_side=None, method=None):
     if output_height is not None:
         assert output_width is not None
         assert resize_side is not None
-        image = _aspect_preserving_resize(image, resize_side)
+        image = _aspect_preserving_resize(image, resize_side, method=method)
         image = _central_crop([image], output_height, output_width)[0]
         image.set_shape([output_height, output_width, 3])
     image = tf.cast(image, tf.float32)
@@ -173,6 +173,13 @@ def vit_tiny(image, image_info=None, output_height=None, output_width=None, **kw
         image = _central_crop([image], output_height, output_width)[0]
         image.set_shape([output_height, output_width, 3])
     image = tf.cast(image, tf.float32)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info
+
+
+def resnet_pruned(image, image_info=None, output_height=None, output_width=None, **kwargs):
+    image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE, method='bilinear')
     if image_info:
         image_info['img_orig'] = tf.cast(image, tf.uint8)
     return image, image_info

@@ -62,7 +62,7 @@ def get_all_anchors(stride, sizes, ratios, max_size):
 
 
 def _generate_anchors(base_size, scales, aspect_ratios):
-    anchor = np.array([1, 1, base_size, base_size], dtype=np.float) - 1
+    anchor = np.array([1, 1, base_size, base_size], dtype=float) - 1
     anchors = _ratio_enum(anchor, aspect_ratios)
     anchors = np.vstack(
         [_scale_enum(anchors[i, :], scales) for i in range(anchors.shape[0])]
@@ -157,8 +157,8 @@ class FasterRCNNStage1(object):
         if anchors is None:
             raise ValueError('Missing detection anchors metadata')
         self._stride = int(anchors['strides'][0])
-        self._aspect_ratios = np.array(anchors['aspect_ratios'], dtype=np.float)
-        self._sizes = np.array(anchors['sizes'], dtype=np.float) / self._stride
+        self._aspect_ratios = np.array(anchors['aspect_ratios'], dtype=float)
+        self._sizes = np.array(anchors['sizes'], dtype=float) / self._stride
         self._pre_nms_topk = pre_nms_topk
         self._post_nms_topk = post_nms_topk
         self._feature_map_height = int(anchors['featuremap_shape'][0])

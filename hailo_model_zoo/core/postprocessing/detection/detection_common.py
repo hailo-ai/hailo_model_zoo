@@ -21,18 +21,28 @@ def translate_coco_2017_to_2014(nmsed_classes):
 def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
     def _single_batch_parse(args):
         frame_detections = args[:, :, :]
-        indices = tf.where(frame_detections[:, :, 4] > score_threshold)[0:100]
-        boxes_and_scores = tf.gather_nd(frame_detections, indices)
-        num_detections = tf.shape(indices)[0]
-        pad_size = 100 - num_detections
-        classes_expanded = tf.expand_dims(tf.cast(indices[:, 0], tf.int32), axis=1) + 1
-        classes_expanded = tf.squeeze(tf.pad(classes_expanded, paddings=[[0, pad_size], [0, 0]],
-                                      mode='CONSTANT', constant_values=0), axis=1)
-        final_frame_results = boxes_and_scores
-        final_frame_results_padded = tf.pad(final_frame_results,
-                                            paddings=[[0, pad_size],
-                                                      [0, 0]], mode='CONSTANT', constant_values=0)
-        return final_frame_results_padded[:, :4], final_frame_results_padded[:, 4], classes_expanded, num_detections
+        boxes = frame_detections[:, :, :4]
+        scores = frame_detections[:, :, 4]
+        indices = tf.where(scores > score_threshold)
+        boxes_after_tsh = tf.gather_nd(boxes, indices)
+        scores_after_tsh = tf.gather_nd(scores, indices)
+        class_after_tsh = tf.cast(indices[:, 0], tf.int32) + 1
+        num_detection_after_tsh = tf.shape(indices)[0]
+        padding_size = 100 - num_detection_after_tsh
+        if padding_size > 0:
+            boxes_after_tsh = tf.pad(boxes_after_tsh,
+                                     paddings=[[0, padding_size],
+                                               [0, 0]], mode='CONSTANT', constant_values=0)
+            scores_after_tsh = tf.pad(scores_after_tsh,
+                                      paddings=[[0, padding_size]], mode='CONSTANT', constant_values=0)
+            class_after_tsh = tf.pad(class_after_tsh,
+                                     paddings=[[0, padding_size]], mode='CONSTANT', constant_values=0)
+
+        top_k_scores, top_k_ind = tf.math.top_k(scores_after_tsh, k=100)
+        top_k_boxes = tf.gather(boxes_after_tsh, top_k_ind)
+        top_k_class = tf.gather(class_after_tsh, top_k_ind)
+        num_detections = tf.shape(top_k_ind)[0]
+        return top_k_boxes, top_k_scores, top_k_class, num_detections
 
     with tf.name_scope('Postprocessor'):
         detections = tf.transpose(endnodes, [0, 1, 3, 2])

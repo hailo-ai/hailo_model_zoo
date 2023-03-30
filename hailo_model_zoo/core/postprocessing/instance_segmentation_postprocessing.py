@@ -198,62 +198,8 @@ def _sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
-def postprocess(det_output, w, h, batch_idx=0, interpolation_mode='bilinear',
-                visualize_lincomb=False, crop_masks=True, score_threshold=0.2):
-    dets = det_output[batch_idx]
-
-    if dets is None:
-        return [None] * 4  # Warning, this is 4 copies of the same thing
-
-    if score_threshold > 0:
-        keep = dets['detection_scores'] > score_threshold
-        for k in dets:
-            if k != 'proto':
-                dets[k] = dets[k][keep]
-
-        if dets['detection_scores'].shape[0] == 0:
-            return [None] * 4
-
-    # im_w and im_h when it concerns bboxes. This is a workaround hack for preserve_aspect_ratio
-    b_w, b_h = (w, h)
-
-    # Actually extract everything from dets now
-    classes = dets['detection_classes']
-    boxes = dets['detection_boxes']
-    scores = dets['detection_scores']
-    masks = dets['mask']
-
-    # At this points masks is only the coefficients
-    proto_data = dets['proto']
-
-    # Test flag, do not upvote
-
-    masks = np.matmul(proto_data, masks.transpose())
-    masks = _sigmoid(masks)
-
-    # Crop masks before upsampling because you know why
-    if crop_masks:
-        masks = _crop(masks, boxes)
-
-    # Scale masks up to the full image
-    masks = cv2.resize(masks, (w, h))
-    if len(masks.shape) < 3:
-        masks = np.expand_dims(masks, axis=0)
-    else:
-        masks = np.transpose(masks, (2, 0, 1))
-
-    # Binarize the masks
-    masks = masks > 0.5
-
-    boxes[:, 0], boxes[:, 2] = _sanitize_coordinates(boxes[:, 0], boxes[:, 2], b_w, cast=False)
-    boxes[:, 1], boxes[:, 3] = _sanitize_coordinates(boxes[:, 1], boxes[:, 3], b_h, cast=False)
-    boxes = np.array(boxes, np.float64)
-
-    return classes, scores, boxes, masks
-
-
 def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0.45,
-                 channels_remove=None, class_names=None):
+                 channels_remove=None, class_names=None, mask_thresh=0.5):
     top_k = 5
     img_gpu = img / 255.0
     h, w, _ = img.shape
@@ -264,12 +210,32 @@ def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0
         class_names_mask = channels_remove[1:]  # Remove background class
         cats = np.where(np.array(class_names_mask) == 1)[0]
         visualization_class_names = list(np.array(class_names)[cats])
-    t = postprocess(dets_out, w, h, visualize_lincomb=False,
-                    crop_masks=True, score_threshold=score_threshold)
-    if t[3] is None:
+
+    boxes = dets_out['detection_boxes']
+    masks = dets_out['mask']
+    classes = dets_out['detection_classes']
+    scores = dets_out['detection_scores']
+
+    # Scale Boxes
+    boxes[:, 0], boxes[:, 2] = _sanitize_coordinates(boxes[:, 0], boxes[:, 2], w, cast=False)
+    boxes[:, 1], boxes[:, 3] = _sanitize_coordinates(boxes[:, 1], boxes[:, 3], h, cast=False)
+    boxes = np.array(boxes, np.float64)
+
+    # Scale Masks
+    masks = cv2.resize(masks, (w, h))
+    if len(masks.shape) < 3:
+        masks = np.expand_dims(masks, axis=0)
+    else:
+        masks = np.transpose(masks, (2, 0, 1))
+    # Binarize the masks
+    masks = masks > mask_thresh
+
+    if not masks.shape[0]:
         return np.array(img_gpu * 255, np.uint8)
-    masks = t[3][:top_k]
-    classes, scores, boxes = [x[:top_k] for x in t[:3]]
+    boxes = boxes[:top_k]
+    masks = masks[:top_k]
+    classes = classes[:top_k]
+    scores = scores[:top_k]
 
     num_dets_to_consider = min(top_k, classes.shape[0])
     for j in range(num_dets_to_consider):
@@ -279,7 +245,7 @@ def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0
 
     if num_dets_to_consider == 0:
         # No detections found so just output the original image
-        return (img_gpu * 255)
+        return np.array(img_gpu * 255, np.uint8)
 
     def get_color(j, on_gpu=None):
         global color_cache
@@ -500,7 +466,7 @@ def process_mask(protos, masks_in, bboxes, shape, upsample=True,
     if not downsample:
         masks = crop_mask(masks, downsampled_bboxes)  # CHW
 
-    return masks > 0.5
+    return masks
 
 
 def _yolov5_decoding(branch_idx, output, stride_list, anchor_list, num_classes):
@@ -563,6 +529,10 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     iou_thres = kwargs['nms_iou_thresh']
     outputs = non_max_suppression(outputs, score_thres, iou_thres)
 
+    return _finalize_detections_yolov5_seg(outputs, protos, **kwargs)
+
+
+def _finalize_detections_yolov5_seg(outputs, protos, **kwargs):
     for batch_idx, output in enumerate(outputs):
         shape = kwargs.get('img_dims', None)
         boxes = output['detection_boxes']
@@ -592,9 +562,10 @@ def _make_grid(anchors, stride, bs=8, nx=20, ny=20):
     return grid, anchor_grid
 
 
-def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2, **kwargs):
+def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2, num_groups=4, **kwargs):
 
     inst_kernels_path = path_resolver.resolve_data_path(kwargs['postprocess_config_json'])
+    meta_arch = kwargs.get('meta_arch', 'sparseinst_giam')
     inst_kernels = np.load(inst_kernels_path, allow_pickle=True)['arr_0'][()]
 
     mask_features = endnodes[0].copy()  # 80 x 80 x 128
@@ -619,6 +590,20 @@ def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2
     normalizer = np.clip(np.sum(iam_prob, axis=1), a_min=1e-6, a_max=None)
     inst_features /= normalizer[:, :, None]
 
+    if 'giam' in meta_arch:
+        inst_features = inst_features.reshape(B, num_groups, -1, C)
+        inst_features = inst_features.transpose(0, 2, 1, 3)
+        inst_features = inst_features.reshape((B, -1, num_groups * C))
+
+        features = list()
+        for batch_idx in range(B):
+            features.append(np.expand_dims(np.matmul(inst_features[batch_idx],
+                                                     inst_kernels['fc']['weights'].transpose()), axis=0))
+        inst_features = np.vstack(features)
+
+        inst_features = inst_features + inst_kernels['fc']['bias']
+        inst_features[inst_features < 0.] = 0.
+
     pred_logits = list()
     pred_kernel = list()
     pred_scores = list()
@@ -639,6 +624,7 @@ def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2
                           np.matmul(pred_kernel[batch_idx],
                                     np.transpose(mask_features.reshape(B, H * W, C), axes=[0, 2, 1])[batch_idx]),
                           axis=0))
+    N = pred_kernel.shape[1]
     pred_masks = np.vstack(pred_masks).reshape(B, N, H, W)
     pred_masks_tmp = np.zeros((B, N, H * scale_factor, W * scale_factor))
 
@@ -648,29 +634,25 @@ def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2
                                                     interpolation=cv2.INTER_LINEAR), axes=(2, 0, 1))
     pred_masks = np.vstack(pred_masks_tmp).reshape(B, N, H * scale_factor, W * scale_factor)
 
+    pred_objectness = _sigmoid(pred_scores)
     pred_scores = _sigmoid(pred_logits)
     pred_masks = _sigmoid(pred_masks)
-    pred_objectness = _sigmoid(pred_scores)
     pred_scores = np.sqrt(pred_scores * pred_objectness)
 
-    img_info = kwargs['image_info']
-    orig_height, orig_width = img_info['orig_height'], img_info['orig_width']
-    output_shapes = (orig_height, orig_width)
-
-    output = {'pred_scores': pred_scores, 'pred_masks': pred_masks, 'output_shapes': output_shapes}
-
-    return output
+    return _finalize_detections_sparseinst(pred_masks, pred_scores, **kwargs)
 
 
-def _spraseinst_post(output, input_shape, output_shape,
-                     cls_threshold=0.005, mask_threshold=0.45):
-    pred_scores = output['pred_scores']
-    pred_masks = output['pred_masks']
-    results = []
+def _finalize_detections_sparseinst(pred_masks, pred_scores, **kwargs):
+    img_info = kwargs['gt_images']
+    hin, win = img_info['img_orig'].shape[1:3]
+    cls_threshold = kwargs.get('score_threshold', 0.005)
+    mask_threshold = kwargs.get('mask_threshold', 0.45)
+
+    outputs = []
     for idx, (scores_per_image, masks_per_image) in enumerate(zip(pred_scores, pred_masks)):
-        result = {}
-        hout, wout = output_shape[0][idx], output_shape[1][idx]
-        hin, win = input_shape[0][idx], input_shape[1][idx]
+        output = {}
+        hout, wout = img_info['height'][idx], img_info['width'][idx]
+        h_resized, w_resized = img_info['resized_height'][idx], img_info['resized_width'][idx]
 
         scores = np.max(scores_per_image, axis=-1)
         labels = np.argmax(scores_per_image, axis=-1)
@@ -680,30 +662,30 @@ def _spraseinst_post(output, input_shape, output_shape,
         masks_per_image = masks_per_image[keep]
 
         if not scores.shape[0]:
-            result['scores'] = scores
-            result['pred_classes'] = labels
-            results.append(result)
+            output['detection_scores'] = scores
+            output['detection_classes'] = labels
+            outputs.append(output)
             continue
 
         scores = _rescoring_mask(scores, masks_per_image > mask_threshold, masks_per_image)
 
         # (1) upsampling the masks to input size, remove the padding area
         masks_per_image = np.transpose(cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)),
-                                       (hin, win), interpolation=cv2.INTER_LINEAR),
-                                       axes=(2, 1, 0))[:, :hout, :wout]
+                                                  (hin, win), interpolation=cv2.INTER_LINEAR),
+                                       axes=(2, 1, 0))[:, :h_resized, :w_resized]
+
         # (2) upsampling/downsampling the masks to the original sizes
         masks_per_image = np.transpose(cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)),
-                                       (hout, wout), interpolation=cv2.INTER_LINEAR),
+                                                  (hout, wout), interpolation=cv2.INTER_LINEAR),
                                        axes=(2, 1, 0))
-        mask_pred = masks_per_image > mask_threshold
+        output['mask'] = masks_per_image
+        output['detection_scores'] = scores
+        output['detection_classes'] = labels
+        output['orig_shape'] = img_info['height'][idx], img_info['width'][idx]
+        output['resized_shape'] = img_info['resized_height'][idx], img_info['resized_width'][idx]
+        outputs.append(output)
 
-        result['pred_masks'] = mask_pred
-        result['scores'] = scores
-        result['pred_classes'] = labels
-
-        results.append(result)
-
-    return results
+    return outputs
 
 
 def _rescoring_mask(scores, masks_pred, masks):
@@ -727,22 +709,26 @@ def _get_pol_area(x, y):
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
 
-def visualize_sparseinst_results(detections, img, class_names=None, alpha=0.5, confidence_threshold=0.5, **kwargs):
-
-    output_shapes = detections['output_shapes']
-    input_shapes = ([im.shape[0] for im in img], [im.shape[1] for im in img])
-    detections = _spraseinst_post(detections, input_shapes, input_shapes)
+def visualize_sparseinst_results(detections, img, class_names=None, alpha=0.5,
+                                 confidence_threshold=0.5, mask_thresh=0.45, **kwargs):
 
     img_idx = 0
-    results = detections[img_idx]
-    output_shape = output_shapes[0][img_idx], output_shapes[1][img_idx]
-    scores = results['scores']
-    keep = scores > confidence_threshold
-
-    masks = results['pred_masks'][keep]
-    scores = results['scores'][keep]
-    classes = results['pred_classes'][keep]
     img_out = img[img_idx].copy()
+
+    output_shape = detections['orig_shape']
+    resized_shape = detections['resized_shape']
+    keep = detections['detection_scores'] > confidence_threshold
+    scores = detections['detection_scores'][keep]
+    classes = detections['detection_classes'][keep]
+    masks = detections['mask'][keep]
+
+    # Binarize the masks
+    masks = masks > mask_thresh
+
+    # remove padding
+    img_out = img_out[:resized_shape[0], :resized_shape[1], :]
+    img_out = cv2.resize(img_out, output_shape[::-1], interpolation=cv2.INTER_LINEAR)
+
     for idx, mask in enumerate(masks):
         label = f"{CLASS_NAMES_COCO[classes[idx]]}"
 
@@ -786,12 +772,11 @@ def visualize_sparseinst_results(detections, img, class_names=None, alpha=0.5, c
                               thickness=2,
                               lineType=cv2.FILLED)
 
-    # remove padding
-    img_out = img_out[:output_shape[0], :output_shape[1], :]
     return img_out
 
 
-def yolact_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+def yolact_postprocessing(endnodes, device_pre_post_layers=None,
+                          score_thresh=0.2, crop_masks=True, **kwargs):
     channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
     if channels_remove:
         mask_list = list(np.where(np.array(kwargs['channels_remove']['mask'][0]) == 0)[0])
@@ -821,7 +806,62 @@ def yolact_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     mask = np.concatenate([mask0, mask1, mask2, mask3, mask4], axis=-2)
     detect = Detect(num_classes, bkg_label=0, top_k=200, conf_thresh=kwargs['score_threshold'],
                     nms_thresh=kwargs['nms_iou_thresh'])
-    return detect(loc, proto, conf, mask, priors)
+
+    det_output = detect(loc, proto, conf, mask, priors)
+
+    return _finalize_detections_yolact(det_output, proto)
+
+
+def _finalize_detections_yolact(det_output, protos, score_thresh=0.2, crop_masks=True, **kwargs):
+
+    outputs = []
+    for batch_idx, dets in enumerate(det_output):
+        proto = protos[batch_idx]
+        empty_output = {'detection_boxes': np.zeros((0, 4)),
+                        'mask': np.zeros((proto.shape[0], proto.shape[1], 0)),
+                        'detection_classes': np.zeros(0),
+                        'detection_scores': np.zeros(0)}
+
+        if dets is None:
+            outputs.append(empty_output)
+            continue
+
+        if score_thresh > 0:
+            keep = dets['detection_scores'] > score_thresh
+            for k in dets:
+                if k != 'proto':
+                    dets[k] = dets[k][keep]
+
+            if dets['detection_scores'].shape[0] == 0:
+                outputs.append(empty_output)
+                continue
+
+        # Actually extract everything from dets now
+        classes = dets['detection_classes']
+        boxes = dets['detection_boxes']
+        scores = dets['detection_scores']
+        masks = dets['mask']
+
+        # At this points masks is only the coefficients
+        proto_data = dets['proto']
+
+        # Test flag, do not upvote
+
+        masks = np.matmul(proto_data, masks.transpose())
+        masks = _sigmoid(masks)
+
+        # Crop masks before upsampling because you know why
+        if crop_masks:
+            masks = _crop(masks, boxes)
+
+        output = {}
+        output['detection_boxes'] = boxes
+        output['mask'] = masks
+        output['detection_scores'] = scores
+        output['detection_classes'] = classes
+        outputs.append(output)
+
+    return outputs
 
 
 def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
@@ -843,15 +883,15 @@ def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, 
     return {'predictions': predictions}
 
 
-def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, score_thres=0.25, **kwargs):
+def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, score_thres=0.25,
+                                 mask_thresh=0.5, **kwargs):
     img_idx = 0
-    det = detections[img_idx]
     img_out = img[img_idx].copy()
 
-    boxes = det['detection_boxes']
-    masks = det['mask']
-    scores = det['detection_scores']
-    classes = det['detection_classes']
+    boxes = detections['detection_boxes']
+    masks = detections['mask'] > mask_thresh
+    scores = detections['detection_scores']
+    classes = detections['detection_classes']
 
     keep = scores > score_thres
     boxes = boxes[keep]
@@ -923,7 +963,7 @@ def visualize_instance_segmentation_result(detections, img, **kwargs):
         return visualize_yolov5_seg_results(detections, img, class_names=dataset_info.class_names, **kwargs)
     elif 'yolact' in meta_arch:
         channels_remove = kwargs["channels_remove"]
-        return prep_display(dets_out=detections[0:1], img=img[0], score_threshold=0.2,
+        return prep_display(dets_out=detections, img=img[0], score_threshold=0.2,
                             channels_remove=channels_remove, class_names=dataset_info.class_names)
     else:
         raise NotImplementedError(f'Visualization {meta_arch} not found')

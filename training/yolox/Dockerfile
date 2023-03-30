@@ -13,14 +13,11 @@ RUN apt-get update && \
     # solve mpi conflicts
     { which mpirun && apt-get remove -y libopenmpi3 || true ; } 
 
-# workaround broken opencv-python 4.6
-RUN pip install opencv-python==4.5.5.64
-
 ARG repo=https://github.com/hailo-ai/YOLOX
 RUN mkdir /workspace/data && \
     git clone $repo && \
     cd YOLOX && pip install -r requirements.txt && pip install -e . && \
-    pip install cython 
+    pip install cython==0.29.24 
 ENV YOLOX_DATADIR=/workspace/data
 
 WORKDIR /workspace/YOLOX

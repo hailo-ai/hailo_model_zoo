@@ -1,0 +1,37 @@
+base:
+- base/yolov5.yaml
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_json: models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m_nms_config.json
+  meta_arch: yolo
+  hpp: true
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+network:
+  network_name: yolov5m_hpp
+paths:
+  alls_script: yolov5m_hpp.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.zip
+parser:
+  nodes:
+  - images
+  - - Conv_289
+    - Conv_273
+    - Conv_257
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 20x20x255, 40x40x255, 80x80x255
+  operations: 26.14G
+  parameters: 21.78M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 42.59
+  source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
+  license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

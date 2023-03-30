@@ -2,6 +2,6 @@ normalization1 = normalization([104.04, 113.985, 119.85], [73.695, 69.87, 70.89]
 change_output_activation(centerpose_regnetx_800mf/conv64, sigmoid)
 change_output_activation(centerpose_regnetx_800mf/conv60, sigmoid)
 input_conversion = input_conversion(bgr_to_rgb)
-model_optimization_config(calibration, batch_size=8, calibset_size=2048)
-post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0, 0.25, 0.25, 0.25, 0.25, 0.25], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2])
+model_optimization_config(calibration, batch_size=4, calibset_size=2048)
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[1.0, 0.25, 0.25, 0.25, 0.25, 0.25], dataset_size=4000, epochs=8, learning_rate=0.0001, loss_types=[l2, l2, l2, l2, l2, l2], loss_layer_names=[conv60, conv61, conv62, conv63, conv64, conv65])
 quantization_param(output_layer1, precision_mode=a16_w16)

@@ -1,0 +1,58 @@
+base:
+- base/yolo.yaml
+preprocessing:
+  input_shape: null
+  meta_arch: mobilenet_ssd_ar
+postprocessing:
+  nms_iou_thresh: 0.3
+  score_threshold: 0.1
+  meta_arch: yolo_v4
+  anchors:
+    strides:
+    - 16
+    - 32
+    sizes:
+    - - 10
+      - 14
+      - 23
+      - 27
+      - 37
+      - 58
+    - - 81
+      - 82
+      - 135
+      - 169
+      - 344
+      - 319
+hn_editor:
+  yuv2rgb: true
+  yuy2: true
+quantization:
+  calib_set: null
+network:
+  network_name: tiny_yolov4_license_plates_yuy2
+paths:
+  alls_script: tiny_yolov4_license_plates_yuy2.alls
+  network_path:
+  - models_files/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.zip
+parser:
+  nodes:
+  - input
+  - - Conv_100
+    - Conv_453
+evaluation:
+  labels_offset: 0
+  classes: 1
+  dataset_name: license_plates
+  data_set: null
+  validation_data_set: null
+info:
+  task: pipeline
+  input_shape: 416x416x2
+  output_shape: 13x13x18, 26x26x18
+  operations: 3.4G
+  parameters: 5.87M
+  framework: darknet
+  eval_metric: mAP
+  full_precision_result: 74.083

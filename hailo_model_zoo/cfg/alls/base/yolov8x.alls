@@ -1,0 +1,15 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=2)
+post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [conv97, conv82, conv67, conv25, conv100, conv88, conv73, conv103, conv89, conv74],
+                                                       loss_types = [l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,ce,ce,ce],
+                                                        loss_factors=[1,1,1,1,2,2,2,2,2,2], epochs = 4, batch_size=2)
+model_optimization_flavor(compression_level=0)
+quantization_param(output_layer1, precision_mode=a16_w16)
+quantization_param(output_layer2, precision_mode=a16_w16)
+quantization_param(output_layer3, precision_mode=a16_w16)
+quantization_param(output_layer4, precision_mode=a16_w16)
+quantization_param(output_layer5, precision_mode=a16_w16)
+quantization_param(output_layer6, precision_mode=a16_w16)
+change_output_activation(conv74, sigmoid)
+change_output_activation(conv89, sigmoid)
+change_output_activation(conv103, sigmoid)

@@ -2,4 +2,7 @@ centerpose_regnetx_1_6gf_fpn/normalization1 = normalization([119.85, 113.985, 10
 model_optimization_config(calibration, batch_size=4, calibset_size=32)
 # pre_quantization_optimization commands
 pre_quantization_optimization(equalization, policy=disabled)
+quantization_param({*output_layer*}, precision_mode=a8_w8)
 performance_param(fps=130)
+change_output_activation(centerpose_regnetx_1_6gf_fpn/conv79, sigmoid)
+change_output_activation(centerpose_regnetx_1_6gf_fpn/conv75, sigmoid)

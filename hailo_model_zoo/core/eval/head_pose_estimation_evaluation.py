@@ -11,13 +11,9 @@ class HeadPoseEstimationEval(Eval):
         self._normalize_results = kwargs.get('normalize_results', True)
         self.reset()
 
-    def _parse_net_output(self, net_output):
-        return net_output['predictions']
-
     def update_op(self, net_output, img_info):
-        net_output = self._parse_net_output(net_output)
         _pitch, _yaw, _roll = img_info['angles'][:, 0], img_info['angles'][:, 1], img_info['angles'][:, 2]
-        _pitch_predicted, _roll_predicted, _yaw_predicted = net_output
+        _pitch_predicted, _roll_predicted, _yaw_predicted = (net_output['pitch'], net_output['roll'], net_output['yaw'])
         self.yaw_err += list(np.abs(_yaw_predicted - _yaw))
         self.pitch_err += list(np.abs(_pitch_predicted - _pitch))
         self.roll_err += list(np.abs(_roll_predicted - _roll))

@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=2)
+change_output_activation(conv58, sigmoid)
+change_output_activation(conv71, sigmoid)
+change_output_activation(conv83, sigmoid)

@@ -28,6 +28,7 @@ evaluation:
   data_set: null
   validation_data_set: null
 info:
+  task: pipeline
   input_shape: 1080x1920x3
   output_shape: 20x20x18, 40x40x18, 80x80x18
   operations: 25.63G

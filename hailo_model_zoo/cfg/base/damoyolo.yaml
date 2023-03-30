@@ -1,0 +1,46 @@
+base:
+- base/coco.yaml
+quantization:
+  calib_set:
+  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+preprocessing:
+  network_type: detection
+  meta_arch: yolo_v5
+  padding_color: 0
+  centered: false
+postprocessing:
+  device_pre_post_layers:
+    sigmoid: true
+  nms_iou_thresh: 0.7
+  score_threshold: 0.05
+  meta_arch: nanodet_split
+  anchors:
+    scale_factors:
+    - 0.0
+    - 0.0
+    regression_length: 16
+    strides:
+    - 8
+    - 16
+    - 32
+info:
+  source: https://github.com/tinyvision/DAMO-YOLO
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  license_url: https://github.com/tinyvision/DAMO-YOLO/blob/master/LICENSE
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0
+evaluation:
+  classes: 80
+  dataset_name: coco_2017_detection

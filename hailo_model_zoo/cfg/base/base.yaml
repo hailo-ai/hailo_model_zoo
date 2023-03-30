@@ -6,6 +6,7 @@ quantization:
   calib_batch_size: null
 hn_editor:
   yuv2rgb: false
+  yuy2: false
   input_resize:
     enabled: false
   channels_remove:
@@ -32,7 +33,6 @@ allocation:
   allocation_timeout: null
   legacy: false
 parser:
-  ew_add_policy: fused_conv_and_add
   nodes:
   - null
   - null
@@ -55,6 +55,8 @@ postprocessing:
   meta_arch: null
   score_threshold: null
   nms_iou_thresh: null
+  nms_max_output_per_class: null
+  mask_threshold: null
   ext_upsample: null
   device_pre_post_layers:
     softmax: false
@@ -63,17 +65,19 @@ postprocessing:
     nms: false
     max_finder: false
     sigmoid: false
+  hpp: false
   postprocess_config_json: null
 evaluation:
   data_set: null
   labels_offset: 0
   limit_num_images: 1000000000.0
-  infer_type: tf_infer
+  infer_type: model_infer
   classes: 1
   two_stage_arch: false
   network_type: null
   gt_json_path: null
   labels_map: null
+  meta_arch: null
 info:
   client_or_rnd: r&d
   standard_or_customized: standard

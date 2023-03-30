@@ -3,13 +3,6 @@ base:
 hn_editor:
   bgr2rgb: true
   output_scheme:
-    change_activations:
-      enabled: true
-      changes:
-      - layer_name: conv79
-        activation: sigmoid
-      - layer_name: conv75
-        activation: sigmoid
     integrated_postprocessing:
       enabled: true
       chains:

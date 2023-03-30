@@ -33,9 +33,15 @@ class FaceVerificationEval(Eval):
     def _parse_net_output(self, net_output):
         return net_output['predictions']
 
+    def _parse_gt_data(self, gt_data):
+        # facenet_infer tf1 legacy support
+        if isinstance(gt_data, tuple):
+            return gt_data
+        return gt_data['image_name'], gt_data['is_same']
+
     def update_op(self, logits_batch, gt_data):
         logits_batch = self._parse_net_output(logits_batch)
-        image_name, is_same = gt_data
+        image_name, is_same = self._parse_gt_data(gt_data)
         idx = 0
         for logits, name, same in zip(logits_batch, image_name, is_same):
             if idx % 2 == 0:

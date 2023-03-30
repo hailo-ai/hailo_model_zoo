@@ -43,17 +43,17 @@ class CenternetPostProc(object):
             return tf_postproc_nms_centernet(endnodes, max_detections_per_class=self._nms_topk_perclass)
         bb_dict = {}
         if device_pre_post_layers and device_pre_post_layers.get('max_finder', False):
-            endnodes.append(endnodes[0])  # following code expects prob tensor to be 3rd.
+            outputs = endnodes
         else:
             endnodes0_padded = tf.pad(endnodes[0], [[0, 0], [1, 1], [1, 1], [0, 0]])
             maxpooled_probs = tf.nn.max_pool2d(endnodes0_padded, [1, 3, 3, 1], [1, 1, 1, 1], 'VALID')
             probs_maxima_booleans = tf.cast(tf.math.equal(endnodes[0], maxpooled_probs), 'float32')
             probs_maxima_values = tf.math.multiply(probs_maxima_booleans, endnodes[0])
-            endnodes.append(probs_maxima_values)
+            outputs = [endnodes[1], endnodes[2], probs_maxima_values]
             # we discard the 0 element in the endnodes list. This is the probabilities tensor.
             # Instead we pass the sparse probabilities tensor probs_maxima_values:
         bb_probs, bb_classes, bb_boxes, num_detections, top_k_indices = tf.numpy_function(
-            self._centernet_postprocessing, endnodes[1:], ['float32', 'int32', 'float32', 'int32', 'int64'],
+            self._centernet_postprocessing, outputs, ['float32', 'int32', 'float32', 'int32', 'int64'],
             name='centernet_postprocessing')
         bb_dict['detection_scores'] = bb_probs
         bb_dict['detection_classes'] = bb_classes

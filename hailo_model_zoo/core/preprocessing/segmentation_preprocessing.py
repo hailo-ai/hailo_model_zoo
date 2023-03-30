@@ -46,19 +46,34 @@ def _pad_tensor(x, max_tensor_padding=MAX_PADDING_LENGTH):
     return tf.squeeze(tf.pad(tf.expand_dims(x, axis=0), paddings, "CONSTANT", constant_values=-1))
 
 
+def _get_resized_shape(size, height, width):
+    size = tf.cast(size, tf.float32)
+    h, w = tf.cast(height, tf.float32), tf.cast(width, tf.float32)
+    scale = size * 1.0 / tf.maximum(h, w)
+    newh = h * scale
+    neww = w * scale
+    neww = int(neww + 0.5)
+    newh = int(newh + 0.5)
+    return newh, neww
+
+
 def sparseinst(image, image_info=None, height=None, width=None, max_pad=MAX_PADDING_LENGTH, **kwargs):
     image_resized = image
     if height and width:
-        paddings = [[0, height - tf.shape(image)[0]],
-                    [0, width - tf.shape(image)[1]],
+        assert height == width, 'sparseinst expects a square input but got {height}x{width}'
+        orig_height, orig_width = tf.shape(image)[0], tf.shape(image)[1]
+        newh, neww = _get_resized_shape(height, orig_height, orig_width)
+        image_resized_ar = tf.squeeze(tf.image.resize(image, size=(newh, neww), method='bilinear'))
+        paddings = [[0, tf.maximum(height - tf.shape(image_resized_ar)[0], 0)],
+                    [0, tf.maximum(width - tf.shape(image_resized_ar)[1], 0)],
                     [0, 0]]
-        image_padded = tf.squeeze(tf.pad(image, paddings, mode="CONSTANT", constant_values=0))
+        image_padded = tf.squeeze(tf.pad(image_resized_ar, paddings, mode="CONSTANT", constant_values=0))
         image_resized = tf.cast(image_padded, tf.float32)
     if image_info:
-        image_info['height'] = tf.cast(height, tf.int32)
-        image_info['width'] = tf.cast(width, tf.int32)
-        image_info['orig_height'] = tf.cast(tf.shape(image)[0], tf.int32)
-        image_info['orig_width'] = tf.cast(tf.shape(image)[1], tf.int32)
+        image_info['resized_height'] = tf.cast(newh, tf.int32)
+        image_info['resized_width'] = tf.cast(neww, tf.int32)
+        image_info['height'] = tf.cast(tf.shape(image)[0], tf.int32)
+        image_info['width'] = tf.cast(tf.shape(image)[1], tf.int32)
         image_info['img_orig'] = tf.cast(image_resized, tf.uint8)
         keys2pad = ['xmin', 'xmax', 'ymin', 'ymax', 'area', 'category_id', 'is_crowd']
         for key in keys2pad:

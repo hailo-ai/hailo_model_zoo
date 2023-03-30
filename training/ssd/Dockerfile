@@ -27,8 +27,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     wget
 
 RUN git clone https://github.com/hailo-ai/models.git /home/tensorflow/models \
-    && cd /home/tensorflow/models \
-    && git checkout 10ee28d
+    && cd /home/tensorflow/models
 
 # Compile protobuf configs
 RUN (cd /home/tensorflow/models/research/ && protoc object_detection/protos/*.proto --python_out=.)

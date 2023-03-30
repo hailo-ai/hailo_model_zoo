@@ -36,7 +36,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-08-16/yolov3_1_3_608_608_static.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3/pretrained/2021-08-16/yolov3.zip
 parser:
-  ew_add_policy: fused_conv_and_add_identity_fallback
   nodes:
   - input
   - - Conv_139

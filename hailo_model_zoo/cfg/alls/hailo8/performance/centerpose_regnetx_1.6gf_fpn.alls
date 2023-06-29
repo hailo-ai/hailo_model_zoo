@@ -1,0 +1,7 @@
+centerpose_regnetx_1_6gf_fpn/normalization1 = normalization([119.85, 113.985, 104.04], [70.89, 69.87, 73.695], centerpose_regnetx_1_6gf_fpn/input_layer1)
+model_optimization_config(calibration, batch_size=4, calibset_size=32)
+# pre_quantization_optimization commands
+pre_quantization_optimization(equalization, policy=disabled)
+performance_param(fps=130)
+change_output_activation(centerpose_regnetx_1_6gf_fpn/conv79, sigmoid)
+change_output_activation(centerpose_regnetx_1_6gf_fpn/conv75, sigmoid)

@@ -12,11 +12,17 @@ hn_editor:
     - 1920
 network:
   network_name: yolov5m_vehicles_yuy2
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json
+  meta_arch: yolo
+  hpp: true
 paths:
   alls_script: yolov5m_vehicles_yuy2.alls
   network_path:
-  - models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2022-02-23/yolov5m_vehicles.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2022-02-23/yolov5m_vehicles.zip
+  - models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.zip
 parser:
   nodes:
   - images
@@ -33,7 +39,7 @@ info:
   task: pipeline
   input_shape: 1080x1920x2
   output_shape: 20x20x18, 40x40x18, 80x80x18
-  operations: 25.63G
+  operations: 51.19G
   parameters: 21.47M
   framework: pytorch
   eval_metric: mAP

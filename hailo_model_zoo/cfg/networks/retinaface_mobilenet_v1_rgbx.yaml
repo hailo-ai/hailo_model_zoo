@@ -1,0 +1,11 @@
+base:
+- networks/retinaface_mobilenet_v1.yaml
+network:
+  network_name: retinaface_mobilenet_v1_rgbx
+paths:
+  alls_script: retinaface_mobilenet_v1_rgbx.alls
+hn_editor:
+  rgbx: true
+info:
+  task: pipeline
+  input_shape: 736x1280x4

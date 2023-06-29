@@ -62,7 +62,7 @@ info:
   input_shape: 512x512x3
   output_shape: 16x16x6, 16x16x6, 16x16x3, 16x16x240, 32x32x6, 32x32x6, 32x32x3, 32x32x240,
     64x64x6, 64x64x6, 64x64x3, 64x64x240
-  operations: 45.60G
+  operations: 91.04G
   parameters: 64.33M
   framework: darknet
   training_data: coco train2017

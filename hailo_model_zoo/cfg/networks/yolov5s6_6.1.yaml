@@ -8,42 +8,16 @@ preprocessing:
   - 1280
   - 3
 postprocessing:
-  anchors:
-    strides:
-    - 8
-    - 16
-    - 32
-    - 64
-    sizes:
-    - - 19
-      - 27
-      - 44
-      - 40
-      - 38
-      - 94
-    - - 96
-      - 68
-      - 86
-      - 152
-      - 180
-      - 137
-    - - 140
-      - 301
-      - 303
-      - 264
-      - 238
-      - 542
-    - - 436
-      - 615
-      - 739
-      - 380
-      - 925
-      - 792
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2023-04-25/yolov5s6_nms_config.json
+  meta_arch: yolo
+  hpp: true
 paths:
   alls_script: yolov5s6_6.1.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2022-04-12/yolov5s6.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2022-04-12/yolov5s6.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2023-04-25/yolov5s6.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s6_6.1/pretrained/2023-04-25/yolov5s6.zip
 parser:
   nodes:
   - images
@@ -55,7 +29,7 @@ info:
   task: object detection
   input_shape: 1280x1280x3
   output_shape: 20x20x255, 40x40x255, 80x80x255, 160x160x255
-  operations: 33.70G
+  operations: 67.4G
   parameters: 12.61M
   framework: pytorch
   training_data: coco train2017

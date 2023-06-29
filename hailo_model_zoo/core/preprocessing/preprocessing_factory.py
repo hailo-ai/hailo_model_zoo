@@ -13,6 +13,8 @@ from hailo_model_zoo.core.preprocessing import face_landmarks_preprocessing
 from hailo_model_zoo.core.preprocessing import fast_depth_preprocessing
 from hailo_model_zoo.core.preprocessing import person_reid_preprocessing
 from hailo_model_zoo.core.preprocessing import mspn_preprocessing
+from hailo_model_zoo.core.preprocessing import low_light_enhancement_preprocessing
+from hailo_model_zoo.core.preprocessing import stereonet_preprocessing
 
 
 def convert_rgb_to_yuv(image):
@@ -31,6 +33,25 @@ def convert_yuv_to_yuy2(image):
     uv_unrolled = tf.reshape(uv_subsampled, (image.shape[-3], image.shape[-2]))
     yuy2_img = tf.stack([y_img, uv_unrolled], axis=-1)
     return yuy2_img
+
+
+def convert_yuv_to_nv12(image):
+    h, w, _ = image.shape
+    y_img = image[..., 0]
+    y = tf.reshape(y_img, (2 * h, w // 2))
+    u = image[..., 1]
+    v = image[..., 2]
+    u_subsample = tf.expand_dims(u[::2, ::2], axis=-1)
+    v_subsample = tf.expand_dims(v[::2, ::2], axis=-1)
+    uv = tf.stack([u_subsample, v_subsample], axis=-1)
+    uv = tf.reshape(uv, (h, w // 2))
+    return tf.reshape(tf.concat([y, uv], axis=0), (h // 2, 3 * w, 1))
+
+
+def convert_rgb_to_rgbx(image):
+    h, w, _ = image.shape
+    new_channel = tf.zeros((h, w, 1))
+    return tf.concat([image, new_channel], axis=-1)
 
 
 def image_resize(image, shape):
@@ -81,6 +102,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'face_ssd': detection_preprocessing.face_ssd,
         'sr_resnet': super_resolution_preprocessing.resnet,
         'srgan': super_resolution_preprocessing.srgan,
+        'zero_dce': low_light_enhancement_preprocessing.zero_dce,
         'openpose': pose_preprocessing.openpose_tf_preproc,
         'centerpose': centerpose_preprocessing.centerpose_preprocessing,
         'mono_depth': mono_depth_estimation_preprocessing.mono_depth_2,
@@ -92,6 +114,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'resmlp': classification_preprocessing.resmlp,
         'fast_depth': fast_depth_preprocessing.fast_depth,
         'lprnet': classification_preprocessing.lprnet,
+        'clip': classification_preprocessing.clip,
         'person_reid': person_reid_preprocessing.market1501,
         'mspn': mspn_preprocessing.mspn,
         'vit': classification_preprocessing.vit_tiny,
@@ -99,12 +122,15 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'retinanet_resnext50': detection_preprocessing.retinanet_resnext50,
         'sparseinst': segmentation_preprocessing.sparseinst,
         'resnet_pruned': classification_preprocessing.resnet_pruned,
+        'stereonet': stereonet_preprocessing.stereonet
     }
     if name not in preprocessing_fn_map:
         raise ValueError('Preprocessing name [%s] was not recognized' % name)
     flip = kwargs.pop('flip', False)
     yuv2rgb = kwargs.pop('yuv2rgb', False)
     yuy2 = kwargs.pop('yuy2', False)
+    nv12 = kwargs.pop('nv12', False)
+    rgbx = kwargs.pop('rgbx', False)
     input_resize = kwargs.pop('input_resize', {})
     if flip:
         height, width = width, height
@@ -119,5 +145,9 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
             image = convert_rgb_to_yuv(image)
         if yuy2:
             image = convert_yuv_to_yuy2(image)
+        if nv12:
+            image = convert_yuv_to_nv12(image)
+        if rgbx:
+            image = convert_rgb_to_rgbx(image)
         return image, image_info
     return preprocessing_fn

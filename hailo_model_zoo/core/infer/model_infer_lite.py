@@ -43,6 +43,7 @@ def model_infer_lite(runner, context, logger, eval_num_examples, print_num_examp
                     del img_info["img_resized"]
             image_info = to_numpy(img_info)
             if not visualize_callback and not dump_results:
+                logits_batch = to_numpy(logits_batch)
                 eval_metric.update_op(logits_batch, image_info)
             if visualize_callback:
                 logits.append(logits_batch)

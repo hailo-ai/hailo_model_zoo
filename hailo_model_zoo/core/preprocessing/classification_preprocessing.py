@@ -2,6 +2,8 @@ from __future__ import division
 
 from past.utils import old_div
 import tensorflow as tf
+import numpy as np
+from PIL import Image
 
 RESIZE_SIDE = 256
 VIT_RESIZE_SIDE = 248
@@ -153,6 +155,23 @@ def resmlp(image, image_info=None, output_height=None, output_width=None, **kwar
         image = _central_crop([image], output_height, output_width)[0]
         image.set_shape([output_height, output_width, 3])
     image = tf.cast(image, tf.float32)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info
+
+
+def pil_resize(image, output_height, output_width):
+    image_uint = np.array(image, np.uint8)
+    pil_image = Image.fromarray(image_uint)
+    resized_image = pil_image.resize((output_width, output_height), Image.BICUBIC)
+    image_numpy = np.array(resized_image, np.uint8)
+    return image_numpy
+
+
+def clip(image, image_info=None, output_height=None, output_width=None, **kwargs):
+    image = tf.numpy_function(pil_resize, [image, output_height, output_width], tf.uint8)
+    image = tf.cast(image, tf.float32)
+    image.set_shape([output_height, output_width, 3])
     if image_info:
         image_info['img_orig'] = tf.cast(image, tf.uint8)
     return image, image_info

@@ -18,7 +18,7 @@ info:
   task: instance segmentation
   input_shape: 640x640x3
   output_shape: 160x160x32, 20x20x351, 40x40x351, 80x80x351
-  operations: 73.94G
+  operations: 147.88G
   parameters: 47.89M
   framework: pytorch
   training_data: coco instances train2017

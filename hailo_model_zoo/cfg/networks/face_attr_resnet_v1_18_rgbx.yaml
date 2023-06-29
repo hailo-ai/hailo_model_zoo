@@ -1,0 +1,12 @@
+base:
+- base/celeba.yaml
+- networks/face_attr_resnet_v1_18.yaml
+network:
+  network_name: face_attr_resnet_v1_18_rgbx
+paths:
+  alls_script: face_attr_resnet_v1_18_rgbx.alls
+hn_editor:
+  rgbx: true
+info:
+  task: pipeline
+  input_shape: 218x178x4

@@ -19,9 +19,11 @@ def resolve_alls_path(path):
     alls_path = ALLS_DIR / path
     if alls_path.exists():
         return alls_path
-    else:
-        alls_path = ALLS_DIR / Path("base") / alls_path.name
-    return alls_path
+    elif (alls_path.parents[1] / Path("base") / alls_path.name).exists():
+        return alls_path.parents[1] / Path("base") / alls_path.name
+    elif (ALLS_DIR / Path('generic') / alls_path.name).exists():
+        return ALLS_DIR / Path('generic') / alls_path.name
+    raise Exception("no alls found for requested hw_arch")
 
 
 def resolve_cfg_path(path):

@@ -30,7 +30,9 @@ def _make_parsing_base():
     parsing_base_parser.add_argument(
         '--ckpt', type=str, default=None, dest='ckpt_path',
         help='Path to onnx or ckpt to use for parsing. By default using the model cache location')
-
+    parsing_base_parser.add_argument(
+        '--hw-arch', type=str, default='hailo8', metavar='', choices=['hailo8', 'hailo8l', 'hailo15h'],
+        help='Which hw arch to run: hailo8 / hailo8l/ hailo15h. By default using hailo8.')
     parsing_base_parser.set_defaults(results_dir=Path('./'))
     return parsing_base_parser
 
@@ -51,9 +53,7 @@ def _make_optimization_base():
     optimization_base_parser.add_argument(
         '--performance', action='store_true',
         help='Enable flag for benchmark performance')
-    optimization_base_parser.add_argument(
-        '--hw-arch', type=str, default='hailo8', metavar='', choices=['hailo8', 'hailo8l'],
-        help='Which hw arch to run: hailo8 / hailo8l')
+
     return optimization_base_parser
 
 

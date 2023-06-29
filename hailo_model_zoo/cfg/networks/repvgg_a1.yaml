@@ -1,0 +1,26 @@
+base:
+- base/repvgg.yaml
+network:
+  network_name: repvgg_a1
+paths:
+  alls_script: repvgg_a1.alls
+  network_path:
+  - models_files/Classification/repvgg/repvgg_a1/pretrained/2022-10-02/RepVGG-A1.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repvgg/repvgg_a1/pretrained/2022-10-02/RepVGG-A1.zip
+parser:
+  nodes:
+  - null
+  - null
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: 1x1x1000
+  operations: 4.7G
+  parameters: 12.79M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 74.4
+  source: https://github.com/DingXiaoH/RepVGG
+  license_url: https://github.com/DingXiaoH/RepVGG/blob/main/LICENSE

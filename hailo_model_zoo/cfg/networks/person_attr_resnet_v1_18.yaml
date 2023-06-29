@@ -34,7 +34,7 @@ info:
   task: person attribute
   input_shape: 224x224x3
   output_shape: 1x35
-  operations: 1.82G
+  operations: 3.64G
   parameters: 11.19M
   framework: pytorch
   training_data: peta train

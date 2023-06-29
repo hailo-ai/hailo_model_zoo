@@ -84,7 +84,7 @@ Training and exporting to ONNX
       :name:validation
 
       <code stage="retrain">
-      ./darknet detector train <span val="docker_obj_data_path">data/obj.data</span> cfg/yolov4-leaky.cfg yolov4-leaky.weights -map -clear
+      ./darknet detector train <span val="docker_obj_data_path">data/obj.data</span> cfg/yolov4-leaky.cfg <span val="docker_path_to_pretrained_model"></span> -map -clear
       </code>
 
    | Final trained weights will be available in ``backup/`` directory.

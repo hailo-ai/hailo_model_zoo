@@ -1,0 +1,11 @@
+base:
+- networks/arcface_mobilefacenet.yaml
+network:
+  network_name: arcface_mobilefacenet_rgbx
+paths:
+  alls_script: arcface_mobilefacenet_rgbx.alls
+hn_editor:
+  rgbx: true
+info:
+  task: pipeline
+  input_shape: 112x112x4

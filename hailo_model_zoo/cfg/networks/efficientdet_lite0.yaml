@@ -5,8 +5,8 @@ network:
 paths:
   alls_script: efficientdet_lite0.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2022-06-14/efficientdet-lite0.tflite
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2022-06-14/efficientdet-lite0.zip
+  - models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2023-04-25/efficientdet-lite0.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2023-04-25/efficientdet-lite0.zip
 parser:
   nodes:
   - pad_to_bounding_box/Pad
@@ -26,38 +26,22 @@ preprocessing:
   - 320
   - 3
 postprocessing:
-  anchors:
-    aspect_ratios:
-    - 1.0
-    - 0.5
-    - 2.0
-    sizes:
-    - 24
-    - 48
-    - 96
-    - 192
-    - 320
-    strides:
-    - 8
-    - 16
-    - 32
-    - 64
-    - 106.6666667
-    scales:
-    - 1.0
-    - 1.2599211
-    - 1.587401
+  device_pre_post_layers:
+    nms: true
+    sigmoid: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2023-04-25/efficientdet_lite0_nms_config.json
+  hpp: true
 info:
   task: object detection
   input_shape: 320x320x3
   output_shape: 40x40x36, 40x40x810, 20x20x36, 20x20x810, 10x10x36, 10x10x810, 5x5x36,
     5x5x810, 3x3x36, 3x3x810
-  operations: 0.99G
+  operations: 1.98G
   parameters: 3.56M
   framework: tensorflow
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 27.435
+  full_precision_result: 27.317
   source: https://github.com/google/automl/tree/master/efficientdet
   license_url: https://www.apache.org/licenses/LICENSE-2.0

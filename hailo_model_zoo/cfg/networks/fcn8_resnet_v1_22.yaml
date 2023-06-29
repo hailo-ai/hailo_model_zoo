@@ -28,7 +28,7 @@ info:
   task: semantic segmentation
   input_shape: 1920x1024x3
   output_shape: 1920x1024x1
-  operations: 150.04G
+  operations: 300.08G
   parameters: 15.12M
   framework: gluoncv
   training_data: cityscapes train

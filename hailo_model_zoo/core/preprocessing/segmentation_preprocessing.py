@@ -69,6 +69,7 @@ def sparseinst(image, image_info=None, height=None, width=None, max_pad=MAX_PADD
                     [0, 0]]
         image_padded = tf.squeeze(tf.pad(image_resized_ar, paddings, mode="CONSTANT", constant_values=0))
         image_resized = tf.cast(image_padded, tf.float32)
+        image_resized.set_shape((height, width, 3))
     if image_info:
         image_info['resized_height'] = tf.cast(newh, tf.int32)
         image_info['resized_width'] = tf.cast(neww, tf.int32)

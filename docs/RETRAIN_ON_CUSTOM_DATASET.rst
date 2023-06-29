@@ -22,6 +22,7 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 * `YOLOv4 <../training/yolov4/README.rst>`_
 * `YOLOv5 <../training/yolov5/README.rst>`_
 * `YOLOX <../training/yolox/README.rst>`_
+* `DAMO-YOLO <../training/damoyolo/README.rst>`_
 * `NanoDet <../training/nanodet/README.rst>`_
 * `SSD <../training/ssd/README.rst>`_
 

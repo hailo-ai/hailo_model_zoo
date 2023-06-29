@@ -47,7 +47,7 @@ info:
   task: object detection
   input_shape: 416x416x3
   output_shape: 13x13x255, 26x26x255, 26x26x255
-  operations: 3.46G
+  operations: 6.92G
   parameters: 6.05M
   framework: pytorch
   training_data: coco train2017

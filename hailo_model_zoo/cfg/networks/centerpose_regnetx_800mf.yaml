@@ -20,7 +20,7 @@ info:
   task: pose estimation
   input_shape: 512x512x3
   output_shape: 128x128x1, 128x128x2, 128x128x34, 128x128x2, 128x128x17, 128x128x2
-  operations: 43.06G
+  operations: 86.12G
   parameters: 12.31M
   framework: pytorch
   training_data: coco keypoints train2017

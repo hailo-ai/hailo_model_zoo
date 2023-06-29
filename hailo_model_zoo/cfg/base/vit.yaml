@@ -4,7 +4,7 @@ preprocessing:
   meta_arch: vit
 parser:
   normalization_params:
-    normalize_in_net: false
+    normalize_in_net: true
     mean_list:
     - 127.5
     - 127.5

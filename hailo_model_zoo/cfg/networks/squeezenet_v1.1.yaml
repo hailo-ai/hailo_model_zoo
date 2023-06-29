@@ -17,7 +17,7 @@ info:
   task: classification
   input_shape: 224x224x3
   output_shape: 1x1x1000
-  operations: 0.39G
+  operations: 0.78G
   parameters: 1.24M
   framework: pytorch
   training_data: imagenet train

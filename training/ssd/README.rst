@@ -1,6 +1,7 @@
 ===========================
 SSD-Mobilenet-V1 Retraining
 ===========================
+**Deprecation Warning: This retraining image will be deprecated in next release.**
 
 * To learn more about ssd look `here <https://github.com/hailo-ai/models/tree/master/research/object_detection>`_
 

@@ -1,0 +1,2 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+reshape_rgb = input_conversion(input_layer1, tf_rgbx_to_hailo_rgb, emulator_support=True)

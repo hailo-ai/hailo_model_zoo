@@ -30,6 +30,6 @@ info:
   full_precision_result: 99.72
   input_shape: 112x112x3
   output_shape: '512'
-  operations: 6.30G
+  operations: 12.6G
   parameters: 31.0M
   license_url: https://opensource.org/licenses/MIT

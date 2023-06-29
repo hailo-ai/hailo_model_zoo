@@ -1,5 +1,11 @@
 base:
 - base/yolov5.yaml
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m_nms_config.json
+  meta_arch: yolo
+  hpp: true
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord
@@ -8,8 +14,8 @@ network:
 paths:
   alls_script: yolov5m.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2022-01-02/yolov5m.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m.zip
 parser:
   nodes:
   - images
@@ -20,7 +26,7 @@ info:
   task: object detection
   input_shape: 640x640x3
   output_shape: 20x20x255, 40x40x255, 80x80x255
-  operations: 26.14G
+  operations: 52.28G
   parameters: 21.78M
   framework: pytorch
   training_data: coco train2017

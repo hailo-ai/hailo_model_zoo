@@ -1,0 +1,12 @@
+base:
+- base/peta.yaml
+- networks/person_attr_resnet_v1_18.yaml
+network:
+  network_name: person_attr_resnet_v1_18_rgbx
+paths:
+  alls_script: person_attr_resnet_v1_18_rgbx.alls
+hn_editor:
+  rgbx: true
+info:
+  task: pipeline
+  input_shape: 224x224x4

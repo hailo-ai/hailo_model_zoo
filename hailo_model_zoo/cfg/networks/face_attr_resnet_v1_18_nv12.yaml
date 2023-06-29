@@ -1,0 +1,13 @@
+base:
+- base/celeba.yaml
+- networks/face_attr_resnet_v1_18.yaml
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+network:
+  network_name: face_attr_resnet_v1_18_nv12
+paths:
+  alls_script: face_attr_resnet_v1_18_nv12.alls
+info:
+  task: pipeline
+  input_shape: 109x178x3

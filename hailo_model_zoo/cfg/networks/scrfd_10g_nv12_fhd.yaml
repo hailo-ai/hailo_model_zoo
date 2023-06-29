@@ -1,0 +1,32 @@
+base:
+- networks/scrfd_10g.yaml
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+  input_resize:
+    enabled: true
+    input_shape:
+    - 1080
+    - 1920
+network:
+  network_name: scrfd_10g_nv12_fhd
+paths:
+  alls_script: scrfd_10g_nv12_fhd.alls
+preprocessing:
+  input_shape:
+  - 640
+  - 640
+  - 3
+info:
+  task: pipeline_hailo15
+  input_shape: 540x1920x3
+  output_shape: 80x80x2, 80x80x8, 80x80x10, 40x40x2, 40x40x8, 40x40x10, 20x20x2, 20x20x8,
+    20x20x10
+  operations: 26.74G
+  parameters: 4.23M
+  framework: pytorch
+  training_data: wider train
+  validation_data: wider val
+  eval_metric: mAP
+  full_precision_result: 82.426
+  license_url: https://opensource.org/licenses/MIT

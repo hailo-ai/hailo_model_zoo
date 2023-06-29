@@ -1,6 +1,41 @@
 Changelog
 =========
 
+**v2.8**
+
+* Update to use Dataflow Compiler v3.24.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Updated to use HailoRT 4.14.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* The Hailo Model Zoo now supports the following vision transformers models:
+
+  * vit_tiny / vit_small / vit_base - encoder based transformer with batchnorm for classification
+  * detr_resnet_v1_18_bn - encoder/decoder transformer for object detection
+  * clip_resnet_50 - Contrastive Language-Image Pre-Training for zero-shot classification
+  * yolov5s_c3tr - object detection model with a MHSA block
+
+* Using HailoRT-pp for postprocessing of the following variants:
+
+  * yolov5
+  * yolox
+  * ssd
+  * efficientdet
+  * yolov7
+
+* New Models:
+
+  * repvgg_a1 / repvgg_a2 - classification
+  * yolov8_seg: yolov8n_seg / yolov8s_seg / yolov8m_seg - instance segmentation
+  * yolov6n_0.2.1 - object detecion
+  * zero_dce - low-light enhancement 
+
+* New retraining dockers for:
+
+  * yolov8
+  * yolov8_seg
+
+* Enable compilation for hailo15h device
+* Enable evaluation of models with RGBX / NV12 input format
+* Bug fixes
+
 **v2.7**
 
 * Update to use Dataflow Compiler v3.23.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

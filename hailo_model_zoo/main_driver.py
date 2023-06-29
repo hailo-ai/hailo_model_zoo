@@ -32,13 +32,15 @@ def _ensure_performance(model_name, model_script, performance, logger):
     if performance and model_script:
         if model_script.parent.name == "base":
             logger.info(f'Using base alls script found in {model_script} because there is no performance alls')
+        if model_script.parent.name == "generic":
+            logger.info(f'Using generic alls script found in {model_script} because there is no specific hardware alls')
         elif model_script.parent.name != "performance" and model_name in get_network_peformance():
             logger.info('Using alls script {model_script}')
 
 
-def _extract_model_script_path(networks_alls_script, model_script_path, performance):
+def _extract_model_script_path(networks_alls_script, model_script_path, hw_arch, performance):
     return Path(model_script_path) if model_script_path \
-        else resolve_alls_path(networks_alls_script, performance=performance)
+        else resolve_alls_path(networks_alls_script, hw_arch=hw_arch, performance=performance)
 
 
 def _ensure_compiled(runner, logger, args, network_info):
@@ -60,6 +62,7 @@ def _ensure_optimized(runner, logger, args, network_info):
         return
     model_script = _extract_model_script_path(network_info.paths.alls_script,
                                               args.model_script_path,
+                                              args.hw_arch,
                                               args.performance)
     _ensure_performance(network_info.network.network_name, model_script, args.performance, logger)
     optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
@@ -99,7 +102,8 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
             # compatible to the performance model script
             model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                       args.model_script_path,
-                                                      False)
+                                                      args.hw_arch,
+                                                      performance=False)
 
             runner.load_model_script(model_script)
             runner.optimize_full_precision()
@@ -136,8 +140,8 @@ def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
         # compatible to the performance model script
         model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                   args.model_script_path,
+                                                  args.hw_arch,
                                                   False)
-
         runner.load_model_script(model_script)
         runner.optimize_full_precision()
         configure_hef_tf2(runner, args.hef_path)
@@ -170,7 +174,7 @@ def parse(args):
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
-    runner = ClientRunner()
+    runner = ClientRunner(hw_arch=args.hw_arch)
     parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
@@ -191,6 +195,7 @@ def optimize(args):
 
     model_script = _extract_model_script_path(network_info.paths.alls_script,
                                               args.model_script_path,
+                                              args.hw_arch,
                                               args.performance)
     _ensure_performance(model_name, model_script, args.performance, logger)
     optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
@@ -208,7 +213,8 @@ def compile(args):
 
     _ensure_optimized(runner, logger, args, network_info)
 
-    model_script = _extract_model_script_path(network_info.paths.alls_script, args.model_script_path, args.performance)
+    model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                              args.model_script_path, args.hw_arch, args.performance)
     _ensure_performance(model_name, model_script, args.performance, logger)
     compile_model(runner, network_info, args.results_dir, model_script)
 
@@ -236,6 +242,7 @@ def profile(args):
         if runner.state == States.HAILO_MODEL:
             model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                       args.model_script_path,
+                                                      args.hw_arch,
                                                       args.performance)
             _ensure_performance(model_name, model_script, args.performance, logger)
             runner.load_model_script(model_script)
@@ -243,7 +250,8 @@ def profile(args):
     else:
         # Optimize the model so profile_hn_model could compile & profile it
         _ensure_optimized(runner, logger, args, network_info)
-    model_script = _extract_model_script_path(network_info.paths.alls_script, args.model_script_path, args.performance)
+    model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                              args.model_script_path, args.hw_arch, args.performance)
     alls_script_path = model_script \
         if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
     _ensure_performance(model_name, alls_script_path, args.performance, logger)
@@ -251,14 +259,14 @@ def profile(args):
     stats, csv_data, latency_data, accuracy_data = runner.profile(profiling_mode=profile_mode,
                                                                   should_use_logical_layers=True,
                                                                   hef_filename=args.hef_path)
-
     mem_file = io.StringIO()
     outpath = args.results_dir / f'{model_name}.html'
+    hn_model = runner._sdk_backend.get_modified_hn_model()
     report_generator = ReactReportGenerator(mem_file=mem_file,
                                             accuracy_data=accuracy_data,
                                             csv_data=csv_data, latency_data=latency_data,
                                             runtime_data=latency_data["runtime_data"], out_path=outpath,
-                                            stats=stats, hw_arch="hailo8")
+                                            stats=stats, hn_model=hn_model)
 
     csv_data = report_generator.create_report(should_open_web_browser=False)
     logger.info(f'Profiler report generated in {outpath}')
@@ -292,6 +300,9 @@ def evaluate(args):
         raise ValueError(
             "Cannot run evaluation without dataset. use --data-path to provide external dataset.")
     model_name = network_info.network.network_name
+    if args.hw_arch == "hailo15h" and args.target == "hailo8":
+        raise ValueError(
+            "Cannot run hailo15h compiled hef on hailo8.")
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')

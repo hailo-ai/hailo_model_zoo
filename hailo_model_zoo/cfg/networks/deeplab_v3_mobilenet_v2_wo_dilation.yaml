@@ -34,7 +34,7 @@ info:
   task: semantic segmentation
   input_shape: 513x513x3
   output_shape: 513x513x1
-  operations: 1.64G
+  operations: 3.28G
   parameters: 2.10M
   framework: tensorflow
   training_data: pascal voc train2012

@@ -12,5 +12,7 @@ def to_numpy(tensor, *, decode=False):
         return result
     if isinstance(tensor, str):
         return tensor
+    if isinstance(tensor, dict):
+        return {k: v.numpy() if hasattr(v, 'numpy') else v for k, v in tensor.items()}
 
     return tf.nest.map_structure(to_numpy, tensor)

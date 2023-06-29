@@ -15,6 +15,7 @@ EVAL_CLASS_MAP = {
     'yolact': YolactEval,
     'yolov5_seg': Yolov5SegEval,
     'sparseinst': SparseInstEval,
+    'yolov8_seg': Yolov5SegEval
 }
 
 

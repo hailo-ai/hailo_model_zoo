@@ -7,6 +7,8 @@ quantization:
 hn_editor:
   yuv2rgb: false
   yuy2: false
+  nv12: false
+  rgbx: false
   input_resize:
     enabled: false
   channels_remove:
@@ -66,7 +68,7 @@ postprocessing:
     max_finder: false
     sigmoid: false
   hpp: false
-  postprocess_config_json: null
+  postprocess_config_file: null
 evaluation:
   data_set: null
   labels_offset: 0

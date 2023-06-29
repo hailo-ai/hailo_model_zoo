@@ -34,6 +34,8 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `CelebA`_
   * `LFW`_
   * `BSD100`_
+  * `CIFAR100`_
+  * `LOL`_
 
 .. _ImageNet:
 
@@ -728,3 +730,71 @@ Manual Download (Optional)
 
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py val --lr /path/to/LRbicx4 --hr /path/to/GTmod12
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py calib --lr /path/to/LRbicx4 --hr /path/to/GTmod12
+
+
+.. _CIFAR100:
+
+CIFAR100
+------
+
+To evaluate/optimize/compile the CLIP models of the 
+Hailo Model Zoo you should generate the CIFAR100 TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_cifar100_tfrecord.py val
+    python hailo_model_zoo/datasets/create_cifar100_tfrecord.py calib
+
+
+.. _LOL:
+
+LOL
+------
+
+To evaluate/optimize/compile the low light enhancement models of the
+Hailo Model Zoo you should generate the LOL TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_lol_tfrecord.py val
+    python hailo_model_zoo/datasets/create_lol_tfrecord.py calib
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the LOL dataset from `here <"https://drive.google.com/uc?export=download&id=157bjO1_cFuSd0HWDUuAmcHRJDVyWpOxB&authuser=0">`_ and extract.
+   The expected dataset structure:
+
+   .. code-block::
+
+      lol_dataset
+      |_ eval15
+         |_ high
+         |   |_ 111.png
+         |   |_ 146.png
+         |   |_ ...
+         |_ low
+         |   |_ 111.png
+         |   |_ 146.png
+         |   |_ ...
+      |_ our485
+         |_ high
+         |   |_ 100.png
+         |   |_ 101.png
+         |   |_ ...
+         |_ low
+         |   |_ 100.png
+         |   |_ 101.png
+         |   |_ ...
+
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_lol_tfrecord.py val --ll /path/to/val/lowlight/images --lle /path/to/val/highlight/images
+      python hailo_model_zoo/datasets/create_lol_tfrecord.py calib --ll /path/to/train/lowlight/images --lle /path/to/train/highlight/images

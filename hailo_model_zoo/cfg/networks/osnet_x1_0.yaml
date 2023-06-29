@@ -25,7 +25,7 @@ info:
   task: person re-id
   input_shape: 256x128x3
   output_shape: 1x512
-  operations: 0.99G
+  operations: 1.98G
   parameters: 2.19M
   framework: pytorch
   training_data: market1501 train

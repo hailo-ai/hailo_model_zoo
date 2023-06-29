@@ -18,7 +18,7 @@ def translate_coco_2017_to_2014(nmsed_classes):
     return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
 
-def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
+def tf_postproc_nms(endnodes, labels_offset, score_threshold, coco_2017_to_2014=True):
     def _single_batch_parse(args):
         frame_detections = args[:, :, :]
         boxes = frame_detections[:, :, :4]
@@ -26,7 +26,7 @@ def tf_postproc_nms(endnodes, score_threshold, coco_2017_to_2014=True):
         indices = tf.where(scores > score_threshold)
         boxes_after_tsh = tf.gather_nd(boxes, indices)
         scores_after_tsh = tf.gather_nd(scores, indices)
-        class_after_tsh = tf.cast(indices[:, 0], tf.int32) + 1
+        class_after_tsh = tf.cast(indices[:, 0], tf.int32) + labels_offset
         num_detection_after_tsh = tf.shape(indices)[0]
         padding_size = 100 - num_detection_after_tsh
         if padding_size > 0:

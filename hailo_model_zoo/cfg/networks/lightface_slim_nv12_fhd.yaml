@@ -1,0 +1,23 @@
+base:
+- base/lightface_slim_base.yaml
+paths:
+  alls_script: lightface_slim_nv12_fhd.alls
+network:
+  network_name: lightface_slim_nv12_fhd
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+  input_resize:
+    enabled: true
+    input_shape:
+    - 1080
+    - 1920
+preprocessing:
+  input_shape:
+  - 240
+  - 320
+  - 3
+info:
+  task: pipeline_hailo15
+  input_shape: 540x1920x3
+  full_percision_result: 39.043

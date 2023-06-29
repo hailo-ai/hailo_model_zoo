@@ -28,7 +28,7 @@ info:
   task: face attribute
   input_shape: 218x178x3
   output_shape: 1x80
-  operations: 1.5G
+  operations: 3G
   parameters: 11.74M
   framework: pytorch
   training_data: celeba train

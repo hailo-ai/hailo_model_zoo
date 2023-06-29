@@ -5,9 +5,11 @@ class DetrPostProc(object):
     def __init__(self, **kwargs):
         pass
 
-    def detr_postprocessing(self, endnodes, **kwargs):
+    def detr_postprocessing(self, endnodes, sigmoid=True, **kwargs):
         logits = tf.squeeze(endnodes[0], [1])  # [batch, 1, 100, 92] -> [batch, 100, 92]
         boxes = tf.squeeze(endnodes[1], [1])   # [batch, 1, 100, 4] -> [batch, 100, 4]
+        if sigmoid:
+            boxes = tf.nn.sigmoid(boxes)
 
         # SoftMax to get scores and class predictions
         probs = tf.nn.softmax(logits, axis=-1)                   # [batch, queries, 92]

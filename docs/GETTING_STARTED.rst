@@ -9,8 +9,8 @@ System Requirements
 
 * Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
 * Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v3.23.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 4.13.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* Hailo Dataflow Compiler v3.24.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.14.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
 * The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 470
@@ -109,6 +109,12 @@ The pre-trained models are stored on AWS S3 and will be downloaded automatically
 
    hailomz parse <model_name>
 
+* The default compilation target is Hailo-8. To compile for different architecture (Hailo-15H for example), use ``--hw_arch hailo15h`` as CLI argument:
+
+.. code-block::
+
+   hailomz parse <model_name> --hw-arch hailo15h
+
 Profiling
 ---------
 
@@ -167,17 +173,23 @@ To run the Hailo compiler and generate the Hailo Executable Format (HEF) file:
 
    hailomz compile <model_name>
 
+By default the compilation target is Hailo-8. To compile for a different architecture use ``--hw-arch`` command line argument:
+
+.. code-block::
+
+   hailomz compile <model_name> --hw-arch hailo15h
+
 To generate the HEF starting from a previously generated HAR file:
 
 .. code-block::
 
-   hailomz compile <model_name> --har /path/to/model.har
+   hailomz compile <model_name> --har /path/to/model.har --hw-arch <hailo8|hailo15h>
 
 In order to achieve highest performance, one could use the performance flag:
 
 .. code-block::
 
-    hailomz optimize <model_name> --performance
+    hailomz optimize <model_name> --performance --hw-arch <hailo8|hailo15h>
 
 The flag will be ignored on models that do not support this feature.
 The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
@@ -229,6 +241,8 @@ To explore other options (for example: changing the default batch-size) use:
 .. code-block::
 
    hailomz eval --help
+
+* Currently MZ evaluation can be done only on hailo8
 
 Visualization
 -------------

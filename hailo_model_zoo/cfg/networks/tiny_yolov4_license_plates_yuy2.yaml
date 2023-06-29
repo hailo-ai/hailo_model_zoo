@@ -51,7 +51,7 @@ info:
   task: pipeline
   input_shape: 416x416x2
   output_shape: 13x13x18, 26x26x18
-  operations: 3.4G
+  operations: 6.8G
   parameters: 5.87M
   framework: darknet
   eval_metric: mAP

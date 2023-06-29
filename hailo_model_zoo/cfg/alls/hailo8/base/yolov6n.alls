@@ -1,0 +1,5 @@
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+
+post_quantization_optimization(finetune, policy=enabled, loss_factors=[0.125, 2, 0.25, 0.125, 2, 0.25, 0.125, 2, 0.25, 1, 1, 1], dataset_size=4000, epochs=8, learning_rate=1e-5, loss_layer_names=[conv36, conv37, conv38, conv47, conv48, conv49, conv57, conv58, conv59, conv33, conv43, conv54], loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2rel, l2rel, l2rel])
+context_switch_param(mode=disabled)
+performance_param(optimization_level=max)

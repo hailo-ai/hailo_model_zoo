@@ -17,7 +17,7 @@ info:
   task: classification
   input_shape: 224x224x3
   output_shape: '1001'
-  operations: 1.00G
+  operations: 2G
   parameters: 4.07M
   framework: tensorflow
   training_data: imagenet train

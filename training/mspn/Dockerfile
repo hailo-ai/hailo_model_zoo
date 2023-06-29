@@ -10,7 +10,7 @@ RUN pip install mmcv-full==1.6.0 && \
     git clone https://github.com/hailo-ai/mmpose.git && \
     cd mmpose && pip install -e . && \
     mkdir -p data/coco/annotations && mkdir pretrained && \
-    pip install tensorboard==2.11.2 onnxruntime==1.13.1 onnx-simplifier==0.4.13 netron==6.4.7 ipdb==0.13.11 && \
+    pip install tensorboard==2.11.2 onnxruntime==1.13.1 onnx-simplifier==0.4.13 ipdb==0.13.11 && \
     wget -P ./data/coco/ https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/coco_gt_as_results.json && \
     wget -P ./pretrained https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/best_AP_epoch_310.pth
 

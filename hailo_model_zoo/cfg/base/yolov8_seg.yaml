@@ -1,0 +1,12 @@
+base:
+- base/yolov8.yaml
+preprocessing:
+  network_type: instance_segmentation
+postprocessing:
+  meta_arch: yolov8_seg_postprocess
+  mask_threshold: 0.5
+evaluation:
+  meta_arch: yolov8_seg
+  infer_type: np_infer_lite
+  dataset_name: coco_detection
+  gt_json_path: models_files/coco/2021-06-18/instances_val2017.json

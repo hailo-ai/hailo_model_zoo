@@ -1,0 +1,6 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/yolo/yolov5l_spp/pretrained/2023-04-25/yolov5l_nms_config.json", yolov5, engine=cpu)
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+pre_quantization_optimization(ew_add_fusing, policy=enabled, infusible_ew_add_type=conv)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=2, dataset_size=1000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv118, conv107, conv95])

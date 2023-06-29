@@ -9,6 +9,7 @@ from hailo_model_zoo.core.eval.pose_estimation_evaluation import PoseEstimationE
 from hailo_model_zoo.core.eval.instance_segmentation_evaluation import InstanceSegmentationEval
 from hailo_model_zoo.core.eval.depth_estimation_evaluation import DepthEstimationEval
 from hailo_model_zoo.core.eval.super_resolution_evaluation import SuperResolutionEval
+from hailo_model_zoo.core.eval.low_light_enhancement_evaluation import LowLightEnhancementEval
 from hailo_model_zoo.core.eval.srgan_evaluation import SRGANEval
 from hailo_model_zoo.core.eval.head_pose_estimation_evaluation import HeadPoseEstimationEval
 from hailo_model_zoo.core.eval.multiple_object_tracking_evaluation import MultipleObjectTrackingEval
@@ -21,6 +22,7 @@ from hailo_model_zoo.core.eval.ocr_evaluation import OCREval
 from hailo_model_zoo.core.eval.person_reid_evaluation import PersonReidEval
 from hailo_model_zoo.core.eval.person_attr_evaluation import PersonAttrEval
 from hailo_model_zoo.core.eval.single_person_pose_estimation_evaluation import SinglePersonPoseEstimationEval
+from hailo_model_zoo.core.eval.stereo_evaluation import StereoNetEval
 
 
 class EmptyEval():
@@ -43,6 +45,7 @@ def get_evaluation(name):
     """
     evaluation_map = {
         'classification': ClassificationEval,
+        'zero_shot_classification': ClassificationEval,
         'segmentation': SegmentationEval,
         'detection': DetectionEval,
         'pose_estimation': PoseEstimationEval,
@@ -68,6 +71,8 @@ def get_evaluation(name):
         'face_attr': PersonAttrEval,
         'single_person_pose_estimation': SinglePersonPoseEstimationEval,
         'super_resolution': SuperResolutionEval,
+        'low_light_enhancement': LowLightEnhancementEval,
+        'stereonet': StereoNetEval
     }
 
     if name not in evaluation_map:

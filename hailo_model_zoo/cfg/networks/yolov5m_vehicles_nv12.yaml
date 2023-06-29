@@ -1,0 +1,46 @@
+base:
+- base/yolov5.yaml
+quantization:
+  calib_set: null
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+  input_resize:
+    enabled: true
+    input_shape:
+    - 1080
+    - 1920
+network:
+  network_name: yolov5m_vehicles_nv12
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json
+  meta_arch: yolo
+  hpp: true
+paths:
+  alls_script: yolov5m_vehicles_nv12.alls
+  network_path:
+  - models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.zip
+parser:
+  nodes:
+  - images
+  - - Conv_289
+    - Conv_273
+    - Conv_257
+evaluation:
+  labels_offset: 0
+  classes: 1
+  dataset_name: vehicle_detection
+  data_set: null
+  validation_data_set: null
+info:
+  task: pipeline
+  input_shape: 540x1920x3
+  output_shape: 20x20x18, 40x40x18, 80x80x18
+  operations: 51.19G
+  parameters: 21.47M
+  framework: pytorch
+  eval_metric: mAP
+  full_precision_result: 46.059

@@ -5,6 +5,8 @@ import json
 from PIL import Image
 from PIL import ImageDraw
 
+from hailo_model_zoo.utils import path_resolver
+
 
 class PostprocessingException(Exception):
     pass
@@ -50,3 +52,14 @@ def visualize_classification_result(logits, img, **kwargs):
     ImageDraw.Draw(img_orig).text((0, 0), "{} ({:.2f})".format(imagenet_labels[int(top1[0] - labels_offset)],
                                                                conf), (255, 0, 0))
     return np.array(img_orig, np.uint8)
+
+
+def zero_shot_classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    endnodes /= tf.norm(endnodes, keepdims=True, axis=-1)
+    path = path_resolver.resolve_data_path(kwargs['postprocess_config_file'])
+    text_features = np.load(path)
+    similarity = tf.linalg.matmul(100.0 * endnodes, text_features, transpose_b=True)
+    if len(similarity.shape) == 4:
+        similarity = tf.squeeze(similarity, [1, 2])
+    probs = tf.nn.softmax(similarity, axis=-1)
+    return {'predictions': probs}

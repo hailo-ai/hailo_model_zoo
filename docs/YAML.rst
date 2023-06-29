@@ -52,7 +52,7 @@ Properties
 
   * | **meta_arch** *(['string', 'null'])*\ : Postprocessing meta architecture name.
     | For example: yolo_v3, yolo_v4, etc. Default: ``None``.
-  * | **postprocess_config_json** *(['string', 'null'])*\ : Path to JSON file with the postprocessing configuration (for offloading NMS to the Hailo-8). Default: ``None``.
+  * | **postprocess_config_file** *(['string', 'null'])*\ : Path to a file with the postprocessing configuration (for example, for offloading NMS to the Hailo-8). Default: ``None``.
   * | **device_pre_post_layers**\ : Whether to use postprocessing on chip or do it on the host.
 
     * | **bilinear** *(boolean)*\ : Activate the bilinear PPU layer. Default: ``False``.

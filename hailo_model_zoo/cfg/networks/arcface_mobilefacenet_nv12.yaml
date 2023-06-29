@@ -1,0 +1,21 @@
+base:
+- networks/arcface_mobilefacenet.yaml
+hn_editor:
+  nv12: true
+  yuv2rgb: true
+network:
+  network_name: arcface_mobilefacenet_nv12
+paths:
+  alls_script: arcface_mobilefacenet_nv12.alls
+info:
+  task: pipeline
+  framework: pytorch
+  training_data: ms1mv3
+  validation_data: lfw
+  eval_metric: lfw verification accuracy
+  full_precision_result: 99.23
+  input_shape: 56x112x3
+  output_shape: '512'
+  operations: 0.88G
+  parameters: 2.04M
+  license_url: https://opensource.org/licenses/MIT

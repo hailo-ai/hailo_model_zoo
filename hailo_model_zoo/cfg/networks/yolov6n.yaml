@@ -5,8 +5,8 @@ network:
 paths:
   alls_script: yolov6n.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2022-06-28/yolov6n.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2022-06-28/yolov6n.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2023-05-31/yolov6n.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2023-05-31/yolov6n.zip
 parser:
   nodes:
   - null
@@ -35,7 +35,7 @@ info:
   input_shape: 640x640x3
   output_shape: 80x80x4, 80x80x1, 80x80x80, 40x40x4, 40x40x1, 40x40x80, 20x20x4, 20x20x1,
     20x20x80
-  operations: 5.57G
+  operations: 4.65G
   parameters: 4.32M
   framework: pytorch
   training_data: coco train2017

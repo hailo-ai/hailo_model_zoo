@@ -371,7 +371,7 @@ info:
   input_shape: 512x512x3
   output_shape: 128x128x32, 64x64x36, 64x64x288, 64x64x279, 32x32x36, 32x32x288, 32x32x279,
     16x16x36, 16x16x288, 16x16x279, 8x8x36, 8x8x288, 8x8x279, 4x4x36, 4x4x288, 4x4x279
-  operations: 51.62G
+  operations: 103.24G
   parameters: 22.14M
   framework: pytorch
   training_data: d2s augemented train

@@ -2,6 +2,7 @@
 from hailo_model_zoo.core.postprocessing.age_gender_postprocessing import (age_gender_postprocessing,
                                                                            visualize_age_gender_result)
 from hailo_model_zoo.core.postprocessing.classification_postprocessing import (classification_postprocessing,
+                                                                               zero_shot_classification_postprocessing,
                                                                                visualize_classification_result)
 from hailo_model_zoo.core.postprocessing.detection_postprocessing import (detection_postprocessing,
                                                                           visualize_detection_result)
@@ -18,6 +19,9 @@ from hailo_model_zoo.core.postprocessing.mono_depth_estimation_postprocessing im
 from hailo_model_zoo.core.postprocessing.super_resolution_postprocessing import (super_resolution_postprocessing,
                                                                                  visualize_super_resolution_result,
                                                                                  visualize_srgan_result)
+from hailo_model_zoo.core.postprocessing.low_light_enhancement_postprocessing import (
+    low_light_enhancement_postprocessing,
+    visualize_low_light_enhancement_result)
 from hailo_model_zoo.core.postprocessing.head_pose_estimation_postprocessing import (
     head_pose_estimation_postprocessing, visualize_head_pose_result)
 from hailo_model_zoo.core.postprocessing.lane_detection_postprocessing import (lane_detection_postprocessing,
@@ -42,6 +46,8 @@ from hailo_model_zoo.core.postprocessing.face_attr_postprocessing import face_at
 from hailo_model_zoo.core.postprocessing.mspn_postprocessing import (
     mspn_postprocessing, visualize_single_person_pose_estimation_result
 )
+from hailo_model_zoo.core.postprocessing.stereonet_postprocessing import (
+    stereonet_postprocessing, visualize_stereonet_result)
 try:
     # THIS CODE IS EXPERIMENTAL AND IN USE ONLY FOR TAPPAS VALIDATION
     from hailo_model_zoo.core.postprocessing.tappas_postprocessing import tappas_postprocessing
@@ -69,6 +75,7 @@ def get_visualization(name, **kwargs):
 
     visualization_fn_map = {
         'classification': visualize_classification_result,
+        'zero_shot_classification': visualize_classification_result,
         'segmentation': visualize_segmentation_result,
         'detection': visualize_detection_result,
         'pose_estimation': visualize_pose_estimation_result,
@@ -76,6 +83,7 @@ def get_visualization(name, **kwargs):
         'instance_segmentation': visualize_instance_segmentation_result,
         'super_resolution': visualize_super_resolution_result,
         'super_resolution_srgan': visualize_srgan_result,
+        'low_light_enhancement': visualize_low_light_enhancement_result,
         'head_pose_estimation': visualize_head_pose_result,
         'age_gender': visualize_age_gender_result,
         'face_detection': visualize_detection_result,
@@ -89,6 +97,7 @@ def get_visualization(name, **kwargs):
         'fast_depth': visualize_fast_depth_result,
         'ocr': visualize_ocr_result,
         'single_person_pose_estimation': visualize_single_person_pose_estimation_result,
+        'stereonet': visualize_stereonet_result
     }
     if name not in visualization_fn_map:
         raise ValueError('Visualization name [%s] was not recognized' % name)
@@ -111,6 +120,7 @@ def get_postprocessing(name, flip=False):
     """
     postprocessing_fn_map = {
         'classification': classification_postprocessing,
+        'zero_shot_classification': zero_shot_classification_postprocessing,
         'segmentation': segmentation_postprocessing,
         'detection': detection_postprocessing,
         'pose_estimation': pose_estimation_postprocessing,
@@ -121,6 +131,7 @@ def get_postprocessing(name, flip=False):
         'instance_segmentation': instance_segmentation_postprocessing,
         'super_resolution': super_resolution_postprocessing,
         'super_resolution_srgan': super_resolution_postprocessing,
+        'low_light_enhancement': low_light_enhancement_postprocessing,
         'head_pose_estimation': head_pose_estimation_postprocessing,
         'face_detection': face_detection_postprocessing,
         'age_gender': age_gender_postprocessing,
@@ -134,6 +145,7 @@ def get_postprocessing(name, flip=False):
         'person_attr': classification_postprocessing,
         'face_attr': face_attr_postprocessing,
         'single_person_pose_estimation': mspn_postprocessing,
+        'stereonet': stereonet_postprocessing,
         'tappas_postprocessing': tappas_postprocessing
     }
 

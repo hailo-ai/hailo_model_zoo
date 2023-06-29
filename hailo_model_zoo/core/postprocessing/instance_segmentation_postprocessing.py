@@ -432,12 +432,15 @@ def crop_mask(masks, boxes):
         boxes: numpy array of bbox coords with shape [n, 4]
     """
 
-    n_masks, h, w = masks.shape
-    x1, y1, x2, y2 = np.array_split(boxes[:, :, None], 4, axis=1)
-    rows = np.arange(w)[None, None, :]
-    cols = np.arange(h)[None, :, None]
-
-    return masks * ((rows >= x1) * (rows < x2) * (cols >= y1) * (cols < y2))
+    n_masks, _, _ = masks.shape
+    integer_boxes = np.ceil(boxes).astype(int)
+    x1, y1, x2, y2 = np.array_split(np.where(integer_boxes > 0, integer_boxes, 0), 4, axis=1)
+    for k in range(n_masks):
+        masks[k, :y1[k, 0], :] = 0
+        masks[k, y2[k, 0]:, :] = 0
+        masks[k, :, :x1[k, 0]] = 0
+        masks[k, :, x2[k, 0]:] = 0
+    return masks
 
 
 def process_mask(protos, masks_in, bboxes, shape, upsample=True,
@@ -564,7 +567,7 @@ def _make_grid(anchors, stride, bs=8, nx=20, ny=20):
 
 def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2, num_groups=4, **kwargs):
 
-    inst_kernels_path = path_resolver.resolve_data_path(kwargs['postprocess_config_json'])
+    inst_kernels_path = path_resolver.resolve_data_path(kwargs['postprocess_config_file'])
     meta_arch = kwargs.get('meta_arch', 'sparseinst_giam')
     inst_kernels = np.load(inst_kernels_path, allow_pickle=True)['arr_0'][()]
 
@@ -864,6 +867,107 @@ def _finalize_detections_yolact(det_output, protos, score_thresh=0.2, crop_masks
     return outputs
 
 
+def _yolov8_decoding(raw_boxes, strides, image_dims, reg_max):
+    boxes = None
+    for box_distribute, stride in zip(raw_boxes, strides):
+        # create grid
+        shape = [int(x / stride) for x in image_dims]
+        grid_x = np.arange(shape[1]) + 0.5
+        grid_y = np.arange(shape[0]) + 0.5
+        grid_x, grid_y = np.meshgrid(grid_x, grid_y)
+        ct_row = grid_y.flatten() * stride
+        ct_col = grid_x.flatten() * stride
+        center = np.stack((ct_col, ct_row, ct_col, ct_row), axis=1)
+
+        # box distribution to distance
+        reg_range = np.arange(reg_max + 1)
+        box_distribute = np.reshape(
+            box_distribute, (-1, box_distribute.shape[1] * box_distribute.shape[2], 4, reg_max + 1))
+        box_distance = _softmax(box_distribute)
+        box_distance = box_distance * np.reshape(reg_range, (1, 1, 1, -1))
+        box_distance = np.sum(box_distance, axis=-1)
+        box_distance = box_distance * stride
+
+        # decode box
+        box_distance = np.concatenate([box_distance[:, :, :2] * (-1), box_distance[:, :, 2:]], axis=-1)
+        decode_box = np.expand_dims(center, axis=0) + box_distance
+
+        xmin = decode_box[:, :, 0]
+        ymin = decode_box[:, :, 1]
+        xmax = decode_box[:, :, 2]
+        ymax = decode_box[:, :, 3]
+        decode_box = np.transpose([xmin, ymin, xmax, ymax], [1, 2, 0])
+
+        xywh_box = np.transpose([(xmin + xmax) / 2, (ymin + ymax) / 2, xmax - xmin, ymax - ymin], [1, 2, 0])
+        boxes = xywh_box if boxes is None else np.concatenate([boxes, xywh_box], axis=1)
+    return boxes  # tf.expand_dims(boxes, axis=2)
+
+
+def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
+    """
+    endnodes is a list of 10 tensors:
+        endnodes[0]:  bbox output with shapes (BS, 20, 20, 64)
+        endnodes[1]:  scores output with shapes (BS, 20, 20, 80)
+        endnodes[2]:  mask coeff output with shapes (BS, 20, 20, 32)
+        endnodes[3]:  bbox output with shapes (BS, 40, 40, 64)
+        endnodes[4]:  scores output with shapes (BS, 40, 40, 80)
+        endnodes[5]:  mask coeff output with shapes (BS, 40, 40, 32)
+        endnodes[6]:  bbox output with shapes (BS, 80, 80, 64)
+        endnodes[7]:  scores output with shapes (BS, 80, 80, 80)
+        endnodes[8]:  mask coeff output with shapes (BS, 80, 80, 32)
+        endnodes[9]:  mask protos with shape (BS, 160, 160, 32)
+    Returns:
+        A list of per image detections, where each is a dictionary with the following structure:
+        {
+            'detection_boxes':   numpy.ndarray with shape (num_detections, 4),
+            'mask':              numpy.ndarray with shape (num_detections, 160, 160),
+            'detection_classes': numpy.ndarray with shape (num_detections, 80),
+            'detection_scores':  numpy.ndarray with shape (num_detections, 80)
+        }
+    """
+    num_classes = kwargs['classes']
+    strides = kwargs['anchors']['strides'][::-1]
+    image_dims = tuple(kwargs['img_dims'])
+    reg_max = kwargs['anchors']['regression_length']
+    raw_boxes = endnodes[:7:3]
+    scores = [np.reshape(s, (-1, s.shape[1] * s.shape[2], num_classes)) for s in endnodes[1:8:3]]
+    scores = np.concatenate(scores, axis=1)
+    outputs = []
+    decoded_boxes = _yolov8_decoding(raw_boxes, strides, image_dims, reg_max)
+    score_thres = kwargs['score_threshold']
+    iou_thres = kwargs['nms_iou_thresh']
+    proto_data = endnodes[9]
+    batch_size, _, _, n_masks = proto_data.shape
+
+    # add objectness=1 for working with yolov5_nms
+    fake_objectness = np.ones((scores.shape[0], scores.shape[1], 1))
+    scores_obj = np.concatenate([fake_objectness, scores], axis=-1)
+
+    coeffs = [np.reshape(c, (-1, c.shape[1] * c.shape[2], n_masks)) for c in endnodes[2:9:3]]
+    coeffs = np.concatenate(coeffs, axis=1)
+
+    # re-arrange predictions for yolov5_nms
+    predictions = np.concatenate([decoded_boxes, scores_obj, coeffs], axis=2)
+
+    nms_res = non_max_suppression(predictions, conf_thres=score_thres, iou_thres=iou_thres, multi_label=True)
+    masks = []
+    outputs = []
+    for b in range(batch_size):
+        protos = proto_data[b]
+        masks = process_mask(protos, nms_res[b]['mask'], nms_res[b]
+                             ['detection_boxes'], image_dims, upsample=True)
+        output = {}
+        output['detection_boxes'] = np.array(nms_res[b]['detection_boxes'])
+        if masks is not None:
+            output['mask'] = np.transpose(masks, (0, 1, 2))
+        else:
+            output['mask'] = masks
+        output['detection_scores'] = np.array(nms_res[b]['detection_scores'])
+        output['detection_classes'] = np.array(nms_res[b]['detection_classes']).astype(int)
+        outputs.append(output)
+    return outputs
+
+
 def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs.get('meta_arch', '')
     if 'sparseinst' in meta_arch:
@@ -878,6 +982,10 @@ def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, 
         predictions = yolact_postprocessing(endnodes,
                                             device_pre_post_layers=device_pre_post_layers,
                                             **kwargs)
+    elif 'yolov8_seg' in meta_arch:
+        predictions = yolov8_seg_postprocess(endnodes,
+                                             device_pre_post_layers=device_pre_post_layers,
+                                             **kwargs)
     else:
         raise NotImplementedError(f'Postprocessing {meta_arch} not found')
     return {'predictions': predictions}
@@ -959,7 +1067,7 @@ def visualize_instance_segmentation_result(detections, img, **kwargs):
 
     if 'sparseinst' in meta_arch:
         return visualize_sparseinst_results(detections, img, class_names=dataset_info.class_names, **kwargs)
-    elif 'yolov5_seg' in meta_arch:
+    elif 'yolov5_seg' or 'yolov8_seg' in meta_arch:
         return visualize_yolov5_seg_results(detections, img, class_names=dataset_info.class_names, **kwargs)
     elif 'yolact' in meta_arch:
         channels_remove = kwargs["channels_remove"]

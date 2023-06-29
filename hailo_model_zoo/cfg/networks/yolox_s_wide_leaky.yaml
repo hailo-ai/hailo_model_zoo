@@ -6,9 +6,9 @@ network:
   network_name: yolox_s_wide_leaky
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2021-09-12/yolox_s_wide_leaky.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2023-05-31/yolox_s_wide_leaky.onnx
   alls_script: yolox_s_wide_leaky.alls
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2021-09-12/yolox_s_wide_leaky.zip
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2023-05-31/yolox_s_wide_leaky.zip
 parser:
   nodes:
   - null
@@ -21,12 +21,18 @@ parser:
     - Conv_229
     - Sigmoid_231
     - Sigmoid_232
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2023-05-31/nms_config_yolox_s_wide_leaky.json
+  meta_arch: yolox
+  hpp: true
 info:
   task: object detection
   input_shape: 640x640x3
   output_shape: 80x80x4, 80x80x1, 80x80x80, 40x40x4, 40x40x1, 40x40x80, 20x20x4, 20x20x1,
     20x20x80
-  operations: 29.73G
+  operations: 59.46G
   parameters: 20.12M
   framework: pytorch
   training_data: coco train2017

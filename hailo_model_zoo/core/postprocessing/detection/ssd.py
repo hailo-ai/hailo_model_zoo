@@ -108,7 +108,7 @@ class SSDPostProc(object):
 
     def __init__(self, img_dims=(300, 300), nms_iou_thresh=0.6,
                  score_threshold=0.3, anchors=None, classes=90,
-                 **kwargs):
+                 should_clip=True, **kwargs):
         self._image_dims = img_dims
         self._nms_iou_thresh = nms_iou_thresh
         self._score_threshold = score_threshold
@@ -117,9 +117,11 @@ class SSDPostProc(object):
             raise ValueError('Missing detection anchors metadata')
         self._anchors = BoxSpecsCreator(anchors)
         self._nms_on_device = False
+        self._should_clip = should_clip
         if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
             self._nms_on_device = True
         self.hpp = kwargs.get("hpp", False)
+        self.sigmoid = kwargs["device_pre_post_layers"].get("sigmoid", False)
 
     @staticmethod
     def expanded_shape(orig_shape, start_dim, num_dims):
@@ -235,7 +237,8 @@ class SSDPostProc(object):
             box_predictions, classes_predictions = \
                 collect_box_class_predictions(endnodes, self._num_classes, self._anchors._type)
             # Score Conversion using Sigmoid function
-            detection_scores = tf.sigmoid(classes_predictions)
+            if not self.sigmoid:
+                detection_scores = tf.sigmoid(classes_predictions)
 
             # detection_scores = tf.identity(classes_predictions_sigmoid, 'raw_box_scores')
             # Slicing Background class score (for a single class no need to slice)
@@ -267,7 +270,8 @@ class SSDPostProc(object):
                                              score_threshold=self._score_threshold,
                                              iou_threshold=self._nms_iou_thresh,
                                              max_output_size_per_class=100,
-                                             max_total_size=100)
+                                             max_total_size=100,
+                                             clip_boxes=self._should_clip)
             # adding offset to the class prediction and cast to integer
             nmsed_classes = tf.cast(tf.add(nmsed_classes, self.label_offset), tf.int16)
 
@@ -278,6 +282,9 @@ class SSDPostProc(object):
 
     def postprocessing(self, endnodes, **kwargs):
         if self._nms_on_device or self.hpp:
-            return tf_postproc_nms(endnodes, self._score_threshold, False)
+            return tf_postproc_nms(endnodes,
+                                   labels_offset=kwargs['labels_offset'],
+                                   score_threshold=self._score_threshold,
+                                   coco_2017_to_2014=False)
         else:
             return self.tf_postproc(endnodes)

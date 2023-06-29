@@ -7,5 +7,5 @@ paths:
 info:
   task: object detection
   input_shape: 300x300x3
-  operations: 1.25G
+  operations: 2.5G
   parameters: 6.79M

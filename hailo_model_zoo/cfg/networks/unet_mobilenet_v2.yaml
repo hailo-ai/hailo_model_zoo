@@ -35,7 +35,7 @@ info:
   task: semantic segmentation
   input_shape: 256x256x3
   output_shape: 256x256x3
-  operations: 14.44G
+  operations: 28.88G
   parameters: 10.08M
   framework: TF2
   training_data: oxford-IIIT pets

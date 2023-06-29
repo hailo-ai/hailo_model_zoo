@@ -20,14 +20,20 @@ from hailo_model_zoo.utils import data, downloader, path_resolver
 from hailo_model_zoo.utils.parse_utils import translate_model, get_normalization_params
 
 
+unsupported_data_folder = {
+    'stereonet'
+}
+
+
 def _get_input_shape(runner, network_info):
     return (network_info.preprocessing.input_shape or runner.get_hn_model().get_input_layers()[0].output_shape[1:])
 
 
-def resolve_alls_path(path, performance=False):
+def resolve_alls_path(path, hw_arch='hailo8', performance=False):
     if not path:
         return None
-    return path_resolver.resolve_alls_path(Path("base" if not performance else "performance") / path)
+    hw_arch = "hailo8" if hw_arch == "hailo8l" else hw_arch
+    return path_resolver.resolve_alls_path(Path(hw_arch) / Path("base" if not performance else "performance") / path)
 
 
 def _apply_output_scheme(runner, network_info):
@@ -120,6 +126,8 @@ def make_preprocessing(runner, network_info):
     hn_editor = network_info.hn_editor
     yuv2rgb = hn_editor.yuv2rgb
     yuy2 = hn_editor.yuy2
+    nv12 = hn_editor.nv12
+    rgbx = hn_editor.rgbx
     input_resize = hn_editor.input_resize
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
@@ -127,26 +135,28 @@ def make_preprocessing(runner, network_info):
     flip = runner.get_hn_model().is_transposed()
 
     preproc_callback = preprocessing_factory.get_preprocessing(
-        meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb, yuy2=yuy2,
+        meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb, yuy2=yuy2, nv12=nv12, rgbx=rgbx,
         input_resize=input_resize, normalization_params=normalization_params,
         **preprocessing_args)
 
     return preproc_callback
 
 
-def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch, preproc_callback):
+def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch, preproc_callback, network_info):
     data_path = Path(data_path)
     if not data_path.exists():
         raise FileNotFoundError(f"Couldn't find dataset in {data_path}. Please refer to docs/DATA.rst.")
     data_tf = True if data_path.is_file() and data_path.suffix in [".tfrecord", ".000"] else False
     args = (preproc_callback, batch_size, data_path)
-
+    name = network_info.network.network_name
     if two_stage_arch:
         func = data.RegionProposalFeed
     elif data_tf:
         func = data.TFRecordFeed
         args += (dataset_name,)
     elif data_path.is_dir():
+        if name in unsupported_data_folder:
+            raise ValueError(f'Folder  data path is currently not supported for {name}')
         func = data.ImageFeed
     else:
         func = data.VideoFeed
@@ -155,7 +165,8 @@ def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch
 
 def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path, dataset_name):
     two_stage_arch = network_info.evaluation.two_stage_arch
-    return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch, preproc_callback)
+    return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch,
+                                    preproc_callback, network_info)
 
 
 def make_evalset_callback(network_info, batch_size, preproc_callback, override_path, return_dataset=False):
@@ -169,6 +180,8 @@ def make_evalset_callback(network_info, batch_size, preproc_callback, override_p
 
 def make_calibset_callback(network_info, batch_size, preproc_callback, override_path):
     dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
+    if override_path is None and network_info.quantization.calib_set is None:
+        raise ValueError("Optimization requires calibration data, please modify YAML or use --calib-path")
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
     data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path, dataset_name)
     dataset = data_feed_cb()._dataset if batch_size is None else data_feed_cb()._dataset.unbatch()

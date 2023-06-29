@@ -5,8 +5,8 @@ network:
 paths:
   alls_script: yolov5s_personface.alls
   network_path:
-  - models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.zip
+  - models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.zip
 parser:
   nodes:
   - images
@@ -16,7 +16,11 @@ parser:
 preprocessing:
   max_pad: 500
 postprocessing:
-  nms_iou_thresh: 0.65
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.json
+  meta_arch: yolo
+  hpp: true
 quantization:
   calib_set: null
 evaluation:
@@ -29,7 +33,7 @@ info:
   task: pipeline
   input_shape: 640x640x3
   output_shape: 80x80x21, 40x40x21, 20x20x21
-  operations: 8.38G
+  operations: 16.71G
   parameters: 7.25M
   framework: pytorch
   training_data: Hailo internal

@@ -16,5 +16,5 @@ info:
   task: pipeline
   input_shape: 720x1280x2
   output_shape: 20x20x255, 40x40x255, 80x80x255
-  operations: 26.50G
+  operations: 53G
   parameters: 22.67M

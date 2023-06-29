@@ -24,7 +24,7 @@ info:
   task: super resolution
   input_shape: 104x160x1
   output_shape: 312x480x1
-  operations: 0.38G
+  operations: 0.76G
   parameters: 0.02M
   framework: pytorch
   training_data: T91

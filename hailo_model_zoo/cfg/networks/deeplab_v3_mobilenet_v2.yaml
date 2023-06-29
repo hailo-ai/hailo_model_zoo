@@ -36,7 +36,7 @@ info:
   task: semantic segmentation
   input_shape: 513x513x3
   output_shape: 513x513x21
-  operations: 8.91G
+  operations: 17.82G
   parameters: 2.10M
   framework: keras
   training_data: pascal voc train2012

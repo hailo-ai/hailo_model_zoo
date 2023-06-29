@@ -19,7 +19,7 @@ info:
   task: semantic segmentation
   input_shape: 1024x1920x3
   output_shape: 1024x1920x1
-  operations: 71.26G
+  operations: 142.52G
   parameters: 11.19M
   framework: pytorch
   training_data: cityscapes train

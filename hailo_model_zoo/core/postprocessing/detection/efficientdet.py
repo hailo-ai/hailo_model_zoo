@@ -19,15 +19,17 @@ class EfficientDetPostProc(object):
         if anchors is None:
             raise ValueError('Missing detection anchors metadata')
         self._anchors_type = anchors["type"]
-        self._anchors_input = tf.reshape(tf.numpy_function(self.anchors_for_shape,
-                                                           [img_dims,
-                                                            np.array(anchors["aspect_ratios"]),
-                                                            np.array(anchors["scales"]),
-                                                            np.array(anchors["sizes"]),
-                                                            np.array(anchors["strides"])],
-                                                           ['float32'])[0], (1, -1, 4))
-        self._nms_on_device = self._nms_on_device = kwargs["device_pre_post_layers"].get(
+        self._hpp = kwargs.get("hpp", False)
+        self._nms_on_device = kwargs["device_pre_post_layers"].get(
             'nms', False) if kwargs["device_pre_post_layers"] else False
+        if not self._hpp and not self._nms_on_device:
+            self._anchors_input = tf.reshape(tf.numpy_function(self.anchors_for_shape,
+                                                               [img_dims,
+                                                                np.array(anchors["aspect_ratios"]),
+                                                                np.array(anchors["scales"]),
+                                                                np.array(anchors["sizes"]),
+                                                                np.array(anchors["strides"])],
+                                                               ['float32'])[0], (1, -1, 4))
 
     def bbox_transform_inv(self, deltas):
         cxa = (self._anchors_input[..., 0] + self._anchors_input[..., 2]) / 2
@@ -54,11 +56,15 @@ class EfficientDetPostProc(object):
         return tf.stack([y1, x1, y2, x2], axis=2)
 
     def postprocessing(self, endnodes, **kwargs):
-        if self._nms_on_device:
-            return tf_postproc_nms(endnodes, self._score_threshold, False)
+        if self._nms_on_device or self._hpp:
+            return tf_postproc_nms(endnodes,
+                                   labels_offset=kwargs['labels_offset'],
+                                   score_threshold=self._score_threshold,
+                                   coco_2017_to_2014=False)
         with tf.name_scope('Postprocessor'):
             regression, classification = collect_box_class_predictions(endnodes, self._num_classes, self._anchors_type)
-            classification = tf.sigmoid(classification)
+            if not kwargs['device_pre_post_layers']['sigmoid']:
+                classification = tf.sigmoid(classification)
             boxes = self.bbox_transform_inv(regression)
             boxes = self.clip_boxes(boxes)
             (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \

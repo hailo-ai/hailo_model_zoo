@@ -7,7 +7,6 @@ Each model is accompanied with its own README, retraining docker and retraining 
 
 
 * FLOPs in the table are counted as MAC operations.
-* All models were compiled using Hailo Dataflow Compiler v3.23.0
 * Supported tasks:
 
   * `Object Detection`_

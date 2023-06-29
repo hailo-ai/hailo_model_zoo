@@ -1,0 +1,12 @@
+base:
+- base/yolov5.yaml
+- networks/yolov5s_personface.yaml
+network:
+  network_name: yolov5s_personface_rgbx
+paths:
+  alls_script: yolov5s_personface_rgbx.alls
+hn_editor:
+  rgbx: true
+info:
+  task: pipeline
+  input_shape: 640x640x4

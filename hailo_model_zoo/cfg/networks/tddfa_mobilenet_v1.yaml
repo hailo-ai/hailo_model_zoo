@@ -11,7 +11,7 @@ info:
   task: facial landmark detection
   input_shape: 120x120x3
   output_shape: '62'
-  operations: 0.18G
+  operations: 0.36G
   parameters: 3.26M
   framework: pytorch
   training_data: aflw2k3d train

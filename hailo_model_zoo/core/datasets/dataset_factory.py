@@ -2,7 +2,8 @@ from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_fac
                                            parse_widerface, parse_utkfaces, parse_mot, parse_tusimple, parse_landmarks,
                                            parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
                                            parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
-                                           parse_lp_ocr, parse_market, parse_peta, parse_bsd100)
+                                           parse_lp_ocr, parse_market, parse_peta, parse_bsd100, parse_cifar, parse_lol,
+                                           parse_kitti_stereo)
 
 
 def get_dataset_parse_func(ds_name):
@@ -22,6 +23,7 @@ def get_dataset_parse_func(ds_name):
         'face_landmarks': parse_landmarks.parse_record,
         'kitti_depth': parse_kitti_depth.parse_record,
         'kitti_3d': parse_kitti_3d.parse_record,
+        'kitti_stereo': parse_kitti_stereo.parse_record,
         'coco_detection': parse_coco.parse_detection_record,
         'open_images': parse_coco.parse_detection_record,
         'visdrone_detection': parse_coco.parse_detection_record,
@@ -36,6 +38,7 @@ def get_dataset_parse_func(ds_name):
         'mot16': parse_mot.parse_mot_record,
         'tusimple': parse_tusimple.parse,
         'div2k': parse_div2k.parse_record,
+        'lol': parse_lol.parse_record,
         'pascal': parse_pascal.parse_record,
         'aflw2k3d': parse_aflw2k3d.parse_record,
         'aflw2k3d_tddfa': parse_aflw2k3d_tddfa.parse_record,
@@ -48,5 +51,6 @@ def get_dataset_parse_func(ds_name):
         'personface_detection': parse_coco.parse_detection_record,
         'peta': parse_peta.parse_classification_record,
         'celeba': parse_peta.parse_classification_record,
+        'cifar100': parse_cifar.parse_cifar100_record,
         'bsd100': parse_bsd100.parse_record,
     }[ds_name]

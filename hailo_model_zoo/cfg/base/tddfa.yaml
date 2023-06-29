@@ -8,7 +8,7 @@ preprocessing:
   network_type: face_landmark_detection_3d
   meta_arch: face_landmark_cnn
 postprocessing:
-  postprocess_config_json: models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/bfm_noneck_v3.pkl
+  postprocess_config_file: models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/bfm_noneck_v3.pkl
   meta_arch: tddfa_postprocessing
 info:
   source: https://github.com/cleardusk/3DDFA_V2

@@ -14,7 +14,7 @@ def sigmoid(x):
 class YoloPostProc(object):
     def __init__(self, img_dims=(608, 608), nms_iou_thresh=0.45, score_threshold=0.01,
                  anchors=None, output_scheme=None, classes=80,
-                 labels_offset=0, meta_arch="yolo_v3", **kwargs):
+                 labels_offset=0, meta_arch="yolo_v3", should_clip=True, **kwargs):
 
         self._network_arch = meta_arch
         self._image_dims = img_dims
@@ -31,8 +31,10 @@ class YoloPostProc(object):
             'yolo_v4': YoloPostProc._yolo4_decode,
             "yolo_v5": YoloPostProc._yolo5_decode,
             "yolox": YoloPostProc._yolox_decode,
+            "yolo_v6": YoloPostProc._yolo6_decode,
         }
         self._nms_on_device = False
+        self._should_clip = should_clip
         if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
             self._nms_on_device = True
         self.hpp = kwargs.get("hpp", False)  # not needed once SDK change the output shape of emulator
@@ -65,6 +67,14 @@ class YoloPostProc(object):
     def _yolox_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
         box_centers = (raw_box_centers + offsets) * stride  # dim [N, HxW, 3, 2]
         box_scales = (np.exp(raw_box_scales) * stride)  # dim [N, HxW, 3, 2]
+        return box_centers, box_scales, objness, class_pred
+
+    @staticmethod
+    def _yolo6_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
+        x1y1 = offsets + 0.5 - raw_box_centers
+        x2y2 = offsets + 0.5 + raw_box_scales
+        box_centers = ((x1y1 + x2y2) / 2) * stride
+        box_scales = (x2y2 - x1y1) * stride
         return box_centers, box_scales, objness, class_pred
 
     def iou_nms(self, endnodes):
@@ -143,7 +153,8 @@ class YoloPostProc(object):
                                          score_threshold=self.score_threshold,
                                          iou_threshold=self._nms_iou_thresh,
                                          max_output_size_per_class=100,
-                                         max_total_size=100)
+                                         max_total_size=100,
+                                         clip_boxes=self._should_clip,)
 
         # adding offset to the class prediction and cast to integer
         def translate_coco_2017_to_2014(nmsed_classes):
@@ -235,6 +246,12 @@ class YoloPostProc(object):
                 scales = endnodes[branch_index][:, :, :, 2:]
                 obj = endnodes[branch_index + 1]
                 probs = endnodes[branch_index + 2]
+            elif 'yolo_v6' in self._network_arch:
+                branch_index = int(2 * index)
+                centers = endnodes[branch_index][:, :, :, :2]
+                scales = endnodes[branch_index][:, :, :, 2:]
+                probs = endnodes[branch_index + 1]
+                obj = tf.ones((1, 1, 1, 2))  # Create dummy objectness tensor
             else:
                 centers = endnodes[branch_index]
                 scales = endnodes[branch_index + 1]
@@ -250,6 +267,9 @@ class YoloPostProc(object):
     def reorganize_split_output_numpy(self, centers, scales, obj, probs):
         num_anchors = len(self._anchors_list[0]) // 2  # the ith element in anchors_list is a list for the x,y
         # anchor values in the ith output layer (stride)
+        if obj.shape == [1, 1, 1, 2]:  # yolov6
+            # Convert dummy to a ones of shape [B, h, w, 1] for objectness
+            obj = np.ones((list(probs.shape[:3]) + [1]), dtype=np.float32)
         for anchor in range(num_anchors):
             concat_arrays_for_anchor = [centers[:, :, :, 2 * anchor:2 * anchor + 2],
                                         scales[:, :, :, 2 * anchor:2 * anchor + 2],
@@ -287,7 +307,10 @@ class YoloPostProc(object):
 
     def postprocessing(self, endnodes, **kwargs):
         if self.hpp:
-            return tf_postproc_nms(endnodes, score_threshold=0.0, coco_2017_to_2014=True)
+            return tf_postproc_nms(endnodes,
+                                   labels_offset=kwargs['labels_offset'],
+                                   score_threshold=0.0,
+                                   coco_2017_to_2014=True)
         if self._nms_on_device:
             return self.iou_nms(endnodes)
         else:

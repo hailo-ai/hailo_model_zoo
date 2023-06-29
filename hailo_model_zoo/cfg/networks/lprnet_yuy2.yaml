@@ -40,7 +40,7 @@ info:
   task: pipeline
   input_shape: 75x304x2
   output_shape: 5x19x11
-  operations: 18.53G
+  operations: 37.01G
   parameters: 7.14M
   framework: pytorch
   eval_metric: Accuracy

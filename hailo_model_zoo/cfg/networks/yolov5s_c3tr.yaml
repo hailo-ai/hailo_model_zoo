@@ -8,19 +8,25 @@ network:
 paths:
   alls_script: yolov5s_c3tr.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-02-07/yolov5s_c3tr_simp.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-02-07/yolov5s_c3tr.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr_simp.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr.zip
 parser:
   nodes:
   - images
   - - Conv_383
     - Conv_332
     - Conv_281
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr_nms_config.json
+  meta_arch: yolo
+  hpp: true
 info:
   task: object detection
   input_shape: 640x640x3
   output_shape: 20x20x255, 40x40x255, 80x80x255
-  operations: 8.51G
+  operations: 17.02G
   parameters: 10.29M
   framework: pytorch
   training_data: coco train2017

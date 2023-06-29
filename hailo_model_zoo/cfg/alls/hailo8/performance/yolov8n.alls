@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(conv42, sigmoid)
+change_output_activation(conv53, sigmoid)
+change_output_activation(conv63, sigmoid)
+performance_param(optimization_level=max)

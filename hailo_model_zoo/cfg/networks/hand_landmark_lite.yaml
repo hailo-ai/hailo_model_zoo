@@ -3,8 +3,6 @@ base:
 evaluation:
   dataset_name: hand_landmark
   network_type: landmark_detection
-  data_set: null
-  validation_data_set: null
 preprocessing:
   network_type: landmark_detection
   meta_arch: face_landmark_cnn
@@ -34,7 +32,7 @@ info:
   task: hand landmark detection
   input_shape: 224x224x3
   output_shape: 1x1, 1x1, 1x63, 1x63
-  operations: 0.15G
+  operations: 0.3G
   parameters: 1.01M
   framework: tflite
   training_data: internal

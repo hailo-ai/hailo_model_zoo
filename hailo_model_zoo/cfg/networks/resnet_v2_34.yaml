@@ -10,7 +10,7 @@ paths:
 info:
   task: classification
   input_shape: 224x224x3
-  operations: 3.67G
+  operations: 7.34G
   parameters: 21.79M
   framework: mxnet
   training_data: imagenet train

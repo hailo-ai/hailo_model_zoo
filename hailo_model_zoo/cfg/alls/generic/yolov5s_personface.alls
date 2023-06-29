@@ -1,0 +1,4 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+nms_postprocess("$HMZ_DATA/models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.json", yolov5, engine=cpu)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv70, conv63, conv55])

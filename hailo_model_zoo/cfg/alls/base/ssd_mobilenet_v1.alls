@@ -1,8 +1,0 @@
-normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
-nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd_nms_postprocess_config.json", ssd)
-context_switch_param(mode=disabled)
-quantization_param({conv*}, bias_mode=single_scale_decomposition)
-post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epochs=8, learning_rate=0.0001,
-                               loss_layer_names=[bbox_decoder13, conv14, bbox_decoder17, conv18, bbox_decoder21, conv22, bbox_decoder25, conv26, bbox_decoder29, conv30, bbox_decoder33, conv34, conv32, conv24, conv28, conv12, conv20, conv16],
-                               loss_factors=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1.0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
-                               loss_types=[l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2, l2])

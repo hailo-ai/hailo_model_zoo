@@ -21,6 +21,4 @@ RUN sed -i "1s/GPU=0/GPU=1/" Makefile && \
 RUN make
 
 RUN cd /workspace/darknet && wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.conv.29 -q && \
-    wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights -q && \
-    gdown https://drive.google.com/uc?id=1C4w_2loEpi-MznqMgKo16oZD7BcvgsCF -O ./cfg/yolov4-leaky.cfg -q && \
-    gdown https://drive.google.com/uc?id=1dW-Sd70aTmXuFvYspiY85SwWdn0cr447 -O yolov4-leaky.weights -q
+    wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights -q

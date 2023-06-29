@@ -1,22 +1,6 @@
 base:
-- base/yolo.yaml
-postprocessing:
-  meta_arch: yolox
-  anchors:
-    strides:
-    - 32
-    - 16
-    - 8
-    sizes:
-    - - 1
-      - 1
-    - - 1
-      - 1
-    - - 1
-      - 1
+- base/yolox.yaml
 preprocessing:
-  centered: false
-  meta_arch: yolo_v5
   input_shape:
   - 416
   - 416
@@ -25,8 +9,8 @@ network:
   network_name: yolox_tiny
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2022-06-01/yolox_tiny.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2022-06-01/yolox_tiny.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2023-05-31/yolox_tiny.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2023-05-31/yolox_tiny.zip
   alls_script: yolox_tiny.alls
 parser:
   normalization_params:
@@ -50,12 +34,18 @@ parser:
     - Conv_303
     - Sigmoid_305
     - Sigmoid_306
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2023-05-31/nms_config_yolox_tiny.json
+  meta_arch: yolox
+  hpp: true
 info:
   task: object detection
   input_shape: 416x416x3
   output_shape: 52x52x4, 52x52x1, 52x52x80, 26x26x4, 26x26x1, 26x26x80, 13x13x4, 13x13x1,
     13x13x80
-  operations: 3.22G
+  operations: 6.44G
   parameters: 5.05M
   framework: pytorch
   training_data: coco train2017

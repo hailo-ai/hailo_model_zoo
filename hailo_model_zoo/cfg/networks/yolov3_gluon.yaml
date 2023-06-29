@@ -57,7 +57,7 @@ info:
   task: object detection
   input_shape: 608x608x3
   output_shape: 19x19x255, 38x38x255, 76x76x255
-  operations: 79.17G
+  operations: 140.69G
   parameters: 68.79M
   framework: gluoncv
   training_data: coco train2017

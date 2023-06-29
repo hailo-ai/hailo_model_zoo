@@ -21,6 +21,7 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 * `YOLOv3 <../training/yolov3/README.rst>`_
 * `YOLOv4 <../training/yolov4/README.rst>`_
 * `YOLOv5 <../training/yolov5/README.rst>`_
+* `YOLOv8 <../training/yolov8/README.rst>`_
 * `YOLOX <../training/yolox/README.rst>`_
 * `DAMO-YOLO <../training/damoyolo/README.rst>`_
 * `NanoDet <../training/nanodet/README.rst>`_
@@ -30,6 +31,10 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 
 * `CenterPose <../training/centerpose/README.rst>`_
 
+**Single Person Pose Estimation**
+
+* `MSPN <../training/mspn/README.rst>`_
+
 **Semantic Segmentation**
 
 * `FCN <../training/fcn/README.rst>`_
@@ -37,6 +42,7 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 **Instance Segmentation**
 
 * `YOLACT <../training/yolact/README.rst>`_
+* `YOLOv8_seg <../training/yolov8_seg/README.rst>`_
 
 **Face Recognition**
 

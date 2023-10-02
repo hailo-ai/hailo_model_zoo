@@ -5,18 +5,22 @@ FROM $base_image
 ARG DEBIAN_FRONTEND=noninteractive
 ARG timezone="Asia/Jerusalem"
 ENV TZ=$timezone
-RUN apt-get update && \ 
+RUN apt-get update && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
-    apt-get -y --no-install-recommends install vim git build-essential python3-opencv sudo tmux && \ 
+    apt-get -y --no-install-recommends install vim git build-essential python3-opencv sudo tmux && \
     # solve mpi conflicts
-    { which mpirun && apt-get remove -y libopenmpi3 || true ; } 
+    { which mpirun && apt-get remove -y libopenmpi3 || true ; }
 
 ARG repo=https://github.com/hailo-ai/mmsegmentation.git
 RUN git clone $repo && \
     cd mmsegmentation && \
-    git checkout Hailo-0.1 && \
-    pip install mmcv-full==1.4.5 onnxruntime==1.13.1 && \
+    git checkout Hailo-1.0 && \
+    pip install --upgrade pip && \
+    pip install opencv-python==4.5.5.64 && \
+    pip install openmim==0.3.7 && \
+    mim install mmengine==0.8.5 && \
+    mim install mmcv==2.0.0 && \
     pip install -e .
 WORKDIR /workspace/mmsegmentation
 
@@ -29,4 +33,3 @@ RUN groupadd --gid $gid $group && \
     adduser --uid $uid --gid $gid --shell /bin/bash --disabled-password --gecos "" $user && \
     chmod u+w /etc/sudoers && echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && chmod -w /etc/sudoers && \
     chown -R $user:$group /workspace
-

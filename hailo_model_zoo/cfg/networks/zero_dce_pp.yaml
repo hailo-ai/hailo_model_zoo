@@ -1,0 +1,42 @@
+base:
+- base/base.yaml
+- base/lol.yaml
+preprocessing:
+  network_type: low_light_enhancement
+  meta_arch: zero_dce
+postprocessing:
+  meta_arch: zero_dce
+network:
+  network_name: zero_dce_pp
+paths:
+  alls_script: zero_dce_pp.alls
+  network_path:
+  - models_files/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip
+parser:
+  nodes:
+  - input.1
+  - - Add_55
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0
+    - 0
+    - 0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+info:
+  task: low light enhancement
+  input_shape: 400x600x3
+  output_shape: 400x600x3
+  operations: 4.84G
+  parameters: 0.02M
+  framework: pytorch
+  training_data: LOL
+  validation_data: LOL
+  eval_metric: PSNR
+  full_precision_result: 15.952
+  source: Internal
+  license_url: https://github.com/hailo-ai/hailo_model_zoo/blob/master/LICENSE

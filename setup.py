@@ -44,12 +44,12 @@ def main():
             'pycocotools',
             'lap==0.4.0',
             'motmetrics==1.2.5',
-            'omegaconf==2.1.0',
+            'omegaconf==2.3.0',
             'pillow<=9.2.0',
             'detection-tools==0.3',
             'scikit-image==0.19.3']
 
-    model_zoo_version = "2.8.0"
+    model_zoo_version = "2.9.0"
 
     package_data = {
         "hailo_model_zoo": [

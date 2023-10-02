@@ -9,4 +9,4 @@ hn_editor:
   nv12: true
 info:
   task: pipeline_hailo15
-  input_shape: 120X320x3
+  input_shape: 120x320x3

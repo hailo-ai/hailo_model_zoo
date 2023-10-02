@@ -2,7 +2,7 @@ from hailo_sdk_client.exposed_definitions import JoinAction, JoinOutputLayersOrd
 from hailo_sdk_client import ClientRunner
 from hailo_sdk_client.runner.client_runner import InvalidArgumentsException
 from hailo_model_zoo.utils.parse_utils import translate_model
-from hailo_model_zoo.utils.path_resolver import resolve_model_path, resolve_alls_path
+from hailo_model_zoo.utils.path_resolver import resolve_model_path
 
 
 def _apply_scope(layer_name, scope):
@@ -37,8 +37,6 @@ def _translate_model(runner, network_info, tensor_shapes):
 
 
 def integrate_postprocessing(runner, integrated_postprocessing_info, network_info):
-    model_script = resolve_alls_path("base/" + network_info.paths.alls_script)
-    runner.load_model_script(model_script)
     for chain in integrated_postprocessing_info.chains:
         hn = runner.get_hn_model()
         ports = chain.ports
@@ -56,10 +54,6 @@ def integrate_postprocessing(runner, integrated_postprocessing_info, network_inf
 
         chained_runner = ClientRunner()
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
-
-        if chain.paths.alls_script is not None:
-            model_script = resolve_alls_path("base/" + chain.paths.alls_script)
-            chained_runner.load_model_script(model_script)
 
         chained_name = chained_runner.get_hn()['name']
         scope = hn.net_params.net_scopes[0] if hn.net_params.net_scopes else hn.name

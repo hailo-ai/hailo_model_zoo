@@ -31,4 +31,4 @@ info:
   eval_metric: mAP
   source: https://github.com/ultralytics/yolov5/releases/tag/v6.1
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
-  full_precision_result: 44.81
+  full_precision_result: 44.8

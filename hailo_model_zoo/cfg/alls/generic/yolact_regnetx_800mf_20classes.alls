@@ -1,7 +1,0 @@
-normalization1 = normalization([123.68, 116.78, 103.94], [58.4, 57.12, 57.38])
-change_output_activation(yolact_regnetx_800mf_20classes/conv83, tanh)
-change_output_activation(yolact_regnetx_800mf_20classes/conv76, tanh)
-change_output_activation(yolact_regnetx_800mf_20classes/conv65, tanh)
-change_output_activation(yolact_regnetx_800mf_20classes/conv68, tanh)
-change_output_activation(yolact_regnetx_800mf_20classes/conv71, tanh)
-model_optimization_config(calibration, batch_size=4, calibset_size=64)

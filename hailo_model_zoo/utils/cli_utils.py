@@ -1,4 +1,6 @@
+import argparse
 from collections import namedtuple
+
 from hailo_model_zoo.utils import path_resolver
 
 
@@ -20,3 +22,13 @@ def register_command(parser_factory, *, name=None):
         HMZ_COMMANDS.append(Command(command_name, func, parser_factory))
         return func
     return _register_inner
+
+
+class OneResizeValueAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        if len(values) > 2:
+            raise ValueError("Too many values provided.")
+        if len(values) == 1:
+            setattr(namespace, self.dest, (values[0], values[0]))
+        elif len(values) == 2:
+            setattr(namespace, self.dest, tuple(values))

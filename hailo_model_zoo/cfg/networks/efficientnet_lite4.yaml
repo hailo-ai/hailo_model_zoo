@@ -5,10 +5,15 @@ network:
 paths:
   alls_script: efficientnet_lite4.alls
   network_path:
-  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.meta
-  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.index
-  - models_files/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite4/pretrained/2021-07-11/efficientnet_lite4.zip
+  - models_files/Classification/efficientnet_lite4/pretrained/2023-07-18/efficientnet_lite4.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite4/pretrained/2023-07-18/efficientnet_lite4.zip
+parser:
+  nodes:
+  - images
+  - efficientnet-lite4/model/head/dense/MatMul;efficientnet-lite4/model/head/dense/BiasAdd
+postprocessing:
+  device_pre_post_layers:
+    softmax: true
 info:
   task: classification
   input_shape: 300x300x3

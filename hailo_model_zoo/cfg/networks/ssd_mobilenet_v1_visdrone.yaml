@@ -7,7 +7,7 @@ postprocessing:
     softmax: false
     bilinear: false
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-06-07/mobilenet_ssd_nms_visdrone_postprocess_config.json
+  postprocess_config_file: models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-07-18/mobilenet_ssd_nms_visdrone_postprocess_config.json
   meta_arch: ssd
   anchors:
     predefined: true
@@ -16,13 +16,11 @@ network:
 paths:
   alls_script: ssd_mobilenet_v1_visdrone.alls
   network_path:
-  - models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-06-07/mobilenet_ssd_visdrone.ckpt.meta
-  - models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-06-07/mobilenet_ssd_visdrone.ckpt.index
-  - models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-06-07/mobilenet_ssd_visdrone.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-06-07/ssd_mobilenet_v1_visdrone.zip
+  - models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-07-18/mobilenet_ssd_visdrone.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-07-18/ssd_mobilenet_v1_visdrone.zip
 parser:
   nodes:
-  - FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Conv2D
+  - FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Relu6;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/BatchNorm/FusedBatchNorm;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_1_depthwise/BatchNorm/FusedBatchNorm;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_1_depthwise/depthwise;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Conv2D
   - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_0/ClassPredictor/BiasAdd
     - BoxPredictor_1/BoxEncodingPredictor/BiasAdd

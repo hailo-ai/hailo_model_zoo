@@ -93,7 +93,7 @@ Training and exporting to ONNX
 
 #. | Training:
  
-   | Configure your model in a .py file. We'll use /workspace/mmsegmentation/configs/fcn/fcn_r18_hailo.py in this guide.
+   | Configure your model in a .py file. We'll use /workspace/mmsegmentation/configs/fcn/fcn8_r18_hailo.py in this guide.
    | start training with the following command:
 
    .. raw:: html
@@ -115,7 +115,7 @@ Training and exporting to ONNX
 
       <pre><code stage="export">
       cd /workspace/mmsegmentation
-      python ./tools/pytorch2onnx.py configs/fcn/fcn_r18_hailo.py --opset-version 11 --checkpoint ./work_dirs/fcn8_r18_hailo/latest.pth --shape 1024 1920 --output-file fcn.onnx
+      python ./tools/pytorch2onnx.py configs/fcn/fcn8_r18_hailo.py --checkpoint ./work_dirs/fcn8_r18_hailo/iter_59520.pth --shape 1024 1920 --out_name fcn.onnx
       </code></pre>
 
 
@@ -126,13 +126,13 @@ Compile the Model using Hailo Model Zoo
 
 | You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
-| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/fcn16_resnet_v1_18.yaml``\ , and run compilation using the model zoo:  
+| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/fcn8_resnet_v1_18.yaml``\ , and run compilation using the model zoo:  
 
 .. raw:: html
    :name:validation
 
    <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">fcn.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/fcn16_resnet_v1_18.yaml</span>
+   hailomz compile --ckpt <span val="local_path_to_onnx">fcn.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/fcn8_resnet_v1_18.yaml</span>
    </code>
 
 

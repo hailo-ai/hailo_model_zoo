@@ -25,7 +25,6 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 * `YOLOX <../training/yolox/README.rst>`_
 * `DAMO-YOLO <../training/damoyolo/README.rst>`_
 * `NanoDet <../training/nanodet/README.rst>`_
-* `SSD <../training/ssd/README.rst>`_
 
 **Pose Estimation**
 

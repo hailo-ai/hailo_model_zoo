@@ -9,6 +9,7 @@ RESIZE_SIDE = 256
 VIT_RESIZE_SIDE = 248
 MOBILENET_CENTRAL_FRACTION = 0.875
 RESMLP_CENTRAL_FRACTION = 0.875
+FASTVIT_CROP_PCT = 0.9
 MEAN_IMAGENET = [123.675, 116.28, 103.53]
 STD_IMAGENET = [58.395, 57.12, 57.375]
 
@@ -142,6 +143,18 @@ def efficientnet(image, image_info=None, output_height=None, output_width=None, 
         image_info['img_orig'] = tf.cast(tf.image.resize(
             [image], [output_height, output_width], method='bicubic')[0], tf.uint8)
     return tf.cast(image_resize, tf.float32), image_info
+
+
+def fastvit(image, image_info=None, output_height=None, output_width=None, **kwargs):
+    if output_height is not None:
+        assert output_width is not None
+        scale_size = tf.cast(tf.math.round(tf.math.floor(output_height / FASTVIT_CROP_PCT)), tf.int32)
+        image = _aspect_preserving_resize(image, scale_size, method='bicubic')
+        image = tf.image.resize_with_crop_or_pad(image, output_height, output_width)
+    image = tf.cast(image, tf.float32)
+    if image_info:
+        image_info['img_orig'] = tf.cast(image, tf.uint8)
+    return image, image_info
 
 
 def resmlp(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip

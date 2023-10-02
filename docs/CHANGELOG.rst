@@ -1,6 +1,34 @@
 Changelog
 =========
 
+**v2.9**
+
+* Update to use Dataflow Compiler v3.25.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.15.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* A new CLI-compatible API that allows users to incorporate format conversion and reshaping capabilities into the input:
+
+.. code-block::
+
+   hailomz compile yolov5s --resize 1080 1920 --input-conversion nv12_to_rgb
+
+* New transformer models added:
+
+  * vit_pose_small_bn - encoder based transformer with batchnorm for pose estimation
+  * clip_resnet_50x4 - Contrastive Language-Image Pre-Training for zero-shot classification
+
+* New retraining dockers for vit variants using unified normalization.
+* New Models:
+
+  * yolov8s_pose / yolov8m_pose - pose estimation
+  * scdepthv3 - depth-estimation
+  * dncnn3 / dncnn_color_blind - image denoising
+  * zero_dce_pp - low-light enhancement
+  * stereonet - stereo depth estimation
+
+* Using HailoRT-pp for postprocessing of the following models:
+
+  * efficientdet_lite0 / efficientdet_lite1 / efficientdet_lite2
+
 **v2.8**
 
 * Update to use Dataflow Compiler v3.24.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
@@ -25,7 +53,7 @@ Changelog
   * repvgg_a1 / repvgg_a2 - classification
   * yolov8_seg: yolov8n_seg / yolov8s_seg / yolov8m_seg - instance segmentation
   * yolov6n_0.2.1 - object detection
-  * zero_dce - low-light enhancement 
+  * zero_dce - low-light enhancement
 
 * New retraining dockers for:
 

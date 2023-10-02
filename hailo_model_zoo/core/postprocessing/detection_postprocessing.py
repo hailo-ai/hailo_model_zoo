@@ -73,8 +73,9 @@ def _get_face_detection_visualization_data(logits):
     return boxes, labels, face_landmarks
 
 
-def visualize_detection_result(logits, image, threshold=0.2, image_info=None, use_normalized_coordinates=True,
-                               max_boxes_to_draw=20, dataset_name='coco', **kwargs):
+def visualize_detection_result(logits, image, threshold=0.2, image_info=None,
+                               use_normalized_coordinates=True, max_boxes_to_draw=20,
+                               dataset_name='coco', **kwargs):
 
     boxes = logits['detection_boxes'][0]
     keypoints = None

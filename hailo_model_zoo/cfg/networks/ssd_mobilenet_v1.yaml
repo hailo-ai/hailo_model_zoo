@@ -7,7 +7,7 @@ postprocessing:
     softmax: false
     bilinear: false
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd_nms_postprocess_config.json
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2023-07-18/mobilenet_ssd_nms_postprocess_config.json
   meta_arch: ssd
   anchors:
     predefined: true
@@ -16,13 +16,11 @@ network:
 paths:
   alls_script: ssd_mobilenet_v1.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/mobilenet_ssd.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2021-07-11/ssd_mobilenet_v1.zip
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2023-07-18/mobilenet_ssd.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2023-07-18/ssd_mobilenet_v1.zip
 parser:
   nodes:
-  - FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Conv2D
+  - FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Relu6;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/BatchNorm/batchnorm/add_1;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_1_depthwise/BatchNorm/batchnorm/mul_1;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_1_depthwise/depthwise;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_1_depthwise/BatchNorm/batchnorm/mul;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/Conv2D;FeatureExtractor/MobilenetV1/MobilenetV1/Conv2d_0/BatchNorm/batchnorm/sub
   - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_0/ClassPredictor/BiasAdd
     - BoxPredictor_1/BoxEncodingPredictor/BiasAdd
@@ -45,6 +43,6 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 23.17
+  full_precision_result: 23.19
   source: https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md
   license_url: https://www.apache.org/licenses/LICENSE-2.0

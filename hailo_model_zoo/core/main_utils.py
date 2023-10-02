@@ -1,23 +1,22 @@
 from pathlib import Path
+
 from omegaconf.listconfig import ListConfig
 
 from hailo_model_zoo.core.info_utils import get_network_info  # noqa (F401) - exports this function for backwards compat
 
 from hailo_model_zoo.core.augmentations import make_model_callback
-from hailo_model_zoo.core.infer import infer_factory
 from hailo_model_zoo.core.eval import eval_factory
-from hailo_model_zoo.core.postprocessing import postprocessing_factory
-from hailo_model_zoo.core.preprocessing import preprocessing_factory
-
 from hailo_model_zoo.core.hn_editor.activations_changer import change_activations
 from hailo_model_zoo.core.hn_editor.channel_remove import channel_remove
 from hailo_model_zoo.core.hn_editor.channel_transpose import bgr2rgb
 from hailo_model_zoo.core.hn_editor.layer_splitter import LayerSplitter
 from hailo_model_zoo.core.hn_editor.network_chainer import integrate_postprocessing
 from hailo_model_zoo.core.hn_editor.normalization_folding import fold_normalization
-
+from hailo_model_zoo.core.infer import infer_factory
+from hailo_model_zoo.core.postprocessing import postprocessing_factory
+from hailo_model_zoo.core.preprocessing import preprocessing_factory
 from hailo_model_zoo.utils import data, downloader, path_resolver
-from hailo_model_zoo.utils.parse_utils import translate_model, get_normalization_params
+from hailo_model_zoo.utils.parse_utils import get_normalization_params, translate_model
 
 
 unsupported_data_folder = {
@@ -26,13 +25,15 @@ unsupported_data_folder = {
 
 
 def _get_input_shape(runner, network_info):
-    return (network_info.preprocessing.input_shape or runner.get_hn_model().get_input_layers()[0].output_shape[1:])
+    return (
+        network_info.preprocessing.input_shape
+        or runner.get_hn_model().get_input_shapes(ignore_input_conversion=True)[0][1:]
+    )
 
 
 def resolve_alls_path(path, hw_arch='hailo8', performance=False):
     if not path:
         return None
-    hw_arch = "hailo8" if hw_arch == "hailo8l" else hw_arch
     return path_resolver.resolve_alls_path(Path(hw_arch) / Path("base" if not performance else "performance") / path)
 
 
@@ -120,20 +121,37 @@ def load_model(runner, har_path, logger):
     runner.load_har(har_path)
 
 
-def make_preprocessing(runner, network_info):
-    preprocessing_args = network_info.preprocessing
-    meta_arch = preprocessing_args.get('meta_arch')
+def get_input_modifications(runner, network_info):
     hn_editor = network_info.hn_editor
     yuv2rgb = hn_editor.yuv2rgb
     yuy2 = hn_editor.yuy2
     nv12 = hn_editor.nv12
     rgbx = hn_editor.rgbx
     input_resize = hn_editor.input_resize
+
+    for configs in runner.modifications_meta_data.inputs.values():
+        for config in configs:
+            if config.cmd_type == 'input_conversion':
+                if config.emulate_conversion:
+                    yuv2rgb = yuv2rgb or config.conversion_type.value in ['yuv_to_rgb', 'yuy2_to_rgb', 'nv12_to_rgb']
+                    yuy2 = yuy2 or config.conversion_type.value in ['yuy2_to_hailo_yuv', 'yuy2_to_rgb']
+                    nv12 = nv12 or config.conversion_type.value in ['nv12_to_hailo_yuv', 'nv12_to_rgb']
+                    rgbx = rgbx or config.conversion_type.value == 'tf_rgbx_to_hailo_rgb'
+            elif config.cmd_type == 'resize':
+                input_resize['enabled'] = True
+                input_resize['input_shape'] = [config.output_shape[1], config.output_shape[2]]
+
+    return yuv2rgb, yuy2, nv12, rgbx, input_resize
+
+
+def make_preprocessing(runner, network_info):
+    preprocessing_args = network_info.preprocessing
+    meta_arch = preprocessing_args.get('meta_arch')
+    yuv2rgb, yuy2, nv12, rgbx, input_resize = get_input_modifications(runner, network_info)
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
     height, width, _ = _get_input_shape(runner, network_info)
     flip = runner.get_hn_model().is_transposed()
-
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb, yuy2=yuy2, nv12=nv12, rgbx=rgbx,
         input_resize=input_resize, normalization_params=normalization_params,
@@ -146,7 +164,7 @@ def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch
     data_path = Path(data_path)
     if not data_path.exists():
         raise FileNotFoundError(f"Couldn't find dataset in {data_path}. Please refer to docs/DATA.rst.")
-    data_tf = True if data_path.is_file() and data_path.suffix in [".tfrecord", ".000"] else False
+    data_tf = data_path.is_file() and data_path.suffix in [".tfrecord", ".000"]
     args = (preproc_callback, batch_size, data_path)
     name = network_info.network.network_name
     if two_stage_arch:
@@ -188,15 +206,32 @@ def make_calibset_callback(network_info, batch_size, preproc_callback, override_
     return dataset
 
 
-def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script):
+def optimize_full_precision_model(runner, model_script, resize, input_conversion):
+    runner.load_model_script(model_script)
+    if resize is not None:
+        height, width = resize
+        runner.load_model_script(f'resize_input1 = resize(resize_shapes=[{height},{width}])', append=True)
+    if input_conversion is not None:
+        hailo_conversion_type = {'rgbx_to_rgb': 'tf_rgbx_to_hailo_rgb'}.get(input_conversion, input_conversion)
+        conversion_layers = ['input_conversion1']
+        if hailo_conversion_type in ['yuy2_to_rgb', 'nv12_to_rgb']:
+            conversion_layers.append('yuv_to_rgb1')
+        runner.load_model_script(
+            f'{", ".join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)',
+            append=True
+        )
+    runner.optimize_full_precision()
+
+
+def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script, resize=None,
+                   input_conversion=None):
+    optimize_full_precision_model(runner, model_script=model_script, resize=resize, input_conversion=input_conversion)
 
     logger.info('Preparing calibration data...')
     preproc_callback = make_preprocessing(runner, network_info)
     calib_feed_callback = make_calibset_callback(network_info, batch_size=None,
                                                  preproc_callback=preproc_callback,
                                                  override_path=calib_path)
-
-    runner.load_model_script(model_script)
     runner.optimize(calib_feed_callback)
 
     model_name = network_info.network.network_name
@@ -209,13 +244,16 @@ def make_visualize_callback(network_info):
     dataset_name = network_info.evaluation.dataset_name
     channels_remove = network_info.hn_editor.channels_remove
     labels_offset = network_info.evaluation.labels_offset
+    classes = network_info.evaluation.classes
     visualize_function = postprocessing_factory.get_visualization(network_type)
 
     def visualize_callback(logits, image, **kwargs):
-        return visualize_function(logits, image, dataset_name=dataset_name,
+        return visualize_function(logits, image,
+                                  dataset_name=dataset_name,
                                   channels_remove=channels_remove,
                                   labels_offset=labels_offset,
-                                  meta_arch=meta_arch, **kwargs)
+                                  meta_arch=meta_arch,
+                                  classes=classes, **kwargs)
     return visualize_callback
 
 

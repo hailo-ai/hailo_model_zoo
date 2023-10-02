@@ -36,6 +36,8 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `BSD100`_
   * `CIFAR100`_
   * `LOL`_
+  * `BSD68`_
+  * `CBSD68`_
 
 .. _ImageNet:
 
@@ -798,3 +800,99 @@ Manual Download (Optional)
 
       python hailo_model_zoo/datasets/create_lol_tfrecord.py val --ll /path/to/val/lowlight/images --lle /path/to/val/highlight/images
       python hailo_model_zoo/datasets/create_lol_tfrecord.py calib --ll /path/to/train/lowlight/images --lle /path/to/train/highlight/images
+
+
+.. _BSD68:
+
+BSD68
+------
+
+To evaluate/optimize/compile the image denoising models of the 
+Hailo Model Zoo you should generate the BSD68 TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_bsd68_tfrecord.py val
+    python hailo_model_zoo/datasets/create_bsd68_tfrecord.py calib
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0">`_ and extract. 
+   The expected dataset structure:
+
+   .. code-block::
+
+      test
+      |_ BSD68
+      |  |_ test001.png
+      |  |_ ...
+      |  |_ test068.png
+      |_ CBSD68
+      |  |_ ...
+      |_ Kodak
+      |  |_ ...
+      |_ McMaster
+      |  |_ ...
+      |_ Set12
+      |  |_ ...
+      |_ Urban100
+      |  |_ ...
+      |_ LRbicx16
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py BSD68 val --data-path <BSD68-extracted-data-folder>
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py BSD68 calib --data-path <BSD68-extracted-data-folder>
+
+
+.. _CBSD68:
+
+CBSD68
+------
+
+To evaluate/optimize/compile the image denoising models of the 
+Hailo Model Zoo you should generate the CBSD68 TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_bsd68_tfrecord.py CBSD68 val
+    python hailo_model_zoo/datasets/create_bsd68_tfrecord.py CBSD68 calib
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0">`_ and extract. 
+   The expected dataset structure:
+
+   .. code-block::
+
+      test
+      |_ BSD68
+      |  |_ ...
+      |_ CBSD68
+      |  |_ test001.png
+      |  |_ ...
+      |  |_ test068.png
+      |_ Kodak
+      |  |_ ...
+      |_ McMaster
+      |  |_ ...
+      |_ Set12
+      |  |_ ...
+      |_ Urban100
+      |  |_ ...
+      |_ LRbicx16
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 val --data-path <CBSD68-extracted-data-folder>
+      python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 calib --data-path <CBSD68-extracted-data-folder>

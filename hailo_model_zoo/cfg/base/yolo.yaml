@@ -1,8 +1,5 @@
 base:
-- base/base.yaml
-quantization:
-  calib_set:
-  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
+- base/coco.yaml
 preprocessing:
   network_type: detection
   input_shape:
@@ -56,5 +53,3 @@ evaluation:
   labels_offset: 1
   classes: 80
   dataset_name: coco_2017_detection
-  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
-  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord

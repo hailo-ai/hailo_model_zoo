@@ -1,5 +1,5 @@
 normalization1 = normalization([127.0, 127.0, 127.0], [128.0, 128.0, 128.0])
 yuv_to_rgb1 = yuv_to_rgb()
-reshape , resize, concat = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support=True)
+reshape = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support=True)
 model_optimization_config(calibration, batch_size=8, calibset_size=16)
 post_quantization_optimization(finetune, policy=disabled)

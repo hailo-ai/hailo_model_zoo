@@ -1,0 +1,39 @@
+base:
+- base/cbsd68.yaml
+network:
+  network_name: dncnn_color_blind
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+preprocessing:
+  network_type: image_denoising
+  meta_arch: dncnn3
+postprocessing:
+  meta_arch: dncnn3
+evaluation:
+  network_type: image_denoising
+paths:
+  alls_script: dncnn_color_blind.alls
+  network_path:
+  - models_files/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip
+info:
+  task: image denoising
+  input_shape: 321x481x3
+  output_shape: 321x481x3
+  operations: 205.97G
+  parameters: 0.66M
+  framework: pytorch
+  eval_metric: PSNR
+  full_precision_result: 33.87
+  validation_data: CBSD68
+  source: https://github.com/cszn/KAIR
+  license: https://github.com/cszn/KAIR/blob/master/LICENSE

@@ -48,5 +48,5 @@ def get_network_names():
     return sorted([name.with_suffix('').name for name in NETWORK_CFG_DIR.glob('*.yaml')])
 
 
-def get_network_peformance():
+def get_network_performance():
     return sorted([name.with_suffix('').name for name in ALLS_PERFORMANCE_DIR.glob('*.alls')])

@@ -6,7 +6,7 @@ from functools import partial
 import tensorflow as tf
 from pathlib import Path
 import numpy as np
-
+import json
 from hailo_sdk_client import ClientRunner, HailoNN
 from hailo_model_zoo.core.main_utils import get_network_info
 from hailo_model_zoo.utils.logger import get_logger
@@ -111,7 +111,7 @@ def convert_tf_record_to_bin_file(hef_path: Path,
     network_info = get_network_info(network_name)
 
     _logger.info('Initializing the runner...')
-    runner = ClientRunner(hw_arch='hailo8p')
+    runner = ClientRunner(hw_arch='hailo8')
     # Hack to filter out client_runner info logs
     runner._logger.setLevel(logging.ERROR)
 
@@ -145,9 +145,22 @@ def convert_tf_record_to_bin_file(hef_path: Path,
     _logger.info(f'File {output_file_name} created with {numn_of_processed_images} images')
 
 
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()  # Convert NumPy array to a Python list
+        return super(NumpyEncoder, self).default(obj)
+
+
 def _save_pre_processed_image_callback(preprocessed_image, file_to_append):
-    '''Callback function which used to get a pre-processed image from the dataset'''
-    file_to_append.write(preprocessed_image.tobytes())
+    if isinstance(preprocessed_image, dict):
+        for key, value in preprocessed_image.items():
+            # Serialize and write each value as binary data
+            binary_data = value.tobytes()
+            file_to_append.write(binary_data)
+    else:
+        # If preprocessed_image is not a dictionary, write its binary data to the file
+        file_to_append.write(preprocessed_image.tobytes())
 
 
 def _save_pre_processed_image_npy_callback(preprocessed_image, images_list):

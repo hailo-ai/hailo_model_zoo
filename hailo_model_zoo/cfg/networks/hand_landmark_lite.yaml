@@ -22,10 +22,8 @@ quantization:
 paths:
   alls_script: hand_landmark_lite.alls
   network_path:
-  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.meta
-  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.index
-  - models_files/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2022-01-23/hand_landmark_lite.zip
+  - models_files/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip
 network:
   network_name: hand_landmark_lite
 info:

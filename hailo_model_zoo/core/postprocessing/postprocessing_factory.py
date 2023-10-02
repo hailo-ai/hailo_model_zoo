@@ -14,8 +14,6 @@ from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing im
     instance_segmentation_postprocessing, visualize_instance_segmentation_result)
 from hailo_model_zoo.core.postprocessing.pose_estimation_postprocessing import (pose_estimation_postprocessing,
                                                                                 visualize_pose_estimation_result)
-from hailo_model_zoo.core.postprocessing.mono_depth_estimation_postprocessing import (
-    mono_depth_estimation_postprocessing, visualize_mono_depth_result)
 from hailo_model_zoo.core.postprocessing.super_resolution_postprocessing import (super_resolution_postprocessing,
                                                                                  visualize_super_resolution_result,
                                                                                  visualize_srgan_result)
@@ -35,8 +33,8 @@ from hailo_model_zoo.core.postprocessing.face_landmarks_3d_postprocessing import
     face_landmarks_3d_postprocessing, visualize_face_landmarks_3d_result)
 from hailo_model_zoo.core.postprocessing.detection_3d_postprocessing import (
     detection_3d_postprocessing, visualize_3d_detection_result)
-from hailo_model_zoo.core.postprocessing.fast_depth_postprocessing import (
-    fast_depth_postprocessing, visualize_fast_depth_result)
+from hailo_model_zoo.core.postprocessing.depth_estimation_postprocessing import (depth_estimation_postprocessing,
+                                                                                 visualize_depth_estimation_result)
 from hailo_model_zoo.core.postprocessing.ocr_postprocessing import (
     ocr_postprocessing, visualize_ocr_result
 )
@@ -48,6 +46,13 @@ from hailo_model_zoo.core.postprocessing.mspn_postprocessing import (
 )
 from hailo_model_zoo.core.postprocessing.stereonet_postprocessing import (
     stereonet_postprocessing, visualize_stereonet_result)
+from hailo_model_zoo.core.postprocessing.image_denoising_postprocessing import (
+    image_denoising_postprocessing, visualize_image_denoising_result
+)
+from hailo_model_zoo.core.postprocessing.vit_pose_postprocessing import (
+    vit_pose_postprocessing
+)
+
 try:
     # THIS CODE IS EXPERIMENTAL AND IN USE ONLY FOR TAPPAS VALIDATION
     from hailo_model_zoo.core.postprocessing.tappas_postprocessing import tappas_postprocessing
@@ -87,17 +92,17 @@ def get_visualization(name, **kwargs):
         'head_pose_estimation': visualize_head_pose_result,
         'age_gender': visualize_age_gender_result,
         'face_detection': visualize_detection_result,
-        'mono_depth_estimation': visualize_mono_depth_result,
         'multiple_object_tracking': visualize_tracking_result,
         'face_landmark_detection': visualize_face_landmarks_result,
         'landmark_detection': visualize_hand_landmarks_result,
         'lane_detection': visualize_lane_detection_result,
         '3d_detection': visualize_3d_detection_result,
         'face_landmark_detection_3d': visualize_face_landmarks_3d_result,
-        'fast_depth': visualize_fast_depth_result,
         'ocr': visualize_ocr_result,
         'single_person_pose_estimation': visualize_single_person_pose_estimation_result,
-        'stereonet': visualize_stereonet_result
+        'stereonet': visualize_stereonet_result,
+        'image_denoising': visualize_image_denoising_result,
+        'depth_estimation': visualize_depth_estimation_result
     }
     if name not in visualization_fn_map:
         raise ValueError('Visualization name [%s] was not recognized' % name)
@@ -124,7 +129,6 @@ def get_postprocessing(name, flip=False):
         'segmentation': segmentation_postprocessing,
         'detection': detection_postprocessing,
         'pose_estimation': pose_estimation_postprocessing,
-        'mono_depth_estimation': mono_depth_estimation_postprocessing,
         'face_verification': facenet_postprocessing,
         'landmark_detection': hand_landmarks_postprocessing,
         'face_landmark_detection': face_landmarks_postprocessing,
@@ -139,14 +143,16 @@ def get_postprocessing(name, flip=False):
         'lane_detection': lane_detection_postprocessing,
         '3d_detection': detection_3d_postprocessing,
         'face_landmark_detection_3d': face_landmarks_3d_postprocessing,
-        'fast_depth': fast_depth_postprocessing,
         'ocr': ocr_postprocessing,
         'person_reid': person_reid_postprocessing,
         'person_attr': classification_postprocessing,
         'face_attr': face_attr_postprocessing,
         'single_person_pose_estimation': mspn_postprocessing,
+        'vit_pose': vit_pose_postprocessing,
         'stereonet': stereonet_postprocessing,
-        'tappas_postprocessing': tappas_postprocessing
+        'tappas_postprocessing': tappas_postprocessing,
+        'image_denoising': image_denoising_postprocessing,
+        'depth_estimation': depth_estimation_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

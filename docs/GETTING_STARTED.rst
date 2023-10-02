@@ -9,13 +9,13 @@ System Requirements
 
 * Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
 * Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v3.24.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 4.14.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* Hailo Dataflow Compiler v3.25.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.15.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
 * The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
-* GPU driver version 470
-* CUDA 11.2
-* CUDNN 8.1
+* GPU driver version 525
+* CUDA 11.8
+* CUDNN 8.9
 
 
 Install Instructions
@@ -24,11 +24,23 @@ Install Instructions
 Hailo Software Suite
 ^^^^^^^^^^^^^^^^^^^^
 
-The `Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_ includes all of Hailo's SW components and insures compatibility across products versions. The Hailo Model Zoo is already installed and ready to be used within the virtualenv of it.
+The model requires the corresponding Dataflow Compiler version, and the optional HailoRT version. Therefore it is recommended to use the 
+`Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_, that includes all of Hailo's SW components and insures compatibility 
+across products versions.
+
+The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS and the Model Zoo (:ref:`see diagram below <sw_suite_figure>`).
+
+
+.. _sw_suite_figure:
+
+.. figure:: images/new_overview_2023-05.svg
+   :alt: Detailed block diagram of Hailo software packages
+
+   Detailed block diagram of Hailo software packages
+
 
 Manual Installation
 ^^^^^^^^^^^^^^^^^^^
-
 
 #. Install the Hailo Dataflow compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
 #. Install the HailoRT - required only for inference on Hailo-8 (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
@@ -164,6 +176,22 @@ In order to achieve highest performance, one could use the performance flag:
 The flag will be ignored on models that do not support this feature.
 The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
 
+To add input conversion to the model, one could use the input conversion flag:
+
+.. code-block::
+
+    hailomz optimize <model_name> --input-conversion nv12_to_rgb
+
+Do not use the flag if an input conversion already exist in the alls or in the YAML.
+
+To add input resize to the model, one could use the resize flag:
+
+.. code-block::
+
+    hailomz optimize <model_name> --resize 1080 1920
+
+Do not use the flag if resize already exist in the alls or in the YAML.
+
 Compile
 -------
 
@@ -193,6 +221,22 @@ In order to achieve highest performance, one could use the performance flag:
 
 The flag will be ignored on models that do not support this feature.
 The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
+
+To add input conversion to the model, one could use the input conversion flag:
+
+.. code-block::
+
+    hailomz compile <model_name> --input-conversion nv12_to_rgb
+
+Do not use the flag if an input conversion already exist in the alls or in the YAML.
+
+To add input resize to the model, one could use the resize flag:
+
+.. code-block::
+
+    hailomz compile <model_name> --resize 1080 1920
+
+Do not use the flag if resize already exist in the alls or in the YAML.
 
 Evaluation
 ----------
@@ -235,6 +279,22 @@ To limit the number of images for evaluation use the following flag:
 .. code-block::
 
    hailomz eval <model_name> --data-count <num-images>
+
+To eval model with additional input conversion, one could use the input conversion flag:
+
+.. code-block::
+
+    hailomz eval <model_name> --input-conversion nv12_to_rgb
+
+Do not use the flag if an input conversion already exist in the alls or in the YAML.
+
+To eval model with input resize, one could use the resize flag:
+
+.. code-block::
+
+    hailomz eval <model_name> --resize 1080 1920
+
+Do not use the flag if resize already exist in the alls or in the YAML.
 
 To explore other options (for example: changing the default batch-size) use:
 

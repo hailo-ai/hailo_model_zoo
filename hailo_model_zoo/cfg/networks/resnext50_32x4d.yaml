@@ -5,13 +5,11 @@ network:
 paths:
   alls_script: resnext50_32x4d.alls
   network_path:
-  - models_files/Classification/resnext50_32x4d/pretrained/2021-07-11/resnext50_32x4d.ckpt.meta
-  - models_files/Classification/resnext50_32x4d/pretrained/2021-07-11/resnext50_32x4d.ckpt.index
-  - models_files/Classification/resnext50_32x4d/pretrained/2021-07-11/resnext50_32x4d.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnext50_32x4d/pretrained/2021-07-11/resnext50_32x4d.zip
+  - models_files/Classification/resnext50_32x4d/pretrained/2023-07-18/resnext50_32x4d.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnext50_32x4d/pretrained/2023-07-18/resnext50_32x4d.zip
 parser:
   nodes:
-  - Pad
+  - input_layer
   - output/BiasAdd
 info:
   task: classification

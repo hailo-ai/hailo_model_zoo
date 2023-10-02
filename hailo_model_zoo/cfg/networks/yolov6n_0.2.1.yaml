@@ -28,4 +28,4 @@ info:
   eval_metric: mAP
   source: https://github.com/meituan/YOLOv6/releases/tag/0.2.1
   license_url: https://github.com/meituan/YOLOv6/blob/main/LICENSE
-  full_precision_result: 35.2
+  full_precision_result: 35.17

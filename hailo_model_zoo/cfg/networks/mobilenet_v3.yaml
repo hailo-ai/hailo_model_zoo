@@ -4,14 +4,12 @@ network:
   network_name: mobilenet_v3
 paths:
   network_path:
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.meta
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.index
-  - models_files/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3_edgetpu.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3/pretrained/2021-07-11/mobilenet_v3.zip
+  - models_files/Classification/mobilenet_v3/pretrained/2023-07-18/mobilenet_v3_edgetpu.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3/pretrained/2023-07-18/mobilenet_v3.zip
   alls_script: mobilenet_v3.alls
 parser:
   nodes:
-  - MobilenetEdgeTPU/Conv/Conv2D
+  - MobilenetEdgeTPU/input
   - MobilenetEdgeTPU/Predictions/Softmax
 info:
   task: classification

@@ -29,6 +29,7 @@ class InstanceSegmentationEval(Eval):
         self.mask_thresh = kwargs.get('mask_thresh', None)
         self.input_shape = kwargs.get('input_shape', None)
         dataset_name = kwargs.get('dataset_name', None)
+        self._labels_map = kwargs.get('labels_map', None)
         dataset_info = get_dataset_info(dataset_name=dataset_name)
         self._label_map = dataset_info.label_map
         self._label_inv_map = {v: k for k, v in self._label_map.items()}
@@ -108,6 +109,11 @@ class InstanceSegmentationEval(Eval):
                                     detection_classes[:, np.newaxis]])[:num_detections, :]
         self._detections = np.vstack([self._detections, new_detections])
 
+    def _get_category_id(self, category_id):
+        if self._labels_map == [0]:
+            return int(0)
+        return int(category_id)
+
     def arrange_dataset(self, img_info):
         gt_data_height = img_info["height"]
         gt_data_width = img_info["width"]
@@ -128,7 +134,7 @@ class InstanceSegmentationEval(Eval):
             def _add_gt_bbox(annotation_id, image_id, category_id, bbox, is_crowd, area):
                 self._dataset['annotations'].append({'id': int(annotation_id),
                                                      'image_id': int(image_id),
-                                                     'category_id': int(category_id),
+                                                     'category_id': self._get_category_id(category_id),
                                                      'bbox': bbox,
                                                      'area': area,
                                                      'iscrowd': is_crowd})
@@ -177,8 +183,18 @@ class InstanceSegmentationEval(Eval):
 
     def _evaluate_mask(self):
         gt_annotations = COCO(self._gt_ann_file)
+        if self._labels_map == [0]:
+            for ann in gt_annotations.anns.keys():
+                # for zero-shot instance segmentation (segment anything) we map all
+                # classes to the same category
+                gt_annotations.anns[ann]['category_id'] = 1
         mask_dets = gt_annotations.loadRes(self._mask_data)
         seg_eval = COCOeval(gt_annotations, mask_dets, 'segm')
+        if self._labels_map == [0]:
+            # zero-shot instnace segmentation (segment anything) works on AR1000
+            # COCO default is [1, 10, 100]
+            seg_eval.params.maxDets = [1, 10, 1000]
+            self._metric_names[8] = 'mask ARmax1000'
         seg_eval.params.imgIds = list(self._images)
         if self._channels_remove:
             seg_eval.params.catIds = list([self._label_inv_map[i] for i in self.catIds])
@@ -214,5 +230,12 @@ class InstanceSegmentationEval(Eval):
             self._evaluate_bbox()
 
     def _get_accuracy(self):
-        return OrderedDict([(self._metric_names[0], self._metrics_vals[0]),
-                            (self._metric_names[1], self._metrics_vals[1])])
+        # in zero-shot instance segmentation we map all classes to zero and
+        # report the AR1000 instead of mAP
+        if self._labels_map == [0]:
+            accuracy = OrderedDict([(self._metric_names[8], self._metrics_vals[8]),
+                                    (self._metric_names[11], self._metrics_vals[11])])
+        else:
+            accuracy = OrderedDict([(self._metric_names[0], self._metrics_vals[0]),
+                                    (self._metric_names[1], self._metrics_vals[1])])
+        return accuracy

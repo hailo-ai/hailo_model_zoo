@@ -4,15 +4,9 @@ network:
   network_name: inception_v1
 paths:
   network_path:
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.meta
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.index
-  - models_files/Classification/inception_v1/pretrained/2021-07-11/inception_v1.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/inception_v1/pretrained/2021-07-11/inception_v1.zip
+  - models_files/Classification/inception_v1/pretrained/2023-07-18/inception_v1.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/inception_v1/pretrained/2023-07-18/inception_v1.zip
   alls_script: inception_v1.alls
-parser:
-  nodes:
-  - InceptionV1/InceptionV1/Conv2d_1a_7x7/Conv2D
-  - Softmax
 info:
   task: classification
   input_shape: 224x224x3

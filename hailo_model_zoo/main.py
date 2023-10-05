@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 import argparse
 import importlib
-
 from pathlib import Path
 
 import hailo_model_zoo.plugin
-# we try to minize imports to make 'main.py --help' responsive. So we only import definitions.
+# we try to minimize imports to make 'main.py --help' responsive. So we only import definitions.
 
-from hailo_model_zoo.utils.cli_utils import add_model_name_arg, HMZ_COMMANDS
-from hailo_model_zoo.utils.constants import TARGETS, DEVICE_NAMES, PROFILER_MODE_NAMES
-
+from hailo_model_zoo.utils.cli_utils import HMZ_COMMANDS, OneResizeValueAction, add_model_name_arg
+from hailo_model_zoo.utils.constants import DEVICE_NAMES, PROFILER_MODE_NAMES, TARGETS
 from hailo_model_zoo.utils.plugin_utils import iter_namespace
 
 
@@ -53,6 +51,13 @@ def _make_optimization_base():
     optimization_base_parser.add_argument(
         '--performance', action='store_true',
         help='Enable flag for benchmark performance')
+    optimization_base_parser.add_argument(
+        '--resize', type=int, nargs='+', action=OneResizeValueAction,
+        help='Add input resize from given [h,w]')
+    optimization_base_parser.add_argument(
+        '--input-conversion', type=str,
+        choices=['nv12_to_rgb', 'yuy2_to_rgb', 'rgbx_to_rgb'],
+        help='Add input conversion from given type')
 
     return optimization_base_parser
 

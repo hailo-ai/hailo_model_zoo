@@ -4,10 +4,8 @@ network:
   network_name: efficientnet_s
 paths:
   network_path:
-  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.meta
-  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.index
-  - models_files/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2021-07-11/efficientnet_s.zip
+  - models_files/Classification/efficientnet_s/pretrained/2023-07-18/efficientnet_s.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2023-07-18/efficientnet_s.zip
   alls_script: efficientnet_s.alls
 parser:
   normalization_params:
@@ -20,9 +18,6 @@ parser:
     - 128
     - 128
     - 128
-  nodes:
-  - efficientnet-edgetpu-S/model/stem/conv2d/Conv2D
-  - Softmax
 info:
   task: classification
   input_shape: 224x224x3

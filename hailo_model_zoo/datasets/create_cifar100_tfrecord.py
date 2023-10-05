@@ -41,6 +41,7 @@ TEMPLATES = ['a photo of a {}.',
              'a photo of the big {}.']
 TF_RECORD_TYPE = ['val', 'calib']
 CLASS_TOKEN_LOC = {"RN50": 'models_files/cifar100/2023-03-09/class_token_resnet50.npy',
+                   "RN50x4": 'models_files/cifar100/2023-03-09/class_token_resnet50x4.npy',
                    "ViT-B/16": 'models_files/cifar100/2023-03-09/class_token_vit_b_16.npy',
                    "ViT-B/32": 'models_files/cifar100/2023-03-09/class_token_vit_b_32.npy'}
 TF_RECORD_LOC = {'val': 'models_files/cifar100/2023-03-09/cifar100_val.tfrecord',

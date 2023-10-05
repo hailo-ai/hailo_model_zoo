@@ -5,14 +5,8 @@ network:
 paths:
   alls_script: squeezenet_v1.1.alls
   network_path:
-  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.meta
-  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.index
-  - models_files/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1_1.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2021-07-11/squeezenet_v1.1.zip
-parser:
-  nodes:
-  - Pad
-  - Softmax
+  - models_files/Classification/squeezenet_v1.1/pretrained/2023-07-18/squeezenet_v1_1.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2023-07-18/squeezenet_v1.1.zip
 info:
   task: classification
   input_shape: 224x224x3

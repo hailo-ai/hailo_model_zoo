@@ -1,0 +1,35 @@
+base:
+- base/bsd68.yaml
+network:
+  network_name: dncnn3
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    std_list:
+    - 255.0
+preprocessing:
+  network_type: image_denoising
+  meta_arch: dncnn3
+postprocessing:
+  meta_arch: dncnn3
+evaluation:
+  network_type: image_denoising
+paths:
+  alls_script: dncnn3.alls
+  network_path:
+  - models_files/ImageDenoising/dncnn3/2023-06-15/dncnn3.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip
+info:
+  task: image denoising
+  input_shape: 321x481x1
+  output_shape: 321x481x1
+  operations: 205.26G
+  parameters: 0.66M
+  framework: pytorch
+  eval_metric: PSNR
+  full_precision_result: 31.46
+  validation_data: BSD68
+  source: https://github.com/cszn/KAIR
+  license: https://github.com/cszn/KAIR/blob/master/LICENSE

@@ -4,8 +4,8 @@ evaluation:
   dataset_name: coco_detection
   labels_offset: 1
   classes: 90
-  data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
-  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
+  data_set: models_files/coco/2023-08-03/coco_val2017.tfrecord
+  validation_data_set: models_files/coco/2023-08-03/coco_val2017.tfrecord
 quantization:
   calib_set:
   - models_files/coco/2021-06-18/coco_calib2017.tfrecord

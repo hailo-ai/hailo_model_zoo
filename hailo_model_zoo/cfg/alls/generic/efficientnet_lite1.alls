@@ -1,3 +1,4 @@
 normalization1 = normalization([127, 127, 127], [128, 128, 128])
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
+logits_layer1 = logits_layer(efficientnet_lite1/fc1, softmax, -1, cpu)

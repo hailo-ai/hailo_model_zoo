@@ -509,6 +509,10 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
             'detection_scores':  numpy.ndarray with shape (num_detections, 80)
         }
     """
+    if kwargs.get('hpp', False):
+        # the outputs where decoded by the emulator (as part of the network)
+        # organizing the output for evaluation
+        return _organize_hpp_yolov5_seg_outputs(endnodes)
 
     protos = endnodes[0]
     outputs = list()
@@ -530,9 +534,23 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     # NMS
     score_thres = kwargs['score_threshold']
     iou_thres = kwargs['nms_iou_thresh']
-    outputs = non_max_suppression(outputs, score_thres, iou_thres)
+    outputs = non_max_suppression(outputs, score_thres, iou_thres, nm=protos.shape[-1])
 
     return _finalize_detections_yolov5_seg(outputs, protos, **kwargs)
+
+
+def _organize_hpp_yolov5_seg_outputs(outputs):
+    # the outputs structure is [-1, h+1, w, num_of_proposals]
+    # were the last row (-1, -1:, :, :) contains padded values of
+    # [y_min, x_min, y_max, x_max, score, class] of each detection
+    # this function separates the structure to informative dict
+    predictions = []
+    for i in range(outputs.shape[0]):
+        predictions.append({'mask': np.transpose(outputs[i, :-1, :, :], (2, 0, 1)),
+                            'detection_boxes': np.squeeze(np.transpose(outputs[i, -1:, 0:4, :], (2, 1, 0))),
+                            'detection_scores': np.squeeze(outputs[i, -1:, 4:5, :]),
+                            'detection_classes': np.squeeze(outputs[i, -1:, 5:6, :])})
+    return predictions
 
 
 def _finalize_detections_yolov5_seg(outputs, protos, **kwargs):
@@ -992,7 +1010,7 @@ def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, 
 
 
 def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, score_thres=0.25,
-                                 mask_thresh=0.5, **kwargs):
+                                 mask_thresh=0.5, max_boxes_to_draw=20, **kwargs):
     img_idx = 0
     img_out = img[img_idx].copy()
 
@@ -1000,6 +1018,8 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
     masks = detections['mask'] > mask_thresh
     scores = detections['detection_scores']
     classes = detections['detection_classes']
+    # for SAM model we want to skip boxes and draw only the masks (single class)
+    skip_boxes = kwargs.get('meta_arch', '') == 'yolov8_seg_postprocess' and kwargs.get('classes', '') == 1
 
     keep = scores > score_thres
     boxes = boxes[keep]
@@ -1007,16 +1027,24 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
     scores = scores[keep]
     classes = classes[keep]
 
+    # take only the best max_boxes_to_draw (proposals are sorted)
+    max_boxes = min(max_boxes_to_draw, len(keep))
+    boxes = boxes[:max_boxes]
+    masks = masks[:max_boxes]
+    scores = scores[:max_boxes]
+    classes = classes[:max_boxes]
+
     for idx, mask in enumerate(masks):
         xmin, ymin, xmax, ymax = boxes[idx].astype(np.int32)
 
         color = np.random.randint(low=0, high=255, size=3, dtype=np.uint8)
         # Draw bbox
-        img_out = cv2.rectangle(img_out,
-                                (xmin, ymin),
-                                (xmax, ymax),
-                                [int(c) for c in color],
-                                3)
+        if not skip_boxes:
+            img_out = cv2.rectangle(img_out,
+                                    (xmin, ymin),
+                                    (xmax, ymax),
+                                    [int(c) for c in color],
+                                    3)
 
         if not np.sum(mask):
             continue
@@ -1035,26 +1063,27 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
                                     isClosed=True, color=color, thickness=1)
 
         # Draw class and score info
-        label = f"{CLASS_NAMES_COCO[int(classes[idx])]}"
-        score = "{:.0f}".format(100 * scores[idx])
+        if not skip_boxes:
+            label = f"{CLASS_NAMES_COCO[int(classes[idx])]}"
+            score = "{:.0f}".format(100 * scores[idx])
 
-        text = label + ': ' + score + '%'
-        (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                    fontScale=0.5, thickness=2)
-        org = (xmin, ymin)
-        # Rectangle for label backround
-        deltaY = max(h - org[1], 0)
-        deltaX = max(-org[0], 0)
-        img_out[np.max([org[1] - h, 0]):org[1] + h // 2 + deltaY,
-                np.max([org[0], 0]):org[0] + w + deltaX, :] = color
+            text = label + ': ' + score + '%'
+            (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                        fontScale=0.5, thickness=2)
+            org = (xmin, ymin)
+            # Rectangle for label backround
+            deltaY = max(h - org[1], 0)
+            deltaX = max(-org[0], 0)
+            img_out[np.max([org[1] - h, 0]):org[1] + h // 2 + deltaY,
+                    np.max([org[0], 0]):org[0] + w + deltaX, :] = color
 
-        img_out = cv2.putText(img_out, text,
-                              org=(xmin, ymin),
-                              fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                              fontScale=0.5,
-                              color=[255, 255, 255],
-                              thickness=2,
-                              lineType=cv2.FILLED)
+            img_out = cv2.putText(img_out, text,
+                                  org=(xmin, ymin),
+                                  fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                                  fontScale=0.5,
+                                  color=[255, 255, 255],
+                                  thickness=2,
+                                  lineType=cv2.FILLED)
 
     return img_out
 

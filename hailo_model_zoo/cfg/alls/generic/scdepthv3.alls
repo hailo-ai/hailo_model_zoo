@@ -1,0 +1,3 @@
+normalization = normalization([114.75,114.75,114.75], [57.375, 57.375, 57.375])
+quantization_param([output_layer1], precision_mode=a16_w16)
+model_optimization_flavor(optimization_level=2, compression_level=0)

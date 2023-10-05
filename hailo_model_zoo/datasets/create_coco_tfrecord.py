@@ -18,8 +18,8 @@ from hailo_model_zoo.utils import path_resolver, downloader
 
 
 TF_RECORD_TYPE = 'val2017', 'calib2017'
-TF_RECORD_LOC = {'val2017': 'models_files/coco/2021-06-18/coco_val2017.tfrecord',
-                 'calib2017': 'models_files/coco/2021-06-18/coco_calib2017.tfrecord'}
+TF_RECORD_LOC = {'val2017': 'models_files/coco/2023-08-03/coco_val2017.tfrecord',
+                 'calib2017': 'models_files/coco/2023-08-03/coco_calib2017.tfrecord'}
 
 
 def _int64_feature(values):
@@ -36,7 +36,7 @@ def _float_list_feature(value):
     return tf.train.Feature(float_list=tf.train.FloatList(value=value))
 
 
-def _create_tfrecord(filenames, name, num_images):
+def _create_tfrecord(filenames, name, num_images, imgs_name2id):
     """Loop over all the images in filenames and create the TFRecord
     """
     tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC[name])
@@ -45,6 +45,7 @@ def _create_tfrecord(filenames, name, num_images):
     progress_bar = tqdm(filenames[:num_images])
     with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
         for i, (img_path, bbox_annotations) in enumerate(progress_bar):
+            progress_bar.set_description(f"{name} #{i+1}: {img_path}")
             xmin, xmax, ymin, ymax, category_id, is_crowd, area = [], [], [], [], [], [], []
             img_jpeg = open(img_path, 'rb').read()
             img = np.array(Image.open(img_path))
@@ -62,12 +63,16 @@ def _create_tfrecord(filenames, name, num_images):
                 area.append(object_annotations['area'])
                 category_id.append(int(object_annotations['category_id']))
 
-                progress_bar.set_description(f"{name} #{i}: {img_path}")
+            if bbox_annotations:
+                img_id = object_annotations['image_id']
+            else:
+                img_id = imgs_name2id[os.path.basename(img_path)]
+
             example = tf.train.Example(features=tf.train.Features(feature={
                 'height': _int64_feature(image_height),
                 'width': _int64_feature(image_width),
                 'num_boxes': _int64_feature(len(bbox_annotations)),
-                'image_id': _int64_feature(object_annotations['image_id']),
+                'image_id': _int64_feature(img_id),
                 'xmin': _float_list_feature(xmin),
                 'xmax': _float_list_feature(xmax),
                 'ymin': _float_list_feature(ymin),
@@ -85,19 +90,24 @@ def get_img_labels_list(dataset_dir, det_file):
     with tf.io.gfile.GFile(str(det_file), 'r') as fid:
         obj_annotations = json.load(fid)
 
+    imgs_name2id = {img['file_name']: img['id'] for img in obj_annotations['images']}
     img_to_obj_annotation = collections.defaultdict(list)
     for annotation in obj_annotations['annotations']:
         image_name = str(annotation['image_id']).zfill(12) + '.jpg'
         img_to_obj_annotation[image_name].append(annotation)
 
+    no_anns_imgs = 0
     orig_file_names, det_annotations = [], []
     for img in sorted(dataset_dir.iterdir()):
+        if img.name not in img_to_obj_annotation:
+            no_anns_imgs += 1
         det_annotations.append(img_to_obj_annotation[img.name])
         orig_file_names.append(str(img))
     files = list(zip(orig_file_names, det_annotations))
+    print(f"{no_anns_imgs} / {len(files)} images have no annotations")
     random.seed(0)
     random.shuffle(files)
-    return files
+    return files, imgs_name2id
 
 
 def download_dataset(name):
@@ -140,8 +150,8 @@ def run(dataset_dir, det_file, name, num_images):
         if dataset_dir != '' or det_file != '':
             raise ValueError('Please use img and det arguments together.')
         dataset_dir, det_file = download_dataset(name)
-    img_labels_list = get_img_labels_list(Path(dataset_dir), Path(det_file))
-    images_num = _create_tfrecord(img_labels_list, name, num_images)
+    img_labels_list, imgs_name2id = get_img_labels_list(Path(dataset_dir), Path(det_file))
+    images_num = _create_tfrecord(img_labels_list, name, num_images, imgs_name2id)
     print('\nDone converting {} images'.format(images_num))
 
 

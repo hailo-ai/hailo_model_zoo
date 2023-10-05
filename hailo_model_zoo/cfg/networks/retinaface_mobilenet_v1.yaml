@@ -5,10 +5,8 @@ network:
 paths:
   alls_script: retinaface_mobilenet_v1.alls
   network_path:
-  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.meta
-  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.index
-  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet720p.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2021-07-18/retinaface_mobilenet_v1_hd.zip
+  - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet720p.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip
 parser:
   nodes:
   - retina_face/mobile_net_v1/stage1/Pad

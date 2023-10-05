@@ -51,6 +51,6 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 32.64
+  full_precision_result: 32.639
   source: https://github.com/Megvii-BaseDetection/YOLOX
   license_url: https://www.apache.org/licenses/LICENSE-2.0

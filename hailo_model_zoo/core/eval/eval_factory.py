@@ -7,7 +7,6 @@ from hailo_model_zoo.core.eval.detection_evaluation import DetectionEval
 from hailo_model_zoo.core.eval.face_verification_evaluation import FaceVerificationEval
 from hailo_model_zoo.core.eval.pose_estimation_evaluation import PoseEstimationEval
 from hailo_model_zoo.core.eval.instance_segmentation_evaluation import InstanceSegmentationEval
-from hailo_model_zoo.core.eval.depth_estimation_evaluation import DepthEstimationEval
 from hailo_model_zoo.core.eval.super_resolution_evaluation import SuperResolutionEval
 from hailo_model_zoo.core.eval.low_light_enhancement_evaluation import LowLightEnhancementEval
 from hailo_model_zoo.core.eval.srgan_evaluation import SRGANEval
@@ -17,12 +16,13 @@ from hailo_model_zoo.core.eval.lane_detection_evaluation import LaneDetectionEva
 from hailo_model_zoo.core.eval.face_landmark_evaluation import FaceLandmarkEval, FaceLandmark3DEval
 from hailo_model_zoo.core.eval.detection_3d_evaluation import Detection3DEval
 from hailo_model_zoo.core.eval.faster_rcnn_evaluation import FasterRCNNEval
-from hailo_model_zoo.core.eval.fast_depth_evaluation import FastDepthEval
 from hailo_model_zoo.core.eval.ocr_evaluation import OCREval
 from hailo_model_zoo.core.eval.person_reid_evaluation import PersonReidEval
 from hailo_model_zoo.core.eval.person_attr_evaluation import PersonAttrEval
 from hailo_model_zoo.core.eval.single_person_pose_estimation_evaluation import SinglePersonPoseEstimationEval
 from hailo_model_zoo.core.eval.stereo_evaluation import StereoNetEval
+from hailo_model_zoo.core.eval.image_denoising_evaluation import ImageDenoisingEval
+from hailo_model_zoo.core.eval.depth_estimation_evaluation import DepthEstimationEval
 
 
 class EmptyEval():
@@ -51,7 +51,6 @@ def get_evaluation(name):
         'pose_estimation': PoseEstimationEval,
         'face_verification': FaceVerificationEval,
         'instance_segmentation': InstanceSegmentationEval,
-        'mono_depth_estimation': DepthEstimationEval,
         'srgan': SRGANEval,
         'landmark_detection': EmptyEval,
         'face_landmark_detection': FaceLandmarkEval,
@@ -64,7 +63,6 @@ def get_evaluation(name):
         '3d_detection': Detection3DEval,
         'empty': EmptyEval,
         'faster_rcnn_stage2': FasterRCNNEval,
-        'fast_depth': FastDepthEval,
         'ocr': OCREval,
         'person_reid': PersonReidEval,
         'person_attr': PersonAttrEval,
@@ -72,7 +70,9 @@ def get_evaluation(name):
         'single_person_pose_estimation': SinglePersonPoseEstimationEval,
         'super_resolution': SuperResolutionEval,
         'low_light_enhancement': LowLightEnhancementEval,
-        'stereonet': StereoNetEval
+        'stereonet': StereoNetEval,
+        'image_denoising': ImageDenoisingEval,
+        'depth_estimation': DepthEstimationEval,
     }
 
     if name not in evaluation_map:

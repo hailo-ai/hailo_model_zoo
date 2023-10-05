@@ -1,4 +1,3 @@
-import io
 from pathlib import Path
 
 try:
@@ -7,24 +6,22 @@ try:
 except ModuleNotFoundError:
     HEF_EXISTS = False
 
-from hailo_sdk_client import InferenceContext
-from hailo_sdk_common.targets.inference_targets import SdkFPOptimized, SdkPartialNumeric
-from hailo_sdk_common.profiler.profiler_common import ProfilerModes
-from hailo_sdk_client import ClientRunner
+from hailo_sdk_client import ClientRunner, InferenceContext
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
-from hailo_model_zoo.core.main_utils import (
-    get_network_info, parse_model, optimize_model,
-    compile_model, get_hef_path,
-    infer_model_tf1, infer_model_tf2,
-    resolve_alls_path, get_integrated_postprocessing)
-from hailo_model_zoo.utils.path_resolver import get_network_peformance
-from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, TARGETS, INFERENCE_TARGETS, DEVICES
+from hailo_sdk_common.profiler.profiler_common import ProfilerModes
+from hailo_sdk_common.targets.inference_targets import SdkFPOptimized, SdkPartialNumeric
+from hailo_model_zoo.core.main_utils import (compile_model, get_hef_path, get_integrated_postprocessing,
+                                             get_network_info, infer_model_tf1, infer_model_tf2,
+                                             optimize_full_precision_model, optimize_model, parse_model,
+                                             resolve_alls_path)
+from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, DEVICES, INFERENCE_TARGETS, TARGETS
 from hailo_model_zoo.utils.logger import get_logger
+from hailo_model_zoo.utils.path_resolver import get_network_performance
 
 
 def _ensure_performance(model_name, model_script, performance, logger):
-    if not performance and model_name in get_network_peformance():
+    if not performance and model_name in get_network_performance():
         # Check whether the model has a performance
         logger.info(f'Running {model_name} with default model script.\n\
                       To obtain maximum performance use --performance:\n\
@@ -34,8 +31,8 @@ def _ensure_performance(model_name, model_script, performance, logger):
             logger.info(f'Using base alls script found in {model_script} because there is no performance alls')
         if model_script.parent.name == "generic":
             logger.info(f'Using generic alls script found in {model_script} because there is no specific hardware alls')
-        elif model_script.parent.name != "performance" and model_name in get_network_peformance():
-            logger.info('Using alls script {model_script}')
+        elif model_script.parent.name != "performance" and model_name in get_network_performance():
+            logger.info(f'Using alls script {model_script}')
 
 
 def _extract_model_script_path(networks_alls_script, model_script_path, hw_arch, performance):
@@ -66,7 +63,7 @@ def _ensure_optimized(runner, logger, args, network_info):
                                               args.performance)
     _ensure_performance(network_info.network.network_name, model_script, args.performance, logger)
     optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
-                   model_script=model_script)
+                   model_script=model_script, resize=args.resize, input_conversion=args.input_conversion)
 
 
 def _ensure_parsed(runner, logger, network_info, args):
@@ -105,8 +102,8 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
                                                       args.hw_arch,
                                                       performance=False)
 
-            runner.load_model_script(model_script)
-            runner.optimize_full_precision()
+            optimize_full_precision_model(runner, model_script=model_script, resize=args.resize,
+                                          input_conversion=args.input_conversion)
 
         return None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
 
@@ -131,19 +128,14 @@ def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
             configure_hef_tf2(runner, args.hef_path)
             return
 
-        integrated_postprocessing = get_integrated_postprocessing(network_info)
-        if integrated_postprocessing and integrated_postprocessing.enabled:
-            runner.optimize_full_precision()
-            configure_hef_tf2(runner, args.hef_path)
-            return
         # We intenionally use base model script and assume its modifications
         # compatible to the performance model script
         model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                   args.model_script_path,
                                                   args.hw_arch,
                                                   False)
-        runner.load_model_script(model_script)
-        runner.optimize_full_precision()
+        optimize_full_precision_model(runner, model_script=model_script, resize=args.resize,
+                                      input_conversion=args.input_conversion)
         configure_hef_tf2(runner, args.hef_path)
         return
 
@@ -199,7 +191,7 @@ def optimize(args):
                                               args.performance)
     _ensure_performance(model_name, model_script, args.performance, logger)
     optimize_model(runner, logger, network_info, args.calib_path, args.results_dir,
-                   model_script=model_script)
+                   model_script=model_script, resize=args.resize, input_conversion=args.input_conversion)
 
 
 def compile(args):
@@ -234,44 +226,35 @@ def profile(args):
     logger.info(f'Initializing the {args.hw_arch} runner...')
     runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
 
-    if profile_mode is ProfilerModes.PRE_PLACEMENT:
-        _ensure_parsed(runner, logger, network_info, args)
-    elif args.hef_path:
+    if profile_mode is ProfilerModes.PRE_PLACEMENT or args.hef_path:
         # we already have hef (or don't need one), just need .hn
         _ensure_parsed(runner, logger, network_info, args)
         if runner.state == States.HAILO_MODEL:
-            model_script = _extract_model_script_path(network_info.paths.alls_script,
-                                                      args.model_script_path,
-                                                      args.hw_arch,
-                                                      args.performance)
-            _ensure_performance(model_name, model_script, args.performance, logger)
-            runner.load_model_script(model_script)
-            runner.optimize_full_precision()
+            if args.hef_path:
+                model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                                          args.model_script_path,
+                                                          args.hw_arch,
+                                                          args.performance)
+                _ensure_performance(model_name, model_script, args.performance, logger)
+            else:
+                model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                                          args.model_script_path,
+                                                          args.hw_arch,
+                                                          False)
+            optimize_full_precision_model(runner, model_script=model_script, resize=args.resize,
+                                          input_conversion=args.input_conversion)
     else:
         # Optimize the model so profile_hn_model could compile & profile it
         _ensure_optimized(runner, logger, args, network_info)
-    model_script = _extract_model_script_path(network_info.paths.alls_script,
-                                              args.model_script_path, args.hw_arch, args.performance)
-    alls_script_path = model_script \
-        if profile_mode is not ProfilerModes.PRE_PLACEMENT else None
-    _ensure_performance(model_name, alls_script_path, args.performance, logger)
 
-    stats, csv_data, latency_data, accuracy_data = runner.profile(profiling_mode=profile_mode,
-                                                                  should_use_logical_layers=True,
-                                                                  hef_filename=args.hef_path)
-    mem_file = io.StringIO()
+    export = runner._profile(profiling_mode=profile_mode, should_use_logical_layers=True,
+                             hef_filename=args.hef_path)
     outpath = args.results_dir / f'{model_name}.html'
-    hn_model = runner._sdk_backend.get_modified_hn_model()
-    report_generator = ReactReportGenerator(mem_file=mem_file,
-                                            accuracy_data=accuracy_data,
-                                            csv_data=csv_data, latency_data=latency_data,
-                                            runtime_data=latency_data["runtime_data"], out_path=outpath,
-                                            stats=stats, hn_model=hn_model)
-
+    report_generator = ReactReportGenerator(export, outpath)
     csv_data = report_generator.create_report(should_open_web_browser=False)
     logger.info(f'Profiler report generated in {outpath}')
 
-    return stats, csv_data, latency_data
+    return export['stats'], csv_data, export['latency_data']
 
 
 def evaluate(args):

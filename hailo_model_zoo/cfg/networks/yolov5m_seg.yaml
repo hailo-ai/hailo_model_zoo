@@ -14,6 +14,8 @@ parser:
     - Conv_326
     - Conv_305
     - Conv_284
+postprocessing:
+  meta_arch: yolov5_seg
 info:
   task: instance segmentation
   input_shape: 640x640x3

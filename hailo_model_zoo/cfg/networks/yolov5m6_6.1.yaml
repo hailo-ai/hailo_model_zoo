@@ -38,4 +38,4 @@ info:
   validation_data: coco val2017
   eval_metric: mAP
   source: https://github.com/ultralytics/yolov5/releases/tag/v6.1
-  full_precision_result: 50.68
+  full_precision_result: 50.67

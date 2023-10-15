@@ -38,6 +38,7 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `LOL`_
   * `BSD68`_
   * `CBSD68`_
+  * `KITTI_STEREO_`
 
 .. _ImageNet:
 
@@ -896,3 +897,49 @@ Manual Download (Optional)
 
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 val --data-path <CBSD68-extracted-data-folder>
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 calib --data-path <CBSD68-extracted-data-folder>
+
+.. _KITTI_STEREO:
+
+KITTI_STEREO
+------------
+
+To evaluate/optimize/compile the stereo models of the
+Hailo Model Zoo you should generate the KITTI Stereo TFRecord files.
+
+Manual Download
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the KITTI Stereo dataset from `here <"https://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo">`_. One must request access and await approval.
+#. Extract the dataset.
+   The expected dataset structure:
+
+   .. code-block::
+
+      kitti_stereo
+      |_ testing
+         |_ image_2
+         |   |_ 000000_10.png
+         |   |_ 000000_11.png
+         |   |_ ...
+         |_ image_3
+         |   |_ 000000_10.png
+         |   |_ 000000_11.png
+         |   |_ ...
+      |_ training
+         |_ image_2
+         |   |_ 000000_10.png
+         |   |_ 000000_11.png
+         |   |_ ...
+         |_ disp_occ_0
+         |   |_ 000000_10.png
+         |   |_ 000001_10.png
+         |   |_ 000002_10.png
+         |   |_ ...
+
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_kitti_stereo_tfrecord.py calib --data <TRAIN_DIR>
+      python hailo_model_zoo/datasets/create_kitti_stereo_tfrecord.py val --data <VALIDATION_DIR>

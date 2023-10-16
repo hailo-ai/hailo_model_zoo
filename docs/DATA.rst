@@ -675,7 +675,7 @@ Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Download LFW dataset from `here <http://vis-www.cs.umass.edu/lfw/lfw.tgz>`_
-#. Download LFW pairs file from `here <http://vis-www.cs.umass.edu/lfw/pairs.txt>`
+#. Download LFW pairs file from `here <http://vis-www.cs.umass.edu/lfw/pairs.txt>`_
 #. Run the scripts:
 
     .. code-block::
@@ -701,7 +701,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1oOqJHTu2JIUz0qyEmVuSI_Nye36nioYX">`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1oOqJHTu2JIUz0qyEmVuSI_Nye36nioYX>`_ and extract. 
    The expected dataset structure:
 
    .. code-block::
@@ -769,7 +769,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the LOL dataset from `here <"https://drive.google.com/uc?export=download&id=157bjO1_cFuSd0HWDUuAmcHRJDVyWpOxB&authuser=0">`_ and extract.
+#. Download the LOL dataset from `here <https://drive.google.com/uc?export=download&id=157bjO1_cFuSd0HWDUuAmcHRJDVyWpOxB&authuser=0>`_ and extract.
    The expected dataset structure:
 
    .. code-block::
@@ -821,7 +821,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0">`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract. 
    The expected dataset structure:
 
    .. code-block::
@@ -869,7 +869,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <"https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0">`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract. 
    The expected dataset structure:
 
    .. code-block::
@@ -909,7 +909,7 @@ Hailo Model Zoo you should generate the KITTI Stereo TFRecord files.
 Manual Download
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the KITTI Stereo dataset from `here <"https://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo">`_. One must request access and await approval.
+#. Download the KITTI Stereo dataset from `here <https://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo>`_. One must request access and await approval.
 #. Extract the dataset.
    The expected dataset structure:
 

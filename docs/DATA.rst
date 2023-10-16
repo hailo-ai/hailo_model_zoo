@@ -38,7 +38,7 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `LOL`_
   * `BSD68`_
   * `CBSD68`_
-  * `KITTI_STEREO_`
+  * `KITTI_STEREO`_
 
 .. _ImageNet:
 

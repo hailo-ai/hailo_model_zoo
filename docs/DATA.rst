@@ -38,7 +38,7 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `LOL`_
   * `BSD68`_
   * `CBSD68`_
-  * `KITTI_STEREO`_
+  * `KITTI Stereo`_
 
 .. _ImageNet:
 
@@ -898,9 +898,9 @@ Manual Download (Optional)
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 val --data-path <CBSD68-extracted-data-folder>
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 calib --data-path <CBSD68-extracted-data-folder>
 
-.. _KITTI_STEREO:
+.. _KITTI Stereo:
 
-KITTI_STEREO
+KITTI Stereo
 ------------
 
 To evaluate/optimize/compile the stereo models of the

@@ -33,3 +33,4 @@ info:
   full_precision_result: 64.26
   source: https://github.com/ultralytics/ultralytics
   license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: GPL-3.0

@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/developer-zone/benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
 * Benchmark, TAPPAS and Recommended networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.25.0
+* All models were compiled using Hailo Dataflow Compiler v3.26.0
 * Supported tasks:
 
   * `Classification`_

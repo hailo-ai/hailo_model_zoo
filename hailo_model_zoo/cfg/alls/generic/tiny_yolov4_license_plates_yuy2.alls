@@ -1,5 +1,6 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 quantization_param(tiny_yolov4_license_plates_yuy2/output_layer1, precision_mode=a16_w16)
 quantization_param(tiny_yolov4_license_plates_yuy2/output_layer2, precision_mode=a16_w16)
-yuv_to_rgb1 = yuv_to_rgb()
+yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 reshape_yuy2 = input_conversion(tiny_yolov4_license_plates_yuy2/input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
+model_optimization_config(globals, output_encoding_vector=enabled)

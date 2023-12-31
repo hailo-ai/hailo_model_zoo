@@ -43,3 +43,4 @@ info:
   full_precision_result: 76.04
   source: https://github.com/bonlime/keras-deeplab-v3-plus
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

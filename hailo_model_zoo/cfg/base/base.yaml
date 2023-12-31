@@ -80,6 +80,7 @@ evaluation:
   gt_json_path: null
   labels_map: null
   meta_arch: null
+  data_count_offset: 0
 info:
   client_or_rnd: r&d
   standard_or_customized: standard

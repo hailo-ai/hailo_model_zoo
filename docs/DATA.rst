@@ -3,7 +3,7 @@
 Datasets
 ========
 
-| The Hailo Model Zoo works with TFRecord files which store the images and labels of the dataset for evaluation and calibration. 
+| The Hailo Model Zoo works with TFRecord files which store the images and labels of the dataset for evaluation and calibration.
 | The instructions on how to create the TFRecord files are given below. By default, datasets are stored in the following path:
 
 .. code-block::
@@ -38,7 +38,7 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `LOL`_
   * `BSD68`_
   * `CBSD68`_
-  * `KITTI Stereo`_
+  * `KITTI_STEREO`_
 
 .. _ImageNet:
 
@@ -80,7 +80,7 @@ To evaluate/optimize/compile the classification models of the Hailo Model Zoo yo
 COCO2017
 --------
 
-| To evaluate/optimize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO (\ `link <https://cocodataset.org/#home>`_\ ) TFRecord files. 
+| To evaluate/optimize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO (\ `link <https://cocodataset.org/#home>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -88,7 +88,7 @@ COCO2017
    python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017
    python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017
 
-| To evaluate/optimize/compile the single person pose estimation models of the Hailo Model Zoo you should generate the single-person COCO TFRecord files. 
+| To evaluate/optimize/compile the single person pose estimation models of the Hailo Model Zoo you should generate the single-person COCO TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -193,7 +193,7 @@ To evaluate/optimize/compile the semantic segmentation models of the Hailo Model
 WIDERFACE
 ---------
 
-| To evaluate/optimize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE (\ `link <http://shuoyang1213.me/WIDERFACE/>`_\ ) TFRecord files. 
+| To evaluate/optimize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE (\ `link <http://shuoyang1213.me/WIDERFACE/>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -257,7 +257,7 @@ Manual Download (Optional)
 VisDrone
 --------
 
-| To evaluate/optimize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone (\ `link <http://aiskyeye.com/download/object-detection-2/>`_\ ) TFRecord files. 
+| To evaluate/optimize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone (\ `link <http://aiskyeye.com/download/object-detection-2/>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -462,7 +462,7 @@ Manual Download (Optional)
       |_ AFW_AFW_1051618982_1_0_4.jpg
       |_ ...
 
-#. 
+#.
    Run
 
    .. code-block::
@@ -470,20 +470,20 @@ Manual Download (Optional)
       python hailo_model_zoo/datasets/create_300w-lp_tddfa_tfrecord.py --dir /path/to/train_aug_120x120
 
 #. Download the following files:
- 
+
    * the official dataset from `here <http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/Database/AFLW2000-3D.zip>`_
    * the cropped dataset from `here <https://drive.google.com/open?id=17LfvBZFAeXt0ACPnVckfdrLTMHUpIQqE>`_
    * The following files from `here <https://github.com/cleardusk/3DDFA/tree/master/test.configs>`_
-    
+
      - AFLW2000-3D.pose.npy
      - AFLW2000-3D.pts68.npy
      - AFLW2000-3D-Reannotated.pts68.npy
      - AFLW2000-3D_crop.roi_box.npy
 
    The expected structure:
-  
+
    .. code-block::
-  
+
       aflw2k3d_tddfa
       |_ AFLW2000-3D_crop.roi_box.npy
       |_ AFLW2000-3D.pose.npy
@@ -591,7 +591,7 @@ Manual Download (Optional)
        |_ 0001_c2s1_000301_00.jpg
        |_ ...
 
-#. Run 
+#. Run
 
    .. code-block::
 
@@ -602,8 +602,8 @@ Manual Download (Optional)
 
 PETA
 ----
-To evaluate/optimize/compile the person attribute models of the 
-Hailo Model Zoo you should generate the PETA TFRecord files 
+To evaluate/optimize/compile the person attribute models of the
+Hailo Model Zoo you should generate the PETA TFRecord files
 (manual download is required).
 
 #. Download the PETA dataset from `here <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_.
@@ -630,8 +630,8 @@ Hailo Model Zoo you should generate the PETA TFRecord files
 CelebA
 ------
 
-To evaluate/optimize/compile the face attribute models of the 
-Hailo Model Zoo you should generate the CelebA TFRecord files 
+To evaluate/optimize/compile the face attribute models of the
+Hailo Model Zoo you should generate the CelebA TFRecord files
 (manual download is required).
 
 
@@ -679,7 +679,7 @@ Manual Download (Optional)
 #. Run the scripts:
 
     .. code-block::
-        
+
         python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py calib --tgz /path/to/lfw.tgz --pairs /path/to/pairs.txt
         python hailo_model_zoo/datasets/create_arcface_lfw_tfrecord.py val --tgz /path/to/lfw.tgz --pairs /path/to/pairs.txt
 
@@ -688,7 +688,7 @@ Manual Download (Optional)
 BSD100
 ------
 
-To evaluate/optimize/compile the super resolution models of the 
+To evaluate/optimize/compile the super resolution models of the
 Hailo Model Zoo you should generate the BSD100 TFRecord files.
 
 Run the creation scripts:
@@ -701,7 +701,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1oOqJHTu2JIUz0qyEmVuSI_Nye36nioYX>`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1oOqJHTu2JIUz0qyEmVuSI_Nye36nioYX>`_ and extract.
    The expected dataset structure:
 
    .. code-block::
@@ -740,7 +740,7 @@ Manual Download (Optional)
 CIFAR100
 ------
 
-To evaluate/optimize/compile the CLIP models of the 
+To evaluate/optimize/compile the CLIP models of the
 Hailo Model Zoo you should generate the CIFAR100 TFRecord files.
 
 Run the creation scripts:
@@ -808,7 +808,7 @@ Manual Download (Optional)
 BSD68
 ------
 
-To evaluate/optimize/compile the image denoising models of the 
+To evaluate/optimize/compile the image denoising models of the
 Hailo Model Zoo you should generate the BSD68 TFRecord files.
 
 Run the creation scripts:
@@ -821,7 +821,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract.
    The expected dataset structure:
 
    .. code-block::
@@ -856,7 +856,7 @@ Manual Download (Optional)
 CBSD68
 ------
 
-To evaluate/optimize/compile the image denoising models of the 
+To evaluate/optimize/compile the image denoising models of the
 Hailo Model Zoo you should generate the CBSD68 TFRecord files.
 
 Run the creation scripts:
@@ -869,7 +869,7 @@ Run the creation scripts:
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract. 
+#. Download the BSD100 dataset from `here <https://drive.google.com/uc?export=download&id=1mwMLt-niNqcQpfN_ZduG9j4k6P_ZkOl0>`_ and extract.
    The expected dataset structure:
 
    .. code-block::
@@ -898,9 +898,9 @@ Manual Download (Optional)
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 val --data-path <CBSD68-extracted-data-folder>
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py CBSD68 calib --data-path <CBSD68-extracted-data-folder>
 
-.. _KITTI Stereo:
+.. _KITTI_STEREO:
 
-KITTI Stereo
+KITTI_STEREO
 ------------
 
 To evaluate/optimize/compile the stereo models of the

@@ -25,7 +25,7 @@ info:
   input_shape: 640x640x3
   output_shape: 20x20x64, 20x20x80, 20x20x32, 40x40x64, 40x40x80, 40x40x32, 80x80x64,
     80x80x80, 80x80x32, 160x160x32
-  operations: 40.2G
+  operations: 42.6G
   parameters: 11.8M
   framework: pytorch
   training_data: coco instances train2017
@@ -34,3 +34,4 @@ info:
   full_precision_result: 36.634
   source: https://github.com/ultralytics/ultralytics
   license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: GPL-3.0

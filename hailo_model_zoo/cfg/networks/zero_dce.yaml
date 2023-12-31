@@ -40,3 +40,4 @@ info:
   full_precision_result: 16.228
   source: Internal
   license_url: https://github.com/hailo-ai/hailo_model_zoo/blob/master/LICENSE
+  license_name: MIT

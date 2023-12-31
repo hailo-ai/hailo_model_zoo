@@ -9,7 +9,6 @@ except ModuleNotFoundError:
 from hailo_sdk_client import ClientRunner, InferenceContext
 from hailo_sdk_client.exposed_definitions import States
 from hailo_sdk_client.tools.profiler.react_report_generator import ReactReportGenerator
-from hailo_sdk_common.profiler.profiler_common import ProfilerModes
 from hailo_sdk_common.targets.inference_targets import SdkFPOptimized, SdkPartialNumeric
 from hailo_model_zoo.core.main_utils import (compile_model, get_hef_path, get_integrated_postprocessing,
                                              get_network_info, infer_model_tf1, infer_model_tf2,
@@ -95,7 +94,7 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
             if integrated_postprocessing and integrated_postprocessing.enabled:
                 runner.optimize_full_precision()
                 return None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
-            # We intenionally use base model script and assume its modifications
+            # We intentionally use base model script and assume its modifications
             # compatible to the performance model script
             model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                       args.model_script_path,
@@ -128,7 +127,7 @@ def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
             configure_hef_tf2(runner, args.hef_path)
             return
 
-        # We intenionally use base model script and assume its modifications
+        # We intentionally use base model script and assume its modifications
         # compatible to the performance model script
         model_script = _extract_model_script_path(network_info.paths.alls_script,
                                                   args.model_script_path,
@@ -148,10 +147,6 @@ def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
 
     _ensure_compiled(runner, logger, args, network_info)
     return
-
-
-def _str_to_profiling_mode(name):
-    return ProfilerModes[name.upper()]
 
 
 def _hailo8l_warning(hw_arch, logger):
@@ -181,7 +176,7 @@ def optimize(args):
             "Cannot run optimization without dataset. use --calib-path to provide external dataset.")
 
     logger.info(f'Initializing the {args.hw_arch} runner...')
-    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
+    runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
 
     _ensure_parsed(runner, logger, network_info, args)
 
@@ -201,7 +196,7 @@ def compile(args):
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info(f'Initializing the {args.hw_arch} runner...')
-    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
+    runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
 
     _ensure_optimized(runner, logger, args, network_info)
 
@@ -214,41 +209,26 @@ def compile(args):
 
 
 def profile(args):
-    profile_mode = _str_to_profiling_mode(args.profile_mode)
-    if args.hef_path and profile_mode is ProfilerModes.PRE_PLACEMENT:
-        raise ValueError(
-            "hef is not used when profiling in pre_placement mode. use --mode post_placement for profiling with a hef.")
     logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
     model_name = network_info.network.network_name
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info(f'Initializing the {args.hw_arch} runner...')
-    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
+    runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
 
-    if profile_mode is ProfilerModes.PRE_PLACEMENT or args.hef_path:
-        # we already have hef (or don't need one), just need .hn
-        _ensure_parsed(runner, logger, network_info, args)
-        if runner.state == States.HAILO_MODEL:
-            if args.hef_path:
-                model_script = _extract_model_script_path(network_info.paths.alls_script,
-                                                          args.model_script_path,
-                                                          args.hw_arch,
-                                                          args.performance)
-                _ensure_performance(model_name, model_script, args.performance, logger)
-            else:
-                model_script = _extract_model_script_path(network_info.paths.alls_script,
-                                                          args.model_script_path,
-                                                          args.hw_arch,
-                                                          False)
-            optimize_full_precision_model(runner, model_script=model_script, resize=args.resize,
-                                          input_conversion=args.input_conversion)
-    else:
-        # Optimize the model so profile_hn_model could compile & profile it
-        _ensure_optimized(runner, logger, args, network_info)
+    _ensure_parsed(runner, logger, network_info, args)
 
-    export = runner._profile(profiling_mode=profile_mode, should_use_logical_layers=True,
-                             hef_filename=args.hef_path)
+    if args.hef_path and runner.state == States.HAILO_MODEL:
+        model_script = _extract_model_script_path(network_info.paths.alls_script,
+                                                  args.model_script_path,
+                                                  args.hw_arch,
+                                                  args.performance)
+        _ensure_performance(model_name, model_script, args.performance, logger)
+        optimize_full_precision_model(runner, model_script=model_script, resize=args.resize,
+                                      input_conversion=args.input_conversion)
+
+    export = runner.profile(should_use_logical_layers=True, hef_filename=args.hef_path)
     outpath = args.results_dir / f'{model_name}.html'
     report_generator = ReactReportGenerator(export, outpath)
     csv_data = report_generator.create_report(should_open_web_browser=False)
@@ -258,16 +238,23 @@ def profile(args):
 
 
 def evaluate(args):
-    if args.target == 'hailo8' and not HEF_EXISTS:
+    logger = get_logger()
+    if args.target == "hailo8":
+        logger.warning("Using 'hailo8' as target will be deprecated please use 'hardware'")
+
+    if args.target in ['hailo8', 'hardware'] and not HEF_EXISTS:
         raise ModuleNotFoundError(
             f"HailoRT is not available, in case you want to run on {args.target} you should install HailoRT first")
+
+    if (args.hw_arch == 'hailo15h' and args.target in ['hailo8', 'hardware']) and not args.use_service:
+        raise ValueError("Evaluation of hw_arch hailo15h is currently not supported in the Hailo Model Zoo")
 
     if args.hef_path and not HEF_EXISTS:
         raise ModuleNotFoundError(
             "HailoRT is not available, in case you want to evaluate with hef you should install HailoRT first")
 
     hardware_targets = set(DEVICE_NAMES)
-    hardware_targets.add('hailo8')
+    hardware_targets.update(['hailo8', 'hardware'])
     if args.hef_path and args.target not in hardware_targets:
         raise ValueError(
             f"hef is not used when evaluating with {args.target}. use --target hailo8 for evaluating with a hef.")
@@ -276,7 +263,6 @@ def evaluate(args):
         raise ValueError(
             "The --video-output argument requires --visualize argument")
 
-    logger = get_logger()
     network_info = get_network_info(args.model_name, yaml_path=args.yaml_path)
 
     if args.data_path is None and network_info.evaluation.data_set is None:
@@ -289,15 +275,18 @@ def evaluate(args):
     logger.info(f'Start run for network {model_name} ...')
 
     logger.info('Initializing the runner...')
-    runner = ClientRunner(hw_arch=args.hw_arch, har_path=args.har_path)
+    runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
     network_groups = None
+
+    #  Enabling service for hailo15h
+    runner.use_service = args.use_service
 
     logger.info(f'Chosen target is {args.target}')
     batch_size = args.batch_size or __get_batch_size(network_info, args.target)
     infer_type = network_info.evaluation.infer_type
     # legacy tf1 inference flow
     if infer_type not in ['runner_infer', 'model_infer', 'np_infer', 'facenet_infer',
-                          'np_infer_lite', 'model_infer_lite']:
+                          'np_infer_lite', 'model_infer_lite', 'sd2_unet_infer']:
         hailo_target = TARGETS[args.target]
         with hailo_target() as target:
             network_groups = _ensure_runnable_state_tf1(args, logger, network_info, runner, target)
@@ -315,7 +304,7 @@ def evaluate(args):
         context = runner.infer_context(target, device_info)
         return infer_model_tf2(runner, network_info, context, logger, args.eval_num_examples, args.data_path,
                                batch_size, args.print_num_examples, args.visualize_results, args.video_outpath,
-                               dump_results=False)
+                               args.use_lite_inference, dump_results=False)
 
 
 def __get_batch_size(network_info, target):

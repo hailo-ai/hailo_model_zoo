@@ -52,6 +52,10 @@ from hailo_model_zoo.core.postprocessing.image_denoising_postprocessing import (
 from hailo_model_zoo.core.postprocessing.vit_pose_postprocessing import (
     vit_pose_postprocessing
 )
+from hailo_model_zoo.core.postprocessing.stable_diffusion_v2_postprocessing import (
+    stable_diffusion_v2_decoder_postprocessing, stable_diffusion_v2_unet_postprocessing,
+    visualize_stable_diffusion_v2_decoder, visualize_stable_diffusion_v2_unet
+)
 
 try:
     # THIS CODE IS EXPERIMENTAL AND IN USE ONLY FOR TAPPAS VALIDATION
@@ -102,7 +106,9 @@ def get_visualization(name, **kwargs):
         'single_person_pose_estimation': visualize_single_person_pose_estimation_result,
         'stereonet': visualize_stereonet_result,
         'image_denoising': visualize_image_denoising_result,
-        'depth_estimation': visualize_depth_estimation_result
+        'depth_estimation': visualize_depth_estimation_result,
+        'stable_diffusion_v2_decoder': visualize_stable_diffusion_v2_decoder,
+        'stable_diffusion_v2_unet': visualize_stable_diffusion_v2_unet,
     }
     if name not in visualization_fn_map:
         raise ValueError('Visualization name [%s] was not recognized' % name)
@@ -153,6 +159,8 @@ def get_postprocessing(name, flip=False):
         'tappas_postprocessing': tappas_postprocessing,
         'image_denoising': image_denoising_postprocessing,
         'depth_estimation': depth_estimation_postprocessing,
+        'stable_diffusion_v2_decoder': stable_diffusion_v2_decoder_postprocessing,
+        'stable_diffusion_v2_unet': stable_diffusion_v2_unet_postprocessing,
     }
 
     if name not in postprocessing_fn_map:

@@ -1,6 +1,31 @@
 Changelog
 =========
 
+**v2.10**
+
+* Update to use Dataflow Compiler v3.26.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.16.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* Using HailoRT-pp for postprocessing of the following variants:
+
+  * yolov8
+
+* Porfiler change:
+
+  * Removal of ``--mode`` flag from ``hailomz profile`` command, which generates a report according to provided HAR state.
+
+* CLI change:
+
+  * ``hailo8`` target is deprecated in favor of ``hardware``
+
+* Support KITTI Stereo Dataset
+* New Models:
+
+  * vit_pose_small - encoder based transformer with layernorm for pose estimation
+  * segformer_b0_bn - encoder based transformer with batchnorm for semantic segmentation  
+
+* Bug fixes
+
 **v2.9**
 
 * Update to use Dataflow Compiler v3.25.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

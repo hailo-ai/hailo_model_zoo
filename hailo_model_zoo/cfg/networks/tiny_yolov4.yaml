@@ -54,3 +54,4 @@ info:
   full_precision_result: 19.18
   source: https://github.com/Tianxiaomo/pytorch-YOLOv4
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

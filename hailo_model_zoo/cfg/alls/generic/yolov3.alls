@@ -6,3 +6,4 @@ post_quantization_optimization(finetune, policy=enabled, dataset_size=8192, epoc
 quantization_param(output_layer1, precision_mode=a16_w16)
 quantization_param(output_layer2, precision_mode=a16_w16)
 quantization_param(output_layer3, precision_mode=a16_w16)
+model_optimization_config(globals, output_encoding_vector=enabled)

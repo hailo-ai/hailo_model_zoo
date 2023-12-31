@@ -424,7 +424,6 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45,
 def _yolov8_decoding(raw_boxes, raw_kpts, strides, image_dims, reg_max, ):
     boxes = None
     decoded_kpts = None
-    # import ipdb; ipdb.set_trace()
     for box_distribute, kpts, stride, j in zip(raw_boxes, raw_kpts, strides, np.arange(3)):
         # create grid
         shape = [int(x / stride) for x in image_dims]

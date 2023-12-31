@@ -24,3 +24,4 @@ info:
   full_precision_result: 73.43
   source: https://github.com/PingoLH/Pytorch-HarDNet
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

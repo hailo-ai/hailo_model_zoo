@@ -1,10 +1,9 @@
 from hailo_model_zoo.utils.platform_discovery import PLATFORM_AVAILABLE
 
 
-PROFILER_MODE_NAMES = {'pre_placement', 'post_placement'}
-
 TARGETS = [
     'hailo8',
+    'hardware',
     'full_precision',
     'emulator',
 ]

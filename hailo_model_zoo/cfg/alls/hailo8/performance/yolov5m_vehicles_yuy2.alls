@@ -1,6 +1,6 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(sigmoid)
-resize_input1 = resize_input([1080, 1920], input_layer1)
+resize_input1 = resize(input_layer1, resize_shapes=[1080, 1920])
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 quantization_param(conv45, precision_mode=a8_w4)
 quantization_param(conv46, precision_mode=a8_w4)
@@ -13,7 +13,7 @@ pre_quantization_optimization(weights_clipping, layers=[conv75], mode=manual, cl
 pre_quantization_optimization(weights_clipping, layers=[conv85], mode=manual, clipping_values=[-26.61, 26.61])
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv94, conv85, conv75])
 
-yuv_to_rgb1 = yuv_to_rgb()
+yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 reshape_yuy2 = input_conversion(input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
 nms_postprocess("$HMZ_DATA/models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json", yolov5, engine=cpu)
 

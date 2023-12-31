@@ -1,0 +1,29 @@
+base:
+- base/fcn.yaml
+inference:
+  emulator_batch_size: 4
+network:
+  network_name: segformer_b0_bn
+parser:
+  nodes:
+  - null
+  - '1553'
+paths:
+  alls_script: segformer_b0_bn.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip
+info:
+  task: semantic segmentation
+  input_shape: 512x1024x3
+  output_shape: 512x1024x1
+  operations: 27.2G
+  parameters: 3.72M
+  framework: pytorch
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 70.17
+  source: https://github.com/NVlabs/SegFormer
+  license_url: https://github.com/NVlabs/SegFormer/blob/master/LICENSE
+  license_name: NVIDIA

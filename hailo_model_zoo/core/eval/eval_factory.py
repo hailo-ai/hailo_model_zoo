@@ -23,6 +23,7 @@ from hailo_model_zoo.core.eval.single_person_pose_estimation_evaluation import S
 from hailo_model_zoo.core.eval.stereo_evaluation import StereoNetEval
 from hailo_model_zoo.core.eval.image_denoising_evaluation import ImageDenoisingEval
 from hailo_model_zoo.core.eval.depth_estimation_evaluation import DepthEstimationEval
+from hailo_model_zoo.core.eval.image_generation_from_text_evaluation import ImagegenerationFromTextEval
 
 
 class EmptyEval():
@@ -73,6 +74,8 @@ def get_evaluation(name):
         'stereonet': StereoNetEval,
         'image_denoising': ImageDenoisingEval,
         'depth_estimation': DepthEstimationEval,
+        'stable_diffusion_v2_decoder': ImagegenerationFromTextEval,
+        'stable_diffusion_v2_unet': ImagegenerationFromTextEval,
     }
 
     if name not in evaluation_map:

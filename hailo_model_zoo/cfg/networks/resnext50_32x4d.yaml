@@ -24,3 +24,4 @@ info:
   full_precision_result: 79.31
   source: https://github.com/osmr/imgclsmob/tree/master/pytorch
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

@@ -23,7 +23,7 @@ info:
   task: object detection
   input_shape: 640x640x3
   output_shape: 20x20x255, 40x40x255, 80x80x255
-  operations: 41.67G
+  operations: 52.88G
   parameters: 22.67M
   framework: pytorch
   training_data: coco train2017
@@ -32,3 +32,4 @@ info:
   full_precision_result: 43.057
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
+  license_name: GPL-3.0

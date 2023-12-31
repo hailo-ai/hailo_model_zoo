@@ -15,21 +15,21 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |cuda| image:: https://img.shields.io/badge/CUDA-11.2-blue.svg
+.. |cuda| image:: https://img.shields.io/badge/CUDA-11.8-blue.svg
    :target: https://developer.nvidia.com/cuda-toolkit
    :alt: Cuda
    :width: 80
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.25.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.26.0-brightgreen.svg
    :target: https://hailo.ai/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.15.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.16.0-brightgreen.svg
    :target: https://hailo.ai/contact-us/
    :alt: HailoRT
    :width: 170

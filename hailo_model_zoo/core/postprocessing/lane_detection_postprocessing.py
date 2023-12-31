@@ -1,57 +1,14 @@
 import numpy as np
 import cv2
-import tensorflow as tf
+
+from hailo_model_zoo.core.postprocessing.lane_detection.polylanenet import PolyLaneNetPostProcessHailo
+from hailo_model_zoo.core.postprocessing.lane_detection.laneaf import LaneAFPostProc
 
 
-class PolyLaneNetPostProcessHailo(object):
-    def __init__(self):
-        return
-
-    def recombine_split_endnodes(self, confs, upper_lower, coeffs_1_2, coeffs_3_4):
-        bs = confs.shape[0]
-        output = np.zeros((bs, 5, 7))
-        for lane in range(5):
-            output[:, lane, 0:1] = confs[:, 1 * lane:1 * lane + 1]
-            output[:, lane, 1:3] = upper_lower[:, 2 * lane:2 * lane + 2]
-            output[:, lane, 3:5] = coeffs_1_2[:, 2 * lane:2 * lane + 2]
-            output[:, lane, 5:7] = coeffs_3_4[:, 2 * lane:2 * lane + 2]
-        return output.astype(np.float32)
-
-    def sigmoid(self, x):
-        return (np.exp(x)) / (np.exp(x) + 1.0)
-
-    def enforce_shared_y(self, pred):
-        pred = pred.reshape(-1, 5, 7)
-        pred_lowers = pred[:, :, 1]
-        first_lowers = pred_lowers[:, 0]
-        first_lowers = np.expand_dims(first_lowers, 1)
-        first_lowers = np.repeat(first_lowers, 5, axis=1)
-        pred[:, :, 1] = first_lowers
-        return pred
-
-    def decode(self, outputs, conf_threshold=0.5):
-        outputs = self.enforce_shared_y(outputs)
-        outputs[:, :, 0] = self.sigmoid(outputs[:, :, 0])
-        outputs[outputs[:, :, 0] < conf_threshold] = 0
-        return outputs
-
-    def polynomize_pred(self, pred):
-        pred = pred[0]  # [0] zero is because it had to be given as a list
-        batch_lanes = []
-        for image in range(pred.shape[0]):
-            # running over images in batch:
-            lanes = []
-            for lane_index in range(pred.shape[1]):
-                confidence = pred[image, lane_index, 0]
-                lower = pred[image, lane_index, 1]
-                upper = pred[image, lane_index, 2]
-                xvals = (np.polyval(pred[image, lane_index, 3:], self.h_range) * self.img_w)
-                xvals[self.h_range < lower] = -2.
-                xvals[self.h_range > upper] = -2.
-                xvals = np.append(xvals, confidence)
-                lanes.append(xvals.astype(np.float32))
-            batch_lanes.append(lanes)
-        return [batch_lanes]
+LANE_DETECTION_ARCHS = {
+    "polylanenet": PolyLaneNetPostProcessHailo,
+    "laneaf": LaneAFPostProc
+}
 
 
 def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs):
@@ -87,16 +44,16 @@ def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs)
     return im
 
 
-def lane_detection_postprocessing(endnodes, device_pre_post_layers=None, img_w=1280,
-                                  img_h=720, output_scheme=None, **kwargs):
-    lane_detection_postproc = PolyLaneNetPostProcessHailo()
-    lane_detection_postproc.h_range_int = np.arange(img_h)
-    lane_detection_postproc.h_range = lane_detection_postproc.h_range_int / (img_h - 1)
-    lane_detection_postproc.img_w = img_w
-    lane_detection_postproc.img_h = img_h
-    if output_scheme and output_scheme.get('split_output', False):
-        endnodes = tf.py_function(lane_detection_postproc.recombine_split_endnodes, endnodes, [tf.float32])
-    decoded = tf.numpy_function(lane_detection_postproc.decode, [endnodes], [tf.float32])
-    postprocessed = tf.py_function(lane_detection_postproc.polynomize_pred,
-                                   [decoded], [tf.float32])  # network always returns 5 lane predictions.
-    return {'predictions': postprocessed[0]}
+def _get_postprocessing_class(meta_arch):
+    for k in LANE_DETECTION_ARCHS:
+        if k in meta_arch:
+            return LANE_DETECTION_ARCHS[k]
+    raise ValueError("Meta-architecture [{}] is not supported".format(meta_arch))
+
+
+def lane_detection_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    meta_arch = kwargs["meta_arch"].lower()
+    kwargs["anchors"] = {} if kwargs["anchors"] is None else kwargs["anchors"]
+    kwargs["device_pre_post_layers"] = device_pre_post_layers
+    postproc = _get_postprocessing_class(meta_arch)(**kwargs)
+    return postproc.postprocessing(endnodes, **kwargs)

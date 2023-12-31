@@ -24,3 +24,4 @@ info:
   full_precision_result: 77.05
   source: https://github.com/facebookresearch/pycls
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

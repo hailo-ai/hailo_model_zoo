@@ -17,7 +17,7 @@ info:
   task: semantic segmentation
   input_shape: 1024x1920x3
   output_shape: 1024x1920x1
-  operations: 142.49G
+  operations: 142.82G
   parameters: 11.20M
   framework: pytorch
   training_data: cityscapes train
@@ -26,3 +26,4 @@ info:
   full_precision_result: 70.0
   source: https://mmsegmentation.readthedocs.io/en/latest
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

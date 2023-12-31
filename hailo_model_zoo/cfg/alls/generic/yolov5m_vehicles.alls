@@ -1,5 +1,5 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-resize_input1 = resize_input([1080, 1920], input_layer1)
+resize_input1 = resize(input_layer1, resize_shapes=[1080, 1920])
 change_output_activation(sigmoid)
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 quantization_param(conv45, precision_mode=a8_w4)

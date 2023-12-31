@@ -22,3 +22,4 @@ info:
   source: https://github.com/openai/CLIP
   full_precision_result: 42.07
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

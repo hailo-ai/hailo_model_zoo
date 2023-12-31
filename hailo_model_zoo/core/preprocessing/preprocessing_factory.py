@@ -1,6 +1,7 @@
 """Contains a factory for image preprocessing."""
 import numpy as np
 import tensorflow as tf
+
 from hailo_model_zoo.core.preprocessing import classification_preprocessing
 from hailo_model_zoo.core.preprocessing import segmentation_preprocessing
 from hailo_model_zoo.core.preprocessing import detection_preprocessing
@@ -15,6 +16,7 @@ from hailo_model_zoo.core.preprocessing import mspn_preprocessing
 from hailo_model_zoo.core.preprocessing import low_light_enhancement_preprocessing
 from hailo_model_zoo.core.preprocessing import stereonet_preprocessing
 from hailo_model_zoo.core.preprocessing import image_denoising_preprocessing
+from hailo_model_zoo.core.preprocessing import stable_diffusion_v2_preprocessing
 
 
 def convert_rgb_to_yuv(image):
@@ -109,6 +111,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'centerpose': centerpose_preprocessing.centerpose_preprocessing,
         'mono_depth': depth_estimation_preprocessing.mono_depth_2,
         'polylanenet': lane_detection_preprocessing.polylanenet,
+        'laneaf': lane_detection_preprocessing.laneaf,
         'fair_mot': detection_preprocessing.fair_mot,
         'face_landmark_cnn': face_landmarks_preprocessing.face_landmark_cnn,
         'smoke': detection_preprocessing.centernet_resnet_v1_18_detection,
@@ -127,7 +130,9 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         'resnet_pruned': classification_preprocessing.resnet_pruned,
         'stereonet': stereonet_preprocessing.stereonet,
         'dncnn3': image_denoising_preprocessing.dncnn3,
-        'scdepthv3': depth_estimation_preprocessing.scdepthv3
+        'scdepthv3': depth_estimation_preprocessing.scdepthv3,
+        'stable_diffusion_v2_decoder': stable_diffusion_v2_preprocessing.vae_decoder,
+        'stable_diffusion_v2_unet': stable_diffusion_v2_preprocessing.unet,
     }
 
     if name not in preprocessing_fn_map:

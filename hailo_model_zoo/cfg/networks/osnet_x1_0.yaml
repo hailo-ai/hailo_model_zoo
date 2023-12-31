@@ -21,6 +21,8 @@ parser:
     - 58.395
     - 57.12
     - 57.375
+evaluation:
+  data_count_offset: 15913
 info:
   task: person re-id
   input_shape: 256x128x3
@@ -34,3 +36,4 @@ info:
   full_precision_result: 94.3
   source: https://github.com/KaiyangZhou/deep-person-reid
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

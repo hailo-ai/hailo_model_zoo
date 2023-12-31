@@ -34,3 +34,4 @@ info:
   full_precision_result: 37.07
   source: https://github.com/WongKinYiu/yolov7
   license_url: https://github.com/WongKinYiu/yolov7/blob/main/LICENSE.md
+  license_name: GPL-3.0

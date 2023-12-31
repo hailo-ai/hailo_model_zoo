@@ -1,5 +1,5 @@
 normalization1 = normalization([127.5, 127.5, 127.5], [128.0, 128.0, 128.0])
-resize_input1 = resize_input([1080, 1920], input_layer1)
+resize_input1 = resize(input_layer1, resize_shapes=[1080, 1920])
 change_output_activation(conv41, sigmoid)
 change_output_activation(conv49, sigmoid)
 change_output_activation(conv56, sigmoid)

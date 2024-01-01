@@ -44,7 +44,7 @@ Hailo Model Zoo
 
 
 .. image:: docs/images/logo.png
-  
+
 |python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
 
@@ -56,8 +56,11 @@ Models
 | Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo-8 device.
 | The models are divided to:
 
-
-* | `PUBLIC MODELS <docs/PUBLIC_MODELS.rst>`_ which were trained on publicly available datasets.
+  | PUBLIC MODELS - which were trained on publicly available datasets.
+   * | `PUBLIC MODELS <docs/PUBLIC_MODELS_HAILO8.rst>`_
+   * | `PUBLIC MODELS <docs/PUBLIC_MODELS_HAILO8L.rst>`_
+   * | `PUBLIC MODELS <docs/PUBLIC_MODELS_HAILO15H.rst>`_
+   * | `PUBLIC MODELS <docs/PUBLIC_MODELS__HAILO15M.rst>`_
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.
 

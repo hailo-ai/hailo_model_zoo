@@ -46,7 +46,7 @@ ImageNet
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -431,7 +431,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 33 8 7 12 8 8 8 7 7
+   :widths: 33 8 7 12 8 8 8 7 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -967,7 +967,7 @@ VisDrone
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1004,7 +1004,7 @@ Cityscapes
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1060,7 +1060,7 @@ Oxford-IIIT Pet
 ^^^^^^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1092,7 +1092,7 @@ Pascal VOC
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 36 7 9 12 9 8 9 8 7
+   :widths: 36 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1141,7 +1141,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 24 8 9 18 9 8 9 8 7
+   :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1202,7 +1202,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 24 8 9 18 9 8 9 8 7
+   :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1263,7 +1263,7 @@ WiderFace
 ^^^^^^^^^
 
 .. list-table::
-   :widths: 24 7 12 11 9 8 8 8 7
+   :widths: 24 7 12 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1348,7 +1348,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 34 7 7 11 9 8 8 8 7
+   :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1481,7 +1481,7 @@ NYU
 ^^^
 
 .. list-table::
-   :widths: 34 7 7 11 9 8 8 8 7
+   :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1530,7 +1530,7 @@ AFLW2k3d
 ^^^^^^^^
 
 .. list-table::
-   :widths: 28 8 8 16 9 8 8 8 7
+   :widths: 28 8 8 16 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1567,7 +1567,7 @@ Market1501
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 28 8 9 13 9 8 8 8 7
+   :widths: 28 8 9 13 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1616,7 +1616,7 @@ BSD100
 ^^^^^^
 
 .. list-table::
-   :widths: 32 8 7 11 9 8 8 8 7
+   :widths: 32 8 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1677,7 +1677,7 @@ LFW
 ^^^
 
 .. list-table::
-   :widths: 12 7 12 14 9 8 10 8 7
+   :widths: 12 7 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1726,7 +1726,7 @@ PETA
 ^^^^
 
 .. list-table::
-   :widths: 24 14 12 14 9 8 10 8 7
+   :widths: 24 14 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1763,7 +1763,7 @@ CELEBA
 ^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1800,7 +1800,7 @@ CIFAR100
 ^^^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1837,7 +1837,7 @@ N/A
 ^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1874,7 +1874,7 @@ LOL
 ^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1923,7 +1923,7 @@ BSD68
 ^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1955,7 +1955,7 @@ CBSD68
 ^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name

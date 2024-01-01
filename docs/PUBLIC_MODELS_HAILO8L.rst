@@ -1640,9 +1640,9 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo8l/espcn_x2.hef>`_
-     - 1161.56
      - 1164.97
-     - 0.936452
+     - 1164.95
+     - 0.954002
    * - espcn_x3
      - 28.41
      - 28.06

@@ -1,16 +1,21 @@
 
 Public Pre-Trained Models
 =========================
+
 .. |rocket| image:: images/rocket.png
   :width: 18
+
 .. |star| image:: images/star.png
   :width: 18
+
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
+
 * Network available in `Hailo Benchmark <https://hailo.ai/developer-zone/benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
 * Benchmark, TAPPAS and Recommended networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.26.0
 * Supported tasks:
+
   * `Classification`_
   * `Object Detection`_
   * `Semantic Segmentation`_
@@ -33,6 +38,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 .. _Classification:
+
 Classification
 --------------
 
@@ -42,6 +48,7 @@ ImageNet
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - Accuracy (top1)
      - Quantized
@@ -416,6 +423,7 @@ ImageNet
      - 6.5406
 
 .. _Object Detection:
+
 Object Detection
 ----------------
 
@@ -425,6 +433,7 @@ COCO
 .. list-table::
    :widths: 33 8 7 12 8 8 8 7 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mAP
      - Quantized
@@ -958,6 +967,7 @@ VisDrone
 ^^^^^^^^
 
 .. list-table::
+
    :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -986,6 +996,7 @@ VisDrone
      - {}
 
 .. _Semantic Segmentation:
+
 Semantic Segmentation
 ---------------------
 
@@ -1048,6 +1059,7 @@ Oxford-IIIT Pet
 ^^^^^^^^^^^^^^^
 
 .. list-table::
+
    :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1079,6 +1091,7 @@ Pascal VOC
 ^^^^^^^^^^
 
 .. list-table::
+
    :widths: 36 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1119,6 +1132,7 @@ Pascal VOC
      - 10.2057
 
 .. _Pose Estimation:
+
 Pose Estimation
 ---------------
 
@@ -1126,6 +1140,7 @@ COCO
 ^^^^
 
 .. list-table::
+
    :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1178,6 +1193,7 @@ COCO
      - 4.96279
 
 .. _Single Person Pose Estimation:
+
 Single Person Pose Estimation
 -----------------------------
 
@@ -1185,6 +1201,7 @@ COCO
 ^^^^
 
 .. list-table::
+
    :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1237,6 +1254,7 @@ COCO
      - 16.2343
 
 .. _Face Detection:
+
 Face Detection
 --------------
 
@@ -1244,6 +1262,7 @@ WiderFace
 ^^^^^^^^^
 
 .. list-table::
+
    :widths: 24 7 12 11 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1320,6 +1339,7 @@ WiderFace
      - 4.6958
 
 .. _Instance Segmentation:
+
 Instance Segmentation
 ---------------------
 
@@ -1327,6 +1347,7 @@ COCO
 ^^^^
 
 .. list-table::
+
    :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1451,6 +1472,7 @@ COCO
      - 9.01885
 
 .. _Depth Estimation:
+
 Depth Estimation
 ----------------
 
@@ -1458,6 +1480,7 @@ NYU
 ^^^
 
 .. list-table::
+
    :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1498,6 +1521,7 @@ NYU
      - 7.93883
 
 .. _Facial Landmark Detection:
+
 Facial Landmark Detection
 -------------------------
 
@@ -1505,6 +1529,7 @@ AFLW2k3d
 ^^^^^^^^
 
 .. list-table::
+
    :widths: 28 8 8 16 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1533,6 +1558,7 @@ AFLW2k3d
      - 0.602537
 
 .. _Person Re-ID:
+
 Person Re-ID
 ------------
 
@@ -1540,6 +1566,7 @@ Market1501
 ^^^^^^^^^^
 
 .. list-table::
+
    :widths: 28 8 9 13 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1580,6 +1607,7 @@ Market1501
      - 0.674959
 
 .. _Super Resolution:
+
 Super Resolution
 ----------------
 
@@ -1587,6 +1615,7 @@ BSD100
 ^^^^^^
 
 .. list-table::
+
    :widths: 32 8 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1639,6 +1668,7 @@ BSD100
      - 0.515348
 
 .. _Face Recognition:
+
 Face Recognition
 ----------------
 
@@ -1646,6 +1676,7 @@ LFW
 ^^^
 
 .. list-table::
+
    :widths: 12 7 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1686,6 +1717,7 @@ LFW
      - 11.7741
 
 .. _Person Attribute:
+
 Person Attribute
 ----------------
 
@@ -1693,6 +1725,7 @@ PETA
 ^^^^
 
 .. list-table::
+
    :widths: 24 14 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1721,6 +1754,7 @@ PETA
      - 2.40937
 
 .. _Face Attribute:
+
 Face Attribute
 --------------
 
@@ -1728,6 +1762,7 @@ CELEBA
 ^^^^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1756,6 +1791,7 @@ CELEBA
      - 3.33325
 
 .. _Zero-shot Classification:
+
 Zero-shot Classification
 ------------------------
 
@@ -1763,6 +1799,7 @@ CIFAR100
 ^^^^^^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1791,6 +1828,7 @@ CIFAR100
      - 14.618
 
 .. _Stereo Depth Estimation:
+
 Stereo Depth Estimation
 -----------------------
 
@@ -1798,6 +1836,7 @@ N/A
 ^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1826,6 +1865,7 @@ N/A
      - {}
 
 .. _Low Light Enhancement:
+
 Low Light Enhancement
 ---------------------
 
@@ -1833,6 +1873,7 @@ LOL
 ^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1873,6 +1914,7 @@ LOL
      - 28.8547
 
 .. _Image Denoising:
+
 Image Denoising
 ---------------
 
@@ -1880,6 +1922,7 @@ BSD68
 ^^^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1911,6 +1954,7 @@ CBSD68
 ^^^^^^
 
 .. list-table::
+
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
    * - Network Name
@@ -1939,6 +1983,7 @@ CBSD68
      - 36.385
 
 .. _Hand Landmark detection:
+
 Hand Landmark detection
 -----------------------
 
@@ -1946,6 +1991,7 @@ Hand Landmark
 ^^^^^^^^^^^^^
 
 .. list-table::
+
    :header-rows: 1
    * - Network Name
      - Input Resolution (HxWxC)

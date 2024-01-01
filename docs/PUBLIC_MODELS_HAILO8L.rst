@@ -967,9 +967,9 @@ VisDrone
 ^^^^^^^^
 
 .. list-table::
-
    :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mAP
      - Quantized
@@ -1006,6 +1006,7 @@ Cityscapes
 .. list-table::
    :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mIoU
      - Quantized
@@ -1059,9 +1060,9 @@ Oxford-IIIT Pet
 ^^^^^^^^^^^^^^^
 
 .. list-table::
-
    :widths: 31 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mIoU
      - Quantized
@@ -1091,9 +1092,9 @@ Pascal VOC
 ^^^^^^^^^^
 
 .. list-table::
-
    :widths: 36 7 9 12 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mIoU
      - Quantized
@@ -1140,9 +1141,9 @@ COCO
 ^^^^
 
 .. list-table::
-
    :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - AP
      - Quantized
@@ -1201,9 +1202,9 @@ COCO
 ^^^^
 
 .. list-table::
-
    :widths: 24 8 9 18 9 8 9 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - AP
      - Quantized
@@ -1262,9 +1263,9 @@ WiderFace
 ^^^^^^^^^
 
 .. list-table::
-
    :widths: 24 7 12 11 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mAP
      - Quantized
@@ -1347,9 +1348,9 @@ COCO
 ^^^^
 
 .. list-table::
-
    :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - mAP
      - Quantized
@@ -1480,9 +1481,9 @@ NYU
 ^^^
 
 .. list-table::
-
    :widths: 34 7 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - RMSE
      - Quantized
@@ -1529,9 +1530,9 @@ AFLW2k3d
 ^^^^^^^^
 
 .. list-table::
-
    :widths: 28 8 8 16 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - NME
      - Quantized
@@ -1566,9 +1567,9 @@ Market1501
 ^^^^^^^^^^
 
 .. list-table::
-
    :widths: 28 8 9 13 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - rank1
      - Quantized
@@ -1615,9 +1616,9 @@ BSD100
 ^^^^^^
 
 .. list-table::
-
    :widths: 32 8 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - PSNR
      - Quantized
@@ -1676,9 +1677,9 @@ LFW
 ^^^
 
 .. list-table::
-
    :widths: 12 7 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - lfw verification accuracy
      - Quantized
@@ -1725,9 +1726,9 @@ PETA
 ^^^^
 
 .. list-table::
-
    :widths: 24 14 12 14 9 8 10 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - Mean Accuracy
      - Quantized
@@ -1762,9 +1763,9 @@ CELEBA
 ^^^^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - Mean Accuracy
      - Quantized
@@ -1799,9 +1800,9 @@ CIFAR100
 ^^^^^^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - Accuracy (top1)
      - Quantized
@@ -1836,9 +1837,9 @@ N/A
 ^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - EPE
      - Quantized
@@ -1873,9 +1874,9 @@ LOL
 ^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - PSNR
      - Quantized
@@ -1922,9 +1923,9 @@ BSD68
 ^^^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - PSNR
      - Quantized
@@ -1954,9 +1955,9 @@ CBSD68
 ^^^^^^
 
 .. list-table::
-
    :widths: 30 7 11 14 9 8 12 8 7 7 7 7
    :header-rows: 1
+
    * - Network Name
      - PSNR
      - Quantized
@@ -1991,8 +1992,8 @@ Hand Landmark
 ^^^^^^^^^^^^^
 
 .. list-table::
-
    :header-rows: 1
+
    * - Network Name
      - Input Resolution (HxWxC)
      - Params (M)

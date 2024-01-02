@@ -279,7 +279,9 @@ def evaluate(args):
     network_groups = None
 
     #  Enabling service for hailo15h
-    runner.use_service = args.use_service
+    if args.use_service:
+        # This property will print a warning when set.
+        runner.use_service = args.use_service
 
     logger.info(f'Chosen target is {args.target}')
     batch_size = args.batch_size or __get_batch_size(network_info, args.target)

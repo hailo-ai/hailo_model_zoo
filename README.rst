@@ -58,9 +58,9 @@ Models
 
 
 * | PUBLIC MODELS - which were trained on publicly available datasets.
-    
+
     `PUBLIC MODELS_HAILO8 <docs/PUBLIC_MODELS_HAILO8.rst>`_
-    
+
     `PUBLIC MODELS_HAILO8L <docs/PUBLIC_MODELS_HAILO8L.rst>`_
 
     `PUBLIC MODELS_HAILO15H <docs/PUBLIC_MODELS_HAILO15H.rst>`_

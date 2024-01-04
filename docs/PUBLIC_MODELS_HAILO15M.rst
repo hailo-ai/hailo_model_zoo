@@ -38,6 +38,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 .. _Classification:
+
 Classification
 --------------
 
@@ -45,7 +46,7 @@ ImageNet
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -59,7 +60,6 @@ ImageNet
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - efficientnet_l
      - 80.46
      - 79.36
@@ -71,55 +71,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_l.hef>`_
      - 57.9951
      - 98.1713
-     - {}
-   * - efficientnet_lite0
-     - 74.99
-     - 73.81
-     - 224x224x3
-     - 4.63
-     - 0.78
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite0/pretrained/2023-07-18/efficientnet_lite0.zip>`_
-     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_lite0.hef>`_
-     - {}
-     - {}
-     - {}
-   * - efficientnet_lite1
-     - 76.68
-     - 76.21
-     - 240x240x3
-     - 5.39
-     - 1.22
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite1/pretrained/2023-07-18/efficientnet_lite1.zip>`_
-     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_lite1.hef>`_
-     - {}
-     - {}
-     - {}
-   * - efficientnet_lite2
-     - 77.45
-     - 76.74
-     - 260x260x3
-     - 6.06
-     - 1.74
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite2/pretrained/2023-07-18/efficientnet_lite2.zip>`_
-     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_lite2.hef>`_
-     - {}
-     - {}
-     - {}
-   * - efficientnet_lite3
-     - 79.29
-     - 78.33
-     - 280x280x3
-     - 8.16
-     - 2.8
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite3/pretrained/2023-07-18/efficientnet_lite3.zip>`_
-     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_lite3.hef>`_
-     - {}
-     - {}
-     - {}
    * - efficientnet_lite4
      - 80.79
      - 79.99
@@ -131,7 +82,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_lite4.hef>`_
      - 73.7215
      - 151.255
-     - {}
    * - efficientnet_m |rocket|
      - 78.91
      - 78.63
@@ -143,19 +93,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_m.hef>`_
      - 127.623
      - 253.787
-     - {}
-   * - efficientnet_s
-     - 77.64
-     - 77.32
-     - 224x224x3
-     - 5.41
-     - 4.72
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2023-07-18/efficientnet_s.zip>`_
-     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientnet_s.hef>`_
-     - {}
-     - {}
-     - {}
    * - hardnet39ds
      - 73.43
      - 72.92
@@ -167,7 +104,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/hardnet39ds.hef>`_
      - 282.524
      - 794.832
-     - {}
    * - hardnet68
      - 75.47
      - 75.04
@@ -179,7 +115,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/hardnet68.hef>`_
      - 124.168
      - 258.157
-     - {}
    * - inception_v1
      - 69.74
      - 69.54
@@ -191,7 +126,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/inception_v1.hef>`_
      - 237.247
      - 522.84
-     - {}
    * - mobilenet_v1
      - 70.97
      - 70.26
@@ -203,7 +137,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mobilenet_v1.hef>`_
      - 1427.43
      - 1427.4
-     - 1.93967
    * - mobilenet_v2_1.0 |rocket|
      - 71.78
      - 71.0
@@ -215,7 +148,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mobilenet_v2_1.0.hef>`_
      - 351.244
      - 821.737
-     - {}
    * - mobilenet_v2_1.4
      - 74.18
      - 73.18
@@ -227,7 +159,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mobilenet_v2_1.4.hef>`_
      - 268.706
      - 638.46
-     - {}
    * - mobilenet_v3
      - 72.21
      - 71.73
@@ -239,7 +170,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mobilenet_v3.hef>`_
      - 324.885
      - 778.084
-     - {}
    * - mobilenet_v3_large_minimalistic
      - 72.11
      - 70.96
@@ -251,7 +181,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mobilenet_v3_large_minimalistic.hef>`_
      - 447.24
      - 1248.59
-     - {}
    * - regnetx_1.6gf
      - 77.05
      - 76.75
@@ -263,7 +192,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/regnetx_1.6gf.hef>`_
      - 303.337
      - 775.166
-     - {}
    * - regnetx_800mf
      - 75.16
      - 74.84
@@ -275,7 +203,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/regnetx_800mf.hef>`_
      - 413.96
      - 1107.48
-     - {}
    * - repvgg_a1
      - 74.4
      - 72.4
@@ -287,7 +214,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/repvgg_a1.hef>`_
      - 321.519
      - 719.195
-     - {}
    * - repvgg_a2
      - 76.52
      - 74.52
@@ -299,7 +225,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/repvgg_a2.hef>`_
      - 177.889
      - 322.874
-     - {}
    * - resmlp12_relu
      - 75.26
      - 74.32
@@ -311,7 +236,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resmlp12_relu.hef>`_
      - 87.3561
      - 308.33
-     - {}
    * - resnet_v1_18
      - 71.26
      - 71.06
@@ -323,7 +247,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resnet_v1_18.hef>`_
      - 364.787
      - 846.451
-     - {}
    * - resnet_v1_34
      - 72.7
      - 72.14
@@ -335,7 +258,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resnet_v1_34.hef>`_
      - 184.44
      - 390.499
-     - {}
    * - resnet_v1_50 |rocket| |star|
      - 75.12
      - 74.47
@@ -347,7 +269,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resnet_v1_50.hef>`_
      - 224.794
      - 565.76
-     - {}
    * - resnext26_32x4d
      - 76.18
      - 75.78
@@ -359,7 +280,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resnext26_32x4d.hef>`_
      - 245.252
      - 500.296
-     - {}
    * - resnext50_32x4d
      - 79.31
      - 78.21
@@ -371,7 +291,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/resnext50_32x4d.hef>`_
      - 142.988
      - 311.237
-     - {}
    * - squeezenet_v1.1
      - 59.85
      - 59.4
@@ -383,7 +302,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/squeezenet_v1.1.hef>`_
      - 651.115
      - 1276.19
-     - {}
    * - vit_base_bn
      - 79.98
      - 78.58
@@ -395,7 +313,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/vit_base_bn.hef>`_
      - 42.9047
      - 101.898
-     - {}
    * - vit_small_bn
      - 78.12
      - 77.02
@@ -407,7 +324,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/vit_small_bn.hef>`_
      - 93.3559
      - 267.595
-     - {}
    * - vit_tiny_bn
      - 68.95
      - 66.75
@@ -419,9 +335,9 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/vit_tiny_bn.hef>`_
      - 154.715
      - 556.287
-     - {}
 
 .. _Object Detection:
+
 Object Detection
 ----------------
 
@@ -429,7 +345,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 33 8 7 12 8 8 8 7 7 7 7 7
+   :widths: 33 8 7 12 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -443,7 +359,6 @@ COCO
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - centernet_resnet_v1_18_postprocess
      - 26.3
      - 23.31
@@ -455,7 +370,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/centernet_resnet_v1_18_postprocess.hef>`_
      - 86.5256
      - 116.281
-     - {}
    * - centernet_resnet_v1_50_postprocess
      - 31.78
      - 29.23
@@ -467,7 +381,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/centernet_resnet_v1_50_postprocess.hef>`_
      - 53.3531
      - 71.9656
-     - {}
    * - damoyolo_tinynasL20_T
      - 42.8
      - 41.7
@@ -479,7 +392,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/damoyolo_tinynasL20_T.hef>`_
      - 100.067
      - 169.343
-     - {}
    * - damoyolo_tinynasL25_S
      - 46.53
      - 46.04
@@ -491,7 +403,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/damoyolo_tinynasL25_S.hef>`_
      - 60.8048
      - 97.3912
-     - {}
    * - damoyolo_tinynasL35_M
      - 49.7
      - 47.9
@@ -503,7 +414,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/damoyolo_tinynasL35_M.hef>`_
      - 40.5352
      - 63.23
-     - {}
    * - detr_resnet_v1_18_bn
      - 33.91
      - 30.36
@@ -515,43 +425,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/detr_resnet_v1_18_bn.hef>`_
      - 18.9067
      - 30.5393
-     - {}
-   * - efficientdet_lite0
-     - 27.32
-     - 26.49
-     - 320x320x3
-     - 3.56
-     - 1.94
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite0/pretrained/2023-04-25/efficientdet-lite0.zip>`_
-     - `link <https://github.com/google/automl/tree/master/efficientdet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientdet_lite0.hef>`_
-     - {}
-     - {}
-     - {}
-   * - efficientdet_lite1
-     - 32.27
-     - 31.72
-     - 384x384x3
-     - 4.73
-     - 4
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite1/pretrained/2023-04-25/efficientdet-lite1.zip>`_
-     - `link <https://github.com/google/automl/tree/master/efficientdet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientdet_lite1.hef>`_
-     - {}
-     - {}
-     - {}
-   * - efficientdet_lite2
-     - 35.95
-     - 34.67
-     - 448x448x3
-     - 5.93
-     - 6.84
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite2/pretrained/2023-04-25/efficientdet-lite2.zip>`_
-     - `link <https://github.com/google/automl/tree/master/efficientdet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/efficientdet_lite2.hef>`_
-     - {}
-     - {}
-     - {}
    * - nanodet_repvgg  |star|
      - 29.3
      - 28.53
@@ -563,7 +436,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/nanodet_repvgg.hef>`_
      - 192.699
      - 311.163
-     - {}
    * - nanodet_repvgg_a12
      - 33.73
      - 31.33
@@ -575,7 +447,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/nanodet_repvgg_a12.hef>`_
      - 109.333
      - 159.891
-     - {}
    * - nanodet_repvgg_a1_640
      - 33.28
      - 32.88
@@ -587,7 +458,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/nanodet_repvgg_a1_640.hef>`_
      - 85.5934
      - 117.759
-     - {}
    * - ssd_mobilenet_v1 |rocket| |star|
      - 23.19
      - 22.29
@@ -599,7 +469,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/ssd_mobilenet_v1.hef>`_
      - 182.389
      - 354.052
-     - {}
    * - ssd_mobilenet_v2
      - 24.15
      - 22.94
@@ -611,7 +480,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/ssd_mobilenet_v2.hef>`_
      - 136.849
      - 257.357
-     - {}
    * - tiny_yolov3
      - 14.66
      - 14.41
@@ -623,7 +491,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/tiny_yolov3.hef>`_
      - 269.057
      - 455.898
-     - {}
    * - tiny_yolov4
      - 19.18
      - 17.73
@@ -635,7 +502,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/tiny_yolov4.hef>`_
      - 273.062
      - 430.406
-     - {}
    * - yolov3  |star|
      - 38.42
      - 38.37
@@ -647,7 +513,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov3.hef>`_
      - 20.7228
      - 24.7059
-     - {}
    * - yolov3_416
      - 37.73
      - 37.53
@@ -659,7 +524,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov3_416.hef>`_
      - 35.1757
      - 50.8807
-     - {}
    * - yolov3_gluon |rocket| |star|
      - 37.28
      - 35.64
@@ -671,7 +535,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov3_gluon.hef>`_
      - 22.0821
      - 27.6056
-     - {}
    * - yolov3_gluon_416  |star|
      - 36.27
      - 34.92
@@ -683,7 +546,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov3_gluon_416.hef>`_
      - 34.5337
      - 50.1277
-     - {}
    * - yolov4_leaky  |star|
      - 42.37
      - 41.08
@@ -695,7 +557,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov4_leaky.hef>`_
      - 29.1715
      - 39.9617
-     - {}
    * - yolov5m
      - 42.59
      - 41.19
@@ -707,7 +568,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5m.hef>`_
      - 53.809
      - 75.5971
-     - {}
    * - yolov5m6_6.1
      - 50.67
      - 48.97
@@ -719,7 +579,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5m6_6.1.hef>`_
      - 16.3575
      - 18.8832
-     - {}
    * - yolov5m_6.1
      - 44.8
      - 43.36
@@ -731,7 +590,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5m_6.1.hef>`_
      - 53.8092
      - 75.5973
-     - {}
    * - yolov5m_wo_spp |rocket|
      - 43.06
      - 40.76
@@ -743,7 +601,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5m_wo_spp_60p.hef>`_
      - 67.6233
      - 94.4975
-     - {}
    * - yolov5s  |star|
      - 35.33
      - 33.98
@@ -755,7 +612,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5s.hef>`_
      - 117.162
      - 180.261
-     - {}
    * - yolov5s_c3tr
      - 37.13
      - 35.63
@@ -767,7 +623,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5s_c3tr.hef>`_
      - 100.892
      - 167.908
-     - {}
    * - yolov5xs_wo_spp
      - 33.18
      - 32.2
@@ -779,7 +634,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5xs_wo_spp.hef>`_
      - 178.885
      - 319.815
-     - {}
    * - yolov5xs_wo_spp_nms_core
      - 32.57
      - 31.06
@@ -791,7 +645,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5xs_wo_spp_nms_core.hef>`_
      - 178.878
      - 319.704
-     - {}
    * - yolov6n
      - 34.28
      - 32.18
@@ -803,7 +656,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov6n.hef>`_
      - 168.961
      - 285.641
-     - {}
    * - yolov6n_0.2.1
      - 35.16
      - 33.66
@@ -815,7 +667,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov6n_0.2.1.hef>`_
      - 181.87
      - 320.321
-     - {}
    * - yolov7
      - 50.59
      - 47.89
@@ -827,7 +678,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov7.hef>`_
      - 28.8124
      - 37.7975
-     - {}
    * - yolov7_tiny
      - 37.07
      - 35.97
@@ -839,7 +689,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov7_tiny.hef>`_
      - 128.247
      - 193.335
-     - {}
    * - yolov7e6
      - 55.37
      - 53.47
@@ -851,7 +700,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov7e6.hef>`_
      - 6.17829
      - 6.53669
-     - {}
    * - yolov8l
      - 52.44
      - 51.78
@@ -863,7 +711,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8l.hef>`_
      - 18.7227
      - 23.979
-     - {}
    * - yolov8m
      - 49.91
      - 49.11
@@ -875,7 +722,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8m.hef>`_
      - 39.082
      - 55.9632
-     - {}
    * - yolov8n
      - 37.02
      - 36.32
@@ -887,7 +733,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8n.hef>`_
      - 163.514
      - 311.781
-     - {}
    * - yolov8s
      - 44.58
      - 43.98
@@ -899,7 +744,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8s.hef>`_
      - 82.4367
      - 129.367
-     - {}
    * - yolov8x
      - 53.45
      - 52.75
@@ -911,7 +755,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8x.hef>`_
      - 10.9973
      - 13.0795
-     - {}
    * - yolox_l_leaky  |star|
      - 48.69
      - 46.71
@@ -923,7 +766,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolox_l_leaky.hef>`_
      - 17.9951
      - 21.8031
-     - {}
    * - yolox_s_leaky
      - 38.12
      - 37.27
@@ -935,7 +777,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolox_s_leaky.hef>`_
      - 87.0709
      - 129.368
-     - {}
    * - yolox_s_wide_leaky
      - 42.4
      - 40.97
@@ -947,7 +788,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolox_s_wide_leaky.hef>`_
      - 53.5291
      - 70.4935
-     - {}
    * - yolox_tiny
      - 32.64
      - 31.39
@@ -959,13 +799,12 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolox_tiny.hef>`_
      - 182.502
      - 362.678
-     - {}
 
 VisDrone
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -979,7 +818,6 @@ VisDrone
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - ssd_mobilenet_v1_visdrone  |star|
      - 2.37
      - 2.22
@@ -991,9 +829,9 @@ VisDrone
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/ssd_mobilenet_v1_visdrone.hef>`_
      - 244.12
      - 527.101
-     - {}
 
 .. _Semantic Segmentation:
+
 Semantic Segmentation
 ---------------------
 
@@ -1001,7 +839,7 @@ Cityscapes
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1015,7 +853,6 @@ Cityscapes
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - fcn8_resnet_v1_18  |star|
      - 69.41
      - 69.21
@@ -1027,19 +864,6 @@ Cityscapes
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/fcn8_resnet_v1_18.hef>`_
      - 18.8156
      - 21.0842
-     - {}
-   * - segformer_b0_bn
-     - 69.81
-     - 68.01
-     - 512x1024x3
-     - 3.72
-     - 27.2
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip>`_
-     - `link <https://github.com/NVlabs/SegFormer>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/segformer_b0_bn.hef>`_
-     - {}
-     - {}
-     - {}
    * - stdc1 |rocket|
      - 74.57
      - 73.92
@@ -1051,13 +875,12 @@ Cityscapes
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/stdc1.hef>`_
      - 15.5433
      - 18.1757
-     - {}
 
 Oxford-IIIT Pet
 ^^^^^^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 7 9 12 9 8 9 8 7 7 7 7
+   :widths: 31 7 9 12 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1071,7 +894,6 @@ Oxford-IIIT Pet
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - unet_mobilenet_v2
      - 77.32
      - 77.02
@@ -1083,13 +905,12 @@ Oxford-IIIT Pet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/unet_mobilenet_v2.hef>`_
      - 133.439
      - 227.59
-     - {}
 
 Pascal VOC
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 36 7 9 12 9 8 9 8 7 7 7 7
+   :widths: 36 7 9 12 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1103,7 +924,6 @@ Pascal VOC
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - deeplab_v3_mobilenet_v2
      - 76.05
      - 74.8
@@ -1115,7 +935,6 @@ Pascal VOC
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/deeplab_v3_mobilenet_v2.hef>`_
      - 42.9866
      - 56.8301
-     - {}
    * - deeplab_v3_mobilenet_v2_wo_dilation
      - 71.46
      - 71.26
@@ -1127,9 +946,9 @@ Pascal VOC
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/deeplab_v3_mobilenet_v2_wo_dilation.hef>`_
      - 87.5364
      - 119.235
-     - {}
 
 .. _Pose Estimation:
+
 Pose Estimation
 ---------------
 
@@ -1137,7 +956,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 24 8 9 18 9 8 9 8 7 7 7 7
+   :widths: 24 8 9 18 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1151,7 +970,6 @@ COCO
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - centerpose_regnetx_1.6gf_fpn  |star|
      - 53.54
      - 52.84
@@ -1163,7 +981,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/centerpose_regnetx_1.6gf_fpn.hef>`_
      - 46.2622
      - 63.1189
-     - {}
    * - centerpose_regnetx_800mf
      - 44.07
      - 42.97
@@ -1175,7 +992,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/centerpose_regnetx_800mf.hef>`_
      - 57.078
      - 75.5737
-     - {}
    * - centerpose_repvgg_a0  |star|
      - 39.17
      - 37.17
@@ -1187,9 +1003,9 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/centerpose_repvgg_a0.hef>`_
      - 91.8911
      - 137.367
-     - {}
 
 .. _Single Person Pose Estimation:
+
 Single Person Pose Estimation
 -----------------------------
 
@@ -1197,7 +1013,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 24 8 9 18 9 8 9 8 7 7 7 7
+   :widths: 24 8 9 18 9 8 9 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1211,7 +1027,6 @@ COCO
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - mspn_regnetx_800mf  |star|
      - 70.8
      - 70.3
@@ -1223,7 +1038,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/mspn_regnetx_800mf.hef>`_
      - 239.436
      - 543.199
-     - {}
    * - vit_pose_small
      - 74.16
      - 71.6
@@ -1235,7 +1049,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/vit_pose_small.hef>`_
      - 25.0889
      - 77.8054
-     - {}
    * - vit_pose_small_bn
      - 72.01
      - 70.81
@@ -1247,9 +1060,9 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/vit_pose_small_bn.hef>`_
      - 73.2665
      - 194.156
-     - {}
 
 .. _Face Detection:
+
 Face Detection
 --------------
 
@@ -1257,7 +1070,7 @@ WiderFace
 ^^^^^^^^^
 
 .. list-table::
-   :widths: 24 7 12 11 9 8 8 8 7 7 7 7
+   :widths: 24 7 12 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1271,7 +1084,6 @@ WiderFace
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - lightface_slim  |star|
      - 39.7
      - 39.22
@@ -1283,7 +1095,6 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/lightface_slim.hef>`_
      - 649.138
      - 1535.33
-     - {}
    * - retinaface_mobilenet_v1  |star|
      - 81.27
      - 81.17
@@ -1295,7 +1106,6 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/retinaface_mobilenet_v1.hef>`_
      - 50.0765
      - 65.3995
-     - {}
    * - scrfd_10g
      - 82.13
      - 82.03
@@ -1307,7 +1117,6 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/scrfd_10g.hef>`_
      - 90.3432
      - 131.564
-     - {}
    * - scrfd_2.5g
      - 76.59
      - 76.32
@@ -1319,7 +1128,6 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/scrfd_2.5g.hef>`_
      - 206.764
      - 320.546
-     - {}
    * - scrfd_500m
      - 68.98
      - 68.88
@@ -1331,9 +1139,9 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/scrfd_500m.hef>`_
      - 231.127
      - 407.787
-     - {}
 
 .. _Instance Segmentation:
+
 Instance Segmentation
 ---------------------
 
@@ -1341,7 +1149,7 @@ COCO
 ^^^^
 
 .. list-table::
-   :widths: 34 7 7 11 9 8 8 8 7 7 7 7
+   :widths: 34 7 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1355,7 +1163,6 @@ COCO
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - yolact_regnetx_1.6gf
      - 27.57
      - 27.27
@@ -1367,7 +1174,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolact_regnetx_1.6gf.hef>`_
      - 34.3425
      - 43.6273
-     - {}
    * - yolact_regnetx_800mf
      - 25.61
      - 25.5
@@ -1379,7 +1185,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolact_regnetx_800mf.hef>`_
      - 40.7949
      - 50.4228
-     - {}
    * - yolov5l_seg
      - 39.78
      - 39.09
@@ -1391,7 +1196,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5l_seg.hef>`_
      - 20.3549
      - 24.6877
-     - {}
    * - yolov5m_seg
      - 37.05
      - 36.32
@@ -1403,7 +1207,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5m_seg.hef>`_
      - 43.6168
      - 56.6371
-     - {}
    * - yolov5n_seg  |star|
      - 23.35
      - 22.75
@@ -1415,7 +1218,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5n_seg.hef>`_
      - 148.879
      - 174.184
-     - {}
    * - yolov5s_seg
      - 31.57
      - 30.49
@@ -1427,7 +1229,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov5s_seg.hef>`_
      - 82.509
      - 113.995
-     - {}
    * - yolov8m_seg
      - 40.6
      - 39.88
@@ -1439,7 +1240,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8m_seg.hef>`_
      - 29.2613
      - 39.2299
-     - {}
    * - yolov8n_seg
      - 30.32
      - 29.68
@@ -1451,7 +1251,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8n_seg.hef>`_
      - 132.766
      - 227.347
-     - {}
    * - yolov8s_seg
      - 36.63
      - 36.03
@@ -1463,9 +1262,9 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/yolov8s_seg.hef>`_
      - 63.7904
      - 90.8048
-     - {}
 
 .. _Depth Estimation:
+
 Depth Estimation
 ----------------
 
@@ -1473,7 +1272,7 @@ NYU
 ^^^
 
 .. list-table::
-   :widths: 34 7 7 11 9 8 8 8 7 7 7 7
+   :widths: 34 7 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1487,7 +1286,6 @@ NYU
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - fast_depth  |star|
      - 0.6
      - 0.62
@@ -1499,7 +1297,6 @@ NYU
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/fast_depth.hef>`_
      - 317.237
      - 768.32
-     - {}
    * - scdepthv3
      - 0.48
      - 0.51
@@ -1511,9 +1308,9 @@ NYU
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/scdepthv3.hef>`_
      - 157.349
      - 276.312
-     - {}
 
 .. _Facial Landmark Detection:
+
 Facial Landmark Detection
 -------------------------
 
@@ -1521,7 +1318,7 @@ AFLW2k3d
 ^^^^^^^^
 
 .. list-table::
-   :widths: 28 8 8 16 9 8 8 8 7 7 7 7
+   :widths: 28 8 8 16 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1535,7 +1332,6 @@ AFLW2k3d
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - tddfa_mobilenet_v1  |star|
      - 3.68
      - 4.05
@@ -1547,9 +1343,9 @@ AFLW2k3d
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/tddfa_mobilenet_v1.hef>`_
      - 4482.73
      - 4484.42
-     - {}
 
 .. _Person Re-ID:
+
 Person Re-ID
 ------------
 
@@ -1557,7 +1353,7 @@ Market1501
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 28 8 9 13 9 8 8 8 7 7 7 7
+   :widths: 28 8 9 13 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1571,7 +1367,6 @@ Market1501
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - osnet_x1_0
      - 94.43
      - 93.63
@@ -1583,7 +1378,6 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/osnet_x1_0.hef>`_
      - 110.173
      - 317.055
-     - {}
    * - repvgg_a0_person_reid_512  |star|
      - 89.9
      - 89.3
@@ -1595,9 +1389,9 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/repvgg_a0_person_reid_512.hef>`_
      - 2632.33
      - 2632.12
-     - 1.17645
 
 .. _Super Resolution:
+
 Super Resolution
 ----------------
 
@@ -1605,7 +1399,7 @@ BSD100
 ^^^^^^
 
 .. list-table::
-   :widths: 32 8 7 11 9 8 8 8 7 7 7 7
+   :widths: 32 8 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1619,7 +1413,6 @@ BSD100
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - espcn_x2
      - 31.4
      - 30.3
@@ -1631,7 +1424,6 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/espcn_x2.hef>`_
      - 1746.31
      - 1745.98
-     - 0.621769
    * - espcn_x3
      - 28.41
      - 28.06
@@ -1643,7 +1435,6 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/espcn_x3.hef>`_
      - 1925.37
      - 1924.98
-     - 0.569555
    * - espcn_x4
      - 26.83
      - 26.58
@@ -1655,9 +1446,9 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/espcn_x4.hef>`_
      - 1908.98
      - 1908.56
-     - 0.559387
 
 .. _Face Recognition:
+
 Face Recognition
 ----------------
 
@@ -1665,7 +1456,7 @@ LFW
 ^^^
 
 .. list-table::
-   :widths: 12 7 12 14 9 8 10 8 7 7 7 7
+   :widths: 12 7 12 14 9 8 10 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1679,7 +1470,6 @@ LFW
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - arcface_mobilefacenet
      - 99.43
      - 99.41
@@ -1691,7 +1481,6 @@ LFW
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/arcface_mobilefacenet.hef>`_
      - 444.238
      - 1190.37
-     - {}
    * - arcface_r50
      - 99.72
      - 99.71
@@ -1703,9 +1492,9 @@ LFW
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/arcface_r50.hef>`_
      - 112.901
      - 234.881
-     - {}
 
 .. _Person Attribute:
+
 Person Attribute
 ----------------
 
@@ -1713,7 +1502,7 @@ PETA
 ^^^^
 
 .. list-table::
-   :widths: 24 14 12 14 9 8 10 8 7 7 7 7
+   :widths: 24 14 12 14 9 8 10 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1727,7 +1516,6 @@ PETA
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - person_attr_resnet_v1_18
      - 82.5
      - 82.61
@@ -1739,9 +1527,9 @@ PETA
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/person_attr_resnet_v1_18.hef>`_
      - 364.245
      - 816.634
-     - {}
 
 .. _Face Attribute:
+
 Face Attribute
 --------------
 
@@ -1749,7 +1537,7 @@ CELEBA
 ^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1763,7 +1551,6 @@ CELEBA
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - face_attr_resnet_v1_18
      - 81.19
      - 81.09
@@ -1775,9 +1562,9 @@ CELEBA
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/face_attr_resnet_v1_18.hef>`_
      - 366.06
      - 884.264
-     - {}
 
 .. _Zero-shot Classification:
+
 Zero-shot Classification
 ------------------------
 
@@ -1785,7 +1572,7 @@ CIFAR100
 ^^^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1799,21 +1586,9 @@ CIFAR100
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
-   * - clip_resnet_50
-     - 42.07
-     - 38.57
-     - 224x224x3
-     - 38.72
-     - 11.62
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
-     - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/clip_resnet_50.hef>`_
-     - {}
-     -
-     - {}
 
 .. _Stereo Depth Estimation:
+
 Stereo Depth Estimation
 -----------------------
 
@@ -1821,7 +1596,7 @@ N/A
 ^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1835,21 +1610,9 @@ N/A
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
-   * - stereonet
-     - 91.79
-     - 89.14
-     - 368X1232X3, 368X1232X3
-     - 5.91
-     - 126.28
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_
-     - `link <https://github.com/nivosco/StereoNet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/stereonet.hef>`_
-     - {}
-     - {}
-     - {}
 
 .. _Low Light Enhancement:
+
 Low Light Enhancement
 ---------------------
 
@@ -1857,7 +1620,7 @@ LOL
 ^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1871,7 +1634,6 @@ LOL
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - zero_dce
      - 16.23
      - 16.24
@@ -1883,7 +1645,6 @@ LOL
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/zero_dce.hef>`_
      - 71.5373
      - 79.9602
-     - {}
    * - zero_dce_pp
      - 15.95
      - 15.82
@@ -1895,9 +1656,9 @@ LOL
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/zero_dce_pp.hef>`_
      - 52.7195
      - 58.1534
-     - {}
 
 .. _Image Denoising:
+
 Image Denoising
 ---------------
 
@@ -1905,7 +1666,7 @@ BSD68
 ^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1919,7 +1680,6 @@ BSD68
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - dncnn3
      - 31.46
      - 31.26
@@ -1931,13 +1691,12 @@ BSD68
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/dncnn3.hef>`_
      - 20.5436
      - 21.0863
-     - {}
 
 CBSD68
 ^^^^^^
 
 .. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7 7
+   :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -1951,7 +1710,6 @@ CBSD68
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - dncnn_color_blind
      - 33.87
      - 32.97
@@ -1963,9 +1721,9 @@ CBSD68
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/dncnn_color_blind.hef>`_
      - 20.5436
      - 21.0838
-     - {}
 
 .. _Hand Landmark detection:
+
 Hand Landmark detection
 -----------------------
 
@@ -1984,7 +1742,6 @@ Hand Landmark
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-     - Latency
    * - hand_landmark_lite
      - 224x224x3
      - 1.01
@@ -1994,4 +1751,3 @@ Hand Landmark
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15m/hand_landmark_lite.hef>`_
      - 386.777
      - 1,101.96
-     - {}

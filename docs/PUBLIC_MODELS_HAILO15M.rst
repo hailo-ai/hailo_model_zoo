@@ -30,8 +30,6 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
   * `Face Recognition`_
   * `Person Attribute`_
   * `Face Attribute`_
-  * `Zero-shot Classification`_
-  * `Stereo Depth Estimation`_
   * `Low Light Enhancement`_
   * `Image Denoising`_
   * `Hand Landmark detection`_
@@ -1563,14 +1561,6 @@ CELEBA
      - 366.06
      - 884.264
 
-.. _Zero-shot Classification:
-
-Zero-shot Classification
-------------------------
-
-CIFAR100
-^^^^^^^^
-
 .. list-table::
    :widths: 30 7 11 14 9 8 12 8 7 7 7
    :header-rows: 1
@@ -1586,14 +1576,6 @@ CIFAR100
      - Compiled
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
-
-.. _Stereo Depth Estimation:
-
-Stereo Depth Estimation
------------------------
-
-N/A
-^^^
 
 .. list-table::
    :widths: 30 7 11 14 9 8 12 8 7 7 7

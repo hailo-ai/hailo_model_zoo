@@ -31,7 +31,6 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
   * `Person Attribute`_
   * `Face Attribute`_
   * `Zero-shot Classification`_
-  * `Stereo Depth Estimation`_
   * `Low Light Enhancement`_
   * `Image Denoising`_
   * `Hand Landmark detection`_
@@ -1597,14 +1596,6 @@ CIFAR100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo15h/clip_resnet_50.hef>`_
      - 141.712
      - 395.576
-
-.. _Stereo Depth Estimation:
-
-Stereo Depth Estimation
------------------------
-
-N/A
-^^^
 
 .. list-table::
    :widths: 30 7 11 14 9 8 12 8 7 7 7

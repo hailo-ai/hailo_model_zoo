@@ -1561,38 +1561,6 @@ CELEBA
      - 366.06
      - 884.264
 
-.. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7
-   :header-rows: 1
-
-   * - Network Name
-     - Accuracy (top1)
-     - Quantized
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-
-.. list-table::
-   :widths: 30 7 11 14 9 8 12 8 7 7 7
-   :header-rows: 1
-
-   * - Network Name
-     - EPE
-     - Quantized
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-
 .. _Low Light Enhancement:
 
 Low Light Enhancement

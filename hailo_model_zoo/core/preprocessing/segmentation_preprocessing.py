@@ -13,30 +13,32 @@ def _resize(image, new_height, new_width, is_mask):
     return resized_image
 
 
-def _resnet_base_preprocessing(image, output_height=None, output_width=None, is_mask=False):
-    image = _resize(image, output_height, output_width, is_mask)
+def _resnet_base_preprocessing(image, height=None, width=None, is_mask=False):
+    image = _resize(image, height, width, is_mask)
     image = tf.cast(image, tf.float32)
     return image
 
 
-def resnet_bw_18(image, image_info=None, output_height=None, output_width=None, **kwargs):
-    image_orig = _resnet_base_preprocessing(image, output_height=output_height, output_width=output_width)
+def resnet_bw_18(image, image_info=None, input_height=None, input_width=None, output_shapes=None, **kwargs):
+    image_orig = _resnet_base_preprocessing(image, height=input_height, width=input_width)
     image_gray = tf.image.rgb_to_grayscale(image)
-    image_gray = _resnet_base_preprocessing(image_gray, output_height=output_height, output_width=output_width)
+    image_gray = _resnet_base_preprocessing(image_gray, height=input_height, width=input_width)
     image_gray = tf.expand_dims(image_gray, axis=-1)
     if image_info and 'mask' in image_info.keys():
-        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], output_height=output_height,
-                                                        output_width=output_width, is_mask=True)
+        assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
+        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=output_shapes[0][1],
+                                                        width=output_shapes[0][2], is_mask=True)
         image_info['img_orig'] = image_orig
     return image_gray, image_info
 
 
-def resnet_v1_18(image, image_info=None, height=None, width=None, flip=False, **kwargs):
+def resnet_v1_18(image, image_info=None, height=None, width=None, output_shapes=None, **kwargs):
     image_orig = _resnet_base_preprocessing(image, height, width)
 
     if image_info and 'mask' in image_info.keys():
-        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], output_height=height,
-                                                        output_width=width, is_mask=True)
+        assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
+        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=output_shapes[0][1],
+                                                        width=output_shapes[0][2], is_mask=True)
         image_info['img_orig'] = image_orig
     return image_orig, image_info
 
@@ -60,7 +62,7 @@ def _get_resized_shape(size, height, width):
 def sparseinst(image, image_info=None, height=None, width=None, max_pad=MAX_PADDING_LENGTH, **kwargs):
     image_resized = image
     if height and width:
-        assert height == width, 'sparseinst expects a square input but got {height}x{width}'
+        assert height == width, f'sparseinst expects a square input but got {height}x{width}'
         orig_height, orig_width = tf.shape(image)[0], tf.shape(image)[1]
         newh, neww = _get_resized_shape(height, orig_height, orig_width)
         image_resized_ar = tf.squeeze(tf.image.resize(image, size=(newh, neww), method='bilinear'))

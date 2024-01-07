@@ -43,3 +43,4 @@ info:
   full_precision_result: 25.614
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

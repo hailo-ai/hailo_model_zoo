@@ -23,3 +23,4 @@ info:
   full_precision_result: 26.83
   source: https://github.com/Lornatang/ESPCN-PyTorch
   license_url: https://github.com/Lornatang/ESPCN-PyTorch/blob/master/LICENSE
+  license_name: Apache-2.0

@@ -36,7 +36,7 @@ info:
   input_shape: 320x320x3
   output_shape: 40x40x36, 40x40x810, 20x20x36, 20x20x810, 10x10x36, 10x10x810, 5x5x36,
     5x5x810, 3x3x36, 3x3x810
-  operations: 1.98G
+  operations: 1.94G
   parameters: 3.56M
   framework: tensorflow
   training_data: coco train2017
@@ -45,3 +45,4 @@ info:
   full_precision_result: 27.32
   source: https://github.com/google/automl/tree/master/efficientdet
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

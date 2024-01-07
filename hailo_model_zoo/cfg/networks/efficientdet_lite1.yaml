@@ -45,3 +45,4 @@ info:
   full_precision_result: 32.27
   source: https://github.com/google/automl/tree/master/efficientdet
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

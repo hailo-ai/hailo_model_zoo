@@ -24,3 +24,4 @@ info:
   full_precision_result: 74.4
   source: https://github.com/DingXiaoH/RepVGG
   license_url: https://github.com/DingXiaoH/RepVGG/blob/main/LICENSE
+  license_name: MIT

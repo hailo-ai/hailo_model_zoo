@@ -44,3 +44,4 @@ info:
   full_precision_result: 77.32
   source: https://www.tensorflow.org/tutorials/images/segmentation
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

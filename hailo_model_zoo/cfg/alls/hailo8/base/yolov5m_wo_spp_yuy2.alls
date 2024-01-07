@@ -1,7 +1,7 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(sigmoid)
-yuv_to_rgb1 = yuv_to_rgb(input_layer1)
-resize_input1 = resize_input([720, 1280], input_layer1)
+yuv_to_rgb1 = input_conversion(input_layer1, yuv_to_rgb)
+resize_input1 = resize(input_layer1, resize_shapes=[720, 1280])
 reshape_yuy2 = input_conversion(input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
 nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2023-04-25/yolov5m_nms_config.json", yolov5, engine=cpu)
 

@@ -30,3 +30,4 @@ info:
   eval_metric: mAP
   full_precision_result: 82.426
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

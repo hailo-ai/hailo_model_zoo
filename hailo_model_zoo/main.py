@@ -7,8 +7,9 @@ import hailo_model_zoo.plugin
 # we try to minimize imports to make 'main.py --help' responsive. So we only import definitions.
 
 from hailo_model_zoo.utils.cli_utils import HMZ_COMMANDS, OneResizeValueAction, add_model_name_arg
-from hailo_model_zoo.utils.constants import DEVICE_NAMES, PROFILER_MODE_NAMES, TARGETS
+from hailo_model_zoo.utils.constants import DEVICE_NAMES, TARGETS
 from hailo_model_zoo.utils.plugin_utils import iter_namespace
+from hailo_model_zoo.utils.version import get_version
 
 
 discovered_plugins = {
@@ -58,7 +59,6 @@ def _make_optimization_base():
         '--input-conversion', type=str,
         choices=['nv12_to_rgb', 'yuy2_to_rgb', 'rgbx_to_rgb'],
         help='Add input conversion from given type')
-
     return optimization_base_parser
 
 
@@ -71,10 +71,6 @@ def _make_hef_base():
 
 def _make_profiling_base():
     profile_base_parser = argparse.ArgumentParser(add_help=False)
-    profile_base_parser.add_argument(
-        '--mode', help='Profiling mode', dest='profile_mode',
-        type=str, default='pre_placement',
-        choices=PROFILER_MODE_NAMES)
     return profile_base_parser
 
 
@@ -112,7 +108,10 @@ def _make_evaluation_base():
             you can give a directory of images in jpg or png format',
     )
     evaluation_base_parser.set_defaults(print_num_examples=1e9,
-                                        visualize_results=False)
+                                        visualize_results=False,
+                                        use_lite_inference=False,
+                                        use_service=False,
+                                        )
     return evaluation_base_parser
 
 
@@ -123,9 +122,12 @@ def _create_args_parser():
     hef_base_parser = _make_hef_base()
     profile_base_parser = _make_profiling_base()
     evaluation_base_parser = _make_evaluation_base()
+    version = get_version('hailo_model_zoo')
 
     # --- create per action subparser
     parser = argparse.ArgumentParser(epilog='Example: hailomz parse resnet_v1_50')
+    parser.add_argument('--version', action='version',
+                        version=f'Hailo Model Zoo v{version}')
     # can't set the entry point for each subparser as it forces us to add imports which slow down the startup time.
     # instead we'll check the 'command' argument after parsing
     subparsers = parser.add_subparsers(dest='command')

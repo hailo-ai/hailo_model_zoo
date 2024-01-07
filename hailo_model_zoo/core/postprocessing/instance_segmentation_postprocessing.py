@@ -509,10 +509,11 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
             'detection_scores':  numpy.ndarray with shape (num_detections, 80)
         }
     """
+    img_dims = kwargs['img_dims']
     if kwargs.get('hpp', False):
         # the outputs where decoded by the emulator (as part of the network)
         # organizing the output for evaluation
-        return _organize_hpp_yolov5_seg_outputs(endnodes)
+        return _organize_hpp_yolov5_seg_outputs(endnodes, img_dims=img_dims)
 
     protos = endnodes[0]
     outputs = list()
@@ -535,22 +536,37 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     score_thres = kwargs['score_threshold']
     iou_thres = kwargs['nms_iou_thresh']
     outputs = non_max_suppression(outputs, score_thres, iou_thres, nm=protos.shape[-1])
+    outputs = _finalize_detections_yolov5_seg(outputs, protos, **kwargs)
 
-    return _finalize_detections_yolov5_seg(outputs, protos, **kwargs)
+    # reorder and normalize bboxes
+    for output in outputs:
+        output['detection_boxes'] = _normalize_yolov5_seg_bboxes(output, img_dims)
+    return outputs
 
 
-def _organize_hpp_yolov5_seg_outputs(outputs):
-    # the outputs structure is [-1, h+1, w, num_of_proposals]
-    # were the last row (-1, -1:, :, :) contains padded values of
-    # [y_min, x_min, y_max, x_max, score, class] of each detection
+def _organize_hpp_yolov5_seg_outputs(outputs, img_dims):
+    # the outputs structure is [-1, num_of_proposals, 6 + h*w]
+    # were the mask information is ordered as follows
+    # [x_min, y_min, x_max, y_max, score, class, flattened mask] of each detection
     # this function separates the structure to informative dict
     predictions = []
-    for i in range(outputs.shape[0]):
-        predictions.append({'mask': np.transpose(outputs[i, :-1, :, :], (2, 0, 1)),
-                            'detection_boxes': np.squeeze(np.transpose(outputs[i, -1:, 0:4, :], (2, 1, 0))),
-                            'detection_scores': np.squeeze(outputs[i, -1:, 4:5, :]),
-                            'detection_classes': np.squeeze(outputs[i, -1:, 5:6, :])})
+    batch_size, num_of_proposals = outputs.shape[0], outputs.shape[-1]
+    outputs = np.transpose(np.squeeze(outputs, axis=1), [0, 2, 1])
+    for i in range(batch_size):
+        predictions.append({'detection_boxes': outputs[i, :, :4][:, [1, 0, 3, 2]],
+                            'detection_scores': outputs[i, :, 4],
+                            'detection_classes': outputs[i, :, 5],
+                            'mask': outputs[i, :, 6:].reshape((num_of_proposals, *img_dims))})
     return predictions
+
+
+def _normalize_yolov5_seg_bboxes(output, img_dims):
+    # normalizes bboxes and change the bboxes format to y_min, x_min, y_max, x_max
+    bboxes = output['detection_boxes']
+    bboxes[:, [0, 2]] /= img_dims[1]
+    bboxes[:, [1, 3]] /= img_dims[0]
+
+    return bboxes
 
 
 def _finalize_detections_yolov5_seg(outputs, protos, **kwargs):
@@ -1015,6 +1031,11 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
     img_out = img[img_idx].copy()
 
     boxes = detections['detection_boxes']
+
+    # scales the box to input shape
+    boxes[:, 0::2] *= img_out.shape[1]
+    boxes[:, 1::2] *= img_out.shape[0]
+
     masks = detections['mask'] > mask_thresh
     scores = detections['detection_scores']
     classes = detections['detection_classes']

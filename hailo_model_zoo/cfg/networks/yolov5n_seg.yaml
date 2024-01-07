@@ -27,3 +27,4 @@ info:
   full_precision_result: 23.349
   source: https://github.com/ultralytics/yolov5
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
+  license_name: GPL-3.0

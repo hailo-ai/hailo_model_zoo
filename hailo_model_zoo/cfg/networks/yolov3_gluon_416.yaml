@@ -64,3 +64,4 @@ info:
   full_precision_result: 36.28
   source: https://cv.gluon.ai/model_zoo/detection.html
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

@@ -18,6 +18,7 @@ quantization:
 info:
   source: https://github.com/tensorboy/centerpose
   license_url: https://opensource.org/licenses/MIT
+  license_name: MIT
 parser:
   normalization_params:
     normalize_in_net: true

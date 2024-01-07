@@ -49,7 +49,7 @@ def resnet(hr_image, image_info=None, height=136, width=260, **kwargs):
     return lr_image, hr_image
 
 
-def srgan(image, image_info, height, width, **kwargs):
+def srgan(image, image_info, height, width, output_shapes=None, **kwargs):
     """
     preprocessing function for srgan and div2k
         1. resize the images by taking a central crop with padding
@@ -71,14 +71,15 @@ def srgan(image, image_info, height, width, **kwargs):
             hr_img = image_info.get('hr_img')
             if hr_img is not None:
                 hr_img = tf.expand_dims(hr_img, axis=0)
-                hr_img = tf.image.resize_with_crop_or_pad(hr_img, 4 * height, 4 * width)
+                assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
+                hr_img = tf.image.resize_with_crop_or_pad(hr_img, output_shapes[0][1], output_shapes[0][2])
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info['hr_img'] = tf.cast(hr_img, tf.uint8)
     # return {'input_layer1': image, 'input_layer1_new': image}, image_info # removed due to hn_editor in srgan
     return image, image_info
 
 
-def espcn(image, image_info, height, width, **kwargs):
+def espcn(image, image_info, height, width, output_shapes, **kwargs):
     if width and height:
 
         image_orig = image
@@ -98,7 +99,6 @@ def espcn(image, image_info, height, width, **kwargs):
 
         if image_info:
             image_info['img_orig'] = image_orig
-            upscale_factor = image_info.get('upscale_factor')
             hr_img = image_info.get('hr_img')
             if hr_img is not None:
                 # Verify input is landscape
@@ -111,7 +111,8 @@ def espcn(image, image_info, height, width, **kwargs):
                 hr_img /= 255.  # Normalization
                 # Taking luminance channel only
                 hr_img = tf.expand_dims(tf.expand_dims(hr_img[..., 0], axis=-1), axis=0)
-                hr_img = tf.image.resize_with_pad(hr_img, upscale_factor * height, upscale_factor * width)
+                assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
+                hr_img = tf.image.resize_with_pad(hr_img, output_shapes[0][1], output_shapes[0][2])
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info['hr_img'] = tf.cast(hr_img, tf.float32)
     return image, image_info

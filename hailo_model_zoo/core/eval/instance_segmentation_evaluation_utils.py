@@ -52,19 +52,23 @@ class Yolov5SegEval(InstSegEvalBase):
         super().__init__()
 
     def scale_boxes(self, boxes, shape_out, shape_in=None, **kwargs):
+        # scales the boxes values to the input size
+        boxes[:, 0::2] *= shape_in[1]
+        boxes[:, 1::2] *= shape_in[0]
+
         ratio_pad = kwargs.get('ratio_pad', None)
         if ratio_pad is None:  # calculate from shape_out
             if shape_in is None:
                 raise ValueError('Expected shape_in to be a tuple of size 2 when ratio is not provided but got None')
             gain = min(shape_in[0] / shape_out[0], shape_in[1] / shape_out[1])  # gain  = old / new
-            pad = (shape_in[1] - shape_out[1] * gain) / 2,\
-                (shape_in[0] - shape_out[0] * gain) / 2  # wh padding
+            pad = [(shape_in - shape_out * gain) / 2
+                   for shape_in, shape_out in zip(shape_in[:2], shape_out[:2])]  # wh padding
         else:
             gain = ratio_pad[0][0]
             pad = ratio_pad[1]
 
-        boxes[:, [0, 2]] -= pad[0]  # x padding
-        boxes[:, [1, 3]] -= pad[1]  # y padding
+        boxes[:, [0, 2]] -= pad[1]  # x padding
+        boxes[:, [1, 3]] -= pad[0]  # y padding
         boxes[:, :4] /= gain
 
         # Clip boxes (xyxy) to image shape (height, width)

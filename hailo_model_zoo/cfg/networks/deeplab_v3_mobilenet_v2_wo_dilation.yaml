@@ -43,3 +43,4 @@ info:
   full_precision_result: 71.46
   source: https://github.com/tensorflow/models/tree/master/research/deeplab
   license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

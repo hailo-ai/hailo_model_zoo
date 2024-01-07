@@ -30,3 +30,4 @@ info:
   full_precision_result: 71.26
   source: https://github.com/yhhhli/BRECQ
   license_url: https://github.com/yhhhli/BRECQ/blob/main/LICENSE
+  license_name: MIT

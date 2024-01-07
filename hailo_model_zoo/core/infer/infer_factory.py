@@ -9,6 +9,7 @@ except ModuleNotFoundError:
     so_infer = None
 from hailo_model_zoo.core.infer.tf_infer_second_stage import tf_infer_second_stage
 from hailo_model_zoo.core.infer.runner_infer import runner_infer
+from hailo_model_zoo.core.infer.sd2_unet_model_infer import unet_infer
 
 NAME_TO_INFER = {
     'tf_infer': tf_infer,
@@ -20,6 +21,7 @@ NAME_TO_INFER = {
     'np_infer_lite': lambda *args, **kwargs: model_infer_lite(*args, **kwargs, np_infer=True),
     'so_infer': so_infer,
     'tf_infer_second_stage': tf_infer_second_stage,
+    'sd2_unet_infer': unet_infer,
 }
 
 

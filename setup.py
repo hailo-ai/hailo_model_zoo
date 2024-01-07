@@ -47,9 +47,11 @@ def main():
             'omegaconf==2.3.0',
             'pillow<=9.2.0',
             'detection-tools==0.3',
-            'scikit-image==0.19.3']
+            'scikit-image==0.19.3',
+            'torch==1.11.0',
+            'torchmetrics==1.2.0']
 
-    model_zoo_version = "2.9.0"
+    model_zoo_version = "2.10.0"
 
     package_data = {
         "hailo_model_zoo": [

@@ -1,5 +1,10 @@
 base:
 - base/yolov8.yaml
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  hpp: true
+  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov8s/2023-02-02/yolov8s_nms_config.json
 network:
   network_name: yolov8s
 paths:
@@ -29,3 +34,4 @@ info:
   full_precision_result: 44.75
   source: https://github.com/ultralytics/ultralytics
   license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: GPL-3.0

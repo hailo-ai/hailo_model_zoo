@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.image import combined_non_max_suppression
 
+from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 from .centernet import COCO_2017_TO_2014_TRANSLATION
 
 
@@ -21,15 +22,11 @@ class NanoDetPostProc:
         self._network_arch = meta_arch
         self._nms_max_output_per_class = 100 if nms_max_output_per_class is None else nms_max_output_per_class
         self._nms_max_output = 100 if post_nms_topk is None else post_nms_topk
+        self.hpp = kwargs.get("hpp", False)
         self._split = {
             'nanodet': self.nanodet_decode,
             'nanodet_split': self.split_decode,
             'nanodet_v8': self.split_decode_yolo  # nanodet_v8 is for YOLOv8
-        }
-        self._decode = {
-            'nanodet': self._box_decoding_nano,
-            'nanodet_split': self._box_decoding_nano,
-            'nanodet_v8': self._box_decoding_yolo  # nanodet_v8 is for YOLOv8
         }
 
     @staticmethod
@@ -76,7 +73,7 @@ class NanoDetPostProc:
     def _get_scores_boxes(self, endnodes):
         return self._split[self._network_arch](endnodes, self.reg_max, self._num_classes)
 
-    def _box_decoding_nano(self, raw_boxes):
+    def _box_decoding(self, raw_boxes):
         boxes = None
         for box_distribute, stride in zip(raw_boxes, self._strides):
             # create grid
@@ -110,44 +107,13 @@ class NanoDetPostProc:
             boxes = decode_box if boxes is None else tf.concat([boxes, decode_box], axis=1)
         return tf.expand_dims(boxes, axis=2)
 
-    def _box_decoding_yolo(self, raw_boxes):
-        boxes = None
-        for box_distribute, stride in zip(raw_boxes, self._strides):
-            # create grid
-            shape = [int(x / stride) for x in self._image_dims]
-            grid_x = np.arange(shape[1]) + 0.5
-            grid_y = np.arange(shape[0]) + 0.5
-            grid_x, grid_y = np.meshgrid(grid_x, grid_y)
-            x_offset, y_offset = self._offset_factors
-            ct_row = (grid_y.flatten() + x_offset) * stride
-            ct_col = (grid_x.flatten() + y_offset) * stride
-            center = np.stack((ct_col, ct_row, ct_col, ct_row), axis=1)
-
-            # box distribution to distance
-            reg_range = np.arange(self.reg_max + 1)
-            box_distance = tf.nn.softmax(box_distribute, axis=-1)
-            box_distance = box_distance * np.reshape(reg_range, (1, 1, 1, -1))
-            box_distance = tf.reduce_sum(box_distance, axis=-1)
-            box_distance = box_distance * stride
-
-            # decode box
-            box_distance = tf.concat([box_distance[:, :, :2] * (-1), box_distance[:, :, 2:]], axis=-1)
-            decode_box = np.expand_dims(center, axis=0) + box_distance
-
-            # clipping
-            xmin = tf.maximum(0.0, decode_box[:, :, 0]) / self._image_dims[1]
-            ymin = tf.maximum(0.0, decode_box[:, :, 1]) / self._image_dims[0]
-            xmax = tf.minimum(tf.cast(self._image_dims[1], tf.float32), decode_box[:, :, 2]) / self._image_dims[1]
-            ymax = tf.minimum(tf.cast(self._image_dims[0], tf.float32), decode_box[:, :, 3]) / self._image_dims[0]
-            decode_box = tf.transpose([ymin, xmin, ymax, xmax], [1, 2, 0])
-
-            boxes = decode_box if boxes is None else tf.concat([boxes, decode_box], axis=1)
-        return tf.expand_dims(boxes, axis=2)
-
-    def _box_decoding(self, raw_boxes):
-        return self._decode[self._network_arch](raw_boxes)
-
     def postprocessing(self, endnodes, *, device_pre_post_layers, **kwargs):
+        if self.hpp:
+            return tf_postproc_nms(endnodes,
+                                   labels_offset=kwargs['labels_offset'],
+                                   score_threshold=0.0,
+                                   coco_2017_to_2014=True)
+
         scores, raw_boxes = self._get_scores_boxes(endnodes)
 
         # decode score/class

@@ -44,3 +44,4 @@ info:
   full_precision_result: 70.579
   source: https://github.com/open-mmlab/mmpose
   license_url: https://github.com/open-mmlab/mmpose/blob/master/LICENSE
+  license_name: Apache-2.0

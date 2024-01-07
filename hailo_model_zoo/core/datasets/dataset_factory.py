@@ -3,7 +3,7 @@ from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_fac
                                            parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
                                            parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
                                            parse_lp_ocr, parse_market, parse_peta, parse_bsd100, parse_cifar, parse_lol,
-                                           parse_kitti_stereo, parse_bsd68)
+                                           parse_kitti_stereo, parse_bsd68, parse_gustavosta_prompts)
 
 
 def get_dataset_parse_func(ds_name):
@@ -55,5 +55,7 @@ def get_dataset_parse_func(ds_name):
         'cifar100': parse_cifar.parse_cifar100_record,
         'bsd100': parse_bsd100.parse_record,
         'bsd68': parse_bsd68.parse_record,
-        'cbsd68': parse_bsd68.parse_record
+        'cbsd68': parse_bsd68.parse_record,
+        'gustavosta_prompts_vae': parse_gustavosta_prompts.vae,
+        'gustavosta_prompts_unet': parse_gustavosta_prompts.unet,
     }[ds_name]

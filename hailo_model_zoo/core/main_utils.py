@@ -27,8 +27,13 @@ unsupported_data_folder = {
 def _get_input_shape(runner, network_info):
     return (
         network_info.preprocessing.input_shape
-        or runner.get_hn_model().get_input_shapes(ignore_input_conversion=True)[0][1:]
+        or runner.get_hn_model().get_input_shapes(ignore_conversion=True)[0][1:]
     )
+
+
+def _get_output_shapes(runner):
+    return [output_layer.output_shape for output_layer in
+            runner.get_hn_model().get_output_layers(remove_non_neural_core_layers=False)]
 
 
 def resolve_alls_path(path, hw_arch='hailo8', performance=False):
@@ -45,10 +50,7 @@ def _apply_output_scheme(runner, network_info):
 
     split_output = output_scheme.split_output
     if split_output:
-        if any(["fc" in x for x in output_scheme.outputs_to_split]):
-            split_fc = True
-        else:
-            split_fc = False
+        split_fc = any("fc" in x for x in output_scheme.outputs_to_split)
         layer_splitter = LayerSplitter(runner, network_info, split_fc)
         runner = layer_splitter.modify_network()
 
@@ -74,8 +76,9 @@ def download_model(network_info, logger):
     # we don't use resolve_model_path, as it strips the extension from .ckpt files
     paths = [path_resolver.resolve_data_path(path) for path in network_path]
     # Check that all files exist. FUTURE: verify checksum
-    if all([path.is_file() for path in paths]):
+    if all(path.is_file() for path in paths):
         return ckpt_path
+
     url = network_info.paths.url
     downloader.download(url, ckpt_path.parent, logger)
     return ckpt_path
@@ -154,68 +157,75 @@ def make_preprocessing(runner, network_info):
     flip = runner.get_hn_model().is_transposed()
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb, yuy2=yuy2, nv12=nv12, rgbx=rgbx,
-        input_resize=input_resize, normalization_params=normalization_params,
+        input_resize=input_resize, normalization_params=normalization_params, output_shapes=_get_output_shapes(runner),
         **preprocessing_args)
 
     return preproc_callback
 
 
-def _make_data_feed_callback(batch_size, data_path, dataset_name, two_stage_arch, preproc_callback, network_info):
+def _make_data_feed_callback(data_path, dataset_name, two_stage_arch, preproc_callback, network_info, batch_size=None):
     data_path = Path(data_path)
     if not data_path.exists():
         raise FileNotFoundError(f"Couldn't find dataset in {data_path}. Please refer to docs/DATA.rst.")
     data_tf = data_path.is_file() and data_path.suffix in [".tfrecord", ".000"]
     args = (preproc_callback, batch_size, data_path)
-    name = network_info.network.network_name
     if two_stage_arch:
         func = data.RegionProposalFeed
     elif data_tf:
         func = data.TFRecordFeed
         args += (dataset_name,)
     elif data_path.is_dir():
-        if name in unsupported_data_folder:
-            raise ValueError(f'Folder  data path is currently not supported for {name}')
+        if network_info.network.network_name in unsupported_data_folder:
+            raise ValueError(f'Folder data path is currently not supported for {network_info.network.network_name}')
         func = data.ImageFeed
     else:
+        if network_info.network.network_name in unsupported_data_folder:
+            raise ValueError(f'Video feed is currently not supported for {network_info.network.network_name}')
         func = data.VideoFeed
     return lambda: func(*args)
 
 
-def _make_dataset_callback(network_info, batch_size, preproc_callback, absolute_path, dataset_name):
+def _make_dataset_callback(network_info, preproc_callback, absolute_path, dataset_name, batch_size=None):
     two_stage_arch = network_info.evaluation.two_stage_arch
-    return _make_data_feed_callback(batch_size, absolute_path, dataset_name, two_stage_arch,
-                                    preproc_callback, network_info)
+    return _make_data_feed_callback(
+        absolute_path, dataset_name, two_stage_arch, preproc_callback, network_info, batch_size=batch_size)
 
 
-def make_evalset_callback(network_info, batch_size, preproc_callback, override_path, return_dataset=False):
+def make_evalset_callback(network_info, preproc_callback, override_path, return_iterator_cb=False, batch_size=None):
     dataset_name = network_info.evaluation.dataset_name
     resolved_data_path = override_path or path_resolver.resolve_data_path(network_info.evaluation.data_set)
-    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, resolved_data_path, dataset_name)
-    if return_dataset:
-        return data_feed_cb().dataset
-    return lambda: data_feed_cb().iterator
+    data_feed_cb = _make_dataset_callback(
+        network_info, preproc_callback, resolved_data_path, dataset_name, batch_size=batch_size)
+    if return_iterator_cb:
+        if batch_size is None:
+            raise ValueError("Batch size is required for iterator")
+        return lambda: data_feed_cb().iterator
+    return data_feed_cb().dataset
 
 
-def make_calibset_callback(network_info, batch_size, preproc_callback, override_path):
+def make_calibset_callback(network_info, preproc_callback, override_path):
     dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
     if override_path is None and network_info.quantization.calib_set is None:
         raise ValueError("Optimization requires calibration data, please modify YAML or use --calib-path")
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
-    data_feed_cb = _make_dataset_callback(network_info, batch_size, preproc_callback, calib_path, dataset_name)
-    dataset = data_feed_cb()._dataset if batch_size is None else data_feed_cb()._dataset.unbatch()
-    return dataset
+    data_feed_cb = _make_dataset_callback(network_info, preproc_callback, calib_path, dataset_name)
+    return lambda: data_feed_cb().dataset
 
 
 def optimize_full_precision_model(runner, model_script, resize, input_conversion):
     runner.load_model_script(model_script)
+    input_layers = runner.get_hn_model().get_input_layers()
+    scope_name = input_layers[0].scope
     if resize is not None:
         height, width = resize
-        runner.load_model_script(f'resize_input1 = resize(resize_shapes=[{height},{width}])', append=True)
+        resize_layer_names = ", ". join(f"{input_layer.scope}/resize_input{i}"
+                                        for i, input_layer in enumerate(input_layers, start=1))
+        runner.load_model_script(f'{resize_layer_names} = resize(resize_shapes=[{height},{width}])', append=True)
     if input_conversion is not None:
         hailo_conversion_type = {'rgbx_to_rgb': 'tf_rgbx_to_hailo_rgb'}.get(input_conversion, input_conversion)
-        conversion_layers = ['input_conversion1']
+        conversion_layers = [f'{scope_name}/input_conversion1']
         if hailo_conversion_type in ['yuy2_to_rgb', 'nv12_to_rgb']:
-            conversion_layers.append('yuv_to_rgb1')
+            conversion_layers.append(f'{scope_name}/yuv_to_rgb1')
         runner.load_model_script(
             f'{", ".join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)',
             append=True
@@ -229,7 +239,7 @@ def optimize_model(runner, logger, network_info, calib_path, results_dir, model_
 
     logger.info('Preparing calibration data...')
     preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_callback = make_calibset_callback(network_info, batch_size=None,
+    calib_feed_callback = make_calibset_callback(network_info,
                                                  preproc_callback=preproc_callback,
                                                  override_path=calib_path)
     runner.optimize(calib_feed_callback)
@@ -317,22 +327,46 @@ def make_eval_callback(network_info, runner):
     return eval_callback
 
 
+def get_infer_type(network_info, use_lite_inference):
+    infer_type = network_info.evaluation.infer_type
+    if not use_lite_inference:
+        return infer_type
+
+    # infer type is already lite
+    if infer_type.endswith('_lite'):
+        return infer_type
+
+    # make sure infer type actually applies
+    if infer_type not in ['np_infer', 'model_infer']:
+        raise ValueError(f'lite inference can only be used with np_infer or model_infer but used with {infer_type}')
+
+    final_infer_type = infer_type + "_lite"
+    return final_infer_type
+
+
+def make_infer_callback(network_info, use_lite_inference):
+    infer_type = get_infer_type(network_info, use_lite_inference)
+    infer_callback = infer_factory.get_infer(infer_type)
+
+    return infer_callback
+
+
 def infer_model_tf2(runner, network_info, target, logger, eval_num_examples,
                     data_path, batch_size, print_num_examples=256, visualize_results=False,
-                    video_outpath=None, dump_results=False):
+                    video_outpath=None, use_lite_inference=False, dump_results=False):
     logger.info('Initializing the dataset ...')
+    if eval_num_examples:
+        eval_num_examples = eval_num_examples + network_info.evaluation.data_count_offset
     preproc_callback = make_preprocessing(runner, network_info)
     # we do not pass batch_size, batching is now done in infer_callback
-    dataset = make_evalset_callback(network_info, None, preproc_callback, data_path, return_dataset=True)
+    dataset = make_evalset_callback(network_info, preproc_callback, data_path)
     # TODO refactor
     postprocessing_callback = get_postprocessing_callback(runner, network_info)
     eval_callback = make_eval_callback(network_info, runner)
     visualize_callback = make_visualize_callback(network_info) if visualize_results else None
 
     model_wrapper_callback = make_model_callback(network_info)
-    infer_type = network_info.evaluation.infer_type
-    infer_callback = infer_factory.get_infer(infer_type)
-
+    infer_callback = make_infer_callback(network_info, use_lite_inference)
     return infer_callback(runner, target, logger, eval_num_examples, print_num_examples, batch_size,
                           dataset, postprocessing_callback, eval_callback, visualize_callback,
                           model_wrapper_callback, video_outpath, dump_results, results_path=None)
@@ -342,8 +376,11 @@ def infer_model_tf1(runner, network_info, target, logger, eval_num_examples,
                     data_path, batch_size, print_num_examples=256, visualize_results=False,
                     video_outpath=None, dump_results=False, network_groups=None):
     logger.info('Initializing the dataset ...')
+    if eval_num_examples:
+        eval_num_examples = eval_num_examples + network_info.evaluation.data_count_offset
     preproc_callback = make_preprocessing(runner, network_info)
-    data_feed_callback = make_evalset_callback(network_info, batch_size, preproc_callback, data_path)
+    data_feed_callback = make_evalset_callback(
+        network_info, preproc_callback, data_path, return_iterator_cb=True, batch_size=batch_size)
 
     def tf_graph_callback(preprocessed_data, rescale_output=None):
         sdk_export = runner.get_tf_graph(

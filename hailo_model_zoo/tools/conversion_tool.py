@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 
 import argparse
+import json
 import logging
 from functools import partial
-import tensorflow as tf
 from pathlib import Path
+
 import numpy as np
-import json
+import tensorflow as tf
+
 from hailo_sdk_client import ClientRunner, HailoNN
-from hailo_model_zoo.core.main_utils import get_network_info
-from hailo_model_zoo.utils.logger import get_logger
+
+from hailo_model_zoo.core.main_utils import _get_output_shapes, get_network_info
 from hailo_model_zoo.core.preprocessing import preprocessing_factory
 from hailo_model_zoo.utils.data import TFRecordFeed
+from hailo_model_zoo.utils.logger import get_logger
 
 _logger = get_logger()
 
@@ -24,7 +27,7 @@ class SourceFileNotFound(Exception):
     pass
 
 
-def _get_data_feed(network_info, model_name, data_path, dataset_name, height, width):
+def _get_data_feed(network_info, model_name, data_path, dataset_name, height, width, output_shapes=None):
     preprocessing_args = network_info.preprocessing
     hn_editor = network_info.hn_editor
     flip = hn_editor.flip
@@ -32,7 +35,7 @@ def _get_data_feed(network_info, model_name, data_path, dataset_name, height, wi
     input_resize = hn_editor.input_resize
     preproc_callback = preprocessing_factory.get_preprocessing(
         model_name, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb,
-        input_resize=input_resize, normalization_params=False,
+        input_resize=input_resize, normalization_params=False, output_shapes=output_shapes,
         **preprocessing_args)
     data_feed = TFRecordFeed(preproc_callback, batch_size=1, dataset_name=dataset_name, tfrecord_file=data_path)
     return data_feed.iterator
@@ -43,7 +46,7 @@ def _init_dataset(runner, tf_path, network_info):
     dataset_name = network_info['evaluation'].get('dataset_name', None)
     height, width = HailoNN.from_parsed_hn(runner.get_hn()).get_input_layers()[0].output_shape[1:3]
     data_feed_callback = partial(_get_data_feed, network_info, model_arch, tf_path,
-                                 dataset_name, height, width)
+                                 dataset_name, height, width, output_shapes=_get_output_shapes(runner))
 
     return data_feed_callback
 

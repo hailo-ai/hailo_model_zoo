@@ -20,3 +20,16 @@ def polylanenet(image, image_info=None, height=None, width=None, **kwargs):
         image_info['image_resized'] = image
 
     return image, image_info
+
+
+def laneaf(image, image_info=None, height=None, width=None, **kwargs):
+    image = tf.cast(image, tf.float32)
+    image_info = _cast_image_info_types(image_info, image)
+    if height and width:
+        image = tf.expand_dims(image, 0)
+        image = image[:, 16:, :, :]  # Crop 16 pixels from the top
+        image = tf.image.resize(image, [height, width], method='bilinear')
+        image = tf.squeeze(image, [0])
+        image_info['image_resized'] = image
+
+    return image, image_info

@@ -15,22 +15,22 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |cuda| image:: https://img.shields.io/badge/CUDA-11.2-blue.svg
+.. |cuda| image:: https://img.shields.io/badge/CUDA-11.8-blue.svg
    :target: https://developer.nvidia.com/cuda-toolkit
    :alt: Cuda
    :width: 80
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.25.0-brightgreen.svg
-   :target: https://hailo.ai/contact-us/
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.26.0-brightgreen.svg
+   :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.15.0-brightgreen.svg
-   :target: https://hailo.ai/contact-us/
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.16.0-brightgreen.svg
+   :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
    :height: 20
@@ -44,7 +44,7 @@ Hailo Model Zoo
 
 
 .. image:: docs/images/logo.png
-  
+
 |python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
 
@@ -57,7 +57,15 @@ Models
 | The models are divided to:
 
 
-* | `PUBLIC MODELS <docs/PUBLIC_MODELS.rst>`_ which were trained on publicly available datasets.
+* | PUBLIC MODELS - which were trained on publicly available datasets.
+
+    `PUBLIC MODELS_HAILO8 <docs/PUBLIC_MODELS_HAILO8.rst>`_
+
+    `PUBLIC MODELS_HAILO8L <docs/PUBLIC_MODELS_HAILO8L.rst>`_
+
+    `PUBLIC MODELS_HAILO15H <docs/PUBLIC_MODELS_HAILO15H.rst>`_
+
+    `PUBLIC MODELS_HAILO15M <docs/PUBLIC_MODELS_HAILO15M.rst>`_
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.
 
@@ -78,8 +86,8 @@ Quick Start Guide
 ------------------
 
 
-* Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/contact-us/>`_
-* Install HailoRT (optional). Required only if you want to run on Hailo-8. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/contact-us/>`_
+* Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_
+* Install HailoRT (optional). Required only if you want to run on Hailo-8. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_
 * Clone the Hailo Model Zoo
 
 
@@ -114,7 +122,7 @@ For full functionality please see the `INSTALLATION GUIDE <docs/GETTING_STARTED.
 * | Compile: run the Hailo compiler to generate the Hailo Executable Format file (HEF) which can be executed on the Hailo hardware.
 * | Evaluate: infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.
 
-For further information about the Hailo Dataflow Compiler please contact `hailo.ai <https://hailo.ai/contact-us/>`_.
+For further information about the Hailo Dataflow Compiler please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_.
 
 
 .. figure:: docs/images/usage_flow.svg

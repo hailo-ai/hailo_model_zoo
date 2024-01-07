@@ -151,7 +151,7 @@ def aggregate(elements):
         return [item for sublist in elements for item in sublist]
 
     # we got primitives - collect them to an array
-    if len(e.shape) == 0:
+    if len(e.shape) == 0 or min(e.shape) == 0:  # added to handle SparseTensor
         return np.array(elements)
 
     # we got multiple numpy arrays, concatenate them

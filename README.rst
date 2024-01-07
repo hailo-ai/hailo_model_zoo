@@ -23,14 +23,14 @@ Hailo Model Zoo
 
 
 .. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.26.0-brightgreen.svg
-   :target: https://hailo.ai/contact-us/
+   :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
 .. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.16.0-brightgreen.svg
-   :target: https://hailo.ai/contact-us/
+   :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
    :height: 20
@@ -86,8 +86,8 @@ Quick Start Guide
 ------------------
 
 
-* Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/contact-us/>`_
-* Install HailoRT (optional). Required only if you want to run on Hailo-8. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/contact-us/>`_
+* Install Hailo Dataflow Compiler and enter the virtualenv. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_
+* Install HailoRT (optional). Required only if you want to run on Hailo-8. In case you are not Hailo customer please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_
 * Clone the Hailo Model Zoo
 
 
@@ -122,7 +122,7 @@ For full functionality please see the `INSTALLATION GUIDE <docs/GETTING_STARTED.
 * | Compile: run the Hailo compiler to generate the Hailo Executable Format file (HEF) which can be executed on the Hailo hardware.
 * | Evaluate: infer the model using the Hailo Emulator or the Hailo hardware and produce the model accuracy.
 
-For further information about the Hailo Dataflow Compiler please contact `hailo.ai <https://hailo.ai/contact-us/>`_.
+For further information about the Hailo Dataflow Compiler please contact `hailo.ai <https://hailo.ai/company-overview/contact-us/>`_.
 
 
 .. figure:: docs/images/usage_flow.svg

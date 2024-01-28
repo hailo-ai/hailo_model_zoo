@@ -59,13 +59,156 @@ Models
 
 * | PUBLIC MODELS - which were trained on publicly available datasets.
 
-    `PUBLIC MODELS_HAILO8 <docs/PUBLIC_MODELS_HAILO8.rst>`_
+  PUBLIC MODELS HAILO8 - Task Type
 
-    `PUBLIC MODELS_HAILO8L <docs/PUBLIC_MODELS_HAILO8L.rst>`_
+     `PUBLIC MODELS_HAILO8 Classification <docs/PUBLIC_MODELS_HAILO8_Classification.rst>`_
 
-    `PUBLIC MODELS_HAILO15H <docs/PUBLIC_MODELS_HAILO15H.rst>`_
+     `PUBLIC MODELS_HAILO8 Object_Detection <docs/PUBLIC_MODELS_HAILO8_Object_Detection.rst>`_
 
-    `PUBLIC MODELS_HAILO15M <docs/PUBLIC_MODELS_HAILO15M.rst>`_
+     `PUBLIC MODELS_HAILO8 Semantic_Segmentation <docs/PUBLIC_MODELS_HAILO8_Semantic_Segmentation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Pose_Estimation <docs/PUBLIC_MODELS_HAILO8_Pose_Estimation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Single_Person_Pose_Estimation <docs/PUBLIC_MODELS_HAILO8_Single_Person_Pose_Estimation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Face_Detection <docs/PUBLIC_MODELS_HAILO8_Face_Detection.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Instance_Segmentation <docs/PUBLIC_MODELS_HAILO8_Instance_Segmentation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Depth_Estimation <docs/PUBLIC_MODELS_HAILO8_Depth_Estimation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Facial_Landmark_Detectio <docs/PUBLIC_MODELS_HAILO8_Facial_Landmark_Detection.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Person_Re-ID <docs/PUBLIC_MODELS_HAILO8_Person_Re-ID.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Super_Resolution <docs/PUBLIC_MODELS_HAILO8_Super_Resolution.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Face_Recognition <docs/PUBLIC_MODELS_HAILO8_Face_Recognition.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Person_Attribute <docs/PUBLIC_MODELS_HAILO8_Person_Attribute.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Face_Attribute <docs/PUBLIC_MODELS_HAILO8_Face_Attribute.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Zero-shot_Classification <docs/PUBLIC_MODELS_HAILO8_Zero-shot_Classification.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Stereo_Depth_Estimation <docs/PUBLIC_MODELS_HAILO8_Stereo_Depth_Estimation.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Low_Light_Enhancement <docs/PUBLIC_MODELS_HAILO8_Low_Light_Enhancement.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Image_Denoising <docs/PUBLIC_MODELS_HAILO8_Image_Denoising.rst>`_
+
+     `PUBLIC MODELS_HAILO8 Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8_Hand_Landmark detection.rst>`_
+
+  PUBLIC MODELS HAILO8L - Task Type
+
+    `PUBLIC MODELS_HAILO8L Classification <docs/PUBLIC_MODELS_HAILO8L_Classification.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Object_Detection <docs/PUBLIC_MODELS_HAILO8L_Object_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Semantic_Segmentation <docs/PUBLIC_MODELS_HAILO8L_Semantic_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Pose_Estimation <docs/PUBLIC_MODELS_HAILO8L_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Single_Person_Pose_Estimation <docs/PUBLIC_MODELS_HAILO8L_Single_Person_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Face_Detection <docs/PUBLIC_MODELS_HAILO8L_Face_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Instance_Segmentation <docs/PUBLIC_MODELS_HAILO8L_Instance_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Depth_Estimation <docs/PUBLIC_MODELS_HAILO8L_Depth_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Facial_Landmark_Detection <docs/PUBLIC_MODELS_HAILO8L_Facial_Landmark_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Person_Re-ID <docs/PUBLIC_MODELS_HAILO8L_Person_Re-ID.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Super_Resolution <docs/PUBLIC_MODELS_HAILO8L_Super_Resolution.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Face_Recognition <docs/PUBLIC_MODELS_HAILO8L_Face_Recognition.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Person_Attribute <docs/PUBLIC_MODELS_HAILO8L_Person_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Face_Attribute <docs/PUBLIC_MODELS_HAILO8L_Face_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Zero-shot_Classification <docs/PUBLIC_MODELS_HAILO8L_Zero-shot_Classification.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Low_Light_Enhancement <docs/PUBLIC_MODELS_HAILO8L_Low_Light_Enhancement.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Image_Denoising <docs/PUBLIC_MODELS_HAILO8L_Image_Denoising.rst>`_
+
+    `PUBLIC MODELS_HAILO8L Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8L_Hand_Landmark detection.rst>`_
+
+  PUBLIC MODELS HAILO15H - Task Type
+
+    `PUBLIC MODELS_HAILO15H Classification <docs/PUBLIC_MODELS_HAILO15H_Classification.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Object_Detection <docs/PUBLIC_MODELS_HAILO15H_Object_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Semantic_Segmentation <docs/PUBLIC_MODELS_HAILO15H_Semantic_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Pose_Estimation <docs/PUBLIC_MODELS_HAILO15H_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Single_Person_Pose_Estimation <docs/PUBLIC_MODELS_HAILO15H_Single_Person_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Face_Detection <docs/PUBLIC_MODELS_HAILO15H_Face_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Instance_Segmentation <docs/PUBLIC_MODELS_HAILO15H_Instance_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Depth_Estimation <docs/PUBLIC_MODELS_HAILO15H_Depth_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Facial_Landmark_Detection <docs/PUBLIC_MODELS_HAILO15H_Facial_Landmark_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Person_Re-ID <docs/PUBLIC_MODELS_HAILO15H_Person_Re-ID.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Super_Resolution <docs/PUBLIC_MODELS_HAILO15H_Super_Resolution.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Face_Recognition <docs/PUBLIC_MODELS_HAILO15H_Face_Recognition.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Person_Attribute <docs/PUBLIC_MODELS_HAILO15H_Person_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Face_Attribute <docs/PUBLIC_MODELS_HAILO15H_Face_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Low_Light_Enhancement <docs/PUBLIC_MODELS_HAILO15H_Low_Light_Enhancement.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Image_Denoising <docs/PUBLIC_MODELS_HAILO15H_Image_Denoising.rst>`_
+
+    `PUBLIC MODELS_HAILO15H Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15H_Hand_Landmark detection.rst>`_
+
+  PUBLIC MODELS HAILO15M - Task Type
+
+    `PUBLIC MODELS_HAILO15M Classification <docs/PUBLIC_MODELS_HAILO15M_Classification.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Object_Detection <docs/PUBLIC_MODELS_HAILO15M_Object_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Semantic_Segmentation <docs/PUBLIC_MODELS_HAILO15M_Semantic_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Pose_Estimation <docs/PUBLIC_MODELS_HAILO15M_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Single_Person_Pose_Estimation <docs/PUBLIC_MODELS_HAILO15M_Single_Person_Pose_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Face_Detection <docs/PUBLIC_MODELS_HAILO15M_Face_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Instance_Segmentation <docs/PUBLIC_MODELS_HAILO15M_Instance_Segmentation.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Depth_Estimation <docs/PUBLIC_MODELS_HAILO15M_Depth_Estimation.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Facial_Landmark_Detection <docs/PUBLIC_MODELS_HAILO15M_Facial_Landmark_Detection.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Person_Re-ID <docs/PUBLIC_MODELS_HAILO15M_Person_Re-ID.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Super_Resolution <docs/PUBLIC_MODELS_HAILO15M_Super_Resolution.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Face_Recognition <docs/PUBLIC_MODELS_HAILO15M_Face_Recognition.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Person_Attribute <docs/PUBLIC_MODELS_HAILO15M_Person_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Face_Attribute <docs/PUBLIC_MODELS_HAILO15M_Face_Attribute.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Low_Light_Enhancement <docs/PUBLIC_MODELS_HAILO15M_Low_Light_Enhancement.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Image_Denoising <docs/PUBLIC_MODELS_HAILO15M_Image_Denoising.rst>`_
+
+    `PUBLIC MODELS_HAILO15M Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15M_Hand_Landmark detection.rst>`_
+
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.
 

@@ -135,7 +135,7 @@ Models
 
     `PUBLIC MODELS_HAILO8L Image_Denoising <docs/PUBLIC_MODELS_HAILO8L_Image_Denoising.rst>`_
 
-    `PUBLIC MODELS_HAILO8L Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8L_Hand_Landmark detection.rst>`_
+    `PUBLIC MODELS_HAILO8L Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8L_Hand_Landmark_detection.rst>`_
 
   PUBLIC MODELS HAILO15H - Task Type
 
@@ -171,7 +171,7 @@ Models
 
     `PUBLIC MODELS_HAILO15H Image_Denoising <docs/PUBLIC_MODELS_HAILO15H_Image_Denoising.rst>`_
 
-    `PUBLIC MODELS_HAILO15H Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15H_Hand_Landmark detection.rst>`_
+    `PUBLIC MODELS_HAILO15H Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15H_Hand_Landmark_detection.rst>`_
 
   PUBLIC MODELS HAILO15M - Task Type
 
@@ -207,7 +207,7 @@ Models
 
     `PUBLIC MODELS_HAILO15M Image_Denoising <docs/PUBLIC_MODELS_HAILO15M_Image_Denoising.rst>`_
 
-    `PUBLIC MODELS_HAILO15M Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15M_Hand_Landmark detection.rst>`_
+    `PUBLIC MODELS_HAILO15M Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO15M_Hand_Landmark_detection.rst>`_
 
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.

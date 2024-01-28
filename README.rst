@@ -97,7 +97,7 @@ Models
 
      `PUBLIC MODELS_HAILO8 Image_Denoising <docs/PUBLIC_MODELS_HAILO8_Image_Denoising.rst>`_
 
-     `PUBLIC MODELS_HAILO8 Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8_Hand_Landmark detection.rst>`_
+     `PUBLIC MODELS_HAILO8 Hand_Landmark detection <docs/PUBLIC_MODELS_HAILO8_Hand_Landmark_detection.rst>`_
 
   PUBLIC MODELS HAILO8L - Task Type
 

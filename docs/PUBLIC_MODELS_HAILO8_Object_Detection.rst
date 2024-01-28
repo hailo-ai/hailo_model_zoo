@@ -1,3 +1,12 @@
+Public Pre-Trained Models
+=========================
+
+.. |rocket| image:: images/rocket.png
+  :width: 18
+
+.. |star| image:: images/star.png
+  :width: 18
+
 .. _Object Detection:
 
 Object Detection
@@ -494,3 +503,33 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo8/yolox_tiny.hef>`_
      - 225.587
      - 634.08
+
+VisDrone
+^^^^^^^^
+
+.. list-table::
+   :widths: 31 7 9 12 9 8 9 8 7 7 7
+   :header-rows: 1
+
+   * - Network Name
+     - mAP
+     - Quantized
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+     - Pretrained
+     - Source
+     - Compiled
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+   * - ssd_mobilenet_v1_visdrone  |star|
+     - 2.37
+     - 2.22
+     - 300x300x3
+     - 5.64
+     - 2.3
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-07-18/ssd_mobilenet_v1_visdrone.zip>`_
+     - `link <https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.10.0/hailo8/ssd_mobilenet_v1_visdrone.hef>`_
+     - 1212.8
+     - 1212.72

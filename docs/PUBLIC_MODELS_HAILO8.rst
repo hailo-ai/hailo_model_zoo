@@ -55,11 +55,6 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <docs/public_models/HAILO8L_Facial_Landmark_Detection.rst>`_
      - `Link <docs/public_models/HAILO15H_Facial_Landmark_Detection.rst>`_
      - `Link <docs/public_models/HAILO15M_Facial_Landmark_Detection.rst>`_
-   * - Facial Landmark Detection
-     - `Link <docs/public_models/HAILO8_Facial_Landmark_Detection.rst>`_
-     - `Link <docs/public_models/HAILO8L_Facial_Landmark_Detection.rst>`_
-     - `Link <docs/public_models/HAILO15H_Facial_Landmark_Detection.rst>`_
-     - `Link <docs/public_models/HAILO15M_Facial_Landmark_Detection.rst>`_
    * - Person Re-ID
      - `Link <docs/public_models/HAILO8_Person_Re_ID.rst>`_
      - `Link <docs/public_models/HAILO8L_Person_Re_ID.rst>`_

@@ -57,7 +57,7 @@ The models are divided to:
 
 * Public models - which were trained on publicly available datasets.
 
-     * For Hailo-8 - `Classification <docs/PUBLIC_MODELS_HAILO8_Classification.rst>`_, `Object Detection <docs/PUBLIC_MODELS_HAILO8_Object_Detection.rst>`_, other tasks
+     * For Hailo-8 - `Classification <docs/public_models/HAILO8_Classification.rst>`_, `Object Detection <docs/public_models/HAILO8_Object_Detection.rst>`_, other tasks
 
      * For Hailo-8L - Classification, Object Detection, other tasks
 

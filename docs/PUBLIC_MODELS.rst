@@ -16,7 +16,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15M_Classification.rst>`_
    * - Object Detection
      - `Link <public_models/HAILO8_Object_Detection.rst>`_
-     - `Link <public_models/HAILO8L_Object_Detectionn.rst>`_
+     - `Link <public_models/HAILO8L_Object_Detection.rst>`_
      - `Link <public_models/HAILO15H_Object_Detection.rst>`_
      - `Link <public_models/HAILO15M_Object_Detection.rst>`_
    * - Semantic Segmentation

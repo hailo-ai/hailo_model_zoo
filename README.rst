@@ -59,11 +59,11 @@ The models are divided to:
 
      * For Hailo-8 - `Classification <docs/public_models/HAILO8_Classification.rst>`_, `Object Detection <docs/public_models/HAILO8_Object_Detection.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-     * For Hailo-8L - Classification, Object Detection, other tasks
+     * For Hailo-8L - `Classification <docs/public_models/HAILO8L_Classification.rst>`_, `Object Detection <docs/public_models/HAILO8L_Object_Detection.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-     * For Hailo-15H - Classification, Object Detection, other tasks
+     * For Hailo-15H - `Classification <docs/public_models/HAILO15H_Classification.rst>`_, `Object Detection <docs/public_models/HAILO15H_Object_Detection.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-     * For Hailo-15M - Classification, Object Detection, other tasks
+     * For Hailo-15M - `Classification <docs/public_models/HAILO15M_Classification.rst>`_, `Object Detection <docs/public_models/HAILO15M_Object_Detection.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 

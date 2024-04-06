@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Instance Segmentation`_
-  
+
 
 .. _Instance Segmentation:
 
@@ -41,8 +41,8 @@ COCO
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
-   * - yolact_regnetx_1.6gf   
+     - Compiled
+   * - yolact_regnetx_1.6gf
      - 27.57
      - 27.27
      - 47
@@ -52,8 +52,8 @@ COCO
      - 125.34
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_1.6gf/pretrained/2022-11-30/yolact_regnetx_1.6gf.zip>`_
      - `link <https://github.com/dbolya/yolact>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolact_regnetx_1.6gf.hef>`_    
-   * - yolact_regnetx_800mf   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolact_regnetx_1.6gf.hef>`_
+   * - yolact_regnetx_800mf
      - 25.61
      - 25.5
      - 45
@@ -63,8 +63,8 @@ COCO
      - 116.75
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2022-11-30/yolact_regnetx_800mf.zip>`_
      - `link <https://github.com/dbolya/yolact>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolact_regnetx_800mf.hef>`_    
-   * - yolov5l_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolact_regnetx_800mf.hef>`_
+   * - yolov5l_seg
      - 39.78
      - 39.09
      - 32
@@ -74,8 +74,8 @@ COCO
      - 147.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5l/pretrained/2022-10-30/yolov5l-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5l_seg.hef>`_    
-   * - yolov5m_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5l_seg.hef>`_
+   * - yolov5m_seg
      - 37.05
      - 36.32
      - 61
@@ -85,8 +85,8 @@ COCO
      - 70.94
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5m/pretrained/2022-10-30/yolov5m-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5m_seg.hef>`_     
-   * - yolov5n_seg  |star| 
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5m_seg.hef>`_
+   * - yolov5n_seg  |star|
      - 23.35
      - 22.75
      - 184
@@ -96,8 +96,8 @@ COCO
      - 7.1
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5n/pretrained/2022-10-30/yolov5n-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5n_seg.hef>`_    
-   * - yolov5s_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5n_seg.hef>`_
+   * - yolov5s_seg
      - 31.57
      - 30.8
      - 92
@@ -107,8 +107,8 @@ COCO
      - 26.42
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5s/pretrained/2022-10-30/yolov5s-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5s_seg.hef>`_    
-   * - yolov8m_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov5s_seg.hef>`_
+   * - yolov8m_seg
      - 40.6
      - 39.85
      - 45
@@ -118,8 +118,8 @@ COCO
      - 110.2
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov8/yolov8m/pretrained/2023-03-06/yolov8m-seg.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov8m_seg.hef>`_    
-   * - yolov8n_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov8m_seg.hef>`_
+   * - yolov8n_seg
      - 30.32
      - 29.68
      - 173
@@ -129,8 +129,8 @@ COCO
      - 12.04
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov8/yolov8n/pretrained/2023-03-06/yolov8n-seg.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov8n_seg.hef>`_    
-   * - yolov8s_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/yolov8n_seg.hef>`_
+   * - yolov8s_seg
      - 36.63
      - 36.13
      - 103

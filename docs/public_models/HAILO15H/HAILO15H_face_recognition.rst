@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Face Recognition`_
-  
+
 
 .. _Face Recognition:
 
@@ -42,8 +42,8 @@ LFW
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - arcface_mobilefacenet   
+     - NV12 Compiled
+   * - arcface_mobilefacenet
      - 99.43
      - 99.41
      - 1924
@@ -54,8 +54,8 @@ LFW
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/arcface_mobilefacenet.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/arcface_mobilefacenet_nv12.hef>`_    
-   * - arcface_r50   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/arcface_mobilefacenet_nv12.hef>`_
+   * - arcface_r50
      - 99.72
      - 99.71
      - 154

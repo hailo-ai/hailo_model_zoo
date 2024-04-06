@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Face Attribute`_
-  
+
 
 .. _Face Attribute:
 
@@ -42,8 +42,8 @@ CELEBA
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - face_attr_resnet_v1_18   
+     - NV12 Compiled
+   * - face_attr_resnet_v1_18
      - 81.19
      - 81.09
      - 430

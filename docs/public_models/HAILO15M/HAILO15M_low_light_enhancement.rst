@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Low Light Enhancement`_
-  
+
 
 .. _Low Light Enhancement:
 
@@ -42,8 +42,8 @@ LOL
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - zero_dce   
+     - NV12 Compiled
+   * - zero_dce
      - 16.23
      - 16.24
      - 71
@@ -54,8 +54,8 @@ LOL
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_
      - `link <Internal>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/zero_dce.hef>`_
-     - `download <NA>`_    
-   * - zero_dce_pp   
+     - `download <NA>`_
+   * - zero_dce_pp
      - 15.95
      - 15.82
      - 54

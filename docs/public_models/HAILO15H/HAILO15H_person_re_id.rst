@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Person Re-ID`_
-  
+
 
 .. _Person Re-ID:
 
@@ -42,8 +42,8 @@ Market1501
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - osnet_x1_0   
+     - NV12 Compiled
+   * - osnet_x1_0
      - 94.43
      - 93.63
      - 167
@@ -54,8 +54,8 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/osnet_x1_0.hef>`_
-     - `download <NA>`_     
-   * - repvgg_a0_person_reid_512  |star| 
+     - `download <NA>`_
+   * - repvgg_a0_person_reid_512  |star|
      - 89.9
      - 89.3
      - 5082

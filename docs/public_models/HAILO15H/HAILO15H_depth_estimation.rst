@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Depth Estimation`_
-  
+
 
 .. _Depth Estimation:
 
@@ -42,8 +42,8 @@ NYU
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled       
-   * - fast_depth  |star| 
+     - NV12 Compiled
+   * - fast_depth  |star|
      - 0.6
      - 0.62
      - 1379
@@ -54,8 +54,8 @@ NYU
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_
      - `link <https://github.com/dwofk/fast-depth>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/fast_depth.hef>`_
-     - `download <NA>`_      
-   * - scdepthv3   
+     - `download <NA>`_
+   * - scdepthv3
      - 0.48
      - 0.51
      - 204

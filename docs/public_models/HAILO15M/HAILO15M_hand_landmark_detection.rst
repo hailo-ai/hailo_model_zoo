@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Hand Landmark detection`_
-  
+
 
 .. _Hand Landmark detection:
 
@@ -26,7 +26,7 @@ Hand Landmark detection
 
 Hand Landmark
 ^^^^^^^^^^^^^
-    
+
 .. list-table::
    :header-rows: 1
 
@@ -39,8 +39,8 @@ Hand Landmark
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - hand_landmark_lite   
+     - NV12 Compiled
+   * - hand_landmark_lite
      - 387
      - 1102
      - 224x224x3

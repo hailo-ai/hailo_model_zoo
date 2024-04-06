@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Semantic Segmentation`_
-  
+
 
 .. _Semantic Segmentation:
 
@@ -42,8 +42,8 @@ Cityscapes
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled     
-   * - fcn8_resnet_v1_18  |star| 
+     - NV12 Compiled
+   * - fcn8_resnet_v1_18  |star|
      - 69.41
      - 69.21
      - 18
@@ -54,8 +54,8 @@ Cityscapes
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2023-06-22/fcn8_resnet_v1_18.zip>`_
      - `link <https://mmsegmentation.readthedocs.io/en/latest>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/fcn8_resnet_v1_18.hef>`_
-     - `download <NA>`_    
-   * - segformer_b0_bn   
+     - `download <NA>`_
+   * - segformer_b0_bn
      - 69.81
      - 68.01
      - None
@@ -66,8 +66,8 @@ Cityscapes
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip>`_
      - `link <https://github.com/NVlabs/SegFormer>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/segformer_b0_bn.hef>`_
-     - `download <NA>`_      
-   * - stdc1 |rocket|  
+     - `download <NA>`_
+   * - stdc1 |rocket|
      - 74.57
      - 73.92
      - 15
@@ -98,8 +98,8 @@ Oxford-IIIT Pet
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - unet_mobilenet_v2   
+     - NV12 Compiled
+   * - unet_mobilenet_v2
      - 77.32
      - 77.02
      - 133
@@ -130,8 +130,8 @@ Pascal VOC
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - deeplab_v3_mobilenet_v2   
+     - NV12 Compiled
+   * - deeplab_v3_mobilenet_v2
      - 76.05
      - 74.8
      - 42
@@ -142,8 +142,8 @@ Pascal VOC
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2_dilation/pretrained/2023-08-22/deeplab_v3_mobilenet_v2_dilation.zip>`_
      - `link <https://github.com/bonlime/keras-deeplab-v3-plus>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/deeplab_v3_mobilenet_v2.hef>`_
-     - `download <NA>`_    
-   * - deeplab_v3_mobilenet_v2_wo_dilation   
+     - `download <NA>`_
+   * - deeplab_v3_mobilenet_v2_wo_dilation
      - 71.46
      - 71.26
      - 87

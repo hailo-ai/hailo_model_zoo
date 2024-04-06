@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: docs/images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: docs/images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Super Resolution`_
-  
+
 
 .. _Super Resolution:
 
@@ -42,8 +42,8 @@ BSD100
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled    
-   * - espcn_x2   
+     - NV12 Compiled
+   * - espcn_x2
      - 31.4
      - 30.3
      - 1637
@@ -54,8 +54,8 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/espcn_x2.hef>`_
-     - `download <NA>`_    
-   * - espcn_x3   
+     - `download <NA>`_
+   * - espcn_x3
      - 28.41
      - 28.06
      - 1925
@@ -66,8 +66,8 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/espcn_x3.hef>`_
-     - `download <NA>`_    
-   * - espcn_x4   
+     - `download <NA>`_
+   * - espcn_x4
      - 26.83
      - 26.58
      - 1891

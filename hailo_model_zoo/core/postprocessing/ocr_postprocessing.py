@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image, ImageDraw
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-']
 
@@ -8,12 +9,14 @@ CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-']
 #     return np.exp(x) / np.expand_dims(np.sum(np.exp(x), axis=-1), axis=-1)
 
 
+@POSTPROCESS_FACTORY.register(name="ocr")
 def ocr_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     logits = np.mean(endnodes, axis=1)
     # probs = _softmax(logits)
     return {'predictions': np.argmax(logits, axis=2)}
 
 
+@VISUALIZATION_FACTORY.register(name="ocr")
 def visualize_ocr_result(probs, img, text_color=(255, 0, 0), **kwrgs):
     probs = np.expand_dims(probs['predictions'][0], axis=0)
     pred = greedy_decoder(probs)[0]

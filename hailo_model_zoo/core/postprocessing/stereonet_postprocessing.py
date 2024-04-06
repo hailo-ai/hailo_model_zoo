@@ -1,13 +1,17 @@
 import io
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="stereonet")
 def stereonet_postprocessing(logits, device_pre_post_layers=None, **kwargs):
     return {'predictions': logits}
 
 
+@VISUALIZATION_FACTORY.register(name="stereonet")
 def visualize_stereonet_result(logits, image, **kwargs):
     logits = np.array(logits['predictions'])[0]
     fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)

@@ -1,9 +1,12 @@
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="face_landmark_detection")
 class FaceLandmarkEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['mse']
@@ -30,6 +33,7 @@ class FaceLandmarkEval(Eval):
         return OrderedDict([(self._metric_names[0], self._metrics_vals[0])])
 
 
+@EVAL_FACTORY.register(name="face_landmark_detection_3d")
 class FaceLandmark3DEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['nme[0,90]', 'nme[0,30]', 'nme[30,60]', 'nme[60,90]']

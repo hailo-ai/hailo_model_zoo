@@ -1,10 +1,12 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
 DEPTH_WIDTH = 1242
 DEPTH_HEIGHT = 375
 
 
+@DATASET_FACTORY.register(name="kitti_depth")
 def parse_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

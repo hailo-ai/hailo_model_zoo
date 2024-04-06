@@ -1,0 +1,30 @@
+{
+	"nms_scores_th": 0.2,
+	"nms_iou_th": 0.6,
+	"image_dims": [
+		640,
+		640
+	],
+	"max_proposals_per_class": 100,
+	"classes": 80,
+	"regression_length": 11,
+	"background_removal": false,
+	"background_removal_index": 0,
+	"bbox_decoders": [
+		{
+			"name": "bbox_decoder1",
+			"stride": 8,
+			"combined_layer": ""
+		},
+		{
+			"name": "bbox_decoder2",
+			"stride": 16,
+			"combined_layer": ""
+		},
+		{
+			"name": "bbox_decoder3",
+			"stride": 32,
+			"combined_layer": ""
+		}
+	]
+}

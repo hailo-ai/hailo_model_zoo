@@ -1,11 +1,15 @@
-import numpy as np
-from collections import OrderedDict
 import os
-from hailo_model_zoo.core.eval.eval_base_class import Eval
-from sklearn.linear_model import LinearRegression
+from collections import OrderedDict
+
+import numpy as np
 from scipy.interpolate import CubicSpline
+from sklearn.linear_model import LinearRegression
+
+from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="lane_detection")
 class LaneDetectionEval(Eval):
     """lane evaluation metric class."""
 

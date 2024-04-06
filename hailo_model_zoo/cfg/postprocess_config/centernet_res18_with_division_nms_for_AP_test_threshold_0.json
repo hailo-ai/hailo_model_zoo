@@ -1,0 +1,18 @@
+{
+    "nms_scores_th": 0.0,
+    "max_proposals_per_class": 100,
+    "centers_scale_factor": 10,
+    "bbox_dimensions_scale_factor": 5,
+    "classes": 80,
+    "background_removal": false,
+    "background_removal_index": 0,
+    "input_division_factor": 4,
+    "bbox_decoders": [
+        {
+	    "name": "bbox_decoder_conv29conv27",
+	    "reg_layer_h": "conv29",
+	    "reg_layer_w": "conv27",
+	    "cls_layer": "ew_add1"
+        }
+    ]
+}

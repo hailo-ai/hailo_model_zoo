@@ -11,7 +11,7 @@ Prerequisites
 * nvidia-docker2 (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
 
 
-**NOTE:**  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
+**NOTE:**\  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
 
 
 Environment Preparations
@@ -21,13 +21,12 @@ Environment Preparations
 #. 
    **Build the docker image**
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/hailo_models/license_plate_detection/</span>
+      
+      cd hailo_model_zoo/hailo_models/license_plate_detection/
       docker build --build-arg timezone=`cat /etc/timezone` -t license_plate_detection:v0 .
-      </code></pre>
+      
 
 
    * This command will build the docker image with the necessary requirements using the Dockerfile exists in this directory.
@@ -35,12 +34,11 @@ Environment Preparations
 #. 
    **Start your docker:**
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> license_plate_detection:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir license_plate_detection:v0
+      
 
 
    * ``docker run`` create a new docker container.
@@ -79,14 +77,13 @@ Finetuning and exporting to ONNX
    * 
      Start training on your dataset starting from our pre-trained weights in ``tiny_yolov4_license_plates.weights`` (or download it from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.weights>`_\ )
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="retrain">
-      ./darknet detector train <span val="docker_obj_data_path">data/obj.data</span> ./cfg/tiny_yolov4_license_plates.cfg tiny_yolov4_license_plates.weights -map -clear
-      </code>
+      
+      ./darknet detector train data/obj.data ./cfg/tiny_yolov4_license_plates.cfg tiny_yolov4_license_plates.weights -map -clear
+      
 
-   **NOTE:** If during training you get an error similar to
+   **NOTE:**\  If during training you get an error similar to
 
    .. code-block::
 
@@ -104,12 +101,11 @@ Finetuning and exporting to ONNX
 #. | **Export to ONNX**
    | Export the model to ONNX using the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/tiny_yolov4_license_plates.cfg <span val="docker_path_to_trained_model">/path/to/trained.weights</span> <span val="docker_path_to_image">/path/to/some/image.jpg</span> 1
-      </code>
+      
+      python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/tiny_yolov4_license_plates.cfg /path/to/trained.weights /path/to/some/image.jpg 1
+      
 
 ----
 
@@ -119,16 +115,16 @@ Compile the Model using Hailo Model Zoo
 You can generate an HEF file for inference on Hailo-8 from your trained ONNX model. In order to do so you need a working model-zoo environment.
 Choose the model YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/tiny_yolov4_license_plates.yaml``\ , and run compilation using the model zoo:
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">tiny_yolov4_license_plates_1_416_416.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/tiny_yolov4_license_plates.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt tiny_yolov4_license_plates_1_416_416.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/tiny_yolov4_license_plates.yaml --start-node-names name1 name2 --end-node-names name1
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

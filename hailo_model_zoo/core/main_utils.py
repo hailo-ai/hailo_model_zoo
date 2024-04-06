@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from omegaconf.listconfig import ListConfig
@@ -24,11 +25,8 @@ unsupported_data_folder = {
 }
 
 
-def _get_input_shape(runner, network_info):
-    return (
-        network_info.preprocessing.input_shape
-        or runner.get_hn_model().get_input_shapes(ignore_conversion=True)[0][1:]
-    )
+def _get_input_shape(runner):
+    return runner.get_native_hn_model().get_input_shapes(ignore_conversion=True)[0][1:3]
 
 
 def _get_output_shapes(runner):
@@ -124,22 +122,37 @@ def load_model(runner, har_path, logger):
     runner.load_har(har_path)
 
 
-def get_input_modifications(runner, network_info):
+def get_input_modifications(runner, network_info, input_conversion_args=None, resize_args=None):
+    def _is_yuv2rgb(conversion_type):
+        return conversion_type in ['yuv_to_rgb', 'yuy2_to_rgb', 'nv12_to_rgb']
+
+    def _is_yuv2(conversion_type):
+        return conversion_type in ['yuy2_to_hailo_yuv', 'yuy2_to_rgb']
+
+    def _is_nv12(conversion_type):
+        return conversion_type in ['nv12_to_hailo_yuv', 'nv12_to_rgb']
+
+    def _is_rgbx(conversion_type):
+        return conversion_type == 'tf_rgbx_to_hailo_rgb'
+
     hn_editor = network_info.hn_editor
-    yuv2rgb = hn_editor.yuv2rgb
-    yuy2 = hn_editor.yuy2
-    nv12 = hn_editor.nv12
-    rgbx = hn_editor.rgbx
+    yuv2rgb = hn_editor.yuv2rgb if not input_conversion_args else _is_yuv2rgb(input_conversion_args)
+    yuy2 = hn_editor.yuy2 if not input_conversion_args else _is_yuv2(input_conversion_args)
+    nv12 = hn_editor.nv12 if not input_conversion_args else _is_nv12(input_conversion_args)
+    rgbx = hn_editor.rgbx if not input_conversion_args else _is_rgbx(input_conversion_args)
+    if resize_args:
+        hn_editor.input_resize.enabled = True
+        hn_editor.input_resize.input_shape = [*resize_args]
     input_resize = hn_editor.input_resize
 
     for configs in runner.modifications_meta_data.inputs.values():
         for config in configs:
             if config.cmd_type == 'input_conversion':
                 if config.emulate_conversion:
-                    yuv2rgb = yuv2rgb or config.conversion_type.value in ['yuv_to_rgb', 'yuy2_to_rgb', 'nv12_to_rgb']
-                    yuy2 = yuy2 or config.conversion_type.value in ['yuy2_to_hailo_yuv', 'yuy2_to_rgb']
-                    nv12 = nv12 or config.conversion_type.value in ['nv12_to_hailo_yuv', 'nv12_to_rgb']
-                    rgbx = rgbx or config.conversion_type.value == 'tf_rgbx_to_hailo_rgb'
+                    yuv2rgb = yuv2rgb or _is_yuv2rgb(config.conversion_type.value)
+                    yuy2 = yuy2 or _is_yuv2(config.conversion_type.value)
+                    nv12 = nv12 or _is_nv12(config.conversion_type.value)
+                    rgbx = rgbx or _is_rgbx(config.conversion_type.value)
             elif config.cmd_type == 'resize':
                 input_resize['enabled'] = True
                 input_resize['input_shape'] = [config.output_shape[1], config.output_shape[2]]
@@ -147,18 +160,19 @@ def get_input_modifications(runner, network_info):
     return yuv2rgb, yuy2, nv12, rgbx, input_resize
 
 
-def make_preprocessing(runner, network_info):
+def make_preprocessing(runner, network_info, input_conversion_args=None, resize_args=None):
     preprocessing_args = network_info.preprocessing
     meta_arch = preprocessing_args.get('meta_arch')
-    yuv2rgb, yuy2, nv12, rgbx, input_resize = get_input_modifications(runner, network_info)
+    yuv2rgb, yuy2, nv12, rgbx, input_resize = get_input_modifications(runner, network_info, input_conversion_args,
+                                                                      resize_args)
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
-    height, width, _ = _get_input_shape(runner, network_info)
+    height, width = _get_input_shape(runner)
     flip = runner.get_hn_model().is_transposed()
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch, height=height, width=width, flip=flip, yuv2rgb=yuv2rgb, yuy2=yuy2, nv12=nv12, rgbx=rgbx,
         input_resize=input_resize, normalization_params=normalization_params, output_shapes=_get_output_shapes(runner),
-        **preprocessing_args)
+        network_name=network_info.network.network_name, **preprocessing_args)
 
     return preproc_callback
 
@@ -212,8 +226,50 @@ def make_calibset_callback(network_info, preproc_callback, override_path):
     return lambda: data_feed_cb().dataset
 
 
-def optimize_full_precision_model(runner, model_script, resize, input_conversion):
+def _handle_classes_argument(runner, logger, classes):
+    script_commands = runner.model_script.split('\n')
+    nms_idx = ['nms_postprocess' in x for x in script_commands]
+    if not any(nms_idx):
+        logger.warning('Ignoring classes parameter since the model has no NMS post-process.')
+        return
+
+    nms_idx = nms_idx.index(True)
+    nms_command = script_commands[nms_idx]
+    nms_args = nms_command[:-1].split("(", 1)[-1].split(", ")
+    arg_to_append = f'classes={classes}'
+    if 'classes' in nms_command:
+        classes_idx = ['classes' in x for x in nms_args].index(True)
+        nms_args.pop(classes_idx)
+    elif '.json' in nms_command:
+        # Duplicate the config file, edit the classes and update the path in the command.
+        path_idx = ['.json' in x for x in nms_args].index(True)
+        orig_path = nms_args[path_idx].split('=')[-1].replace('"', '').replace("'", "")
+        with open(orig_path, 'r') as f:
+            nms_cfg = json.load(f)
+        nms_cfg['classes'] = classes
+        tmp_path = f"{orig_path.split('.json')[0]}_tmp.json"
+        with open(tmp_path, 'w') as f:
+            json.dump(nms_cfg, f, indent=4)
+        nms_args.pop(path_idx)
+        arg_to_append = f'config_path="{tmp_path}"'
+
+    nms_args.append(arg_to_append)
+    script_commands[nms_idx] = f'nms_postprocess({", ".join(nms_args)})'
+    runner.load_model_script("\n".join(script_commands))
+
+
+def prepare_calibration_data(runner, network_info, calib_path, logger, input_conversion_args=None, resize_args=None):
+    logger.info('Preparing calibration data...')
+    preproc_callback = make_preprocessing(runner, network_info, input_conversion_args, resize_args)
+    calib_feed_callback = make_calibset_callback(network_info, preproc_callback, calib_path)
+    return calib_feed_callback
+
+
+def optimize_full_precision_model(runner, calib_feed_callback, logger, model_script, resize, input_conversion,
+                                  classes):
     runner.load_model_script(model_script)
+    if classes is not None:
+        _handle_classes_argument(runner, logger, classes)
     input_layers = runner.get_hn_model().get_input_layers()
     scope_name = input_layers[0].scope
     if resize is not None:
@@ -230,18 +286,13 @@ def optimize_full_precision_model(runner, model_script, resize, input_conversion
             f'{", ".join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)',
             append=True
         )
-    runner.optimize_full_precision()
+    runner.optimize_full_precision(calib_data=calib_feed_callback)
 
 
-def optimize_model(runner, logger, network_info, calib_path, results_dir, model_script, resize=None,
-                   input_conversion=None):
-    optimize_full_precision_model(runner, model_script=model_script, resize=resize, input_conversion=input_conversion)
+def optimize_model(runner, calib_feed_callback, logger, network_info, results_dir, model_script, resize=None,
+                   input_conversion=None, classes=None):
+    optimize_full_precision_model(runner, calib_feed_callback, logger, model_script, resize, input_conversion, classes)
 
-    logger.info('Preparing calibration data...')
-    preproc_callback = make_preprocessing(runner, network_info)
-    calib_feed_callback = make_calibset_callback(network_info,
-                                                 preproc_callback=preproc_callback,
-                                                 override_path=calib_path)
     runner.optimize(calib_feed_callback)
 
     model_name = network_info.network.network_name
@@ -268,7 +319,7 @@ def make_visualize_callback(network_info):
 
 
 def _gather_postprocessing_dictionary(runner, network_info):
-    height, width, _ = _get_input_shape(runner, network_info)
+    height, width = _get_input_shape(runner)
     postproc_info = dict(img_dims=(height, width))
     postproc_info.update(network_info.hn_editor)
     postproc_info.update(network_info.evaluation)
@@ -299,7 +350,7 @@ def make_eval_callback(network_info, runner):
     gt_json_path = network_info.evaluation.gt_json_path
     meta_arch = network_info.evaluation.meta_arch
     gt_json_path = path_resolver.resolve_data_path(gt_json_path) if gt_json_path else None
-    input_shape = _get_input_shape(runner, network_info)
+    input_shape = _get_input_shape(runner)
     eval_args = dict(
         net_name=net_name,
         network_type=network_type,
@@ -353,11 +404,12 @@ def make_infer_callback(network_info, use_lite_inference):
 
 def infer_model_tf2(runner, network_info, target, logger, eval_num_examples,
                     data_path, batch_size, print_num_examples=256, visualize_results=False,
-                    video_outpath=None, use_lite_inference=False, dump_results=False):
+                    video_outpath=None, use_lite_inference=False, dump_results=False, input_conversion_args=None,
+                    resize_args=None):
     logger.info('Initializing the dataset ...')
     if eval_num_examples:
         eval_num_examples = eval_num_examples + network_info.evaluation.data_count_offset
-    preproc_callback = make_preprocessing(runner, network_info)
+    preproc_callback = make_preprocessing(runner, network_info, input_conversion_args, resize_args)
     # we do not pass batch_size, batching is now done in infer_callback
     dataset = make_evalset_callback(network_info, preproc_callback, data_path)
     # TODO refactor
@@ -407,10 +459,15 @@ def get_hef_path(results_dir, model_name):
     return results_dir.joinpath(f"{model_name}.hef")
 
 
-def compile_model(runner, network_info, results_dir, allocator_script_filename):
+def compile_model(runner, network_info, results_dir, allocator_script_filename, performance=False):
     model_name = network_info.network.network_name
+    model_script_parent = None
     if allocator_script_filename is not None:
         runner.load_model_script(allocator_script_filename)
+        model_script_parent = allocator_script_filename.parent.name
+    if performance:
+        if model_script_parent == 'generic' or allocator_script_filename is None:
+            runner.load_model_script("performance_param(compiler_optimization_level=max)", append=True)
     hef = runner.compile()
 
     with open(get_hef_path(results_dir, model_name), "wb") as hef_out_file:

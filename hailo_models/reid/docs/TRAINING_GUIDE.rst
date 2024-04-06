@@ -10,7 +10,7 @@ Prerequisites
 * docker (\ `installation instructions <https://docs.docker.com/engine/install/ubuntu/>`_\ )
 * nvidia-docker2 (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
 
-**NOTE:**  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
+**NOTE:**\  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
 
 Environment Preparations
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -18,13 +18,12 @@ Environment Preparations
 #. 
    **Build the docker image:**
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/hailo_models/reid/</span>
+      
+      cd hailo_model_zoo/hailo_models/reid/
       docker build  --build-arg timezone=`cat /etc/timezone` -t person_reid:v0 .
-      </code></pre>
+      
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -40,13 +39,12 @@ Environment Preparations
 #. 
    **Start your docker:**
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path">/path/to/local/drive</span>:<span
-      val="docker_vol_path">/path/to/docker/dir</span> person_reid:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/drive:<span
+      val="docker_vol_path">/path/to/docker/dir person_reid:v0
+      
 
 
    * ``docker run`` create a new docker container.
@@ -71,22 +69,20 @@ Finetuning and exporting to ONNX
    * 
      Start training on your dataset starting from our pre-trained weights in ``models/repvgg_a0_person_reid_512.pth`` or ``models/repvgg_a0_person_reid_2048.pth`` (you can also download it from `512-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.pth>`_ & `2048-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_2048/2022-04-18/repvgg_a0_person_reid_2048.pth>`_\ ) - to do so, you can edit the added yaml ``configs/repvgg_a0_hailo_pre_train.yaml`` and take a look at the examples in `torchreid <https://github.com/KaiyangZhou/deep-person-reid>`_.
 
-     .. raw:: html
-        :name:validation
+     .. code-block::
 
-         <code stage="retrain">
+         
          python scripts/main.py  --config-file configs/repvgg_a0_hailo_pre_train.yaml
-         </code>
+         
 
 #. | **Export to ONNX**
    | Export the model to ONNX using the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python scripts/export.py --model_name <span val="model_name"><model_name></span> --weights <span val="weights">/path/to/model/pth</span>
-      </code>
+      
+      python scripts/export.py --model_name <model_name> --weights /path/to/model/pth
+      
 
 ----
 
@@ -96,17 +92,17 @@ Compile the Model using Hailo Model Zoo
 | In case you exported to onnx based on one of our provided RepVGG models, you can generate an HEF file for inference on Hailo-8 from your trained ONNX model. In order to do so you need a working model-zoo environment.
 | Choose the model YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/repvgg_a0_person_reid_512.yaml`` (or 2048), and run compilation using the model zoo:
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">repvgg_a0_person_reid_512.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/repvgg_a0_person_reid_512.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt repvgg_a0_person_reid_512.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/repvgg_a0_person_reid_512.yaml --start-node-names name1 name2 --end-node-names name1
+   
 
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

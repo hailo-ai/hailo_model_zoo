@@ -13,3 +13,6 @@ parser:
     - 127.5
     - 127.5
     - 127.5
+info:
+  license_url: https://github.com/huggingface/pytorch-image-models/blob/main/LICENSE
+  license_name: Apache-2.0

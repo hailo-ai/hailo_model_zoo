@@ -2,8 +2,10 @@ from collections import OrderedDict
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.eval.kitti_eval import kitti_evaluation
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="3d_detection")
 class Detection3DEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['car_bev_AP_e', 'car_bev_AP_m', 'car_bev_AP_h',

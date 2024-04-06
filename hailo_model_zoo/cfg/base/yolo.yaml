@@ -36,6 +36,7 @@ postprocessing:
       - 198
       - 373
       - 326
+  hpp: false
 info:
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
 parser:

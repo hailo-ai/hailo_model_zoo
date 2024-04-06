@@ -1,5 +1,7 @@
-import numpy as np
 import cv2
+import numpy as np
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 """
 properties of patch for image visualization:
@@ -7,10 +9,12 @@ properties of patch for image visualization:
 """ size fit for screen comparison """
 
 
+@POSTPROCESS_FACTORY.register(name="low_light_enhancement")
 def low_light_enhancement_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     return {'predictions': endnodes}
 
 
+@VISUALIZATION_FACTORY.register(name="low_light_enhancement")
 def visualize_low_light_enhancement_result(logits, img, **kwargs):
     """
     Visualizing the output of the Low-Light Enhancement network.

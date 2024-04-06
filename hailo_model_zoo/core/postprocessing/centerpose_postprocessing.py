@@ -158,13 +158,13 @@ def centerpose_postprocessing(endnodes, device_pre_post_layers=None, gt_images=N
         center_heatmap = _nms(center_heatmap)
         joint_heatmap = _nms(joint_heatmap)
 
-    bboxes, scores, keypoints, joint_scores = tf.py_function(_centerpose_postprocessing,
-                                                             [center_heatmap, center_wh,
-                                                              joint_heatmap, center_offset,
-                                                              joint_center_offset, joint_offset,
-                                                              gt_images["center"], gt_images["scale"]],
-                                                             [tf.float32, tf.float32, tf.float32, tf.float32],
-                                                             name='centerpose_postprocessing')
+    bboxes, scores, keypoints, joint_scores = tf.numpy_function(_centerpose_postprocessing,
+                                                                [center_heatmap, center_wh,
+                                                                 joint_heatmap, center_offset,
+                                                                 joint_center_offset, joint_offset,
+                                                                 gt_images["center"], gt_images["scale"]],
+                                                                [tf.float64, tf.float32, tf.float64, tf.float64],
+                                                                name='centerpose_postprocessing')
     return {
         'bboxes': bboxes,
         'scores': scores,

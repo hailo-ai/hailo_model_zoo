@@ -7,7 +7,6 @@ postprocessing:
     softmax: false
     bilinear: false
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2023-03-16/mobilenet_v2_ssd_nms_postprocess_config.json
   meta_arch: ssd
   anchors:
     predefined: true
@@ -38,7 +37,7 @@ parser:
 info:
   task: object detection
   input_shape: 300x300x3
-  output_shape: 2244x8x1
+  output_shape: 90x8x1
   operations: 1.52G
   parameters: 4.46M
   framework: tensorflow

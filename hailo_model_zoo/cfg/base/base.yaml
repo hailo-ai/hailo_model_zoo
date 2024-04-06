@@ -82,8 +82,6 @@ evaluation:
   meta_arch: null
   data_count_offset: 0
 info:
-  client_or_rnd: r&d
-  standard_or_customized: standard
   task: N/A
   input_shape: N/A
   output_shape: N/A

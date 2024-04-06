@@ -58,9 +58,9 @@ class PolyLaneNetPostProcessHailo(object):
 
     def postprocessing(self, endnodes, device_pre_post_layers=None, output_scheme=None, **kwargs):
         if output_scheme and output_scheme.get('split_output', False):
-            endnodes = tf.py_function(self.recombine_split_endnodes, endnodes, [tf.float32])
+            endnodes = tf.numpy_function(self.recombine_split_endnodes, endnodes, [tf.float32])
         decoded = tf.numpy_function(self.decode, [endnodes], [tf.float32])
         # network always returns 5 lane predictions.
-        postprocessed = tf.py_function(self.polynomize_pred, [decoded], [tf.float32])
+        postprocessed = tf.numpy_function(self.polynomize_pred, [decoded], [tf.float32])
         # import ipdb; ipdb.set_trace()
         return {'predictions': postprocessed[0]}

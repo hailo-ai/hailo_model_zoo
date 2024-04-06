@@ -18,9 +18,9 @@ def translate_model(runner, network_info, ckpt_path, *, tensor_shapes=None):
     model_name = network_info.network.network_name
     start_node, end_node = network_info.parser.nodes[0:2]
 
-    if type(end_node) == str:
+    if type(end_node) is str:
         end_node = [end_node]
-    if type(start_node) == str:
+    if type(start_node) is str:
         start_node = [start_node]
 
     ckpt_path = str(ckpt_path)

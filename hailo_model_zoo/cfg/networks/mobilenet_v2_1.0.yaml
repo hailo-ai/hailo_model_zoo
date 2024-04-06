@@ -25,5 +25,3 @@ info:
   eval_metric: Accuracy (top1)
   full_precision_result: 71.78
   source: https://github.com/tensorflow/models/tree/v1.13.0/research/slim
-  license_url: https://github.com/tensorflow/models/blob/v1.13.0/LICENSE
-  license_name: Apache-2.0

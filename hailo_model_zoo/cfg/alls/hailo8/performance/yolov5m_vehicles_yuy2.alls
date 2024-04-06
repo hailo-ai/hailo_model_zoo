@@ -15,7 +15,7 @@ post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, e
 
 yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 reshape_yuy2 = input_conversion(input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
-nms_postprocess("$HMZ_DATA/models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json", yolov5, engine=cpu)
+nms_postprocess("../../../postprocess_config/yolov5m_vehicles_nms_config.json", yolov5, engine=cpu)
 
 allocator_param(timeout=100000, cluster_timeout=100000, automatic_ddr=disabled)
 allocator_param(merge_min_layer_utilization=0.1)

@@ -1,15 +1,19 @@
-import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.manifold import TSNE
 import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+from sklearn.manifold import TSNE
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="face_verification")
 def facenet_postprocessing(endnodes, device_pre_post_layers, **kwargs):
     embeddings = tf.nn.l2_normalize(endnodes, 1, 1e-10, name='embeddings')
     return {'predictions': embeddings}
 
 
+@VISUALIZATION_FACTORY.register(name="face_verification")
 def visualize_face_result(embeddings1, embeddings2, filenames, **kwargs):
     matplotlib.use('TkAgg')
     tsne = TSNE(n_components=2, random_state=0)

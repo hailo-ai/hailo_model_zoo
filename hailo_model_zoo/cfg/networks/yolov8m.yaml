@@ -4,7 +4,6 @@ postprocessing:
   device_pre_post_layers:
     nms: true
   hpp: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m_nms_config.json
 network:
   network_name: yolov8m
 paths:
@@ -24,7 +23,7 @@ parser:
 info:
   task: object detection
   input_shape: 640x640x3
-  output_shape: 80x80x80, 80X80X64, 40X40X80, 40X40X64, 20X20X80, 20X20X64
+  output_shape: 80x5x100
   operations: 78.93G
   parameters: 25.9M
   framework: pytorch

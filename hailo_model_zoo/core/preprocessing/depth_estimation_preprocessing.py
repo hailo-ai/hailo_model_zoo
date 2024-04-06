@@ -1,7 +1,11 @@
 from __future__ import division
+
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
+
+@PREPROCESS_FACTORY.register(name="mono_depth")
 def mono_depth_2(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
     if output_height and output_width:
@@ -21,6 +25,7 @@ def fastdepth_transform(image):
     return image
 
 
+@PREPROCESS_FACTORY.register
 def fast_depth(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)  # from unit8 also divides by 255...
     image = fastdepth_transform(image)
@@ -35,6 +40,7 @@ def fast_depth(image, image_info=None, output_height=None, output_width=None, **
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def scdepthv3(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
     image = tf.image.resize(image, (output_height, output_width))

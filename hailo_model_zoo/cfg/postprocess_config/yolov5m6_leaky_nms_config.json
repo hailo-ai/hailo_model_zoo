@@ -1,0 +1,73 @@
+{
+	"nms_scores_th": 0.2,
+	"nms_iou_th": 0.6,
+	"image_dims": [
+		1280,
+		1280
+	],
+	"max_proposals_per_class": 80,
+	"background_removal": false,
+	"classes": 80,
+	"bbox_decoders": [
+		{
+			"name": "bbox_decoder81",
+			"w": [
+				19,
+				44,
+				38
+			],
+			"h": [
+				27,
+				40,
+				94
+			],
+			"stride": 8,
+			"encoded_layer": "conv81"
+		},
+		{
+			"name": "bbox_decoder90",
+			"w": [
+				96,
+				86,
+				180
+			],
+			"h": [
+				68,
+				152,
+				137
+			],
+			"stride": 16,
+			"encoded_layer": "conv90"
+		},
+		{
+			"name": "bbox_decoder99",
+			"w": [
+				140,
+				303,
+				238
+			],
+			"h": [
+				301,
+				264,
+				542
+			],
+			"stride": 32,
+			"encoded_layer": "conv99"
+		},
+		{
+			"name": "bbox_decoder107",
+			"w": [
+				436,
+				739,
+				925
+			],
+			"h": [
+				615,
+				380,
+				792
+			],
+			"stride": 64,
+			"encoded_layer": "conv107"
+		}
+	]
+}

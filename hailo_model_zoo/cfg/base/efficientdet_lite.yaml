@@ -20,6 +20,7 @@ postprocessing:
   score_threshold: 0.001
   nms_iou_thresh: 0.5
   meta_arch: efficientdet
+  hpp: false
 evaluation:
   labels_offset: 1
   classes: 89

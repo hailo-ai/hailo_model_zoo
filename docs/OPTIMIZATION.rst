@@ -36,6 +36,8 @@ Both steps may degrade the model accuracy, therefore, evaluation is needed to ve
 .. figure:: images/quant_flow.svg
 
 
+**NOTE:**\  Hailo Model Zoo provides the following functionality for Model Zoo models only. If you wish to use your custom model, use the Dataflow Compiler directly.
+
 #. 
    First step includes full precision validation. This step is important to make sure parsing was successful and we built the pre/post processing and evaluation of the model correctly. In the Hailo Model Zoo, we can execute the following which will infer a specific model in full precision to verify that the accuracy is correct (this will be our baseline for measuring degradation):
 

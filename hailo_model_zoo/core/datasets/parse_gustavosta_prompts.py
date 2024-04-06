@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
+
+@DATASET_FACTORY.register(name="gustavosta_prompts_vae")
 def vae(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """
@@ -26,6 +29,7 @@ def vae(serialized_example):
     return [vae_input, image_info]
 
 
+@DATASET_FACTORY.register(name="gustavosta_prompts_unet")
 def unet(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

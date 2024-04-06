@@ -1,7 +1,10 @@
 from collections import OrderedDict
-import numpy as np
-from hailo_model_zoo.core.eval.eval_base_class import Eval
+
 import cv2
+import numpy as np
+
+from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 DATASETS_INFO = {
     'nyu_depth_v2': {
@@ -18,6 +21,7 @@ DATASETS_INFO = {
 }
 
 
+@EVAL_FACTORY.register(name="depth_estimation")
 class DepthEstimationEval(Eval):
     """
     DepthEstimationEval is a class to evaluate depth estimation models.

@@ -1,10 +1,11 @@
-import tensorflow as tf
-import numpy as np
-import os
 import json
-from PIL import Image
-from PIL import ImageDraw
+import os
 
+import numpy as np
+import tensorflow as tf
+from PIL import Image, ImageDraw
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.utils import path_resolver
 
 
@@ -20,6 +21,8 @@ def _is_logits_shape_allowed(shape, classes):
     return False
 
 
+@POSTPROCESS_FACTORY.register(name="person_attr")
+@POSTPROCESS_FACTORY.register(name="classification")
 def classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     if device_pre_post_layers is not None and device_pre_post_layers['softmax']:
         probs = endnodes
@@ -39,6 +42,8 @@ def _get_imagenet_labels():
     return imagenet_names[1:]
 
 
+@VISUALIZATION_FACTORY.register(name="classification")
+@VISUALIZATION_FACTORY.register(name="zero_shot_classification")
 def visualize_classification_result(logits, img, **kwargs):
     logits = logits['predictions']
     # TODO: SDK-32906 (wrong shape for classifiers) remove this when sdk is fixed
@@ -54,6 +59,7 @@ def visualize_classification_result(logits, img, **kwargs):
     return np.array(img_orig, np.uint8)
 
 
+@POSTPROCESS_FACTORY.register(name="zero_shot_classification")
 def zero_shot_classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     endnodes /= tf.norm(endnodes, keepdims=True, axis=-1)
     path = path_resolver.resolve_data_path(kwargs['postprocess_config_file'])

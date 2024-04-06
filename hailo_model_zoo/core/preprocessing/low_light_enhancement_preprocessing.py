@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
+
+@PREPROCESS_FACTORY.register
 def zero_dce(image, image_info, height, width, output_shapes, **kwargs):
     """
     preprocessing function for zero_dce

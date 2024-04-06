@@ -2,17 +2,18 @@ import json
 import os
 
 from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
-from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
-from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
-from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
+from hailo_model_zoo.core.postprocessing.detection.detr import DetrPostProc
 from hailo_model_zoo.core.postprocessing.detection.efficientdet import EfficientDetPostProc
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage1_postprocessing import FasterRCNNStage1
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage2_postprocessing import FasterRCNNStage2
 from hailo_model_zoo.core.postprocessing.detection.nanodet import NanoDetPostProc
-from hailo_model_zoo.core.postprocessing.detection.detr import DetrPostProc
 from hailo_model_zoo.core.postprocessing.detection.retinanet_mlperf import retinanet_postproc
-
+from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
+from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
+from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 
 DETECTION_ARCHS = {
     "ssd": SSDPostProc,
@@ -35,6 +36,7 @@ def _get_postprocessing_class(meta_arch):
     raise ValueError("Meta-architecture [{}] is not supported".format(meta_arch))
 
 
+@POSTPROCESS_FACTORY.register(name="detection")
 def detection_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs["meta_arch"].lower()
     kwargs["anchors"] = {} if kwargs["anchors"] is None else kwargs["anchors"]
@@ -73,6 +75,8 @@ def _get_face_detection_visualization_data(logits):
     return boxes, labels, face_landmarks
 
 
+@VISUALIZATION_FACTORY.register(name="detection")
+@VISUALIZATION_FACTORY.register(name="face_detection")
 def visualize_detection_result(logits, image, threshold=0.2, image_info=None,
                                use_normalized_coordinates=True, max_boxes_to_draw=20,
                                dataset_name='coco', **kwargs):

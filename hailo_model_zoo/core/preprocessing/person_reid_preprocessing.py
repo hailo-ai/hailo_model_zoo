@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
+
+@PREPROCESS_FACTORY.register(name="person_reid")
 def market1501(image, image_info=None, height=256, width=128, **kwargs):
     image = tf.cast(image, tf.float32)
 

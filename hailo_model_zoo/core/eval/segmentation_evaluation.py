@@ -1,7 +1,9 @@
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
 def confusion_matrix(y_true, y_pred, N):
@@ -13,6 +15,7 @@ def confusion_matrix(y_true, y_pred, N):
     return y[:N - 1, :N - 1]
 
 
+@EVAL_FACTORY.register(name="segmentation")
 class SegmentationEval(Eval):
     def __init__(self, *, labels_map=None, **kwargs):
         self._labels_offset = kwargs['labels_offset']

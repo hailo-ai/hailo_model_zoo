@@ -1,9 +1,13 @@
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="zero_shot_classification")
+@EVAL_FACTORY.register(name="classification")
 class ClassificationEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['top1', 'top5']

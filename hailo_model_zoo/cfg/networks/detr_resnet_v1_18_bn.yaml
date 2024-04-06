@@ -33,8 +33,8 @@ parser:
 info:
   task: object detection
   input_shape: 800x800x3
-  output_shape: 100x4, 100x92
-  operations: 58.97G
+  output_shape: 1x100x92, 1x100x4
+  operations: 61.87G
   parameters: 32.42M
   framework: pytorch
   training_data: coco train2017

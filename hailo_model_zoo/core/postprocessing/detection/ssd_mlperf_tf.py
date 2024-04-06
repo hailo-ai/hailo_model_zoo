@@ -198,7 +198,7 @@ def filter_bboxes(scores_pred, xmin, ymin, xmax, ymax, min_size, name):
         height = ymax - ymin
         filter_mask = tf.logical_and(width > min_size, height > min_size)
         filter_mask = tf.cast(filter_mask, tf.float32)
-        return tf.multiply(xmin, filter_mask), tf.multiply(ymin, filter_mask),\
+        return tf.multiply(xmin, filter_mask), tf.multiply(ymin, filter_mask), \
             tf.multiply(xmax, filter_mask), tf.multiply(ymax, filter_mask), tf.multiply(scores_pred, filter_mask)
 
 
@@ -209,8 +209,8 @@ def sort_bboxes(scores_pred, xmin, ymin, xmax, ymax, keep_topk, name):
         xmin, ymin, xmax, ymax = tf.gather(xmin, idxes), tf.gather(
             ymin, idxes), tf.gather(xmax, idxes), tf.gather(ymax, idxes)
         paddings_scores = tf.expand_dims(tf.stack([0, tf.maximum(keep_topk - cur_bboxes, 0)], axis=0), axis=0)
-        return tf.pad(xmin, paddings_scores, "CONSTANT"), tf.pad(ymin, paddings_scores, "CONSTANT"),\
-            tf.pad(xmax, paddings_scores, "CONSTANT"), tf.pad(ymax, paddings_scores, "CONSTANT"),\
+        return tf.pad(xmin, paddings_scores, "CONSTANT"), tf.pad(ymin, paddings_scores, "CONSTANT"), \
+            tf.pad(xmax, paddings_scores, "CONSTANT"), tf.pad(ymax, paddings_scores, "CONSTANT"), \
             tf.pad(scores, paddings_scores, "CONSTANT")
 
 
@@ -308,7 +308,7 @@ class SSDMLPerfPostProc:
             num_detections = tf.concat(pred_results[3], axis=0)
             xmin, ymin, xmax, ymax = tf.unstack(detection_bboxes, axis=-1)
             detection_bboxes = tf.stack([ymin, xmin, ymax, xmax], axis=-1)
-            [detection_classes] = tf.py_function(translate_coco_2017_to_2014, [detection_classes], ['int32'])
+            [detection_classes] = tf.numpy_function(translate_coco_2017_to_2014, [detection_classes], ['int32'])
             predictions['detection_classes'] = detection_classes
             predictions['detection_scores'] = detection_scores
             predictions['detection_boxes'] = detection_bboxes

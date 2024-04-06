@@ -1,9 +1,11 @@
 from collections import OrderedDict
+
 import numpy as np
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.eval.tracking_evaluation_external.mot_evaluator import Evaluator
 from hailo_model_zoo.core.eval.tracking_evaluation_external.tracking_classes import JDETracker
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 MIN_BOX_AREA = 200
 
@@ -16,6 +18,7 @@ STD = [0.289, 0.274, 0.278]
 REID_DIMENSION = 128
 
 
+@EVAL_FACTORY.register(name="multiple_object_tracking")
 class MultipleObjectTrackingEval(Eval):
     def __init__(self, **kwargs):
         self._video_trackers = {}

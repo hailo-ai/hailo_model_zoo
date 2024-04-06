@@ -1,5 +1,5 @@
 normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
-nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v1/pretrained/2023-07-18/mobilenet_ssd_nms_postprocess_config.json", ssd, engine=nn_core)
+nms_postprocess("../../../postprocess_config/mobilenet_ssd_nms_postprocess_config.json", ssd, engine=nn_core)
 
 quantization_param({conv*}, bias_mode=single_scale_decomposition)
 post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epochs=8, learning_rate=0.0001,
@@ -10,4 +10,4 @@ post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epoc
 
 nms1_d0, nms1_d0_output, nms1_d1, nms1_d1_output = defuse(nms1, 2, defuse_type=NMS)
 performance_param(compiler_optimization_level=max)
-allocator_param(enable_lanes=False)
+performance_param(optimization_level=max)

@@ -21,7 +21,7 @@ preprocessing:
 info:
   task: classification
   input_shape: 224x224x3
-  output_shape: 1x1x1000
+  output_shape: '1000'
   operations: 6.04G
   parameters: 15.77M
   framework: pytorch

@@ -1,6 +1,34 @@
 Changelog
 =========
 
+**v2.11**
+
+* Update to use Dataflow Compiler v3.27.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.17.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New Models:
+
+  * FastSAM-s - Zero-shot Instance Segmentation
+  * Yolov9c - Latest Object Detection model of the YOLO family
+
+* Using HailoRT-pp for postprocessing of the following variants:
+
+  * nanodet
+
+  Postprocessing JSON configurations are now part of the cfg directory.
+
+* Introduced new flags for hailomz CLI:
+
+  * ``--start-node-names`` and ``--end-node-names`` for customizing parsing behavior.
+  * ``--classes`` for adjusting the number of classes in post-processing configuration.
+
+  The ``--performance`` flag, previously utilized for compiling models with their enhanced model script if available, now offers an additional functionality.
+  In instances where a model lacks an optimized model script, this flag triggers the compiler's Performance Mode to achieve the best performance
+
+  These flags simplify the process of compiling models generated from our retrain dockers.
+
+* Bug fixes
+
 **v2.10**
 
 * Update to use Dataflow Compiler v3.26.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
@@ -10,7 +38,7 @@ Changelog
 
   * yolov8
 
-* Porfiler change:
+* Profiler change:
 
   * Removal of ``--mode`` flag from ``hailomz profile`` command, which generates a report according to provided HAR state.
 
@@ -128,7 +156,7 @@ Changelog
   * yolov5m_seg
   * yolov5l_seg
 
-* New object detecion variants for high resolution images:
+* New object detection variants for high resolution images:
 
   * yolov7e6
   * yolov5n6_6.1
@@ -215,9 +243,9 @@ Changelog
 
 * ReID training docker for the Hailo model repvgg_a0_person_reid_512/2048
 
-**NOTE:**  Ubuntu 18.04 will be deprecated in Hailo Model Zoo future version
+**NOTE:**\  Ubuntu 18.04 will be deprecated in Hailo Model Zoo future version
 
-**NOTE:**  Python 3.6 will be deprecated in Hailo Model Zoo future version
+**NOTE:**\  Python 3.6 will be deprecated in Hailo Model Zoo future version
 
 **v2.1**
 
@@ -270,7 +298,7 @@ Changelog
   * unet_mobilenet_v2
 
 * Support Oxford-IIIT Pet Dataset
-* New mutli-network example: detection_pose_estimation which combines the following networks:
+* New multi-network example: detection_pose_estimation which combines the following networks:
 
   * yolov5m_wo_spp_60p
   * centerpose_repvgg_a0

@@ -20,4 +20,4 @@ preprocessing:
 info:
   task: pipeline_hailo15
   input_shape: 540x1920x3
-  full_percision_result: 39.043
+  full_precision_result: 39.043

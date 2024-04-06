@@ -21,13 +21,12 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/training/arcface</span>
+      
+      cd hailo_model_zoo/training/arcface
       docker build --build-arg timezone=`cat /etc/timezone` -t arcface:v0 .
-      </code></pre>
+      
 
    | the following optional arguments can be   passed via --build-arg:
 
@@ -39,12 +38,11 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all <span val="replace_none">-u "username"</span> --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> arcface:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir arcface:v0
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -92,12 +90,11 @@ Training and exporting to ONNX
 
    | Start training with the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="retrain">
-      python -m torch.distributed.launch --nproc_per_node=<span val="gpu_num">2</span> --nnodes=1 --node_rank=0 --master_addr="127.0.0.1" --master_port=12581 train_v2.py <span val="cfg">/path/to/config</span>
-      </code>
+      
+      python -m torch.distributed.launch --nproc_per_node=2 --nnodes=1 --node_rank=0 --master_addr="127.0.0.1" --master_port=12581 train_v2.py /path/to/config
+      
 
 
    * nproc_per_node: number of gpu devices
@@ -106,12 +103,11 @@ Training and exporting to ONNX
 
    | After finishing training run the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python torch2onnx.py <span val="model_path">/path/to/model.pt</span> --network <span val="arch">mbf</span> --output <span val="model_onnx">/path/to/model.onnx</span> --simplify true
-      </code>
+      
+      python torch2onnx.py /path/to/model.pt --network mbf --output /path/to/model.onnx --simplify true
+      
 
 
 
@@ -124,17 +120,17 @@ You can generate an HEF file for inference on Hailo-8 from your trained ONNX mod
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">arcface_s_leaky.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">/path/to/arcface_mobilefacenet.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt arcface_s_leaky.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml /path/to/arcface_mobilefacenet.yaml --start-node-names name1 name2 --end-node-names name1
+   
 
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

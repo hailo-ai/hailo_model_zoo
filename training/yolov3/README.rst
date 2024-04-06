@@ -21,13 +21,12 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/training/yolov3</span>
+      
+      cd hailo_model_zoo/training/yolov3
       docker build --build-arg timezone=`cat /etc/timezone` -t yolov3:v0 .
-      </code></pre>
+      
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -40,12 +39,11 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> yolov3:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir yolov3:v0
+      
    
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -81,12 +79,11 @@ Training and exporting to ONNX
 
    * | Start training - The following command is an example for training the yolov3.
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="retrain">
-      ./darknet detector train <span val="docker_obj_data_path">data/obj.data</span> cfg/yolov3.cfg yolov3.weights -map -clear
-      </code>
+      
+      ./darknet detector train data/obj.data cfg/yolov3.cfg yolov3.weights -map -clear
+      
 
    | Final trained weights will be available in ``backup/`` directory.
      
@@ -94,12 +91,11 @@ Training and exporting to ONNX
 #. | Export to ONNX:
    | In order to export your trained YOLOv3 model to ONNX run the following script:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/yolov3.cfg <span val="docker_path_to_trained_model">/path/to/trained.weights</span> <span val="docker_path_to_image">/path/to/some/image.jpg</span> 1
-      </code>
+      
+      python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/yolov3.cfg /path/to/trained.weights /path/to/some/image.jpg 1
+      
 
    * The ONNX would be available in ``/workspace/darknet/``
 
@@ -117,12 +113,11 @@ Compile the Model using Hailo Model Zoo
 |
 | Run compilation using the model zoo:
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-  <code stage="compile">
-  hailomz compile  yolov3_416 --ckpt <span val="local_path_to_onnx">yolov3_1_416_416.onnx</span>  --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span>
-  </code>
+  
+  hailomz compile  yolov3_416 --ckpt yolov3_1_416_416.onnx  --calib-path /path/to/calibration/imgs/dir/
+  
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format

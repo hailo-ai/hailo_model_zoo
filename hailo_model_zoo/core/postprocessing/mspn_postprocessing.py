@@ -1,8 +1,8 @@
-import numpy as np
 import cv2
+import numpy as np
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.preprocessing.affine_utils import transform_preds
-
 
 pose_kpt_color = np.array([[0, 255, 0],
                            [0, 255, 0],
@@ -156,6 +156,7 @@ def _get_default_bbox(batch_size):
     return default_bbox  # Bx1x4
 
 
+@POSTPROCESS_FACTORY.register(name="single_person_pose_estimation")
 def mspn_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     image_info = kwargs['gt_images']
     height, width = image_info['img_resized'].shape[1:3]
@@ -195,6 +196,7 @@ def mspn_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     return {'predictions': all_preds}
 
 
+@VISUALIZATION_FACTORY.register(name="single_person_pose_estimation")
 def visualize_single_person_pose_estimation_result(probs, image, kpt_score_thr=0.3,
                                                    radius=8, thickness=2, **kwargs):
 

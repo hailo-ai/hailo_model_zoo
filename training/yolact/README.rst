@@ -20,13 +20,12 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/training/yolact</span>
+      
+      cd hailo_model_zoo/training/yolact
       docker build --build-arg timezone=`cat /etc/timezone` -t yolact:v0 .
-      </code></pre>
+      
 
 
 
@@ -42,12 +41,11 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span>  yolact:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  yolact:v0
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -89,25 +87,23 @@ Training and exporting to ONNX
 
    | Once your dataset is prepared, create a soft link to it under the yolact/data work directory, then you can start training your model:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="retrain">
+      
       cd /workspace/yolact
       ln -s /workspace/data/coco data/coco
       python train.py --config=yolact_regnetx_800MF_config
-      </code></pre>
+      
 
    * ``yolact_regnetx_800MF_config`` - configuration using the regnetx_800MF backbone.
 
-#. | Export to ONNX: In orded to export your trained YOLACT model to ONNX run the following script:
+#. | Export to ONNX: In order to export your trained YOLACT model to ONNX run the following script:
     
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python export.py --config=yolact_regnetx_800MF_config --trained_model=<span val="docker_path_to_trained_model">path/to/trained/model</span> --export_path=<span val="docker_path_to_onnx">path/to/export/model.onnx</span>
-      </code>
+      
+      python export.py --config=yolact_regnetx_800MF_config --trained_model=path/to/trained/model --export_path=path/to/export/model.onnx
+      
 
    * ``--config`` - same configuration used for training.
    * ``--trained_model`` - path to the weights produced by the training process.
@@ -122,16 +118,16 @@ You can generate an HEF file for inference on Hailo-8 from your trained ONNX mod
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolact.yaml``\ , and run compilation using the model zoo:  
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile <span val="replace_none">yolact</span> --ckpt <span val="local_path_to_onnx">yolact.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/yolact_regnetx_800mf_20classes.yaml</span>
-   </code>
+   
+   hailomz compile yolact --ckpt yolact.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolact_regnetx_800mf_20classes.yaml --start-node-names name1 name2 --end-node-names name1
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

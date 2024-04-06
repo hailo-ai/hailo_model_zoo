@@ -20,6 +20,7 @@ postprocessing:
     - 8
     - 16
     - 32
+  hpp: false
 info:
   source: https://github.com/RangiLyu/nanodet
 parser:

@@ -1,10 +1,13 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+from detection_tools.utils.visualization_utils import \
+    visualize_boxes_and_labels_on_image_array
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
-from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 
 
+@POSTPROCESS_FACTORY.register(name="multiple_object_tracking")
 def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     kwargs['meta_arch'] = kwargs.get('meta_arch', {})
     if kwargs['meta_arch'] != 'fair_mot':
@@ -17,9 +20,9 @@ def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=Non
                                                              **kwargs)
 
     re_id_values = tf.nn.l2_normalize(endnodes[0], axis=-1)
-    top_indices = tf.py_function(_get_top_indices, [re_id_values, detection_dict['top_k_indices']], [tf.int64])
+    top_indices = tf.numpy_function(_get_top_indices, [re_id_values, detection_dict['top_k_indices']], [tf.int64])
     detection_dict['re_id_values'] = tf.gather_nd(re_id_values, top_indices)
-    return dict(**detection_dict)
+    return {**detection_dict}
 
 
 def _get_top_indices(re_id_values, top_k):
@@ -30,6 +33,7 @@ def _get_top_indices(re_id_values, top_k):
     return top_indices_including_all_features.reshape((re_id_values.shape[0], -1, 128, top_k.shape[-1]))
 
 
+@VISUALIZATION_FACTORY.register(name="multiple_object_tracking")
 def visualize_tracking_result(logits, image, threshold=0.4, image_info=None, use_normalized_coordinates=True,
                               max_boxes_to_draw=20, dataset_name=None, **kwargs):
     boxes = logits['detection_boxes'][0]

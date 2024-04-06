@@ -1,9 +1,12 @@
-import numpy as np
 import math
 
+import numpy as np
+
 from hailo_model_zoo.core.eval.super_resolution_evaluation import SuperResolutionEval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="image_denoising")
 class ImageDenoisingEval(SuperResolutionEval):
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)

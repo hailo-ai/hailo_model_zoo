@@ -1,9 +1,13 @@
-import tensorflow as tf
-import numpy as np
-import cv2
 from math import cos, sin
 
+import cv2
+import numpy as np
+import tensorflow as tf
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
+
+
+@POSTPROCESS_FACTORY.register(name="head_pose_estimation")
 def head_pose_estimation_postprocessing(endnodes, device_pre_post_layers, **kwargs):
     if device_pre_post_layers is not None and device_pre_post_layers['softmax']:
         probs = endnodes
@@ -20,6 +24,7 @@ def head_pose_estimation_postprocessing(endnodes, device_pre_post_layers, **kwar
     }
 
 
+@VISUALIZATION_FACTORY.register(name="head_pose_estimation")
 def visualize_head_pose_result(net_output, img, **kwargs):
     img = img[0]
     pitch, roll, yaw = net_output['pitch'][0], net_output['roll'][0], net_output['yaw'][0]

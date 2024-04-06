@@ -2,8 +2,10 @@ import tensorflow as tf
 from tqdm import tqdm
 
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, aggregate, visualize, to_numpy
+from hailo_model_zoo.core.factory import INFER_FACTORY
 
 
+@INFER_FACTORY.register
 def model_infer(runner, context, logger, eval_num_examples, print_num_examples,
                 batch_size, dataset, postprocessing_callback,
                 eval_callback, visualize_callback, model_augmentation_callback,
@@ -60,3 +62,11 @@ def model_infer(runner, context, logger, eval_num_examples, print_num_examples,
         img_info_per_image = [x[1] for x in dataset]
         visualize(probs, img_info_per_image, visualize_callback, video_outpath)
     return accuracy
+
+
+@INFER_FACTORY.register
+def np_infer(*args, **kwargs):
+    return model_infer(*args, **kwargs, np_infer=True),
+
+
+INFER_FACTORY.register(model_infer, name="facenet_infer")

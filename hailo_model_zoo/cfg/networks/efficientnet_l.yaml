@@ -10,7 +10,7 @@ paths:
 info:
   task: classification
   input_shape: 300x300x3
-  output_shape: 1x1x1001
+  output_shape: '1001'
   operations: 19.4G
   parameters: 10.55M
   framework: tensorflow

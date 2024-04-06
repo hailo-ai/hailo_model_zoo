@@ -1,15 +1,15 @@
-import numpy as np
 from collections import OrderedDict
+
+import numpy as np
+from pycocotools import mask as maskUtils
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
-from pycocotools import mask as maskUtils
 
-from hailo_model_zoo.core.eval.eval_base_class import Eval
-from hailo_model_zoo.core.eval.instance_segmentation_evaluation_utils import (YolactEval,
-                                                                              Yolov5SegEval,
-                                                                              SparseInstEval)
 from hailo_model_zoo.core.datasets.datasets_info import get_dataset_info
-
+from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.eval.instance_segmentation_evaluation_utils import (
+    SparseInstEval, YolactEval, Yolov5SegEval)
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 EVAL_CLASS_MAP = {
     'yolact': YolactEval,
@@ -19,6 +19,7 @@ EVAL_CLASS_MAP = {
 }
 
 
+@EVAL_FACTORY.register(name="instance_segmentation")
 class InstanceSegmentationEval(Eval):
     """COCO evaluation metric class."""
 
@@ -191,7 +192,7 @@ class InstanceSegmentationEval(Eval):
         mask_dets = gt_annotations.loadRes(self._mask_data)
         seg_eval = COCOeval(gt_annotations, mask_dets, 'segm')
         if self._labels_map == [0]:
-            # zero-shot instnace segmentation (segment anything) works on AR1000
+            # zero-shot instance segmentation (segment anything) works on AR1000
             # COCO default is [1, 10, 100]
             seg_eval.params.maxDets = [1, 10, 1000]
             self._metric_names[8] = 'mask ARmax1000'

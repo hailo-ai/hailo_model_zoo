@@ -15,6 +15,6 @@ paths:
 info:
   task: pipeline
   input_shape: 720x1280x2
-  output_shape: 20x20x255, 40x40x255, 80x80x255
+  output_shape: 80x5x80
   operations: 52.89G
   parameters: 22.67M

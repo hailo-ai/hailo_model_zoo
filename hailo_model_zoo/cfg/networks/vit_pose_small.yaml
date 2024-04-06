@@ -37,7 +37,7 @@ info:
   parameters: 24.29M
   framework: pytorch
   eval_metric: AP
-  full_precision_result: 73.8
+  full_precision_result: 74.16
   source: https://github.com/ViTAE-Transformer/ViTPose
   license_url: https://github.com/ViTAE-Transformer/ViTPose/blob/main/LICENSE
   license_name: Apache-2.0

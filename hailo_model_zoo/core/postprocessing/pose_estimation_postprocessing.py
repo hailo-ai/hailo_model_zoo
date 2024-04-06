@@ -1,11 +1,13 @@
 import math
-import numpy as np
-import cv2
 from operator import itemgetter
-from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import xywh2xyxy
+
+import cv2
+import numpy as np
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.centerpose_postprocessing import centerpose_postprocessing
 from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
-
+from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import xywh2xyxy
 
 BODY_PARTS_KPT_IDS = [[1, 2], [1, 5], [2, 3], [3, 4], [5, 6], [6, 7], [1, 8], [8, 9], [9, 10], [1, 11],
                       [11, 12], [12, 13], [1, 0], [0, 14], [14, 16], [0, 15], [15, 17], [2, 16], [5, 17]]
@@ -36,6 +38,7 @@ def scale_kpts(kpts, shape, orig_shape):
     return kpts
 
 
+@POSTPROCESS_FACTORY.register(name="pose_estimation")
 def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     if kwargs.get('meta_arch') == 'centerpose':
         return centerpose_postprocessing(endnodes,
@@ -76,6 +79,7 @@ def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwar
         return {'predictions': coco_result_list}
 
 
+@VISUALIZATION_FACTORY.register(name="pose_estimation")
 def visualize_pose_estimation_result(results, img, dataset_name, *, detection_threshold=0.5,
                                      joint_threshold=0.5, **kwargs):
     assert dataset_name == 'cocopose'

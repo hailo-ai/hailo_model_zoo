@@ -21,13 +21,12 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/training/yolox</span>
+      
+      cd hailo_model_zoo/training/yolox
       docker build --build-arg timezone=`cat /etc/timezone` -t yolox:v0 .
-      </code></pre>
+      
 
    | the following optional arguments can be   passed via --build-arg:
 
@@ -39,12 +38,11 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all <span val="replace_none">-u "username"</span> --ipc=host -v <span val="local_vol_path">/path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> yolox:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir yolox:v0
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -65,19 +63,18 @@ Training and exporting to ONNX
 
    | Start training with the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="retrain">
-      python tools/train.py -f exps/default/yolox_s_leaky.py -d <span val=gpu_num>8</span> -b <span val="batch_size">64</span> -c yolox_s.pth
-                              <pre><span val="replace_none">
+      
+      python tools/train.py -f exps/default/yolox_s_leaky.py -d 8 -b 64 -c yolox_s.pth
+                              
                               exps/default/yolox_m_leaky.py
                               exps/default/yolox_l_leaky.py
                               exps/default/yolox_x_leaky.py
                               exps/default/yolox_s_wide_leaky.py
-                              </span></pre>
+                              
 
-      </code>
+      
 
 
    * -f: experiment description file
@@ -96,12 +93,11 @@ Training and exporting to ONNX
 
    | After finishing training run the following command:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
+      
       python tools/export_onnx.py --output-name yolox_s_leaky.onnx -f ./exps/default/yolox_s_leaky.py -c YOLOX_outputs/yolox_s_leaky/best_ckpt.pth
-      </code>
+      
 
 
  **NOTE:**\  Your trained model will be found under the following path: ``/workspace/YOLOX/YOLOX_outputs/yolox_s_leaky/``\ , and the exported onnx will be written to ``/workspace/YOLOX/yolox_s_leaky.onnx``
@@ -116,16 +112,17 @@ You can generate an HEF file for inference on Hailo-8 from your trained ONNX mod
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolox_s_leaky.yaml``\ , and run compilation using the model zoo:  
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">yolox_s_leaky.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/yolox_s_leaky.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt yolox_s_leaky.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolox_s_leaky.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80 
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
+* | ``--classes`` - adjusting the number of classes in post-processing configuration (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

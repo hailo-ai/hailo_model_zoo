@@ -2,7 +2,6 @@ from hailo_model_zoo.utils.platform_discovery import PLATFORM_AVAILABLE
 
 
 TARGETS = [
-    'hailo8',
     'hardware',
     'full_precision',
     'emulator',

@@ -8,14 +8,12 @@ if PLATFORM_AVAILABLE:
     from hailo_platform.pyhailort._pyhailort import HailoRTStatusException
 
 TARGETS = {
-    'hailo8': Device if PLATFORM_AVAILABLE else None,
     'hardware': Device if PLATFORM_AVAILABLE else None,
     'full_precision': SdkFPOptimized,
     'emulator': SdkPartialNumeric,
 }
 
 INFERENCE_TARGETS = {
-    'hailo8': InferenceContext.SDK_HAILO_HW,
     'hardware': InferenceContext.SDK_HAILO_HW,
     'full_precision': InferenceContext.SDK_FP_OPTIMIZED,
     'emulator': InferenceContext.SDK_QUANTIZED,

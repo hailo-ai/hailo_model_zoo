@@ -4,6 +4,7 @@ import tensorflow as tf
 from tqdm import tqdm
 from PIL import Image
 
+from hailo_model_zoo.core.factory import INFER_FACTORY
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, save_image, get_logits_per_image
 from hailo_sdk_client import SdkFineTune
 
@@ -37,6 +38,7 @@ def _visualize(logits_batch, img_info, num_of_images, visualize_callback, video_
     return video_writer
 
 
+@INFER_FACTORY.register
 def tf_infer(runner, target, logger, eval_num_examples, print_num_examples,
              batch_size, data_feed_callback, tf_graph_callback, postprocessing_callback,
              eval_callback, visualize_callback, video_outpath, dump_results, results_path):

@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 ACCEPTED_AGE_DELTA = 5
 ADIENCE_AGE_LIST = [3.0, 7.0, 13.5, 22.5, 35.0, 45.5, 56.5]
@@ -13,6 +14,7 @@ def _get_age_range(age):
     return len(ADIENCE_AGE_LIST)
 
 
+@EVAL_FACTORY.register(name="age_gender")
 class AgeGenderEval(Eval):
     """
     Age/Gender estimation evaluation metrics class.

@@ -10,3 +10,4 @@ hn_editor:
 info:
   task: pipeline
   input_shape: 218x178x4
+  output_shape: '80'

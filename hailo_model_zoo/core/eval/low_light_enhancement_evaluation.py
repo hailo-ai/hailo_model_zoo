@@ -1,10 +1,14 @@
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
+
 # Calculation is based on: https://torchmetrics.readthedocs.io/en/stable/image/peak_signal_noise_ratio.html
 
 
+@EVAL_FACTORY.register(name="low_light_enhancement")
 class LowLightEnhancementEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['PSNR']

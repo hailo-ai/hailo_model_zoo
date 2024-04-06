@@ -30,7 +30,7 @@ parser:
     - 255
     - 255
 info:
-  task: Depth Estimation
+  task: depth estimation
   input_shape: 224x224x3
   output_shape: 224x224x1
   operations: 0.74G
@@ -39,3 +39,5 @@ info:
   eval_metric: RMSE
   source: https://github.com/dwofk/fast-depth
   full_precision_result: 0.604
+  license_url: https://github.com/dwofk/fast-depth/blob/master/LICENSE
+  license_name: MIT

@@ -1,13 +1,17 @@
-import tensorflow as tf
-import numpy as np
 import cv2
+import numpy as np
+import tensorflow as tf
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="image_denoising")
 def image_denoising_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     endnodes = tf.cast(tf.math.round(tf.clip_by_value(endnodes, 0, 1) * 255.0), tf.uint8)
     return {'predictions': endnodes}
 
 
+@VISUALIZATION_FACTORY.register(name="image_denoising")
 def visualize_image_denoising_result(predicted_img, orig_img, **kwargs):
     noised_img = kwargs['img_info']['img_noised'].numpy()
     if kwargs['img_info']['transpose'].numpy():

@@ -1,14 +1,17 @@
 from collections import OrderedDict
 
 import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.eval.widerface_evaluation_external.evaluation import (
-    image_eval, img_pr_info, dataset_pr_info, voc_ap)
+    dataset_pr_info, image_eval, img_pr_info, voc_ap)
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 THRESH_NUM = 1000
 IOU_THRESH = 0.5
 
 
+@EVAL_FACTORY.register(name="face_detection")
 class FaceDetectionEval(Eval):
     """
     Widerface evaluation metric class.

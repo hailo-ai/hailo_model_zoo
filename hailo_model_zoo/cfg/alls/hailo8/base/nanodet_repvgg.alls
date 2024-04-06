@@ -1,5 +1,6 @@
 normalization1 = normalization([103.53, 116.28, 123.675], [57.375, 57.12, 58.395])
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 input_conversion = input_conversion(bgr_to_rgb)
+nms_postprocess("../../../postprocess_config/nanodet_nms_config.json", meta_arch=yolov8, engine=cpu)
 
 allocator_param(merge_min_layer_utilization=0.1)

@@ -1,7 +1,11 @@
 from __future__ import division
+
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
+
+@PREPROCESS_FACTORY.register
 def stereonet(images, image_info=None, output_height=None, output_width=None, flip=None, **kwargs):
     image_l = images['image_l']
     image_r = images['image_r']

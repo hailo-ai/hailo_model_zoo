@@ -49,4 +49,4 @@ Hand Landmark
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_
      - `link <https://github.com/google/mediapipe>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/hand_landmark_lite.hef>`_
-     - `download <NA>`_
+     - None

@@ -54,7 +54,7 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/espcn_x2.hef>`_
-     - `download <NA>`_
+     - None
    * - espcn_x3
      - 28.41
      - 28.06
@@ -66,7 +66,7 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/espcn_x3.hef>`_
-     - `download <NA>`_
+     - None
    * - espcn_x4
      - 26.83
      - 26.58
@@ -78,4 +78,4 @@ BSD100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/espcn_x4.hef>`_
-     - `download <NA>`_
+     - None

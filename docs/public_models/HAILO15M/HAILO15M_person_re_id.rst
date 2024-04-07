@@ -54,7 +54,7 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/osnet_x1_0.hef>`_
-     - `download <NA>`_
+     - None
    * - repvgg_a0_person_reid_512  |star|
      - 89.9
      - 89.3
@@ -66,4 +66,4 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/repvgg_a0_person_reid_512.hef>`_
-     - `download <NA>`_
+     - None

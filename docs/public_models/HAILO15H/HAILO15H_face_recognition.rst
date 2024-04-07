@@ -66,4 +66,4 @@ LFW
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/arcface_r50.hef>`_
-     - `download <NA>`_
+     - None

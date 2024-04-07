@@ -66,4 +66,4 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small_bn/pretrained/2023-07-20/vit_pose_small_bn.zip>`_
      - `link <https://github.com/ViTAE-Transformer/ViTPose>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/vit_pose_small_bn.hef>`_
-     - `download <NA>`_
+     - None

@@ -54,7 +54,7 @@ BSD68
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/dncnn3.hef>`_
-     - `download <NA>`_
+     - None
 
 CBSD68
 ^^^^^^
@@ -86,4 +86,4 @@ CBSD68
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/dncnn_color_blind.hef>`_
-     - `download <NA>`_
+     - None

@@ -54,4 +54,4 @@ N/A
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_
      - `link <https://github.com/nivosco/StereoNet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/stereonet.hef>`_
-     - `download <NA>`_
+     - None

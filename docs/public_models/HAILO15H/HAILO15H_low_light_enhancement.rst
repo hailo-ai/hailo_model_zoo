@@ -54,7 +54,7 @@ LOL
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_
      - `link <Internal>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/zero_dce.hef>`_
-     - `download <NA>`_
+     - None
    * - zero_dce_pp
      - 15.95
      - 15.82
@@ -66,4 +66,4 @@ LOL
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_
      - `link <Internal>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/zero_dce_pp.hef>`_
-     - `download <NA>`_
+     - None

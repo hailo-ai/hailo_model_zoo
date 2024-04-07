@@ -54,4 +54,4 @@ CIFAR100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/clip_resnet_50.hef>`_
-     - `download <NA>`_
+     - None

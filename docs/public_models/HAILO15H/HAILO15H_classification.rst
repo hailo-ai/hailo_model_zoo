@@ -54,7 +54,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_l/pretrained/2023-07-18/efficientnet_l.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_l.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_lite0
      - 74.99
      - 73.81
@@ -66,7 +66,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite0/pretrained/2023-07-18/efficientnet_lite0.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_lite0.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_lite1
      - 76.68
      - 76.21
@@ -78,7 +78,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite1/pretrained/2023-07-18/efficientnet_lite1.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_lite1.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_lite2
      - 77.45
      - 76.74
@@ -90,7 +90,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite2/pretrained/2023-07-18/efficientnet_lite2.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_lite2.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_lite3
      - 79.29
      - 78.42
@@ -102,7 +102,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite3/pretrained/2023-07-18/efficientnet_lite3.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_lite3.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_lite4
      - 80.79
      - 79.99
@@ -114,7 +114,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite4/pretrained/2023-07-18/efficientnet_lite4.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_lite4.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_m
      - 78.91
      - 78.63
@@ -126,7 +126,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_m/pretrained/2023-07-18/efficientnet_m.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_m.hef>`_
-     - `download <NA>`_
+     - None
    * - efficientnet_s
      - 77.64
      - 77.32
@@ -138,7 +138,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2023-07-18/efficientnet_s.zip>`_
      - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/efficientnet_s.hef>`_
-     - `download <NA>`_
+     - None
    * - hardnet39ds
      - 73.43
      - 72.92
@@ -150,7 +150,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/hardnet39ds/pretrained/2021-07-20/hardnet39ds.zip>`_
      - `link <https://github.com/PingoLH/Pytorch-HarDNet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/hardnet39ds.hef>`_
-     - `download <NA>`_
+     - None
    * - hardnet68
      - 75.47
      - 75.04
@@ -162,7 +162,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/hardnet68/pretrained/2021-07-20/hardnet68.zip>`_
      - `link <https://github.com/PingoLH/Pytorch-HarDNet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/hardnet68.hef>`_
-     - `download <NA>`_
+     - None
    * - inception_v1
      - 69.74
      - 69.54
@@ -174,7 +174,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/inception_v1/pretrained/2023-07-18/inception_v1.zip>`_
      - `link <https://github.com/tensorflow/models/tree/v1.13.0/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/inception_v1.hef>`_
-     - `download <NA>`_
+     - None
    * - mobilenet_v1
      - 70.97
      - 70.26
@@ -186,7 +186,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v1/pretrained/2023-07-18/mobilenet_v1.zip>`_
      - `link <https://github.com/tensorflow/models/tree/v1.13.0/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/mobilenet_v1.hef>`_
-     - `download <NA>`_
+     - None
    * - mobilenet_v2_1.0 |rocket|
      - 71.78
      - 71.0
@@ -198,7 +198,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.0/pretrained/2021-07-11/mobilenet_v2_1.0.zip>`_
      - `link <https://github.com/tensorflow/models/tree/v1.13.0/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/mobilenet_v2_1.0.hef>`_
-     - `download <NA>`_
+     - None
    * - mobilenet_v2_1.4
      - 74.18
      - 73.18
@@ -210,7 +210,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4.zip>`_
      - `link <https://github.com/tensorflow/models/tree/v1.13.0/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/mobilenet_v2_1.4.hef>`_
-     - `download <NA>`_
+     - None
    * - mobilenet_v3
      - 72.21
      - 71.73
@@ -222,7 +222,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3/pretrained/2023-07-18/mobilenet_v3.zip>`_
      - `link <https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/mobilenet_v3.hef>`_
-     - `download <NA>`_
+     - None
    * - mobilenet_v3_large_minimalistic
      - 72.11
      - 70.61
@@ -234,7 +234,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3_large_minimalistic/pretrained/2021-07-11/mobilenet_v3_large_minimalistic.zip>`_
      - `link <https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/mobilenet_v3_large_minimalistic.hef>`_
-     - `download <NA>`_
+     - None
    * - regnetx_1.6gf
      - 77.05
      - 76.75
@@ -246,7 +246,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnetx_1.6gf/pretrained/2021-07-11/regnetx_1.6gf.zip>`_
      - `link <https://github.com/facebookresearch/pycls>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/regnetx_1.6gf.hef>`_
-     - `download <NA>`_
+     - None
    * - regnetx_800mf
      - 75.16
      - 74.84
@@ -258,7 +258,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnetx_800mf/pretrained/2021-07-11/regnetx_800mf.zip>`_
      - `link <https://github.com/facebookresearch/pycls>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/regnetx_800mf.hef>`_
-     - `download <NA>`_
+     - None
    * - repvgg_a1
      - 74.4
      - 72.4
@@ -270,7 +270,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repvgg/repvgg_a1/pretrained/2022-10-02/RepVGG-A1.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/repvgg_a1.hef>`_
-     - `download <NA>`_
+     - None
    * - repvgg_a2
      - 76.52
      - 74.52
@@ -282,7 +282,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repvgg/repvgg_a2/pretrained/2022-10-02/RepVGG-A2.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/repvgg_a2.hef>`_
-     - `download <NA>`_
+     - None
    * - resmlp12_relu
      - 75.26
      - 74.32
@@ -294,7 +294,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resmlp12_relu/pretrained/2022-03-03/resmlp12_relu.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models/>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resmlp12_relu.hef>`_
-     - `download <NA>`_
+     - None
    * - resnet_v1_18
      - 71.26
      - 71.06
@@ -306,7 +306,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_18/pretrained/2022-04-19/resnet_v1_18.zip>`_
      - `link <https://github.com/yhhhli/BRECQ>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resnet_v1_18.hef>`_
-     - `download <NA>`_
+     - None
    * - resnet_v1_34
      - 72.7
      - 72.14
@@ -318,7 +318,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_34/pretrained/2021-07-11/resnet_v1_34.zip>`_
      - `link <https://github.com/tensorflow/models/tree/master/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resnet_v1_34.hef>`_
-     - `download <NA>`_
+     - None
    * - resnet_v1_50 |rocket| |star|
      - 75.12
      - 74.47
@@ -330,7 +330,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_50/pretrained/2021-07-11/resnet_v1_50.zip>`_
      - `link <https://github.com/tensorflow/models/tree/master/research/slim>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resnet_v1_50.hef>`_
-     - `download <NA>`_
+     - None
    * - resnext26_32x4d
      - 76.18
      - 75.78
@@ -342,7 +342,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnext26_32x4d/pretrained/2023-09-18/resnext26_32x4d.zip>`_
      - `link <https://github.com/osmr/imgclsmob/tree/master/pytorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resnext26_32x4d.hef>`_
-     - `download <NA>`_
+     - None
    * - resnext50_32x4d
      - 79.31
      - 78.21
@@ -354,7 +354,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnext50_32x4d/pretrained/2023-07-18/resnext50_32x4d.zip>`_
      - `link <https://github.com/osmr/imgclsmob/tree/master/pytorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/resnext50_32x4d.hef>`_
-     - `download <NA>`_
+     - None
    * - squeezenet_v1.1
      - 59.85
      - 59.4
@@ -366,7 +366,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2023-07-18/squeezenet_v1.1.zip>`_
      - `link <https://github.com/osmr/imgclsmob/tree/master/pytorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/squeezenet_v1.1.hef>`_
-     - `download <NA>`_
+     - None
    * - vit_base_bn |rocket|
      - 79.98
      - 78.58
@@ -378,7 +378,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base/pretrained/2023-01-25/vit_base.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/vit_base_bn.hef>`_
-     - `download <NA>`_
+     - None
    * - vit_small_bn
      - 78.12
      - 77.02
@@ -390,7 +390,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_small/pretrained/2022-08-08/vit_small.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/vit_small_bn.hef>`_
-     - `download <NA>`_
+     - None
    * - vit_tiny_bn
      - 68.95
      - 67.15
@@ -402,4 +402,4 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny/pretrained/2023-08-29/vit_tiny_bn.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15h/vit_tiny_bn.hef>`_
-     - `download <NA>`_
+     - None

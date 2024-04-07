@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Single Person Pose Estimation HAILO8
+Public Pre-Trained Models - Single Person Pose Estimation Hailo8
 ================================================================
 
 .. |rocket| image:: ../../images/rocket.png

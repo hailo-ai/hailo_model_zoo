@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Image Denoising HAILO8L
+Public Pre-Trained Models - Image Denoising Hailo8L
 ===================================================
 
 .. |rocket| image:: ../../images/rocket.png

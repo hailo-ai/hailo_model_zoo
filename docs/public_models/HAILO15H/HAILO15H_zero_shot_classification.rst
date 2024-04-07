@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Zero-shot Classification HAILO15H
+Public Pre-Trained Models - Zero-shot Classification Hailo15H
 =============================================================
 
 .. |rocket| image:: ../../images/rocket.png

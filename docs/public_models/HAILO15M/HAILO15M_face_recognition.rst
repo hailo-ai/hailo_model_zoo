@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Face Recognition HAILO15M
+Public Pre-Trained Models - Face Recognition Hailo15M
 =====================================================
 
 .. |rocket| image:: ../../images/rocket.png

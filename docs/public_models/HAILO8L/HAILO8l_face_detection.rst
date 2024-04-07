@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Face Detection HAILO8L
+Public Pre-Trained Models - Face Detection Hailo8L
 ==================================================
 
 .. |rocket| image:: ../../images/rocket.png

@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Stereo Depth Estimation HAILO15H
+Public Pre-Trained Models - Stereo Depth Estimation Hailo15H
 ============================================================
 
 .. |rocket| image:: ../../images/rocket.png

@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Person Re-ID HAILO8
+Public Pre-Trained Models - Person Re-ID Hailo8
 ===============================================
 
 .. |rocket| image:: ../../images/rocket.png

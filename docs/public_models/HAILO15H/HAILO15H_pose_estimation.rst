@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Pose Estimation HAILO15H
+Public Pre-Trained Models - Pose Estimation Hailo15H
 ====================================================
 
 .. |rocket| image:: ../../images/rocket.png

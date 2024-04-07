@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Person Attribute HAILO15H
+Public Pre-Trained Models - Person Attribute Hailo15H
 =====================================================
 
 .. |rocket| image:: ../../images/rocket.png

@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Person Attribute HAILO8
+Public Pre-Trained Models - Person Attribute Hailo8
 ===================================================
 
 .. |rocket| image:: ../../images/rocket.png

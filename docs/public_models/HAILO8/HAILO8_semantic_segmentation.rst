@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Semantic Segmentation HAILO8
+Public Pre-Trained Models - Semantic Segmentation Hailo8
 ========================================================
 
 .. |rocket| image:: ../../images/rocket.png

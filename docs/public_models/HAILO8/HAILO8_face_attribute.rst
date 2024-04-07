@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Face Attribute HAILO8
+Public Pre-Trained Models - Face Attribute Hailo8
 =================================================
 
 .. |rocket| image:: ../../images/rocket.png

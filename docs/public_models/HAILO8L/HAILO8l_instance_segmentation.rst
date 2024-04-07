@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Instance Segmentation HAILO8L
+Public Pre-Trained Models - Instance Segmentation Hailo8L
 =========================================================
 
 .. |rocket| image:: ../../images/rocket.png

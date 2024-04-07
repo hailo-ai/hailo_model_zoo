@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Low Light Enhancement HAILO15H
+Public Pre-Trained Models - Low Light Enhancement Hailo15H
 ==========================================================
 
 .. |rocket| image:: ../../images/rocket.png

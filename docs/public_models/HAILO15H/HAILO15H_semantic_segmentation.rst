@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Semantic Segmentation HAILO15H
+Public Pre-Trained Models - Semantic Segmentation Hailo15H
 ==========================================================
 
 .. |rocket| image:: ../../images/rocket.png

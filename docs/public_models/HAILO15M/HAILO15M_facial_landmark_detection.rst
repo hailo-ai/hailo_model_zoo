@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Facial Landmark Detection HAILO15M
+Public Pre-Trained Models - Facial Landmark Detection Hailo15M
 ==============================================================
 
 .. |rocket| image:: ../../images/rocket.png

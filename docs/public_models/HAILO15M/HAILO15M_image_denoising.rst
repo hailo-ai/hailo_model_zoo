@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Image Denoising HAILO15M
+Public Pre-Trained Models - Image Denoising Hailo15M
 ====================================================
 
 .. |rocket| image:: ../../images/rocket.png

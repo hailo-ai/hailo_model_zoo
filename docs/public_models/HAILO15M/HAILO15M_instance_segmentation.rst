@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Instance Segmentation HAILO15M
+Public Pre-Trained Models - Instance Segmentation Hailo15M
 ==========================================================
 
 .. |rocket| image:: ../../images/rocket.png

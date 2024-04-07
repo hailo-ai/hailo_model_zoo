@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Zero-shot Classification HAILO8
+Public Pre-Trained Models - Zero-shot Classification Hailo8
 ===========================================================
 
 .. |rocket| image:: ../../images/rocket.png

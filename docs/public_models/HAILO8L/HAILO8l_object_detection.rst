@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Object Detection HAILO8L
+Public Pre-Trained Models - Object Detection Hailo8L
 ====================================================
 
 .. |rocket| image:: ../../images/rocket.png

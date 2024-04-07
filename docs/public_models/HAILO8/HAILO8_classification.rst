@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Classification HAILO8
+Public Pre-Trained Models - Classification Hailo8
 =================================================
 
 .. |rocket| image:: ../../images/rocket.png

@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Hand Landmark detection HAILO15M
+Public Pre-Trained Models - Hand Landmark detection Hailo15M
 ============================================================
 
 .. |rocket| image:: ../../images/rocket.png

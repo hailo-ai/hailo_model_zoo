@@ -1,5 +1,5 @@
 
-Public Pre-Trained Models - Depth Estimation HAILO8
+Public Pre-Trained Models - Depth Estimation Hailo8
 ===================================================
 
 .. |rocket| image:: ../../images/rocket.png

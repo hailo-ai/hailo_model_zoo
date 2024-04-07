@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: docs/images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: docs/images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.

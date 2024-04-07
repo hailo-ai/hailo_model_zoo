@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models
-=========================
+Public Pre-Trained Models - Classification HAILO15M
+===================================================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -14,9 +14,6 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
 * Benchmark, TAPPAS and Recommended networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0
-* Supported tasks:
-
-  * `Classification`_
 
 
 .. _Classification:

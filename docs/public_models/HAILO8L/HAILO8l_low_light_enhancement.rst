@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models
-=========================
+Public Pre-Trained Models - Low Light Enhancement HAILO8L
+=========================================================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -14,9 +14,6 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
 * Benchmark, TAPPAS and Recommended networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0
-* Supported tasks:
-
-  * `Low Light Enhancement`_
 
 
 .. _Low Light Enhancement:

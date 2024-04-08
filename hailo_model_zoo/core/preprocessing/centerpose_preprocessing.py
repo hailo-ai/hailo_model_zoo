@@ -1,6 +1,8 @@
-import tensorflow as tf
 import cv2
 import numpy as np
+import tensorflow as tf
+
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 from hailo_model_zoo.core.preprocessing.affine_utils import get_affine_transform
 
 
@@ -20,12 +22,13 @@ def _centerpose_preprocessing(image, height, width):
     return inp_image, center, scale
 
 
+@PREPROCESS_FACTORY.register(name="centerpose")
 def centerpose_preprocessing(image, image_info=None, height=None, width=None, **kwargs):
     image_info['orig_height'], image_info['orig_width'] = tf.shape(image)[0], tf.shape(image)[1]
     image_info['img_orig'] = tf.image.encode_jpeg(image, quality=100)
-    image, center, scale = tf.py_function(_centerpose_preprocessing,
-                                          [image, height, width],
-                                          [tf.float32, tf.float32, tf.float32])
+    image, center, scale = tf.numpy_function(_centerpose_preprocessing,
+                                             [image, height, width],
+                                             [tf.uint8, tf.float32, tf.float64])
     image.set_shape((height, width, 3))
     image_info['img_resized'] = image
     image_info['center'], image_info['scale'] = center, scale

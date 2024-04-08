@@ -1,7 +1,9 @@
 
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, aggregate, visualize
+from hailo_model_zoo.core.factory import INFER_FACTORY
 
 
+@INFER_FACTORY.register
 def runner_infer(runner, context, logger, eval_num_examples, print_num_examples,
                  batch_size, dataset, postprocessing_callback,
                  eval_callback, visualize_callback, model_wrapper_callback,

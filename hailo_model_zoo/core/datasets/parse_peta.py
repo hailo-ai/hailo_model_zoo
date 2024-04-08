@@ -1,6 +1,10 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
+
+@DATASET_FACTORY.register(name="peta")
+@DATASET_FACTORY.register(name="celeba")
 def parse_classification_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

@@ -12,6 +12,7 @@ from hailo_model_zoo.core.main_utils import (
     get_network_info,
     optimize_model,
     load_model,
+    prepare_calibration_data,
     resolve_alls_path
 )
 from hailo_model_zoo.utils.logger import get_logger
@@ -32,8 +33,8 @@ def get_quantized_model(model_name, network_info, results_dir):
 
     logger.info("Start Optimization...")
     model_script = resolve_alls_path(network_info.paths.alls_script, performance="base")
-    optimize_model(runner, logger, network_info, calib_path=None, results_dir=results_dir,
-                   model_script=model_script)
+    calib_feed_callback = prepare_calibration_data(runner, network_info, None, logger)
+    optimize_model(runner, calib_feed_callback, network_info, results_dir=results_dir, model_script=model_script)
     return runner
 
 

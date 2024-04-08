@@ -1,11 +1,16 @@
 from collections import OrderedDict
-from hailo_model_zoo.core.eval.eval_base_class import Eval
+
 import numpy as np
 import torch
-from torchmetrics.multimodal.clip_score import CLIPScore
 from torchmetrics.image.fid import FrechetInceptionDistance
+from torchmetrics.multimodal.clip_score import CLIPScore
+
+from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="stable_diffusion_v2_decoder")
+@EVAL_FACTORY.register(name="stable_diffusion_v2_unet")
 class ImagegenerationFromTextEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['snr_db', 'clip_score', 'FID_score']

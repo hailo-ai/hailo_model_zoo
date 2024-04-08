@@ -11,3 +11,4 @@ paths:
 info:
   task: pipeline
   input_shape: 109x178x3
+  output_shape: '80'

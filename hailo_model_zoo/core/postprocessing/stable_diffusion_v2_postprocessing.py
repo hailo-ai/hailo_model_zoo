@@ -1,14 +1,17 @@
-import tensorflow as tf
 import numpy as np
-from PIL import Image
-from PIL import ImageDraw
+import tensorflow as tf
+from PIL import Image, ImageDraw
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="stable_diffusion_v2_decoder")
 def stable_diffusion_v2_decoder_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     output_image = tf.clip_by_value(endnodes / 2 + 0.5, 0.0, 1.0)
     return {'predictions': output_image}
 
 
+@VISUALIZATION_FACTORY.register(name="stable_diffusion_v2_decoder")
 def visualize_stable_diffusion_v2_decoder(logits, img_gt, **kwargs):
     max_chars_per_line = 80
     image_gen = logits['predictions']
@@ -25,11 +28,13 @@ def visualize_stable_diffusion_v2_decoder(logits, img_gt, **kwargs):
     return np.array(image_gen_pil, np.uint8)
 
 
+@POSTPROCESS_FACTORY.register(name="stable_diffusion_v2_unet")
 def stable_diffusion_v2_unet_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     endnodes = tf.transpose(endnodes, (0, 2, 3, 1))
     return {'predictions': endnodes}
 
 
+@VISUALIZATION_FACTORY.register(name="stable_diffusion_v2_unet")
 def visualize_stable_diffusion_v2_unet(logits, img_gt, **kwargs):
     max_chars_per_line = 80
     image_gen = logits['predictions']

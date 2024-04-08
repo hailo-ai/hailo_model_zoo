@@ -15,7 +15,6 @@ network:
 postprocessing:
   device_pre_post_layers:
     nms: true
-  postprocess_config_file: models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json
   meta_arch: yolo
   hpp: true
 paths:
@@ -38,7 +37,7 @@ evaluation:
 info:
   task: pipeline
   input_shape: 1080x1920x2
-  output_shape: 20x20x18, 40x40x18, 80x80x18
+  output_shape: 1x5x80
   operations: 51.19G
   parameters: 21.47M
   framework: pytorch

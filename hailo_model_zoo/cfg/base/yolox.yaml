@@ -11,6 +11,7 @@ postprocessing:
   nms_iou_thresh: 0.65
   score_threshold: 0.01
   meta_arch: yolox
+  hpp: false
   anchors:
     strides:
     - 32

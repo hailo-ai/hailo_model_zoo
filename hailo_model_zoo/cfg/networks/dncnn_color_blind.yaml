@@ -36,4 +36,5 @@ info:
   full_precision_result: 33.87
   validation_data: CBSD68
   source: https://github.com/cszn/KAIR
-  license: https://github.com/cszn/KAIR/blob/master/LICENSE
+  license_url: https://github.com/cszn/KAIR/blob/master/LICENSE
+  license_name: MIT

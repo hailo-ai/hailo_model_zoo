@@ -9,8 +9,8 @@ System Requirements
 
 * Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
 * Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v3.26.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 4.16.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* Hailo Dataflow Compiler v3.27.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.17.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
 * The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 525
@@ -24,8 +24,8 @@ Install Instructions
 Hailo Software Suite
 ^^^^^^^^^^^^^^^^^^^^
 
-The model requires the corresponding Dataflow Compiler version, and the optional HailoRT version. Therefore it is recommended to use the 
-`Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_, that includes all of Hailo's SW components and insures compatibility 
+The model requires the corresponding Dataflow Compiler version, and the optional HailoRT version. Therefore it is recommended to use the
+`Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_, that includes all of Hailo's SW components and insures compatibility
 across products versions.
 
 The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS and the Model Zoo (:ref:`see diagram below <sw_suite_figure>`).
@@ -116,6 +116,9 @@ The following scheme shows high-level view of the model-zoo evaluation process, 
 
 By default, each stage executes all of its previously necessary stages according to the above diagram. The post-parsing stages also have an option to start from the product of previous stages (i.e., the Hailo Archive (HAR) file), as explained below. The operations are configured through a YAML file that exist for each model in the cfg folder. For a description of the YAML structure please see `YAML <YAML.rst>`_.
 
+**NOTE:**\  Hailo Model Zoo provides the following functionality for Model Zoo models only. If you wish to use your custom model, use the Dataflow Compiler directly.
+
+
 Parsing
 -------
 
@@ -130,6 +133,12 @@ The pre-trained models are stored on AWS S3 and will be downloaded automatically
 .. code-block::
 
    hailomz parse <model_name> --hw-arch hailo15h
+
+* To customize the parsing behavior, use ``--start-node-names`` and\or ``--end-node-names`` flags:
+
+.. code-block::
+
+    hailomz parse <model_name> --start-node-names <name1> --end-node-names <name1> <name2>
 
 Optimization
 ------------
@@ -169,7 +178,7 @@ To add input conversion to the model, use the input conversion flag:
 
     hailomz optimize <model_name> --input-conversion nv12_to_rgb
 
-Do not use the flag if an input conversion already exist in the alls or in the YAML.
+* Do not use the flag if an input conversion already exist in the alls or in the YAML.
 
 To add input resize to the model, use the resize flag:
 
@@ -177,7 +186,15 @@ To add input resize to the model, use the resize flag:
 
     hailomz optimize <model_name> --resize 1080 1920
 
-Do not use the flag if resize already exist in the alls or in the YAML.
+* Do not use the flag if resize already exist in the alls or in the YAML.
+
+To adjust the number of classes in post-processing configuration, use classes flag:
+
+.. code-block::
+
+    hailomz optimize <model_name> --classes 80
+
+* Use this flag only if post-process exists in the alls or in the YAML.
 
 Profiling
 ---------
@@ -186,13 +203,8 @@ To generate the model profiler report:
 
 .. code-block::
 
-   hailomz profile <model_name>
-
-To generate the model profiler report using a previously generated HAR file:
-
-.. code-block::
-
-   hailomz profile <model_name> --har /path/to/model.har
+   hailomz parse <model_name>
+   hailo profiler path/to/model.har
 
 * When profiling a Quantized HAR file (the result of the optimization process), the report contains information about your model and accuracy.
 

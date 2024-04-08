@@ -1,8 +1,12 @@
 from collections import OrderedDict
+
 import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="stereonet")
 class StereoNetEval(Eval):
     def __init__(self, **kwargs):
         self.TotalEPE = 0

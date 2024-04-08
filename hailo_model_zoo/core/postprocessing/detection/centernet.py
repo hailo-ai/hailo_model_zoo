@@ -100,9 +100,9 @@ class CenternetPostProc(object):
         bb_probs = pad_list(bb_probs, required_zero_detections_padding)
         bb_classes = pad_list(bb_classes, required_zero_detections_padding)
         bb_boxes = pad_list(bb_boxes, required_zero_detections_padding)
-        return np.expand_dims(np.array(bb_probs), 0).astype('float32'),\
-            np.expand_dims(np.array(bb_classes), 0).astype('int32'),\
-            np.expand_dims(np.array(bb_boxes), 0).astype('float32'),\
+        return np.expand_dims(np.array(bb_probs), 0).astype('float32'), \
+            np.expand_dims(np.array(bb_classes), 0).astype('int32'), \
+            np.expand_dims(np.array(bb_boxes), 0).astype('float32'), \
             (np.ones([1]) * num_detections).astype('int32')
 
     def _centernet_postprocessing(self, box_widths, box_offsets, sparse_probs, **kwargs):

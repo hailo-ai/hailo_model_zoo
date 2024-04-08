@@ -7,7 +7,6 @@ postprocessing:
     softmax: false
     bilinear: false
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-Visdrone/ssd/ssd_mobilenet_v1_visdrone/pretrained/2023-07-18/mobilenet_ssd_nms_visdrone_postprocess_config.json
   meta_arch: ssd
   anchors:
     predefined: true
@@ -36,7 +35,7 @@ parser:
 info:
   task: object detection
   input_shape: 300x300x3
-  output_shape: 2244x8x1
+  output_shape: 11x8x1
   operations: 2.3G
   parameters: 5.64M
   framework: tensorflow

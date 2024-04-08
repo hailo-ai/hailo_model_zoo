@@ -1,9 +1,12 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
+
 NOISE_MEAN = 0
 NOISE_STD = 15
 
 
+@PREPROCESS_FACTORY.register
 def dncnn3(image, image_info, height, width, output_shapes, **kwargs):
     transpose = False
     if tf.shape(image)[0] > tf.shape(image)[1]:

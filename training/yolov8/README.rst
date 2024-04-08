@@ -13,7 +13,7 @@ Prerequisites
 * nvidia-docker2 (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
 
 
-**NOTE:**  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
+**NOTE:**\  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
 
 Environment Preparations
 ------------------------
@@ -21,13 +21,12 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <pre><code stage="docker_build">
-      cd <span val="dockerfile_path">hailo_model_zoo/training/yolov8</span>
+      
+      cd hailo_model_zoo/training/yolov8
       docker build --build-arg timezone=`cat /etc/timezone` -t yolov8:v0 .
-      </code></pre>
+      
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -42,12 +41,11 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path"> /path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> yolov8:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v  /path/to/local/data/dir:/path/to/docker/data/dir yolov8:v0
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -72,12 +70,11 @@ Training and exporting to ONNX
 
    * | Start training - The following command is an example for training a *yolov8s* model.  
 
-     .. raw:: html
-        :name:validation
+     .. code-block::
   
-        <code stage="retrain">
-        yolo detect train data=coco128.yaml model=yolov8s.pt name=retrain_yolov8s epochs=<span val=epochs>100</span> batch=<span val=batch_size>16</span>
-        </code>
+        
+        yolo detect train data=coco128.yaml model=yolov8s.pt name=retrain_yolov8s epochs=100 batch=16
+        
 
      * ``yolov8s.pt`` - pretrained weights. The pretrained weights for *yolov8n*\ , *yolov8s*\ , *yolov8m*\ , *yolov8l* and *yolov8x* will be downloaded to your working directory when running this command.
      * ``coco128.yaml`` - example file for data.yaml file. Can be found at ultralytics/ultralytics/datasets.
@@ -85,20 +82,19 @@ Training and exporting to ONNX
      * ``epochs`` - number of epochs to run. default to 100.
      * ``batch`` - number of images per batch. default to 16.
 
-   **NOTE:**\ more configurable parameters can be found at https://docs.ultralytics.com/modes/train/
+   **NOTE:**\  more configurable parameters can be found at https://docs.ultralytics.com/modes/train/
 
 #. | Export to ONNX:
 
    | In order to export your trained YOLOv8 model to ONNX run the following script:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      yolo export model=<span val="docker_pretrained_path">/path/to/trained/best.pt</span> imgsz=640 format=onnx opset=11  # export at 640x640
-      </code>
+      
+      yolo export model=/path/to/trained/best.pt imgsz=640 format=onnx opset=11  # export at 640x640
+      
 
-   **NOTE:**\ more configurable parameters can be found at https://docs.ultralytics.com/modes/export/
+   **NOTE:**\  more configurable parameters can be found at https://docs.ultralytics.com/modes/export/
 
 ----
 
@@ -109,16 +105,17 @@ Compile the Model using Hailo Model Zoo
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov8s.yaml``\ , and run compilation using the model zoo:  
 
-.. raw:: html
-   :name:validation
+.. code-block::
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">yolov8s.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/yolov8s.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt yolov8s.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolov8s.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80 
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
+* | ``--classes`` - adjusting the number of classes in post-processing configuration (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::

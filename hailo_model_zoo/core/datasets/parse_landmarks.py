@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
+
+@DATASET_FACTORY.register(name="face_landmarks")
 def parse_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """
@@ -27,6 +30,8 @@ def parse_record(serialized_example):
     return [image, image_info]
 
 
+@DATASET_FACTORY.register(name="hand_detection")
+@DATASET_FACTORY.register(name="hand_landmark")
 def parse_hand_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

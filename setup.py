@@ -2,19 +2,11 @@
 
 from setuptools import find_packages, setup
 
-
-import subprocess
-check_dfc_installed = subprocess.run(
-    "pip show hailo-dataflow-compiler".split(),
-    stdout=subprocess.PIPE,
-    stderr=subprocess.PIPE,
-)
-if check_dfc_installed.stderr:
+import importlib
+if not importlib.util.find_spec('hailo_sdk_client'):
     raise ModuleNotFoundError("hailo_sdk_client was not installed or you are not "
                               "in the right virtualenv.\n"
                               "In case you are not an Hailo customer please visit us at https://hailo.ai/")
-
-
 try:
     import cpuinfo
     cpu_flags = cpuinfo.get_cpu_info()['flags']
@@ -51,7 +43,7 @@ def main():
             'torch==1.11.0',
             'torchmetrics==1.2.0']
 
-    model_zoo_version = "2.10.0"
+    model_zoo_version = "2.11.0"
 
     package_data = {
         "hailo_model_zoo": [

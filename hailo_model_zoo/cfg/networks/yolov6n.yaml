@@ -30,6 +30,8 @@ parser:
     - 255.0
     - 255.0
     fold_normalization: true
+postprocessing:
+  hpp: true
 info:
   task: object detection
   input_shape: 640x640x3

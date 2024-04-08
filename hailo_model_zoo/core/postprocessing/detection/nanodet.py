@@ -22,7 +22,7 @@ class NanoDetPostProc:
         self._network_arch = meta_arch
         self._nms_max_output_per_class = 100 if nms_max_output_per_class is None else nms_max_output_per_class
         self._nms_max_output = 100 if post_nms_topk is None else post_nms_topk
-        self.hpp = kwargs.get("hpp", False)
+        self._hpp = kwargs.get("hpp", False)
         self._split = {
             'nanodet': self.nanodet_decode,
             'nanodet_split': self.split_decode,
@@ -108,20 +108,19 @@ class NanoDetPostProc:
         return tf.expand_dims(boxes, axis=2)
 
     def postprocessing(self, endnodes, *, device_pre_post_layers, **kwargs):
-        if self.hpp:
-            return tf_postproc_nms(endnodes,
-                                   labels_offset=kwargs['labels_offset'],
-                                   score_threshold=0.0,
-                                   coco_2017_to_2014=True)
-
-        scores, raw_boxes = self._get_scores_boxes(endnodes)
-
-        # decode score/class
-        if not device_pre_post_layers.sigmoid:
-            scores = tf.sigmoid(scores)
-
-        # decode boxes
-        boxes = self._box_decoding(raw_boxes)
+        if self._hpp:
+            if kwargs.get('bbox_decoding_only', False):
+                endnodes = tf.squeeze(endnodes, axis=1)
+                boxes, scores = tf.split(endnodes, [4, self._num_classes], axis=-1)
+                boxes = tf.expand_dims(boxes, axis=2)
+            else:
+                return tf_postproc_nms(endnodes, labels_offset=kwargs['labels_offset'], score_threshold=0.0,
+                                       coco_2017_to_2014=True)
+        else:
+            scores, raw_boxes = self._get_scores_boxes(endnodes)
+            scores = tf.sigmoid(scores) if not device_pre_post_layers.sigmoid else scores
+            # decode boxes
+            boxes = self._box_decoding(raw_boxes)
 
         # nms
         (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
@@ -137,7 +136,7 @@ class NanoDetPostProc:
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.py_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
         nmsed_classes.set_shape((1, 100))
 
         return {'detection_boxes': nmsed_boxes,

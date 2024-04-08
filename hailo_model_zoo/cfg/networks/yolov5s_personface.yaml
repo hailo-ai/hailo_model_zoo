@@ -18,7 +18,6 @@ preprocessing:
 postprocessing:
   device_pre_post_layers:
     nms: true
-  postprocess_config_file: models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.json
   meta_arch: yolo
   hpp: true
 quantization:
@@ -32,7 +31,7 @@ evaluation:
 info:
   task: pipeline
   input_shape: 640x640x3
-  output_shape: 80x80x21, 40x40x21, 20x20x21
+  output_shape: 2x5x80
   operations: 16.71G
   parameters: 7.25M
   framework: pytorch

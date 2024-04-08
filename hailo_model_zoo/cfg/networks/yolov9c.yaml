@@ -1,0 +1,32 @@
+base:
+- base/yolov8.yaml
+network:
+  network_name: yolov9c
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov9c/pretrained/2024-02-24/yolov9c.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov9c/pretrained/2024-02-24/yolov9c.zip
+  alls_script: yolov9c.alls
+parser:
+  nodes:
+  - null
+  - - Conv_1058
+    - Conv_1065
+    - Conv_1088
+    - Conv_1095
+    - Conv_1118
+    - Conv_1125
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x80x64, 80x80x80, 40x40x64, 40x40x80, 20x20x64, 20x20x80
+  operations: 102.1G
+  parameters: 25.3M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 52.8
+  source: https://github.com/WongKinYiu/yolov9
+  license_url: https://github.com/WongKinYiu/yolov7/blob/main/LICENSE.md
+  license_name: GPL-3.0

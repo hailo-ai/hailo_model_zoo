@@ -1,9 +1,9 @@
-import numpy as np
 import cv2
+import numpy as np
 
-from hailo_model_zoo.core.postprocessing.lane_detection.polylanenet import PolyLaneNetPostProcessHailo
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.lane_detection.laneaf import LaneAFPostProc
-
+from hailo_model_zoo.core.postprocessing.lane_detection.polylanenet import PolyLaneNetPostProcessHailo
 
 LANE_DETECTION_ARCHS = {
     "polylanenet": PolyLaneNetPostProcessHailo,
@@ -11,6 +11,7 @@ LANE_DETECTION_ARCHS = {
 }
 
 
+@VISUALIZATION_FACTORY.register(name="lane_detection")
 def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs):
     pred = pred['predictions']
     color = [0, 255, 0]
@@ -51,6 +52,7 @@ def _get_postprocessing_class(meta_arch):
     raise ValueError("Meta-architecture [{}] is not supported".format(meta_arch))
 
 
+@POSTPROCESS_FACTORY.register(name="lane_detection")
 def lane_detection_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs["meta_arch"].lower()
     kwargs["anchors"] = {} if kwargs["anchors"] is None else kwargs["anchors"]

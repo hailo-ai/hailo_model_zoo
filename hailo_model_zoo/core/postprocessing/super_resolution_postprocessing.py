@@ -1,7 +1,8 @@
-import tensorflow as tf
-import numpy as np
 import cv2
+import numpy as np
+import tensorflow as tf
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.preprocessing.super_resolution_preprocessing import RGB2YUV_mat, RGB2YUV_offset
 
 """
@@ -17,6 +18,8 @@ YUV2RGB_mat = [[1.16438355, 1.16438355, 1.16438355],
                [1.59602715, -0.81296805, 0.]]
 
 
+@POSTPROCESS_FACTORY.register(name="super_resolution")
+@POSTPROCESS_FACTORY.register(name="super_resolution_srgan")
 def super_resolution_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs['meta_arch'].lower()
     if 'sr_resnet' in meta_arch:
@@ -68,6 +71,7 @@ def focus_on_patch(image, h_center, w_center, width):
     return image[h_min:h_max, w_min:w_max, :]
 
 
+@VISUALIZATION_FACTORY.register(name="super_resolution_srgan")
 def visualize_srgan_result(logits, img, **kwargs):
     """
     Visualizing the output of the Super-Res network compared with a naive upscaling.
@@ -99,6 +103,7 @@ def visualize_srgan_result(logits, img, **kwargs):
     return mosaic_image
 
 
+@VISUALIZATION_FACTORY.register(name="super_resolution")
 def visualize_super_resolution_result(logits, img, **kwargs):
     """
     Visualizing the output of the Super-Res network compared with a naive upscaling.

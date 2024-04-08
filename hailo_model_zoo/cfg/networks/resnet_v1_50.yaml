@@ -28,7 +28,7 @@ parser:
 info:
   task: classification
   input_shape: 224x224x3
-  output_shape: 1x1x1000
+  output_shape: '1000'
   operations: 6.98G
   parameters: 25.53M
   framework: tensorflow

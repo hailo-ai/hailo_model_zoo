@@ -3,8 +3,10 @@ import re
 from collections import OrderedDict
 
 import numpy as np
-from hailo_model_zoo.core.eval.eval_base_class import Eval
 from sklearn.model_selection import KFold
+
+from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
 def _accuracy(threshold, dist, actual_issame):
@@ -22,6 +24,7 @@ def _distance(embeddings1, embeddings2):
     return dist
 
 
+@EVAL_FACTORY.register(name="face_verification")
 class FaceVerificationEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['acc']

@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
+
+@DATASET_FACTORY.register(name="mot16")
 def parse_mot_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

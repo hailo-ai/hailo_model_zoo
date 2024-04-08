@@ -14,14 +14,13 @@ Environment Preparations
 
 #. | Build the docker image:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-       <pre><code stage="docker_build">
+       
        cd hailo_model_zoo/training/vit
-       cd <span val="dockerfile_path">hailo_model_zoo/training/vit</span>
+       cd hailo_model_zoo/training/vit
        docker build --build-arg timezone=`cat /etc/timezone` -t vit:v0 .
-       </code></pre>
+       
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -37,13 +36,12 @@ Environment Preparations
 
 #. | Start your docker:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
 
-      <code stage="docker_run">
-      docker run <span val="replace_none">--name "your_docker_name"</span> -it --gpus all --ipc=host -v <span val="local_vol_path"> /path/to/local/data/dir</span>:<span val="docker_vol_path">/path/to/docker/data/dir</span> vit:v0
-      </code>
+      
+      docker run --name "your_docker_name" -it --gpus all --ipc=host -v  /path/to/local/data/dir:/path/to/docker/data/dir vit:v0
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -60,16 +58,15 @@ Training and exporting to ONNX
 #. | Train your model:
    | Once the docker is started, you can start training your model.
 
-   * | Prepare your custome dataset - Follow the steps described `here <https://timm.fast.ai/training>`
+   * | Prepare your custom dataset - Follow the steps described `here <https://timm.fast.ai/training>`
 
-   * | Start training - The following commad is an example for training a *vit_tiny_un_patch16_224* model.
+   * | Start training - The following command is an example for training a *vit_tiny_un_patch16_224* model.
 
-     .. raw:: html
-        :name:validation
+     .. code-block::
 
-        <code stage="retrain">
-        python3 -m torch.distributed.launch --nproc_per_node=1 train.py <span val="train_set_path">../data/imagenet_10000/</span> --model vit_tiny_un_patch16_224 --output output --experiment retrain --initial-checkpoint vit_tiny_un_patch16_224.pth.tar  --epochs 1 --workers 6 --batch-size=<span val=batch_size>64</span> --drop-path 0.1 --model-ema --model-ema-decay 0.99996 --opt adamw --opt-eps 1e-8 --weight-decay 0.05 --lr 0.00001 --aa rand-m9-mstd0.5-inc1 --train-interpolation bicubic --use-ra-sampler --reprob 0.25 --mixup 0.8 --cutmix 1.0
-        </code>
+        
+        python3 -m torch.distributed.launch --nproc_per_node=1 train.py ../data/imagenet_10000/ --model vit_tiny_un_patch16_224 --output output --experiment retrain --initial-checkpoint vit_tiny_un_patch16_224.pth.tar  --epochs 1 --workers 6 --batch-size=64 --drop-path 0.1 --model-ema --model-ema-decay 0.99996 --opt adamw --opt-eps 1e-8 --weight-decay 0.05 --lr 0.00001 --aa rand-m9-mstd0.5-inc1 --train-interpolation bicubic --use-ra-sampler --reprob 0.25 --mixup 0.8 --cutmix 1.0
+        
 
       * ``vit_tiny_un_patch16_224.pth.tar`` - pretrained weights.
       * ``--model-ema`` - use exponential moving average weights.
@@ -79,12 +76,11 @@ Training and exporting to ONNX
    
    | In order to export your trained ViT model to ONNX run the following script:
 
-   .. raw:: html
-      :name:validation
+   .. code-block::
 
-      <code stage="export">
-      python export.py --model vit_tiny_un_patch16_224 --checkpoint=<span val="docker_pretrained_path">/path/to/trained/best.pt</span> --use-ema
-      </code>
+      
+      python export.py --model vit_tiny_un_patch16_224 --checkpoint=/path/to/trained/best.pt --use-ema
+      
 
       * ``--use-ema`` - optional to use if --model-ema was used during training.
 
@@ -97,14 +93,15 @@ Compile the Model using Hailo Model Zoo
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/vit_tiny.yaml``\ , and run compilation using the model zoo:  
 
-   <code stage="compile">
-   hailomz compile --ckpt <span val="local_path_to_onnx">vit_tiny_un_patch16_224.onnx</span> --calib-path <span val="calib_set_path">/path/to/calibration/imgs/dir/</span> --yaml <span val="yaml_file_path">path/to/vit_tiny_un_patch16_224.yaml</span>
-   </code>
+   
+   hailomz compile --ckpt vit_tiny_un_patch16_224.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/vit_tiny_un_patch16_224.yaml --start-node-names name1 name2 --end-node-names name1
+   
 
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | ``--yaml`` - path to your configuration YAML file.
+* | ``--start-node-names`` and ``--end-node-names`` - node names for customizing parsing behavior (optional).
 * | The model zoo will take care of adding the input normalization to be part of the model.
   
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.

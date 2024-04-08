@@ -1,9 +1,11 @@
 from __future__ import division
 
-from past.utils import old_div
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+from past.utils import old_div
 from PIL import Image
+
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
 RESIZE_SIDE = 256
 VIT_RESIZE_SIDE = 248
@@ -18,6 +20,7 @@ class PatchifyException(Exception):
     """Patchify exception."""
 
 
+@PREPROCESS_FACTORY.register(name="mobilenet")
 def mobilenet_v1(image, image_info=None, height=None, width=None, **kwargs):
     if image.dtype != tf.float32:
         image = tf.image.convert_image_dtype(image, dtype=tf.float32)
@@ -122,6 +125,7 @@ def _resnet_base_preprocessing(image, output_height=None, output_width=None, res
     return image
 
 
+@PREPROCESS_FACTORY.register(name="basic_resnet")
 def resnet_v1_18_34(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE)
     if image_info:
@@ -129,6 +133,7 @@ def resnet_v1_18_34(image, image_info=None, output_height=None, output_width=Non
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def efficientnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
     shape = tf.shape(image)
     padded_center_crop_size = tf.cast(output_height / (output_height + 32)
@@ -145,6 +150,7 @@ def efficientnet(image, image_info=None, output_height=None, output_width=None, 
     return tf.cast(image_resize, tf.float32), image_info
 
 
+@PREPROCESS_FACTORY.register
 def fastvit(image, image_info=None, output_height=None, output_width=None, **kwargs):
     if output_height is not None:
         assert output_width is not None
@@ -157,6 +163,7 @@ def fastvit(image, image_info=None, output_height=None, output_width=None, **kwa
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def resmlp(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
     '''
     This version of preprocessing runs the base ResMLP preprocess (Resize + CenterCrop).
@@ -181,6 +188,7 @@ def pil_resize(image, output_height, output_width):
     return image_numpy
 
 
+@PREPROCESS_FACTORY.register
 def clip(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.numpy_function(pil_resize, [image, output_height, output_width], tf.uint8)
     image = tf.cast(image, tf.float32)
@@ -190,6 +198,7 @@ def clip(image, image_info=None, output_height=None, output_width=None, **kwargs
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def lprnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = tf.image.resize([image], [output_height, output_width], method='bicubic')[0]
     image = tf.squeeze(image)
@@ -198,6 +207,7 @@ def lprnet(image, image_info=None, output_height=None, output_width=None, **kwar
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register(name="vit")
 def vit_tiny(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
     if output_height is not None:
         assert output_width is not None
@@ -210,6 +220,7 @@ def vit_tiny(image, image_info=None, output_height=None, output_width=None, **kw
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def resnet_pruned(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE, method='bilinear')
     if image_info:

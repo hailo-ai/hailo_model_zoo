@@ -1,8 +1,8 @@
-from builtins import object
 import os
 import cv2
 import numpy as np
 import tensorflow as tf
+from pathlib import Path
 
 from hailo_model_zoo.core.datasets import dataset_factory
 from hailo_model_zoo.utils.video_utils import VideoCapture
@@ -49,11 +49,10 @@ def _parse_video_frame(image, name):
                    'mask': tf.image.rgb_to_grayscale(image)}
 
 
-def _video_generator(video_path):
+def _video_generator(video_path: Path):
     def _video_generator_implementation():
-        filename = os.path.basename(video_path)
-        base, _ = os.path.splitext(filename)
-        with VideoCapture(video_path) as cap:
+        base = video_path.stem
+        with VideoCapture(str(video_path)) as cap:
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             required_digits = len(str(total_frames))
             number_format = '{{:0{}d}}'.format(required_digits)
@@ -70,7 +69,7 @@ def _video_generator(video_path):
     return _video_generator_implementation
 
 
-class DataFeed(object):
+class DataFeed:
     """DataFeed class. Use this class to handle input data"""
 
     def __init__(self, preprocessing_callback, batch_size=8):
@@ -133,7 +132,13 @@ class VideoFeed(DataFeed):
     def __init__(self, preprocessing_callback, batch_size, file_path):
         super().__init__(preprocessing_callback, batch_size=batch_size)
 
-        dataset = tf.data.Dataset.from_generator(_video_generator(file_path), (tf.float32, tf.string))
+        dataset = tf.data.Dataset.from_generator(
+            _video_generator(file_path),
+            output_signature=(
+                tf.TensorSpec(shape=(None, None, 3), dtype=tf.float32),
+                (tf.TensorSpec(shape=(), dtype=tf.string)),
+            ),
+        )
         dataset = dataset.map(_parse_video_frame)
         if self._preproc_callback:
             dataset = dataset.map(self._preproc_callback)

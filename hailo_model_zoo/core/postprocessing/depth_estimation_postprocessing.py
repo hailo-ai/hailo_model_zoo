@@ -1,7 +1,10 @@
 import io
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 import tensorflow as tf
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
 def scdepthv3_postprocessing(logits):
@@ -24,6 +27,7 @@ def mono_depth_postprocessing(endnodes):
     return {'predictions': depth * depth_scale_factor}
 
 
+@VISUALIZATION_FACTORY.register(name="depth_estimation")
 def visualize_depth_estimation_result(logits, image, **kwargs):
     logits = logits['predictions']
     image = np.array(image, dtype=np.uint8)
@@ -58,6 +62,7 @@ def _get_postprocessing_function(meta_arch):
     raise ValueError("Meta-architecture [{}] is not supported".format(meta_arch))
 
 
+@POSTPROCESS_FACTORY.register(name="depth_estimation")
 def depth_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs["meta_arch"].lower()
     postprocess = _get_postprocessing_function(meta_arch)

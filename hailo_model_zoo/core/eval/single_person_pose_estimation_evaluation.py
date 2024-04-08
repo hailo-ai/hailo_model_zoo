@@ -1,10 +1,12 @@
 import os
-import numpy as np
 from collections import OrderedDict
+
+import numpy as np
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 GT_LABELS_FILE = 'person_keypoints_val2017.json'
 
@@ -21,6 +23,7 @@ METRIC_NAMES = ['Average-Precision-IoU-0.50:0.95',
                 ]
 
 
+@EVAL_FACTORY.register(name="single_person_pose_estimation")
 class SinglePersonPoseEstimationEval(Eval):
 
     def __init__(self, **kwargs):

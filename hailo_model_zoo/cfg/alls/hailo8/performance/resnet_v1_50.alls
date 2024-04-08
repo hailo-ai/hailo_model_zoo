@@ -1,5 +1,13 @@
 normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
 quantization_param({conv*}, max_elementwise_feed_repeat=1)
 post_quantization_optimization(finetune, policy=disabled)
-performance_param(fps=1331)
+post_quantization_optimization(bias_correction, policy=enabled)
+performance_param(optimization_level=max)
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+resources_param(max_utilization=0.9)
+
+
+
+
+
 

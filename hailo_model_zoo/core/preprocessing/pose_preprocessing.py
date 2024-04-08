@@ -1,7 +1,10 @@
-import tensorflow as tf
+import math
+
 import cv2
 import numpy as np
-import math
+import tensorflow as tf
+
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
 
 def _openpose_padding(img, desired_dims, pad_value=0):
@@ -28,6 +31,7 @@ def _openpose_preproc(img, desired_height, desired_width):
     return padded_img, pad
 
 
+@PREPROCESS_FACTORY.register(name="openpose")
 def openpose_tf_preproc(img, image_info, desired_height, desired_width, **kwargs):
     res_tens, pad = tf.numpy_function(_openpose_preproc,
                                       [img, desired_height, desired_width], (tf.float32, tf.int64))
@@ -66,6 +70,7 @@ def letterbox(img, height=608, width=1088, centered=True,
     return img, new_width, new_height
 
 
+@PREPROCESS_FACTORY.register(name="yolov8_pose")
 def yolo_pose(image, image_info=None, height=None, width=None,
               scope=None, padding_color=114, **kwargs):
     """

@@ -1,5 +1,7 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
+
 TO_BLUR = True
 BLUR_SIZE = 5
 BLUR_MEAN = 1.0
@@ -32,6 +34,7 @@ def _blur_image(image, size=5, mean=1.0, std=0.66):
     return blurred
 
 
+@PREPROCESS_FACTORY.register(name="sr_resnet")
 def resnet(hr_image, image_info=None, height=136, width=260, **kwargs):
     hr_image = tf.cast(hr_image, tf.float32)
     hr_image = tf.expand_dims(hr_image, 0)
@@ -49,6 +52,7 @@ def resnet(hr_image, image_info=None, height=136, width=260, **kwargs):
     return lr_image, hr_image
 
 
+@PREPROCESS_FACTORY.register
 def srgan(image, image_info, height, width, output_shapes=None, **kwargs):
     """
     preprocessing function for srgan and div2k
@@ -79,6 +83,7 @@ def srgan(image, image_info, height, width, output_shapes=None, **kwargs):
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def espcn(image, image_info, height, width, output_shapes, **kwargs):
     if width and height:
 

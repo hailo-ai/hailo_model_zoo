@@ -2,6 +2,7 @@
 import cv2
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 from hailo_model_zoo.core.preprocessing.roi_align_wrapper import ROIAlignWrapper
 
 MAX_PADDING_LENGTH = 100
@@ -37,6 +38,8 @@ def _pad_tensor(x, max_tensor_padding=MAX_PADDING_LENGTH):
     return tf.squeeze(tf.pad(tf.expand_dims(x, axis=0), paddings, "CONSTANT", constant_values=-1))
 
 
+@PREPROCESS_FACTORY.register(name="centernet")
+@PREPROCESS_FACTORY.register(name="smoke")
 def centernet_resnet_v1_18_detection(image, image_info=None, height=None, width=None,
                                      max_pad=MAX_PADDING_LENGTH, **kwargs):
     image_info['img_orig'] = image
@@ -87,6 +90,7 @@ def centernet_resnet_v1_18_detection(image, image_info=None, height=None, width=
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
     """This is the preprocessing used by GluonCV"""
     image = tf.cast(image, tf.float32)
@@ -129,6 +133,7 @@ def yolo_v3(image, image_info=None, height=None, width=None, **kwargs):
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def yolo_v5(image, image_info=None, height=None, width=None,
             scope=None, padding_color=114, **kwargs):
     """
@@ -186,6 +191,7 @@ def yolo_v5(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register(name="resnet_ssd")
 def resnet_v1_18_detection(image, image_info=None, height=None, width=None,
                            max_pad=MAX_PADDING_LENGTH, **kwargs):
     image = tf.cast(image, tf.float32)
@@ -209,6 +215,7 @@ def resnet_v1_18_detection(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def regnet_detection(image, image_info=None, height=None, width=None,
                      max_pad=MAX_PADDING_LENGTH, **kwargs):
     image = tf.cast(image, tf.float32)
@@ -270,11 +277,13 @@ def ssd_base(image, image_info, resize_function, height=None, width=None,
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def mobilenet_ssd(image, image_info, height, width, **kwargs):
     image, image_info = ssd_base(image, image_info, _resize_bilinear_tf, height, width, **kwargs)
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def faster_rcnn_stage2(featuremap, image_info, height=None, width=None,
                        max_pad=MAX_PADDING_LENGTH, **kwargs):
     """Prepare stage2 inputs
@@ -304,6 +313,7 @@ def _resize_ar_preserving(image, height, width, **kwargs):
     return image, height_factor, width_factor
 
 
+@PREPROCESS_FACTORY.register(name="mobilenet_ssd_ar")
 def mobilenet_ssd_ar_preserving(image, image_info=None, height=None, width=None,
                                 max_pad=MAX_PADDING_LENGTH, **kwargs):
     image, image_info = ssd_base(image, image_info, _resize_ar_preserving,
@@ -347,6 +357,7 @@ def _ar_preserving_resize_and_crop(image, height, width, **kwargs):
             padding_w)
 
 
+@PREPROCESS_FACTORY.register
 def face_ssd(image, image_info=None, height=None, width=None,
              max_pad=2048, **kwargs):
     if image.dtype == tf.uint8:
@@ -380,6 +391,7 @@ def face_ssd(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def retinaface(image, image_info=None, height=None, width=None,
                max_pad=2048, **kwargs):
     shape = tf.shape(image)
@@ -432,6 +444,7 @@ def letterbox(img, height=608, width=1088, centered=True,
     return img, new_width, new_height
 
 
+@PREPROCESS_FACTORY.register
 def fair_mot(image, image_info=None, height=None, width=None,
              max_pad=MAX_PADDING_LENGTH, **kwargs):
     if height and width:
@@ -463,6 +476,7 @@ def fair_mot(image, image_info=None, height=None, width=None,
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def detr(image, image_info=None, height=800, width=800, **kwargs):
     image = tf.cast(image, tf.float32)
     shape = tf.shape(image)
@@ -498,6 +512,7 @@ def detr(image, image_info=None, height=800, width=800, **kwargs):
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def retinanet_resnext50(image, image_info=None, height=800, width=800, flip=False, image_mean=[0.485, 0.456, 0.406],
                         image_std=[0.229, 0.224, 0.225], **kwargs):
     shape = tf.shape(image)

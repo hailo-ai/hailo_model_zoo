@@ -3,6 +3,8 @@ from tqdm import tqdm
 import numpy as np
 import onnxruntime
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, aggregate, visualize, to_numpy
+
+from hailo_model_zoo.core.factory import INFER_FACTORY
 from hailo_model_zoo.utils.path_resolver import resolve_data_path
 
 
@@ -45,6 +47,7 @@ def scheduler_step(model_output, t, sample, step_index, s_churn=0.0, s_tmin=0.0,
     return prev_sample
 
 
+@INFER_FACTORY.register(name="sd2_unet_infer")
 def unet_infer(runner, context, logger, eval_num_examples, print_num_examples,
                batch_size, dataset, postprocessing_callback,
                eval_callback, visualize_callback, model_augmentation_callback,

@@ -1,5 +1,5 @@
 normalization1 = normalization([127.0, 127.0, 127.0], [128.0, 128.0, 128.0])
-nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite1/pretrained/2023-04-25/efficientdet_lite1_nms_config.json", ssd, engine=cpu)
+nms_postprocess("../../postprocess_config/efficientdet_lite1_nms_config.json", ssd, engine=cpu)
 change_output_activation(efficientdet_lite1/conv84, sigmoid)
 change_output_activation(efficientdet_lite1/conv93, sigmoid)
 change_output_activation(efficientdet_lite1/conv102, sigmoid)

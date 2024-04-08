@@ -13,4 +13,4 @@ pre_quantization_optimization(weights_clipping, layers=[conv111], mode=manual, c
 
 post_quantization_optimization(finetune, policy=disabled)
 
-nms_postprocess("$HMZ_DATA/models_files/ObjectDetection/Detection-COCO/yolo/yolox_l_leaky/pretrained/2023-05-31/nms_config_yolox_l_leaky.json", yolox, engine=cpu)
+nms_postprocess("../../postprocess_config/nms_config_yolox_l_leaky.json", yolox, engine=cpu)

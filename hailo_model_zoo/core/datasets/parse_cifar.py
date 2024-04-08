@@ -1,6 +1,9 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import DATASET_FACTORY
 
+
+@DATASET_FACTORY.register(name="cifar100")
 def parse_cifar100_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information
     """

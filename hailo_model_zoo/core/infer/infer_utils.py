@@ -1,4 +1,5 @@
 import os
+from collections.abc import Mapping
 
 import cv2
 import numpy as np
@@ -111,6 +112,7 @@ class VideoWriter:
         self.video_writer.release()
 
     def write(self, image, image_name):
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         self.video_writer.write(image)
 
 
@@ -119,27 +121,57 @@ def _make_writer(info_per_image, video_outpath):
         writer = ImageSaver()
     else:
         ref_image = info_per_image[0]['img_orig']
-        width, height = ref_image.shape[2], ref_image.shape[1]
+        width, height = ref_image.shape[-2], ref_image.shape[-3]
         writer = VideoWriter(width, height, video_outpath)
     return writer
 
 
-def visualize(logits_batch, info_per_image, visualize_callback, video_outpath):
-    with _make_writer(info_per_image, video_outpath) as writer:
-        logits_per_image = get_logits_per_image(logits_batch)
-        for image_index, (image_logits, image_info) in enumerate(zip(logits_per_image, info_per_image)):
-            original_image = image_info['img_orig']
+class WriterHook:
+    def __init__(self, visualize_callback, video_outpath) -> None:
+        self.video_outpath = video_outpath
+        self.visualize_callback = visualize_callback
+
+        self.writer = None
+        self.image_index = 0
+
+    def __enter__(self):
+        if self.writer:
+            self.writer.__enter__()
+
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        if self.writer:
+            self.writer.__exit__(exc_type, exc_value, exc_traceback)
+
+    def visualize(self, image_logits, image_info):
+        logits_per_image = get_logits_per_image(image_logits)
+        batch_size = len(logits_per_image)
+        # image_info could either be per_image list or dictionary with info of entire batch
+        if isinstance(image_info, Mapping):
+            image_info = [{k: v[i] for k, v in image_info.items()} for i in range(batch_size)]
+        if not self.writer:
+            self.writer = _make_writer(image_info, self.video_outpath)
+
+        for image_index_in_batch, (image_logits, image_info) in enumerate(zip(logits_per_image, image_info)):
+            image_index = image_index_in_batch + self.image_index
+            original_image = image_info["img_orig"]
             original_image = to_numpy(original_image)
-            image_name = image_info.get('image_name', f'image{image_index}')
+            image_name = image_info.get("image_name", f"image{image_index}")
             image_name = to_numpy(image_name, decode=True)
             # Decode image if needed
             if type(original_image) is bytes:
-                original_image = cv2.imdecode(np.fromstring(original_image, dtype=np.uint8),
-                                              cv2.IMREAD_UNCHANGED)
+                original_image = cv2.imdecode(np.fromstring(original_image, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
             original_image = np.expand_dims(original_image, axis=0)
 
-            image = visualize_callback(image_logits, original_image, img_info=image_info, image_name=image_name)
-            writer.write(image, image_name)
+            image = self.visualize_callback(image_logits, original_image, img_info=image_info, image_name=image_name)
+            self.writer.write(image, image_name)
+        self.image_index += image_index_in_batch
+
+
+def visualize(logits_batch, info_per_image, visualize_callback, video_outpath):
+    with WriterHook(visualize_callback, video_outpath) as writer:
+        writer.visualize(logits_batch, info_per_image)
 
 
 def aggregate(elements):

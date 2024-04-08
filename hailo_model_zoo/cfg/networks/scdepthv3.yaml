@@ -29,7 +29,7 @@ parser:
     - 57.375
     - 57.375
 info:
-  task: Depth Estimation
+  task: depth estimation
   input_shape: 256x320x3
   output_shape: 256x320x1
   operations: 10.7G
@@ -38,3 +38,5 @@ info:
   eval_metric: RMSE
   source: https://github.com/JiawangBian/sc_depth_pl/
   full_precision_result: 0.481
+  license_url: https://github.com/JiawangBian/sc_depth_pl/blob/master/LICENSE
+  license_name: GPL-3.0

@@ -1,17 +1,22 @@
+import cv2
 import numpy as np
 from PIL import Image, ImageDraw
-import cv2
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="face_landmark_detection")
 def face_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     shape = kwargs['img_dims']
     return {'predictions': endnodes * shape[0]}
 
 
+@POSTPROCESS_FACTORY.register(name="landmark_detection")
 def hand_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     return {'predictions': endnodes[0]}
 
 
+@VISUALIZATION_FACTORY.register(name="face_landmark_detection")
 def visualize_face_landmarks_result(logits, image, **kwargs):
     logits = logits['predictions']
     img = Image.fromarray(image[0])
@@ -20,6 +25,7 @@ def visualize_face_landmarks_result(logits, image, **kwargs):
     return np.array(img)
 
 
+@VISUALIZATION_FACTORY.register(name="landmark_detection")
 def visualize_hand_landmarks_result(logits, image, **kwargs):
     logits = logits['predictions'][0]
     img = image[0]

@@ -1,8 +1,11 @@
 import pickle
+
 import cv2
 import numpy as np
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import (POSTPROCESS_FACTORY,
+                                          VISUALIZATION_FACTORY)
 from hailo_model_zoo.core.infer.infer_utils import to_numpy
 from hailo_model_zoo.utils.path_resolver import resolve_data_path
 
@@ -145,6 +148,7 @@ def face_3dmm_to_landmarks_np(face_3dmm_params, img_dims, roi_box):
     return pts3d
 
 
+@POSTPROCESS_FACTORY.register(name="face_landmark_detection_3d")
 def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, img_dims=None, gt_images=None, **kwargs):
     assert img_dims[0] == img_dims[1], "Assumes square input"
     batch_size = tf.shape(endnodes)[0]
@@ -158,6 +162,7 @@ def face_landmarks_3d_postprocessing(endnodes, device_pre_post_layers=None, *, i
     return {'predictions': ptds3d}
 
 
+@VISUALIZATION_FACTORY.register(name="face_landmark_detection_3d")
 def visualize_face_landmarks_3d_result(logits, image, **kwargs):
     logits = logits['predictions']
     img = to_numpy(kwargs.get('img_info', {}).get('uncropped_image', image[0]))

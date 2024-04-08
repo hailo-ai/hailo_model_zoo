@@ -22,12 +22,12 @@ def _load_cfg(cfg_file):
     return config
 
 
-def get_network_info(model_name, read_only=False, yaml_path=None):
+def get_network_info(model_name, read_only=False, yaml_path=None, nodes=None):
     '''
     Args:
         model_name: The network name to load.
         read_only: If set return read-only object.
-                   The read_only mode save run-time and memroy.
+                   The read_only mode save run-time and memory.
         yaml_path: Path to external YAML file for network configuration
     Return:
         OmegaConf object that represent network configuration.
@@ -39,6 +39,10 @@ def get_network_info(model_name, read_only=False, yaml_path=None):
     if not cfg_path.is_file():
         raise ValueError('cfg file is missing in {}'.format(cfg_path))
     cfg = _load_cfg(cfg_path)
+    if nodes and nodes[0] != '':
+        cfg.parser.nodes[0] = nodes[0]
+    if nodes and nodes[1] != '':
+        cfg.parser.nodes[1] = nodes[1]
     if read_only:
         OmegaConf.set_readonly(cfg, True)
         return cfg

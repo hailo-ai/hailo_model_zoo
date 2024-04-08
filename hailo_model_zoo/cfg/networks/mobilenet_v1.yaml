@@ -14,7 +14,7 @@ parser:
 info:
   task: classification
   input_shape: 224x224x3
-  output_shape: 1x1x1001
+  output_shape: '1001'
   operations: 1.14G
   parameters: 4.22M
   framework: tensorflow
@@ -23,5 +23,3 @@ info:
   eval_metric: Accuracy (top1)
   full_precision_result: 70.97
   source: https://github.com/tensorflow/models/tree/v1.13.0/research/slim
-  license_url: https://github.com/tensorflow/models/blob/v1.13.0/LICENSE
-  license_name: Apache-2.0

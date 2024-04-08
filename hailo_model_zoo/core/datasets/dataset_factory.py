@@ -1,9 +1,14 @@
-from hailo_model_zoo.core.datasets import (parse_imagenet, parse_coco, parse_facenet, parse_afw, parse_kitti_depth,
-                                           parse_widerface, parse_utkfaces, parse_mot, parse_tusimple, parse_landmarks,
-                                           parse_div2k, parse_pascal, parse_kitti_3d, parse_aflw2k3d,
-                                           parse_aflw2k3d_tddfa, parse_nyu_depth_v2, parse_300w_lp_tddfa,
-                                           parse_lp_ocr, parse_market, parse_peta, parse_bsd100, parse_cifar, parse_lol,
-                                           parse_kitti_stereo, parse_bsd68, parse_gustavosta_prompts)
+"""Contains a factory for network infer."""
+import importlib
+
+import hailo_model_zoo.core.datasets
+from hailo_model_zoo.core.factory import DATASET_FACTORY
+from hailo_model_zoo.utils.plugin_utils import iter_namespace
+
+discovered_plugins = {
+    name: importlib.import_module(name)
+    for _, name, _ in iter_namespace(hailo_model_zoo.core.datasets)
+}
 
 
 def get_dataset_parse_func(ds_name):
@@ -12,50 +17,4 @@ def get_dataset_parse_func(ds_name):
         image: image tensor
         image_info: dictionary that contains other information of the image (e.g., the label)
     """
-    return {
-        'hand_detection': parse_landmarks.parse_hand_record,
-        'hand_landmark': parse_landmarks.parse_hand_record,
-        'imagenet': parse_imagenet.parse_record,
-        'coco_segmentation': parse_coco.parse_segmentation_record,
-        'cityscapes': parse_coco.parse_segmentation_record,
-        'oxford_pet': parse_coco.parse_segmentation_record,
-        'facenet': parse_facenet.parse_facenet_record,
-        'face_landmarks': parse_landmarks.parse_record,
-        'kitti_depth': parse_kitti_depth.parse_record,
-        'kitti_3d': parse_kitti_3d.parse_record,
-        'kitti_stereo': parse_kitti_stereo.parse_record,
-        'coco_detection': parse_coco.parse_detection_record,
-        'open_images': parse_coco.parse_detection_record,
-        'visdrone_detection': parse_coco.parse_detection_record,
-        'd2s_detection': parse_coco.parse_detection_record,
-        'd2s_fruits_detection': parse_coco.parse_detection_record,
-        'coco_2017_detection': parse_coco.parse_detection_record,
-        'cocopose': parse_coco.parse_pose_estimation_record,
-        'cocopose_single_person': parse_coco.parse_single_person_pose_estimation_record,
-        'coco_cityscapes_combined': parse_coco.parse_combined_pas_record,
-        'afw': parse_afw.parse_record,
-        'widerface': parse_widerface.parse_detection_record,
-        'utkfaces': parse_utkfaces.parse_age_gender_record,
-        'mot16': parse_mot.parse_mot_record,
-        'tusimple': parse_tusimple.parse,
-        'div2k': parse_div2k.parse_record,
-        'lol': parse_lol.parse_record,
-        'pascal': parse_pascal.parse_record,
-        'aflw2k3d': parse_aflw2k3d.parse_record,
-        'aflw2k3d_tddfa': parse_aflw2k3d_tddfa.parse_record,
-        'nyu_depth_v2': parse_nyu_depth_v2.parse_record,
-        'vehicle_detection': parse_coco.parse_detection_record,
-        '300w-lp_tddfa': parse_300w_lp_tddfa.parse_record,
-        'license_plates': parse_coco.parse_detection_record,
-        'lp_ocr': parse_lp_ocr.parse_lp_ocr_record,
-        'market1501': parse_market.parse_market_record,
-        'personface_detection': parse_coco.parse_detection_record,
-        'peta': parse_peta.parse_classification_record,
-        'celeba': parse_peta.parse_classification_record,
-        'cifar100': parse_cifar.parse_cifar100_record,
-        'bsd100': parse_bsd100.parse_record,
-        'bsd68': parse_bsd68.parse_record,
-        'cbsd68': parse_bsd68.parse_record,
-        'gustavosta_prompts_vae': parse_gustavosta_prompts.vae,
-        'gustavosta_prompts_unet': parse_gustavosta_prompts.unet,
-    }[ds_name]
+    return DATASET_FACTORY.get(ds_name)

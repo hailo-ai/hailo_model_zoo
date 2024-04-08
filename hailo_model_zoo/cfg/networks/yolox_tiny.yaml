@@ -37,14 +37,12 @@ parser:
 postprocessing:
   device_pre_post_layers:
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolox/yolox_tiny/pretrained/2023-05-31/nms_config_yolox_tiny.json
   meta_arch: yolox
   hpp: true
 info:
   task: object detection
   input_shape: 416x416x3
-  output_shape: 52x52x4, 52x52x1, 52x52x80, 26x26x4, 26x26x1, 26x26x80, 13x13x4, 13x13x1,
-    13x13x80
+  output_shape: 80x5x100
   operations: 6.44G
   parameters: 5.05M
   framework: pytorch

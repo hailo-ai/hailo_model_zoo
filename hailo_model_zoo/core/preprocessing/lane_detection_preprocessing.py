@@ -1,5 +1,7 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
+
 
 def _cast_image_info_types(image_info, image):
     image_info['img_orig'] = tf.cast(image, tf.uint8)
@@ -7,6 +9,7 @@ def _cast_image_info_types(image_info, image):
     return image_info
 
 
+@PREPROCESS_FACTORY.register
 def polylanenet(image, image_info=None, height=None, width=None, **kwargs):
     image = tf.cast(image, tf.float32)
     image_info = _cast_image_info_types(image_info, image)
@@ -22,6 +25,7 @@ def polylanenet(image, image_info=None, height=None, width=None, **kwargs):
     return image, image_info
 
 
+@PREPROCESS_FACTORY.register
 def laneaf(image, image_info=None, height=None, width=None, **kwargs):
     image = tf.cast(image, tf.float32)
     image_info = _cast_image_info_types(image_info, image)

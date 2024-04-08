@@ -37,7 +37,7 @@ Outputs
 
   * Bounding box coordinates ((x,y) centers, height, width)
   * Box objectness confidence score
-  * Class probablity confidence score per class
+  * Class probability confidence score per class
 
 * The above 7 values per anchor are concatenated into the 21 output channels
 

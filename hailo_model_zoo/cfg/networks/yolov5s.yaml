@@ -16,13 +16,12 @@ parser:
 postprocessing:
   device_pre_post_layers:
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_spp/pretrained/2023-04-25/yolov5s_nms_config.json
   meta_arch: yolo
   hpp: true
 info:
   task: object detection
   input_shape: 640x640x3
-  output_shape: 80x80x255, 40x40x255, 20x20x255
+  output_shape: 80x5x80
   operations: 17.44G
   parameters: 7.46M
   framework: pytorch

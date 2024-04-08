@@ -1,14 +1,16 @@
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
-from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.datasets.datasets_info import get_dataset_info
+from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.eval.faster_rcnn_proposals_nms import FasterRCNNProposalsNMS
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="faster_rcnn_stage2")
 class FasterRCNNEval(Eval):
     """COCO evaluation metric class."""
 

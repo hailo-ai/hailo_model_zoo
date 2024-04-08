@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.26.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.27.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.16.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.17.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -57,13 +57,13 @@ The models are divided to:
 
 * Public models - which were trained on publicly available datasets.
 
-    * For Hailo-8 - `Classification <docs/public_models/HAILO8_Classification.rst>`_, `Object Detection <docs/public_models/HAILO8_Object_Detection.rst>`_, `Segmentation <docs/public_models/HAILO8_Semantic_Segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-8 - `Classification <docs/public_models/HAILO8/HAILO8_classification.rst>`_, `Object Detection <docs/public_models/HAILO8/HAILO8_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8/HAILO8_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-    * For Hailo-8L - `Classification <docs/public_models/HAILO8L_Classification.rst>`_, `Object Detection <docs/public_models/HAILO8L_Object_Detection.rst>`_, `Segmentation <docs/public_models/HAILO8L_Semantic_Segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-8L - `Classification <docs/public_models/HAILO8L/HAILO8l_classification.rst>`_, `Object Detection <docs/public_models/HAILO8L/HAILO8l_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8L/HAILO8l_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-    * For Hailo-15H - `Classification <docs/public_models/HAILO15H_Classification.rst>`_, `Object Detection <docs/public_models/HAILO15H_Object_Detection.rst>`_, `Segmentation <docs/public_models/HAILO15H_Semantic_Segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-15H - `Classification <docs/public_models/HAILO15H/HAILO15H_classification.rst>`_, `Object Detection <docs/public_models/HAILO15H/HAILO15H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15H/HAILO15H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-    * For Hailo-15M - `Classification <docs/public_models/HAILO15M_Classification.rst>`_, `Object Detection <docs/public_models/HAILO15M_Object_Detection.rst>`_, `Segmentation <docs/public_models/HAILO15M_Semantic_Segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-15M - `Classification <docs/public_models/HAILO15M/HAILO15M_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO15M_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO15M_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 

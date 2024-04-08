@@ -30,7 +30,7 @@ Architecture
 Inputs
 ^^^^^^
 
-* RGB liscense plate image with size of 75x300x3
+* RGB license plate image with size of 75x300x3
 * 
   Image normalization occurs on-chip
 

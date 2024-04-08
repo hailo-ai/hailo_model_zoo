@@ -1,7 +1,9 @@
-import tensorflow as tf
-import numpy as np
 import os
 
+import numpy as np
+import tensorflow as tf
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.visualize_3d import visualization3Dbox
 from hailo_model_zoo.utils import path_resolver
 
@@ -30,6 +32,7 @@ def get_calibration_matrix_from_data(data):
             return P2
 
 
+@POSTPROCESS_FACTORY.register(name="3d_detection")
 def detection_3d_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     output_scheme = kwargs.get('output_scheme', None)
     if output_scheme:
@@ -368,6 +371,7 @@ class SMOKEPostProcess(object):
         return feature_maps
 
 
+@VISUALIZATION_FACTORY.register(name="3d_detection")
 def visualize_3d_detection_result(logits, image, image_name=None, threshold=0.25, image_info=None,
                                   use_normalized_coordinates=True, max_boxes_to_draw=20,
                                   dataset_name='kitti_3d', channels_remove=None, **kwargs):

@@ -1,8 +1,10 @@
 import tensorflow as tf
 
 from hailo_model_zoo.core.infer.infer_utils import log_accuracy
+from hailo_model_zoo.core.factory import INFER_FACTORY
 
 
+@INFER_FACTORY.register
 def tf_infer_second_stage(runner, target, logger, eval_num_examples, print_num_examples,
                           batch_size, data_feed_callback, tf_graph_callback, postprocessing_callback,
                           eval_callback, visualize_callback, video_outpath, dump_results, results_path):

@@ -29,13 +29,11 @@ postprocessing:
   device_pre_post_layers:
     nms: true
     sigmoid: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/efficientdet/efficientdet_lite1/pretrained/2023-04-25/efficientdet_lite1_nms_config.json
   hpp: true
 info:
   task: object detection
   input_shape: 384x384x3
-  output_shape: 48x48x36, 48x48x810, 24x24x36, 24x24x810, 12x12x36, 12x12x810, 6x6x36,
-    6x6x810, 3x3x36, 3x3x810
+  output_shape: 89x5x100
   operations: 4G
   parameters: 4.73M
   framework: tensorflow

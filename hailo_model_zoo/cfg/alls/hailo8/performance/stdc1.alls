@@ -5,4 +5,4 @@ post_quantization_optimization(finetune, policy=enabled, dataset_size=512, epoch
 
 resize7_d0, resize7_d1, resize7_d2, resize7_dc = defuse(resize7, 3)
 performance_param(compiler_optimization_level=1)
-allocator_param(timeout=25m)
+performance_param(optimization_level=max)

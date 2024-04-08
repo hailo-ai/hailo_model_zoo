@@ -2,9 +2,9 @@ from itertools import product
 
 import numpy as np
 import tensorflow as tf
-
 from detection_tools.core.post_processing import batch_multiclass_non_max_suppression
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY
 from hailo_model_zoo.core.postprocessing.face_detection.scrfd import SCRFDPostProc
 
 
@@ -266,6 +266,7 @@ META_ARCH_TO_CLASS = {
 DEFAULT_CLASS = FaceDetectionPostProc
 
 
+@POSTPROCESS_FACTORY.register(name="face_detection")
 def face_detection_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs.get('meta_arch', None)
     if meta_arch:

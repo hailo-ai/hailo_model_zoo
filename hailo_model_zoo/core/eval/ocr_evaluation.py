@@ -1,9 +1,13 @@
-import numpy as np
 from collections import OrderedDict
+
+import numpy as np
+
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.factory import EVAL_FACTORY
 from hailo_model_zoo.core.postprocessing.ocr_postprocessing import CHARS, greedy_decoder
 
 
+@EVAL_FACTORY.register(name="ocr")
 class OCREval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ['Accuracy']

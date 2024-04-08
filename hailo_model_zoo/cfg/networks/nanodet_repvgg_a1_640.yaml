@@ -5,18 +5,23 @@ network:
 paths:
   alls_script: nanodet_repvgg_a1_640.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2022-07-19/nanodet_repvgg_a1_640.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2022-07-19/nanodet_repvgg_a1_640.zip
+  - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2024-01-25/nanodet_repvgg_a1_640.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2024-01-25/nanodet_repvgg_a1_640.zip
 parser:
   nodes:
   - null
   - - Conv_65
     - Conv_81
     - Conv_97
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  meta_arch: yolov8
+  hpp: true
 info:
   task: object detection
   input_shape: 640x640x3
-  output_shape: 80x80x124, 40x40x124, 20x20x124
+  output_shape: 80x5x100
   operations: 42.8G
   parameters: 10.79M
   framework: pytorch

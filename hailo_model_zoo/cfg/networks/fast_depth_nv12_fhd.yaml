@@ -47,3 +47,5 @@ info:
   eval_metric: RMSE
   source: https://github.com/dwofk/fast-depth
   full_precision_result: 0.61
+  license_url: https://github.com/dwofk/fast-depth/blob/master/LICENSE
+  license_name: MIT

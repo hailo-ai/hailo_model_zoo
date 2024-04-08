@@ -1,7 +1,8 @@
-import tensorflow as tf
 import numpy as np
-from PIL import ImageFilter
-from PIL import Image
+import tensorflow as tf
+from PIL import Image, ImageFilter
+
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
 class PostProcessingException(Exception):
@@ -71,6 +72,7 @@ def color_segment_img(orig_img, logits, dataset):
     return np.array(composite_backscaled, np.uint8)[:, :, :3]
 
 
+@POSTPROCESS_FACTORY.register(name="segmentation")
 def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     device_pre_post_layers = device_pre_post_layers if device_pre_post_layers is not None else {
         'bilinear': False, 'argmax': False}
@@ -88,6 +90,7 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
     return {'predictions': predictions}
 
 
+@VISUALIZATION_FACTORY.register(name="segmentation")
 def visualize_segmentation_result(logits, image, **kwargs):
     logits = logits['predictions']
     dataset = kwargs['dataset_name']

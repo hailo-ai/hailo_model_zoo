@@ -1,2 +1,2 @@
 pre_quantization_optimization(equalization, policy=disabled)
-post_quantization_optimization(finetune, policy=enabled, loss_layer_names=[conv53, conv54, conv65, conv66, conv67, conv77, conv51, conv63, conv75], loss_factors=[1, 1, 1, 1, 1, 1, 52, 16, 4])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, loss_layer_names=[conv53, conv54, conv65, conv66, conv67, conv77, conv51, conv63, conv75], loss_factors=[1, 1, 1, 1, 1, 1, 52, 16, 4])

@@ -29,13 +29,12 @@ network:
 info:
   task: hand landmark detection
   input_shape: 224x224x3
-  output_shape: 1x1, 1x1, 1x63, 1x63
+  output_shape: 63, 63, 1, 1
   operations: 0.3G
   parameters: 1.01M
   framework: tflite
   training_data: internal
   validation_data: internal
-  validation_data_set: N/A
   eval_metric: MNAE
   full_precision_result: 12.02
   source: https://github.com/google/mediapipe

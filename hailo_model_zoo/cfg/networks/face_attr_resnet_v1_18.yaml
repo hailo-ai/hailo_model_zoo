@@ -27,7 +27,7 @@ preprocessing:
 info:
   task: face attribute
   input_shape: 218x178x3
-  output_shape: 1x80
+  output_shape: '80'
   operations: 3G
   parameters: 11.74M
   framework: pytorch
@@ -36,3 +36,5 @@ info:
   eval_metric: Mean Accuracy
   full_precision_result: 81.188
   source: https://github.com/d-li14/face-attribute-prediction
+  license_url: https://github.com/d-li14/face-attribute-prediction/blob/master/LICENSE
+  license_name: MIT

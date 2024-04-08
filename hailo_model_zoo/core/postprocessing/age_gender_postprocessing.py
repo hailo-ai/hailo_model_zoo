@@ -1,10 +1,11 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+from PIL import Image, ImageDraw
 
-from PIL import Image
-from PIL import ImageDraw
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 
 
+@POSTPROCESS_FACTORY.register(name="age_gender")
 def age_gender_postprocessing(endnodes, device_pre_post_layers, **kwargs):
     age_predictions, gender_predictions = endnodes
 
@@ -30,6 +31,7 @@ def age_gender_postprocessing(endnodes, device_pre_post_layers, **kwargs):
     return {'age': res_age, 'is_male': is_male}
 
 
+@VISUALIZATION_FACTORY.register(name="age_gender")
 def visualize_age_gender_result(logits, img, **kwargs):
     gender = 'Male' if logits['is_male'][0] else 'Female'
     img_orig = Image.fromarray(img[0])

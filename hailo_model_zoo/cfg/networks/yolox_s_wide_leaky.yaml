@@ -24,14 +24,12 @@ parser:
 postprocessing:
   device_pre_post_layers:
     nms: true
-  postprocess_config_file: models_files/ObjectDetection/Detection-COCO/yolo/yolox_s_wide_leaky/pretrained/2023-05-31/nms_config_yolox_s_wide_leaky.json
   meta_arch: yolox
   hpp: true
 info:
   task: object detection
   input_shape: 640x640x3
-  output_shape: 80x80x4, 80x80x1, 80x80x80, 40x40x4, 40x40x1, 40x40x80, 20x20x4, 20x20x1,
-    20x20x80
+  output_shape: 80x5x100
   operations: 59.46G
   parameters: 20.12M
   framework: pytorch

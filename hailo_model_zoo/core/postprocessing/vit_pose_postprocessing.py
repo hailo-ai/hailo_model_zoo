@@ -1,6 +1,7 @@
-import numpy as np
 import cv2
+import numpy as np
 
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY
 
 pose_kpt_color = np.array([[0, 255, 0],
                            [0, 255, 0],
@@ -141,7 +142,9 @@ def post_dark_udp(coords, batch_heatmaps, kernel=3):
     dxy = 0.5 * (ix1y1 - ix1 - iy1 + i_ + i_ - ix1_ - iy1_ + ix1_y1_)
     hessian = np.concatenate([dxx, dxy, dxy, dyy], axis=1)
     hessian = hessian.reshape(N, K, 2, 2)
-    hessian = np.linalg.inv(hessian + np.finfo(np.float32).eps * np.eye(2))
+    # we factor np.eye(2) by 10^-6 because originally we had a case of a
+    # too small epsilon, resulting in a non inversible matrix.
+    hessian = np.linalg.inv(hessian + 1e-6 * np.eye(2))
     coords -= np.einsum('ijmn,ijnk->ijmk', hessian, derivative).squeeze()
     return coords
 
@@ -265,6 +268,7 @@ def transform_preds(coords, center, scale, output_size, use_udp=False):
     return target_coords
 
 
+@POSTPROCESS_FACTORY.register(name="vit_pose")
 def vit_pose_postprocessing(endnodes, device_pre_post_layers=None, kernel=11, **kwargs):
     img_info = kwargs['gt_images']
     center = img_info['center']

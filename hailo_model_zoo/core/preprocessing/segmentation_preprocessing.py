@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 from hailo_model_zoo.core.preprocessing.detection_preprocessing import MAX_PADDING_LENGTH
 
 
@@ -19,26 +20,24 @@ def _resnet_base_preprocessing(image, height=None, width=None, is_mask=False):
     return image
 
 
-def resnet_bw_18(image, image_info=None, input_height=None, input_width=None, output_shapes=None, **kwargs):
+@PREPROCESS_FACTORY.register(name="fcn_resnet_bw")
+def resnet_bw_18(image, image_info=None, input_height=None, input_width=None, **kwargs):
     image_orig = _resnet_base_preprocessing(image, height=input_height, width=input_width)
     image_gray = tf.image.rgb_to_grayscale(image)
     image_gray = _resnet_base_preprocessing(image_gray, height=input_height, width=input_width)
     image_gray = tf.expand_dims(image_gray, axis=-1)
     if image_info and 'mask' in image_info.keys():
-        assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
-        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=output_shapes[0][1],
-                                                        width=output_shapes[0][2], is_mask=True)
+        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=input_height, width=input_width,
+                                                        is_mask=True)
         image_info['img_orig'] = image_orig
     return image_gray, image_info
 
 
-def resnet_v1_18(image, image_info=None, height=None, width=None, output_shapes=None, **kwargs):
+@PREPROCESS_FACTORY.register(name="fcn_resnet")
+def resnet_v1_18(image, image_info=None, height=None, width=None, **kwargs):
     image_orig = _resnet_base_preprocessing(image, height, width)
-
     if image_info and 'mask' in image_info.keys():
-        assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
-        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=output_shapes[0][1],
-                                                        width=output_shapes[0][2], is_mask=True)
+        image_info['mask'] = _resnet_base_preprocessing(image_info['mask'], height=height, width=width, is_mask=True)
         image_info['img_orig'] = image_orig
     return image_orig, image_info
 
@@ -59,6 +58,7 @@ def _get_resized_shape(size, height, width):
     return newh, neww
 
 
+@PREPROCESS_FACTORY.register
 def sparseinst(image, image_info=None, height=None, width=None, max_pad=MAX_PADDING_LENGTH, **kwargs):
     image_resized = image
     if height and width:

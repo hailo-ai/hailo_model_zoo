@@ -14,4 +14,4 @@ pre_quantization_optimization(weights_clipping, layers=[conv85], mode=manual, cl
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv94, conv85, conv75])
 yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 reshape_yuy2 = input_conversion(input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
-nms_postprocess("$HMZ_DATA/models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles_nms_config.json", yolov5, engine=cpu)
+nms_postprocess("../../postprocess_config/yolov5m_vehicles_nms_config.json", yolov5, engine=cpu)

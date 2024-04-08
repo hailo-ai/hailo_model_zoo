@@ -15,6 +15,9 @@ class HailoExamplesFormatter(logging.Formatter):
         logging.WARNING: '33;1m',  # bold yellow
         logging.ERROR: '31;1m',  # bold red
         logging.CRITICAL: '41;1m',  # bold white on red
+        # This has to match hailo_sdk_common.logger.logger.DEPRECATION_WARNING.
+        # Unfortunately we can't import it here because it's too slow.
+        logging.WARNING - 1: '33;21m',  # yellow
     }
 
     def format(self, record):

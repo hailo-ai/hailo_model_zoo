@@ -1,11 +1,13 @@
-import numpy as np
 from itertools import product
 from math import sqrt
-import cv2
 
-from hailo_model_zoo.core.datasets.datasets_info import get_dataset_info, CLASS_NAMES_COCO
-from hailo_model_zoo.utils import path_resolver
+import cv2
+import numpy as np
+
+from hailo_model_zoo.core.datasets.datasets_info import CLASS_NAMES_COCO, get_dataset_info
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+from hailo_model_zoo.utils import path_resolver
 
 COLORS = ((244, 67, 54),
           (233, 30, 99),
@@ -1002,6 +1004,7 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     return outputs
 
 
+@POSTPROCESS_FACTORY.register(name="instance_segmentation")
 def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs.get('meta_arch', '')
     if 'sparseinst' in meta_arch:
@@ -1109,6 +1112,7 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
     return img_out
 
 
+@VISUALIZATION_FACTORY.register(name="instance_segmentation")
 def visualize_instance_segmentation_result(detections, img, **kwargs):
     detections = detections['predictions']
     meta_arch = kwargs.get('meta_arch', '')

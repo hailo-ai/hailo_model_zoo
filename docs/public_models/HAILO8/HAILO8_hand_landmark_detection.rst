@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Hand Landmark detection Hailo8
-==========================================================
+Hailo8 Hand Landmark detection
+==============================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

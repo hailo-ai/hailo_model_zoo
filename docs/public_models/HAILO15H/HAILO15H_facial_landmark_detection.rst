@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Facial Landmark Detection Hailo15H
-==============================================================
+Hailo15H Facial Landmark Detection
+==================================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

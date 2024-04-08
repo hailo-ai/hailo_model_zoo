@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Classification Hailo15H
-===================================================
+Hailo15H Classification
+=======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

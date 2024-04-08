@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Classification Hailo8
-=================================================
+Hailo8 Classification
+=====================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Depth Estimation Hailo15M
-=====================================================
+Hailo15M Depth Estimation
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

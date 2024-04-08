@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Super Resolution Hailo8
-===================================================
+Hailo8 Super Resolution
+=======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

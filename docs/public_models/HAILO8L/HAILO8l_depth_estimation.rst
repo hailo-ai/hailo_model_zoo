@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Depth Estimation Hailo8L
-====================================================
+Hailo8L Depth Estimation
+========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

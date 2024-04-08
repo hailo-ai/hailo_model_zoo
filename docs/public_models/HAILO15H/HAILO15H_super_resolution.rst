@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Super Resolution Hailo15H
-=====================================================
+Hailo15H Super Resolution
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

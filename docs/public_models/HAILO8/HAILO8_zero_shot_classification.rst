@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Zero-shot Classification Hailo8
-===========================================================
+Hailo8 Zero-shot Classification
+===============================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

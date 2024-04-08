@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Low Light Enhancement Hailo15H
-==========================================================
+Hailo15H Low Light Enhancement
+==============================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

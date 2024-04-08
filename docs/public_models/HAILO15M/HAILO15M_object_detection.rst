@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Object Detection Hailo15M
-=====================================================
+Hailo15M Object Detection
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

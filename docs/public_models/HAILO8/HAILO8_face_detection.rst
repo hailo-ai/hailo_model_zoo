@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Face Detection Hailo8
-=================================================
+Hailo8 Face Detection
+=====================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

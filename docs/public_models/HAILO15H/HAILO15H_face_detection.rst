@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Face Detection Hailo15H
-===================================================
+Hailo15H Face Detection
+=======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

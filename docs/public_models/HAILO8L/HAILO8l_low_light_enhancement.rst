@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Low Light Enhancement Hailo8L
-=========================================================
+Hailo8L Low Light Enhancement
+=============================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

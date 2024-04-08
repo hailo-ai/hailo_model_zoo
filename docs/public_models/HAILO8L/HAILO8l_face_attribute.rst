@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Face Attribute Hailo8L
-==================================================
+Hailo8L Face Attribute
+======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

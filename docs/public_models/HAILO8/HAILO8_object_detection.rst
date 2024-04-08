@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Object Detection Hailo8
-===================================================
+Hailo8 Object Detection
+=======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

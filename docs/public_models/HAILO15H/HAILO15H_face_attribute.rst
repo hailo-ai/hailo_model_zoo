@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Face Attribute Hailo15H
-===================================================
+Hailo15H Face Attribute
+=======================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

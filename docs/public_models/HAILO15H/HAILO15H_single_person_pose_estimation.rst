@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Single Person Pose Estimation Hailo15H
-==================================================================
+Hailo15H Single Person Pose Estimation
+======================================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

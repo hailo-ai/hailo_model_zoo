@@ -1,6 +1,6 @@
 
-Public Pre-Trained Models - Stereo Depth Estimation Hailo8
-==========================================================
+Hailo8 Stereo Depth Estimation
+==============================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18

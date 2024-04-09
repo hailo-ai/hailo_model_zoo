@@ -11,7 +11,7 @@ Hailo15M Facial Landmark Detection
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
 * Benchmark and TAPPAS networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0
 

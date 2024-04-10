@@ -39,7 +39,7 @@ LFW
      - Pretrained
      - Source
      - Compiled
-   * - arcface_mobilefacenet
+   * - arcface_mobilefacenet  |star|
      - 99.43
      - 99.41
      - 328

@@ -52,7 +52,7 @@ WiderFace
      - `link <https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/lightface_slim.hef>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/lightface_slim_nv12.hef>`_
-   * - retinaface_mobilenet_v1  |star|
+   * - retinaface_mobilenet_v1
      - 81.27
      - 81.17
      - 49

@@ -40,7 +40,7 @@ Cityscapes
      - Source
      - Compiled
      - NV12 Compiled
-   * - fcn8_resnet_v1_18  |star|
+   * - fcn8_resnet_v1_18
      - 69.41
      - 69.21
      - 18

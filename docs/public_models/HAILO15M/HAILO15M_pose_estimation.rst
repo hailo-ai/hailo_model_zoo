@@ -64,7 +64,7 @@ COCO
      - `link <https://github.com/tensorboy/centerpose>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/centerpose_regnetx_800mf.hef>`_
      - None
-   * - centerpose_repvgg_a0  |star|
+   * - centerpose_repvgg_a0
      - 39.17
      - 37.17
      - 95

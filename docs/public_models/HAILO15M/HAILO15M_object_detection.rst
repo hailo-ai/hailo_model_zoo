@@ -232,7 +232,7 @@ COCO
      - `link <https://github.com/Tianxiaomo/pytorch-YOLOv4>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/tiny_yolov4.hef>`_
      - None
-   * - yolov3  |star|
+   * - yolov3
      - 38.42
      - 38.37
      - 20
@@ -256,7 +256,7 @@ COCO
      - `link <https://github.com/AlexeyAB/darknet>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov3_416.hef>`_
      - None
-   * - yolov3_gluon  |star|
+   * - yolov3_gluon
      - 37.28
      - 35.64
      - 20
@@ -268,7 +268,7 @@ COCO
      - `link <https://cv.gluon.ai/model_zoo/detection.html>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov3_gluon.hef>`_
      - None
-   * - yolov3_gluon_416  |star|
+   * - yolov3_gluon_416
      - 36.27
      - 34.92
      - 35
@@ -280,7 +280,7 @@ COCO
      - `link <https://cv.gluon.ai/model_zoo/detection.html>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov3_gluon_416.hef>`_
      - None
-   * - yolov4_leaky  |star|
+   * - yolov4_leaky
      - 42.37
      - 41.08
      - 28
@@ -328,7 +328,7 @@ COCO
      - `link <https://github.com/ultralytics/yolov5/releases/tag/v6.1>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov5m_6.1.hef>`_
      - None
-   * - yolov5m_wo_spp |rocket|
+   * - yolov5m_wo_spp  |star| |rocket|
      - 43.06
      - 41.06
      - 67.6233
@@ -340,7 +340,7 @@ COCO
      - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov5m_wo_spp_60p.hef>`_
      - None
-   * - yolov5s  |star|
+   * - yolov5s
      - 35.33
      - 33.98
      - 117
@@ -460,7 +460,7 @@ COCO
      - `link <https://github.com/ultralytics/ultralytics>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/yolov8l.hef>`_
      - None
-   * - yolov8m
+   * - yolov8m  |star|
      - 49.91
      - 49.11
      - 38

@@ -40,7 +40,7 @@ LFW
      - Source
      - Compiled
      - NV12 Compiled
-   * - arcface_mobilefacenet
+   * - arcface_mobilefacenet  |star|
      - 99.43
      - 99.41
      - 1924

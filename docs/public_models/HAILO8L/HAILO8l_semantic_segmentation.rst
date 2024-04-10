@@ -39,7 +39,7 @@ Cityscapes
      - Pretrained
      - Source
      - Compiled
-   * - fcn8_resnet_v1_18  |star|
+   * - fcn8_resnet_v1_18
      - 69.41
      - 69.21
      - 15

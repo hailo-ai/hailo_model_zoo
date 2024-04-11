@@ -10,9 +10,9 @@ Hailo15M Pose Estimation
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
-* Network available in `Hailo Benchmark <https://hailo.ai/developer-zone/benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
-* Benchmark, TAPPAS and Recommended networks run in performance mode
+* Benchmark Networks are marked with |rocket|
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
+* Benchmark and TAPPAS networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0
 
 
@@ -64,7 +64,7 @@ COCO
      - `link <https://github.com/tensorboy/centerpose>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/centerpose_regnetx_800mf.hef>`_
      - None
-   * - centerpose_repvgg_a0  |star|
+   * - centerpose_repvgg_a0
      - 39.17
      - 37.17
      - 95

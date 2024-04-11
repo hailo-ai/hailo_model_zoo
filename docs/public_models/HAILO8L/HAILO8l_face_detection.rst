@@ -10,9 +10,9 @@ Hailo8L Face Detection
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
-* Network available in `Hailo Benchmark <https://hailo.ai/developer-zone/benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://hailo.ai/developer-zone/tappas-apps-toolkit/>`_ are marked with |star|
-* Benchmark, TAPPAS and Recommended networks run in performance mode
+* Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
+* Benchmark and TAPPAS networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0
 
 
@@ -50,7 +50,7 @@ WiderFace
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/lightface_slim/2021-07-18/lightface_slim.zip>`_
      - `link <https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8l/lightface_slim.hef>`_
-   * - retinaface_mobilenet_v1  |star|
+   * - retinaface_mobilenet_v1
      - 81.27
      - 81.17
      - 45

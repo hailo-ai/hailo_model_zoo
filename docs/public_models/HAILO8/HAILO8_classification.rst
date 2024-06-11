@@ -10,7 +10,7 @@ Hailo8 Classification
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
-* Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
+* Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
 * Benchmark and TAPPAS networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.27.0

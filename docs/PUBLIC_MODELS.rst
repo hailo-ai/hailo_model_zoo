@@ -97,8 +97,8 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Zero-shot Classification
      - `Link <public_models/HAILO8/HAILO8_zero_shot_classification.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_zero_shot_classification.rst>`_
-     - NA
-     - NA
+     - `Link <public_models/HAILO15H/HAILO15H_zero_shot_classification.rst>`_
+     - `Link <public_models/HAILO15M/HAILO15M_zero_shot_classification.rst>`_
      - NA
    * - Stereo Depth Estimation
      - `Link <public_models/HAILO8/HAILO8_stereo_depth_estimation.rst>`_

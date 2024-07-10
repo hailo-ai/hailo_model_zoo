@@ -124,3 +124,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15H/HAILO15H_hand_landmark_detection.rst>`_
      - `Link <public_models/HAILO15M/HAILO15M_hand_landmark_detection.rst>`_
      - NA
+   * - Zero-shot Instance Segmentation
+     - `Link <public_models/HAILO8/HAILO8_zero_shot_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO8/HAILO8L_zero_shot_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO8/HAILO15H_zero_shot_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO8/HAILO15M_zero_shot_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO8/HAILO10_zero_shot_instance_segmentation.rst>`_

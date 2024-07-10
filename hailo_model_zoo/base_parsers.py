@@ -37,28 +37,45 @@ def make_parsing_base():
         type=str,
         default="hailo8",
         metavar="",
-        choices=["hailo8", "hailo8l", "hailo15h", "hailo15m"],
-        help="Which hw arch to run: hailo8 / hailo8l/ hailo15h/ hailo15m. By default using hailo8.",
+        choices=["hailo8", "hailo8l", "hailo15h", "hailo15m", "hailo10h"],
+        help="Which hw arch to run: hailo8 / hailo8l/ hailo15h/ hailo15m / hailo10h. By default using hailo8.",
     )
     parsing_base_parser.add_argument(
-        '--start-node-names',
+        "--start-node-names",
         type=str,
-        default='',
-        nargs='+',
-        help='List of names of the first nodes to parse.\nExample: --start-node-names <start_name1> <start_name2> ...')
+        default="",
+        nargs="+",
+        help="List of names of the first nodes to parse.\nExample: --start-node-names <start_name1> <start_name2> ...",
+    )
     parsing_base_parser.add_argument(
-        '--end-node-names',
+        "--end-node-names",
         type=str,
-        default='',
-        nargs='+',
-        help='List of nodes that indicate the parsing end. The order determines the order of the outputs.'
-             '\nExample: --end-node-names <end_name1> <end_name2> ...')
+        default="",
+        nargs="+",
+        help="List of nodes that indicate the parsing end. The order determines the order of the outputs."
+        "\nExample: --end-node-names <end_name1> <end_name2> ...",
+    )
     parsing_base_parser.set_defaults(results_dir=Path("./"))
     return parsing_base_parser
 
 
 def make_optimization_base():
     optimization_base_parser = argparse.ArgumentParser(add_help=False)
+    mutually_exclusive_group = optimization_base_parser.add_mutually_exclusive_group()
+    mutually_exclusive_group.add_argument(
+        "--model-script",
+        type=str,
+        default=None,
+        dest="model_script_path",
+        help="Path to model script to use. By default using the model script specified"
+        " in the network YAML configuration",
+    ).complete = ALLS_COMPLETE
+    mutually_exclusive_group.add_argument(
+        "--performance",
+        action="store_true",
+        help="Enable flag for benchmark performance",
+    )
+
     optimization_base_parser.add_argument(
         "--har", type=str, default=None, help="Use external har file", dest="har_path"
     ).complete = HAR_COMPLETE
@@ -68,19 +85,6 @@ def make_optimization_base():
         help="Path to external tfrecord for calibration or a directory containing \
             images in jpg or png format",
     ).complete = TFRECORD_COMPLETE
-    optimization_base_parser.add_argument(
-        "--model-script",
-        type=str,
-        default=None,
-        dest="model_script_path",
-        help="Path to model script to use. By default using the model script specified"
-        " in the network YAML configuration",
-    ).complete = ALLS_COMPLETE
-    optimization_base_parser.add_argument(
-        "--performance",
-        action="store_true",
-        help="Enable flag for benchmark performance",
-    )
     optimization_base_parser.add_argument(
         "--resize",
         type=int,
@@ -95,10 +99,8 @@ def make_optimization_base():
         help="Add input conversion from given type",
     )
     optimization_base_parser.add_argument(
-        '--classes',
-        type=int,
-        metavar='',
-        help='Number of classes for NMS configuration')
+        "--classes", type=int, metavar="", help="Number of classes for NMS configuration"
+    )
     return optimization_base_parser
 
 

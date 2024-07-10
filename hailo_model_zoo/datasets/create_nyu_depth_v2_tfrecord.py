@@ -1,25 +1,27 @@
 #!/usr/bin/env python
 
-import random
 import argparse
-import tempfile
 import os
+import random
 import tarfile
+import tempfile
 from pathlib import Path
 
+import h5py
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
-import h5py
 
-from hailo_model_zoo.utils import path_resolver, downloader
+from hailo_model_zoo.utils import downloader, path_resolver
 
-TF_RECORD_TYPE = 'val', 'calib'
+TF_RECORD_TYPE = "val", "calib"
 
-TF_RECORD_LOC = {'val': 'models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_val.tfrecord',
-                 'calib': 'models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_calib.tfrecord'}
+TF_RECORD_LOC = {
+    "val": "models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_val.tfrecord",
+    "calib": "models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_calib.tfrecord",
+}
 
-DOWNLOAD_URL = {'dataset': ("http://datasets.lids.mit.edu/fastdepth/data/nyudepthv2.tar.gz")}
+DOWNLOAD_URL = {"dataset": ("http://datasets.lids.mit.edu/fastdepth/data/nyudepthv2.tar.gz")}
 
 
 def _int64_feature(values):
@@ -38,15 +40,14 @@ def _bytes_feature(values):
 
 def h5_loader(path):
     with h5py.File(path, "r") as h5f:
-        rgb = np.array(h5f['rgb'])
+        rgb = np.array(h5f["rgb"])
         rgb = np.transpose(rgb, (1, 2, 0))
-        depth = np.array(h5f['depth'])
+        depth = np.array(h5f["depth"])
     return rgb, depth
 
 
 def _create_tfrecord(filenames, name, num_images=8192, shuffle=False):
-    """Loop over all the images in filenames and create the TFRecord
-    """
+    """Loop over all the images in filenames and create the TFRecord"""
     tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC[name])
     tfrecords_filename.parent.mkdir(parents=True, exist_ok=True)
 
@@ -64,35 +65,39 @@ def _create_tfrecord(filenames, name, num_images=8192, shuffle=False):
             image_height = rgb.shape[0]
 
             progress_bar.set_description(f"#{i}: {name}")
-            example = tf.train.Example(features=tf.train.Features(feature={
-                'height': _int64_feature(image_height),
-                'width': _int64_feature(image_width),
-                'image_name': _bytes_feature(str.encode(os.path.basename(file))),
-                'depth': _bytes_feature(np.array(depth, np.float32).tobytes()),
-                'rgb': _bytes_feature(np.array(rgb, np.uint8).tobytes()),
-            }))
+            example = tf.train.Example(
+                features=tf.train.Features(
+                    feature={
+                        "height": _int64_feature(image_height),
+                        "width": _int64_feature(image_width),
+                        "image_name": _bytes_feature(str.encode(os.path.basename(file))),
+                        "depth": _bytes_feature(np.array(depth, np.float32).tobytes()),
+                        "rgb": _bytes_feature(np.array(rgb, np.uint8).tobytes()),
+                    }
+                )
+            )
             writer.write(example.SerializeToString())
-    print('\nDone converting {} images'.format(i + 1))
+    print("\nDone converting {} images".format(i + 1))
     return tfrecords_filename
 
 
 def get_image_files(data_dir):
-    return [str(f) for f in data_dir.glob('**/*.h5')]
+    return [str(f) for f in data_dir.glob("**/*.h5")]
 
 
 def download_dataset(path=None):
     if path is None:
         dataset_dir = Path.cwd()
-        dataset_dir = dataset_dir / 'nyu_depth_v2'
+        dataset_dir = dataset_dir / "nyu_depth_v2"
         # download images if needed
         if not dataset_dir.exists():
             # create the libraries if needed
             dataset_dir.mkdir(parents=True, exist_ok=True)
-            print(f'Downloading dataset to {dataset_dir}')
-            with tempfile.NamedTemporaryFile('wb', suffix='.tar.gz') as outfile:
-                downloader.download_to_file(DOWNLOAD_URL['dataset'], outfile)
+            print(f"Downloading dataset to {dataset_dir}")
+            with tempfile.NamedTemporaryFile("wb", suffix=".tar.gz") as outfile:
+                downloader.download_to_file(DOWNLOAD_URL["dataset"], outfile)
                 outfile.seek(0)  # rewind to beginning of file
-                with tarfile.open(outfile.name, 'r') as tar:
+                with tarfile.open(outfile.name, "r") as tar:
                     tar.extractall(str(dataset_dir))
     else:
         dataset_dir = Path(path)
@@ -101,9 +106,9 @@ def download_dataset(path=None):
 
 
 def validate_dataset_dirs(dataset_dir):
-    dataset_train = dataset_dir / 'nyudepthv2' / 'train'
-    dataset_val = dataset_dir / 'nyudepthv2' / 'val'
-    err_msg = f'Could not find expected data libraries, delete {str(dataset_dir)} to re-download dataset'
+    dataset_train = dataset_dir / "nyudepthv2" / "train"
+    dataset_val = dataset_dir / "nyudepthv2" / "val"
+    err_msg = f"Could not find expected data libraries, delete {str(dataset_dir)} to re-download dataset"
     if not (dataset_train.exists() and dataset_val.exists()):
         raise ValueError(err_msg)
     return dataset_train, dataset_val
@@ -112,27 +117,27 @@ def validate_dataset_dirs(dataset_dir):
 def run(data_dir, num_images, name, shuffle=False):
     images = get_image_files(data_dir)
     output_file = _create_tfrecord(images, name, num_images, shuffle)
-    print(f'Done saved tfrecord to {output_file}')
+    print(f"Done saved tfrecord to {output_file}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('type', help='which tf-record to create {}'.format(TF_RECORD_TYPE))
-    parser.add_argument('--data', help="optional: path to manual downloaded dataset directory", type=str, default=None)
-    parser.add_argument('--num-images', help="optional: limit the number of images", type=int, default=1024)
+    parser.add_argument("type", help="which tf-record to create {}".format(TF_RECORD_TYPE))
+    parser.add_argument("--data", help="optional: path to manual downloaded dataset directory", type=str, default=None)
+    parser.add_argument("--num-images", help="optional: limit the number of images", type=int, default=1024)
     args = parser.parse_args()
 
     dataset_train, dataset_val = download_dataset(args.data)
 
-    if args.type == 'val':
-        print('Creating validation tfrecord')
-        run(dataset_val, args.num_images, name='val', shuffle=False)
+    if args.type == "val":
+        print("Creating validation tfrecord")
+        run(dataset_val, args.num_images, name="val", shuffle=False)
     else:
-        if args.type == 'calib':
-            print('Creating calibration tfrecord')
-            run(dataset_train, args.num_images, name='calib', shuffle=True)
+        if args.type == "calib":
+            print("Creating calibration tfrecord")
+            run(dataset_train, args.num_images, name="calib", shuffle=True)
         else:
-            print('ERROR No dataset type selected')
+            print("ERROR No dataset type selected")
 
 """
 ----------------------------------------------------------------------------

@@ -7,16 +7,16 @@ from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 
 @PREPROCESS_FACTORY.register
 def stereonet(images, image_info=None, output_height=None, output_width=None, flip=None, **kwargs):
-    image_l = images['image_l']
-    image_r = images['image_r']
-    crop_h, crop_w, _ = kwargs['input_shape']
+    image_l = images["image_l"]
+    image_r = images["image_r"]
+    crop_h, crop_w, _ = kwargs["input_shape"]
     image_l = pad_and_crop_tensor(image_l, crop_h, crop_w)
     image_l = tf.ensure_shape(image_l, [crop_h, crop_w, 3])
     image_r = pad_and_crop_tensor(image_r, crop_h, crop_w)
     image_r = tf.ensure_shape(image_r, [crop_h, crop_w, 3])
-    image = {'stereonet/input_layer1': image_l, 'stereonet/input_layer2': image_r}
-    image_info['gt_l'] = pad_and_crop_tensor(image_info['gt_l'], crop_h, crop_w)
-    image_info['img_orig'] = tf.cast(image_l, tf.uint8)
+    image = {"stereonet/input_layer1": image_l, "stereonet/input_layer2": image_r}
+    image_info["gt_l"] = pad_and_crop_tensor(image_info["gt_l"], crop_h, crop_w)
+    image_info["img_orig"] = tf.cast(image_l, tf.uint8)
     return image, image_info
 
 

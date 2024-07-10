@@ -1,2 +1,0 @@
-normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-performance_param(optimization_level=max)

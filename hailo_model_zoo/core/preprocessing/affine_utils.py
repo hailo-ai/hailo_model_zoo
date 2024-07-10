@@ -1,9 +1,9 @@
-import numpy as np
 import cv2
+import numpy as np
 
 
 def affine_transform(pt, t):
-    new_pt = np.array([pt[0], pt[1], 1.], dtype=np.float32).T
+    new_pt = np.array([pt[0], pt[1], 1.0], dtype=np.float32).T
     new_pt = np.dot(t, new_pt)
     return new_pt[:2]
 
@@ -23,13 +23,10 @@ def get_dir(src_point, rot_rad):
     return src_result
 
 
-def get_affine_transform(center,
-                         scale,
-                         rot,
-                         output_size,
-                         shift=np.array([0, 0], dtype=np.float32),
-                         inv=0,
-                         pixel_std=1.0):
+def get_affine_transform(center, scale, rot, output_size, shift=None, inv=0, pixel_std=1.0):
+    if shift is None:
+        shift = np.array([0, 0], dtype=np.float32)
+
     if not isinstance(scale, np.ndarray) and not isinstance(scale, list):
         scale = np.array([scale, scale], dtype=np.float32)
 

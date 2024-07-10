@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import argparse
-import os
 import json
+import os
 import shutil
 import tarfile
 from pathlib import Path
@@ -19,16 +19,13 @@ from hailo_model_zoo.utils.downloader import download_file
 
 CALIB_LOCATION = "models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_calib.tfrecord"
 VAL_LOCATION = "models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_val.tfrecord"
-TFRECORD_LOCATION = {
-    'calib': CALIB_LOCATION,
-    'val': VAL_LOCATION
-}
+TFRECORD_LOCATION = {"calib": CALIB_LOCATION, "val": VAL_LOCATION}
 CALIB_PAIR_COUNT = 128
 
-TGZ_PATH = 'http://vis-www.cs.umass.edu/lfw/lfw.tgz'
-PAIRS_PATH = 'http://vis-www.cs.umass.edu/lfw/pairs.txt'
+TGZ_PATH = "http://vis-www.cs.umass.edu/lfw/lfw.tgz"
+PAIRS_PATH = "http://vis-www.cs.umass.edu/lfw/pairs.txt"
 
-DEFAULT_KPS_URL = 'https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/data/lfw/2022-08-30/lfw.json'
+DEFAULT_KPS_URL = "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/data/lfw/2022-08-30/lfw.json"
 
 
 def _int64_feature(values):
@@ -42,13 +39,13 @@ def _bytes_feature(values):
 
 
 def _get_jpg_path(lfw_dir, person_name, image_num):
-    return os.path.join(lfw_dir, person_name, '{}_{}.jpg'.format(person_name, image_num.zfill(4)))
+    return os.path.join(lfw_dir, person_name, "{}_{}.jpg".format(person_name, image_num.zfill(4)))
 
 
 def _get_paths(lfw_dir, pairs):
     path_list, issame_list = [], []
     for pair_num, line in enumerate(pairs):
-        values = line.strip().split('\t')
+        values = line.strip().split("\t")
         if len(values) == 3:
             path0 = _get_jpg_path(lfw_dir, values[0], values[1])
             path1 = _get_jpg_path(lfw_dir, values[0], values[2])
@@ -75,19 +72,25 @@ def get_example(img_path, gt, pair_idx):
     img = img.tostring()
     gt = int(gt)
     pair_idx = int(pair_idx)
-    example = tf.train.Example(features=tf.train.Features(feature={
-        'height': _int64_feature(height),
-        'width': _int64_feature(width),
-        'image_name': _bytes_feature(filename),
-        'image': _bytes_feature(img),
-        'pair_index': _int64_feature(pair_idx),
-        'is_same': _int64_feature(gt)}))
+    example = tf.train.Example(
+        features=tf.train.Features(
+            feature={
+                "height": _int64_feature(height),
+                "width": _int64_feature(width),
+                "image_name": _bytes_feature(filename),
+                "image": _bytes_feature(img),
+                "pair_index": _int64_feature(pair_idx),
+                "is_same": _int64_feature(gt),
+            }
+        )
+    )
     return example
 
 
 def _convert_dataset(img_list, gt_list, dataset_dir, is_calibration=False):
-    tfrecords_filename = os.path.join(dataset_dir,
-                                      'arcface_lfw_pairs_{}.tfrecord'.format('calib' if is_calibration else 'val'))
+    tfrecords_filename = os.path.join(
+        dataset_dir, "arcface_lfw_pairs_{}.tfrecord".format("calib" if is_calibration else "val")
+    )
     image_label_pair = list(zip(img_list, gt_list))
     if is_calibration:
         image_label_pair = image_label_pair[:CALIB_PAIR_COUNT]
@@ -132,18 +135,18 @@ def download_dataset(images_dir, tgz_file):
     if not tgz_path.is_file():
         download_file(TGZ_PATH, tgz_path)
 
-    with tarfile.open(tgz_path, 'r:gz') as tar_ref:
+    with tarfile.open(tgz_path, "r:gz") as tar_ref:
         members = filter_lfw(tar_ref.getmembers())
         tar_ref.extractall(images_dir, members=members)
 
 
 ARCFACE_SOURCE = np.array(
-    [[38.2946, 51.6963], [73.5318, 51.5014], [56.0252, 71.7366],
-     [41.5493, 92.3655], [70.7299, 92.2041]],
-    dtype=np.float32)
+    [[38.2946, 51.6963], [73.5318, 51.5014], [56.0252, 71.7366], [41.5493, 92.3655], [70.7299, 92.2041]],
+    dtype=np.float32,
+)
 
 
-def estimate_norm(lmk, image_size=112, mode='arcface'):
+def estimate_norm(lmk, image_size=112, mode="arcface"):
     assert lmk.shape == (5, 2)
     assert image_size % 112 == 0 or image_size % 128 == 0
     if image_size % 112 == 0:
@@ -172,12 +175,12 @@ def align_dataset(args):
         download_file(args.kps_url, keypoints_path)
 
     images_path = Path(args.img)
-    aligned_path = Path(args.img + '_aligned')
+    aligned_path = Path(args.img + "_aligned")
     aligned_path.mkdir(parents=True, exist_ok=True)
     with open(keypoints_path) as f:
         keypoints = json.load(f)
 
-    keypoints = {k: np.array(v['keypoints']) for k, v in keypoints.items()}
+    keypoints = {k: np.array(v["keypoints"]) for k, v in keypoints.items()}
 
     for person_dir in images_path.iterdir():
         if not person_dir.is_dir():
@@ -208,7 +211,7 @@ def run(args):
     tfrecord_path = path_resolver.resolve_data_path(TFRECORD_LOCATION[dataset_type])
 
     if not args.force and tfrecord_path.exists():
-        print(f'tfrecord already exists at {tfrecord_path}. Skipping...')
+        print(f"tfrecord already exists at {tfrecord_path}. Skipping...")
         return
 
     download_dataset(args.img, args.tgz)
@@ -217,32 +220,37 @@ def run(args):
     with open(args.pairs) as f:
         pairs = f.readlines()[1:]
     img_list, gt_list = _get_paths(aligned_path, pairs)
-    result_tfrecord_path = _convert_dataset(img_list, gt_list, args.img, dataset_type == 'calib')
+    result_tfrecord_path = _convert_dataset(img_list, gt_list, args.img, dataset_type == "calib")
     tfrecord_path.parent.mkdir(parents=True, exist_ok=True)
     shutil.move(result_tfrecord_path, tfrecord_path)
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     epilog=('examples:\n'
-                                             '  python create_arcface_lfw_tfrecord.py calib\n'
-                                             '  python create_arcface_lfw_tfrecord.py val\n'))
-    parser.add_argument('type', help="TFRecord of which dataset to create", type=str,
-                        choices=['calib', 'val'])
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "examples:\n"
+            "  python create_arcface_lfw_tfrecord.py calib\n"
+            "  python create_arcface_lfw_tfrecord.py val\n"
+        ),
+    )
+    parser.add_argument("type", help="TFRecord of which dataset to create", type=str, choices=["calib", "val"])
 
-    parser.add_argument('--img', '-i', help="images directory", type=str, default='lfw')
-    parser.add_argument('--tgz', help='path to lfw.tgz', type=str, default='lfw.tgz')
+    parser.add_argument("--img", "-i", help="images directory", type=str, default="lfw")
+    parser.add_argument("--tgz", help="path to lfw.tgz", type=str, default="lfw.tgz")
 
-    parser.add_argument('--pairs', '-p', help="pairs.txt file path", type=str, default='pairs.txt')
+    parser.add_argument("--pairs", "-p", help="pairs.txt file path", type=str, default="pairs.txt")
 
     alignment_parser = parser.add_mutually_exclusive_group()
-    alignment_parser.add_argument('--kps-url', help='download url for keypoints file',
-                                  default=DEFAULT_KPS_URL)
-    alignment_parser.add_argument('--kps', '-k', help='path to keypoints file', default='lfw.json')
-    alignment_parser.add_argument('--no-align', action='store_true',
-                                  help=('Assume images are already aligned,'
-                                        ' does not use keypoints for alignment'), default=False)
-    parser.add_argument('--force', '-f', help='override existing tfrecord', action='store_true', default=False)
+    alignment_parser.add_argument("--kps-url", help="download url for keypoints file", default=DEFAULT_KPS_URL)
+    alignment_parser.add_argument("--kps", "-k", help="path to keypoints file", default="lfw.json")
+    alignment_parser.add_argument(
+        "--no-align",
+        action="store_true",
+        help=("Assume images are already aligned," " does not use keypoints for alignment"),
+        default=False,
+    )
+    parser.add_argument("--force", "-f", help="override existing tfrecord", action="store_true", default=False)
 
     args = parser.parse_args()
     run(args)

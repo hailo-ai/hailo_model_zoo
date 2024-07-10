@@ -1,0 +1,18 @@
+base:
+- base/coco.yaml
+preprocessing:
+  meta_arch: detr
+  network_type: detection
+postprocessing:
+  meta_arch: detr
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375

@@ -9,25 +9,25 @@ from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACT
 
 @POSTPROCESS_FACTORY.register(name="head_pose_estimation")
 def head_pose_estimation_postprocessing(endnodes, device_pre_post_layers, **kwargs):
-    if device_pre_post_layers is not None and device_pre_post_layers['softmax']:
+    if device_pre_post_layers is not None and device_pre_post_layers["softmax"]:
         probs = endnodes
     else:
         probs = [tf.nn.softmax(x) for x in endnodes]
-    idx_tensor = [idx for idx in range(66)]
+    idx_tensor = list(range(66))
     pitch_predicted = tf.reduce_sum(probs[0] * idx_tensor, 1) * 3 - 99
     roll_predicted = tf.reduce_sum(probs[1] * idx_tensor, 1) * 3 - 99
     yaw_predicted = tf.reduce_sum(probs[2] * idx_tensor, 1) * 3 - 99
     return {
-        'pitch': pitch_predicted,
-        'roll': roll_predicted,
-        'yaw': yaw_predicted,
+        "pitch": pitch_predicted,
+        "roll": roll_predicted,
+        "yaw": yaw_predicted,
     }
 
 
 @VISUALIZATION_FACTORY.register(name="head_pose_estimation")
 def visualize_head_pose_result(net_output, img, **kwargs):
     img = img[0]
-    pitch, roll, yaw = net_output['pitch'][0], net_output['roll'][0], net_output['yaw'][0]
+    pitch, roll, yaw = net_output["pitch"][0], net_output["roll"][0], net_output["yaw"][0]
     pitch = pitch * np.pi / 180
     yaw = -(yaw * np.pi / 180)
     roll = roll * np.pi / 180

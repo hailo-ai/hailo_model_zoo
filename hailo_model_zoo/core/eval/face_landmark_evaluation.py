@@ -9,7 +9,7 @@ from hailo_model_zoo.core.factory import EVAL_FACTORY
 @EVAL_FACTORY.register(name="face_landmark_detection")
 class FaceLandmarkEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['mse']
+        self._metric_names = ["mse"]
         self._metrics_vals = [0]
         self.reset()
 
@@ -17,12 +17,12 @@ class FaceLandmarkEval(Eval):
         self._err = []
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)
-        for b in range(len(gt_labels['landmarks'])):
-            gt = gt_labels['landmarks'][b]
+        for b in range(len(gt_labels["landmarks"])):
+            gt = gt_labels["landmarks"][b]
             res = net_output[b, :]
             self._err += [np.mean(np.abs(gt - res)) / len(res)]
 
@@ -36,7 +36,7 @@ class FaceLandmarkEval(Eval):
 @EVAL_FACTORY.register(name="face_landmark_detection_3d")
 class FaceLandmark3DEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['nme[0,90]', 'nme[0,30]', 'nme[30,60]', 'nme[60,90]']
+        self._metric_names = ["nme[0,90]", "nme[0,30]", "nme[30,60]", "nme[60,90]"]
         self._metrics_vals = [0.0, 0.0, 0.0, 0.0]
         self.reset()
 
@@ -44,11 +44,11 @@ class FaceLandmark3DEval(Eval):
         self.nme_list = [[], [], []]
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)
-        gt_landmarks = gt_labels['landmarks']
+        gt_landmarks = gt_labels["landmarks"]
         minx = np.min(gt_landmarks[:, :, 0], axis=1)
         maxx = np.max(gt_landmarks[:, :, 0], axis=1)
         miny = np.min(gt_landmarks[:, :, 1], axis=1)
@@ -59,7 +59,7 @@ class FaceLandmark3DEval(Eval):
         mean_error = np.mean(np.linalg.norm(diff, axis=2), axis=1)
         normalized_mean_error = mean_error / box_length
 
-        yaw_abs = np.squeeze(np.abs(gt_labels['yaw']))
+        yaw_abs = np.squeeze(np.abs(gt_labels["yaw"]))
         small_angles_ind = yaw_abs <= 30
         if small_angles_ind.any():
             self.nme_list[0].append(normalized_mean_error[small_angles_ind])

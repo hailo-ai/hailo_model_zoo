@@ -31,6 +31,7 @@ preprocessing:
   input_shape: null
   max_pad: 100
   padding_color: 0
+  preprocess_config_file: null
 allocation:
   allocation_timeout: null
   legacy: false
@@ -68,6 +69,7 @@ postprocessing:
     max_finder: false
     sigmoid: false
   hpp: false
+  bbox_decoding_only: false
   postprocess_config_file: null
 evaluation:
   data_set: null

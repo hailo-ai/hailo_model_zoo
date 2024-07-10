@@ -8,10 +8,24 @@ from hailo_model_zoo.core.infer.infer_utils import WriterHook, log_accuracy, to_
 
 
 @INFER_FACTORY.register
-def model_infer_lite(runner, context, logger, eval_num_examples, print_num_examples,
-                     batch_size, dataset, postprocessing_callback,
-                     eval_callback, visualize_callback, model_augmentation_callback,
-                     video_outpath, dump_results, results_path, *, np_infer=False):
+def model_infer_lite(
+    runner,
+    context,
+    logger,
+    eval_num_examples,
+    print_num_examples,
+    batch_size,
+    dataset,
+    postprocessing_callback,
+    eval_callback,
+    visualize_callback,
+    model_augmentation_callback,
+    video_outpath,
+    dump_results,
+    results_path,
+    *,
+    np_infer=False,
+):
     eval_metric = eval_callback()
     if not np_infer:
         postprocessing_callback = tf.function(postprocessing_callback, reduce_retracing=True)

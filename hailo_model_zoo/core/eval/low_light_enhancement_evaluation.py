@@ -11,12 +11,12 @@ from hailo_model_zoo.core.factory import EVAL_FACTORY
 @EVAL_FACTORY.register(name="low_light_enhancement")
 class LowLightEnhancementEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['PSNR']
+        self._metric_names = ["PSNR"]
         self._metrics_vals = [0]
         self.reset()
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)
@@ -42,8 +42,8 @@ class LowLightEnhancementEval(Eval):
         self.target_max = 0.0
 
     def _aggregate(self, net_output, gt_labels):
-        _sum_squared_error = np.sum(np.square(net_output - gt_labels['enhanced_img_processed']))
-        target_min, target_max = gt_labels['enhanced_img_processed'].min(), gt_labels['enhanced_img_processed'].max()
+        _sum_squared_error = np.sum(np.square(net_output - gt_labels["enhanced_img_processed"]))
+        target_min, target_max = gt_labels["enhanced_img_processed"].min(), gt_labels["enhanced_img_processed"].max()
         self.target_min = min(self.target_min, target_min)
         self.target_max = max(self.target_max, target_max)
         return _sum_squared_error

@@ -1,10 +1,10 @@
-class config():
+class config:
     def __init__(self):
         # Todo: set base_dir to kitti/image_2
-        self.base_dir = '/media/user/新加卷/kitti_dateset/'
+        self.base_dir = "/media/user/新加卷/kitti_dataset/"
 
         # Todo: set the base network: vgg16, vgg16_conv or mobilenet_v2
-        self.network = 'mobilenet_v2'
+        self.network = "mobilenet_v2"
 
         # set the bin size
         self.bin = 2
@@ -26,5 +26,5 @@ class config():
         self.batch_size = 8
 
         # set the categories
-        self.KITTI_cat = ['Car', 'Cyclist', 'Pedestrian']
+        self.KITTI_cat = ["Car", "Cyclist", "Pedestrian"]
         # self.KITTI_cat = ['Car']

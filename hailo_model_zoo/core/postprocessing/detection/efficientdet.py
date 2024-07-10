@@ -1,15 +1,16 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+from tensorflow.image import combined_non_max_suppression
+
+from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 from .ssd import collect_box_class_predictions
-from tensorflow.image import combined_non_max_suppression
-from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 
 class EfficientDetPostProc(object):
-
-    def __init__(self, img_dims, nms_iou_thresh, score_threshold, anchors,
-                 classes, labels_offset, max_detections=100, **kwargs):
+    def __init__(
+        self, img_dims, nms_iou_thresh, score_threshold, anchors, classes, labels_offset, max_detections=100, **kwargs
+    ):
         self._image_dims = img_dims
         self._nms_iou_thresh = nms_iou_thresh
         self._score_threshold = score_threshold
@@ -17,19 +18,27 @@ class EfficientDetPostProc(object):
         self._max_detections = max_detections
         self._label_offset = labels_offset
         if anchors is None:
-            raise ValueError('Missing detection anchors metadata')
+            raise ValueError("Missing detection anchors metadata")
         self._anchors_type = anchors["type"]
         self._hpp = kwargs.get("hpp", False)
-        self._nms_on_device = kwargs["device_pre_post_layers"].get(
-            'nms', False) if kwargs["device_pre_post_layers"] else False
+        self._nms_on_device = (
+            kwargs["device_pre_post_layers"].get("nms", False) if kwargs["device_pre_post_layers"] else False
+        )
         if not self._hpp and not self._nms_on_device:
-            self._anchors_input = tf.reshape(tf.numpy_function(self.anchors_for_shape,
-                                                               [img_dims,
-                                                                np.array(anchors["aspect_ratios"]),
-                                                                np.array(anchors["scales"]),
-                                                                np.array(anchors["sizes"]),
-                                                                np.array(anchors["strides"])],
-                                                               ['float32'])[0], (1, -1, 4))
+            self._anchors_input = tf.reshape(
+                tf.numpy_function(
+                    self.anchors_for_shape,
+                    [
+                        img_dims,
+                        np.array(anchors["aspect_ratios"]),
+                        np.array(anchors["scales"]),
+                        np.array(anchors["sizes"]),
+                        np.array(anchors["strides"]),
+                    ],
+                    ["float32"],
+                )[0],
+                (1, -1, 4),
+            )
 
     def bbox_transform_inv(self, deltas):
         cxa = (self._anchors_input[..., 0] + self._anchors_input[..., 2]) / 2
@@ -41,10 +50,10 @@ class EfficientDetPostProc(object):
         h = tf.math.exp(th) * ha
         cy = ty * ha + cya
         cx = tx * wa + cxa
-        ymin = cy - h / 2.
-        xmin = cx - w / 2.
-        ymax = cy + h / 2.
-        xmax = cx + w / 2.
+        ymin = cy - h / 2.0
+        xmin = cx - w / 2.0
+        ymax = cy + h / 2.0
+        xmax = cx + w / 2.0
         return tf.stack([xmin, ymin, xmax, ymax], axis=-1)
 
     def clip_boxes(self, boxes):
@@ -57,41 +66,43 @@ class EfficientDetPostProc(object):
 
     def postprocessing(self, endnodes, **kwargs):
         if self._nms_on_device or self._hpp:
-            return tf_postproc_nms(endnodes,
-                                   labels_offset=kwargs['labels_offset'],
-                                   score_threshold=self._score_threshold,
-                                   coco_2017_to_2014=False)
-        with tf.name_scope('Postprocessor'):
+            return tf_postproc_nms(
+                endnodes,
+                labels_offset=kwargs["labels_offset"],
+                score_threshold=self._score_threshold,
+                coco_2017_to_2014=False,
+            )
+        with tf.name_scope("Postprocessor"):
             regression, classification = collect_box_class_predictions(endnodes, self._num_classes, self._anchors_type)
-            if not kwargs['device_pre_post_layers']['sigmoid']:
+            if not kwargs["device_pre_post_layers"]["sigmoid"]:
                 classification = tf.sigmoid(classification)
             boxes = self.bbox_transform_inv(regression)
             boxes = self.clip_boxes(boxes)
-            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
-                combined_non_max_suppression(boxes=tf.expand_dims(boxes, axis=[2]),
-                                             scores=classification,
-                                             score_threshold=self._score_threshold,
-                                             iou_threshold=self._nms_iou_thresh,
-                                             max_output_size_per_class=self._max_detections,
-                                             max_total_size=self._max_detections)
+            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+                boxes=tf.expand_dims(boxes, axis=[2]),
+                scores=classification,
+                score_threshold=self._score_threshold,
+                iou_threshold=self._nms_iou_thresh,
+                max_output_size_per_class=self._max_detections,
+                max_total_size=self._max_detections,
+            )
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._label_offset), tf.int16)
-        return {'detection_boxes': nmsed_boxes,
-                'detection_scores': nmsed_scores,
-                'detection_classes': nmsed_classes,
-                'num_detections': num_detections}
+        return {
+            "detection_boxes": nmsed_boxes,
+            "detection_scores": nmsed_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }
 
     def shift(self, feature_map_shape, stride, anchors):
         # create a grid starting from half stride from the top left corner
         shift_x = (np.arange(0, feature_map_shape[1]) + 0.5) * stride
         shift_y = (np.arange(0, feature_map_shape[0]) + 0.5) * stride
         shift_x, shift_y = np.meshgrid(shift_x, shift_y)
-        shifts = np.vstack((
-            shift_x.ravel(), shift_y.ravel(),
-            shift_x.ravel(), shift_y.ravel()
-        )).transpose()
+        shifts = np.vstack((shift_x.ravel(), shift_y.ravel(), shift_x.ravel(), shift_y.ravel())).transpose()
         A = anchors.shape[0]
         K = shifts.shape[0]
-        all_anchors = (anchors.reshape((1, A, 4)) + shifts.reshape((1, K, 4)).transpose((1, 0, 2)))
+        all_anchors = anchors.reshape((1, A, 4)) + shifts.reshape((1, K, 4)).transpose((1, 0, 2))
         all_anchors = np.array(all_anchors.reshape((K * A, 4)), np.float32)
         return all_anchors
 
@@ -113,9 +124,9 @@ class EfficientDetPostProc(object):
 
     def anchors_for_shape(self, image_dims, aspect_ratio, scales, sizes, strides):
         pyramid_levels = [3, 4, 5, 6, 7]
-        feature_map_shapes = [(image_dims + 2 ** x - 1) // (2 ** x) for x in pyramid_levels]
+        feature_map_shapes = [(image_dims + 2**x - 1) // (2**x) for x in pyramid_levels]
         all_anchors = np.zeros((0, 4), dtype=np.float32)
-        for idx, p in enumerate(pyramid_levels):
+        for idx, _p in enumerate(pyramid_levels):
             anchors = self.generate_anchors(sizes[idx], aspect_ratio, scales)
             shifted_anchors = self.shift(feature_map_shapes[idx], strides[idx], anchors)
             all_anchors = np.append(all_anchors, shifted_anchors, axis=0)

@@ -7,17 +7,14 @@ from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 DATASETS_INFO = {
-    'nyu_depth_v2': {
-        'min_depth': 0.1,
-        'max_depth': 10,
-        'crop_array': np.array([45, 471, 41, 601]).astype(np.int32)
+    "nyu_depth_v2": {"min_depth": 0.1, "max_depth": 10, "crop_array": np.array([45, 471, 41, 601]).astype(np.int32)},
+    "kitti_depth": {
+        "min_depth": 1e-3,
+        "max_depth": 80,
+        "crop_array": np.array([0.40810811 * 375, 0.99189189 * 375, 0.03594771 * 1242, 0.96405229 * 1242]).astype(
+            np.int32
+        ),
     },
-    'kitti_depth': {
-        'min_depth': 1e-3,
-        'max_depth': 80,
-        'crop_array': np.array([0.40810811 * 375, 0.99189189 * 375,
-                                0.03594771 * 1242, 0.96405229 * 1242]).astype(np.int32)
-    }
 }
 
 
@@ -49,9 +46,9 @@ class DepthEstimationEval(Eval):
 
         dataset_name = kwargs["dataset_name"].lower()
         dataset_info = DATASETS_INFO[dataset_name]
-        self.min_depth = dataset_info['min_depth']
-        self.max_depth = dataset_info['max_depth']
-        self.crop = dataset_info['crop_array']
+        self.min_depth = dataset_info["min_depth"]
+        self.max_depth = dataset_info["max_depth"]
+        self.crop = dataset_info["crop_array"]
 
     def _parse_net_output(self, net_output):
         """
@@ -63,7 +60,7 @@ class DepthEstimationEval(Eval):
         Returns:
             numpy array: Depth predictions.
         """
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def is_percentage(self):
         """
@@ -100,8 +97,8 @@ class DepthEstimationEval(Eval):
         thresh = np.maximum((gt / pred), (pred / gt))
 
         delta1 = (thresh < 1.25).mean()  # fraction of threshold ratios below 1.25
-        delta2 = (thresh < 1.25 ** 2).mean()  # fraction of threshold ratios below 1.25^2
-        delta3 = (thresh < 1.25 ** 3).mean()  # fraction of threshold ratios below 1.25^3
+        delta2 = (thresh < 1.25**2).mean()  # fraction of threshold ratios below 1.25^2
+        delta3 = (thresh < 1.25**3).mean()  # fraction of threshold ratios below 1.25^3
 
         rmse = (gt - pred) ** 2
         rmse = np.sqrt(rmse.mean())  # root mean squared error
@@ -125,7 +122,7 @@ class DepthEstimationEval(Eval):
         Returns:
             tuple: Tuple containing the filtered ground truth and predicted depth maps.
         """
-        if self.meta_arch == 'fast_depth':
+        if self.meta_arch == "fast_depth":
             # For fast_depth, only use a mask to filter out invalid depth values (<= 0).
             valid_mask = ((gt > 0) + (pred > 0)) > 0
             return gt[valid_mask], pred[valid_mask]
@@ -138,7 +135,7 @@ class DepthEstimationEval(Eval):
 
         # Create a crop_mask to identify regions to be cropped out from the depth maps
         crop_mask = np.isnan(gt)
-        crop_mask[self.crop[0]:self.crop[1], self.crop[2]:self.crop[3]] = 1
+        crop_mask[self.crop[0] : self.crop[1], self.crop[2] : self.crop[3]] = 1
         # Create a range mask to filter out depth values outside [self.min_depth, self.max_depth]
         range_mask = np.logical_and(gt > self.min_depth, gt < self.max_depth)
         # Combine range mask and crop mask
@@ -166,7 +163,7 @@ class DepthEstimationEval(Eval):
             img_info (dict): Image information dictionary containing 'depth' key with ground truth depth maps.
         """
         pred = self._parse_net_output(net_output)
-        gt = img_info['depth']
+        gt = img_info["depth"]
 
         # Loop through each sample in the batch.
         for i in range(pred.shape[0]):
@@ -188,15 +185,18 @@ class DepthEstimationEval(Eval):
         Returns:
             OrderedDict: Dictionary containing depth error metrics with keys and their corresponding values.
         """
-        return OrderedDict([('rmse', self.avg[0]),
-                            ('rmse_log', self.avg[1]),
-                            ('abs_rel', self.avg[2]),
-                            ('sq_rel', self.avg[3]),
-                            ('log10', self.avg[4]),
-                            ('delta1', self.avg[5]),
-                            ('delta2', self.avg[6]),
-                            ('delta3', self.avg[7]),
-                            ])
+        return OrderedDict(
+            [
+                ("rmse", self.avg[0]),
+                ("rmse_log", self.avg[1]),
+                ("abs_rel", self.avg[2]),
+                ("sq_rel", self.avg[3]),
+                ("log10", self.avg[4]),
+                ("delta1", self.avg[5]),
+                ("delta2", self.avg[6]),
+                ("delta3", self.avg[7]),
+            ]
+        )
 
     def reset(self):
         """

@@ -1,0 +1,21 @@
+base:
+- base/vit.yaml
+network:
+  network_name: deit_tiny
+paths:
+  network_path:
+  - models_files/Classification/deit_tiny/pretrained/2024-05-21/deit_tiny.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/deit_tiny/pretrained/2024-05-21/deit_tiny.zip
+  alls_script: deit_tiny.alls
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 2.57G
+  parameters: 5.3M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  source: https://github.com/facebookresearch/deit
+  full_precision_result: 69.07

@@ -27,20 +27,20 @@ def _distance(embeddings1, embeddings2):
 @EVAL_FACTORY.register(name="face_verification")
 class FaceVerificationEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['acc']
-        self._tf_path = kwargs.get('tf_path', False)
+        self._metric_names = ["acc"]
+        self._tf_path = kwargs.get("tf_path", False)
         self._metrics_vals = [0]
         self._folds_num = 10
         self.reset()
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def _parse_gt_data(self, gt_data):
         # facenet_infer tf1 legacy support
         if isinstance(gt_data, tuple):
             return gt_data
-        return gt_data['image_name'], gt_data['is_same']
+        return gt_data["image_name"], gt_data["is_same"]
 
     def update_op(self, logits_batch, gt_data):
         logits_batch = self._parse_net_output(logits_batch)
@@ -52,8 +52,9 @@ class FaceVerificationEval(Eval):
                 if self._tf_path:
                     self._actual_issame.append(same)
                 else:
-                    self._actual_issame.append(re.sub(b"[0-9]", b"_", name)
-                                               == re.sub(b"[0-9]", b"_", image_name[idx + 1]))
+                    self._actual_issame.append(
+                        re.sub(b"[0-9]", b"_", name) == re.sub(b"[0-9]", b"_", image_name[idx + 1])
+                    )
                 self._embeddings1.append(logits)
             else:
                 self._embeddings2.append(logits)
@@ -66,16 +67,29 @@ class FaceVerificationEval(Eval):
         nrof_pairs = min(len(self._actual_issame), len(self._embeddings1))
         indices = np.arange(nrof_pairs)
         for fold_idx, (train_set, test_set) in enumerate(k_fold.split(indices)):
-            emb_mean = np.mean(np.concatenate([np.array(self._embeddings1)[train_set.astype(
-                int)], np.array(self._embeddings2)[train_set.astype(int)]]), axis=0)
+            emb_mean = np.mean(
+                np.concatenate(
+                    [
+                        np.array(self._embeddings1)[train_set.astype(int)],
+                        np.array(self._embeddings2)[train_set.astype(int)],
+                    ]
+                ),
+                axis=0,
+            )
             dist = _distance(np.array(self._embeddings1) - emb_mean, np.array(self._embeddings2) - emb_mean)
             acc_train = np.zeros((len(thresholds)))
             for threshold_idx, threshold in enumerate(thresholds):
-                acc_train[threshold_idx] = _accuracy(threshold, np.array(
-                    dist)[train_set.astype(int)], np.array(self._actual_issame)[train_set.astype(int)])
+                acc_train[threshold_idx] = _accuracy(
+                    threshold,
+                    np.array(dist)[train_set.astype(int)],
+                    np.array(self._actual_issame)[train_set.astype(int)],
+                )
             best_threshold_index = np.argmax(acc_train)
-            accuracy[fold_idx] = _accuracy(thresholds[best_threshold_index], np.array(
-                dist)[test_set.astype(int)], np.array(self._actual_issame)[test_set.astype(int)])
+            accuracy[fold_idx] = _accuracy(
+                thresholds[best_threshold_index],
+                np.array(dist)[test_set.astype(int)],
+                np.array(self._actual_issame)[test_set.astype(int)],
+            )
         self._metrics_vals[0] = np.mean(accuracy)
 
     def _get_accuracy(self):

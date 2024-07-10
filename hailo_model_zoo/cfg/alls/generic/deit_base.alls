@@ -1,0 +1,11 @@
+norm_layer1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_config(calibration, batch_size=8, calibset_size=1024)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+model_optimization_config(negative_exponent, layers={*}, rank=0)
+quantization_param({deit_base/ew_add*}, precision_mode=a16_w16)
+quantization_param({deit_base/ew_add1}, precision_mode=a8_w8)
+
+# allocation params
+resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=0.85, max_memory_utilization=0.8)

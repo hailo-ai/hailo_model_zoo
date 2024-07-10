@@ -9,17 +9,69 @@ from hailo_model_zoo.core.postprocessing.centerpose_postprocessing import center
 from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
 from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import xywh2xyxy
 
-BODY_PARTS_KPT_IDS = [[1, 2], [1, 5], [2, 3], [3, 4], [5, 6], [6, 7], [1, 8], [8, 9], [9, 10], [1, 11],
-                      [11, 12], [12, 13], [1, 0], [0, 14], [14, 16], [0, 15], [15, 17], [2, 16], [5, 17]]
-BODY_PARTS_PAF_IDS = ([12, 13], [20, 21], [14, 15], [16, 17], [22, 23], [24, 25], [0, 1], [2, 3], [4, 5],
-                      [6, 7], [8, 9], [10, 11], [28, 29], [30, 31], [34, 35], [32, 33], [36, 37], [18, 19], [26, 27])
+BODY_PARTS_KPT_IDS = [
+    [1, 2],
+    [1, 5],
+    [2, 3],
+    [3, 4],
+    [5, 6],
+    [6, 7],
+    [1, 8],
+    [8, 9],
+    [9, 10],
+    [1, 11],
+    [11, 12],
+    [12, 13],
+    [1, 0],
+    [0, 14],
+    [14, 16],
+    [0, 15],
+    [15, 17],
+    [2, 16],
+    [5, 17],
+]
+BODY_PARTS_PAF_IDS = (
+    [12, 13],
+    [20, 21],
+    [14, 15],
+    [16, 17],
+    [22, 23],
+    [24, 25],
+    [0, 1],
+    [2, 3],
+    [4, 5],
+    [6, 7],
+    [8, 9],
+    [10, 11],
+    [28, 29],
+    [30, 31],
+    [34, 35],
+    [32, 33],
+    [36, 37],
+    [18, 19],
+    [26, 27],
+)
 
 STRIDE = 8
 
-JOINT_PAIRS = [[0, 1], [1, 3], [0, 2], [2, 4],
-               [5, 6], [5, 7], [7, 9], [6, 8], [8, 10],
-               [5, 11], [6, 12], [11, 12],
-               [11, 13], [12, 14], [13, 15], [14, 16]]
+JOINT_PAIRS = [
+    [0, 1],
+    [1, 3],
+    [0, 2],
+    [2, 4],
+    [5, 6],
+    [5, 7],
+    [7, 9],
+    [6, 8],
+    [8, 10],
+    [5, 11],
+    [6, 12],
+    [11, 12],
+    [11, 13],
+    [12, 14],
+    [13, 15],
+    [14, 16],
+]
 
 
 def _sigmoid(x):
@@ -40,73 +92,85 @@ def scale_kpts(kpts, shape, orig_shape):
 
 @POSTPROCESS_FACTORY.register(name="pose_estimation")
 def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    if kwargs.get('meta_arch') == 'centerpose':
-        return centerpose_postprocessing(endnodes,
-                                         device_pre_post_layers=None,
-                                         **kwargs)
-    if kwargs.get('meta_arch') == 'nanodet_v8':
-        return yolov8_pose_estimation_postprocess(endnodes,
-                                                  device_pre_post_layers=None,
-                                                  **kwargs)
+    if kwargs.get("meta_arch") == "centerpose":
+        return centerpose_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
+    if kwargs.get("meta_arch") == "nanodet_v8":
+        return yolov8_pose_estimation_postprocess(endnodes, device_pre_post_layers=None, **kwargs)
     coco_result_list = []
     for i in range(len(endnodes)):
-        image_info = kwargs['gt_images']
-        heatmaps, pafs, image_id, pad, orig_shape = endnodes[0][i], endnodes[1][i], \
-            int(image_info['image_id'][i]), image_info['pad'][i], image_info['orig_shape'][i][:2]
+        image_info = kwargs["gt_images"]
+        heatmaps, pafs, image_id, pad, orig_shape = (
+            endnodes[0][i],
+            endnodes[1][i],
+            int(image_info["image_id"][i]),
+            image_info["pad"][i],
+            image_info["orig_shape"][i][:2],
+        )
         total_keypoints_num = 0
         all_keypoints_by_type = []
 
         height, width = orig_shape
         heatmaps = cv2.resize(heatmaps, (0, 0), fx=STRIDE, fy=STRIDE, interpolation=cv2.INTER_CUBIC)
-        heatmaps = heatmaps[pad[0]:heatmaps.shape[0] - pad[2], pad[1]:heatmaps.shape[1] - pad[3]:, :]
+        heatmaps = heatmaps[pad[0] : heatmaps.shape[0] - pad[2], pad[1] : heatmaps.shape[1] - pad[3] :, :]
         heatmaps = cv2.resize(heatmaps, (width, height), interpolation=cv2.INTER_CUBIC)
 
         pafs = cv2.resize(pafs, (0, 0), fx=STRIDE, fy=STRIDE, interpolation=cv2.INTER_CUBIC)
-        pafs = pafs[pad[0]:pafs.shape[0] - pad[2], pad[1]:pafs.shape[1] - pad[3], :]
+        pafs = pafs[pad[0] : pafs.shape[0] - pad[2], pad[1] : pafs.shape[1] - pad[3], :]
         pafs = cv2.resize(pafs, (width, height), interpolation=cv2.INTER_CUBIC)
 
         for kpt_idx in range(18):  # 19th for bg
-            total_keypoints_num += extract_keypoints(heatmaps[:, :, kpt_idx],
-                                                     all_keypoints_by_type, total_keypoints_num)
+            total_keypoints_num += extract_keypoints(
+                heatmaps[:, :, kpt_idx], all_keypoints_by_type, total_keypoints_num
+            )
 
         pose_entries, all_keypoints = group_keypoints(all_keypoints_by_type, pafs)
         coco_keypoints, scores = convert_to_coco_format(pose_entries, all_keypoints)
 
-        coco_result_list += [{'image_id': image_id, 'category_id': 1,  # person
-                              'keypoints': coco_keypoints[idx], 'score': scores[idx]
-                              } for idx in range(len(coco_keypoints))]
+        coco_result_list += [
+            {
+                "image_id": image_id,
+                "category_id": 1,  # person
+                "keypoints": coco_keypoints[idx],
+                "score": scores[idx],
+            }
+            for idx in range(len(coco_keypoints))
+        ]
 
-        return {'predictions': coco_result_list}
+        return {"predictions": coco_result_list}
 
 
 @VISUALIZATION_FACTORY.register(name="pose_estimation")
-def visualize_pose_estimation_result(results, img, dataset_name, *, detection_threshold=0.5,
-                                     joint_threshold=0.5, **kwargs):
-    assert dataset_name == 'cocopose'
-    if 'predictions' in results:
-        results = results['predictions']
+def visualize_pose_estimation_result(
+    results, img, dataset_name, *, detection_threshold=0.5, joint_threshold=0.5, **kwargs
+):
+    assert dataset_name == "cocopose"
+    if "predictions" in results:
+        results = results["predictions"]
         bboxes, scores, keypoints, joint_scores = results
     else:
         bboxes, scores, keypoints, joint_scores = (
-            results['bboxes'], results['scores'], results['keypoints'], results['joint_scores'])
+            results["bboxes"],
+            results["scores"],
+            results["keypoints"],
+            results["joint_scores"],
+        )
 
     batch_size = bboxes.shape[0]
     assert batch_size == 1
 
     box, score, keypoint, keypoint_score = bboxes[0], scores[0], keypoints[0], joint_scores[0]
-    if 'centerpose' in kwargs['meta_arch']:
+    if "centerpose" in kwargs["meta_arch"]:
         image = cv2.cvtColor(img[0], cv2.COLOR_BGR2RGB)
     else:
         image = img[0]
-    for detection_box, detection_score, detection_keypoints, detection_keypoints_score in (
-            zip(box, score, keypoint, keypoint_score)):
+    for detection_box, detection_score, detection_keypoints, detection_keypoints_score in zip(
+        box, score, keypoint, keypoint_score
+    ):
         if detection_score < detection_threshold:
             continue
         xmin, ymin, xmax, ymax = [int(x) for x in detection_box]
 
-        cv2.rectangle(image, (xmin, ymin),
-                      (xmax, ymax),
-                      (255, 0, 0), 1)
+        cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (255, 0, 0), 1)
         cv2.putText(image, str(detection_score), (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (36, 255, 12), 1)
 
         joint_visible = detection_keypoints_score > joint_threshold
@@ -133,18 +197,20 @@ def linspace2d(start, stop, n=10):
 
 def extract_keypoints(heatmap, all_keypoints, total_keypoint_num):
     heatmap[heatmap < 0.1] = 0
-    heatmap_with_borders = np.pad(heatmap, [(2, 2), (2, 2)], mode='constant')
-    heatmap_center = heatmap_with_borders[1:heatmap_with_borders.shape[0] - 1, 1:heatmap_with_borders.shape[1] - 1]
-    heatmap_left = heatmap_with_borders[1:heatmap_with_borders.shape[0] - 1, 2:heatmap_with_borders.shape[1]]
-    heatmap_right = heatmap_with_borders[1:heatmap_with_borders.shape[0] - 1, 0:heatmap_with_borders.shape[1] - 2]
-    heatmap_up = heatmap_with_borders[2:heatmap_with_borders.shape[0], 1:heatmap_with_borders.shape[1] - 1]
-    heatmap_down = heatmap_with_borders[0:heatmap_with_borders.shape[0] - 2, 1:heatmap_with_borders.shape[1] - 1]
+    heatmap_with_borders = np.pad(heatmap, [(2, 2), (2, 2)], mode="constant")
+    heatmap_center = heatmap_with_borders[1 : heatmap_with_borders.shape[0] - 1, 1 : heatmap_with_borders.shape[1] - 1]
+    heatmap_left = heatmap_with_borders[1 : heatmap_with_borders.shape[0] - 1, 2 : heatmap_with_borders.shape[1]]
+    heatmap_right = heatmap_with_borders[1 : heatmap_with_borders.shape[0] - 1, 0 : heatmap_with_borders.shape[1] - 2]
+    heatmap_up = heatmap_with_borders[2 : heatmap_with_borders.shape[0], 1 : heatmap_with_borders.shape[1] - 1]
+    heatmap_down = heatmap_with_borders[0 : heatmap_with_borders.shape[0] - 2, 1 : heatmap_with_borders.shape[1] - 1]
 
-    heatmap_peaks = ((heatmap_center > heatmap_left)
-                     & (heatmap_center > heatmap_right)
-                     & (heatmap_center > heatmap_up)
-                     & (heatmap_center > heatmap_down))
-    heatmap_peaks = heatmap_peaks[1:heatmap_center.shape[0] - 1, 1:heatmap_center.shape[1] - 1]
+    heatmap_peaks = (
+        (heatmap_center > heatmap_left)
+        & (heatmap_center > heatmap_right)
+        & (heatmap_center > heatmap_up)
+        & (heatmap_center > heatmap_down)
+    )
+    heatmap_peaks = heatmap_peaks[1 : heatmap_center.shape[0] - 1, 1 : heatmap_center.shape[1] - 1]
     keypoints = list(zip(np.nonzero(heatmap_peaks)[1], np.nonzero(heatmap_peaks)[0]))  # (w, h)
     keypoints = sorted(keypoints, key=itemgetter(0))
 
@@ -155,11 +221,14 @@ def extract_keypoints(heatmap, all_keypoints, total_keypoint_num):
         if suppressed[i]:
             continue
         for j in range(i + 1, len(keypoints)):
-            if math.sqrt((keypoints[i][0] - keypoints[j][0]) ** 2
-                         + (keypoints[i][1] - keypoints[j][1]) ** 2) < 6:
+            if math.sqrt((keypoints[i][0] - keypoints[j][0]) ** 2 + (keypoints[i][1] - keypoints[j][1]) ** 2) < 6:
                 suppressed[j] = 1
-        keypoint_with_score_and_id = (keypoints[i][0], keypoints[i][1], heatmap[keypoints[i][1], keypoints[i][0]],
-                                      total_keypoint_num + keypoint_num)
+        keypoint_with_score_and_id = (
+            keypoints[i][0],
+            keypoints[i][1],
+            heatmap[keypoints[i][1], keypoints[i][0]],
+            total_keypoint_num + keypoint_num,
+        )
         keypoints_with_score_and_id.append(keypoint_with_score_and_id)
         keypoint_num += 1
     all_keypoints.append(keypoints_with_score_and_id)
@@ -190,8 +259,8 @@ def group_keypoints(all_keypoints_by_type, pafs, pose_entry_size=20, min_paf_sco
                 if num == 0:
                     pose_entry = np.ones(pose_entry_size) * -1
                     pose_entry[kpt_b_id] = kpts_b[i][3]  # keypoint idx
-                    pose_entry[-1] = 1                   # num keypoints in pose
-                    pose_entry[-2] = kpts_b[i][2]        # pose score
+                    pose_entry[-1] = 1  # num keypoints in pose
+                    pose_entry[-2] = kpts_b[i][2]  # pose score
                     pose_entries.append(pose_entry)
             continue
         elif num_kpts_b == 0:  # body part has just 'a' keypoints
@@ -215,8 +284,7 @@ def group_keypoints(all_keypoints_by_type, pafs, pose_entry_size=20, min_paf_sco
             for j in range(num_kpts_b):
                 kpt_b = np.array(kpts_b[j][0:2])
                 mid_point = [(), ()]
-                mid_point[0] = (int(round((kpt_a[0] + kpt_b[0]) * 0.5)),
-                                int(round((kpt_a[1] + kpt_b[1]) * 0.5)))
+                mid_point[0] = (int(round((kpt_a[0] + kpt_b[0]) * 0.5)), int(round((kpt_a[1] + kpt_b[1]) * 0.5)))
                 mid_point[1] = mid_point[0]
 
                 vec = [kpt_b[0] - kpt_a[0], kpt_b[1] - kpt_a[1]]
@@ -225,8 +293,10 @@ def group_keypoints(all_keypoints_by_type, pafs, pose_entry_size=20, min_paf_sco
                     continue
                 vec[0] /= vec_norm
                 vec[1] /= vec_norm
-                cur_point_score = (vec[0] * part_pafs[mid_point[0][1], mid_point[0][0], 0]
-                                   + vec[1] * part_pafs[mid_point[1][1], mid_point[1][0], 1])
+                cur_point_score = (
+                    vec[0] * part_pafs[mid_point[0][1], mid_point[0][0], 0]
+                    + vec[1] * part_pafs[mid_point[1][1], mid_point[1][0], 1]
+                )
 
                 height_n = pafs.shape[0] // 2
                 success_ratio = 0
@@ -348,8 +418,7 @@ def convert_to_coco_format(pose_entries, all_keypoints):
     return coco_keypoints, scores
 
 
-def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45,
-                        max_det=100, n_kpts=17):
+def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45, max_det=100, n_kpts=17):
     """Non-Maximum Suppression (NMS) on inference results to reject overlapping detections
     Args:
         prediction: numpy.ndarray with shape (batch_size, num_proposals, 56)
@@ -368,10 +437,8 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45,
          }
     """
 
-    assert 0 <= conf_thres <= 1, \
-        f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
-    assert 0 <= iou_thres <= 1, \
-        f'Invalid IoU threshold {iou_thres}, valid values are between 0.0 and 1.0'
+    assert 0 <= conf_thres <= 1, f"Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0"
+    assert 0 <= iou_thres <= 1, f"Invalid IoU threshold {iou_thres}, valid values are between 0.0 and 1.0"
 
     nc = prediction.shape[2] - n_kpts * 3 - 4  # number of classes
     xc = prediction[..., 4] > conf_thres  # candidates
@@ -383,10 +450,14 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45,
         x = x[xc[xi]]  # confidence
         # If none remain process next image
         if not x.shape[0]:
-            output.append({'bboxes': np.zeros((0, 4)),
-                           'keypoints': np.zeros((0, n_kpts, 3)),
-                           'scores': np.zeros((0)),
-                           'num_detections': 0})
+            output.append(
+                {
+                    "bboxes": np.zeros((0, 4)),
+                    "keypoints": np.zeros((0, n_kpts, 3)),
+                    "scores": np.zeros((0)),
+                    "num_detections": 0,
+                }
+            )
             continue
 
         # (center_x, center_y, width, height) to (x1, y1, x2, y2)
@@ -416,19 +487,22 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45,
         kpts = out[:, 6:]
         kpts = np.reshape(kpts, (-1, n_kpts, 3))
 
-        out = {'bboxes': boxes,
-               'keypoints': kpts,
-               'scores': scores,
-               'num_detections': int(scores.shape[0])}
+        out = {"bboxes": boxes, "keypoints": kpts, "scores": scores, "num_detections": int(scores.shape[0])}
 
         output.append(out)
     return output
 
 
-def _yolov8_decoding(raw_boxes, raw_kpts, strides, image_dims, reg_max, ):
+def _yolov8_decoding(
+    raw_boxes,
+    raw_kpts,
+    strides,
+    image_dims,
+    reg_max,
+):
     boxes = None
     decoded_kpts = None
-    for box_distribute, kpts, stride, j in zip(raw_boxes, raw_kpts, strides, np.arange(3)):
+    for box_distribute, kpts, stride, _j in zip(raw_boxes, raw_kpts, strides, np.arange(3)):
         # create grid
         shape = [int(x / stride) for x in image_dims]
         grid_x = np.arange(shape[1]) + 0.5
@@ -441,7 +515,8 @@ def _yolov8_decoding(raw_boxes, raw_kpts, strides, image_dims, reg_max, ):
         # box distribution to distance
         reg_range = np.arange(reg_max + 1)
         box_distribute = np.reshape(
-            box_distribute, (-1, box_distribute.shape[1] * box_distribute.shape[2], 4, reg_max + 1))
+            box_distribute, (-1, box_distribute.shape[1] * box_distribute.shape[2], 4, reg_max + 1)
+        )
         box_distance = _softmax(box_distribute)
         box_distance = box_distance * np.reshape(reg_range, (1, 1, 1, -1))
         box_distance = np.sum(box_distance, axis=-1)
@@ -490,31 +565,31 @@ def yolov8_pose_estimation_postprocess(endnodes, device_pre_post_layers=None, **
         }
     """
     batch_size = endnodes[0].shape[0]
-    num_classes = kwargs['classes']  # always 1
-    max_detections = kwargs['nms_max_output_per_class']
-    strides = kwargs['anchors']['strides'][::-1]
-    image_dims = tuple(kwargs['img_dims'])
-    reg_max = kwargs['anchors']['regression_length']
+    num_classes = kwargs["classes"]  # always 1
+    max_detections = kwargs["nms_max_output_per_class"]
+    strides = kwargs["anchors"]["strides"][::-1]
+    image_dims = tuple(kwargs["img_dims"])
+    reg_max = kwargs["anchors"]["regression_length"]
     raw_boxes = endnodes[:7:3]
     scores = [np.reshape(s, (-1, s.shape[1] * s.shape[2], num_classes)) for s in endnodes[1:8:3]]
     scores = np.concatenate(scores, axis=1)
     kpts = [np.reshape(c, (-1, c.shape[1] * c.shape[2], 17, 3)) for c in endnodes[2:9:3]]
     decoded_boxes, decoded_kpts = _yolov8_decoding(raw_boxes, kpts, strides, image_dims, reg_max)
-    score_thres = kwargs['score_threshold']
-    iou_thres = kwargs['nms_iou_thresh']
+    score_thres = kwargs["score_threshold"]
+    iou_thres = kwargs["nms_iou_thresh"]
 
     # re-arrange predictions for yolov5_nms
     decoded_kpts = np.reshape(decoded_kpts, (batch_size, -1, 51))
     predictions = np.concatenate([decoded_boxes, scores, decoded_kpts], axis=2)
     nms_res = non_max_suppression(predictions, conf_thres=score_thres, iou_thres=iou_thres, max_det=max_detections)
     output = {}
-    output['bboxes'] = np.zeros((batch_size, max_detections, 4))
-    output['keypoints'] = np.zeros((batch_size, max_detections, 17, 2))
-    output['joint_scores'] = np.zeros((batch_size, max_detections, 17, 1))
-    output['scores'] = np.zeros((batch_size, max_detections, 1))
+    output["bboxes"] = np.zeros((batch_size, max_detections, 4))
+    output["keypoints"] = np.zeros((batch_size, max_detections, 17, 2))
+    output["joint_scores"] = np.zeros((batch_size, max_detections, 17, 1))
+    output["scores"] = np.zeros((batch_size, max_detections, 1))
     for b in range(batch_size):
-        output['bboxes'][b, :nms_res[b]['num_detections']] = nms_res[b]['bboxes']
-        output['keypoints'][b, :nms_res[b]['num_detections']] = nms_res[b]['keypoints'][..., :2]
-        output['joint_scores'][b, :nms_res[b]['num_detections'], ..., 0] = _sigmoid(nms_res[b]['keypoints'][..., 2])
-        output['scores'][b, :nms_res[b]['num_detections'], ..., 0] = nms_res[b]['scores']
+        output["bboxes"][b, : nms_res[b]["num_detections"]] = nms_res[b]["bboxes"]
+        output["keypoints"][b, : nms_res[b]["num_detections"]] = nms_res[b]["keypoints"][..., :2]
+        output["joint_scores"][b, : nms_res[b]["num_detections"], ..., 0] = _sigmoid(nms_res[b]["keypoints"][..., 2])
+        output["scores"][b, : nms_res[b]["num_detections"], ..., 0] = nms_res[b]["scores"]
     return output

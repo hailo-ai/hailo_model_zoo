@@ -9,25 +9,27 @@ from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACT
 from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
 from hailo_model_zoo.utils import path_resolver
 
-COLORS = ((244, 67, 54),
-          (233, 30, 99),
-          (156, 39, 176),
-          (103, 58, 183),
-          (63, 81, 181),
-          (33, 150, 243),
-          (3, 169, 244),
-          (0, 188, 212),
-          (0, 150, 136),
-          (76, 175, 80),
-          (139, 195, 74),
-          (205, 220, 57),
-          (255, 235, 59),
-          (255, 193, 7),
-          (255, 152, 0),
-          (255, 87, 34),
-          (121, 85, 72),
-          (158, 158, 158),
-          (96, 125, 139))
+COLORS = (
+    (244, 67, 54),
+    (233, 30, 99),
+    (156, 39, 176),
+    (103, 58, 183),
+    (63, 81, 181),
+    (33, 150, 243),
+    (3, 169, 244),
+    (0, 188, 212),
+    (0, 150, 136),
+    (76, 175, 80),
+    (139, 195, 74),
+    (205, 220, 57),
+    (255, 235, 59),
+    (255, 193, 7),
+    (255, 152, 0),
+    (255, 87, 34),
+    (121, 85, 72),
+    (158, 158, 158),
+    (96, 125, 139),
+)
 
 
 def _sanitize_coordinates(_x1, _x2, img_size, padding=0, cast=True):
@@ -66,10 +68,8 @@ def _crop(masks, boxes, padding=1):
 
 
 def _intersect(box_a, box_b):
-    max_xy = np.minimum(np.expand_dims(box_a[:, :, 2:], axis=2),
-                        np.expand_dims(box_b[:, :, 2:], axis=1))
-    min_xy = np.maximum(np.expand_dims(box_a[:, :, :2], axis=2),
-                        np.expand_dims(box_b[:, :, :2], axis=1))
+    max_xy = np.minimum(np.expand_dims(box_a[:, :, 2:], axis=2), np.expand_dims(box_b[:, :, 2:], axis=1))
+    min_xy = np.maximum(np.expand_dims(box_a[:, :, :2], axis=2), np.expand_dims(box_b[:, :, :2], axis=1))
     inter = np.clip((max_xy - min_xy), a_min=0, a_max=None)
 
     return inter[:, :, :, 0] * inter[:, :, :, 1]
@@ -94,9 +94,10 @@ def _jaccard(box_a, box_b, iscrowd=False):
 
 def _decode(loc, priors):
     variances = [0.1, 0.2]
-    boxes = np.concatenate((
-        priors[:, :2] + loc[:, :2] * variances[0] * priors[:, 2:],
-        priors[:, 2:] * np.exp(loc[:, 2:] * variances[1])), 1)
+    boxes = np.concatenate(
+        (priors[:, :2] + loc[:, :2] * variances[0] * priors[:, 2:], priors[:, 2:] * np.exp(loc[:, 2:] * variances[1])),
+        1,
+    )
     boxes[:, :2] -= boxes[:, 2:] / 2
     boxes[:, 2:] += boxes[:, :2]
 
@@ -113,7 +114,7 @@ class Detect(object):
         # Parameters used in nms.
         self._nms_thresh = nms_thresh
         if nms_thresh <= 0:
-            raise ValueError('nms_threshold must be non negative.')
+            raise ValueError("nms_threshold must be non negative.")
         self._conf_thresh = conf_thresh
 
     def __call__(self, loc_data, proto_data, conf_data, mask_data, prior_data):
@@ -129,18 +130,18 @@ class Detect(object):
             result = self._detect(batch_idx, conf_preds, decoded_boxes, mask_data)
 
             if result is not None and proto_data is not None:
-                result['proto'] = proto_data[batch_idx]
+                result["proto"] = proto_data[batch_idx]
 
             out.append(result)
 
         return out
 
     def _detect(self, batch_idx, conf_preds, decoded_boxes, mask_data):
-        """ Perform nms for only the max scoring class that isn't background (class 0) """
+        """Perform nms for only the max scoring class that isn't background (class 0)"""
         cur_scores = conf_preds[batch_idx, 1:, :]
         conf_scores = np.amax(cur_scores, axis=0)
 
-        keep = (conf_scores > self._conf_thresh)
+        keep = conf_scores > self._conf_thresh
         scores = cur_scores[:, keep]
         boxes = decoded_boxes[keep, :]
         masks = mask_data[batch_idx, keep, :]
@@ -150,7 +151,7 @@ class Detect(object):
 
         boxes, masks, classes, scores = self._fast_nms(boxes, masks, scores, self._nms_thresh, self._top_k)
 
-        return {'detection_boxes': boxes, 'mask': masks, 'detection_classes': classes, 'detection_scores': scores}
+        return {"detection_boxes": boxes, "mask": masks, "detection_classes": classes, "detection_scores": scores}
 
     def _fast_nms(self, boxes, masks, scores, iou_threshold=0.5, top_k=200, second_threshold=False):
         max_num_detections = 100
@@ -170,9 +171,9 @@ class Detect(object):
         iou_max = np.amax(iou, axis=1)
 
         # Now just filter out the ones higher than the threshold
-        keep = (iou_max <= iou_threshold)
+        keep = iou_max <= iou_threshold
         if second_threshold:
-            keep *= (scores > self._conf_thresh)
+            keep *= scores > self._conf_thresh
 
         # Assign each kept detection to its corresponding class
         classes = np.arange(num_classes)[:, None]
@@ -200,23 +201,31 @@ def _sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
-def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0.45,
-                 channels_remove=None, class_names=None, mask_thresh=0.5):
+def prep_display(
+    dets_out,
+    img,
+    score_threshold,
+    class_color=False,
+    mask_alpha=0.45,
+    channels_remove=None,
+    class_names=None,
+    mask_thresh=0.5,
+):
     top_k = 5
     img_gpu = img / 255.0
     h, w, _ = img.shape
     if not channels_remove["enabled"]:
         visualization_class_names = class_names
     else:
-        channels_remove = np.array(channels_remove['mask'][0])
+        channels_remove = np.array(channels_remove["mask"][0])
         class_names_mask = channels_remove[1:]  # Remove background class
         cats = np.where(np.array(class_names_mask) == 1)[0]
         visualization_class_names = list(np.array(class_names)[cats])
 
-    boxes = dets_out['detection_boxes']
-    masks = dets_out['mask']
-    classes = dets_out['detection_classes']
-    scores = dets_out['detection_scores']
+    boxes = dets_out["detection_boxes"]
+    masks = dets_out["mask"]
+    classes = dets_out["detection_classes"]
+    scores = dets_out["detection_scores"]
 
     # Scale Boxes
     boxes[:, 0], boxes[:, 2] = _sanitize_coordinates(boxes[:, 0], boxes[:, 2], w, cast=False)
@@ -260,26 +269,28 @@ def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0
             # The image might come in as RGB or BRG, depending
             color = (color[2], color[1], color[0])
             if on_gpu is not None:
-                color = 1.0 * color / 255.
+                color = 1.0 * color / 255.0
                 color_cache[on_gpu][color_idx] = color
             return color
+
     masks = masks[:num_dets_to_consider, :, :, None]
 
     # Prepare the RGB images for each mask given their color (size [num_dets, h, w, 1])
-    colors = np.concatenate([np.reshape(get_color(j, on_gpu=None),
-                             (1, 1, 1, 3)) for j in range(num_dets_to_consider)], axis=0)
+    colors = np.concatenate(
+        [np.reshape(get_color(j, on_gpu=None), (1, 1, 1, 3)) for j in range(num_dets_to_consider)], axis=0
+    )
     masks_color = np.repeat(masks, 3, axis=-1) * colors * mask_alpha
 
     # This is 1 everywhere except for 1-mask_alpha where the mask is
-    inv_alph_masks = masks * (-mask_alpha) + 1
+    inv_alpha_masks = masks * (-mask_alpha) + 1
     masks_color_summand = masks_color[0]
     if num_dets_to_consider > 1:
-        inv_alph_cumul = np.cumprod(inv_alph_masks[:(num_dets_to_consider - 1)], axis=0)
-        masks_color_cumul = masks_color[1:] * inv_alph_cumul
+        inv_alpha_cumul = np.cumprod(inv_alpha_masks[: (num_dets_to_consider - 1)], axis=0)
+        masks_color_cumul = masks_color[1:] * inv_alpha_cumul
         masks_color_summand += np.sum(masks_color_cumul, axis=0)
 
-    img_gpu = img_gpu * np.prod(inv_alph_masks, axis=0) + masks_color_summand
-    img_numpy = (img_gpu * 255)
+    img_gpu = img_gpu * np.prod(inv_alpha_masks, axis=0) + masks_color_summand
+    img_numpy = img_gpu * 255
 
     for j in reversed(range(num_dets_to_consider)):
         x1, y1, x2, y2 = boxes[j, :]
@@ -289,7 +300,7 @@ def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0
         cv2.rectangle(img_numpy, (int(x1), int(y1)), (int(x2), int(y2)), color, 1)
 
         _class = visualization_class_names[classes[j]]
-        text_str = '%s: %.2f' % (_class, score)
+        text_str = "%s: %.2f" % (_class, score)
 
         font_face = cv2.FONT_HERSHEY_DUPLEX
         font_scale = 0.6
@@ -299,8 +310,16 @@ def prep_display(dets_out, img, score_threshold, class_color=False, mask_alpha=0
         text_pt = (x1, y1 - 3)
 
         cv2.rectangle(img_numpy, (int(x1), int(y1)), (int(x1 + text_w), int(y1 - text_h - 4)), color, -1)
-        cv2.putText(img_numpy, text_str, (int(text_pt[0]), int(text_pt[1])), font_face, font_scale,
-                    [255., 255., 255.], font_thickness, cv2.LINE_AA)
+        cv2.putText(
+            img_numpy,
+            text_str,
+            (int(text_pt[0]), int(text_pt[1])),
+            font_face,
+            font_scale,
+            [255.0, 255.0, 255.0],
+            font_thickness,
+            cv2.LINE_AA,
+        )
 
     return np.array(img_numpy, np.uint8)
 
@@ -311,15 +330,15 @@ def _softmax(x):
 
 def _make_priors(anchors, img_size):
     priors = []
-    square_anchors = True if len(anchors['scales'][0]) == 1 else False
-    for conv_size, pred_scale in zip(anchors['feature_map'], anchors['scales']):
+    square_anchors = True if len(anchors["scales"][0]) == 1 else False
+    for conv_size, pred_scale in zip(anchors["feature_map"], anchors["scales"]):
         prior_data = []
         for j, i in product(range(conv_size), range(conv_size)):
             # +0.5 because priors are in center-size notation
             x = (i + 0.5) / conv_size
             y = (j + 0.5) / conv_size
             for scale in pred_scale:
-                for ar in anchors['aspect_ratios']:
+                for ar in anchors["aspect_ratios"]:
                     ar = sqrt(ar)
                     w = scale * ar / img_size
                     h = w if square_anchors else scale / ar / img_size
@@ -329,8 +348,7 @@ def _make_priors(anchors, img_size):
     return np.concatenate(priors, axis=-2)
 
 
-def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45,
-                        max_det=300, nm=32, multi_label=True):
+def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, max_det=300, nm=32, multi_label=True):
     """Non-Maximum Suppression (NMS) on inference results to reject overlapping detections
     Args:
         prediction: numpy.ndarray with shape (batch_size, num_proposals, 351)
@@ -349,10 +367,8 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45,
          }
     """
 
-    assert 0 <= conf_thres <= 1, \
-        f'Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0'
-    assert 0 <= iou_thres <= 1, \
-        f'Invalid IoU threshold {iou_thres}, valid values are between 0.0 and 1.0'
+    assert 0 <= conf_thres <= 1, f"Invalid Confidence threshold {conf_thres}, valid values are between 0.0 and 1.0"
+    assert 0 <= iou_thres <= 1, f"Invalid IoU threshold {iou_thres}, valid values are between 0.0 and 1.0"
 
     nc = prediction.shape[2] - nm - 5  # number of classes
     xc = prediction[..., 4] > conf_thres  # candidates
@@ -364,10 +380,14 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45,
         x = x[xc[xi]]  # confidence
         # If none remain process next image
         if not x.shape[0]:
-            output.append({'detection_boxes': np.zeros((0, 4)),
-                           'mask': np.zeros((0, 32)),
-                           'detection_classes': np.zeros((0, 80)),
-                           'detection_scores': np.zeros((0, 80))})
+            output.append(
+                {
+                    "detection_boxes": np.zeros((0, 4)),
+                    "mask": np.zeros((0, 32)),
+                    "detection_classes": np.zeros((0, 80)),
+                    "detection_scores": np.zeros((0, 80)),
+                }
+            )
             continue
 
         # Confidence = Objectness X Class Score
@@ -407,10 +427,7 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45,
         boxes = out[:, :4]
         masks = out[:, 6:]
 
-        out = {'detection_boxes': boxes,
-               'mask': masks,
-               'detection_classes': classes,
-               'detection_scores': scores}
+        out = {"detection_boxes": boxes, "mask": masks, "detection_classes": classes, "detection_scores": scores}
 
         output.append(out)
 
@@ -438,15 +455,14 @@ def crop_mask(masks, boxes):
     integer_boxes = np.ceil(boxes).astype(int)
     x1, y1, x2, y2 = np.array_split(np.where(integer_boxes > 0, integer_boxes, 0), 4, axis=1)
     for k in range(n_masks):
-        masks[k, :y1[k, 0], :] = 0
-        masks[k, y2[k, 0]:, :] = 0
-        masks[k, :, :x1[k, 0]] = 0
-        masks[k, :, x2[k, 0]:] = 0
+        masks[k, : y1[k, 0], :] = 0
+        masks[k, y2[k, 0] :, :] = 0
+        masks[k, :, : x1[k, 0]] = 0
+        masks[k, :, x2[k, 0] :] = 0
     return masks
 
 
-def process_mask(protos, masks_in, bboxes, shape, upsample=True,
-                 downsample=False):
+def process_mask(protos, masks_in, bboxes, shape, upsample=True, downsample=False):
     mh, mw, c = protos.shape
     ih, iw = shape
     masks = _sigmoid(masks_in @ protos.reshape((-1, c)).transpose((1, 0))).reshape((-1, mh, mw))
@@ -511,38 +527,34 @@ def yolov5_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
             'detection_scores':  numpy.ndarray with shape (num_detections, 80)
         }
     """
-    img_dims = kwargs['img_dims']
-    if kwargs.get('hpp', False):
+    img_dims = kwargs["img_dims"]
+    if kwargs.get("hpp", False):
         # the outputs where decoded by the emulator (as part of the network)
         # organizing the output for evaluation
         return _organize_hpp_yolov5_seg_outputs(endnodes, img_dims=img_dims)
 
     protos = endnodes[0]
-    outputs = list()
-    anchor_list = np.array(kwargs['anchors']['sizes'][::-1])
-    stride_list = kwargs['anchors']['strides'][::-1]
-    num_classes = kwargs['classes']
+    outputs = []
+    anchor_list = np.array(kwargs["anchors"]["sizes"][::-1])
+    stride_list = kwargs["anchors"]["strides"][::-1]
+    num_classes = kwargs["classes"]
 
     outputs = []
     for branch_idx, output in enumerate(endnodes[1:]):
-        decoded_info = _yolov5_decoding(branch_idx,
-                                        output,
-                                        stride_list,
-                                        anchor_list,
-                                        num_classes)
+        decoded_info = _yolov5_decoding(branch_idx, output, stride_list, anchor_list, num_classes)
         outputs.append(decoded_info)
 
     outputs = np.concatenate(outputs, 1)  # (BS, num_proposals, 117)
 
     # NMS
-    score_thres = kwargs['score_threshold']
-    iou_thres = kwargs['nms_iou_thresh']
+    score_thres = kwargs["score_threshold"]
+    iou_thres = kwargs["nms_iou_thresh"]
     outputs = non_max_suppression(outputs, score_thres, iou_thres, nm=protos.shape[-1])
     outputs = _finalize_detections_yolov5_seg(outputs, protos, **kwargs)
 
     # reorder and normalize bboxes
     for output in outputs:
-        output['detection_boxes'] = _normalize_yolov5_seg_bboxes(output, img_dims)
+        output["detection_boxes"] = _normalize_yolov5_seg_bboxes(output, img_dims)
     return outputs
 
 
@@ -555,16 +567,20 @@ def _organize_hpp_yolov5_seg_outputs(outputs, img_dims):
     batch_size, num_of_proposals = outputs.shape[0], outputs.shape[-1]
     outputs = np.transpose(np.squeeze(outputs, axis=1), [0, 2, 1])
     for i in range(batch_size):
-        predictions.append({'detection_boxes': outputs[i, :, :4][:, [1, 0, 3, 2]],
-                            'detection_scores': outputs[i, :, 4],
-                            'detection_classes': outputs[i, :, 5],
-                            'mask': outputs[i, :, 6:].reshape((num_of_proposals, *img_dims))})
+        predictions.append(
+            {
+                "detection_boxes": outputs[i, :, :4][:, [1, 0, 3, 2]],
+                "detection_scores": outputs[i, :, 4],
+                "detection_classes": outputs[i, :, 5],
+                "mask": outputs[i, :, 6:].reshape((num_of_proposals, *img_dims)),
+            }
+        )
     return predictions
 
 
 def _normalize_yolov5_seg_bboxes(output, img_dims):
     # normalizes bboxes and change the bboxes format to y_min, x_min, y_max, x_max
-    bboxes = output['detection_boxes']
+    bboxes = output["detection_boxes"]
     bboxes[:, [0, 2]] /= img_dims[1]
     bboxes[:, [1, 3]] /= img_dims[0]
 
@@ -573,13 +589,13 @@ def _normalize_yolov5_seg_bboxes(output, img_dims):
 
 def _finalize_detections_yolov5_seg(outputs, protos, **kwargs):
     for batch_idx, output in enumerate(outputs):
-        shape = kwargs.get('img_dims', None)
-        boxes = output['detection_boxes']
-        masks = output['mask']
+        shape = kwargs.get("img_dims", None)
+        boxes = output["detection_boxes"]
+        masks = output["mask"]
         proto = protos[batch_idx]
 
         masks = process_mask(proto, masks, boxes, shape, upsample=True)
-        output['mask'] = masks
+        output["mask"] = masks
 
     return outputs
 
@@ -587,7 +603,7 @@ def _finalize_detections_yolov5_seg(outputs, protos, **kwargs):
 def _make_grid(anchors, stride, bs=8, nx=20, ny=20):
     na = len(anchors) // 2
     y, x = np.arange(ny), np.arange(nx)
-    yv, xv = np.meshgrid(y, x, indexing='ij')
+    yv, xv = np.meshgrid(y, x, indexing="ij")
 
     grid = np.stack((xv, yv), 2)
     grid = np.stack([grid for _ in range(na)], 0) - 0.5
@@ -602,14 +618,13 @@ def _make_grid(anchors, stride, bs=8, nx=20, ny=20):
 
 
 def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2, num_groups=4, **kwargs):
-
-    inst_kernels_path = path_resolver.resolve_data_path(kwargs['postprocess_config_file'])
-    meta_arch = kwargs.get('meta_arch', 'sparseinst_giam')
-    inst_kernels = np.load(inst_kernels_path, allow_pickle=True)['arr_0'][()]
+    inst_kernels_path = path_resolver.resolve_data_path(kwargs["postprocess_config_file"])
+    meta_arch = kwargs.get("meta_arch", "sparseinst_giam")
+    inst_kernels = np.load(inst_kernels_path, allow_pickle=True)["arr_0"][()]
 
     mask_features = endnodes[0].copy()  # 80 x 80 x 128
-    features = endnodes[1].copy()       # 80 x 80 x 256
-    iam = endnodes[2].copy()            # 80 x 80 x 100
+    features = endnodes[1].copy()  # 80 x 80 x 256
+    iam = endnodes[2].copy()  # 80 x 80 x 100
     iam_prob = _sigmoid(iam)
 
     B, H, W, N = iam_prob.shape
@@ -618,59 +633,70 @@ def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2
     C = features.shape[-1]
     features = np.reshape(features, (B, H * W, C))
 
-    inst_features = list()
+    inst_features = []
     for batch_idx in range(B):
         np.expand_dims(np.matmul(iam_prob_trans[batch_idx], features[batch_idx]), axis=0)
         # for each and every batch element
-        inst_features.append(np.expand_dims(np.matmul(iam_prob_trans[batch_idx],
-                                                      features[batch_idx]), axis=0))
+        inst_features.append(np.expand_dims(np.matmul(iam_prob_trans[batch_idx], features[batch_idx]), axis=0))
     inst_features = np.vstack(inst_features)
 
     normalizer = np.clip(np.sum(iam_prob, axis=1), a_min=1e-6, a_max=None)
     inst_features /= normalizer[:, :, None]
 
-    if 'giam' in meta_arch:
+    if "giam" in meta_arch:
         inst_features = inst_features.reshape(B, num_groups, -1, C)
         inst_features = inst_features.transpose(0, 2, 1, 3)
         inst_features = inst_features.reshape((B, -1, num_groups * C))
 
-        features = list()
+        features = []
         for batch_idx in range(B):
-            features.append(np.expand_dims(np.matmul(inst_features[batch_idx],
-                                                     inst_kernels['fc']['weights'].transpose()), axis=0))
+            features.append(
+                np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels["fc"]["weights"].transpose()), axis=0)
+            )
         inst_features = np.vstack(features)
 
-        inst_features = inst_features + inst_kernels['fc']['bias']
-        inst_features[inst_features < 0.] = 0.
+        inst_features = inst_features + inst_kernels["fc"]["bias"]
+        inst_features[inst_features < 0.0] = 0.0
 
-    pred_logits = list()
-    pred_kernel = list()
-    pred_scores = list()
+    pred_logits = []
+    pred_kernel = []
+    pred_scores = []
     for batch_idx in range(B):
-        pred_scores.append(np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels['obj']['weights']), axis=0))
-        pred_kernel.append(np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels['mask_kernel']['weights']),
-                                          axis=0))
-        pred_logits.append(np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels['cls_score']['weights']),
-                                          axis=0))
-    pred_scores = np.vstack(pred_scores) + inst_kernels['obj']['bias']
-    pred_kernel = np.vstack(pred_kernel) + inst_kernels['mask_kernel']['bias']
-    pred_logits = np.vstack(pred_logits) + inst_kernels['cls_score']['bias']
+        pred_scores.append(np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels["obj"]["weights"]), axis=0))
+        pred_kernel.append(
+            np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels["mask_kernel"]["weights"]), axis=0)
+        )
+        pred_logits.append(
+            np.expand_dims(np.matmul(inst_features[batch_idx], inst_kernels["cls_score"]["weights"]), axis=0)
+        )
+    pred_scores = np.vstack(pred_scores) + inst_kernels["obj"]["bias"]
+    pred_kernel = np.vstack(pred_kernel) + inst_kernels["mask_kernel"]["bias"]
+    pred_logits = np.vstack(pred_logits) + inst_kernels["cls_score"]["bias"]
 
-    pred_masks = list()
+    pred_masks = []
     C = mask_features.shape[-1]
     for batch_idx in range(B):
-        pred_masks.append(np.expand_dims(
-                          np.matmul(pred_kernel[batch_idx],
-                                    np.transpose(mask_features.reshape(B, H * W, C), axes=[0, 2, 1])[batch_idx]),
-                          axis=0))
+        pred_masks.append(
+            np.expand_dims(
+                np.matmul(
+                    pred_kernel[batch_idx], np.transpose(mask_features.reshape(B, H * W, C), axes=[0, 2, 1])[batch_idx]
+                ),
+                axis=0,
+            )
+        )
     N = pred_kernel.shape[1]
     pred_masks = np.vstack(pred_masks).reshape(B, N, H, W)
     pred_masks_tmp = np.zeros((B, N, H * scale_factor, W * scale_factor))
 
     for i, _ in enumerate(pred_masks):
-        pred_masks_tmp[i] = np.transpose(cv2.resize(np.transpose(pred_masks[i], axes=(1, 2, 0)),
-                                                    (H * scale_factor, W * scale_factor),
-                                                    interpolation=cv2.INTER_LINEAR), axes=(2, 0, 1))
+        pred_masks_tmp[i] = np.transpose(
+            cv2.resize(
+                np.transpose(pred_masks[i], axes=(1, 2, 0)),
+                (H * scale_factor, W * scale_factor),
+                interpolation=cv2.INTER_LINEAR,
+            ),
+            axes=(2, 0, 1),
+        )
     pred_masks = np.vstack(pred_masks_tmp).reshape(B, N, H * scale_factor, W * scale_factor)
 
     pred_objectness = _sigmoid(pred_scores)
@@ -682,16 +708,16 @@ def sparseinst_postprocess(endnodes, device_pre_post_layers=None, scale_factor=2
 
 
 def _finalize_detections_sparseinst(pred_masks, pred_scores, **kwargs):
-    img_info = kwargs['gt_images']
-    hin, win = img_info['img_orig'].shape[1:3]
-    cls_threshold = kwargs.get('score_threshold', 0.005)
-    mask_threshold = kwargs.get('mask_threshold', 0.45)
+    img_info = kwargs["gt_images"]
+    hin, win = img_info["img_orig"].shape[1:3]
+    cls_threshold = kwargs.get("score_threshold", 0.005)
+    mask_threshold = kwargs.get("mask_threshold", 0.45)
 
     outputs = []
     for idx, (scores_per_image, masks_per_image) in enumerate(zip(pred_scores, pred_masks)):
         output = {}
-        hout, wout = img_info['height'][idx], img_info['width'][idx]
-        h_resized, w_resized = img_info['resized_height'][idx], img_info['resized_width'][idx]
+        hout, wout = img_info["height"][idx], img_info["width"][idx]
+        h_resized, w_resized = img_info["resized_height"][idx], img_info["resized_width"][idx]
 
         scores = np.max(scores_per_image, axis=-1)
         labels = np.argmax(scores_per_image, axis=-1)
@@ -701,27 +727,29 @@ def _finalize_detections_sparseinst(pred_masks, pred_scores, **kwargs):
         masks_per_image = masks_per_image[keep]
 
         if not scores.shape[0]:
-            output['detection_scores'] = scores
-            output['detection_classes'] = labels
+            output["detection_scores"] = scores
+            output["detection_classes"] = labels
             outputs.append(output)
             continue
 
         scores = _rescoring_mask(scores, masks_per_image > mask_threshold, masks_per_image)
 
         # (1) upsampling the masks to input size, remove the padding area
-        masks_per_image = np.transpose(cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)),
-                                                  (hin, win), interpolation=cv2.INTER_LINEAR),
-                                       axes=(2, 1, 0))[:, :h_resized, :w_resized]
+        masks_per_image = np.transpose(
+            cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)), (hin, win), interpolation=cv2.INTER_LINEAR),
+            axes=(2, 1, 0),
+        )[:, :h_resized, :w_resized]
 
         # (2) upsampling/downsampling the masks to the original sizes
-        masks_per_image = np.transpose(cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)),
-                                                  (hout, wout), interpolation=cv2.INTER_LINEAR),
-                                       axes=(2, 1, 0))
-        output['mask'] = masks_per_image
-        output['detection_scores'] = scores
-        output['detection_classes'] = labels
-        output['orig_shape'] = img_info['height'][idx], img_info['width'][idx]
-        output['resized_shape'] = img_info['resized_height'][idx], img_info['resized_width'][idx]
+        masks_per_image = np.transpose(
+            cv2.resize(np.transpose(masks_per_image, axes=(2, 1, 0)), (hout, wout), interpolation=cv2.INTER_LINEAR),
+            axes=(2, 1, 0),
+        )
+        output["mask"] = masks_per_image
+        output["detection_scores"] = scores
+        output["detection_classes"] = labels
+        output["orig_shape"] = img_info["height"][idx], img_info["width"][idx]
+        output["resized_shape"] = img_info["resized_height"][idx], img_info["resized_width"][idx]
         outputs.append(output)
 
     return outputs
@@ -748,24 +776,24 @@ def _get_pol_area(x, y):
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1)))
 
 
-def visualize_sparseinst_results(detections, img, class_names=None, alpha=0.5,
-                                 confidence_threshold=0.5, mask_thresh=0.45, **kwargs):
-
+def visualize_sparseinst_results(
+    detections, img, class_names=None, alpha=0.5, confidence_threshold=0.5, mask_thresh=0.45, **kwargs
+):
     img_idx = 0
     img_out = img[img_idx].copy()
 
-    output_shape = detections['orig_shape']
-    resized_shape = detections['resized_shape']
-    keep = detections['detection_scores'] > confidence_threshold
-    scores = detections['detection_scores'][keep]
-    classes = detections['detection_classes'][keep]
-    masks = detections['mask'][keep]
+    output_shape = detections["orig_shape"]
+    resized_shape = detections["resized_shape"]
+    keep = detections["detection_scores"] > confidence_threshold
+    scores = detections["detection_scores"][keep]
+    classes = detections["detection_classes"][keep]
+    masks = detections["mask"][keep]
 
     # Binarize the masks
     masks = masks > mask_thresh
 
     # remove padding
-    img_out = img_out[:resized_shape[0], :resized_shape[1], :]
+    img_out = img_out[: resized_shape[0], : resized_shape[1], :]
     img_out = cv2.resize(img_out, output_shape[::-1], interpolation=cv2.INTER_LINEAR)
 
     for idx, mask in enumerate(masks):
@@ -786,45 +814,51 @@ def visualize_sparseinst_results(detections, img, class_names=None, alpha=0.5,
         pol_areas = []
         for pol in polygons:
             pol_areas.append(_get_pol_area(pol[::2], pol[1::2]))
-            img_out = cv2.polylines(img_out, [pol.reshape((-1, 1, 2)).astype(np.int32)],
-                                    isClosed=True, color=color, thickness=2)
+            img_out = cv2.polylines(
+                img_out, [pol.reshape((-1, 1, 2)).astype(np.int32)], isClosed=True, color=color, thickness=2
+            )
 
         # Draw class and score info
         score = "{:.0f}".format(100 * scores[idx])
         label = f"{CLASS_NAMES_COCO[classes[idx]]}"
-        text = label + ': ' + score + '%'
+        text = label + ": " + score + "%"
         x0, y0 = int(np.mean(polygons[np.argmax(pol_areas)][::2])), int(np.mean(polygons[np.argmax(pol_areas)][1::2]))
-        (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                    fontScale=0.5, thickness=2)
+        (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5, thickness=2)
         org = (x0 - w // 2, y0 - h // 2)
-        # Black rectangle for label backround
+        # Black rectangle for label background
         deltaY = max(h - org[1], 0)
         deltaX = max(-org[0], 0)
-        img_out[np.max([org[1] - h, 0]):org[1] + h // 2 + deltaY,
-                np.max([org[0], 0]):org[0] + w + deltaX, :] = [0, 0, 0]
+        img_out[np.max([org[1] - h, 0]) : org[1] + h // 2 + deltaY, np.max([org[0], 0]) : org[0] + w + deltaX, :] = [
+            0,
+            0,
+            0,
+        ]
 
-        img_out = cv2.putText(img_out, text,
-                              org=(max(org[0], 0), max(org[1], 0)),
-                              fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                              fontScale=0.5,
-                              color=color,
-                              thickness=2,
-                              lineType=cv2.FILLED)
+        img_out = cv2.putText(
+            img_out,
+            text,
+            org=(max(org[0], 0), max(org[1], 0)),
+            fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+            fontScale=0.5,
+            color=color,
+            thickness=2,
+            lineType=cv2.FILLED,
+        )
 
     return img_out
 
 
-def yolact_postprocessing(endnodes, device_pre_post_layers=None,
-                          score_thresh=0.2, crop_masks=True, **kwargs):
+def yolact_postprocessing(endnodes, device_pre_post_layers=None, score_thresh=0.2, crop_masks=True, **kwargs):
     channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
     if channels_remove:
-        mask_list = list(np.where(np.array(kwargs['channels_remove']['mask'][0]) == 0)[0])
-        num_classes = kwargs['classes'] - int(len(mask_list))
+        mask_list = list(np.where(np.array(kwargs["channels_remove"]["mask"][0]) == 0)[0])
+        num_classes = kwargs["classes"] - int(len(mask_list))
     else:
-        num_classes = kwargs['classes']
-    priors = _make_priors(kwargs['anchors'], kwargs['img_dims'][0])
-    proto, bbox0, mask0, conf0, bbox1, mask1, conf1, bbox2, mask2, \
-        conf2, bbox3, mask3, conf3, bbox4, mask4, conf4 = endnodes
+        num_classes = kwargs["classes"]
+    priors = _make_priors(kwargs["anchors"], kwargs["img_dims"][0])
+    proto, bbox0, mask0, conf0, bbox1, mask1, conf1, bbox2, mask2, conf2, bbox3, mask3, conf3, bbox4, mask4, conf4 = (
+        endnodes
+    )
     bbox0 = np.reshape(bbox0, [bbox0.shape[0], -1, 4])
     bbox1 = np.reshape(bbox1, [bbox1.shape[0], -1, 4])
     bbox2 = np.reshape(bbox2, [bbox2.shape[0], -1, 4])
@@ -843,8 +877,9 @@ def yolact_postprocessing(endnodes, device_pre_post_layers=None,
     mask3 = np.reshape(mask3, [mask3.shape[0], -1, 32])
     mask4 = np.reshape(mask4, [mask4.shape[0], -1, 32])
     mask = np.concatenate([mask0, mask1, mask2, mask3, mask4], axis=-2)
-    detect = Detect(num_classes, bkg_label=0, top_k=200, conf_thresh=kwargs['score_threshold'],
-                    nms_thresh=kwargs['nms_iou_thresh'])
+    detect = Detect(
+        num_classes, bkg_label=0, top_k=200, conf_thresh=kwargs["score_threshold"], nms_thresh=kwargs["nms_iou_thresh"]
+    )
 
     det_output = detect(loc, proto, conf, mask, priors)
 
@@ -852,37 +887,38 @@ def yolact_postprocessing(endnodes, device_pre_post_layers=None,
 
 
 def _finalize_detections_yolact(det_output, protos, score_thresh=0.2, crop_masks=True, **kwargs):
-
     outputs = []
     for batch_idx, dets in enumerate(det_output):
         proto = protos[batch_idx]
-        empty_output = {'detection_boxes': np.zeros((0, 4)),
-                        'mask': np.zeros((proto.shape[0], proto.shape[1], 0)),
-                        'detection_classes': np.zeros(0),
-                        'detection_scores': np.zeros(0)}
+        empty_output = {
+            "detection_boxes": np.zeros((0, 4)),
+            "mask": np.zeros((proto.shape[0], proto.shape[1], 0)),
+            "detection_classes": np.zeros(0),
+            "detection_scores": np.zeros(0),
+        }
 
         if dets is None:
             outputs.append(empty_output)
             continue
 
         if score_thresh > 0:
-            keep = dets['detection_scores'] > score_thresh
+            keep = dets["detection_scores"] > score_thresh
             for k in dets:
-                if k != 'proto':
+                if k != "proto":
                     dets[k] = dets[k][keep]
 
-            if dets['detection_scores'].shape[0] == 0:
+            if dets["detection_scores"].shape[0] == 0:
                 outputs.append(empty_output)
                 continue
 
         # Actually extract everything from dets now
-        classes = dets['detection_classes']
-        boxes = dets['detection_boxes']
-        scores = dets['detection_scores']
-        masks = dets['mask']
+        classes = dets["detection_classes"]
+        boxes = dets["detection_boxes"]
+        scores = dets["detection_scores"]
+        masks = dets["mask"]
 
         # At this points masks is only the coefficients
-        proto_data = dets['proto']
+        proto_data = dets["proto"]
 
         # Test flag, do not upvote
 
@@ -894,10 +930,10 @@ def _finalize_detections_yolact(det_output, protos, score_thresh=0.2, crop_masks
             masks = _crop(masks, boxes)
 
         output = {}
-        output['detection_boxes'] = boxes
-        output['mask'] = masks
-        output['detection_scores'] = scores
-        output['detection_classes'] = classes
+        output["detection_boxes"] = boxes
+        output["mask"] = masks
+        output["detection_scores"] = scores
+        output["detection_classes"] = classes
         outputs.append(output)
 
     return outputs
@@ -918,7 +954,8 @@ def _yolov8_decoding(raw_boxes, strides, image_dims, reg_max):
         # box distribution to distance
         reg_range = np.arange(reg_max + 1)
         box_distribute = np.reshape(
-            box_distribute, (-1, box_distribute.shape[1] * box_distribute.shape[2], 4, reg_max + 1))
+            box_distribute, (-1, box_distribute.shape[1] * box_distribute.shape[2], 4, reg_max + 1)
+        )
         box_distance = _softmax(box_distribute)
         box_distance = box_distance * np.reshape(reg_range, (1, 1, 1, -1))
         box_distance = np.sum(box_distance, axis=-1)
@@ -961,17 +998,17 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
             'detection_scores':  numpy.ndarray with shape (num_detections, 80)
         }
     """
-    num_classes = kwargs['classes']
-    strides = kwargs['anchors']['strides'][::-1]
-    image_dims = tuple(kwargs['img_dims'])
-    reg_max = kwargs['anchors']['regression_length']
+    num_classes = kwargs["classes"]
+    strides = kwargs["anchors"]["strides"][::-1]
+    image_dims = tuple(kwargs["img_dims"])
+    reg_max = kwargs["anchors"]["regression_length"]
     raw_boxes = endnodes[:7:3]
     scores = [np.reshape(s, (-1, s.shape[1] * s.shape[2], num_classes)) for s in endnodes[1:8:3]]
     scores = np.concatenate(scores, axis=1)
     outputs = []
     decoded_boxes = _yolov8_decoding(raw_boxes, strides, image_dims, reg_max)
-    score_thres = kwargs['score_threshold']
-    iou_thres = kwargs['nms_iou_thresh']
+    score_thres = kwargs["score_threshold"]
+    iou_thres = kwargs["nms_iou_thresh"]
     proto_data = endnodes[9]
     batch_size, _, _, n_masks = proto_data.shape
 
@@ -990,60 +1027,52 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     outputs = []
     for b in range(batch_size):
         protos = proto_data[b]
-        masks = process_mask(protos, nms_res[b]['mask'], nms_res[b]
-                             ['detection_boxes'], image_dims, upsample=True)
+        masks = process_mask(protos, nms_res[b]["mask"], nms_res[b]["detection_boxes"], image_dims, upsample=True)
         output = {}
-        output['detection_boxes'] = np.array(nms_res[b]['detection_boxes'])
+        output["detection_boxes"] = np.array(nms_res[b]["detection_boxes"])
         if masks is not None:
-            output['mask'] = np.transpose(masks, (0, 1, 2))
+            output["mask"] = np.transpose(masks, (0, 1, 2))
         else:
-            output['mask'] = masks
-        output['detection_scores'] = np.array(nms_res[b]['detection_scores'])
-        output['detection_classes'] = np.array(nms_res[b]['detection_classes']).astype(int)
+            output["mask"] = masks
+        output["detection_scores"] = np.array(nms_res[b]["detection_scores"])
+        output["detection_classes"] = np.array(nms_res[b]["detection_classes"]).astype(int)
         outputs.append(output)
     return outputs
 
 
 @POSTPROCESS_FACTORY.register(name="instance_segmentation")
 def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    meta_arch = kwargs.get('meta_arch', '')
-    if 'sparseinst' in meta_arch:
-        predictions = sparseinst_postprocess(endnodes,
-                                             device_pre_post_layers=device_pre_post_layers,
-                                             **kwargs)
-    elif 'yolov5_seg' in meta_arch:
-        predictions = yolov5_seg_postprocess(endnodes,
-                                             device_pre_post_layers=device_pre_post_layers,
-                                             **kwargs)
-    elif 'yolact' in meta_arch:
-        predictions = yolact_postprocessing(endnodes,
-                                            device_pre_post_layers=device_pre_post_layers,
-                                            **kwargs)
-    elif 'yolov8_seg' in meta_arch:
-        predictions = yolov8_seg_postprocess(endnodes,
-                                             device_pre_post_layers=device_pre_post_layers,
-                                             **kwargs)
+    meta_arch = kwargs.get("meta_arch", "")
+    if "sparseinst" in meta_arch:
+        predictions = sparseinst_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
+    elif "yolov5_seg" in meta_arch:
+        predictions = yolov5_seg_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
+    elif "yolact" in meta_arch:
+        predictions = yolact_postprocessing(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
+    elif "yolov8_seg" in meta_arch:
+        predictions = yolov8_seg_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     else:
-        raise NotImplementedError(f'Postprocessing {meta_arch} not found')
-    return {'predictions': predictions}
+        raise NotImplementedError(f"Postprocessing {meta_arch} not found")
+    return {"predictions": predictions}
 
 
-def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, score_thres=0.25,
-                                 mask_thresh=0.5, max_boxes_to_draw=20, **kwargs):
+def visualize_yolov5_seg_results(
+    detections, img, class_names=None, alpha=0.5, score_thres=0.25, mask_thresh=0.5, max_boxes_to_draw=20, **kwargs
+):
     img_idx = 0
     img_out = img[img_idx].copy()
 
-    boxes = detections['detection_boxes']
+    boxes = detections["detection_boxes"]
 
     # scales the box to input shape
     boxes[:, 0::2] *= img_out.shape[1]
     boxes[:, 1::2] *= img_out.shape[0]
 
-    masks = detections['mask'] > mask_thresh
-    scores = detections['detection_scores']
-    classes = detections['detection_classes']
+    masks = detections["mask"] > mask_thresh
+    scores = detections["detection_scores"]
+    classes = detections["detection_classes"]
     # for SAM model we want to skip boxes and draw only the masks (single class)
-    skip_boxes = kwargs.get('meta_arch', '') == 'yolov8_seg_postprocess' and kwargs.get('classes', '') == 1
+    skip_boxes = kwargs.get("meta_arch", "") == "yolov8_seg_postprocess" and kwargs.get("classes", "") == 1
 
     keep = scores > score_thres
     boxes = boxes[keep]
@@ -1064,11 +1093,7 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
         color = np.random.randint(low=0, high=255, size=3, dtype=np.uint8)
         # Draw bbox
         if not skip_boxes:
-            img_out = cv2.rectangle(img_out,
-                                    (xmin, ymin),
-                                    (xmax, ymax),
-                                    [int(c) for c in color],
-                                    3)
+            img_out = cv2.rectangle(img_out, (xmin, ymin), (xmax, ymax), [int(c) for c in color], 3)
 
         if not np.sum(mask):
             continue
@@ -1083,49 +1108,58 @@ def visualize_yolov5_seg_results(detections, img, class_names=None, alpha=0.5, s
         pol_areas = []
         for pol in polygons:
             pol_areas.append(_get_pol_area(pol[::2], pol[1::2]))
-            img_out = cv2.polylines(img_out, [pol.reshape((-1, 1, 2)).astype(np.int32)],
-                                    isClosed=True, color=color, thickness=1)
+            img_out = cv2.polylines(
+                img_out, [pol.reshape((-1, 1, 2)).astype(np.int32)], isClosed=True, color=color, thickness=1
+            )
 
         # Draw class and score info
         if not skip_boxes:
             label = f"{CLASS_NAMES_COCO[int(classes[idx])]}"
             score = "{:.0f}".format(100 * scores[idx])
 
-            text = label + ': ' + score + '%'
-            (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                        fontScale=0.5, thickness=2)
+            text = label + ": " + score + "%"
+            (w, h), _ = cv2.getTextSize(text, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5, thickness=2)
             org = (xmin, ymin)
-            # Rectangle for label backround
+            # Rectangle for label background
             deltaY = max(h - org[1], 0)
             deltaX = max(-org[0], 0)
-            img_out[np.max([org[1] - h, 0]):org[1] + h // 2 + deltaY,
-                    np.max([org[0], 0]):org[0] + w + deltaX, :] = color
+            img_out[
+                np.max([org[1] - h, 0]) : org[1] + h // 2 + deltaY, np.max([org[0], 0]) : org[0] + w + deltaX, :
+            ] = color
 
-            img_out = cv2.putText(img_out, text,
-                                  org=(xmin, ymin),
-                                  fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                                  fontScale=0.5,
-                                  color=[255, 255, 255],
-                                  thickness=2,
-                                  lineType=cv2.FILLED)
+            img_out = cv2.putText(
+                img_out,
+                text,
+                org=(xmin, ymin),
+                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5,
+                color=[255, 255, 255],
+                thickness=2,
+                lineType=cv2.FILLED,
+            )
 
     return img_out
 
 
 @VISUALIZATION_FACTORY.register(name="instance_segmentation")
 def visualize_instance_segmentation_result(detections, img, **kwargs):
-    detections = detections['predictions']
-    meta_arch = kwargs.get('meta_arch', '')
-    dataset_name = kwargs.get('dataset_name', None)
+    detections = detections["predictions"]
+    meta_arch = kwargs.get("meta_arch", "")
+    dataset_name = kwargs.get("dataset_name", None)
     dataset_info = get_dataset_info(dataset_name=dataset_name)
 
-    if 'sparseinst' in meta_arch:
+    if "sparseinst" in meta_arch:
         return visualize_sparseinst_results(detections, img, class_names=dataset_info.class_names, **kwargs)
-    elif 'yolov5_seg' or 'yolov8_seg' in meta_arch:
+    elif "yolov5_seg" or "yolov8_seg" in meta_arch:
         return visualize_yolov5_seg_results(detections, img, class_names=dataset_info.class_names, **kwargs)
-    elif 'yolact' in meta_arch:
+    elif "yolact" in meta_arch:
         channels_remove = kwargs["channels_remove"]
-        return prep_display(dets_out=detections, img=img[0], score_threshold=0.2,
-                            channels_remove=channels_remove, class_names=dataset_info.class_names)
+        return prep_display(
+            dets_out=detections,
+            img=img[0],
+            score_threshold=0.2,
+            channels_remove=channels_remove,
+            class_names=dataset_info.class_names,
+        )
     else:
-        raise NotImplementedError(f'Visualization {meta_arch} not found')
+        raise NotImplementedError(f"Visualization {meta_arch} not found")

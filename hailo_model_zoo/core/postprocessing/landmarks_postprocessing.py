@@ -7,18 +7,18 @@ from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACT
 
 @POSTPROCESS_FACTORY.register(name="face_landmark_detection")
 def face_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    shape = kwargs['img_dims']
-    return {'predictions': endnodes * shape[0]}
+    shape = kwargs["img_dims"]
+    return {"predictions": endnodes * shape[0]}
 
 
 @POSTPROCESS_FACTORY.register(name="landmark_detection")
 def hand_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    return {'predictions': endnodes[0]}
+    return {"predictions": endnodes[0]}
 
 
 @VISUALIZATION_FACTORY.register(name="face_landmark_detection")
 def visualize_face_landmarks_result(logits, image, **kwargs):
-    logits = logits['predictions']
+    logits = logits["predictions"]
     img = Image.fromarray(image[0])
     img_draw = ImageDraw.Draw(img)
     img_draw.point(logits[0], fill=(255, 255, 255))
@@ -27,7 +27,7 @@ def visualize_face_landmarks_result(logits, image, **kwargs):
 
 @VISUALIZATION_FACTORY.register(name="landmark_detection")
 def visualize_hand_landmarks_result(logits, image, **kwargs):
-    logits = logits['predictions'][0]
+    logits = logits["predictions"][0]
     img = image[0]
     pts = [int(x) for i, x in enumerate(logits) if (i + 1) % 3 != 0]
     for i in range(len(pts)):

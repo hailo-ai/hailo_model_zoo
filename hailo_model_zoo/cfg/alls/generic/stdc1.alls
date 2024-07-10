@@ -1,3 +1,5 @@
 stdc1/normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
+pre_quantization_optimization(global_avgpool_reduction, layers=avgpool7, division_factors=[128, 1])
 post_quantization_optimization(finetune, policy=enabled, dataset_size=512, epochs=6, loss_layer_names=[conv33], loss_types=[l2])
+allocator_param(timeout=25m)

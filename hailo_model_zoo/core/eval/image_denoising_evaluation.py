@@ -10,7 +10,7 @@ from hailo_model_zoo.core.factory import EVAL_FACTORY
 class ImageDenoisingEval(SuperResolutionEval):
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)
-        self._psnr += self.evaluate_psnr(net_output, gt_labels['img'], gt_labels['height'], gt_labels['width'])
+        self._psnr += self.evaluate_psnr(net_output, gt_labels["img"], gt_labels["height"], gt_labels["width"])
 
     def evaluate_psnr(self, y_pred, y_true, height, width):
         psnr_list = []

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from hailo_model_zoo.core.eval.eval_result import EvalResult
 
 
@@ -31,8 +32,9 @@ class Eval(ABC):
 
     def get_accuracy(self):
         result_dict = self._get_accuracy()
-        return [EvalResult(value=value,
-                           name=key,
-                           is_percentage=self.is_percentage(),
-                           is_bigger_better=self.is_bigger_better())
-                for key, value in result_dict.items()]
+        return [
+            EvalResult(
+                value=value, name=key, is_percentage=self.is_percentage(), is_bigger_better=self.is_bigger_better()
+            )
+            for key, value in result_dict.items()
+        ]

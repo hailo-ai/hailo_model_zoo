@@ -1,28 +1,32 @@
-import numpy as np
 import copy
+
+import numpy as np
 
 
 class LayerSplitter(object):
     def __init__(self, runner, network_info, split_fc=False):
-        supported_networks = ['yolov3',
-                              'yolov3_gluon',
-                              'yolov3_416',
-                              'yolov3_gluon_416',
-                              'yolov4_leaky',
-                              'yolov4_leaky_yuy2',
-                              'yolov4',
-                              'tiny_yolov4',
-                              'tiny_yolov4_license_plates',
-                              'tiny_yolov4_license_plates_yuy2',
-                              'polylanenet_resnet_v1_34',
-                              'smoke_regnetx_800mf']
+        supported_networks = [
+            "yolov3",
+            "yolov3_gluon",
+            "yolov3_416",
+            "yolov3_gluon_416",
+            "yolov4_leaky",
+            "yolov4_leaky_yuy2",
+            "yolov4",
+            "tiny_yolov4",
+            "tiny_yolov4_license_plates",
+            "tiny_yolov4_license_plates_yuy2",
+            "polylanenet_resnet_v1_34",
+            "smoke_regnetx_800mf",
+        ]
         self._runner = runner
         self._hn = self._runner.get_hn()
         self._npz = self._runner.get_params()
         self._layer_names = network_info.hn_editor.output_scheme.outputs_to_split
         self._split_type = self._get_network_name()
-        assert self._split_type in supported_networks, \
-            'LayerSplitter does not yet support {} network architecture.'.format(self._split_type)
+        assert (
+            self._split_type in supported_networks
+        ), "LayerSplitter does not yet support {} network architecture.".format(self._split_type)
         if network_info.postprocessing.anchors.sizes is not None:
             self._num_anchors = len(network_info.postprocessing.anchors.sizes[0]) // 2
         self._num_classes = network_info.evaluation.classes
@@ -45,22 +49,22 @@ class LayerSplitter(object):
         self._clear_names_and_shapes_of_prev_layer_outputs()
         self._clear_net_params_output_layer_order()
         for layer in self._layer_names:
-            if 'polylanenet' in self._split_type:
+            if "polylanenet" in self._split_type:
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_polylanenet_hn_layer(layer)
-            elif 'yolo' in self._split_type:
+            elif "yolo" in self._split_type:
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
-            elif 'tiny_yolov4' in self._split_type:
+            elif "tiny_yolov4" in self._split_type:
                 output_layer_ordinals = list(range(0, self._max_layers))
                 split_names, split_kernel_shapes = self.split_yolov3_hn_layer(layer)
-            elif 'smoke' in self._split_type:
+            elif "smoke" in self._split_type:
                 output_layer_ordinals = [0, 1, 3, 4, 5, 6]
                 split_names, split_kernel_shapes = self.split_smoke_hn_layer(layer)
             for split_name, split_kernel_shape in zip(split_names, split_kernel_shapes):
                 output_index += 1
                 self._add_layer_to_hn(split_name, split_kernel_shape, layer, output_layer_ordinals[output_index])
-            del (self._hn_modified["layers"][layer])
+            del self._hn_modified["layers"][layer]
 
     def split_polylanenet_hn_layer(self, layer):
         kernel_shape = self._hn_modified["layers"][layer]["params"]["kernel_shape"]
@@ -143,7 +147,7 @@ class LayerSplitter(object):
         split_kernel_shapes.append(depth_kernel_shape)
 
         """adding conv68 although it's not split because it needs to secure an output layer:"""
-        self._hn_modified["net_params"]["output_layers_order"].append(f'{self._get_network_name()}/conv68')
+        self._hn_modified["net_params"]["output_layers_order"].append(f"{self._get_network_name()}/conv68")
 
         offset_name = layer + "_offset"
         offset_kernel_shape = kernel_shape[:3]
@@ -199,32 +203,37 @@ class LayerSplitter(object):
         self._hn_modified["layers"][output_layer_name]["original_names"] = ["out"]
 
     def _check_which_layers_to_remove(self):
-        if 'smoke' in self._split_type:
+        if "smoke" in self._split_type:
             return [1]
         else:
             return None
 
     def _remove_output_layers(self):
         layer_list = self._check_which_layers_to_remove()
-        output_layers = [layer for layer in self._hn_modified["layers"] if
-                         self._hn_modified["layers"][layer]["type"] == "output_layer"]
+        output_layers = [
+            layer
+            for layer in self._hn_modified["layers"]
+            if self._hn_modified["layers"][layer]["type"] == "output_layer"
+        ]
         if layer_list:
             for layer in output_layers:
-                if layer not in [f'{self._get_network_name()}/output_layer{ind}' for ind in layer_list]:
+                if layer not in [f"{self._get_network_name()}/output_layer{ind}" for ind in layer_list]:
                     output_layers.remove(layer)
 
         while len(output_layers) > 0:
             output_layer = output_layers.pop()
-            del (self._hn_modified["layers"][output_layer])
+            del self._hn_modified["layers"][output_layer]
 
     def _clear_names_and_shapes_of_prev_layer_outputs(self):
         for layer in self._layer_names:
             for modified_l in self._hn_modified["layers"]:
                 if layer in self._hn_modified["layers"][modified_l]["output"]:
-                    self._hn_modified["layers"][modified_l]["output"] = \
-                        [x for x in self._hn_modified["layers"][modified_l]["output"] if x != layer]
-                    self._hn_modified["layers"][modified_l]["output_shapes"] = \
-                        [x for x in self._hn_modified["layers"][modified_l]["output_shapes"] if x != layer]
+                    self._hn_modified["layers"][modified_l]["output"] = [
+                        x for x in self._hn_modified["layers"][modified_l]["output"] if x != layer
+                    ]
+                    self._hn_modified["layers"][modified_l]["output_shapes"] = [
+                        x for x in self._hn_modified["layers"][modified_l]["output_shapes"] if x != layer
+                    ]
 
     def _clear_net_params_output_layer_order(self):
         self._hn_modified["net_params"]["output_layers_order"] = []
@@ -236,17 +245,17 @@ class LayerSplitter(object):
 
     def _split_layer_in_npz(self, layer):
         """replacing a layer entry in the npz with 4 layers"""
-        if 'polylanenet' in self._split_type:
+        if "polylanenet" in self._split_type:
             self._remodel_polylanenet_weights_and_biases_for_layer(layer)
-        elif 'yolo' in self._split_type:
+        elif "yolo" in self._split_type:
             self._remodel_yolov3_weights_and_biases_for_layer(layer)
-        elif 'tiny_yolov4' in self._split_type:
+        elif "tiny_yolov4" in self._split_type:
             self._remodel_yolov3_weights_and_biases_for_layer(layer)
-        elif 'smoke' in self._split_type:
+        elif "smoke" in self._split_type:
             self._remodel_smoke_weights_and_biases_for_layer(layer)
 
-        del (self._npz_modified[layer + '/kernel:0'])
-        del (self._npz_modified[layer + '/bias:0'])
+        del self._npz_modified[layer + "/kernel:0"]
+        del self._npz_modified[layer + "/bias:0"]
 
     def _remodel_polylanenet_weights_and_biases_for_layer(self, layer):
         """remodeling a single output layer"""
@@ -258,22 +267,22 @@ class LayerSplitter(object):
         coeffs_1_2_bias_list = []
         coeffs_3_4_weight_list = []
         coeffs_3_4_bias_list = []
-        weights = copy.deepcopy(self._npz_modified[layer + '/kernel:0'])
-        biases = copy.deepcopy(self._npz_modified[layer + '/bias:0'])
+        weights = copy.deepcopy(self._npz_modified[layer + "/kernel:0"])
+        biases = copy.deepcopy(self._npz_modified[layer + "/bias:0"])
         for anchor in range(self._num_anchors):
             """in polylanenet #anchors==#lanes"""
             """cherry-picking the weight elements for the 4 new output layer"""
             offset = anchor * (self._num_lane_coeffs + 3)
             """the weights:"""
-            confs_weight_list.append(weights[:, offset: offset + 1])
-            lower_upper_weight_list.append(weights[:, offset + 1: offset + 3])
-            coeffs_1_2_weight_list.append(weights[:, offset + 3: offset + 5])
-            coeffs_3_4_weight_list.append(weights[:, offset + 5: offset + 7])
+            confs_weight_list.append(weights[:, offset : offset + 1])
+            lower_upper_weight_list.append(weights[:, offset + 1 : offset + 3])
+            coeffs_1_2_weight_list.append(weights[:, offset + 3 : offset + 5])
+            coeffs_3_4_weight_list.append(weights[:, offset + 5 : offset + 7])
             """the biases:"""
-            confs_bias_list.append(biases[offset: offset + 1])
-            lower_upper_bias_list.append(biases[offset + 1: offset + 3])
-            coeffs_1_2_bias_list.append(biases[offset + 3: offset + 5])
-            coeffs_3_4_bias_list.append(biases[offset + 5: offset + 7])
+            confs_bias_list.append(biases[offset : offset + 1])
+            lower_upper_bias_list.append(biases[offset + 1 : offset + 3])
+            coeffs_1_2_bias_list.append(biases[offset + 3 : offset + 5])
+            coeffs_3_4_bias_list.append(biases[offset + 5 : offset + 7])
 
         confs_weights = np.concatenate(confs_weight_list, 1)
         lower_upper_weights = np.concatenate(lower_upper_weight_list, 1)
@@ -284,17 +293,17 @@ class LayerSplitter(object):
         coeffs_1_2_biases = np.concatenate(coeffs_1_2_bias_list, 0)
         coeffs_3_4_biases = np.concatenate(coeffs_3_4_bias_list, 0)
 
-        self._npz_modified[layer + '_confs/kernel:0'] = confs_weights
-        self._npz_modified[layer + '_confs/bias:0'] = confs_biases
+        self._npz_modified[layer + "_confs/kernel:0"] = confs_weights
+        self._npz_modified[layer + "_confs/bias:0"] = confs_biases
 
-        self._npz_modified[layer + '_lower_upper/kernel:0'] = lower_upper_weights
-        self._npz_modified[layer + '_lower_upper/bias:0'] = lower_upper_biases
+        self._npz_modified[layer + "_lower_upper/kernel:0"] = lower_upper_weights
+        self._npz_modified[layer + "_lower_upper/bias:0"] = lower_upper_biases
 
-        self._npz_modified[layer + '_coeffs_1_2/kernel:0'] = coeffs_1_2_weights
-        self._npz_modified[layer + '_coeffs_1_2/bias:0'] = coeffs_1_2_biases
+        self._npz_modified[layer + "_coeffs_1_2/kernel:0"] = coeffs_1_2_weights
+        self._npz_modified[layer + "_coeffs_1_2/bias:0"] = coeffs_1_2_biases
 
-        self._npz_modified[layer + '_coeffs_3_4/kernel:0'] = coeffs_3_4_weights
-        self._npz_modified[layer + '_coeffs_3_4/bias:0'] = coeffs_3_4_biases
+        self._npz_modified[layer + "_coeffs_3_4/kernel:0"] = coeffs_3_4_weights
+        self._npz_modified[layer + "_coeffs_3_4/bias:0"] = coeffs_3_4_biases
 
     def _remodel_yolov3_weights_and_biases_for_layer(self, layer):
         """remodeling a single output layer"""
@@ -306,21 +315,21 @@ class LayerSplitter(object):
         obj_bias_list = []
         probs_weight_list = []
         probs_bias_list = []
-        weights = copy.deepcopy(self._npz_modified[layer + '/kernel:0'])
-        biases = copy.deepcopy(self._npz_modified[layer + '/bias:0'])
+        weights = copy.deepcopy(self._npz_modified[layer + "/kernel:0"])
+        biases = copy.deepcopy(self._npz_modified[layer + "/bias:0"])
         for anchor in range(self._num_anchors):
             """cherry-picking the weight elements for the 4 new output layer"""
             offset = anchor * (self._num_classes + 5)
             """the weights:"""
-            centers_weight_list.append(weights[:, :, :, offset: offset + 2])
-            scales_weight_list.append(weights[:, :, :, offset + 2: offset + 4])
-            obj_weight_list.append(weights[:, :, :, offset + 4: offset + 5])
-            probs_weight_list.append(weights[:, :, :, offset + 5: offset + 5 + self._num_classes])
+            centers_weight_list.append(weights[:, :, :, offset : offset + 2])
+            scales_weight_list.append(weights[:, :, :, offset + 2 : offset + 4])
+            obj_weight_list.append(weights[:, :, :, offset + 4 : offset + 5])
+            probs_weight_list.append(weights[:, :, :, offset + 5 : offset + 5 + self._num_classes])
             """the biases:"""
-            centers_bias_list.append(biases[offset: offset + 2])
-            scales_bias_list.append(biases[offset + 2: offset + 4])
-            obj_bias_list.append(biases[offset + 4: offset + 5])
-            probs_bias_list.append(biases[offset + 5: offset + 5 + self._num_classes])
+            centers_bias_list.append(biases[offset : offset + 2])
+            scales_bias_list.append(biases[offset + 2 : offset + 4])
+            obj_bias_list.append(biases[offset + 4 : offset + 5])
+            probs_bias_list.append(biases[offset + 5 : offset + 5 + self._num_classes])
 
         centers_weights = np.concatenate(centers_weight_list, 3)
         scales_weights = np.concatenate(scales_weight_list, 3)
@@ -331,22 +340,22 @@ class LayerSplitter(object):
         obj_biases = np.concatenate(obj_bias_list, 0)
         probs_biases = np.concatenate(probs_bias_list, 0)
 
-        self._npz_modified[layer + '_centers/kernel:0'] = centers_weights
-        self._npz_modified[layer + '_centers/bias:0'] = centers_biases
+        self._npz_modified[layer + "_centers/kernel:0"] = centers_weights
+        self._npz_modified[layer + "_centers/bias:0"] = centers_biases
 
-        self._npz_modified[layer + '_scales/kernel:0'] = scales_weights
-        self._npz_modified[layer + '_scales/bias:0'] = scales_biases
+        self._npz_modified[layer + "_scales/kernel:0"] = scales_weights
+        self._npz_modified[layer + "_scales/bias:0"] = scales_biases
 
-        self._npz_modified[layer + '_obj/kernel:0'] = obj_weights
-        self._npz_modified[layer + '_obj/bias:0'] = obj_biases
+        self._npz_modified[layer + "_obj/kernel:0"] = obj_weights
+        self._npz_modified[layer + "_obj/bias:0"] = obj_biases
 
-        self._npz_modified[layer + '_probs/kernel:0'] = probs_weights
-        self._npz_modified[layer + '_probs/bias:0'] = probs_biases
+        self._npz_modified[layer + "_probs/kernel:0"] = probs_weights
+        self._npz_modified[layer + "_probs/bias:0"] = probs_biases
 
     def _remodel_smoke_weights_and_biases_for_layer(self, layer, rescale=1.0):
         """remodeling a single output layer"""
-        weights = copy.deepcopy(self._npz_modified[layer + '/kernel:0'])
-        biases = copy.deepcopy(self._npz_modified[layer + '/bias:0'])
+        weights = copy.deepcopy(self._npz_modified[layer + "/kernel:0"])
+        biases = copy.deepcopy(self._npz_modified[layer + "/bias:0"])
         """the weights:"""
         depth_weights = weights[:, :, :, :1]
         offset_weights = weights[:, :, :, 1:3]
@@ -360,21 +369,21 @@ class LayerSplitter(object):
         sin_biases = biases[6:7]
         cos_biases = biases[7:] * rescale
 
-        self._npz_modified[layer + '_depth/kernel:0'] = depth_weights
-        self._npz_modified[layer + '_depth/bias:0'] = depth_biases
+        self._npz_modified[layer + "_depth/kernel:0"] = depth_weights
+        self._npz_modified[layer + "_depth/bias:0"] = depth_biases
 
-        self._npz_modified[layer + '_offset/kernel:0'] = offset_weights
-        self._npz_modified[layer + '_offset/bias:0'] = offset_biases
+        self._npz_modified[layer + "_offset/kernel:0"] = offset_weights
+        self._npz_modified[layer + "_offset/bias:0"] = offset_biases
 
-        self._npz_modified[layer + '_dims/kernel:0'] = dims_weights
-        self._npz_modified[layer + '_dims/bias:0'] = dims_biases
+        self._npz_modified[layer + "_dims/kernel:0"] = dims_weights
+        self._npz_modified[layer + "_dims/bias:0"] = dims_biases
 
-        self._npz_modified[layer + '_sin/kernel:0'] = sin_weights
-        self._npz_modified[layer + '_sin/bias:0'] = sin_biases
+        self._npz_modified[layer + "_sin/kernel:0"] = sin_weights
+        self._npz_modified[layer + "_sin/bias:0"] = sin_biases
 
-        self._npz_modified[layer + '_cos/kernel:0'] = cos_weights
-        self._npz_modified[layer + '_cos/bias:0'] = cos_biases
+        self._npz_modified[layer + "_cos/kernel:0"] = cos_weights
+        self._npz_modified[layer + "_cos/bias:0"] = cos_biases
 
     def _get_network_name(self):
         hn_dict = self._hn
-        return hn_dict['name']
+        return hn_dict["name"]

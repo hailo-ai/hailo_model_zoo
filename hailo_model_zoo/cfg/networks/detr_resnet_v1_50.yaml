@@ -1,0 +1,28 @@
+base:
+- base/detr.yaml
+network:
+  network_name: detr_resnet_v1_50
+paths:
+  alls_script: detr_resnet_v1_50.alls
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_50/2024-03-05/detr_resnet_v1_50.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_50/2024-03-05/detr_resnet_v1_50.zip
+parser:
+  nodes:
+  - test_input
+  - - /class_embed/Add
+    - /Sigmoid
+info:
+  task: object detection
+  input_shape: 800x800x3
+  output_shape: 100x4, 100x92
+  operations: 120.4G
+  parameters: 41.1M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 38.38
+  source: https://github.com/facebookresearch/detr
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

@@ -8,7 +8,7 @@ ADIENCE_AGE_LIST = [3.0, 7.0, 13.5, 22.5, 35.0, 45.5, 56.5]
 
 
 def _get_age_range(age):
-    for i, range_min_age in enumerate(ADIENCE_AGE_LIST):
+    for i, _range_min_age in enumerate(ADIENCE_AGE_LIST):
         if age <= ADIENCE_AGE_LIST[i]:
             return i
     return len(ADIENCE_AGE_LIST)
@@ -38,12 +38,12 @@ class AgeGenderEval(Eval):
         self._age_mae = 0
 
     def update_op(self, net_output, gt_labels):
-        for i in range(gt_labels['age'].shape[0]):
-            real_age = gt_labels['age'][i]
-            is_female = gt_labels['is_female_int'][i] == 1
+        for i in range(gt_labels["age"].shape[0]):
+            real_age = gt_labels["age"][i]
+            is_female = gt_labels["is_female_int"][i] == 1
 
-            predicted_age = net_output['age'][i]
-            predicted_is_male = net_output['is_male'][i][0]
+            predicted_age = net_output["age"][i]
+            predicted_is_male = net_output["is_male"][i][0]
             if predicted_is_male != is_female:
                 self._gender_correct_num += 1
 
@@ -69,9 +69,14 @@ class AgeGenderEval(Eval):
 
     def _get_accuracy(self):
         _num_images = self._num_images if self._num_images else 1
-        return OrderedDict((('Gender accuracy', self._gender_accuracy), ('Age MAE', self._age_mae / _num_images),
-                            ('Age accuracy', self._age_accuracy),
-                            ('Age adience accuracy', self._age_adience_accuracy)))
+        return OrderedDict(
+            (
+                ("Gender accuracy", self._gender_accuracy),
+                ("Age MAE", self._age_mae / _num_images),
+                ("Age accuracy", self._age_accuracy),
+                ("Age adience accuracy", self._age_adience_accuracy),
+            )
+        )
 
     def is_percentage(self):
         return True

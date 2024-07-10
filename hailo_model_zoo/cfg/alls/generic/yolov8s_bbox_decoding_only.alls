@@ -1,0 +1,2 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+nms_postprocess("../../postprocess_config/unreleased/yolov8s_bbox_decoding_only_nms_config.json", meta_arch=yolov8, engine=cpu, bbox_decoding_only=True)

@@ -1,0 +1,25 @@
+base:
+- base/imagenet.yaml
+preprocessing:
+  meta_arch: resnet_pruned
+info:
+  source: https://github.com/ChengpengChen/RepGhost
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+postprocessing:
+  device_pre_post_layers:
+    softmax: false
+    argmax: false
+    bilinear: false
+    nms: false

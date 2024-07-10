@@ -1,0 +1,28 @@
+base:
+- base/resnet.yaml
+parser:
+  nodes:
+  - input.1
+  - - '995'
+paths:
+  alls_script: levit256.alls
+  network_path:
+  - models_files/Classification/levit_256/2024-05-13/levit-256.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/levit_256/2024-05-13/levit-256.zip
+network:
+  network_name: levit256
+preprocessing:
+  meta_arch: resnet_pruned
+info:
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 2.6G
+  parameters: 18.9M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 81.43
+  source: https://github.com/facebookresearch/LeViT
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

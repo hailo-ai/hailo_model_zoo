@@ -54,7 +54,7 @@ class FasterRCNNStage2(object):
         self._num_classes = classes
 
     def postprocessing(self, endnodes, image_info, **kwargs):
-        rpn_boxes = image_info['rpn_proposals']
+        rpn_boxes = image_info["rpn_proposals"]
         num_roi = tf.shape(rpn_boxes)[0]
         cls_preds = endnodes[0]
         box_preds = endnodes[1]
@@ -65,8 +65,12 @@ class FasterRCNNStage2(object):
         decoded_boxes = box_decoder(bboxes_preds, rpn_boxes)
         detection_boxes = decoded_boxes
         proposals, classes = tf.split(tf.shape(cls_preds), 2)
-        detection_scores = tf.expand_dims(tf.slice(cls_preds, begin=[0, 1],
-                                                   size=[proposals[0], classes[0] - 1]), axis=0)
+        detection_scores = tf.expand_dims(
+            tf.slice(cls_preds, begin=[0, 1], size=[proposals[0], classes[0] - 1]), axis=0
+        )
         detection_scores = tf.reshape(detection_scores, shape=[-1, self._num_classes])
-        return {'detection_scores': detection_scores, 'detection_boxes': detection_boxes,
-                'image_id': image_info['image_id']}
+        return {
+            "detection_scores": detection_scores,
+            "detection_boxes": detection_boxes,
+            "image_id": image_info["image_id"],
+        }

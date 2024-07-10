@@ -1,0 +1,15 @@
+base:
+- base/yolo.yaml
+postprocessing:
+  meta_arch: nanodet_v8
+  anchors:
+    scale_factors:
+    - 0.5
+    - 0.5
+    regression_length: 15
+  device_pre_post_layers:
+    sigmoid: true
+  nms_max_output_per_class: 300
+  post_nms_topk: 300
+  nms_iou_thresh: 0.7
+  score_threshold: 0.001

@@ -1,20 +1,23 @@
-import tensorflow as tf
 import numpy as np
-from hailo_model_zoo.core.postprocessing.detection.detection_common import (COCO_2017_TO_2014_TRANSLATION,
-                                                                            tf_postproc_nms_centernet)
+import tensorflow as tf
+
+from hailo_model_zoo.core.postprocessing.detection.detection_common import (
+    COCO_2017_TO_2014_TRANSLATION,
+    tf_postproc_nms_centernet,
+)
 
 
 def pad_list(lst, pad_size):
     if type(lst[0]) is np.ndarray:
         padding_element = np.zeros(lst[0].shape)
-    elif type(lst[0]) is list:
+    elif type(lst[0]) is list:  # noqa: E721
         padding_element = len(lst[0]) * [0]
     elif type(lst[0]) in [np.float32, float]:
-        padding_element = 0.
+        padding_element = 0.0
     elif type(lst[0]) in [np.int32, int]:
         padding_element = 0
     else:
-        raise ValueError('type of lst items should be ndarray, list, float or int. instead got:', type(lst[0]))
+        raise ValueError("type of lst items should be ndarray, list, float or int. instead got:", type(lst[0]))
     lst = lst + pad_size * [padding_element]
     return lst
 
@@ -30,8 +33,8 @@ def _find_topk(probs, topk):
 
 class CenternetPostProc(object):
     def __init__(self, **kwargs):
-        self._nms_on_device = kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False)
-        self._nms_topk_perclass = kwargs.get('post_nms_topk', 400)
+        self._nms_on_device = kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get("nms", False)
+        self._nms_topk_perclass = kwargs.get("post_nms_topk", 400)
 
     def postprocessing(self, endnodes, device_pre_post_layers=None, **kwargs):
         """since the preprocess not only resizes the image but also pads the smaller
@@ -42,30 +45,33 @@ class CenternetPostProc(object):
         if self._nms_on_device:
             return tf_postproc_nms_centernet(endnodes, max_detections_per_class=self._nms_topk_perclass)
         bb_dict = {}
-        if device_pre_post_layers and device_pre_post_layers.get('max_finder', False):
+        if device_pre_post_layers and device_pre_post_layers.get("max_finder", False):
             outputs = endnodes
         else:
             endnodes0_padded = tf.pad(endnodes[0], [[0, 0], [1, 1], [1, 1], [0, 0]])
-            maxpooled_probs = tf.nn.max_pool2d(endnodes0_padded, [1, 3, 3, 1], [1, 1, 1, 1], 'VALID')
-            probs_maxima_booleans = tf.cast(tf.math.equal(endnodes[0], maxpooled_probs), 'float32')
+            maxpooled_probs = tf.nn.max_pool2d(endnodes0_padded, [1, 3, 3, 1], [1, 1, 1, 1], "VALID")
+            probs_maxima_booleans = tf.cast(tf.math.equal(endnodes[0], maxpooled_probs), "float32")
             probs_maxima_values = tf.math.multiply(probs_maxima_booleans, endnodes[0])
             outputs = [endnodes[1], endnodes[2], probs_maxima_values]
             # we discard the 0 element in the endnodes list. This is the probabilities tensor.
             # Instead we pass the sparse probabilities tensor probs_maxima_values:
         bb_probs, bb_classes, bb_boxes, num_detections, top_k_indices = tf.numpy_function(
-            self._centernet_postprocessing, outputs, ['float32', 'int32', 'float32', 'int32', 'int64'],
-            name='centernet_postprocessing')
-        bb_dict['detection_scores'] = bb_probs
-        bb_dict['detection_classes'] = bb_classes
-        bb_dict['detection_boxes'] = bb_boxes
-        bb_dict['num_detections'] = num_detections
-        bb_dict['top_k_indices'] = top_k_indices
+            self._centernet_postprocessing,
+            outputs,
+            ["float32", "int32", "float32", "int32", "int64"],
+            name="centernet_postprocessing",
+        )
+        bb_dict["detection_scores"] = bb_probs
+        bb_dict["detection_classes"] = bb_classes
+        bb_dict["detection_boxes"] = bb_boxes
+        bb_dict["num_detections"] = num_detections
+        bb_dict["top_k_indices"] = top_k_indices
         return bb_dict
 
     def _generate_boxes(self, probs, coors, classes, widths, offsets, output_height, output_width):
         """expecting to receive descending order lists"""
         MAX_NUM_OF_DETECTIONS = 100
-        SCALE = 4.
+        SCALE = 4.0
         label_offset = 1
         coors = [[SCALE * h, SCALE * w] for h, w in coors]
         widths = [[SCALE * width_x, SCALE * width_y] for width_x, width_y in widths]
@@ -93,17 +99,19 @@ class CenternetPostProc(object):
             bb_classes.append(obj_class)
             bb_boxes.append([y0, x0, y1, x1])
         if bb_probs == []:
-            bb_probs = [0.]
+            bb_probs = [0.0]
             bb_classes = [0]
-            bb_boxes = [[0., 0., 0., 0.]]
+            bb_boxes = [[0.0, 0.0, 0.0, 0.0]]
             required_zero_detections_padding -= 1
         bb_probs = pad_list(bb_probs, required_zero_detections_padding)
         bb_classes = pad_list(bb_classes, required_zero_detections_padding)
         bb_boxes = pad_list(bb_boxes, required_zero_detections_padding)
-        return np.expand_dims(np.array(bb_probs), 0).astype('float32'), \
-            np.expand_dims(np.array(bb_classes), 0).astype('int32'), \
-            np.expand_dims(np.array(bb_boxes), 0).astype('float32'), \
-            (np.ones([1]) * num_detections).astype('int32')
+        return (
+            np.expand_dims(np.array(bb_probs), 0).astype("float32"),
+            np.expand_dims(np.array(bb_classes), 0).astype("int32"),
+            np.expand_dims(np.array(bb_boxes), 0).astype("float32"),
+            (np.ones([1]) * num_detections).astype("int32"),
+        )
 
     def _centernet_postprocessing(self, box_widths, box_offsets, sparse_probs, **kwargs):
         # endnodes3 is the sparse tensor of maximum prob values.
@@ -121,7 +129,7 @@ class CenternetPostProc(object):
             # return a map with nonzeros only if the value is in the top k value list:
             topk_probs = _find_topk(sparse_probs[i], TOPK)
             # a [batch_size, h_out, w_out, num_of_classes] array
-            topk_probs_im = topk_probs * (topk_probs >= PROB_THRESH).astype('float')
+            topk_probs_im = topk_probs * (topk_probs >= PROB_THRESH).astype("float")
             top_indices = np.unravel_index(np.argsort(topk_probs_im.ravel())[-TOPK:][::-1], topk_probs_im.shape)
             widths_im = box_widths[i]
             offsets_im = box_offsets[i]
@@ -133,9 +141,15 @@ class CenternetPostProc(object):
                     topk_widths_list.append(widths_im[h, w, :])
                     topk_offsets_list.append(offsets_im[h, w, :])
 
-            bb_probs_for_im, bb_classes_for_im, bb_boxes_for_im, num_detections_for_im = \
-                self._generate_boxes(topk_probs_list, topk_coors_list, topk_class_list,
-                                     topk_widths_list, topk_offsets_list, output_height, output_width)
+            bb_probs_for_im, bb_classes_for_im, bb_boxes_for_im, num_detections_for_im = self._generate_boxes(
+                topk_probs_list,
+                topk_coors_list,
+                topk_class_list,
+                topk_widths_list,
+                topk_offsets_list,
+                output_height,
+                output_width,
+            )
             if i == 0:
                 bb_probs_batch = bb_probs_for_im
                 bb_classes_batch = bb_classes_for_im
@@ -148,6 +162,7 @@ class CenternetPostProc(object):
                 bb_boxes_batch = np.concatenate([bb_boxes_batch, bb_boxes_for_im], 0)
                 num_detections_batch = np.concatenate([num_detections_batch, num_detections_for_im], 0)
                 topk_indices_per_image = np.concatenate(
-                    [topk_indices_per_image, np.stack([np.array([i] * TOPK)] + list(top_indices), axis=1)], 0)
+                    [topk_indices_per_image, np.stack([np.array([i] * TOPK)] + list(top_indices), axis=1)], 0
+                )
         bb_classes_batch = np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(bb_classes_batch).astype(np.int32)
         return bb_probs_batch, bb_classes_batch, bb_boxes_batch, num_detections_batch, topk_indices_per_image

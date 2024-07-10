@@ -1,0 +1,27 @@
+base:
+- base/vit.yaml
+network:
+  network_name: vit_small
+paths:
+  network_path:
+  - models_files/Classification/vit_small/pretrained/2024-04-03/vit_small_patch16_224_ops17.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_small/pretrained/2024-04-03/vit_small_patch16_224_ops17.zip
+  alls_script: vit_small.alls
+parser:
+  nodes:
+  - input.1
+  - '898'
+evaluation:
+  infer_type: model_infer_lite
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 8.62G
+  parameters: 21.12M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  source: https://github.com/rwightman/pytorch-image-models
+  full_precision_result: 81.54

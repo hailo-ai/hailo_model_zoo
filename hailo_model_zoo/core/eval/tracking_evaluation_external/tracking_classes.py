@@ -1,6 +1,7 @@
-from collections import deque, OrderedDict
+from collections import OrderedDict, deque
 
 import numpy as np
+
 from hailo_model_zoo.core.eval.tracking_evaluation_external import matching
 from hailo_model_zoo.core.eval.tracking_evaluation_external.kalman_filter import KalmanFilter
 
@@ -59,7 +60,6 @@ class STrack(BaseTrack):
     shared_kalman = KalmanFilter()
 
     def __init__(self, tlwh, score, temp_feat, buffer_size=30):
-
         # wait activate
         self._tlwh = np.asarray(tlwh, dtype=float)
         self.kalman_filter = None
@@ -135,8 +135,7 @@ class STrack(BaseTrack):
         self.tracklet_len += 1
 
         new_tlwh = new_track.tlwh
-        self.mean, self.covariance = self.kalman_filter.update(
-            self.mean, self.covariance, self.tlwh_to_xyah(new_tlwh))
+        self.mean, self.covariance = self.kalman_filter.update(self.mean, self.covariance, self.tlwh_to_xyah(new_tlwh))
         self.state = TrackState.Tracked
         self.is_activated = True
 
@@ -187,7 +186,7 @@ class STrack(BaseTrack):
         return ret
 
     def __repr__(self):
-        return 'OT_{}_({}-{})'.format(self.track_id, self.start_frame, self.end_frame)
+        return "OT_{}_({}-{})".format(self.track_id, self.start_frame, self.end_frame)
 
 
 class JDETracker(object):
@@ -211,16 +210,14 @@ class JDETracker(object):
     def merge_outputs(self, detections):
         results = {}
         for j in range(1, self.num_classes + 1):
-            results[j] = np.concatenate(
-                [detection[j] for detection in detections], axis=0).astype(np.float32)
+            results[j] = np.concatenate([detection[j] for detection in detections], axis=0).astype(np.float32)
 
-        scores = np.hstack(
-            [results[j][:, 4] for j in range(1, self.num_classes + 1)])
+        scores = np.hstack([results[j][:, 4] for j in range(1, self.num_classes + 1)])
         if len(scores) > self.max_per_image:
             kth = len(scores) - self.max_per_image
             thresh = np.partition(scores, kth)[kth]
             for j in range(1, self.num_classes + 1):
-                keep_inds = (results[j][:, 4] >= thresh)
+                keep_inds = results[j][:, 4] >= thresh
                 results[j] = results[j][keep_inds]
         return results
 
@@ -232,9 +229,10 @@ class JDETracker(object):
         removed_stracks = []
 
         if len(dets) > 0:
-            '''Detections'''
-            detections = [STrack(STrack.tlbr_to_tlwh(tlbrs[:4]), tlbrs[4], f, 30) for
-                          (tlbrs, f) in zip(dets[:, :5], id_feature)]
+            """Detections"""
+            detections = [
+                STrack(STrack.tlbr_to_tlwh(tlbrs[:4]), tlbrs[4], f, 30) for (tlbrs, f) in zip(dets[:, :5], id_feature)
+            ]
         else:
             detections = []
 
@@ -246,7 +244,7 @@ class JDETracker(object):
             else:
                 tracked_stracks.append(track)
 
-        ''' Step 2: First association, with embedding'''
+        """ Step 2: First association, with embedding"""
         strack_pool = joint_stracks(tracked_stracks, self.lost_stracks)
         STrack.multi_predict(strack_pool)
         dists = matching.embedding_distance(strack_pool, detections)
@@ -264,7 +262,7 @@ class JDETracker(object):
                 track.re_activate(det, self.frame_id, new_id=False)
                 refind_stracks.append(track)
 
-        ''' Step 3: Second association, with IOU'''
+        """ Step 3: Second association, with IOU"""
         detections = [detections[i] for i in u_detection]
         r_tracked_stracks = [strack_pool[i] for i in u_track if strack_pool[i].state == TrackState.Tracked]
         dists = matching.iou_distance(r_tracked_stracks, detections)
@@ -286,7 +284,7 @@ class JDETracker(object):
                 track.mark_lost()
                 lost_stracks.append(track)
 
-        '''Deal with unconfirmed tracks, usually tracks with only one beginning frame'''
+        """Deal with unconfirmed tracks, usually tracks with only one beginning frame"""
         detections = [detections[i] for i in u_detection]
         dists = matching.iou_distance(unconfirmed, detections)
         matches, u_unconfirmed, u_detection = matching.linear_assignment(dists, thresh=0.7)
@@ -355,7 +353,7 @@ def sub_stracks(tlista, tlistb):
 def remove_duplicate_stracks(stracksa, stracksb):
     pdist = matching.iou_distance(stracksa, stracksb)
     pairs = np.where(pdist < 0.15)
-    dupa, dupb = list(), list()
+    dupa, dupb = [], []
     for p, q in zip(*pairs):
         timep = stracksa[p].frame_id - stracksa[p].start_frame
         timeq = stracksb[q].frame_id - stracksb[q].start_frame

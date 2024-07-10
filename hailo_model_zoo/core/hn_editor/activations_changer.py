@@ -2,7 +2,6 @@ from hailo_sdk_common.hailo_nn.hn_definitions import ActivationTypes
 
 
 def change_activations(runner, activation_changes):
-
     network = runner.get_hn_model()
     params = runner.get_params()
 

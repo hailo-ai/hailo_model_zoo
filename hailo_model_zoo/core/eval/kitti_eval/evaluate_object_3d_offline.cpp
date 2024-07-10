@@ -194,7 +194,7 @@ vector<tGroundtruth> loadGroundtruth(string file_name,bool &success) {
                    &g.box.x1,   &g.box.y1,     &g.box.x2,    &g.box.y2,
                    &g.h,      &g.w,        &g.l,       &g.t1,
                    &g.t2,      &g.t3,        &g.ry )==15) {
-      cout<< "inside kitti gt readed" << str <<"," << g.truncation;
+      cout<< "inside kitti gt read" << str <<"," << g.truncation;
       g.box.type = str;
       groundtruth.push_back(g);
     }
@@ -465,7 +465,7 @@ tPrData computeStatistics(CLASSES current_class, const vector<tGroundtruth> &gt,
   tPrData stat = tPrData();
   const double NO_DETECTION = -10000000;
   vector<double> delta;            // holds angular difference for TPs (needed for AOS evaluation)
-  vector<bool> assigned_detection; // holds wether a detection was assigned to a valid or ignored ground truth
+  vector<bool> assigned_detection; // holds whether a detection was assigned to a valid or ignored ground truth
   assigned_detection.assign(det.size(), false);
   vector<bool> ignored_threshold;
   ignored_threshold.assign(det.size(), false); // holds detections with a threshold lower than thresh if FP are computed
@@ -810,7 +810,7 @@ bool eval(string gt_dir, string result_dir, Mail* mail){
   vector< vector<tGroundtruth> > groundtruth;
   vector< vector<tDetection> >   detections;
 
-  // holds wether orientation similarity shall be computed (might be set to false while loading detections)
+  // holds whether orientation similarity shall be computed (might be set to false while loading detections)
   // and which labels where provided by this submission
   bool compute_aos=true;
   vector<bool> eval_image(NUM_CLASS, false);
@@ -938,7 +938,7 @@ int32_t main (int32_t argc,char *argv[]) {
     mail->msg(result_dir.c_str());
   } else {
     system(("rm -r " + result_dir + "/plot").c_str());
-    mail->msg("An error occured while processing your results.");
+    mail->msg("An error occurred while processing your results.");
   }
 
   // send mail and exit

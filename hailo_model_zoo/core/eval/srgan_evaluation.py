@@ -10,8 +10,8 @@ from hailo_model_zoo.core.factory import EVAL_FACTORY
 @EVAL_FACTORY.register(name="srgan")
 class SRGANEval(Eval):
     def __init__(self, **kwargs):
-        self._metric_names = ['psnr', 'ssim']
-        self._normalize_results = kwargs.get('normalize_results', True)
+        self._metric_names = ["psnr", "ssim"]
+        self._normalize_results = kwargs.get("normalize_results", True)
         self._metrics_vals = [0, 0]
         self.reset()
 
@@ -31,12 +31,12 @@ class SRGANEval(Eval):
         return y_image
 
     def _parse_net_output(self, net_output):
-        return net_output['predictions']
+        return net_output["predictions"]
 
     def update_op(self, net_output, gt_labels):
         net_output = self._parse_net_output(net_output)
-        self._psnr += self.evaluate_psnr(net_output, gt_labels['hr_img'], gt_labels['height'], gt_labels['width'])
-        self._ssim += self.evaluate_ssim(net_output, gt_labels['hr_img'], gt_labels['height'], gt_labels['width'])
+        self._psnr += self.evaluate_psnr(net_output, gt_labels["hr_img"], gt_labels["height"], gt_labels["width"])
+        self._ssim += self.evaluate_ssim(net_output, gt_labels["hr_img"], gt_labels["height"], gt_labels["width"])
 
     def evaluate(self):
         normalize_factor = 100.0 if self._normalize_results else 1.0
@@ -44,8 +44,9 @@ class SRGANEval(Eval):
         self._metrics_vals[1] = np.mean(self._ssim) / normalize_factor
 
     def _get_accuracy(self):
-        return OrderedDict([(self._metric_names[0], self._metrics_vals[0]),
-                            (self._metric_names[1], self._metrics_vals[1])])
+        return OrderedDict(
+            [(self._metric_names[0], self._metrics_vals[0]), (self._metric_names[1], self._metrics_vals[1])]
+        )
 
     def reset(self):
         self._psnr = []
@@ -53,7 +54,7 @@ class SRGANEval(Eval):
 
     def evaluate_psnr(self, y_pred, y_true, height, width):
         """
-        ###  TF implementaion:  ###
+        ###  TF implementation:  ###
         PSNR is Peak Signal to Noise Ratio, which is similar to mean squared error.
         It can be calculated as
         PSNR = 20 * log10(MAXp) - 10 * log10(MSE)
@@ -71,7 +72,7 @@ class SRGANEval(Eval):
             y_true_single_im = self.shave(y_true[image_num], height[image_num], width[image_num], margin=4)
             y_pred_single_im = self.convert_rgb_to_y(y_pred_single_im)
             y_true_single_im = self.convert_rgb_to_y(y_true_single_im)
-            psnr_list.append(48.1308 - 10. * np.log10(np.mean(np.square(y_pred_single_im - y_true_single_im))))
+            psnr_list.append(48.1308 - 10.0 * np.log10(np.mean(np.square(y_pred_single_im - y_true_single_im))))
         return psnr_list
 
     def evaluate_ssim(self, y_pred, y_true, height, width):
@@ -98,13 +99,14 @@ class SRGANEval(Eval):
             window = np.outer(kernel, kernel.transpose())
             mu1 = cv2.filter2D(img1, -1, window)[5:-5, 5:-5]  # valid
             mu2 = cv2.filter2D(img2, -1, window)[5:-5, 5:-5]
-            mu1_sq = mu1 ** 2
-            mu2_sq = mu2 ** 2
+            mu1_sq = mu1**2
+            mu2_sq = mu2**2
             mu1_mu2 = mu1 * mu2
-            sigma1_sq = cv2.filter2D(img1 ** 2, -1, window)[5:-5, 5:-5] - mu1_sq
-            sigma2_sq = cv2.filter2D(img2 ** 2, -1, window)[5:-5, 5:-5] - mu2_sq
+            sigma1_sq = cv2.filter2D(img1**2, -1, window)[5:-5, 5:-5] - mu1_sq
+            sigma2_sq = cv2.filter2D(img2**2, -1, window)[5:-5, 5:-5] - mu2_sq
             sigma12 = cv2.filter2D(img1 * img2, -1, window)[5:-5, 5:-5] - mu1_mu2
-            ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / \
-                ((mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2))
+            ssim_map = ((2 * mu1_mu2 + C1) * (2 * sigma12 + C2)) / (
+                (mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2)
+            )
             ssim_list.append(ssim_map.mean())
         return ssim_list

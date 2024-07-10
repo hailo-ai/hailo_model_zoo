@@ -1,2 +1,1 @@
-performance_param(optimization_level=max)
 post_quantization_optimization(finetune, policy=disabled)

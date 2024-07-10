@@ -3,17 +3,38 @@ import numpy as np
 
 from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import _sanitize_coordinates
 
-BBOX_METRIC_NAMES = ['bbox AP', 'bbox AP50', 'bbox AP75', 'bbox APs', 'bbox APm',
-                     'bbox APl', 'bbox ARmax1', 'bbox ARmax10', 'bbox ARmax100',
-                     'bbox ARs', 'bbox ARm', 'bbox ARl']
+BBOX_METRIC_NAMES = [
+    "bbox AP",
+    "bbox AP50",
+    "bbox AP75",
+    "bbox APs",
+    "bbox APm",
+    "bbox APl",
+    "bbox ARmax1",
+    "bbox ARmax10",
+    "bbox ARmax100",
+    "bbox ARs",
+    "bbox ARm",
+    "bbox ARl",
+]
 
-SEGM_METRIC_NAMES = ['mask AP', 'mask AP50', 'mask AP75', 'mask APs', 'mask APm',
-                     'mask APl', 'mask ARmax1', 'mask ARmax10', 'mask ARmax100',
-                     'mask ARs', 'mask ARm', 'mask ARl']
+SEGM_METRIC_NAMES = [
+    "mask AP",
+    "mask AP50",
+    "mask AP75",
+    "mask APs",
+    "mask APm",
+    "mask APl",
+    "mask ARmax1",
+    "mask ARmax10",
+    "mask ARmax100",
+    "mask ARs",
+    "mask ARm",
+    "mask ARl",
+]
 
 
-class InstSegEvalBase():
-
+class InstSegEvalBase:
     def __init__(self):
         self.eval_bbox = True
         self.eval_mask = True
@@ -27,7 +48,6 @@ class InstSegEvalBase():
 
 
 class YolactEval(InstSegEvalBase):
-
     def __init__(self):
         super().__init__()
 
@@ -47,7 +67,6 @@ class YolactEval(InstSegEvalBase):
 
 
 class Yolov5SegEval(InstSegEvalBase):
-
     def __init__(self):
         super().__init__()
 
@@ -56,13 +75,14 @@ class Yolov5SegEval(InstSegEvalBase):
         boxes[:, 0::2] *= shape_in[1]
         boxes[:, 1::2] *= shape_in[0]
 
-        ratio_pad = kwargs.get('ratio_pad', None)
+        ratio_pad = kwargs.get("ratio_pad", None)
         if ratio_pad is None:  # calculate from shape_out
             if shape_in is None:
-                raise ValueError('Expected shape_in to be a tuple of size 2 when ratio is not provided but got None')
+                raise ValueError("Expected shape_in to be a tuple of size 2 when ratio is not provided but got None")
             gain = min(shape_in[0] / shape_out[0], shape_in[1] / shape_out[1])  # gain  = old / new
-            pad = [(shape_in - shape_out * gain) / 2
-                   for shape_in, shape_out in zip(shape_in[:2], shape_out[:2])]  # wh padding
+            pad = [
+                (shape_in - shape_out * gain) / 2 for shape_in, shape_out in zip(shape_in[:2], shape_out[:2])
+            ]  # wh padding
         else:
             gain = ratio_pad[0][0]
             pad = ratio_pad[1]
@@ -78,10 +98,10 @@ class Yolov5SegEval(InstSegEvalBase):
         return boxes
 
     def scale_masks(self, masks, shape_out, shape_in=None, **kwargs):
-        ratio_pad = kwargs.get('ratio_pad', None)
+        ratio_pad = kwargs.get("ratio_pad", None)
         if ratio_pad is None:  # calculate from shape_out and shape_in
             if shape_in is None:
-                raise ValueError('Expected shape_in to be a tuple of size 2 but got None')
+                raise ValueError("Expected shape_in to be a tuple of size 2 but got None")
             gain = min(shape_in[0] / shape_out[0], shape_in[1] / shape_out[1])  # gain  = old / new
             pad = (shape_in[1] - shape_out[1] * gain) / 2, (shape_in[0] - shape_out[0] * gain) / 2  # wh padding
         else:

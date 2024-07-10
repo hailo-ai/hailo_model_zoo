@@ -1,12 +1,13 @@
-from hailo_sdk_client.exposed_definitions import JoinAction, JoinOutputLayersOrder
 from hailo_sdk_client import ClientRunner
+from hailo_sdk_client.exposed_definitions import JoinAction, JoinOutputLayersOrder
 from hailo_sdk_client.runner.client_runner import InvalidArgumentsException
+
 from hailo_model_zoo.utils.parse_utils import translate_model
 from hailo_model_zoo.utils.path_resolver import resolve_model_path
 
 
 def _apply_scope(layer_name, scope):
-    return layer_name if '/' in layer_name else f'{scope}/{layer_name}'
+    return layer_name if "/" in layer_name else f"{scope}/{layer_name}"
 
 
 def _make_tensor_shapes(hn, ports, start_node_name, is_onnx):
@@ -48,21 +49,26 @@ def integrate_postprocessing(runner, integrated_postprocessing_info, network_inf
             fixed_ports = {_apply_scope(source, scope): dest for source, dest in ports.items()}
         else:
             fixed_ports = ports
-        tensor_shapes = _make_tensor_shapes(hn, fixed_ports, start_node_name,
-                                            integrated_postprocessing_info.
-                                            chains[0]['paths']['network_path'][0].endswith('.onnx'))
+        tensor_shapes = _make_tensor_shapes(
+            hn,
+            fixed_ports,
+            start_node_name,
+            integrated_postprocessing_info.chains[0]["paths"]["network_path"][0].endswith(".onnx"),
+        )
 
         chained_runner = ClientRunner()
         _translate_model(chained_runner, chain, tensor_shapes=tensor_shapes)
 
-        chained_name = chained_runner.get_hn()['name']
+        chained_name = chained_runner.get_hn()["name"]
         scope = hn.net_params.net_scopes[0] if hn.net_params.net_scopes else hn.name
 
-        scoped_ports = {_apply_scope(source_layer, scope): f'{chained_name}/{dest_layer}'
-                        for source_layer, dest_layer in ports.items()}
+        scoped_ports = {
+            _apply_scope(source_layer, scope): f"{chained_name}/{dest_layer}"
+            for source_layer, dest_layer in ports.items()
+        }
 
         # Make sure the new outputs are in the same order so postprocessing won't break
-        scoped_ports['output_layers_order'] = JoinOutputLayersOrder.NEW_OUTPUTS_IN_PLACE
+        scoped_ports["output_layers_order"] = JoinOutputLayersOrder.NEW_OUTPUTS_IN_PLACE
 
         # Fuse the two networks
         runner.join(chained_runner, join_action=JoinAction.CUSTOM, join_action_info=scoped_ports)

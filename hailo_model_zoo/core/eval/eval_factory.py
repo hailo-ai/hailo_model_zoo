@@ -1,20 +1,17 @@
 """Contains a factory for network evaluation."""
+
 import importlib
 
 import hailo_model_zoo.core.eval
 from hailo_model_zoo.core.factory import EVAL_FACTORY
 from hailo_model_zoo.utils.plugin_utils import iter_namespace
 
-discovered_plugins = {
-    name: importlib.import_module(name)
-    for _, name, _
-    in iter_namespace(hailo_model_zoo.core.eval)
-}
+discovered_plugins = {name: importlib.import_module(name) for _, name, _ in iter_namespace(hailo_model_zoo.core.eval)}
 
 
 @EVAL_FACTORY.register(name="landmark_detection")
 @EVAL_FACTORY.register(name="empty")
-class EmptyEval():
+class EmptyEval:
     def __init__(self, **kwargs):
         pass
 

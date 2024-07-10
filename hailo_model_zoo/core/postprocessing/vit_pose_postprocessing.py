@@ -3,49 +3,75 @@ import numpy as np
 
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY
 
-pose_kpt_color = np.array([[0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0]])
+pose_kpt_color = np.array(
+    [
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+    ]
+)
 
 
-skeleton = [[15, 13], [13, 11], [16, 14], [14, 12], [11, 12], [5, 11],
-            [6, 12], [5, 6], [5, 7], [6, 8], [7, 9], [8, 10], [1, 2],
-            [0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 6]]
+skeleton = [
+    [15, 13],
+    [13, 11],
+    [16, 14],
+    [14, 12],
+    [11, 12],
+    [5, 11],
+    [6, 12],
+    [5, 6],
+    [5, 7],
+    [6, 8],
+    [7, 9],
+    [8, 10],
+    [1, 2],
+    [0, 1],
+    [0, 2],
+    [1, 3],
+    [2, 4],
+    [3, 5],
+    [4, 6],
+]
 
 
-pose_link_color = np.array([[255, 128, 0],
-                            [255, 128, 0],
-                            [255, 128, 0],
-                            [255, 128, 0],
-                            [255, 51, 255],
-                            [255, 51, 255],
-                            [255, 51, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0]])
+pose_link_color = np.array(
+    [
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 51, 255],
+        [255, 51, 255],
+        [255, 51, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+    ]
+)
 
 
 def _get_max_preds(heatmaps):
@@ -66,9 +92,8 @@ def _get_max_preds(heatmaps):
         - preds (np.ndarray[N, K, 2]): Predicted keypoint location.
         - maxvals (np.ndarray[N, K, 1]): Scores (confidence) of the keypoints.
     """
-    assert isinstance(heatmaps,
-                      np.ndarray), ('heatmaps should be numpy.ndarray')
-    assert heatmaps.ndim == 4, 'batch_images should be 4-ndim'
+    assert isinstance(heatmaps, np.ndarray), "heatmaps should be numpy.ndarray"
+    assert heatmaps.ndim == 4, "batch_images should be 4-ndim"
 
     N, K, _, W = heatmaps.shape
     heatmaps_reshaped = heatmaps.reshape((N, K, -1))
@@ -111,16 +136,14 @@ def post_dark_udp(coords, batch_heatmaps, kernel=3):
         batch_heatmaps = batch_heatmaps.cpu().numpy()
     B, K, H, W = batch_heatmaps.shape
     N = coords.shape[0]
-    assert (B == 1 or B == N)
+    assert B == 1 or B == N
     for heatmaps in batch_heatmaps:
         for heatmap in heatmaps:
             cv2.GaussianBlur(heatmap, (kernel, kernel), 0)
     np.clip(batch_heatmaps, 0.001, 50, batch_heatmaps)
     np.log(batch_heatmaps, batch_heatmaps)
 
-    batch_heatmaps_pad = np.pad(
-        batch_heatmaps, ((0, 0), (0, 0), (1, 1), (1, 1)),
-        mode='edge').flatten()
+    batch_heatmaps_pad = np.pad(batch_heatmaps, ((0, 0), (0, 0), (1, 1), (1, 1)), mode="edge").flatten()
 
     index = coords[..., 0] + 1 + (coords[..., 1] + 1) * (W + 2)
     index += (W + 2) * (H + 2) * np.arange(0, B * K).reshape(-1, K)
@@ -145,7 +168,7 @@ def post_dark_udp(coords, batch_heatmaps, kernel=3):
     # we factor np.eye(2) by 10^-6 because originally we had a case of a
     # too small epsilon, resulting in a non inversible matrix.
     hessian = np.linalg.inv(hessian + 1e-6 * np.eye(2))
-    coords -= np.einsum('ijmn,ijnk->ijmk', hessian, derivative).squeeze()
+    coords -= np.einsum("ijmn,ijnk->ijmk", hessian, derivative).squeeze()
     return coords
 
 
@@ -182,8 +205,7 @@ def _gaussian_blur(heatmaps, kernel=11, eps=1e-12):
     for i in range(batch_size):
         for j in range(num_joints):
             origin_max = np.max(heatmaps[i, j])
-            dr = np.zeros((height + 2 * border, width + 2 * border),
-                          dtype=np.float32)
+            dr = np.zeros((height + 2 * border, width + 2 * border), dtype=np.float32)
             dr[border:-border, border:-border] = heatmaps[i, j].copy()
             dr = cv2.GaussianBlur(dr, (kernel, kernel), 0)
             heatmaps[i, j] = dr[border:-border, border:-border].copy()
@@ -191,9 +213,8 @@ def _gaussian_blur(heatmaps, kernel=11, eps=1e-12):
     return heatmaps
 
 
-def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixel_std=200.):
-    assert bbox.shape[1] == 1, \
-        f"Expected a single box per image but got {bbox.shape[1]}"
+def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixel_std=200.0):
+    assert bbox.shape[1] == 1, f"Expected a single box per image but got {bbox.shape[1]}"
     box = np.squeeze(bbox.copy(), axis=1)
     xmin, xmax, ymin, ymax = box[:, 0], box[:, 1], box[:, 2], box[:, 3]
     xmin *= orig_width
@@ -270,9 +291,9 @@ def transform_preds(coords, center, scale, output_size, use_udp=False):
 
 @POSTPROCESS_FACTORY.register(name="vit_pose")
 def vit_pose_postprocessing(endnodes, device_pre_post_layers=None, kernel=11, **kwargs):
-    img_info = kwargs['gt_images']
-    center = img_info['center']
-    scale = img_info['scale']
+    img_info = kwargs["gt_images"]
+    center = img_info["center"]
+    scale = img_info["scale"]
 
     endnodes_ = endnodes.transpose(0, 3, 1, 2)
     N, K, H, W = endnodes_.shape
@@ -281,11 +302,10 @@ def vit_pose_postprocessing(endnodes, device_pre_post_layers=None, kernel=11, **
 
     # Transform back to the image
     for i in range(N):
-        preds[i] = transform_preds(
-            preds[i], center[i], scale[i], [W, H], use_udp=True)
+        preds[i] = transform_preds(preds[i], center[i], scale[i], [W, H], use_udp=True)
 
     all_preds = np.zeros((N, preds.shape[1], 3), dtype=np.float32)
     all_preds[:, :, 0:2] = preds[:, :, 0:2]
     all_preds[:, :, 2:3] = maxvals
 
-    return {'predictions': all_preds}
+    return {"predictions": all_preds}

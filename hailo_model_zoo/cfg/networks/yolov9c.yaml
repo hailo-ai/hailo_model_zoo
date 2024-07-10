@@ -2,6 +2,10 @@ base:
 - base/yolov8.yaml
 network:
   network_name: yolov9c
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  hpp: true
 paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov9c/pretrained/2024-02-24/yolov9c.onnx

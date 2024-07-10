@@ -13,24 +13,22 @@ properties of patch for image visualization:
 THICKNESS = 3
 NORMALIZATION_VALUE = 127.5
 
-YUV2RGB_mat = [[1.16438355, 1.16438355, 1.16438355],
-               [0., -0.3917616, 2.01723105],
-               [1.59602715, -0.81296805, 0.]]
+YUV2RGB_mat = [[1.16438355, 1.16438355, 1.16438355], [0.0, -0.3917616, 2.01723105], [1.59602715, -0.81296805, 0.0]]
 
 
 @POSTPROCESS_FACTORY.register(name="super_resolution")
 @POSTPROCESS_FACTORY.register(name="super_resolution_srgan")
 def super_resolution_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    meta_arch = kwargs['meta_arch'].lower()
-    if 'sr_resnet' in meta_arch:
+    meta_arch = kwargs["meta_arch"].lower()
+    if "sr_resnet" in meta_arch:
         endnodes = tf.clip_by_value(endnodes * 255, 0, 255)
-    elif 'srgan' in meta_arch:
+    elif "srgan" in meta_arch:
         endnodes = tf.cast(tf.clip_by_value(endnodes * NORMALIZATION_VALUE + NORMALIZATION_VALUE, 0, 255), tf.uint8)
-    elif 'espcn' in meta_arch:
+    elif "espcn" in meta_arch:
         endnodes = tf.cast(tf.clip_by_value(endnodes, 0, 1), tf.float32)
     else:
         raise Exception("Super resolution postprocessing {} is not supported".format(meta_arch))
-    return {'predictions': endnodes}
+    return {"predictions": endnodes}
 
 
 def create_mosaic_real_ratio(combined_images, input_resized):
@@ -87,18 +85,17 @@ def visualize_srgan_result(logits, img, **kwargs):
     h_center = 380
     w_center = 490
     width = 400
-    logits = logits['predictions']
-    input_resized = np.clip(cv2.resize(img[0],
-                            (logits.shape[2], logits.shape[1]),
-                            interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
+    logits = logits["predictions"]
+    input_resized = np.clip(
+        cv2.resize(img[0], (logits.shape[2], logits.shape[1]), interpolation=cv2.INTER_CUBIC), 0, 255
+    ).astype(np.uint8)
 
     input_resized_patch = focus_on_patch(input_resized, h_center, w_center, width)
     img_sr = logits[0]
     img_sr_patch = focus_on_patch(img_sr, h_center, w_center, width)
     combined_images = np.concatenate([input_resized_patch, img_sr_patch], 0)
     small_input = img[0]
-    small_input_with_patch_drawn = \
-        draw_patch(small_input, int(h_center / 4), int(w_center / 4), int(width / 4))
+    small_input_with_patch_drawn = draw_patch(small_input, int(h_center / 4), int(w_center / 4), int(width / 4))
     mosaic_image = create_mosaic_real_ratio(combined_images, small_input_with_patch_drawn)
     return mosaic_image
 
@@ -116,21 +113,25 @@ def visualize_super_resolution_result(logits, img, **kwargs):
     """
 
     transpose = False
-    if 'img_info' in kwargs and 'height' in kwargs['img_info']:
-        transpose = kwargs['img_info']['height'] > kwargs['img_info']['width']
+    if "img_info" in kwargs and "height" in kwargs["img_info"]:
+        transpose = kwargs["img_info"]["height"] > kwargs["img_info"]["width"]
 
     if transpose:
         img = np.transpose(img, axes=[0, 2, 1, 3])
-    logits = logits['predictions']
+    logits = logits["predictions"]
     img_yuv = np.matmul(img[0], RGB2YUV_mat) + RGB2YUV_offset
 
-    input_resized = np.clip(cv2.resize(img[0],
-                            logits.shape[1:3] if transpose else logits.shape[1:3][::-1],
-                            interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
+    input_resized = np.clip(
+        cv2.resize(img[0], logits.shape[1:3] if transpose else logits.shape[1:3][::-1], interpolation=cv2.INTER_CUBIC),
+        0,
+        255,
+    ).astype(np.uint8)
 
-    img_yuv_resized = np.clip(cv2.resize(img_yuv,
-                              logits.shape[1:3] if transpose else logits.shape[1:3][::-1],
-                              interpolation=cv2.INTER_CUBIC), 0, 255).astype(np.uint8)
+    img_yuv_resized = np.clip(
+        cv2.resize(img_yuv, logits.shape[1:3] if transpose else logits.shape[1:3][::-1], interpolation=cv2.INTER_CUBIC),
+        0,
+        255,
+    ).astype(np.uint8)
     img_sr = logits[0] * 255  # Un-normalize
     img_sr = np.transpose(img_sr, axes=[1, 0, 2]) if transpose else img_sr
     if img_sr.shape[-1] == 1:
@@ -139,10 +140,11 @@ def visualize_super_resolution_result(logits, img, **kwargs):
     white_patch = np.array(255 * np.ones((50, img_sr.shape[1], 3))).astype(np.uint8)
     img_sr = np.clip(np.matmul(img_sr - RGB2YUV_offset, YUV2RGB_mat), 0, 255).astype(np.uint8)  # YUV ==> RGB
     img_sr = np.concatenate([white_patch, img_sr], axis=0)
-    img_sr = cv2.putText(img_sr, 'SR', (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+    img_sr = cv2.putText(img_sr, "SR", (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
     input_resized = np.concatenate([white_patch, input_resized], axis=0)
-    input_resized = cv2.putText(input_resized, 'Bicubic Resize', (5, 40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+    input_resized = cv2.putText(
+        input_resized, "Bicubic Resize", (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2
+    )
 
     combined_image = np.concatenate([img_sr, input_resized], axis=1)
 

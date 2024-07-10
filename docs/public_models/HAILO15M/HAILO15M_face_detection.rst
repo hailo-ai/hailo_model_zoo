@@ -63,7 +63,7 @@ WiderFace
      - 25.14
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip>`_
      - `link <https://github.com/biubug6/Pytorch_Retinaface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/retinaface_mobilenet_v1.hef>`_/`nv12 <NA>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/retinaface_mobilenet_v1.hef>`_
    * - scrfd_10g
      - 82.13
      - 82.03
@@ -74,7 +74,7 @@ WiderFace
      - 26.74
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_10g.hef>`_/`nv12 <NA>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_10g.hef>`_
    * - scrfd_2.5g
      - 76.59
      - 76.32
@@ -85,7 +85,7 @@ WiderFace
      - 6.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_2.5g/pretrained/2022-09-07/scrfd_2.5g.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_2.5g.hef>`_/`nv12 <NA>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_2.5g.hef>`_
    * - scrfd_500m
      - 68.98
      - 68.88
@@ -96,4 +96,4 @@ WiderFace
      - 1.5
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_500m/pretrained/2022-09-07/scrfd_500m.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_500m.hef>`_/`nv12 <NA>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scrfd_500m.hef>`_

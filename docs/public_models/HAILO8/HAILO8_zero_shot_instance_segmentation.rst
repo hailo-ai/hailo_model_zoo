@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `zero-shot instance segmentation`_
-  
+
 
 .. _zero-shot instance segmentation:
 
@@ -41,8 +41,8 @@ COCO
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
-   * - fast_sam_s   
+     - Compiled
+   * - fast_sam_s
      - 40.1
      - 38.4
      - 44

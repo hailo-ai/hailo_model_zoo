@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Zero-shot Classification`_
-  
+
 
 .. _Zero-shot Classification:
 
@@ -41,8 +41,8 @@ CIFAR100
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
-   * - clip_resnet_50   
+     - Compiled
+   * - clip_resnet_50
      - 42.07
      - 38.27
      - 64
@@ -52,8 +52,8 @@ CIFAR100
      - 11.62
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/clip_resnet_50.hef>`_    
-   * - clip_resnet_50x4   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/clip_resnet_50.hef>`_
+   * - clip_resnet_50x4
      - 50.31
      - 47.69
      - 26

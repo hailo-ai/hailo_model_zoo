@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Single Person Pose Estimation`_
-  
+
 
 .. _Single Person Pose Estimation:
 
@@ -41,8 +41,8 @@ COCO
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled     
-   * - mspn_regnetx_800mf  |star| 
+     - Compiled
+   * - mspn_regnetx_800mf  |star|
      - 70.8
      - 70.52
      - 2130
@@ -52,8 +52,8 @@ COCO
      - 2.94
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_
      - `link <https://github.com/open-mmlab/mmpose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/mspn_regnetx_800mf.hef>`_    
-   * - vit_pose_small   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/mspn_regnetx_800mf.hef>`_
+   * - vit_pose_small
      - 72.56
      - 70.9
      - 36
@@ -63,8 +63,8 @@ COCO
      - 17.17
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_
      - `link <https://github.com/ViTAE-Transformer/ViTPose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/vit_pose_small.hef>`_    
-   * - vit_pose_small_bn   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/vit_pose_small.hef>`_
+   * - vit_pose_small_bn
      - 72.01
      - 70.81
      - 71

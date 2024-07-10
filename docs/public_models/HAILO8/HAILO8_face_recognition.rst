@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Face Recognition`_
-  
+
 
 .. _Face Recognition:
 
@@ -41,8 +41,8 @@ LFW
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled     
-   * - arcface_mobilefacenet  |star| 
+     - Compiled
+   * - arcface_mobilefacenet  |star|
      - 99.43
      - 99.41
      - 3458
@@ -52,8 +52,8 @@ LFW
      - 0.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/arcface_mobilefacenet.hef>`_    
-   * - arcface_r50   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/arcface_mobilefacenet.hef>`_
+   * - arcface_r50
      - 99.72
      - 99.71
      - 108

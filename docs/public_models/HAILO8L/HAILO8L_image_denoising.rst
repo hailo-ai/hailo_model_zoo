@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Image Denoising`_
-  
+
 
 .. _Image Denoising:
 
@@ -41,8 +41,8 @@ BSD68
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
-   * - dncnn3   
+     - Compiled
+   * - dncnn3
      - 31.46
      - 31.26
      - 29
@@ -71,8 +71,8 @@ CBSD68
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
-   * - dncnn_color_blind   
+     - Compiled
+   * - dncnn_color_blind
      - 33.87
      - 32.97
      - 29

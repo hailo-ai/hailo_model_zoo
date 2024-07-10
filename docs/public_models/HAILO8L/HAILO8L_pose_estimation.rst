@@ -2,10 +2,10 @@
 Public Pre-Trained Models
 =========================
 
-.. |rocket| image:: images/rocket.png
+.. |rocket| image:: ../../images/rocket.png
   :width: 18
 
-.. |star| image:: images/star.png
+.. |star| image:: ../../images/star.png
   :width: 18
 
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Supported tasks:
 
   * `Pose Estimation`_
-  
+
 
 .. _Pose Estimation:
 
@@ -41,8 +41,8 @@ COCO
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled     
-   * - centerpose_regnetx_1.6gf_fpn  |star| 
+     - Compiled
+   * - centerpose_regnetx_1.6gf_fpn  |star|
      - 53.54
      - 53.53
      - 42
@@ -52,8 +52,8 @@ COCO
      - 64.58
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip>`_
      - `link <https://github.com/tensorboy/centerpose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_regnetx_1.6gf_fpn.hef>`_    
-   * - centerpose_regnetx_800mf   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_regnetx_1.6gf_fpn.hef>`_
+   * - centerpose_regnetx_800mf
      - 44.07
      - 43.07
      - 67
@@ -63,8 +63,8 @@ COCO
      - 86.12
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip>`_
      - `link <https://github.com/tensorboy/centerpose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_regnetx_800mf.hef>`_    
-   * - centerpose_repvgg_a0   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_regnetx_800mf.hef>`_
+   * - centerpose_repvgg_a0
      - 39.17
      - 37.17
      - 96
@@ -74,8 +74,8 @@ COCO
      - 28.27
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg_a0.zip>`_
      - `link <https://github.com/tensorboy/centerpose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_repvgg_a0.hef>`_    
-   * - yolov8m_pose   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/centerpose_repvgg_a0.hef>`_
+   * - yolov8m_pose
      - 64.26
      - 61.66
      - 37
@@ -85,8 +85,8 @@ COCO
      - 81.02
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8m/pretrained/2023-06-11/yolov8m_pose.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/yolov8m_pose.hef>`_    
-   * - yolov8s_pose   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/yolov8m_pose.hef>`_
+   * - yolov8s_pose
      - 59.2
      - 55.6
      - 82

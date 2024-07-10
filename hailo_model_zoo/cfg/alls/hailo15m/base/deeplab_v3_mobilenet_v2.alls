@@ -1,0 +1,9 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
+pre_quantization_optimization(equalization, policy=disabled)
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)
+model_optimization_config(globals, output_encoding_vector=enabled)
+
+# TODO: HRT-12501 - support hw-padding
+allocator_param(enable_hw_padding=False)

@@ -1,0 +1,14 @@
+# normalization commands
+normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
+
+# New quantization params
+post_quantization_optimization(bias_correction, policy=enabled)
+post_quantization_optimization(finetune, policy=disabled)
+
+quantization_param({*}, max_elementwise_feed_repeat=1)
+
+# model_optimization_config commands
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+
+# allocation params
+resources_param(max_utilization=0.9)

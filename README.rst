@@ -65,7 +65,7 @@ The models are divided to:
 
     * For Hailo-15M - `Classification <docs/public_models/HAILO15M/HAILO15M_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO15M_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO15M_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-    * For Hailo-10 - `Classification <docs/public_models/HAILO10/HAILO10_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO10_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO10_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-10 - `Classification <docs/public_models/HAILO10/HAILO10_classification.rst>`_, `Object Detection <docs/public_models/HAILO10/HAILO10_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10/HAILO10_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 

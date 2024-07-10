@@ -14,8 +14,6 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.28.0
-* Supported tasks:
-
   * `Stereo Depth Estimation`_
 
 

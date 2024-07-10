@@ -7,9 +7,7 @@ Each model is accompanied with its own README, retraining docker and retraining 
 
 
 * FLOPs in the table are counted as MAC operations.
-* Supported tasks:
 
-  * `Object Detection`_
   * `Person & Face Detection`_
   * `License Plate Recognition`_
   * `Person Re-Identification`_

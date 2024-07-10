@@ -1,7 +1,7 @@
 Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo devices.
 
 .. list-table::
-   :widths: 31 9 7 11 9
+   :widths: 31 9 7 11 9 9
    :header-rows: 1
 
    * - Task Type
@@ -9,6 +9,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - Hailo-8L
      - Hailo-15H
      - Hailo-15M
+     - Hailo-10
    * - Classification
      - `Link <public_models/HAILO8/HAILO8_classification.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_classification.rst>`_

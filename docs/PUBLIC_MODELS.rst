@@ -126,7 +126,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
    * - Zero-shot Instance Segmentation
      - `Link <public_models/HAILO8/HAILO8_zero_shot_instance_segmentation.rst>`_
-     - `Link <public_models/HAILOL/HAILO8L_zero_shot_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO15M/HAILO15M_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO10/HAILO10_zero_shot_instance_segmentation.rst>`_

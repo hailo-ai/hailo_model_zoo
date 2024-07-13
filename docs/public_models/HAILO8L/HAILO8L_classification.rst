@@ -403,17 +403,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2023-07-18/squeezenet_v1.1.zip>`_
      - `link <https://github.com/osmr/imgclsmob/tree/master/pytorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/squeezenet_v1.1.hef>`_
-   * - vit_base
-     - 84.55
-     - 83.12
-     - 31
-     - 90
-     - 224x224x3
-     - 86.5
-     - 35.188
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base/pretrained/2024-04-03/vit_base_patch16_224_ops17.zip>`_
-     - `link <https://github.com/rwightman/pytorch-image-models>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/vit_base.hef>`_
    * - vit_base_bn
      - 79.98
      - 78.58

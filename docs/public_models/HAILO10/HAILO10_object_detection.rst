@@ -259,16 +259,6 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr.zip>`_
      - `link <https://github.com/ultralytics/yolov5/tree/v6.0>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/yolov5s_c3tr.hef>`_
-   * - yolov5s_wo_spp
-     - 34.47
-     - 33.26
-     - 0
-     - 640x640x3
-     - 7.85
-     - 17.74
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s/pretrained/2023-04-25/yolov5s.zip>`_
-     - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/yolov5s_wo_spp.hef>`_
    * - yolov5xs_wo_spp
      - 33.18
      - 32.2

@@ -447,17 +447,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_small_bn/pretrained/2022-08-08/vit_small.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/vit_small_bn.hef>`_
-   * - vit_tiny
-     - 75.51
-     - 73.49
-     - 5
-     - 10
-     - 224x224x3
-     - 5.73
-     - 2.2
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny/pretrained/2024-04-03/vit_tiny_patch16_224_ops17.zip>`_
-     - `link <https://github.com/rwightman/pytorch-image-models>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/vit_tiny.hef>`_
    * - vit_tiny_bn
      - 68.95
      - 67.15

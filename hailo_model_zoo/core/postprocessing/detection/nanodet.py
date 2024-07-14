@@ -1,15 +1,26 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 from tensorflow.image import combined_non_max_suppression
 
 from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
+
 from .centernet import COCO_2017_TO_2014_TRANSLATION
 
 
 class NanoDetPostProc:
-    def __init__(self, img_dims=(416, 416), nms_iou_thresh=0.6, labels_offset=0,
-                 score_threshold=0.3, anchors=None, classes=80, nms_max_output_per_class=None, post_nms_topk=None,
-                 meta_arch='nanodet', **kwargs):
+    def __init__(
+        self,
+        img_dims=(416, 416),
+        nms_iou_thresh=0.6,
+        labels_offset=0,
+        score_threshold=0.3,
+        anchors=None,
+        classes=80,
+        nms_max_output_per_class=None,
+        post_nms_topk=None,
+        meta_arch="nanodet",
+        **kwargs,
+    ):
         self._num_classes = classes
         self._image_dims = img_dims
         self._nms_iou_thresh = nms_iou_thresh
@@ -24,9 +35,9 @@ class NanoDetPostProc:
         self._nms_max_output = 100 if post_nms_topk is None else post_nms_topk
         self._hpp = kwargs.get("hpp", False)
         self._split = {
-            'nanodet': self.nanodet_decode,
-            'nanodet_split': self.split_decode,
-            'nanodet_v8': self.split_decode_yolo  # nanodet_v8 is for YOLOv8
+            "nanodet": self.nanodet_decode,
+            "nanodet_split": self.split_decode,
+            "nanodet_v8": self.split_decode_yolo,  # nanodet_v8 is for YOLOv8
         }
 
     @staticmethod
@@ -34,10 +45,8 @@ class NanoDetPostProc:
         scores, boxes = [], []
         for node in endnodes:
             fm_size_h, fm_size_w = node.shape[1:3]
-            scores.append(tf.reshape(node[:, :, :, :num_classes],
-                                     [-1, fm_size_h * fm_size_w, num_classes]))
-            boxes.append(tf.reshape(node[:, :, :, num_classes:],
-                                    [-1, fm_size_h * fm_size_w, 4, (reg_max + 1)]))
+            scores.append(tf.reshape(node[:, :, :, :num_classes], [-1, fm_size_h * fm_size_w, num_classes]))
+            boxes.append(tf.reshape(node[:, :, :, num_classes:], [-1, fm_size_h * fm_size_w, 4, (reg_max + 1)]))
         return tf.concat(scores, axis=1), boxes
 
     @staticmethod
@@ -109,13 +118,14 @@ class NanoDetPostProc:
 
     def postprocessing(self, endnodes, *, device_pre_post_layers, **kwargs):
         if self._hpp:
-            if kwargs.get('bbox_decoding_only', False):
+            if kwargs.get("bbox_decoding_only", False):
                 endnodes = tf.squeeze(endnodes, axis=1)
                 boxes, scores = tf.split(endnodes, [4, self._num_classes], axis=-1)
                 boxes = tf.expand_dims(boxes, axis=2)
             else:
-                return tf_postproc_nms(endnodes, labels_offset=kwargs['labels_offset'], score_threshold=0.0,
-                                       coco_2017_to_2014=True)
+                return tf_postproc_nms(
+                    endnodes, labels_offset=kwargs["labels_offset"], score_threshold=0.0, coco_2017_to_2014=True
+                )
         else:
             scores, raw_boxes = self._get_scores_boxes(endnodes)
             scores = tf.sigmoid(scores) if not device_pre_post_layers.sigmoid else scores
@@ -123,23 +133,26 @@ class NanoDetPostProc:
             boxes = self._box_decoding(raw_boxes)
 
         # nms
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
-            combined_non_max_suppression(boxes=boxes,
-                                         scores=scores,
-                                         score_threshold=self._score_threshold,
-                                         iou_threshold=self._nms_iou_thresh,
-                                         max_output_size_per_class=self._nms_max_output_per_class,
-                                         max_total_size=self._nms_max_output)
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+            boxes=boxes,
+            scores=scores,
+            score_threshold=self._score_threshold,
+            iou_threshold=self._nms_iou_thresh,
+            max_output_size_per_class=self._nms_max_output_per_class,
+            max_total_size=self._nms_max_output,
+        )
 
         # adding offset to the class prediction and cast to integer
         def translate_coco_2017_to_2014(nmsed_classes):
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
         nmsed_classes.set_shape((1, 100))
 
-        return {'detection_boxes': nmsed_boxes,
-                'detection_scores': nmsed_scores,
-                'detection_classes': nmsed_classes,
-                'num_detections': num_detections}
+        return {
+            "detection_boxes": nmsed_boxes,
+            "detection_scores": nmsed_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }

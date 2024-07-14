@@ -5,7 +5,7 @@
         736,
         960
     ],
-    "max_proposals_per_class": 67,
+    "max_proposals_per_class": 69,
     "classes": 4,
     "bbox_decoders": [
         {

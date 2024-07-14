@@ -1,0 +1,23 @@
+base:
+- base/vit.yaml
+preprocessing:
+  meta_arch: fastvit
+network:
+  network_name: fastvit_sa12
+paths:
+  network_path:
+  - models_files/Classification/fastvit_sa12/pretrained/2023-08-21/fastvit_sa12.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/fastvit_sa12/pretrained/2023-08-21/fastvit_sa12.zip
+  alls_script: fastvit_sa12.alls
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 3.59G
+  parameters: 11.99M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  source: https://github.com/apple/ml-fastvit/tree/main
+  full_precision_result: 79.8

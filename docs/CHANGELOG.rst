@@ -1,10 +1,35 @@
 Changelog
 =========
 
+**v2.12**
+
+* Update to use Dataflow Compiler v3.28.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.18.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* Target ``hardware`` now supports Hailo-10H device
+
+* New Models:
+
+  * Original ViT models - tiny, small, base - Transformer based classification models
+  * DeiT models - tiny, small, base - Transformer based classification models
+  * DETR (resnet50) - Transformer based object detection model
+  * fastvit_sa12 - Fast transformer based classification model
+  * levit256 - Transformer based classification model
+  * YOLOv10 - nano, small - Latest YOLO detectors
+  * RepGhostNet1.0x, RepGhostNet2.0x - Hardware-Efficient classification models
+
+* New postprocessing support on NN Core:
+
+  * yolov6 tag 0.2.1
+
+* Added support for person attribute visualization
+
+* Bug fixes
+
 **v2.11**
 
 * Update to use Dataflow Compiler v3.27.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Update to use HailoRT 4.17.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.18.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 * New Models:
 
@@ -50,7 +75,7 @@ Changelog
 * New Models:
 
   * vit_pose_small - encoder based transformer with layernorm for pose estimation
-  * segformer_b0_bn - encoder based transformer with batchnorm for semantic segmentation  
+  * segformer_b0_bn - encoder based transformer with batchnorm for semantic segmentation
 
 * Bug fixes
 

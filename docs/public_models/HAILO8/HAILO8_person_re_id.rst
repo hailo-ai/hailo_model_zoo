@@ -1,6 +1,6 @@
 
-Hailo8 Person Re-ID
-===================
+Public Pre-Trained Models
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -11,9 +11,10 @@ Hailo8 Person Re-ID
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
+
 
 
 .. _Person Re-ID:
@@ -41,23 +42,23 @@ Market1501
      - Compiled
    * - osnet_x1_0
      - 94.43
-     - 93.63
-     - 157
-     - 539
+     - 93.73
+     - 160
+     - 522
      - 256x128x3
      - 2.19
      - 1.98
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/osnet_x1_0.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/osnet_x1_0.hef>`_
    * - repvgg_a0_person_reid_512  |star|
      - 89.9
-     - 89.3
-     - 5204
-     - 5204
+     - 89.5
+     - 5203
+     - 5203
      - 256x128x3
      - 7.68
      - 1.78
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/repvgg_a0_person_reid_512.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/repvgg_a0_person_reid_512.hef>`_

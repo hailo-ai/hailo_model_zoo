@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-
 from detection_tools.core.post_processing import batch_multiclass_non_max_suppression
 
 
@@ -14,10 +13,10 @@ class SCRFDPostProc(object):
         self._image_dims = image_dims
         self._nms_iou_thresh = nms_iou_thresh
         self._score_threshold = score_threshold
-        self._num_branches = len(anchors['steps'])
+        self._num_branches = len(anchors["steps"])
         if anchors is None:
-            raise ValueError('Missing detection anchors metadata')
-        self._anchors = self.extract_anchors(anchors['min_sizes'], anchors['steps'])
+            raise ValueError("Missing detection anchors metadata")
+        self._anchors = self.extract_anchors(anchors["min_sizes"], anchors["steps"])
 
     def collect_box_class_predictions(self, output_branches):
         box_predictors_list = []
@@ -30,13 +29,15 @@ class SCRFDPostProc(object):
         for branch_index in range(0, len(sorted_output_branches), num_output_nodes_per_branch):
             num_of_batches, _, _, _ = tf.unstack(tf.shape(sorted_output_branches[branch_index]))
             box_predictors_list.append(tf.reshape(sorted_output_branches[branch_index], shape=[num_of_batches, -1, 4]))
-            class_predictors_list.append(tf.reshape(sorted_output_branches[branch_index + 1],
-                                                    shape=[num_of_batches, -1, self.NUM_CLASSES]))
+            class_predictors_list.append(
+                tf.reshape(sorted_output_branches[branch_index + 1], shape=[num_of_batches, -1, self.NUM_CLASSES])
+            )
 
             if num_output_nodes_per_branch > 2:
                 # Assume output is landmarks
-                landmarks_predictors_list.append(tf.reshape(sorted_output_branches[branch_index + 2],
-                                                            shape=[num_of_batches, -1, 10]))
+                landmarks_predictors_list.append(
+                    tf.reshape(sorted_output_branches[branch_index + 2], shape=[num_of_batches, -1, 10])
+                )
         box_predictors = tf.concat(box_predictors_list, axis=1)
         class_predictors = tf.concat(class_predictors_list, axis=1)
         landmarks_predictors = tf.concat(landmarks_predictors_list, axis=1) if landmarks_predictors_list else None
@@ -79,7 +80,7 @@ class SCRFDPostProc(object):
         return tf.stack([x1, y1, x2, y2], axis=-1)
 
     def tf_postproc(self, endnodes):
-        with tf.name_scope('Postprocessor'):
+        with tf.name_scope("Postprocessor"):
             box_predictions, classes_predictions, landmarks_predictors = self.collect_box_class_predictions(endnodes)
             additional_fields = {}
 
@@ -95,29 +96,37 @@ class SCRFDPostProc(object):
 
             decoded_landmarks = None
             if tf.is_tensor(landmarks_predictors):
-                decoded_landmarks = self._decode_landmarks(tf.reshape(landmarks_predictors, (-1, 10)),
-                                                           tiled_anchors_boxlist)
+                decoded_landmarks = self._decode_landmarks(
+                    tf.reshape(landmarks_predictors, (-1, 10)), tiled_anchors_boxlist
+                )
                 decoded_landmarks = tf.reshape(decoded_landmarks, [batch_size, num_proposals, 10])
-                additional_fields['landmarks'] = decoded_landmarks
+                additional_fields["landmarks"] = decoded_landmarks
 
-            detection_boxes = tf.identity(tf.expand_dims(detection_boxes, axis=[2]), 'raw_box_locations')
-            (nmsed_boxes, nmsed_scores, nmsed_classes, nmsed_masks, nmsed_additional_fields, num_detections) = \
-                batch_multiclass_non_max_suppression(boxes=detection_boxes, scores=detection_scores,
-                                                     score_thresh=self._score_threshold,
-                                                     iou_thresh=self._nms_iou_thresh,
-                                                     additional_fields=additional_fields,
-                                                     max_size_per_class=1000, max_total_size=1000)
+            detection_boxes = tf.identity(tf.expand_dims(detection_boxes, axis=[2]), "raw_box_locations")
+            (nmsed_boxes, nmsed_scores, nmsed_classes, nmsed_masks, nmsed_additional_fields, num_detections) = (
+                batch_multiclass_non_max_suppression(
+                    boxes=detection_boxes,
+                    scores=detection_scores,
+                    score_thresh=self._score_threshold,
+                    iou_thresh=self._nms_iou_thresh,
+                    additional_fields=additional_fields,
+                    max_size_per_class=1000,
+                    max_total_size=1000,
+                )
+            )
             # adding offset to the class prediction and cast to integer
             nmsed_classes = tf.cast(tf.add(nmsed_classes, self.LABEL_OFFSET), tf.int16)
 
-        results = {'detection_boxes': nmsed_boxes,
-                   'detection_scores': nmsed_scores,
-                   'detection_classes': nmsed_classes,
-                   'num_detections': num_detections, }
+        results = {
+            "detection_boxes": nmsed_boxes,
+            "detection_scores": nmsed_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }
 
         nmsed_additional_fields = nmsed_additional_fields or {}
-        face_landmarks = nmsed_additional_fields.get('landmarks')
+        face_landmarks = nmsed_additional_fields.get("landmarks")
         if tf.is_tensor(face_landmarks):
-            results['face_landmarks'] = face_landmarks
+            results["face_landmarks"] = face_landmarks
 
         return results

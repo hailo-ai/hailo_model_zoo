@@ -5,19 +5,19 @@ from hailo_model_zoo.core.factory import DATASET_FACTORY
 
 @DATASET_FACTORY.register(name="aflw2k3d")
 def parse_record(serialized_example):
-    """Parse serialized example of TfRecord and extract dictionary of all the information
-    """
+    """Parse serialized example of TfRecord and extract dictionary of all the information"""
     features = tf.io.parse_single_example(
         serialized_example,
         features={
-            'image': tf.io.FixedLenFeature([], tf.string),
-            'landmarks_68_3d_xy_normalized': tf.io.FixedLenFeature([68, 2], tf.float32),
-            'landmarks_68_3d_z': tf.io.FixedLenFeature([68, 1], tf.float32),
-        })
-    image = tf.cast(tf.image.decode_jpeg(features['image'], channels=3), tf.uint8)
+            "image": tf.io.FixedLenFeature([], tf.string),
+            "landmarks_68_3d_xy_normalized": tf.io.FixedLenFeature([68, 2], tf.float32),
+            "landmarks_68_3d_z": tf.io.FixedLenFeature([68, 1], tf.float32),
+        },
+    )
+    image = tf.cast(tf.image.decode_jpeg(features["image"], channels=3), tf.uint8)
     image = tf.reshape(image, (450, 450, 3))
     shape = tf.shape(image)
-    landmarks = features['landmarks_68_3d_xy_normalized'] * 450.0
+    landmarks = features["landmarks_68_3d_xy_normalized"] * 450.0
 
     height, width = shape[0], shape[1]
 
@@ -42,18 +42,13 @@ def parse_record(serialized_example):
     pad_left = tf.maximum(0, -roi_box[0])
     pad_up = tf.maximum(0, -roi_box[1])
 
-    padded_image = tf.image.pad_to_bounding_box(image,
-                                                pad_up,
-                                                pad_left,
-                                                tf.maximum(roi_box[3], height) + pad_up,
-                                                tf.maximum(roi_box[2], width) + pad_left)
+    padded_image = tf.image.pad_to_bounding_box(
+        image, pad_up, pad_left, tf.maximum(roi_box[3], height) + pad_up, tf.maximum(roi_box[2], width) + pad_left
+    )
     face_image = tf.image.crop_to_bounding_box(
-        padded_image, roi_box[1] + pad_up, roi_box[0] + pad_left, roi_box[3] - roi_box[1], roi_box[2] - roi_box[0])
+        padded_image, roi_box[1] + pad_up, roi_box[0] + pad_left, roi_box[3] - roi_box[1], roi_box[2] - roi_box[0]
+    )
 
-    landmarks = tf.concat([landmarks, features['landmarks_68_3d_z']], axis=-1)
-    image_info = {
-        'landmarks': landmarks,
-        'roi_box': roi_box,
-        'uncropped_image': image
-    }
+    landmarks = tf.concat([landmarks, features["landmarks_68_3d_z"]], axis=-1)
+    image_info = {"landmarks": landmarks, "roi_box": roi_box, "uncropped_image": image}
     return [face_image, image_info]

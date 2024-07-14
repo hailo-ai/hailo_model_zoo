@@ -1,0 +1,2 @@
+# allocation params
+resources_param(max_utilization=0.8)

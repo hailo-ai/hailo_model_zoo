@@ -1,0 +1,2 @@
+resources_param(max_utilization=1.125)
+allocator_param(max_auto_merge_depth=4, merge_max_layer_utilization=1.5, merge_max_memory_utilization=1.5, merge_min_layer_utilization=0.8, enable_post_split_average_buffers=False)

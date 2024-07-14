@@ -5,17 +5,14 @@ from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACT
 from hailo_model_zoo.core.postprocessing.lane_detection.laneaf import LaneAFPostProc
 from hailo_model_zoo.core.postprocessing.lane_detection.polylanenet import PolyLaneNetPostProcessHailo
 
-LANE_DETECTION_ARCHS = {
-    "polylanenet": PolyLaneNetPostProcessHailo,
-    "laneaf": LaneAFPostProc
-}
+LANE_DETECTION_ARCHS = {"polylanenet": PolyLaneNetPostProcessHailo, "laneaf": LaneAFPostProc}
 
 
 @VISUALIZATION_FACTORY.register(name="lane_detection")
-def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs):
-    pred = pred['predictions']
+def visualize_lane_detection_result(pred, im, dataset_name="tusimple", **kwargs):
+    pred = pred["predictions"]
     color = [0, 255, 0]
-    conf = pred[0, :, -1]   # last element in each lane is confidence
+    conf = pred[0, :, -1]  # last element in each lane is confidence
     pred = pred[:, :, :-1]  # removing conf from pred for ease of expression
     pred = pred[0].astype(int)
     im = im[0]
@@ -31,17 +28,19 @@ def visualize_lane_detection_result(pred, im, dataset_name='tusimple', **kwargs)
         points = [[ypoints[j], xpoints[j]] for j in range(len(xpoints))]
         for current_point in points:
             if current_point[1] > 0 and current_point[1] < im.shape[1]:
-                overlay = cv2.circle(overlay,
-                                     (int(current_point[1]), int(current_point[0])),
-                                     radius=2, color=color, thickness=2)
-        cv2.putText(overlay,
-                    str('{:.1f}'.format(lane_confidence)),
-                    (int(xpoints[ypoints == lane_horizon_y]), int(lane_horizon_y)),
-                    fontFace=cv2.FONT_HERSHEY_COMPLEX,
-                    fontScale=0.5,
-                    color=(0, 255, 0))
+                overlay = cv2.circle(
+                    overlay, (int(current_point[1]), int(current_point[0])), radius=2, color=color, thickness=2
+                )
+        cv2.putText(
+            overlay,
+            str("{:.1f}".format(lane_confidence)),
+            (int(xpoints[ypoints == lane_horizon_y]), int(lane_horizon_y)),
+            fontFace=cv2.FONT_HERSHEY_COMPLEX,
+            fontScale=0.5,
+            color=(0, 255, 0),
+        )
     w = 0.6
-    im = ((1. - w) * im + w * overlay).astype(np.uint8)
+    im = ((1.0 - w) * im + w * overlay).astype(np.uint8)
     return im
 
 

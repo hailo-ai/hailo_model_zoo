@@ -64,10 +64,10 @@ class LaneAFPostProc(object):
                     vafs = vafs / np.linalg.norm(vafs, axis=1, keepdims=True)
                     # get predicted cluster center by adding vafs
                     pred_points = pts + vafs * np.linalg.norm(pts - cluster_mean, axis=1, keepdims=True)
-                    # get error between prediceted cluster center and actual cluster center
+                    # get error between predicated cluster center and actual cluster center
                     error = np.mean(np.linalg.norm(pred_points - cluster_mean, axis=1))
                     C[r, c] = error
-            # assign clusters to lane (in acsending order of error)
+            # assign clusters to lane (in ascending order of error)
             row_ind, col_ind = np.unravel_index(np.argsort(C, axis=None), C.shape)
             for r, c in zip(row_ind, col_ind):
                 if C[r, c] >= err_thresh:
@@ -77,26 +77,28 @@ class LaneAFPostProc(object):
                 assigned[c] = True
                 # update best lane match with current pixel
                 output[row, clusters[c]] = r + 1
-                lane_end_pts[r] = np.stack((np.array(clusters[c], dtype=np.float32),
-                                           row * np.ones_like(clusters[c])), axis=1)
+                lane_end_pts[r] = np.stack(
+                    (np.array(clusters[c], dtype=np.float32), row * np.ones_like(clusters[c])), axis=1
+                )
             # initialize unassigned clusters to new lanes
             for c, cluster in enumerate(clusters):
                 if len(cluster) == 0:
                     continue
                 if not assigned[c]:
                     output[row, cluster] = next_lane_id
-                    lane_end_pts.append(np.stack((np.array(cluster, dtype=np.float32),
-                                        row * np.ones_like(cluster)), axis=1))
+                    lane_end_pts.append(
+                        np.stack((np.array(cluster, dtype=np.float32), row * np.ones_like(cluster)), axis=1)
+                    )
                     next_lane_id += 1
         return output
 
     def postprocessing(self, endnodes, device_pre_post_layers=None, **kwargs):
-        '''
+        """
         endnodes:
             [0]: haf - [B, 88, 160, 1]
             [1]: vaf - [B, 88, 160, 2]
             [2]: hm  - [B, 88, 160, 1]
-        '''
+        """
         haf, vaf, hm = endnodes
         hm_repeat = tf.tile(tf.math.sigmoid(hm), [1, 1, 1, 3])
         meann = tf.zeros(3, dtype=tf.float32)
@@ -107,6 +109,6 @@ class LaneAFPostProc(object):
         seg_out = tf.numpy_function(
             lambda x, y, z: self._decode_wrapper(x, y, z, fg_thresh=128, err_thresh=5),
             (hm_images_bgr, vaf, haf),
-            tf.uint8
+            tf.uint8,
         )
-        return {'predictions': seg_out}
+        return {"predictions": seg_out}

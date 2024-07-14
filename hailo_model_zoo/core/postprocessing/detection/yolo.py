@@ -1,20 +1,31 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
+from tensorflow.image import combined_non_max_suppression
+
+from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 from .centernet import COCO_2017_TO_2014_TRANSLATION
 from .detection_common import translate_coco_2017_to_2014
-from tensorflow.image import combined_non_max_suppression
-from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
 
 def sigmoid(x):
-    return 1. / (1. + np.exp(-x))
+    return 1.0 / (1.0 + np.exp(-x))
 
 
 class YoloPostProc(object):
-    def __init__(self, img_dims=(608, 608), nms_iou_thresh=0.45, score_threshold=0.01,
-                 anchors=None, output_scheme=None, classes=80,
-                 labels_offset=0, meta_arch="yolo_v3", should_clip=True, **kwargs):
+    def __init__(
+        self,
+        img_dims=(608, 608),
+        nms_iou_thresh=0.45,
+        score_threshold=0.01,
+        anchors=None,
+        output_scheme=None,
+        classes=80,
+        labels_offset=0,
+        meta_arch="yolo_v3",
+        should_clip=True,
+        **kwargs,
+    ):
         self._network_arch = meta_arch
         self._image_dims = img_dims
         self._nms_iou_thresh = nms_iou_thresh
@@ -27,45 +38,47 @@ class YoloPostProc(object):
         self._labels_offset = labels_offset
         self._yolo_decoding = {
             "yolo_v3": YoloPostProc._yolo3_decode,
-            'yolo_v4': YoloPostProc._yolo4_decode,
+            "yolo_v4": YoloPostProc._yolo4_decode,
             "yolo_v5": YoloPostProc._yolo5_decode,
             "yolox": YoloPostProc._yolox_decode,
             "yolo_v6": YoloPostProc._yolo6_decode,
         }
         self._nms_on_device = False
         self._should_clip = should_clip
-        if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get('nms', False):
+        if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get("nms", False):
             self._nms_on_device = True
         self.hpp = kwargs.get("hpp", False)  # not needed once SDK change the output shape of emulator
 
     @staticmethod
     def _yolo3_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
         box_centers = (sigmoid(raw_box_centers) + offsets) * stride  # dim [N, HxW, 3, 2]
-        box_scales = (np.exp(raw_box_scales) * anchors_for_stride)  # dim [N, HxW, 3, 2]
+        box_scales = np.exp(raw_box_scales) * anchors_for_stride  # dim [N, HxW, 3, 2]
         confidence = sigmoid(objness)  # dim [N, HxW, 3, 1]
         class_pred = sigmoid(class_pred)
         return box_centers, box_scales, confidence, class_pred
 
     @staticmethod
-    def _yolo4_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride,
-                      scale_x_y=1.05):
-        box_scales = (np.exp(raw_box_scales) * anchors_for_stride)  # dim [N, HxW, 3, 2]
-        box_centers = (sigmoid(raw_box_centers) * scale_x_y
-                       - 0.5 * (scale_x_y - 1) + offsets) * stride  # dim [N, HxW, 3, 2]
+    def _yolo4_decode(
+        raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride, scale_x_y=1.05
+    ):
+        box_scales = np.exp(raw_box_scales) * anchors_for_stride  # dim [N, HxW, 3, 2]
+        box_centers = (
+            sigmoid(raw_box_centers) * scale_x_y - 0.5 * (scale_x_y - 1) + offsets
+        ) * stride  # dim [N, HxW, 3, 2]
         confidence = sigmoid(objness)  # dim [N, HxW, 3, 1]
         class_pred = sigmoid(class_pred)
         return box_centers, box_scales, confidence, class_pred
 
     @staticmethod
     def _yolo5_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
-        box_centers = (raw_box_centers * 2. - 0.5 + offsets) * stride
+        box_centers = (raw_box_centers * 2.0 - 0.5 + offsets) * stride
         box_scales = (raw_box_scales * 2) ** 2 * anchors_for_stride  # dim [N, HxW, 3, 2]
         return box_centers, box_scales, objness, class_pred
 
     @staticmethod
     def _yolox_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
         box_centers = (raw_box_centers + offsets) * stride  # dim [N, HxW, 3, 2]
-        box_scales = (np.exp(raw_box_scales) * stride)  # dim [N, HxW, 3, 2]
+        box_scales = np.exp(raw_box_scales) * stride  # dim [N, HxW, 3, 2]
         return box_centers, box_scales, objness, class_pred
 
     @staticmethod
@@ -77,20 +90,23 @@ class YoloPostProc(object):
         return box_centers, box_scales, objness, class_pred
 
     def iou_nms(self, detection_boxes, detection_scores):
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
-            combined_non_max_suppression(boxes=detection_boxes,
-                                         scores=detection_scores,
-                                         score_threshold=self.score_threshold,
-                                         iou_threshold=self._nms_iou_thresh,
-                                         max_output_size_per_class=100,
-                                         max_total_size=100)
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+            boxes=detection_boxes,
+            scores=detection_scores,
+            score_threshold=self.score_threshold,
+            iou_threshold=self._nms_iou_thresh,
+            max_output_size_per_class=100,
+            max_total_size=100,
+        )
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
-        return {'detection_boxes': nmsed_boxes,
-                'detection_scores': nmsed_scores,
-                'detection_classes': nmsed_classes,
-                'num_detections': num_detections}
+        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
+        return {
+            "detection_boxes": nmsed_boxes,
+            "detection_scores": nmsed_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }
 
     def yolo_postprocessing(self, endnodes, **kwargs):
         """
@@ -120,10 +136,12 @@ class YoloPostProc(object):
             anchors_for_stride = np.array(anchors_list[::-1][output_ind])
             anchors_for_stride = np.reshape(anchors_for_stride, (1, 1, -1, 2))  # dim [1, 1, 3, 2]
             output_branch_and_data = [output_branch, anchors_for_stride, stride]
-            detection_boxes, detection_scores = tf.numpy_function(self.yolo_postprocess_numpy,
-                                                                  output_branch_and_data,
-                                                                  ['float32', 'float32'],
-                                                                  name=f'{self._network_arch}_postprocessing')
+            detection_boxes, detection_scores = tf.numpy_function(
+                self.yolo_postprocess_numpy,
+                output_branch_and_data,
+                ["float32", "float32"],
+                name=f"{self._network_arch}_postprocessing",
+            )
 
             # detection_boxes is a [BS, num_detections, 1, 4] tensor, detection_scores is a
             # [BS, num_detections, num_classes] tensor
@@ -142,27 +160,30 @@ class YoloPostProc(object):
                 detection_boxes_full = tf.concat([detection_boxes_full, detection_boxes], axis=1)
                 detection_scores_full = tf.concat([detection_scores_full, detection_scores], axis=1)
 
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = \
-            combined_non_max_suppression(boxes=detection_boxes_full,
-                                         scores=detection_scores_full,
-                                         score_threshold=self.score_threshold,
-                                         iou_threshold=self._nms_iou_thresh,
-                                         max_output_size_per_class=100,
-                                         max_total_size=100,
-                                         clip_boxes=self._should_clip,)
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+            boxes=detection_boxes_full,
+            scores=detection_scores_full,
+            score_threshold=self.score_threshold,
+            iou_threshold=self._nms_iou_thresh,
+            max_output_size_per_class=100,
+            max_total_size=100,
+            clip_boxes=self._should_clip,
+        )
 
         # adding offset to the class prediction and cast to integer
         def translate_coco_2017_to_2014(nmsed_classes):
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
         nmsed_classes.set_shape((BS, 100))
 
-        return {'detection_boxes': nmsed_boxes,
-                'detection_scores': nmsed_scores,
-                'detection_classes': nmsed_classes,
-                'num_detections': num_detections}
+        return {
+            "detection_boxes": nmsed_boxes,
+            "detection_scores": nmsed_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }
 
     def yolo_postprocess_numpy(self, net_out, anchors_for_stride, stride):
         """
@@ -204,7 +225,8 @@ class YoloPostProc(object):
             class_pred=class_pred,
             anchors_for_stride=anchors_for_stride,
             offsets=offsets,
-            stride=stride)
+            stride=stride,
+        )
 
         class_score = class_pred * confidence  # dim [N, HxW, 3, 80]
         wh = box_scales / 2.0
@@ -226,22 +248,22 @@ class YoloPostProc(object):
 
     def reorganize_split_output(self, endnodes):
         """endnodes is a list of output tensors. we split them into groups of 4,
-           since the remodeling created 4 output tensors out of each single output tensor,
-           and we reorganize those 4 tensors back into the form of a single output tensor.
-           if originally there were 3 output branches, the remodeling created 12 output tensors.
-           we split them into 3 groups of 4 and for each group return a single tensor.
+        since the remodeling created 4 output tensors out of each single output tensor,
+        and we reorganize those 4 tensors back into the form of a single output tensor.
+        if originally there were 3 output branches, the remodeling created 12 output tensors.
+        we split them into 3 groups of 4 and for each group return a single tensor.
         """
         reorganized_endnodes_list = []
         for index in range(len(self._anchors_list)):
             branch_index = int(4 * index)
-            if 'yolox' in self._network_arch:
+            if "yolox" in self._network_arch:
                 # special case for yolox: 9 branches
                 branch_index = int(3 * index)
                 centers = endnodes[branch_index][:, :, :, :2]
                 scales = endnodes[branch_index][:, :, :, 2:]
                 obj = endnodes[branch_index + 1]
                 probs = endnodes[branch_index + 2]
-            elif 'yolo_v6' in self._network_arch:
+            elif "yolo_v6" in self._network_arch:
                 branch_index = int(2 * index)
                 centers = endnodes[branch_index][:, :, :, :2]
                 scales = endnodes[branch_index][:, :, :, 2:]
@@ -252,9 +274,12 @@ class YoloPostProc(object):
                 scales = endnodes[branch_index + 1]
                 obj = endnodes[branch_index + 2]
                 probs = endnodes[branch_index + 3]
-            branch_endnodes = tf.numpy_function(self.reorganize_split_output_numpy,
-                                                [centers, scales, obj, probs],
-                                                ['float32'], name='yolov3_match_remodeled_output')
+            branch_endnodes = tf.numpy_function(
+                self.reorganize_split_output_numpy,
+                [centers, scales, obj, probs],
+                ["float32"],
+                name="yolov3_match_remodeled_output",
+            )
 
             reorganized_endnodes_list.append(branch_endnodes[0])  # because the py_func returns a list
         return reorganized_endnodes_list
@@ -266,10 +291,12 @@ class YoloPostProc(object):
             # Convert dummy to a ones of shape [B, h, w, 1] for objectness
             obj = np.ones((list(probs.shape[:3]) + [1]), dtype=np.float32)
         for anchor in range(num_anchors):
-            concat_arrays_for_anchor = [centers[:, :, :, 2 * anchor:2 * anchor + 2],
-                                        scales[:, :, :, 2 * anchor:2 * anchor + 2],
-                                        obj[:, :, :, anchor:anchor + 1],
-                                        probs[:, :, :, anchor * self._num_classes:(anchor + 1) * self._num_classes]]
+            concat_arrays_for_anchor = [
+                centers[:, :, :, 2 * anchor : 2 * anchor + 2],
+                scales[:, :, :, 2 * anchor : 2 * anchor + 2],
+                obj[:, :, :, anchor : anchor + 1],
+                probs[:, :, :, anchor * self._num_classes : (anchor + 1) * self._num_classes],
+            ]
 
             partial_concat = np.concatenate(concat_arrays_for_anchor, 3)
 
@@ -280,9 +307,9 @@ class YoloPostProc(object):
         return full_concat_array
 
     def hpp_detection_postprocess(self, endnodes):
-        '''
+        """
         input endnodes from HPP in the following format (Batch, 1, 6, MAX_PROPOSALS)
-        '''
+        """
         endnodes = tf.transpose(endnodes, [0, 1, 3, 2])
         detection_boxes = endnodes[:, 0, :, :4]  # (B, 100, 4)
         detection_scores = endnodes[:, 0, :, 4]  # (B, 100)
@@ -293,16 +320,18 @@ class YoloPostProc(object):
 
         num_detections = tf.reduce_sum(tf.cast(detection_scores > 0, dtype=tf.int32), axis=1)
         nmsed_classes = tf.cast(tf.add(detection_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ['int32'])
+        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
 
-        return {'detection_boxes': detection_boxes,
-                'detection_scores': detection_scores,
-                'detection_classes': nmsed_classes,
-                'num_detections': num_detections}
+        return {
+            "detection_boxes": detection_boxes,
+            "detection_scores": detection_scores,
+            "detection_classes": nmsed_classes,
+            "num_detections": num_detections,
+        }
 
     def postprocessing(self, endnodes, **kwargs):
         if self.hpp:
-            if kwargs.get('bbox_decoding_only', False):
+            if kwargs.get("bbox_decoding_only", False):
                 # extracts the boxes and scores from the concatenated output tensor then applies NMS
                 endnodes = tf.squeeze(endnodes, axis=1)
                 detection_boxes = endnodes[:, :, None, :4]  # (B, 100, 1, 4)
@@ -310,8 +339,9 @@ class YoloPostProc(object):
                 detection_scores = endnodes[..., 4:5] * endnodes[..., 5:]
                 return self.iou_nms(detection_boxes, detection_scores)
 
-            return tf_postproc_nms(endnodes, labels_offset=kwargs['labels_offset'], score_threshold=0.0,
-                                   coco_2017_to_2014=True)
+            return tf_postproc_nms(
+                endnodes, labels_offset=kwargs["labels_offset"], score_threshold=0.0, coco_2017_to_2014=True
+            )
         if self._nms_on_device:
             endnodes = tf.transpose(endnodes, [0, 3, 1, 2])
             detection_boxes = endnodes[:, :, :, :4]

@@ -14,10 +14,10 @@ class PolyLaneNetPostProcessHailo(object):
         bs = confs.shape[0]
         output = np.zeros((bs, 5, 7))
         for lane in range(5):
-            output[:, lane, 0:1] = confs[:, 1 * lane:1 * lane + 1]
-            output[:, lane, 1:3] = upper_lower[:, 2 * lane:2 * lane + 2]
-            output[:, lane, 3:5] = coeffs_1_2[:, 2 * lane:2 * lane + 2]
-            output[:, lane, 5:7] = coeffs_3_4[:, 2 * lane:2 * lane + 2]
+            output[:, lane, 0:1] = confs[:, 1 * lane : 1 * lane + 1]
+            output[:, lane, 1:3] = upper_lower[:, 2 * lane : 2 * lane + 2]
+            output[:, lane, 3:5] = coeffs_1_2[:, 2 * lane : 2 * lane + 2]
+            output[:, lane, 5:7] = coeffs_3_4[:, 2 * lane : 2 * lane + 2]
         return output.astype(np.float32)
 
     def sigmoid(self, x):
@@ -48,19 +48,19 @@ class PolyLaneNetPostProcessHailo(object):
                 confidence = pred[image, lane_index, 0]
                 lower = pred[image, lane_index, 1]
                 upper = pred[image, lane_index, 2]
-                xvals = (np.polyval(pred[image, lane_index, 3:], self.h_range) * self.img_w)
-                xvals[self.h_range < lower] = -2.
-                xvals[self.h_range > upper] = -2.
+                xvals = np.polyval(pred[image, lane_index, 3:], self.h_range) * self.img_w
+                xvals[self.h_range < lower] = -2.0
+                xvals[self.h_range > upper] = -2.0
                 xvals = np.append(xvals, confidence)
                 lanes.append(xvals.astype(np.float32))
             batch_lanes.append(lanes)
         return [batch_lanes]
 
     def postprocessing(self, endnodes, device_pre_post_layers=None, output_scheme=None, **kwargs):
-        if output_scheme and output_scheme.get('split_output', False):
+        if output_scheme and output_scheme.get("split_output", False):
             endnodes = tf.numpy_function(self.recombine_split_endnodes, endnodes, [tf.float32])
         decoded = tf.numpy_function(self.decode, [endnodes], [tf.float32])
         # network always returns 5 lane predictions.
         postprocessed = tf.numpy_function(self.polynomize_pred, [decoded], [tf.float32])
         # import ipdb; ipdb.set_trace()
-        return {'predictions': postprocessed[0]}
+        return {"predictions": postprocessed[0]}

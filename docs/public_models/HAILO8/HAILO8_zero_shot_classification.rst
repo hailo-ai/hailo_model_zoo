@@ -1,6 +1,6 @@
 
-Hailo8 Zero-shot Classification
-===============================
+Public Pre-Trained Models
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -11,9 +11,10 @@ Hailo8 Zero-shot Classification
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
+
 
 
 .. _Zero-shot Classification:
@@ -41,12 +42,23 @@ CIFAR100
      - Compiled
    * - clip_resnet_50
      - 42.07
-     - 38.57
-     - 88
-     - 366
+     - 38.27
+     - 83
+     - 347
      - 224x224x3
      - 38.72
      - 11.62
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/clip_resnet_50.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/clip_resnet_50.hef>`_
+   * - clip_resnet_50x4
+     - 50.31
+     - 47.69
+     - 36
+     - 101
+     - 288x288x3
+     - 87.0
+     - 41.3
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_
+     - `link <https://github.com/openai/CLIP>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/clip_resnet_50x4.hef>`_

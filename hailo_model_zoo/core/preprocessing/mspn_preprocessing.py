@@ -8,7 +8,7 @@ from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 from hailo_model_zoo.core.preprocessing.affine_utils import get_affine_transform
 
 
-def _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=200., padding=1.25):
+def _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=200.0, padding=1.25):
     """Transform the bbox format from (x,y,w,h) into (center, scale)
     Args:
         bbox (ndarray): Single bbox in (x, y, w, h)
@@ -23,7 +23,7 @@ def _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=200., padding=1.25):
     """
     x, y, w, h = bbox
 
-    center = np.array([x + w / 2., y + h / 2.], dtype=np.float32)
+    center = np.array([x + w / 2.0, y + h / 2.0], dtype=np.float32)
 
     if w > aspect_ratio * h:
         h = w * 1.0 / aspect_ratio
@@ -35,7 +35,7 @@ def _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=200., padding=1.25):
     return center, scale
 
 
-def _mspn_preprocessing(image, aspect_ratio, bbox, height, width, pixel_std=200., padding=1.25):
+def _mspn_preprocessing(image, aspect_ratio, bbox, height, width, pixel_std=200.0, padding=1.25):
     image = np.array(image)
     center, scale = _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=pixel_std, padding=padding)
     trans_input = get_affine_transform(center, scale, 0, [float(width), float(height)], pixel_std=pixel_std)
@@ -46,12 +46,12 @@ def _mspn_preprocessing(image, aspect_ratio, bbox, height, width, pixel_std=200.
 
 def _get_bbox_xywh(image_info):
     # Get box info if exists, otherwise assume box spans the entire image
-    bbox = image_info.get('bbox', [[0, 1, 0, 1]])[0]
+    bbox = image_info.get("bbox", [[0, 1, 0, 1]])[0]
     xmin, xmax, ymin, ymax = bbox[0], bbox[1], bbox[2], bbox[3]
-    xmin *= tf.cast(image_info['orig_width'], tf.float32)
-    xmax *= tf.cast(image_info['orig_width'], tf.float32)
-    ymin *= tf.cast(image_info['orig_height'], tf.float32)
-    ymax *= tf.cast(image_info['orig_height'], tf.float32)
+    xmin *= tf.cast(image_info["orig_width"], tf.float32)
+    xmax *= tf.cast(image_info["orig_width"], tf.float32)
+    ymin *= tf.cast(image_info["orig_height"], tf.float32)
+    ymax *= tf.cast(image_info["orig_height"], tf.float32)
     bbox = [xmin, ymin, xmax - xmin, ymax - ymin]
 
     return bbox
@@ -59,45 +59,45 @@ def _get_bbox_xywh(image_info):
 
 @PREPROCESS_FACTORY.register
 def mspn(image, image_info=None, height=None, width=None, **kwargs):
-    image_info['orig_height'], image_info['orig_width'] = tf.shape(image)[0], tf.shape(image)[1]
-    image_info['img_orig'] = tf.image.encode_jpeg(image, quality=100)
+    image_info["orig_height"], image_info["orig_width"] = tf.shape(image)[0], tf.shape(image)[1]
+    image_info["img_orig"] = tf.image.encode_jpeg(image, quality=100)
 
     aspect_ratio = width / height
     bbox = _get_bbox_xywh(image_info)
 
-    image, center, scale = tf.numpy_function(_mspn_preprocessing,
-                                             [image, aspect_ratio, bbox, height, width],
-                                             [tf.uint8, tf.float32, tf.float32])
+    image, center, scale = tf.numpy_function(
+        _mspn_preprocessing, [image, aspect_ratio, bbox, height, width], [tf.uint8, tf.float32, tf.float32]
+    )
     image = tf.cast(image, tf.float32)
     image.set_shape((height, width, 3))
-    image_info['img_resized'] = image
-    image_info['center'], image_info['scale'] = center, scale
+    image_info["img_resized"] = image
+    image_info["center"], image_info["scale"] = center, scale
 
     return image, image_info
 
 
 @PREPROCESS_FACTORY.register
 def vit_pose(image, image_info=None, height=None, width=None, **kwargs):
-    image_info['orig_height'], image_info['orig_width'] = tf.shape(image)[0], tf.shape(image)[1]
-    image_info['img_orig'] = tf.image.encode_jpeg(image, quality=100)
+    image_info["orig_height"], image_info["orig_width"] = tf.shape(image)[0], tf.shape(image)[1]
+    image_info["img_orig"] = tf.image.encode_jpeg(image, quality=100)
 
-    aspect_ratio = tf.cast(image_info['orig_height'], tf.float32) / tf.cast(image_info['orig_width'], tf.float32)
+    aspect_ratio = tf.cast(image_info["orig_height"], tf.float32) / tf.cast(image_info["orig_width"], tf.float32)
     aspect_ratio = width / height
 
     bbox = _get_bbox_xywh(image_info)
 
-    image, center, scale = tf.numpy_function(_vit_pose_preprocessing,
-                                             [image, aspect_ratio, bbox, height, width],
-                                             [tf.uint8, tf.float32, tf.float32])
+    image, center, scale = tf.numpy_function(
+        _vit_pose_preprocessing, [image, aspect_ratio, bbox, height, width], [tf.uint8, tf.float32, tf.float32]
+    )
 
     image.set_shape((height, width, 3))
-    image_info['img_resized'] = image
-    image_info['center'], image_info['scale'] = center, scale
+    image_info["img_resized"] = image
+    image_info["center"], image_info["scale"] = center, scale
 
     return image, image_info
 
 
-def _vit_pose_preprocessing(image, aspect_ratio, bbox, height, width, pixel_std=200., padding=1.25):
+def _vit_pose_preprocessing(image, aspect_ratio, bbox, height, width, pixel_std=200.0, padding=1.25):
     image = np.array(image).astype(np.uint8)
     center, scale = _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=pixel_std, padding=padding)
 
@@ -129,12 +129,12 @@ def get_warp_matrix(theta, size_input, size_dst, size_target):
     scale_y = size_dst[1] / size_target[1]
     matrix[0, 0] = math.cos(theta) * scale_x
     matrix[0, 1] = -math.sin(theta) * scale_x
-    matrix[0, 2] = scale_x * (-0.5 * size_input[0] * math.cos(theta)
-                              + 0.5 * size_input[1] * math.sin(theta)
-                              + 0.5 * size_target[0])
+    matrix[0, 2] = scale_x * (
+        -0.5 * size_input[0] * math.cos(theta) + 0.5 * size_input[1] * math.sin(theta) + 0.5 * size_target[0]
+    )
     matrix[1, 0] = math.sin(theta) * scale_y
     matrix[1, 1] = math.cos(theta) * scale_y
-    matrix[1, 2] = scale_y * (-0.5 * size_input[0] * math.sin(theta)
-                              - 0.5 * size_input[1] * math.cos(theta)
-                              + 0.5 * size_target[1])
+    matrix[1, 2] = scale_y * (
+        -0.5 * size_input[0] * math.sin(theta) - 0.5 * size_input[1] * math.cos(theta) + 0.5 * size_target[1]
+    )
     return matrix

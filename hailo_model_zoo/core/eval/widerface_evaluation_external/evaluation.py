@@ -4,7 +4,7 @@ pyximported = False
 
 
 def image_eval(pred, gt, ignore, iou_thresh):
-    """ single image evaluation
+    """single image evaluation
     pred: Nx5
     gt: Nx4
     ignore:
@@ -12,6 +12,7 @@ def image_eval(pred, gt, ignore, iou_thresh):
     global pyximported
     if not pyximported:
         import pyximport
+
         pyximport.install()
         pyximported = True
     from .box_overlaps import bbox_overlaps
@@ -30,7 +31,6 @@ def image_eval(pred, gt, ignore, iou_thresh):
     overlaps = bbox_overlaps(_pred[:, :4], _gt)
 
     for h in range(_pred.shape[0]):
-
         gt_overlap = overlaps[h]
         max_overlap, max_idx = gt_overlap.max(), gt_overlap.argmax()
         if max_overlap >= iou_thresh:
@@ -46,9 +46,8 @@ def image_eval(pred, gt, ignore, iou_thresh):
 
 
 def img_pr_info(thresh_num, pred_info, proposal_list, pred_recall):
-    pr_info = np.zeros((thresh_num, 2)).astype('float')
+    pr_info = np.zeros((thresh_num, 2)).astype("float")
     for t in range(thresh_num):
-
         thresh = 1 - (t + 1) / thresh_num
         r_index = np.where(pred_info[:, 4] >= thresh)[0]
         if len(r_index) == 0:
@@ -56,7 +55,7 @@ def img_pr_info(thresh_num, pred_info, proposal_list, pred_recall):
             pr_info[t, 1] = 0
         else:
             r_index = r_index[-1]
-            p_index = np.where(proposal_list[:r_index + 1] == 1)[0]
+            p_index = np.where(proposal_list[: r_index + 1] == 1)[0]
             pr_info[t, 0] = len(p_index)
             pr_info[t, 1] = pred_recall[r_index]
     return pr_info
@@ -71,8 +70,8 @@ def dataset_pr_info(thresh_num, pr_curve, count_face):
 
 
 def voc_ap(rec, prec):
-    mrec = np.concatenate(([0.], rec, [1.]))
-    mpre = np.concatenate(([0.], prec, [0.]))
+    mrec = np.concatenate(([0.0], rec, [1.0]))
+    mpre = np.concatenate(([0.0], prec, [0.0]))
     for i in range(mpre.size - 1, 0, -1):
         mpre[i - 1] = np.maximum(mpre[i - 1], mpre[i])
 

@@ -1,6 +1,6 @@
 
-Hailo8 Hand Landmark detection
-==============================
+Public Pre-Trained Models
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -11,9 +11,9 @@ Hailo8 Hand Landmark detection
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
 
 
 
@@ -45,4 +45,4 @@ Hand Landmark
      - 0.3
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_
      - `link <https://github.com/google/mediapipe>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/hand_landmark_lite.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/hand_landmark_lite.hef>`_

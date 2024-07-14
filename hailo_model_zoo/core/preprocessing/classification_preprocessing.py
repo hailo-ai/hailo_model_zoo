@@ -32,13 +32,13 @@ def mobilenet_v1(image, image_info=None, height=None, width=None, **kwargs):
     if height and width:
         # Resize the image to the specified height and width.
         image = tf.expand_dims(image, 0)
-        image = tf.image.resize(image, [height, width], method='bilinear')
+        image = tf.image.resize(image, [height, width], method="bilinear")
         image = tf.squeeze(image, [0])
 
-    # retrieve a 0-255 that was implicitely changed by tf.image.convert_image_dtype:
+    # retrieve a 0-255 that was implicitly changed by tf.image.convert_image_dtype:
     image = image * 255
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
 
     return image, image_info
 
@@ -50,9 +50,9 @@ def _smallest_size_at_least(height, width, smallest_side):
     width = tf.cast(width, tf.float32)
     smallest_side = tf.cast(smallest_side, tf.float32)
 
-    scale = tf.cond(tf.greater(height, width),
-                    lambda: old_div(smallest_side, width),
-                    lambda: old_div(smallest_side, height))
+    scale = tf.cond(
+        tf.greater(height, width), lambda: old_div(smallest_side, width), lambda: old_div(smallest_side, height)
+    )
     new_height = tf.cast(height * scale, tf.int32)
     new_width = tf.cast(width * scale, tf.int32)
     return new_height, new_width
@@ -66,11 +66,11 @@ def _aspect_preserving_resize(image, smallest_side, **kwargs):
     width = shape[1]
     new_height, new_width = _smallest_size_at_least(height, width, smallest_side)
     image = tf.expand_dims(image, 0)
-    if ("method" in kwargs) and (kwargs['method'] is not None):
-        resized_image = tf.image.resize(image, [new_height, new_width], method=kwargs["method"],
-                                        antialias=True)
-    else:
-        resized_image = tf.image.resize(image, [new_height, new_width], method='bilinear')
+    method = kwargs.get("method", "bilinear")
+    antialias = bool(kwargs.get("method"))
+    resized_image = tf.image.resize(
+        image, [new_height, new_width], method=method if method else "bilinear", antialias=antialias
+    )
     resized_image = tf.squeeze(resized_image)
     resized_image.set_shape([None, None, 3])
     return resized_image
@@ -79,17 +79,16 @@ def _aspect_preserving_resize(image, smallest_side, **kwargs):
 def _crop(image, offset_height, offset_width, crop_height, crop_width):
     original_shape = tf.shape(image)
 
-    rank_assertion = tf.Assert(
-        tf.equal(tf.rank(image), 3),
-        ['Rank of image must be equal to 3.'])
+    rank_assertion = tf.Assert(tf.equal(tf.rank(image), 3), ["Rank of image must be equal to 3."])
     with tf.control_dependencies([rank_assertion]):
         cropped_shape = tf.stack([crop_height, crop_width, original_shape[2]])
 
     size_assertion = tf.Assert(
         tf.logical_and(
-            tf.greater_equal(original_shape[0], crop_height),
-            tf.greater_equal(original_shape[1], crop_width)),
-        ['Crop size greater than the image size.'])
+            tf.greater_equal(original_shape[0], crop_height), tf.greater_equal(original_shape[1], crop_width)
+        ),
+        ["Crop size greater than the image size."],
+    )
 
     offsets = tf.cast(tf.stack([offset_height, offset_width, 0]), tf.int32)
 
@@ -109,8 +108,7 @@ def _central_crop(image_list, crop_height, crop_width):
         offset_height = old_div((image_height - crop_height), 2)
         offset_width = old_div((image_width - crop_width), 2)
 
-        outputs.append(_crop(image, offset_height, offset_width,
-                             crop_height, crop_width))
+        outputs.append(_crop(image, offset_height, offset_width, crop_height, crop_width))
     return outputs
 
 
@@ -129,24 +127,27 @@ def _resnet_base_preprocessing(image, output_height=None, output_width=None, res
 def resnet_v1_18_34(image, image_info=None, output_height=None, output_width=None, **kwargs):
     image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE)
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
 @PREPROCESS_FACTORY.register
 def efficientnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
     shape = tf.shape(image)
-    padded_center_crop_size = tf.cast(output_height / (output_height + 32)
-                                      * tf.cast(tf.minimum(shape[0], shape[1]), tf.float32), tf.int32)
+    padded_center_crop_size = tf.cast(
+        output_height / (output_height + 32) * tf.cast(tf.minimum(shape[0], shape[1]), tf.float32), tf.int32
+    )
     offset_height = ((shape[0] - padded_center_crop_size) + 1) // 2
     offset_width = ((shape[1] - padded_center_crop_size) + 1) // 2
     image_crop = tf.image.crop_to_bounding_box(
-        image, offset_height, offset_width, padded_center_crop_size, padded_center_crop_size)
-    image_resize = tf.image.resize([image_crop], [output_height, output_width], method='bicubic')[0]
+        image, offset_height, offset_width, padded_center_crop_size, padded_center_crop_size
+    )
+    image_resize = tf.image.resize([image_crop], [output_height, output_width], method="bicubic")[0]
 
     if image_info:
-        image_info['img_orig'] = tf.cast(tf.image.resize(
-            [image], [output_height, output_width], method='bicubic')[0], tf.uint8)
+        image_info["img_orig"] = tf.cast(
+            tf.image.resize([image], [output_height, output_width], method="bicubic")[0], tf.uint8
+        )
     return tf.cast(image_resize, tf.float32), image_info
 
 
@@ -155,28 +156,28 @@ def fastvit(image, image_info=None, output_height=None, output_width=None, **kwa
     if output_height is not None:
         assert output_width is not None
         scale_size = tf.cast(tf.math.round(tf.math.floor(output_height / FASTVIT_CROP_PCT)), tf.int32)
-        image = _aspect_preserving_resize(image, scale_size, method='bicubic')
+        image = _aspect_preserving_resize(image, scale_size, method="bicubic")
         image = tf.image.resize_with_crop_or_pad(image, output_height, output_width)
     image = tf.cast(image, tf.float32)
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
 @PREPROCESS_FACTORY.register
 def resmlp(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
-    '''
+    """
     This version of preprocessing runs the base ResMLP preprocess (Resize + CenterCrop).
     The patchify is done on-chip
-    '''
+    """
     if output_height is not None:
         assert output_width is not None
-        image = _aspect_preserving_resize(image, RESIZE_SIDE, method='bicubic')
+        image = _aspect_preserving_resize(image, RESIZE_SIDE, method="bicubic")
         image = _central_crop([image], output_height, output_width)[0]
         image.set_shape([output_height, output_width, 3])
     image = tf.cast(image, tf.float32)
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
@@ -194,16 +195,16 @@ def clip(image, image_info=None, output_height=None, output_width=None, **kwargs
     image = tf.cast(image, tf.float32)
     image.set_shape([output_height, output_width, 3])
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
 @PREPROCESS_FACTORY.register
 def lprnet(image, image_info=None, output_height=None, output_width=None, **kwargs):
-    image = tf.image.resize([image], [output_height, output_width], method='bicubic')[0]
+    image = tf.image.resize([image], [output_height, output_width], method="bicubic")[0]
     image = tf.squeeze(image)
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
@@ -211,18 +212,18 @@ def lprnet(image, image_info=None, output_height=None, output_width=None, **kwar
 def vit_tiny(image, image_info=None, output_height=None, output_width=None, **kwargs):  # Full model in chip
     if output_height is not None:
         assert output_width is not None
-        image = _aspect_preserving_resize(image, VIT_RESIZE_SIDE, method=kwargs.get('resize_method'))
+        image = _aspect_preserving_resize(image, VIT_RESIZE_SIDE, method=kwargs.get("resize_method"))
         image = _central_crop([image], output_height, output_width)[0]
         image.set_shape([output_height, output_width, 3])
     image = tf.cast(image, tf.float32)
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info
 
 
 @PREPROCESS_FACTORY.register
 def resnet_pruned(image, image_info=None, output_height=None, output_width=None, **kwargs):
-    image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE, method='bilinear')
+    image = _resnet_base_preprocessing(image, output_height, output_width, RESIZE_SIDE, method="bilinear")
     if image_info:
-        image_info['img_orig'] = tf.cast(image, tf.uint8)
+        image_info["img_orig"] = tf.cast(image, tf.uint8)
     return image, image_info

@@ -1,5 +1,6 @@
-import numpy as np
 from functools import namedtuple
+
+import numpy as np
 
 from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
 
@@ -7,7 +8,7 @@ PadInfo = namedtuple("PadInfo", ["height_pad", "width_pad", "scaling_factor"])
 
 
 class Memoize:
-    """ Caching Class"""
+    """Caching Class"""
 
     def __init__(self, fn):
         self._fn = fn
@@ -40,9 +41,7 @@ def compute_padding_values(h, w, target_height=600, target_width=800):
 class FasterRCNNProposalsNMS(object):
     """This class manages the postprocessing parts added the evaluation: collect image proposals and NMS"""
 
-    def __init__(self, height, width, coco_gt,
-                 score_threshold, iou_threshold,
-                 label_inv_map, detections):
+    def __init__(self, height, width, coco_gt, score_threshold, iou_threshold, label_inv_map, detections):
         self._image_height = height
         self._image_width = width
         self._coco_gt = coco_gt
@@ -63,26 +62,27 @@ class FasterRCNNProposalsNMS(object):
         The pad and resize information is being extracted from the real image shape and the target shapes
         and later used for mapping the bboxes to the original image for evaluation
         """
-        for i, img_coco_info in enumerate(self._coco_gt.dataset['images']):
-            h_pad, w_pad, scaling = compute_padding_values(img_coco_info['height'], img_coco_info['width'],
-                                                           self._image_height, self._image_width)
-            self._bbox_pad_mapping[img_coco_info['id']] = PadInfo(h_pad, w_pad, scaling)
+        for _i, img_coco_info in enumerate(self._coco_gt.dataset["images"]):
+            h_pad, w_pad, scaling = compute_padding_values(
+                img_coco_info["height"], img_coco_info["width"], self._image_height, self._image_width
+            )
+            self._bbox_pad_mapping[img_coco_info["id"]] = PadInfo(h_pad, w_pad, scaling)
 
     def _convert_resize_and_pad(self, img_dets, img_id):
         """
-        Detections transfomation to the original image coordinates
+        Detections transformation to the original image coordinates
         """
-        convertion_info = self._bbox_pad_mapping[img_id]
-        img_dets[:, 0] -= convertion_info.width_pad
-        img_dets[:, 0] /= convertion_info.scaling_factor
+        conversion_info = self._bbox_pad_mapping[img_id]
+        img_dets[:, 0] -= conversion_info.width_pad
+        img_dets[:, 0] /= conversion_info.scaling_factor
         # clip to 0 xmin ymin
-        img_dets[:, 1] -= convertion_info.height_pad
-        img_dets[:, 1] /= convertion_info.scaling_factor
+        img_dets[:, 1] -= conversion_info.height_pad
+        img_dets[:, 1] /= conversion_info.scaling_factor
         # clip to img_size xmax / ymax
-        img_dets[:, 2] -= convertion_info.width_pad
-        img_dets[:, 2] /= convertion_info.scaling_factor
-        img_dets[:, 3] -= convertion_info.height_pad
-        img_dets[:, 3] /= convertion_info.scaling_factor
+        img_dets[:, 2] -= conversion_info.width_pad
+        img_dets[:, 2] /= conversion_info.scaling_factor
+        img_dets[:, 3] -= conversion_info.height_pad
+        img_dets[:, 3] /= conversion_info.scaling_factor
         return self._clip(img_dets, img_id)
 
     def _clip(self, img_dets, img_id):
@@ -92,9 +92,9 @@ class FasterRCNNProposalsNMS(object):
         xmin, ymin, xmax, ymax = np.split(img_dets, 4, axis=1)
         xmin[xmin < 0] = 0
         ymin[ymin < 0] = 0
-        convertion_info = self._bbox_pad_mapping[img_id]
-        xmax_clip = (self._image_width - convertion_info.width_pad * 2) / convertion_info.scaling_factor
-        ymax_clip = (self._image_height - convertion_info.height_pad * 2) / convertion_info.scaling_factor
+        conversion_info = self._bbox_pad_mapping[img_id]
+        xmax_clip = (self._image_width - conversion_info.width_pad * 2) / conversion_info.scaling_factor
+        ymax_clip = (self._image_height - conversion_info.height_pad * 2) / conversion_info.scaling_factor
         xmax[xmax > xmax_clip] = xmax_clip
         ymax[ymin > ymax_clip] = ymax_clip
         return np.hstack([xmin, ymin, xmax, ymax])
@@ -103,8 +103,8 @@ class FasterRCNNProposalsNMS(object):
         """
         Perform per class nms for detections of one image according to the image id
         """
-        detection_boxes = np.stack(self._per_image_detection_results[img_id]['detection_boxes'])
-        detection_scores = np.stack(self._per_image_detection_results[img_id]['detection_scores'])
+        detection_boxes = np.stack(self._per_image_detection_results[img_id]["detection_boxes"])
+        detection_scores = np.stack(self._per_image_detection_results[img_id]["detection_scores"])
         """ Perform nms for only the max scoring class that isn't background (class 0) """
         num_classes = detection_scores.shape[1]
         ind = np.arange(0, num_classes)
@@ -114,7 +114,7 @@ class FasterRCNNProposalsNMS(object):
         scr_lst = []
         box_lst = []
 
-        for i, _cls in enumerate(sorted(found_classes)):
+        for _i, _cls in enumerate(sorted(found_classes)):
             cls_scores = detection_scores[:, _cls]
             cls_boxes = detection_boxes[:, _cls, :]
             mask_scores = cls_scores > self._score_threshold
@@ -144,8 +144,9 @@ class FasterRCNNProposalsNMS(object):
         # (image_id, xmin, ymin, width, height, score, class)
         xmin, ymin, xmax, ymax = np.split(boxes, 4, axis=1)
         boxes_wh_coding = np.hstack([xmin, ymin, xmax - xmin, ymax - ymin])
-        new_detections = np.hstack([image_id_vec[:, np.newaxis], boxes_wh_coding, scores[:, np.newaxis],
-                                    classes[:, np.newaxis]])
+        new_detections = np.hstack(
+            [image_id_vec[:, np.newaxis], boxes_wh_coding, scores[:, np.newaxis], classes[:, np.newaxis]]
+        )
         new_detections[:, 6] = [self._label_inv_map[i] for i in (new_detections[:, 6] + 1)]
         return new_detections
 
@@ -160,7 +161,7 @@ class FasterRCNNProposalsNMS(object):
         for img_id in self._finished_collect_proposals:
             if not self._is_nmsed[img_id]:
                 # perform nms on the data for this image_id
-                # mapp categories, and write to self._detections
+                # map categories, and write to self._detections
                 new_detections = self.nms_detections(img_id)
                 if len(new_detections) > 0:
                     self._detections = np.vstack([self._detections, new_detections])
@@ -169,12 +170,11 @@ class FasterRCNNProposalsNMS(object):
         return self._detections
 
     def _set_detections_data(self, image_id, bboxes, scores):
-        self._per_image_detection_results[image_id]['detection_boxes'].append(bboxes)
-        self._per_image_detection_results[image_id]['detection_scores'].append(scores)
+        self._per_image_detection_results[image_id]["detection_boxes"].append(bboxes)
+        self._per_image_detection_results[image_id]["detection_scores"].append(scores)
 
     def init_image_id_det_results(self, image_id, bboxes, scores):
-        self._per_image_detection_results.setdefault(image_id, {'detection_scores': [],
-                                                                'detection_boxes': []})
+        self._per_image_detection_results.setdefault(image_id, {"detection_scores": [], "detection_boxes": []})
         self._is_nmsed.setdefault(image_id, False)
         self._set_detections_data(image_id, bboxes, scores)
 

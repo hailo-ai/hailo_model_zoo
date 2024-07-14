@@ -15,4 +15,4 @@ quantization_param(conv88, precision_mode=a8_w4)
 quantization_param(conv90, precision_mode=a8_w4)
 
 # post_quantization_optimization commands
-post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv93, conv84, conv74]))
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv93, conv84, conv74])

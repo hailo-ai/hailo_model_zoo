@@ -1,15 +1,26 @@
-
-from hailo_model_zoo.core.infer.infer_utils import log_accuracy, write_results, aggregate, visualize
 from hailo_model_zoo.core.factory import INFER_FACTORY
+from hailo_model_zoo.core.infer.infer_utils import aggregate, log_accuracy, visualize, write_results
 
 
 @INFER_FACTORY.register
-def runner_infer(runner, context, logger, eval_num_examples, print_num_examples,
-                 batch_size, dataset, postprocessing_callback,
-                 eval_callback, visualize_callback, model_wrapper_callback,
-                 video_outpath, dump_results, results_path):
+def runner_infer(
+    runner,
+    context,
+    logger,
+    eval_num_examples,
+    print_num_examples,
+    batch_size,
+    dataset,
+    postprocessing_callback,
+    eval_callback,
+    visualize_callback,
+    model_wrapper_callback,
+    video_outpath,
+    dump_results,
+    results_path,
+):
     eval_metric = eval_callback()
-    logger.info('Running inference...')
+    logger.info("Running inference...")
     with context as ctx:
         logits = runner.infer(context=ctx, dataset=dataset, batch_size=batch_size, data_count=eval_num_examples)
     num_of_images = logits.shape[0]

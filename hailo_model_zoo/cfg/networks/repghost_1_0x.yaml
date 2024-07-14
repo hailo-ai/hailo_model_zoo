@@ -1,0 +1,27 @@
+base:
+- base/repghost.yaml
+network:
+  network_name: repghost_1_0x
+paths:
+  alls_script: repghost_1_0x.alls
+  network_path:
+  - models_files/Classification/repghost/repghostnet_1_0x/pretrained/2023-04-03/repghostnet_1_0x.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repghost/repghostnet_1_0x/pretrained/2023-04-03/repghostnet_1_0x.zip
+parser:
+  nodes:
+  - null
+  - null
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 0.28G
+  parameters: 4.1M
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  full_precision_result: 73.03
+  source: https://github.com/ChengpengChen/RepGhost
+  license_url: https://github.com/ChengpengChen/RepGhost/blob/main/LICENSE
+  license_name: MIT

@@ -1,6 +1,6 @@
 
-Hailo8 Image Denoising
-======================
+Public Pre-Trained Models
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -11,9 +11,10 @@ Hailo8 Image Denoising
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
+
 
 
 .. _Image Denoising:
@@ -42,14 +43,14 @@ BSD68
    * - dncnn3
      - 31.46
      - 31.26
-     - 60
-     - 60
+     - 59
+     - 59
      - 321x481x1
      - 0.66
      - 205.26
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/dncnn3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/dncnn3.hef>`_
 
 CBSD68
 ^^^^^^
@@ -72,11 +73,11 @@ CBSD68
    * - dncnn_color_blind
      - 33.87
      - 32.97
-     - 60
-     - 60
+     - 59
+     - 59
      - 321x481x3
      - 0.66
      - 205.97
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo8/dncnn_color_blind.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/dncnn_color_blind.hef>`_

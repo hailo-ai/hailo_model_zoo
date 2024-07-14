@@ -1,12 +1,13 @@
 import numpy as np
 import tensorflow as tf
+
 from hailo_model_zoo.core.preprocessing.affine_utils import transform_preds
 
 
 def _nms(heatmap):
     heatmap_padded = tf.pad(heatmap, [[0, 0], [1, 1], [1, 1], [0, 0]])
-    pooled_heatmap = tf.nn.max_pool(heatmap_padded, [1, 3, 3, 1], [1, 1, 1, 1], 'VALID')
-    keep = tf.cast(tf.math.equal(heatmap, pooled_heatmap), 'float32')
+    pooled_heatmap = tf.nn.max_pool(heatmap_padded, [1, 3, 3, 1], [1, 1, 1, 1], "VALID")
+    keep = tf.cast(tf.math.equal(heatmap, pooled_heatmap), "float32")
     return tf.math.multiply(keep, heatmap)
 
 
@@ -36,8 +37,7 @@ def _topk(scores, K=40):
 
     topk_score, topk_ind = _np_topk(topk_scores.reshape((batch_size, -1)), K)
     topk_clses = (topk_ind / K).astype(int)
-    topk_indices = _gather_feat(
-        topk_indices.reshape((batch_size, -1, 1)), topk_ind).reshape(batch_size, K)
+    topk_indices = _gather_feat(topk_indices.reshape((batch_size, -1, 1)), topk_ind).reshape(batch_size, K)
     topk_ys = _gather_feat(topk_ys.reshape((batch_size, -1, 1)), topk_ind).reshape(batch_size, K)
     topk_xs = _gather_feat(topk_xs.reshape((batch_size, -1, 1)), topk_ind).reshape(batch_size, K)
 
@@ -70,11 +70,24 @@ def _transpose_and_gather_feat(feat, ind):
     return feat
 
 
-def _centerpose_postprocessing(center_heatmap, center_wh, joint_heatmap, center_offset, joint_center_offset,
-                               joint_offset, centers, scales, *, K=100, heatmap_score_thresh=0.1, **kwargs):
+def _centerpose_postprocessing(
+    center_heatmap,
+    center_wh,
+    joint_heatmap,
+    center_offset,
+    joint_center_offset,
+    joint_offset,
+    centers,
+    scales,
+    *,
+    K=100,
+    heatmap_score_thresh=0.1,
+    **kwargs,
+):
     center_heatmap, center_wh, joint_heatmap, center_offset, joint_center_offset, joint_offset = (
-        np.array(x) for x in (center_heatmap, center_wh, joint_heatmap,
-                              center_offset, joint_center_offset, joint_offset))
+        np.array(x)
+        for x in (center_heatmap, center_wh, joint_heatmap, center_offset, joint_center_offset, joint_offset)
+    )
 
     batch_size, out_height, out_width, category = center_heatmap.shape
     num_joints = joint_center_offset.shape[-1] // 2
@@ -97,10 +110,9 @@ def _centerpose_postprocessing(center_heatmap, center_wh, joint_heatmap, center_
     classes = classes.reshape((batch_size, K, 1)).astype(float)
     scores = scores.reshape((batch_size, K, 1))
 
-    bboxes = np.concatenate([xs - wh[..., 0:1] / 2,
-                             ys - wh[..., 1:2] / 2,
-                             xs + wh[..., 0:1] / 2,
-                             ys + wh[..., 1:2] / 2], axis=2)
+    bboxes = np.concatenate(
+        [xs - wh[..., 0:1] / 2, ys - wh[..., 1:2] / 2, xs + wh[..., 0:1] / 2, ys + wh[..., 1:2] / 2], axis=2
+    )
     if joint_heatmap is not None:
         keypoints = keypoints.reshape((batch_size, K, num_joints, 2)).transpose((0, 2, 1, 3))  # b x J x K x 2
         reg_kps = np.tile(np.expand_dims(keypoints, 3), (1, 1, 1, K, 1))
@@ -119,7 +131,7 @@ def _centerpose_postprocessing(center_heatmap, center_wh, joint_heatmap, center_
         hm_ys = (1 - mask) * (-10000) + mask * hm_ys
         hm_xs = (1 - mask) * (-10000) + mask * hm_xs
         hm_kps = np.tile(np.expand_dims(np.stack([hm_xs, hm_ys], axis=-1), 2), (1, 1, K, 1, 1))
-        dist = (((reg_kps - hm_kps) ** 2).sum(axis=4) ** 0.5)
+        dist = ((reg_kps - hm_kps) ** 2).sum(axis=4) ** 0.5
         min_ind = np.argmin(dist, axis=3)  # b x J x K
         min_dist = np.take_along_axis(dist, np.expand_dims(min_ind, axis=3), axis=3)
         hm_score = np.expand_dims(np.take_along_axis(hm_score, min_ind, axis=2), -1)  # b x J x K x 1
@@ -130,9 +142,14 @@ def _centerpose_postprocessing(center_heatmap, center_wh, joint_heatmap, center_
         top = np.tile(bboxes[:, :, 1].reshape((batch_size, 1, K, 1)), (1, num_joints, 1, 1))
         right = np.tile(bboxes[:, :, 2].reshape((batch_size, 1, K, 1)), (1, num_joints, 1, 1))
         bottom = np.tile(bboxes[:, :, 3].reshape((batch_size, 1, K, 1)), (1, num_joints, 1, 1))
-        mask = (hm_kps[..., 0:1] < left) + (hm_kps[..., 0:1] > right) + \
-            (hm_kps[..., 1:2] < top) + (hm_kps[..., 1:2] > bottom) + \
-            (hm_score < heatmap_score_thresh) + (min_dist > (np.maximum(bottom - top, right - left) * 0.3))
+        mask = (
+            (hm_kps[..., 0:1] < left)
+            + (hm_kps[..., 0:1] > right)
+            + (hm_kps[..., 1:2] < top)
+            + (hm_kps[..., 1:2] > bottom)
+            + (hm_score < heatmap_score_thresh)
+            + (min_dist > (np.maximum(bottom - top, right - left) * 0.3))
+        )
         mask = np.tile((mask > 0).astype(float), 2)
         keypoints = (1 - mask) * hm_kps + mask * keypoints
         keypoints = keypoints.transpose((0, 2, 1, 3)).reshape(batch_size, K, num_joints * 2)
@@ -141,33 +158,40 @@ def _centerpose_postprocessing(center_heatmap, center_wh, joint_heatmap, center_
         box, keypoint = bboxes[batch_index], keypoints[batch_index]
         center, scale = centers[batch_index], scales[batch_index]
 
-        box = transform_preds(box.reshape(-1, 2),
-                              center, scale, (out_height, out_width)).reshape(-1, 4)
-        keypoint = transform_preds(keypoint.reshape(-1, 2),
-                                   center, scale, (out_height, out_width)).reshape(-1, 34)
+        box = transform_preds(box.reshape(-1, 2), center, scale, (out_height, out_width)).reshape(-1, 4)
+        keypoint = transform_preds(keypoint.reshape(-1, 2), center, scale, (out_height, out_width)).reshape(-1, 34)
 
         bboxes[batch_index], keypoints[batch_index] = box, keypoint
     return [bboxes, scores, keypoints, hm_score.transpose((0, 2, 1, 3))]
 
 
-def centerpose_postprocessing(endnodes, device_pre_post_layers=None, gt_images=None, integrated_postprocessing=None,
-                              **kwargs):
+def centerpose_postprocessing(
+    endnodes, device_pre_post_layers=None, gt_images=None, integrated_postprocessing=None, **kwargs
+):
     center_heatmap, center_wh, joint_center_offset, center_offset, joint_heatmap, joint_offset = endnodes
 
-    if not integrated_postprocessing or not integrated_postprocessing.get('enabled', True):
+    if not integrated_postprocessing or not integrated_postprocessing.get("enabled", True):
         center_heatmap = _nms(center_heatmap)
         joint_heatmap = _nms(joint_heatmap)
 
-    bboxes, scores, keypoints, joint_scores = tf.numpy_function(_centerpose_postprocessing,
-                                                                [center_heatmap, center_wh,
-                                                                 joint_heatmap, center_offset,
-                                                                 joint_center_offset, joint_offset,
-                                                                 gt_images["center"], gt_images["scale"]],
-                                                                [tf.float64, tf.float32, tf.float64, tf.float64],
-                                                                name='centerpose_postprocessing')
+    bboxes, scores, keypoints, joint_scores = tf.numpy_function(
+        _centerpose_postprocessing,
+        [
+            center_heatmap,
+            center_wh,
+            joint_heatmap,
+            center_offset,
+            joint_center_offset,
+            joint_offset,
+            gt_images["center"],
+            gt_images["scale"],
+        ],
+        [tf.float64, tf.float32, tf.float64, tf.float64],
+        name="centerpose_postprocessing",
+    )
     return {
-        'bboxes': bboxes,
-        'scores': scores,
-        'keypoints': keypoints,
-        'joint_scores': joint_scores,
+        "bboxes": bboxes,
+        "scores": scores,
+        "keypoints": keypoints,
+        "joint_scores": joint_scores,
     }

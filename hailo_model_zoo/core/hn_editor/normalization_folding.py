@@ -3,11 +3,11 @@ import numpy as np
 
 def fold_normalization(runner, mean_list, std_list):
     hn = runner.get_hn()
-    name = hn['name']
+    name = hn["name"]
     params = runner.get_params()
 
-    layer_name = 'conv1'
-    kernel_name = '/'.join([name, layer_name, 'kernel:0'])
+    layer_name = "conv1"
+    kernel_name = "/".join([name, layer_name, "kernel:0"])
     kernel = params[kernel_name]
     if kernel.shape[2] != 3:
         raise ValueError(f"Expected 3 channels in the first convolution, but got shape: {kernel.shape}")
@@ -17,7 +17,7 @@ def fold_normalization(runner, mean_list, std_list):
     assert new_kernel.shape == kernel.shape
     params[kernel_name] = new_kernel
 
-    bias_name = '/'.join([name, layer_name, 'bias:0'])
+    bias_name = "/".join([name, layer_name, "bias:0"])
     bias = params[bias_name]
     new_bias_term = np.zeros_like(new_kernel)
     for c in range(kernel.shape[2]):

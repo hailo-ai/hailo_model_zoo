@@ -1,15 +1,16 @@
 def bgr2rgb(runner):
     hn = runner.get_hn()
-    network_name = hn['name']
+    network_name = hn["name"]
     params = runner.get_params()
 
-    layer_name = 'conv1'
-    parameter_name = '/'.join([network_name, layer_name, 'kernel:0'])
+    layer_name = "conv1"
+    parameter_name = "/".join([network_name, layer_name, "kernel:0"])
     shape = params[parameter_name].shape
     channels = shape[2]
     if channels not in [3, 12]:
         raise ValueError(
-            f"Expected 3 channels in the first convolution (or 12 after space_to_depth) but got shape: {shape}")
+            f"Expected 3 channels in the first convolution (or 12 after space_to_depth) but got shape: {shape}"
+        )
     if channels == 3:
         params[parameter_name] = params[parameter_name][:, :, ::-1, :]
     if channels == 12:
@@ -32,11 +33,13 @@ def _verify_after_space_to_depth(runner, layer_name):
     if len(predecessors) != 1:
         predecessor_names = [p.name for p in predecessors]
         raise ValueError(
-            f'For a conv with 12 channels expected a single single_to_depth predecessors, but got {predecessor_names}')
+            f"For a conv with 12 channels expected a single single_to_depth predecessors, but got {predecessor_names}"
+        )
 
     predecessor = predecessors[0]
     op = predecessor.op.name
-    if op != 'space_to_depth':
+    if op != "space_to_depth":
         name = predecessor.name
         raise ValueError(
-            f"For a conv with 12 channels expected predecessor of type space_to_depth, but got {op} ({name})")
+            f"For a conv with 12 channels expected predecessor of type space_to_depth, but got {op} ({name})"
+        )

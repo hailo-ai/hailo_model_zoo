@@ -1,8 +1,8 @@
-normalization0 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(calibration, batch_size=8, calibset_size=128)
-post_quantization_optimization(finetune, policy=disabled)
-post_quantization_optimization(bias_correction, policy=enabled)
-pre_quantization_optimization(equalization, policy=disabled)
+norm_layer1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_config(calibration, batch_size=2, calibset_size=128)
+
+# allocation commands
+allocator_param(max_auto_defuse=1)
 
 buffers(resmlp12_relu/space_to_depth1, resmlp12_relu/conv1, 0, PARTIAL_ROW)
 buffers(resmlp12_relu/mul_and_add1, resmlp12_relu/conv3, 0, PARTIAL_ROW)
@@ -42,4 +42,7 @@ buffers(resmlp12_relu/mul_and_add23, resmlp12_relu/conv36, 0, PARTIAL_ROW)
 buffers(resmlp12_relu/mul_and_add23, resmlp12_relu/conv37, 0, PARTIAL_ROW)
 buffers(resmlp12_relu/conv36, resmlp12_relu/conv37, 0, PARTIAL_ROW)
 
-performance_param(fps=1431)
+context0 = context([mul_and_add1,conv3,conv4])
+context1 = context([mul_and_add7,conv12,conv13])
+context2 = context([mul_and_add13,conv21,conv22])
+context3 = context([mul_and_add23,conv36,conv37])

@@ -4,49 +4,75 @@ import numpy as np
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.preprocessing.affine_utils import transform_preds
 
-pose_kpt_color = np.array([[0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [0, 255, 0],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [51, 153, 255],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0],
-                           [255, 128, 0]])
+pose_kpt_color = np.array(
+    [
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+    ]
+)
 
 
-skeleton = [[15, 13], [13, 11], [16, 14], [14, 12], [11, 12], [5, 11],
-            [6, 12], [5, 6], [5, 7], [6, 8], [7, 9], [8, 10], [1, 2],
-            [0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 6]]
+skeleton = [
+    [15, 13],
+    [13, 11],
+    [16, 14],
+    [14, 12],
+    [11, 12],
+    [5, 11],
+    [6, 12],
+    [5, 6],
+    [5, 7],
+    [6, 8],
+    [7, 9],
+    [8, 10],
+    [1, 2],
+    [0, 1],
+    [0, 2],
+    [1, 3],
+    [2, 4],
+    [3, 5],
+    [4, 6],
+]
 
 
-pose_link_color = np.array([[255, 128, 0],
-                            [255, 128, 0],
-                            [255, 128, 0],
-                            [255, 128, 0],
-                            [255, 51, 255],
-                            [255, 51, 255],
-                            [255, 51, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [51, 153, 255],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0],
-                            [0, 255, 0]])
+pose_link_color = np.array(
+    [
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 128, 0],
+        [255, 51, 255],
+        [255, 51, 255],
+        [255, 51, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [51, 153, 255],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+        [0, 255, 0],
+    ]
+)
 
 
 def _get_max_preds(heatmaps):
@@ -67,9 +93,8 @@ def _get_max_preds(heatmaps):
         - preds (np.ndarray[N, K, 2]): Predicted keypoint location.
         - maxvals (np.ndarray[N, K, 1]): Scores (confidence) of the keypoints.
     """
-    assert isinstance(heatmaps,
-                      np.ndarray), ('heatmaps should be numpy.ndarray')
-    assert heatmaps.ndim == 4, 'batch_images should be 4-ndim'
+    assert isinstance(heatmaps, np.ndarray), "heatmaps should be numpy.ndarray"
+    assert heatmaps.ndim == 4, "batch_images should be 4-ndim"
 
     N, K, _, W = heatmaps.shape
     heatmaps_reshaped = heatmaps.reshape((N, K, -1))
@@ -117,8 +142,7 @@ def _gaussian_blur(heatmaps, kernel=11, eps=1e-12):
     for i in range(batch_size):
         for j in range(num_joints):
             origin_max = np.max(heatmaps[i, j])
-            dr = np.zeros((height + 2 * border, width + 2 * border),
-                          dtype=np.float32)
+            dr = np.zeros((height + 2 * border, width + 2 * border), dtype=np.float32)
             dr[border:-border, border:-border] = heatmaps[i, j].copy()
             dr = cv2.GaussianBlur(dr, (kernel, kernel), 0)
             heatmaps[i, j] = dr[border:-border, border:-border].copy()
@@ -126,9 +150,8 @@ def _gaussian_blur(heatmaps, kernel=11, eps=1e-12):
     return heatmaps
 
 
-def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixel_std=200.):
-    assert bbox.shape[1] == 1, \
-        f"Expected a single box per image but got {bbox.shape[1]}"
+def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixel_std=200.0):
+    assert bbox.shape[1] == 1, f"Expected a single box per image but got {bbox.shape[1]}"
     box = np.squeeze(bbox.copy(), axis=1)
     xmin, xmax, ymin, ymax = box[:, 0], box[:, 1], box[:, 2], box[:, 3]
     xmin *= orig_width
@@ -158,13 +181,13 @@ def _get_default_bbox(batch_size):
 
 @POSTPROCESS_FACTORY.register(name="single_person_pose_estimation")
 def mspn_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    image_info = kwargs['gt_images']
-    height, width = image_info['img_resized'].shape[1:3]
+    image_info = kwargs["gt_images"]
+    height, width = image_info["img_resized"].shape[1:3]
     aspect_ratio = width / height
 
     # Get box info if exists, otherwise assume box spans the entire image
-    bbox = image_info.get('bbox', _get_default_bbox(endnodes.shape[0]))
-    center, scale = bbox_xyxy2cs(bbox, image_info['orig_height'], image_info['orig_width'], aspect_ratio)
+    bbox = image_info.get("bbox", _get_default_bbox(endnodes.shape[0]))
+    center, scale = bbox_xyxy2cs(bbox, image_info["orig_height"], image_info["orig_width"], aspect_ratio)
     heatmaps = np.transpose(endnodes, axes=[0, 3, 1, 2])
 
     heatmaps = _gaussian_blur(heatmaps, kernel=5)
@@ -176,34 +199,27 @@ def mspn_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
             px = int(preds[n][k][0])
             py = int(preds[n][k][1])
             if 1 < px < W - 1 and 1 < py < H - 1:
-                diff = np.array([
-                    heatmap[py][px + 1] - heatmap[py][px - 1],
-                    heatmap[py + 1][px] - heatmap[py - 1][px]
-                ])
-                preds[n][k] += np.sign(diff) * .25
+                diff = np.array([heatmap[py][px + 1] - heatmap[py][px - 1], heatmap[py + 1][px] - heatmap[py - 1][px]])
+                preds[n][k] += np.sign(diff) * 0.25
                 preds[n][k] += 0.5
 
     for i in range(N):
-        preds[i] = transform_preds(preds[i], center[i], scale[i],
-                                   [W, H], pixel_std=200.0
-                                   )
+        preds[i] = transform_preds(preds[i], center[i], scale[i], [W, H], pixel_std=200.0)
 
     maxvals = maxvals / 255.0 + 0.5
     all_preds = np.zeros((N, preds.shape[1], 3), dtype=np.float32)
     all_preds[:, :, 0:2] = preds[:, :, 0:2]
     all_preds[:, :, 2:3] = maxvals
 
-    return {'predictions': all_preds}
+    return {"predictions": all_preds}
 
 
 @VISUALIZATION_FACTORY.register(name="single_person_pose_estimation")
-def visualize_single_person_pose_estimation_result(probs, image, kpt_score_thr=0.3,
-                                                   radius=8, thickness=2, **kwargs):
-
+def visualize_single_person_pose_estimation_result(probs, image, kpt_score_thr=0.3, radius=8, thickness=2, **kwargs):
     idx = 0
     img = cv2.cvtColor(image[idx], cv2.COLOR_BGR2RGB)
     img_h, img_w, _ = img.shape
-    probs = probs['predictions'][idx]
+    probs = probs["predictions"][idx]
     kpts = np.array(probs, copy=False)
 
     # draw keypoint on image
@@ -228,12 +244,19 @@ def visualize_single_person_pose_estimation_result(probs, image, kpt_score_thr=0
             pos1 = (int(kpts[sk[0], 0]), int(kpts[sk[0], 1]))
             pos2 = (int(kpts[sk[1], 0]), int(kpts[sk[1], 1]))
 
-            if (pos1[0] <= 0 or pos1[0] >= img_w or pos1[1] <= 0
-                    or pos1[1] >= img_h or pos2[0] <= 0 or pos2[0] >= img_w
-                    or pos2[1] <= 0 or pos2[1] >= img_h
-                    or kpts[sk[0], 2] < kpt_score_thr
-                    or kpts[sk[1], 2] < kpt_score_thr
-                    or pose_link_color[sk_id] is None):
+            if (
+                pos1[0] <= 0
+                or pos1[0] >= img_w
+                or pos1[1] <= 0
+                or pos1[1] >= img_h
+                or pos2[0] <= 0
+                or pos2[0] >= img_w
+                or pos2[1] <= 0
+                or pos2[1] >= img_h
+                or kpts[sk[0], 2] < kpt_score_thr
+                or kpts[sk[1], 2] < kpt_score_thr
+                or pose_link_color[sk_id] is None
+            ):
                 # skip the link that should not be drawn
                 continue
             color = tuple(int(c) for c in pose_link_color[sk_id])

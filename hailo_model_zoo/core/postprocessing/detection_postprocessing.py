@@ -25,7 +25,7 @@ DETECTION_ARCHS = {
     "faster_rcnn_stage2": FasterRCNNStage2,
     "nanodet": NanoDetPostProc,
     "detr": DetrPostProc,
-    "retinanet_mlperf": retinanet_postproc
+    "retinanet_mlperf": retinanet_postproc,
 }
 
 
@@ -46,72 +46,80 @@ def detection_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
 
 
 def _get_coco_labels():
-    coco_names = json.load(open(os.path.join(os.path.dirname(__file__), 'coco_names.json')))
-    coco_names = {int(k): {'id': int(k), 'name': str(v)} for (k, v) in coco_names.items()}
+    coco_names = json.load(open(os.path.join(os.path.dirname(__file__), "coco_names.json")))
+    coco_names = {int(k): {"id": int(k), "name": str(v)} for (k, v) in coco_names.items()}
     return coco_names
 
 
 def _get_open_images_labels():
-    open_images_names = json.load(open(os.path.join(os.path.dirname(__file__), 'open_images_names.json')))
-    open_images_names = {int(k): {'id': int(k), 'name': str(v)} for (k, v) in open_images_names.items()}
+    open_images_names = json.load(open(os.path.join(os.path.dirname(__file__), "open_images_names.json")))
+    open_images_names = {int(k): {"id": int(k), "name": str(v)} for (k, v) in open_images_names.items()}
     return open_images_names
 
 
 def _get_visdrone_labels():
-    visdrone_names = json.load(open(os.path.join(os.path.dirname(__file__), 'visdrone_names.json')))
-    visdrone_names = {int(k): {'id': int(k), 'name': str(v)} for (k, v) in visdrone_names.items()}
+    visdrone_names = json.load(open(os.path.join(os.path.dirname(__file__), "visdrone_names.json")))
+    visdrone_names = {int(k): {"id": int(k), "name": str(v)} for (k, v) in visdrone_names.items()}
     return visdrone_names
 
 
 def _get_face_detection_visualization_data(logits):
-    boxes = logits['detection_boxes'][0]
+    boxes = logits["detection_boxes"][0]
 
-    face_landmarks = logits.get('face_landmarks')
+    face_landmarks = logits.get("face_landmarks")
     if face_landmarks is not None:
         face_landmarks = face_landmarks[0].reshape((-1, 5, 2))[:, :, (1, 0)]
     boxes = boxes[:, (1, 0, 3, 2)]
     # No name to prevent clobbering the visualization
-    labels = {1: {'id': 1, 'name': ''}}
+    labels = {1: {"id": 1, "name": ""}}
     return boxes, labels, face_landmarks
 
 
 @VISUALIZATION_FACTORY.register(name="detection")
 @VISUALIZATION_FACTORY.register(name="face_detection")
-def visualize_detection_result(logits, image, threshold=0.2, image_info=None,
-                               use_normalized_coordinates=True, max_boxes_to_draw=20,
-                               dataset_name='coco', **kwargs):
-
-    boxes = logits['detection_boxes'][0]
+def visualize_detection_result(
+    logits,
+    image,
+    threshold=0.2,
+    image_info=None,
+    use_normalized_coordinates=True,
+    max_boxes_to_draw=20,
+    dataset_name="coco",
+    **kwargs,
+):
+    boxes = logits["detection_boxes"][0]
     keypoints = None
-    if 'coco' in dataset_name:
+    if "coco" in dataset_name:
         labels = _get_coco_labels()
-    elif 'open_images' in dataset_name:
+    elif "open_images" in dataset_name:
         labels = _get_open_images_labels()
-    elif 'visdrone' in dataset_name:
+    elif "visdrone" in dataset_name:
         labels = _get_visdrone_labels()
-    elif 'mot' in dataset_name:
-        labels = {1: {'name': 'person', 'id': 1}},
-    elif 'widerface' in dataset_name:
+    elif "mot" in dataset_name:
+        labels = ({1: {"name": "person", "id": 1}},)
+    elif "widerface" in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
-    elif 'vehicle_detection' in dataset_name:
-        labels = {0: {'name': 'vehicle'}}
-    elif 'license_plates' in dataset_name:
-        labels = {0: {'name': 'plate'}}
-    elif 'hand_detection' in dataset_name:
-        labels = {1: {'name': 'hand'}}
-    elif 'personface_detection' in dataset_name:
-        labels = {1: {'name': 'person'}, 2: {'name': 'face'}}
+    elif "vehicle_detection" in dataset_name:
+        labels = {0: {"name": "vehicle"}}
+    elif "license_plates" in dataset_name:
+        labels = {0: {"name": "plate"}}
+    elif "hand_detection" in dataset_name:
+        labels = {1: {"name": "hand"}}
+    elif "personface_detection" in dataset_name:
+        labels = {1: {"name": "person"}, 2: {"name": "face"}}
     else:
-        raise Exception('No Labels for dataset {}'.format(dataset_name))
+        raise Exception("No Labels for dataset {}".format(dataset_name))
 
-    return visualize_boxes_and_labels_on_image_array(image[0],
-                                                     boxes,
-                                                     logits['detection_classes'][0],
-                                                     logits['detection_scores'][0],
-                                                     labels,
-                                                     instance_masks=logits.get('detection_masks'),
-                                                     use_normalized_coordinates=use_normalized_coordinates,
-                                                     max_boxes_to_draw=max_boxes_to_draw,
-                                                     line_thickness=4,
-                                                     min_score_thresh=threshold,
-                                                     keypoints=keypoints)
+    return visualize_boxes_and_labels_on_image_array(
+        image[0],
+        boxes,
+        logits["detection_classes"][0],
+        logits["detection_scores"][0],
+        labels,
+        instance_masks=logits.get("detection_masks"),
+        use_normalized_coordinates=use_normalized_coordinates,
+        max_boxes_to_draw=max_boxes_to_draw,
+        line_thickness=4,
+        min_score_thresh=threshold,
+        keypoints=keypoints,
+    )

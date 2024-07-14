@@ -1,13 +1,14 @@
 import lap
 import numpy as np
 import scipy
+from scipy.spatial.distance import cdist
+
 from hailo_model_zoo.core.eval.tracking_evaluation_external import kalman_filter
 from hailo_model_zoo.core.eval.widerface_evaluation_external.python_box_overlaps import bbox_overlaps
-from scipy.spatial.distance import cdist
 
 
 def merge_matches(m1, m2, shape):
-    O, P, Q = shape
+    O, P, Q = shape  # noqa: E741
     m1 = np.asarray(m1)
     m2 = np.asarray(m2)
 
@@ -17,15 +18,15 @@ def merge_matches(m1, m2, shape):
     mask = M1 * M2
     match = mask.nonzero()
     match = list(zip(match[0], match[1]))
-    unmatched_O = tuple(set(range(O)) - set([i for i, j in match]))
-    unmatched_Q = tuple(set(range(Q)) - set([j for i, j in match]))
+    unmatched_O = tuple(set(range(O)) - {i for i, j in match})
+    unmatched_Q = tuple(set(range(Q)) - {j for i, j in match})
 
     return match, unmatched_O, unmatched_Q
 
 
 def _indices_to_matches(cost_matrix, indices, thresh):
     matched_cost = cost_matrix[tuple(zip(*indices))]
-    matched_mask = (matched_cost <= thresh)
+    matched_mask = matched_cost <= thresh
 
     matches = indices[matched_mask]
     unmatched_a = tuple(set(range(cost_matrix.shape[0])) - set(matches[:, 0]))
@@ -53,17 +54,15 @@ def ious(atlbrs, btlbrs):
     if ious.size == 0:
         return ious
 
-    ious = bbox_overlaps(
-        np.ascontiguousarray(atlbrs, dtype=float),
-        np.ascontiguousarray(btlbrs, dtype=float)
-    )
+    ious = bbox_overlaps(np.ascontiguousarray(atlbrs, dtype=float), np.ascontiguousarray(btlbrs, dtype=float))
 
     return ious
 
 
 def iou_distance(atracks, btracks):
-    if (len(atracks) > 0 and isinstance(atracks[0], np.ndarray)) or\
-            (len(btracks) > 0 and isinstance(btracks[0], np.ndarray)):
+    if (len(atracks) > 0 and isinstance(atracks[0], np.ndarray)) or (
+        len(btracks) > 0 and isinstance(btracks[0], np.ndarray)
+    ):
         atlbrs = atracks
         btlbrs = btracks
     else:
@@ -75,7 +74,7 @@ def iou_distance(atracks, btracks):
     return cost_matrix
 
 
-def embedding_distance(tracks, detections, metric='cosine'):
+def embedding_distance(tracks, detections, metric="cosine"):
     cost_matrix = np.zeros((len(tracks), len(detections)), dtype=float)
     if cost_matrix.size == 0:
         return cost_matrix
@@ -94,8 +93,7 @@ def gate_cost_matrix(kf, cost_matrix, tracks, detections, only_position=False):
     gating_threshold = kalman_filter.chi2inv95[gating_dim]
     measurements = np.asarray([det.to_xyah() for det in detections])
     for row, track in enumerate(tracks):
-        gating_distance = kf.gating_distance(
-            track.mean, track.covariance, measurements, only_position)
+        gating_distance = kf.gating_distance(track.mean, track.covariance, measurements, only_position)
         cost_matrix[row, gating_distance > gating_threshold] = np.inf
     return cost_matrix
 
@@ -107,8 +105,7 @@ def fuse_motion(kf, cost_matrix, tracks, detections, only_position=False, lambda
     gating_threshold = kalman_filter.chi2inv95[gating_dim]
     measurements = np.asarray([det.to_xyah() for det in detections])
     for row, track in enumerate(tracks):
-        gating_distance = kf.gating_distance(
-            track.mean, track.covariance, measurements, only_position, metric='maha')
+        gating_distance = kf.gating_distance(track.mean, track.covariance, measurements, only_position, metric="maha")
         cost_matrix[row, gating_distance > gating_threshold] = np.inf
         cost_matrix[row] = lambda_ * cost_matrix[row] + (1 - lambda_) * gating_distance
     return cost_matrix

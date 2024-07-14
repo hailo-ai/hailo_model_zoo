@@ -22,6 +22,7 @@ postprocessing:
   meta_arch: yolo
   hpp: true
 info:
+  task: object detection
   input_shape: 640x640x3
   output_shape: 80x5x80
   operations: 52.88G

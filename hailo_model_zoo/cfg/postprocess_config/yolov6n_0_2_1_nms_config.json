@@ -1,0 +1,30 @@
+{
+    "nms_scores_th": 0.03,
+    "nms_iou_th": 0.65,
+    "image_dims": [
+        640,
+        640
+    ],
+    "max_proposals_per_class": 100,
+    "classes": 80,
+    "bbox_decoders": [
+        {
+            "name": "fused_bbox_decoder_8",
+            "stride": 8,
+            "reg_layer":"", 
+            "cls_layer":""
+        },
+        {
+            "name": "fused_bbox_decoder_16",
+            "stride": 16,
+            "reg_layer":"", 
+            "cls_layer":""
+        },
+        {
+            "name": "fused_bbox_decoder_32",
+            "stride": 32,
+            "reg_layer":"",
+            "cls_layer":""
+        }
+    ]
+}

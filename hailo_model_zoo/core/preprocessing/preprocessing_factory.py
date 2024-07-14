@@ -1,4 +1,5 @@
 """Contains a factory for image preprocessing."""
+
 import importlib
 
 import numpy as np
@@ -9,16 +10,18 @@ from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
 from hailo_model_zoo.utils.plugin_utils import iter_namespace
 
 discovered_plugins = {
-    name: importlib.import_module(name)
-    for _, name, _
-    in iter_namespace(hailo_model_zoo.core.preprocessing)
+    name: importlib.import_module(name) for _, name, _ in iter_namespace(hailo_model_zoo.core.preprocessing)
 }
 
 
 def convert_rgb_to_yuv(image):
-    transition_matrix = np.array([[0.2568619, -0.14823364, 0.43923104],
-                                  [0.5042455, -0.2909974, -0.367758],
-                                  [0.09799913, 0.43923104, -0.07147305]])
+    transition_matrix = np.array(
+        [
+            [0.2568619, -0.14823364, 0.43923104],
+            [0.5042455, -0.2909974, -0.367758],
+            [0.09799913, 0.43923104, -0.07147305],
+        ]
+    )
     image = tf.matmul(image, transition_matrix)
     image += [16, 128, 128]
     return image
@@ -54,7 +57,7 @@ def convert_rgb_to_rgbx(image):
 
 def image_resize(image, shape):
     image = tf.expand_dims(image, 0)
-    image = tf.image.resize(image, tuple(shape), method='bilinear')
+    image = tf.image.resize(image, tuple(shape), method="bilinear")
     return tf.squeeze(image, [0])
 
 
@@ -83,18 +86,18 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
     """
 
     preprocessing_callback = PREPROCESS_FACTORY.get(name)
-    flip = kwargs.pop('flip', False)
-    yuv2rgb = kwargs.pop('yuv2rgb', False)
-    yuy2 = kwargs.pop('yuy2', False)
-    nv12 = kwargs.pop('nv12', False)
-    rgbx = kwargs.pop('rgbx', False)
-    input_resize = kwargs.pop('input_resize', {})
+    flip = kwargs.pop("flip", False)
+    yuv2rgb = kwargs.pop("yuv2rgb", False)
+    yuy2 = kwargs.pop("yuy2", False)
+    nv12 = kwargs.pop("nv12", False)
+    rgbx = kwargs.pop("rgbx", False)
+    input_resize = kwargs.pop("input_resize", {})
 
     def preprocessing_fn(image, image_info=None):
         image, image_info = preprocessing_callback(image, image_info, height, width, flip=flip, **kwargs)
         if normalization_params:
             image = normalize(image, normalization_params)
-        if input_resize.get('enabled', False):
+        if input_resize.get("enabled", False):
             image = image_resize(image, input_resize.input_shape)
         if yuv2rgb:
             image = convert_rgb_to_yuv(image)
@@ -105,4 +108,5 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
         if rgbx:
             image = convert_rgb_to_rgbx(image)
         return image, image_info
+
     return preprocessing_fn

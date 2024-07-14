@@ -1,8 +1,8 @@
 {
   "nms_scores_th": 0.01,
-  "nms_iou_th": 1.0,
+  "nms_iou_th": 0.45,
   "image_dims": [512, 512],
-  "max_proposals_per_class": 80,
+  "max_proposals_per_class": 100,
   "background_removal": false,
   "input_division_factor": 8,
   "classes": 80,
@@ -42,7 +42,7 @@
           "w": [
               116,
               156,
-              373 
+              373
           ],
           "h": [
               90,

@@ -9,26 +9,27 @@ Usage:
     >>> model_path = 'Classification/mobilenet_v1/pretrained/mobilenet_v1_1_0_224.ckpt.zip'
     >>> download(hailo_storage+model_path, model_files_dir, getLogger())
 """
+
 import logging
 import shutil
 import tempfile
 import zipfile
-
 from pathlib import Path
-from requests import get, Session, Response
-from tqdm.auto import tqdm
-from typing import Union, Optional, Generator, IO
+from typing import IO, Generator, Optional, Union
 from urllib.parse import urlparse
+
+from requests import Response, Session, get
+from tqdm.auto import tqdm
+
 _DEFAULT_CHUNK_SIZE = 4096
 
 
-def _write_with_progress(fout: IO, iterator: Generator, *,
-                         desc: str, content_length: Optional[int] = 0):
+def _write_with_progress(fout: IO, iterator: Generator, *, desc: str, content_length: Optional[int] = 0):
     with tqdm(
         desc=desc,
         miniters=1,
         total=content_length,
-        unit='B',
+        unit="B",
         unit_divisor=1024,
         unit_scale=True,
     ) as progress_bar:
@@ -42,11 +43,15 @@ def download_to_file(url: str, fout: IO, desc: Optional[str] = None) -> None:
     resp = get(url, allow_redirects=True, stream=True)
     resp.raise_for_status()
 
-    _write_with_progress(fout, resp.iter_content(chunk_size=_DEFAULT_CHUNK_SIZE),
-                         desc=desc, content_length=int(resp.headers.get('content-length', 0)))
+    _write_with_progress(
+        fout,
+        resp.iter_content(chunk_size=_DEFAULT_CHUNK_SIZE),
+        desc=desc,
+        content_length=int(resp.headers.get("content-length", 0)),
+    )
 
 
-def download_file(url: str, dst: Path = Path('.'), desc: Optional[str] = None) -> None:
+def download_file(url: str, dst: Path = Path("."), desc: Optional[str] = None) -> None:
     if not dst.is_dir():
         # if destination is a file, we use its name
         filename = dst.name
@@ -59,7 +64,7 @@ def download_file(url: str, dst: Path = Path('.'), desc: Optional[str] = None) -
     desc = desc or filename
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        with open(f'{temp_dir}/temp_file', 'wb') as outfile:
+        with open(f"{temp_dir}/temp_file", "wb") as outfile:
             download_to_file(url, outfile, desc=desc)
         shutil.move(outfile.name, str(dst))
     return dst
@@ -71,13 +76,13 @@ def download(url: str, dst_dir: Union[str, Path], logger: logging.Logger) -> str
     dst = Path(dst_dir) / Path(url).name
 
     if not (dst.exists() and dst.is_file()):
-        logger.debug(f'downloading {url} into {dst_dir}')
+        logger.debug(f"downloading {url} into {dst_dir}")
         download_file(url, dst)
     else:
-        logger.debug(f'{dst.name} already exists inside {dst_dir}. Skipping download')
+        logger.debug(f"{dst.name} already exists inside {dst_dir}. Skipping download")
 
-    logger.debug(f'unzipping {dst} into {dst_dir}')
-    with zipfile.ZipFile(dst, 'r') as zip_fp:
+    logger.debug(f"unzipping {dst} into {dst_dir}")
+    with zipfile.ZipFile(dst, "r") as zip_fp:
         zip_fp.extractall(dst_dir)
 
     return dst.name
@@ -85,9 +90,9 @@ def download(url: str, dst_dir: Union[str, Path], logger: logging.Logger) -> str
 
 def _get_auth_token(response: Response):
     for k, v in response.cookies.items():
-        if k.startswith('download_warning'):
+        if k.startswith("download_warning"):
             return v
-    return 't'
+    return "t"
 
 
 def download_from_drive(url: str, fp: IO, desc: Optional[str] = None):
@@ -95,9 +100,12 @@ def download_from_drive(url: str, fp: IO, desc: Optional[str] = None):
         with session.get(url, stream=True) as response:
             response.raise_for_status()
             auth_token = _get_auth_token(response)
-        download_url = f'{url}&confirm={auth_token}'
+        download_url = f"{url}&confirm={auth_token}"
         with session.get(download_url, stream=True) as response:
             response.raise_for_status()
-            _write_with_progress(fp, response.iter_content(_DEFAULT_CHUNK_SIZE),
-                                 content_length=int(response.headers.get('content-length', 0)),
-                                 desc=desc)
+            _write_with_progress(
+                fp,
+                response.iter_content(_DEFAULT_CHUNK_SIZE),
+                content_length=int(response.headers.get("content-length", 0)),
+                desc=desc,
+            )

@@ -1,11 +1,12 @@
-import numpy as np
 import copy
+
 import motmetrics as mm
-mm.lap.default_solver = 'lap'
+import numpy as np
+
+mm.lap.default_solver = "lap"
 
 
 class Evaluator(object):
-
     def __init__(self):
         self.acc = mm.MOTAccumulator(auto_id=True)
 
@@ -22,7 +23,7 @@ class Evaluator(object):
         iou_distance = mm.distances.iou_matrix(ignore_tlwhs, trk_tlwhs, max_iou=0.5)
         if len(iou_distance) > 0:
             match_is, match_js = mm.lap.linear_sum_assignment(iou_distance)
-            match_is, match_js = map(lambda a: np.asarray(a, dtype=int), [match_is, match_js])
+            match_is, match_js = (np.asarray(a, dtype=int) for a in [match_is, match_js])
             match_ious = iou_distance[match_is, match_js]
 
             match_js = np.asarray(match_js, dtype=int)
@@ -37,32 +38,28 @@ class Evaluator(object):
         # acc
         self.acc.update(gt_ids, trk_ids, iou_distance)
 
-        if rtn_events and iou_distance.size > 0 and hasattr(self.acc, 'last_mot_events'):
+        if rtn_events and iou_distance.size > 0 and hasattr(self.acc, "last_mot_events"):
             events = self.acc.last_mot_events
         else:
             events = None
         return events
 
     @staticmethod
-    def get_summary(accs, names, metrics=('mota', 'num_switches', 'idp', 'idr', 'idf1', 'precision', 'recall')):
+    def get_summary(accs, names, metrics=("mota", "num_switches", "idp", "idr", "idf1", "precision", "recall")):
         names = copy.deepcopy(names)
         if metrics is None:
             metrics = mm.metrics.motchallenge_metrics
         metrics = copy.deepcopy(metrics)
 
         mh = mm.metrics.create()
-        summary = mh.compute_many(
-            accs,
-            metrics=metrics,
-            names=names,
-            generate_overall=True
-        )
+        summary = mh.compute_many(accs, metrics=metrics, names=names, generate_overall=True)
 
         return summary
 
     @staticmethod
     def save_summary(summary, filename):
         import pandas as pd
+
         writer = pd.ExcelWriter(filename)
         summary.to_excel(writer)
         writer.save()

@@ -1,6 +1,7 @@
-from omegaconf import OmegaConf
-from pathlib import Path
 from functools import lru_cache
+from pathlib import Path
+
+from omegaconf import OmegaConf
 
 from hailo_model_zoo.utils import path_resolver
 
@@ -8,10 +9,10 @@ from hailo_model_zoo.utils import path_resolver
 @lru_cache(maxsize=128)
 def _load_cfg(cfg_file):
     cfg = OmegaConf.load(cfg_file)
-    base = cfg.get('base')
+    base = cfg.get("base")
     if not base:
         return cfg
-    del cfg['base']
+    del cfg["base"]
     # if extension exists make a recursive call for each extension
     config = OmegaConf.create()
     for f in base:
@@ -23,7 +24,7 @@ def _load_cfg(cfg_file):
 
 
 def get_network_info(model_name, read_only=False, yaml_path=None, nodes=None):
-    '''
+    """
     Args:
         model_name: The network name to load.
         read_only: If set return read-only object.
@@ -31,17 +32,17 @@ def get_network_info(model_name, read_only=False, yaml_path=None, nodes=None):
         yaml_path: Path to external YAML file for network configuration
     Return:
         OmegaConf object that represent network configuration.
-    '''
+    """
     if model_name is None and yaml_path is None:
         raise ValueError("Either model_name or yaml_path must be given")
-    net = f'networks/{model_name}.yaml'
+    net = f"networks/{model_name}.yaml"
     cfg_path = Path(yaml_path) if yaml_path is not None else path_resolver.resolve_cfg_path(net)
     if not cfg_path.is_file():
-        raise ValueError('cfg file is missing in {}'.format(cfg_path))
+        raise ValueError("cfg file is missing in {}".format(cfg_path))
     cfg = _load_cfg(cfg_path)
-    if nodes and nodes[0] != '':
+    if nodes and nodes[0] != "":
         cfg.parser.nodes[0] = nodes[0]
-    if nodes and nodes[1] != '':
+    if nodes and nodes[1] != "":
         cfg.parser.nodes[1] = nodes[1]
     if read_only:
         OmegaConf.set_readonly(cfg, True)

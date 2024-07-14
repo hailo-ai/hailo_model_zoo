@@ -1,0 +1,4 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+nms_postprocess("../../postprocess_config/yolov5s_nms_config.json", yolov5, engine=cpu, bbox_decoding_only=True)
+model_optimization_config(calibration, batch_size=4)

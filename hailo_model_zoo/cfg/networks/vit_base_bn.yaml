@@ -4,8 +4,8 @@ network:
   network_name: vit_base_bn
 paths:
   network_path:
-  - models_files/Classification/vit_base/pretrained/2023-01-25/vit_base_patch16_224_unfilt.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base/pretrained/2023-01-25/vit_base.zip
+  - models_files/Classification/vit_base_bn/pretrained/2023-01-25/vit_base_patch16_224_unfilt.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base_bn/pretrained/2023-01-25/vit_base.zip
   alls_script: vit_base_bn.alls
 parser:
   nodes:
@@ -22,4 +22,4 @@ info:
   validation_data: imagenet val
   eval_metric: Accuracy (top1)
   source: https://github.com/rwightman/pytorch-image-models
-  full_precision_result: 80.16
+  full_precision_result: 79.98

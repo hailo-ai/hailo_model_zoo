@@ -1,6 +1,6 @@
 
-Hailo15M Person Re-ID
-=====================
+Public Pre-Trained Models
+=========================
 
 .. |rocket| image:: ../../images/rocket.png
   :width: 18
@@ -11,9 +11,10 @@ Hailo15M Person Re-ID
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
+
 
 
 .. _Person Re-ID:
@@ -25,7 +26,7 @@ Market1501
 ^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -39,22 +40,20 @@ Market1501
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled
    * - osnet_x1_0
      - 94.43
-     - 93.63
-     - 114
-     - 321
+     - 93.73
+     - 113
+     - 320
      - 256x128x3
      - 2.19
      - 1.98
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/osnet_x1_0.hef>`_
-     - None
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/osnet_x1_0.hef>`_
    * - repvgg_a0_person_reid_512  |star|
      - 89.9
-     - 89.3
+     - 89.5
      - 2632
      - 2632
      - 256x128x3
@@ -62,5 +61,4 @@ Market1501
      - 1.78
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/repvgg_a0_person_reid_512.hef>`_
-     - None
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/repvgg_a0_person_reid_512.hef>`_

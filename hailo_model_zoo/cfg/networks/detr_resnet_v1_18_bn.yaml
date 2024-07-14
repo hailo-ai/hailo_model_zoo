@@ -1,35 +1,17 @@
 base:
-- base/coco.yaml
-quantization:
-  calib_set:
-  - models_files/coco/2021-06-18/coco_calib2017.tfrecord
-preprocessing:
-  meta_arch: detr
-  network_type: detection
-postprocessing:
-  meta_arch: detr_resnet_v1_18_bn
+- base/detr.yaml
 network:
   network_name: detr_resnet_v1_18_bn
 paths:
   alls_script: detr_resnet_v1_18_bn.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/detr/detr_r18/detr_resnet_v1_18/2022-09-18/detr_resnet_v1_18_bn.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/detr/detr_r18/detr_resnet_v1_18/2022-09-18/detr_resnet_v1_18_bn.zip
+  - models_files/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_18/2022-09-18/detr_resnet_v1_18_bn.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_18/2022-09-18/detr_resnet_v1_18_bn.zip
 parser:
   nodes:
   - Conv_195
   - - Add_3451
     - Sigmoid_3460
-  normalization_params:
-    normalize_in_net: true
-    mean_list:
-    - 123.675
-    - 116.28
-    - 103.53
-    std_list:
-    - 58.395
-    - 57.12
-    - 57.375
 info:
   task: object detection
   input_shape: 800x800x3

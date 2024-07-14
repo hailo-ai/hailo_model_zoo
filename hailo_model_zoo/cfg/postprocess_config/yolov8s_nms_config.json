@@ -12,22 +12,22 @@
 	"background_removal_index": 0,
 	"bbox_decoders": [
 		{
-			"name": "yolov8s/bbox_decoder41",
+			"name": "bbox_decoder41",
 			"stride": 8,
-			"reg_layer": "yolov8s/conv41",
-			"cls_layer": "yolov8s/conv42"
+			"reg_layer": "conv41",
+			"cls_layer": "conv42"
 		},
 		{
-			"name": "yolov8s/bbox_decoder52",
+			"name": "bbox_decoder52",
 			"stride": 16,
-			"reg_layer": "yolov8s/conv52",
-			"cls_layer": "yolov8s/conv53"
+			"reg_layer": "conv52",
+			"cls_layer": "conv53"
 		},
 		{
-			"name": "yolov8s/bbox_decoder62",
+			"name": "bbox_decoder62",
 			"stride": 32,
-			"reg_layer": "yolov8s/conv62",
-			"cls_layer": "yolov8s/conv63"
+			"reg_layer": "conv62",
+			"cls_layer": "conv63"
 		}
 	]
 }

@@ -9,9 +9,9 @@ System Requirements
 
 * Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
 * Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v3.27.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 4.17.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
-* The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
+* Hailo Dataflow Compiler v3.28.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.18.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* The Hailo Model Zoo supports Hailo-8 / Hailo-10H connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 525
 * CUDA 11.8
@@ -43,7 +43,7 @@ Manual Installation
 ^^^^^^^^^^^^^^^^^^^
 
 #. Install the Hailo Dataflow compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
-#. Install the HailoRT - required only for inference on Hailo-8 (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
+#. Install the HailoRT - required only for inference on Hailo-8 / Hailo-10H (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
 #. Clone the Hailo Model Zoo repo:
 
    .. code-block::
@@ -58,7 +58,7 @@ Manual Installation
 
 #. For setting up datasets please see `DATA <DATA.rst>`_.
 
-#. Verify Hailo-8 is connected via PCIe (required only to run on Hailo-8. Full-precision / emulation run on GPU.)
+#. Verify Hailo-8 / Hailo-10 is connected via PCIe (required only to run on Hailo-8 / Hailo-10. Full-precision / emulation run on GPU.)
 
    .. code-block::
 
@@ -237,7 +237,7 @@ In order to achieve the best performance, use the performance flag:
 
 .. code-block::
 
-    hailomz optimize <model_name> --performance --hw-arch <hailo8|hailo15h>
+    hailomz optimize <model_name> --performance --hw-arch hardware
 
 The flag will be ignored on models that do not support this feature.
 The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
@@ -279,13 +279,14 @@ To evaluate models with the Hailo emulator (after quantization to integer repres
 
    hailomz eval <model_name> --target emulator
 
-To evaluate models on Hailo-8:
+To evaluate models on Hailo-8 / Hailo-10:
 
 .. code-block::
 
    hailomz eval <model_name> --target hardware
 
-If multiple Hailo-8 devices are available, it's possible to select a specific one
+If multiple devices are available, it's possible to select a specific one.
+Make sure to run on a device compatible to the compiled model.
 
 .. code-block::
 
@@ -322,7 +323,7 @@ To explore other options (for example: changing the default batch-size) use:
 
    hailomz eval --help
 
-* Currently MZ evaluation can be done only on hailo8
+* Currently MZ evaluation can be done only on hailo8 and hailo10h.
 
 Visualization
 -------------

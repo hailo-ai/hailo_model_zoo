@@ -1,5 +1,6 @@
-normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+norm_layer1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
 post_quantization_optimization(bias_correction, policy=disabled)
 pre_quantization_optimization(equalization, policy=enabled)
-post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epochs=8, learning_rate=0.0001, loss_factors=[0.2, 0.1, 30.0], loss_layer_names=[ew_add18, conv61, conv63], loss_types=[l2, l2, l2])
+post_quantization_optimization(finetune, policy=enabled, dataset_size=4000, epochs=8, warmup_epochs=0, learning_rate=0.00005, loss_factors=[0.2, 0.1, 30.0], loss_layer_names=[ew_add18, conv61, conv63], loss_types=[l2, l2, l2])

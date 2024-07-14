@@ -735,9 +735,9 @@ Manual Download (Optional)
       python hailo_model_zoo/datasets/create_bsd100_tfrecord.py calib --lr /path/to/LRbicx4 --hr /path/to/GTmod12
 
 
-.. _CIFAR100:
+.. _CLIP_CIFAR100:
 
-CIFAR100
+CLIP_CIFAR100
 ------
 
 To evaluate/optimize/compile the CLIP models of the
@@ -747,8 +747,8 @@ Run the creation scripts:
 
 .. code-block::
 
-    python hailo_model_zoo/datasets/create_cifar100_tfrecord.py val
-    python hailo_model_zoo/datasets/create_cifar100_tfrecord.py calib
+    python hailo_model_zoo/datasets/create_clip_cifar100_tfrecord.py val
+    python hailo_model_zoo/datasets/create_clip_cifar100_tfrecord.py calib
 
 
 .. _LOL:

@@ -1,5 +1,5 @@
 
-Hailo15M Face Recognition
+Public Pre-Trained Models
 =========================
 
 .. |rocket| image:: ../../images/rocket.png
@@ -11,9 +11,10 @@ Hailo15M Face Recognition
 Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
 
 * Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas/>`_ are marked with |star|
-* Benchmark and TAPPAS networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.27.0
+* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
+* Benchmark and TAPPAS  networks run in performance mode
+* All models were compiled using Hailo Dataflow Compiler v3.28.0
+
 
 
 .. _Face Recognition:
@@ -25,7 +26,7 @@ LFW
 ^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -39,19 +40,17 @@ LFW
      - Pretrained
      - Source
      - Compiled
-     - NV12 Compiled
    * - arcface_mobilefacenet  |star|
      - 99.43
      - 99.41
-     - 439
-     - 1188
+     - 435
+     - 1184
      - 112x112x3
      - 2.04
      - 0.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/arcface_mobilefacenet.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/arcface_mobilefacenet_nv12.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_mobilefacenet.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_mobilefacenet_nv12.hef>`_
    * - arcface_r50
      - 99.72
      - 99.71
@@ -62,5 +61,4 @@ LFW
      - 12.6
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.11.0/hailo15m/arcface_r50.hef>`_
-     - None
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_r50.hef>`_

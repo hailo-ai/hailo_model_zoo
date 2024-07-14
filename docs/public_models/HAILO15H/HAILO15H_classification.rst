@@ -403,17 +403,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/squeezenet_v1.1/pretrained/2023-07-18/squeezenet_v1.1.zip>`_
      - `link <https://github.com/osmr/imgclsmob/tree/master/pytorch>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/squeezenet_v1.1.hef>`_
-   * - vit_base
-     - 84.55
-     - 83.12
-     - 59
-     - 196
-     - 224x224x3
-     - 86.5
-     - 35.188
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base/pretrained/2024-04-03/vit_base_patch16_224_ops17.zip>`_
-     - `link <https://github.com/rwightman/pytorch-image-models>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_base.hef>`_
    * - vit_base_bn |rocket|
      - 79.98
      - 78.58
@@ -425,17 +414,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base_bn/pretrained/2023-01-25/vit_base.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_base_bn.hef>`_
-   * - vit_small
-     - 81.54
-     - 79.84
-     - 125
-     - 451
-     - 224x224x3
-     - 21.12
-     - 8.62
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_small/pretrained/2024-04-03/vit_small_patch16_224_ops17.zip>`_
-     - `link <https://github.com/rwightman/pytorch-image-models>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_small.hef>`_
    * - vit_small_bn
      - 78.12
      - 77.22
@@ -447,17 +425,6 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_small_bn/pretrained/2022-08-08/vit_small.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_small_bn.hef>`_
-   * - vit_tiny
-     - 75.51
-     - 73.49
-     - 10
-     - 20
-     - 224x224x3
-     - 5.73
-     - 2.2
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny/pretrained/2024-04-03/vit_tiny_patch16_224_ops17.zip>`_
-     - `link <https://github.com/rwightman/pytorch-image-models>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_tiny.hef>`_
    * - vit_tiny_bn
      - 68.95
      - 67.15
@@ -469,22 +436,11 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny_bn/pretrained/2023-08-29/vit_tiny_bn.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/vit_tiny_bn.hef>`_
-   * - yolov5m
-     - 42.585
-     - 41.354
-     - 75
-     - 121
-     - 640x640x3
-     - 5.05
-     - 6.44
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m.zip>`_
-     - `link <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/yolov5m.hef>`_
    * - vit_tiny
      - 75.51
      - 73.59
-     - 11
-     - 11
+     - 82
+     - 311
      - 224x224x3
      - 5.73M
      - 2.2
@@ -497,7 +453,7 @@ ImageNet
      - 31
      - 84
      - 224x224x3
-     - 21.12
+     - 5.73M
      - 2.2
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny/pretrained/2024-04-03/vit_tiny_patch16_224_ops17.zip>`_
      - `link <https://github.com/rwightman/pytorch-image-models>`_

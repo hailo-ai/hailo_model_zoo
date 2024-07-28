@@ -57,7 +57,7 @@ Training and exporting to ONNX
 
 #. | Prepare your data:
 
-   | For more information on obtraining datasets `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch#download-datasets-or-prepare-datasets>`_
+   | For more information on obtraining datasets `here <https://github.com/hailo-ai/insightface/tree/master/recognition/arcface_torch#download-datasets-or-prepare-datasets>`_
    | The repository supports the following formats:
 
    #. | ImageFolder dataset - each class (person) has its own directory

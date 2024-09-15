@@ -235,7 +235,7 @@ COCO
      - 640x640x3
      - 2.3
      - 6.8
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10n/2024-05-31/yolov10n.zip>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10n/pretrained/2024-05-31/yolov10n.zip>`_
      - `link <https://github.com/THU-MIG/yolov10>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/yolov10n.hef>`_
    * - yolov10s
@@ -246,7 +246,7 @@ COCO
      - 640x640x3
      - 7.2
      - 21.7
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10s/2024-05-31/yolov10s.zip>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10s/pretrained/2024-05-31/yolov10s.zip>`_
      - `link <https://github.com/THU-MIG/yolov10>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/yolov10s.hef>`_
    * - yolov3

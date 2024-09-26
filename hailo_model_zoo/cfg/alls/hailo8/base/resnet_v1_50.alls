@@ -1,5 +1,5 @@
 normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
-model_optimization_flavor(compression_level=1)
+
 quantization_param({conv*}, max_elementwise_feed_repeat=1)
 # quantization_param([conv5, conv8, conv11, conv15, conv18, conv21, conv24, conv28, conv31, conv34, conv37, conv40, conv43, conv47, conv50, conv53], max_elementwise_feed_repeat=1)
 post_quantization_optimization(finetune, policy=disabled)
@@ -7,6 +7,7 @@ post_quantization_optimization(bias_correction, policy=enabled)
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
 
 quantization_param({resnet_v1_50/*}, max_elementwise_feed_repeat=1)
+model_optimization_flavor(compression_level=1)
 
 allocator_param(auto_split_const_inputs=False, automatic_ddr=False, automatic_ddr_l3_cuts_threshold=25, automatic_l4_portals=False, automatic_l4_portals_l3_cuts_threshold=15, automatic_reshapes=disabled, automatic_resize_reshapes=disabled, calculate_power=True, cluster_timeout=300, defuse_by_validator=False, enable_auto_spatial_collapse=False, enable_auto_spatial_reshapes=False, enable_automatic_offdevice_outputs=False, enable_axis_upsize=True, enable_collapser=False, enable_defuse_with_slack=False, enable_fixer=False, enable_lanes=False, enable_lcu_ecc=True, enable_muxer=False, enable_swapper=False, max_auto_defuse=1, max_auto_merge_depth=1, merge_min_layer_utilization=0.95, ppu_reshape_slack=0, seed=0, splitter_timeout=600, timeout=600, validate=True, width_splitter_defuse=disabled)
 resources_param(max_apu_utilization=0.8500000000000005, max_compute_16bit_utilization=0.8500000000000005, max_compute_utilization=0.8500000000000005, max_control_utilization=0.8500000000000005, max_input_aligner_utilization=0.8500000000000005, max_memory_utilization=0.8500000000000005, max_utilization=0.0)

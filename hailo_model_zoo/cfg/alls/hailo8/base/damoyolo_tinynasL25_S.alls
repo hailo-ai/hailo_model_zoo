@@ -1,5 +1,5 @@
 post_quantization_optimization(finetune, policy=disabled)
-
+model_optimization_flavor(compression_level=1)
 allocator_param(max_auto_merge_depth=3, merge_min_layer_utilization=0)
 resources_param(max_utilization=0.975, max_compute_utilization=0.975, max_compute_16bit_utilization=0.975, max_memory_utilization=0.90, max_input_aligner_utilization=0.975, max_apu_utilization=0.975)
 damoyolo_tinynasL25_S = network_group([damoyolo_tinynasL25_S])

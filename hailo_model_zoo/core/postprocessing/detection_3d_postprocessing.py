@@ -36,6 +36,209 @@ def get_calibration_matrix_from_data(data):
             return P2
 
 
+def denormalize_bbox(normalized_bboxes):
+    # rotation
+    rot_sine = normalized_bboxes[..., 6:7]
+
+    rot_cosine = normalized_bboxes[..., 7:8]
+    rot = tf.math.atan2(rot_sine, rot_cosine)
+
+    # center in the bev
+    cx = normalized_bboxes[..., 0:1]
+    cy = normalized_bboxes[..., 1:2]
+    cz = normalized_bboxes[..., 4:5]
+
+    # size
+    width = normalized_bboxes[..., 2:3]
+    length = normalized_bboxes[..., 3:4]
+    height = normalized_bboxes[..., 5:6]
+
+    width = tf.exp(width)
+    length = tf.exp(length)
+    height = tf.exp(height)
+    if normalized_bboxes.shape[-1] > 8:
+        # velocity
+        vx = normalized_bboxes[:, 8:9]
+        vy = normalized_bboxes[:, 9:10]
+        denormalized_bboxes = tf.concat([cx, cy, cz, width, length, height, rot, vx, vy], axis=-1)
+
+    else:
+        denormalized_bboxes = tf.concat([cx, cy, cz, width, length, height, rot], axis=-1)
+    return denormalized_bboxes
+
+
+class NMSFreeCoder:
+    """Bbox coder for NMS-free detector.
+    Args:
+        pc_range (list[float]): Range of point cloud.
+        post_center_range (list[float]): Limit of the center.
+            Default: None.
+        max_num (int): Max number to be kept. Default: 100.
+        score_threshold (float): Threshold to filter boxes based on score.
+            Default: None.
+        code_size (int): Code size of bboxes. Default: 9
+    """
+
+    def __init__(
+        self, pc_range, voxel_size=None, post_center_range=None, max_num=100, score_threshold=None, num_classes=10
+    ):
+        self.pc_range = pc_range
+        self.voxel_size = voxel_size
+        self.post_center_range = post_center_range
+        self.max_num = max_num
+        self.score_threshold = score_threshold
+        self.num_classes = num_classes
+
+    def encode(self):
+        pass
+
+    def decode_single(self, cls_scores, bbox_preds):
+        """Decode bboxes.
+        Args:
+            cls_scores (Tensor): Outputs from the classification head, \
+                shape [num_query, cls_out_channels]. Note \
+                cls_out_channels should includes background.
+            bbox_preds (Tensor): Outputs from the regression \
+                head with normalized coordinate format (cx, cy, w, l, cz, h, rot_sine, rot_cosine, vx, vy). \
+                Shape [num_query, 9].
+        Returns:
+            list[dict]: Decoded boxes.
+        """
+        max_num = self.max_num
+
+        cls_scores = tf.math.sigmoid(cls_scores)
+        scores, indices = tf.math.top_k(tf.reshape(cls_scores, [-1]), k=max_num)
+
+        labels = tf.math.floormod(indices, self.num_classes)
+        bbox_index = tf.math.floordiv(indices, self.num_classes)
+
+        bbox_preds = tf.gather(bbox_preds, bbox_index)
+
+        final_box_preds = denormalize_bbox(bbox_preds)
+        final_scores = scores
+        final_preds = labels
+
+        # use score threshold
+        if self.score_threshold is not None:
+            thresh_mask = final_scores > self.score_threshold
+        if self.post_center_range is not None:
+            self.post_center_range = tf.constant(self.post_center_range)
+
+            mask = tf.math.reduce_all((final_box_preds[..., :3] >= self.post_center_range[:3]), axis=1)
+            mask &= tf.math.reduce_all((final_box_preds[..., :3] <= self.post_center_range[3:]), axis=1)
+
+            if self.score_threshold:
+                mask &= thresh_mask
+
+            boxes3d = final_box_preds[mask]
+            tmp = boxes3d[:, 2:3] - boxes3d[:, 5:6] * 0.5
+            boxes3d = tf.concat([boxes3d[..., 0:2], tmp, boxes3d[..., 3:]], axis=-1)
+            scores = final_scores[mask]
+            labels = final_preds[mask]
+            predictions_dict = {"boxes_3d": boxes3d, "scores_3d": scores, "labels_3d": labels}
+
+        else:
+            raise NotImplementedError(
+                "Need to reorganize output as a batch, only " "support post_center_range is not None for now!"
+            )
+        return predictions_dict
+
+    def decode(self, preds_dicts):
+        """Decode bboxes.
+        Args:
+            all_cls_scores (Tensor): Outputs from the classification head, \
+                shape [nb_dec, bs, num_query, cls_out_channels]. Note \
+                cls_out_channels should includes background.
+            all_bbox_preds (Tensor): Sigmoid outputs from the regression \
+                head with normalized coordinate format (cx, cy, w, l, cz, h, rot_sine, rot_cosine, vx, vy). \
+                Shape [nb_dec, bs, num_query, 9].
+        Returns:
+            list[dict]: Decoded boxes.
+        """
+        # NOTE: PETR-v2 takes only the last output branch results
+        all_cls_scores = preds_dicts["cls_scores"][-1]
+        all_bbox_preds = preds_dicts["bbox_pred"][-1]
+
+        batch_size = all_cls_scores.shape[0]
+        predictions_list = []
+        for i in range(batch_size):
+            predictions_list.append(self.decode_single(all_cls_scores[i], all_bbox_preds[i]))
+        return predictions_list
+
+
+@POSTPROCESS_FACTORY.register(name="object_detection_3d")
+def petrv2_transformer(endnodes, device_pre_post_layers=None, **kwargs):
+    batch_size = endnodes[0].shape[0]
+
+    img_info = kwargs.get("gt_images", None)
+    timestamp = img_info["timestamp"]
+    timestamp = tf.reshape(timestamp, [batch_size, -1, 6])
+    mean_time_stamp = tf.math.reduce_mean((timestamp[:, 1, :] - timestamp[:, 0, :]), -1)
+    mean_time_stamp = tf.expand_dims(tf.expand_dims(mean_time_stamp, -1), -1)
+    endnodes = [tf.squeeze(endnode, [0]) for endnode in endnodes]
+    num_pred = len(endnodes) // 2
+    reg_branches = endnodes[:num_pred]
+    cls_branches = endnodes[num_pred:]
+
+    def _get_reference_points(ref_points_path):
+        ref_points = np.load(ref_points_path)
+        return ref_points
+
+    ref_points_path = kwargs.get("postprocess_config_file", None)
+    ref_points_path = path_resolver.resolve_data_path(ref_points_path) if ref_points_path else None
+    if not os.path.isfile(ref_points_path):
+        raise FileNotFoundError(f"Could not find {ref_points_path}")
+    ref_points_path = tf.constant(str(ref_points_path))
+    ref_points = tf.numpy_function(_get_reference_points, [ref_points_path], ["float32"])[0]
+    ref_points = tf.reshape(ref_points, [reg_branches[0].shape[0], reg_branches[0].shape[1], 3])
+
+    outputs_coords = []
+    for lvl in range(len(reg_branches)):
+        reg_branch = reg_branches[lvl]
+        x1 = reg_branch[..., 0:2] + ref_points[..., 0:2]
+        x1 = tf.math.sigmoid(x1)
+        x2 = reg_branch[..., 2:4]
+        x3 = reg_branch[..., 4:5] + ref_points[..., 2:3]
+        x3 = tf.math.sigmoid(x3)
+        x4 = reg_branch[..., 5:8]
+        x5 = reg_branch[..., 8:] / mean_time_stamp
+
+        output_coord = tf.concat([x1, x2, x3, x4, x5], axis=-1)
+        assert output_coord.shape == reg_branch.shape
+        outputs_coords.append(output_coord)
+
+    all_cls_scores = tf.stack(cls_branches)
+    all_bbox_preds = tf.stack(outputs_coords)
+
+    pc_range = [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+    x1 = all_bbox_preds[..., 0:1] * (pc_range[3] - pc_range[0]) + pc_range[0]
+    x2 = all_bbox_preds[..., 1:2] * (pc_range[4] - pc_range[1]) + pc_range[1]
+    x3 = all_bbox_preds[..., 2:4]
+    x4 = all_bbox_preds[..., 4:5] * (pc_range[5] - pc_range[2]) + pc_range[2]
+    x5 = all_bbox_preds[..., 5:]
+    all_bbox_pred = tf.concat([x1, x2, x3, x4, x5], axis=-1)
+    assert all_bbox_pred.shape == all_bbox_preds.shape
+
+    preds_dict = {"cls_scores": all_cls_scores, "bbox_pred": all_bbox_pred}
+    num_classes = kwargs.get("classes", None)
+    bbox_coder = NMSFreeCoder(
+        post_center_range=[-61.2, -61.2, -10.0, 61.2, 61.2, 10.0],
+        pc_range=pc_range,
+        max_num=300,
+        voxel_size=[0.2, 0.2, 8],
+        num_classes=num_classes,
+    )
+
+    preds_dicts = bbox_coder.decode(preds_dict)
+
+    return {"predictions": preds_dicts}
+
+
+@POSTPROCESS_FACTORY.register(name="object_detection_3d_backbone")
+def petrv2_backbone(endnodes, device_pre_post_layers=None, **kwargs):
+    return {"predictions": endnodes}
+
+
 @POSTPROCESS_FACTORY.register(name="3d_detection")
 def detection_3d_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     output_scheme = kwargs.get("output_scheme", None)

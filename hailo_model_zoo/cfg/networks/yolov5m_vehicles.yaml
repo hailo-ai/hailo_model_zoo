@@ -26,7 +26,6 @@ evaluation:
   classes: 1
   dataset_name: vehicle_detection
   data_set: null
-  validation_data_set: null
 postprocessing:
   device_pre_post_layers:
     nms: true

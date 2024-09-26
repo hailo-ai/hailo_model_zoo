@@ -2,7 +2,6 @@ base:
 - base/base.yaml
 evaluation:
   data_set: models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_val.tfrecord
-  validation_data_set: models_files/nyu_depth_v2/2020-11-01/nyu_depth_v2_val.tfrecord
   dataset_name: nyu_depth_v2
 quantization:
   calib_set:

@@ -1,4 +1,5 @@
 mspn_regnetx_800mf_nv12/normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_flavor(optimization_level=2, compression_level=1)
 quantization_param(output_layer1, precision_mode=a8_w8)
-reshape, yuv_to_rgb1 = input_conversion(input_layer1, nv12_to_rgb, emulator_support=True)
+yuv_to_rgb1 = input_conversion(yuv_to_rgb)
+reshape = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support=True)

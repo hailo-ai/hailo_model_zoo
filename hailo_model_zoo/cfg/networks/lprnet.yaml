@@ -32,7 +32,6 @@ evaluation:
   classes: 10
   dataset_name: lp_ocr
   data_set: null
-  validation_data_set: null
 info:
   task: pipeline
   input_shape: 75x300x3

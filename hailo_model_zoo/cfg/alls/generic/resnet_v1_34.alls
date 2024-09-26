@@ -1,3 +1,13 @@
-normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_flavor(optimization_level=2, compression_level=2)
+# New quantization params
+post_quantization_optimization(bias_correction, policy=disabled)
+pre_quantization_optimization(equalization, policy=enabled)
+
+
+# normalization commands
+norm_layer1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 quantization_param({*}, max_elementwise_feed_repeat=1)
+
+
+
+# model_optimization_config commands
+model_optimization_config(calibration, batch_size=2, calibset_size=64)

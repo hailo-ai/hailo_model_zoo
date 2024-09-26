@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Image Denoising:
 
-Image Denoising
 ---------------
 
 BSD68
@@ -39,10 +38,10 @@ BSD68
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - dncnn3
+     - Compiled    
+   * - dncnn3   
      - 31.46
-     - 31.26
+     - 0.17
      - 44
      - 44
      - 321x481x1
@@ -50,7 +49,7 @@ BSD68
      - 205.26
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/dncnn3.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/dncnn3.hef>`_
 
 CBSD68
 ^^^^^^
@@ -69,10 +68,10 @@ CBSD68
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - dncnn_color_blind
+     - Compiled    
+   * - dncnn_color_blind   
      - 33.87
-     - 32.97
+     - 0.93
      - 44
      - 44
      - 321x481x3
@@ -80,4 +79,4 @@ CBSD68
      - 205.97
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15h/dncnn_color_blind.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/dncnn_color_blind.hef>`_

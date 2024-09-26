@@ -1,6 +1,8 @@
 import numpy as np
+from numba import njit
 
 
+@njit
 def bbox_overlaps(boxes, query_boxes):
     boxes_count = boxes.shape[0]
     secondary_boxes_count = query_boxes.shape[0]

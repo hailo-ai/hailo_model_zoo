@@ -27,7 +27,6 @@ evaluation:
   classes: 2
   dataset_name: personface_detection
   data_set: null
-  validation_data_set: null
 info:
   task: pipeline
   input_shape: 640x640x3

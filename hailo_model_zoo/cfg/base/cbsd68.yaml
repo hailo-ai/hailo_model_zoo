@@ -3,7 +3,6 @@ base:
 evaluation:
   dataset_name: cbsd68
   data_set: models_files/CBSD68/2023-06-25/cbsd68_val.tfrecord
-  validation_data_set: models_files/CBSD68/2023-06-25/cbsd68_val.tfrecord
 quantization:
   calib_set:
   - models_files/CBSD68/2023-06-25/cbsd68_calib.tfrecord

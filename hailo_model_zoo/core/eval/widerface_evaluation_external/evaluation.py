@@ -1,6 +1,6 @@
 import numpy as np
 
-pyximported = False
+from .python_box_overlaps import bbox_overlaps
 
 
 def image_eval(pred, gt, ignore, iou_thresh):
@@ -9,13 +9,6 @@ def image_eval(pred, gt, ignore, iou_thresh):
     gt: Nx4
     ignore:
     """
-    global pyximported
-    if not pyximported:
-        import pyximport
-
-        pyximport.install()
-        pyximported = True
-    from .box_overlaps import bbox_overlaps
 
     _pred = pred.copy()
     _gt = gt.copy()

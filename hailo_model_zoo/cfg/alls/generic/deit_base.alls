@@ -7,5 +7,4 @@ model_optimization_config(negative_exponent, layers={*}, rank=0)
 quantization_param({deit_base/ew_add*}, precision_mode=a16_w16)
 quantization_param({deit_base/ew_add1}, precision_mode=a8_w8)
 
-# allocation params
 resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=0.85, max_memory_utilization=0.8)

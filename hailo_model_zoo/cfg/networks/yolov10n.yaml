@@ -8,9 +8,9 @@ network:
   network_name: yolov10n
 paths:
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/yolov10n/2024-05-31/yolov10n.onnx
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov10n/pretrained/2024-05-31/yolov10n.onnx
   alls_script: yolov10n.alls
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10n/2024-05-31/yolov10n.zip
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10n/pretrained/2024-05-31/yolov10n.zip
 parser:
   nodes:
   - null

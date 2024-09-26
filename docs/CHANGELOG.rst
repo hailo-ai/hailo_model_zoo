@@ -1,6 +1,41 @@
 Changelog
 =========
 
+**v2.13**
+
+* Update to use Dataflow Compiler v3.29.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.19.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* Using jit_compile which reduces dramatically the emulation inference time of the Hailo Model Zoo models.
+
+* New tasks:
+
+  * BEV: Multi-View 3D Object Detection
+
+    * Added support for NuScenes dataset
+
+    * Added PETRv2 with the following configuration:
+
+      1. Backbone: RepVGG-B0 (800x320 input resolution)
+
+      2. Transformer: 3 decoder layers, detection queries=304, replaced LN with UN
+
+* New Models:
+
+  * `CAS-ViT <https://arxiv.org/pdf/2408.03703>`_ - S, M, T - Convolutional-Attention based classification model
+  * `YOLOv10 <https://arxiv.org/pdf/2405.14458>`_ - base, x-large - Latest YOLO detectors
+  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ Text Encoders - ResNet50x4, ViT-Large
+
+* New retraining Docker containers for:
+
+  * PETR - Multi-View 3D Object Detection
+
+* Introduced new flags for hailomz CLI:
+
+  * ``--ap-per-class`` for measuring average-precision per-class. Relevant for object detection and instance segmentation tasks.
+
+* Bug fixes
+
 **v2.12**
 
 * Update to use Dataflow Compiler v3.28.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

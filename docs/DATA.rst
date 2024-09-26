@@ -39,6 +39,8 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `BSD68`_
   * `CBSD68`_
   * `KITTI_STEREO`_
+  * `KINETICS400`_
+  * `NUSCENES`_
 
 .. _ImageNet:
 
@@ -943,3 +945,108 @@ Manual Download
 
       python hailo_model_zoo/datasets/create_kitti_stereo_tfrecord.py calib --data <TRAIN_DIR>
       python hailo_model_zoo/datasets/create_kitti_stereo_tfrecord.py val --data <VALIDATION_DIR>
+
+.. _KINETICS400:
+
+KINETICS400
+------------
+
+To evaluate/optimize/compile the video classification models of the
+Hailo Model Zoo you should generate the KINETICS400 TFRecord files.
+
+Manual Download
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the kinetics400 dataset from `here <https://github.com/cvdfoundation/kinetics-dataset>`_. Follow the instructions to download the dataset.
+#. The expected dataset structure:
+   .. code-block::
+
+      k400/videos
+      |_ test
+         |_ abseiling
+         |   |_ 0aSqlZT8QmM_000048_000058.mp4
+         |   |_ 0xreS8KFbrw_000417_000427.mp4
+         |   |_ ...
+         |_ air drumming
+         |   |_ 013SMb0SX8I_000020_000030.mp4
+         |   |_ 013SMb0SX8I_000020_000030.mp4
+         |   |_ ...
+      |_ train
+         |_ abseiling
+         |   |_ 0347ZoDXyP0_000095_000105.mp4
+         |   |_ 035LtPeUFTE_000085_000095.mp4
+         |   |_ ...
+         |_ air drumming
+         |   |_ 03V2idM7_KY_000003_000013.mp4
+         |   |_ 1R7Ds_000003_000013.mp4
+         |   |_ 0c1bhfxioqE_000078_000088.mp4
+         |   |_ ...
+      |_ val
+         |_ abseiling
+         |   |_ 0wR5jVB-WPk_000417_000427.mp4
+         |   |_ 3caPS4FHFF8_000036_000046.mp4
+         |   |_ ...
+         |_ air drumming
+         |   |_ 2cPLjY5AWXU_000001_000011.mp4
+         |   |_ 3K0Sw7rbzPU_000114_000124.mp4
+         |   |_ 6Tnsmk9C2rg_000048_000058.mp4
+         |   |_ ...
+
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_kinetics400_tfrecord.py calib --data <path_to_k400/videos>
+      python hailo_model_zoo/datasets/create_kinetics400_tfrecord.py val --data <path_to_k400/videos>
+
+.. _NUSCENES:
+
+NUSCENES
+------------
+
+#. Download the dataset from `here <https://www.nuscenes.org/download>`_ and extract.
+#. The expected dataset structure:
+
+   .. code-block::
+
+      nuscenes
+      |_ maps
+      |  |_ *.png
+      |_ samples
+      |  |_ CAM_BACK
+      |  |_ |_ *.jpg
+      |  |_ CAM_BACK_LEFT
+      |  |_ |_ *.jpg
+      |  |_ CAM_BACK_RIGHT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT_LEFT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT_RIGHT
+      |  |_ |_ *.jpg
+      |_ sweeps
+      |  |_ CAM_BACK
+      |  |_ |_ *.jpg
+      |  |_ CAM_BACK_LEFT
+      |  |_ |_ *.jpg
+      |  |_ CAM_BACK_RIGHT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT_LEFT
+      |  |_ |_ *.jpg
+      |  |_ CAM_FRONT_RIGHT
+      |  |_ |_ *.jpg
+      |_ v1.0-trainval
+      |  |_ *.json
+
+#. Run the scripts:
+
+   .. code-block::
+
+      python hailo_model_zoo/datasets/create_nuscenes_tfrecord.py calib --ann_file <train_annotation_file.pkl>
+      python hailo_model_zoo/datasets/create_nuscenes_tfrecord.py val --ann_file <val_annotation_file.pkl>
+
+   where <\*_annotation_file.pkl> is the train / val .pkl annotation file generated from the PETR training environment.

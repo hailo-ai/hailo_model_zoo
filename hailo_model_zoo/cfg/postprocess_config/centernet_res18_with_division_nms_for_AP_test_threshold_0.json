@@ -9,10 +9,9 @@
     "input_division_factor": 4,
     "bbox_decoders": [
         {
-	    "name": "bbox_decoder_conv29conv27",
-	    "reg_layer_h": "conv29",
-	    "reg_layer_w": "conv27",
-	    "cls_layer": "ew_add1"
+            "reg_layer_h": "conv30",
+            "reg_layer_w": "conv28",
+            "cls_layer": "ew_add10"
         }
     ]
 }

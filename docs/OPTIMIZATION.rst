@@ -28,7 +28,7 @@ The model optimization has two main steps: full precision optimization and quant
 
 
 * Full precision optimization includes any changes to the model in the floating point precision domain, for example, Equalization (`Meller2019`_), TSE (`Vosco2021`_) and pruning.
-* Quantization includes compressing the model from floating point to integer representation of the weights and activations (4/8/16 bits) and algorithms to improve the model's accuracy, such as IBC (`Finkelstein2019`_) and QFT.
+* Quantization includes compressing the model from floating point to integer representation of the weights and activations (4/8/16 bits) and algorithms to improve the model's accuracy, such as IBC (`Finkelstein2019`_) and QFT (`Finkelstein2022`_).
 
 Both steps may degrade the model accuracy, therefore, evaluation is needed to verify the model accuracy. This workflow is depicted in the following diagram:
 

@@ -1,5 +1,5 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(sigmoid)
-nms_postprocess("../../postprocess_config/unreleased/yolov5s_nms_config.json", yolov5, engine=cpu)
-model_optimization_config(calibration, batch_size=4, calibset_size=64)
+nms_postprocess("../../postprocess_config/unreleased/yolov5s_wo_spp_nms_config.json", yolov5, engine=cpu)
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0002, epochs=8, dataset_size=2048)
+model_optimization_config(calibration, batch_size=4)

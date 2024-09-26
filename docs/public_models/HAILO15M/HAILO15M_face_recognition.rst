@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Face Recognition:
 
-Face Recognition
 ----------------
 
 LFW
@@ -39,26 +38,26 @@ LFW
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - arcface_mobilefacenet  |star|
+     - Compiled     
+   * - arcface_mobilefacenet  |star| 
      - 99.43
-     - 99.41
-     - 435
-     - 1184
+     - -0.03
+     - 0
+     - 464
      - 112x112x3
      - 2.04
      - 0.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_mobilefacenet.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_mobilefacenet_nv12.hef>`_
-   * - arcface_r50
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/arcface_mobilefacenet.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/arcface_mobilefacenet_nv12.hef>`_    
+   * - arcface_r50   
      - 99.72
-     - 99.71
-     - 113
-     - 235
+     - -0.02
+     - 0
+     - 117
      - 112x112x3
      - 31.0
      - 12.6
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_
      - `link <https://github.com/deepinsight/insightface>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/arcface_r50.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/arcface_r50.hef>`_

@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 import numpy as np
+from prettytable import PrettyTable
 from pycocotools import mask as maskUtils
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
@@ -9,6 +10,7 @@ from hailo_model_zoo.core.datasets.datasets_info import get_dataset_info
 from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.eval.instance_segmentation_evaluation_utils import SparseInstEval, YolactEval, Yolov5SegEval
 from hailo_model_zoo.core.factory import EVAL_FACTORY
+from hailo_model_zoo.core.postprocessing.detection_postprocessing import _get_labels
 
 EVAL_CLASS_MAP = {
     "yolact": YolactEval,
@@ -32,6 +34,7 @@ class InstanceSegmentationEval(Eval):
         dataset_info = get_dataset_info(dataset_name=dataset_name)
         self._label_map = dataset_info.label_map
         self._label_inv_map = {v: k for k, v in self._label_map.items()}
+        self.labels_offset = kwargs["labels_offset"]
         self._channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
         if self._channels_remove:
             self.cls_mapping, self.catIds = self._create_class_mapping()
@@ -40,7 +43,7 @@ class InstanceSegmentationEval(Eval):
         self._mask_data = []
 
         self.eval_config = EVAL_CLASS_MAP[self.meta_arch]()
-        self._metric_names = self.eval_config._metric_names
+        self._metric_names = self.eval_config._metric_names  # noqa: SLF001 allow access to private member
         self._metrics_vals = [0] * len(self._metric_names)
         self.scale_boxes = self.eval_config.scale_boxes
         self.scale_masks = self.eval_config.scale_masks
@@ -48,6 +51,9 @@ class InstanceSegmentationEval(Eval):
         self.eval_bbox = self.eval_config.eval_bbox
 
         self._gt_ann_file = kwargs["gt_json_path"]
+        self.show_results_per_class = kwargs["show_results_per_class"]
+        self.dataset_name = kwargs["dataset_name"]
+        self.mask = kwargs["channels_remove"].get("mask")
         self.reset()
 
     def _create_class_mapping(self):
@@ -187,6 +193,17 @@ class InstanceSegmentationEval(Eval):
         # Arrange annotations
         self.arrange_dataset(img_info)
 
+    def _print_per_class(self, seg_eval):
+        s = seg_eval.eval["precision"][..., seg_eval.params.areaRngLbl.index("all"), seg_eval.params.maxDets.index(100)]
+        table = PrettyTable()
+        table.field_names = ["Class Name", "Mask Average Precision (AP)"]
+        ap_values = np.mean(s, axis=(0, 1))
+        labels = _get_labels(self.dataset_name)
+        class_names = [labels[k]["name"] for k in seg_eval.params.catIds]
+        for class_name, ap in zip(class_names, ap_values[ap_values > -1]):
+            table.add_row([class_name, f"{ap:.2f}"])
+        print(table)
+
     def _evaluate_mask(self):
         gt_annotations = COCO(self._gt_ann_file)
         if self._labels_map == [0]:
@@ -207,6 +224,8 @@ class InstanceSegmentationEval(Eval):
         seg_eval.evaluate()
         seg_eval.accumulate()
         seg_eval.summarize()
+        if self.show_results_per_class:
+            self._print_per_class(seg_eval)
         self._metrics_vals = list(np.array(seg_eval.stats, dtype=np.float32))
 
     def _evaluate_bbox(self):

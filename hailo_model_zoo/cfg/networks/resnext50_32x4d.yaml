@@ -10,7 +10,7 @@ paths:
 parser:
   nodes:
   - input_layer
-  - output/BiasAdd
+  - - output/BiasAdd
 info:
   task: classification
   input_shape: 224x224x3

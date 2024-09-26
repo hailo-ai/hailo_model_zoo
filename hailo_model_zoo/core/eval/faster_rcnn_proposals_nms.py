@@ -51,7 +51,7 @@ class FasterRCNNProposalsNMS(object):
         self._is_nmsed = {}
         self._bbox_pad_mapping = {}
         self._create_bbox_padding_map()
-        self._finished_collect_proposals = {}
+        self.finished_collect_proposals = {}
         self._create_bbox_padding_map()
         self._label_inv_map = label_inv_map
         self._detections = detections
@@ -68,7 +68,7 @@ class FasterRCNNProposalsNMS(object):
             )
             self._bbox_pad_mapping[img_coco_info["id"]] = PadInfo(h_pad, w_pad, scaling)
 
-    def _convert_resize_and_pad(self, img_dets, img_id):
+    def convert_resize_and_pad(self, img_dets, img_id):
         """
         Detections transformation to the original image coordinates
         """
@@ -157,8 +157,8 @@ class FasterRCNNProposalsNMS(object):
         only if collecting the detections of this image was finished (_finished_collect_proposals=True)
         """
         if force_last_img:
-            self._finished_collect_proposals[_last_image_id] = True
-        for img_id in self._finished_collect_proposals:
+            self.finished_collect_proposals[_last_image_id] = True
+        for img_id in self.finished_collect_proposals:
             if not self._is_nmsed[img_id]:
                 # perform nms on the data for this image_id
                 # map categories, and write to self._detections
@@ -183,4 +183,4 @@ class FasterRCNNProposalsNMS(object):
         """
         Number of images which all of their detections were gathered
         """
-        return len(self._finished_collect_proposals)
+        return len(self.finished_collect_proposals)

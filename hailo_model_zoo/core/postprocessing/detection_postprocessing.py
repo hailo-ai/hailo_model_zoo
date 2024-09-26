@@ -75,6 +75,30 @@ def _get_face_detection_visualization_data(logits):
     return boxes, labels, face_landmarks
 
 
+def _get_labels(dataset_name):
+    if "coco" in dataset_name:
+        labels = _get_coco_labels()
+    elif "open_images" in dataset_name:
+        labels = _get_open_images_labels()
+    elif "visdrone" in dataset_name:
+        labels = _get_visdrone_labels()
+    elif "mot" in dataset_name:
+        labels = ({1: {"name": "person", "id": 1}},)
+    elif "widerface" in dataset_name:
+        labels = {1: {"id": 1, "name": ""}}
+    elif "vehicle_detection" in dataset_name:
+        labels = {0: {"name": "vehicle"}}
+    elif "license_plates" in dataset_name:
+        labels = {0: {"name": "plate"}}
+    elif "hand_detection" in dataset_name:
+        labels = {1: {"name": "hand"}}
+    elif "personface_detection" in dataset_name:
+        labels = {1: {"name": "person"}, 2: {"name": "face"}}
+    else:
+        raise Exception("No Labels for dataset {}".format(dataset_name))
+    return labels
+
+
 @VISUALIZATION_FACTORY.register(name="detection")
 @VISUALIZATION_FACTORY.register(name="face_detection")
 def visualize_detection_result(
@@ -89,26 +113,9 @@ def visualize_detection_result(
 ):
     boxes = logits["detection_boxes"][0]
     keypoints = None
-    if "coco" in dataset_name:
-        labels = _get_coco_labels()
-    elif "open_images" in dataset_name:
-        labels = _get_open_images_labels()
-    elif "visdrone" in dataset_name:
-        labels = _get_visdrone_labels()
-    elif "mot" in dataset_name:
-        labels = ({1: {"name": "person", "id": 1}},)
-    elif "widerface" in dataset_name:
+    labels = _get_labels(dataset_name)
+    if "widerface" in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
-    elif "vehicle_detection" in dataset_name:
-        labels = {0: {"name": "vehicle"}}
-    elif "license_plates" in dataset_name:
-        labels = {0: {"name": "plate"}}
-    elif "hand_detection" in dataset_name:
-        labels = {1: {"name": "hand"}}
-    elif "personface_detection" in dataset_name:
-        labels = {1: {"name": "person"}, 2: {"name": "face"}}
-    else:
-        raise Exception("No Labels for dataset {}".format(dataset_name))
 
     return visualize_boxes_and_labels_on_image_array(
         image[0],

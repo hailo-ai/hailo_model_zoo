@@ -112,8 +112,27 @@ class VideoWriter:
         self.video_writer.write(image)
 
 
+class RawWriter:
+    def __init__(self, raw_suffix):
+        self.raw_suffix = raw_suffix.numpy().decode("utf-8")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        pass
+
+    def write(self, image, image_name):
+        with open(".".join([image_name, self.raw_suffix]), "wb") as outfile:
+            outfile.write(image)
+
+
 def _make_writer(info_per_image, video_outpath):
-    if not video_outpath:
+    if info_per_image[0].get("raw_suffix"):
+        if video_outpath:
+            raise ValueError("Impossible to write both raw and video in parallel")
+        writer = RawWriter(info_per_image[0]["raw_suffix"])
+    elif not video_outpath:
         writer = ImageSaver()
     else:
         ref_image = info_per_image[0]["img_orig"]

@@ -56,10 +56,10 @@ class FasterRCNNEval(Eval):
         for _i, (img_dets, image_id) in enumerate(zip(batch_dets, image_ids)):
             if self._last_image_id is None:
                 self._last_image_id = image_id
-            new_img_dets = self._faster_proposlas_nms._convert_resize_and_pad(img_dets, image_id)
+            new_img_dets = self._faster_proposlas_nms.convert_resize_and_pad(img_dets, image_id)
             new_dets.append(new_img_dets)
             if not self._last_image_id == image_id:
-                self._faster_proposlas_nms._finished_collect_proposals[self._last_image_id] = True
+                self._faster_proposlas_nms.finished_collect_proposals[self._last_image_id] = True
                 self._last_image_id = image_id
 
         net_output["detection_boxes"] = np.stack(new_dets)

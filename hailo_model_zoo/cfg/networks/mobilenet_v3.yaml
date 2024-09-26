@@ -10,7 +10,7 @@ paths:
 parser:
   nodes:
   - MobilenetEdgeTPU/input
-  - MobilenetEdgeTPU/Predictions/Softmax
+  - - MobilenetEdgeTPU/Predictions/Softmax
 info:
   task: classification
   input_shape: 224x224x3

@@ -1,3 +1,4 @@
+# ruff: noqa: SLF001 allow access to private member
 import numpy as np
 import tensorflow as tf
 from tensorflow.image import combined_non_max_suppression

@@ -10,7 +10,7 @@ paths:
 parser:
   nodes:
   - images
-  - efficientnet-lite1/model/head/dense/MatMul;efficientnet-lite1/model/head/dense/BiasAdd
+  - - efficientnet-lite1/model/head/dense/MatMul;efficientnet-lite1/model/head/dense/BiasAdd
 postprocessing:
   device_pre_post_layers:
     softmax: true

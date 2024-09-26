@@ -3,15 +3,15 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CURRENT_VERSION = "3.28.0"
+CUR_DFC_VERSION = "3.29.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
     dfc_version = version(package_name)
-    if dfc_version != CURRENT_VERSION:
+    if dfc_version != CUR_DFC_VERSION:
         print(
             f"Warning! The current version of the Dataflow Compiler is {dfc_version}.\n"
-            f"Current Hailo-Model-Zoo works best with DFC version {CURRENT_VERSION}. Please consider updating your DFC"
+            f"Current Hailo-Model-Zoo works best with DFC version {CUR_DFC_VERSION}. Please consider updating your DFC"
         )
 except PackageNotFoundError:
     raise PackageNotFoundError(
@@ -38,7 +38,7 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 
 def main():
     reqs = [
-        "Cython",
+        "numba",
         "imageio==2.9.0",
         "matplotlib",
         "numpy",
@@ -54,15 +54,16 @@ def main():
         "pillow<=9.2.0",
         "detection-tools==0.3",
         "scikit-image==0.19.3",
+        "nuscenes-devkit==1.1.10",
     ]
 
-    model_zoo_version = "2.12.0"
+    model_zoo_version = "2.13.0"
 
     package_data = {
         "hailo_model_zoo": [
             "cfg/base/*.yaml",
             "cfg/networks/*.yaml",
-            "cfg/alls/*/*/*.alls",
+            "cfg/alls/**/*.alls",
             "datasets/*",
             "cfg/multi-networks/*.yaml",
             "cfg/multi-networks/*.yaml",

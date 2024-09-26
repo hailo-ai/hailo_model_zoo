@@ -2,7 +2,6 @@ base:
 - base/base.yaml
 evaluation:
   dataset_name: hand_landmark
-  network_type: landmark_detection
 preprocessing:
   network_type: landmark_detection
   meta_arch: face_landmark_cnn

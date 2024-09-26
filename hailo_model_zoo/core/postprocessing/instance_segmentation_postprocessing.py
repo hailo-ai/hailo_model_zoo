@@ -1029,7 +1029,7 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
         protos = proto_data[b]
         masks = process_mask(protos, nms_res[b]["mask"], nms_res[b]["detection_boxes"], image_dims, upsample=True)
         output = {}
-        output["detection_boxes"] = np.array(nms_res[b]["detection_boxes"])
+        output["detection_boxes"] = np.array(nms_res[b]["detection_boxes"]) / np.tile(image_dims, 2)
         if masks is not None:
             output["mask"] = np.transpose(masks, (0, 1, 2))
         else:

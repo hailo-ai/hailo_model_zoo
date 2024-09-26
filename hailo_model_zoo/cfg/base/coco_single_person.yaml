@@ -5,7 +5,6 @@ evaluation:
   labels_offset: 0
   classes: 17
   data_set: models_files/coco/2022-06-28/coco_single_person_val2017.tfrecord
-  validation_data_set: models_files/coco/2022-06-28/coco_single_person_val2017.tfrecord
 quantization:
   calib_set:
   - models_files/coco/2022-06-28/coco_single_person_calib2017.tfrecord

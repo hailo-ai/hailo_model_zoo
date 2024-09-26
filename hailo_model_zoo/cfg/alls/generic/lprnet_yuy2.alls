@@ -4,3 +4,5 @@ yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 reshape_yuy2 = input_conversion(lprnet_yuy2/input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
 model_optimization_config(calibration, batch_size=4, calibset_size=64)
 pre_quantization_optimization(equalization, policy=disabled)
+
+allocator_param(automatic_ddr=disabled)

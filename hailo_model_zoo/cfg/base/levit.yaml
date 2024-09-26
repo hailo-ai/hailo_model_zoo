@@ -1,0 +1,14 @@
+base:
+- base/resnet.yaml
+preprocessing:
+  meta_arch: resnet_pruned
+info:
+  input_shape: 224x224x3
+  output_shape: '1000'
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)
+  source: https://github.com/facebookresearch/LeViT
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

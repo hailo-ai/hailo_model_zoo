@@ -1,5 +1,10 @@
 norm1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 
+context_switch_param(mode=enabled)
+allocator_param(enable_partial_row_buffers=disabled)
+
+resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=0.95, max_memory_utilization=0.8)
+
 model_optimization_config(calibration, batch_size=16, calibset_size=1024)
 model_optimization_config(globals, multiproc_policy=disabled)
 post_quantization_optimization(finetune, policy=enabled, batch_size=4)

@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Zero-shot Classification:
 
-Zero-shot Classification
 ------------------------
 
 CIFAR100
@@ -39,26 +38,26 @@ CIFAR100
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - clip_resnet_50
+     - Compiled    
+   * - clip_resnet_50   
      - 42.07
-     - 38.27
-     - 64
+     - 2.75
+     - 68
      - 193
      - 224x224x3
      - 38.72
      - 11.62
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/clip_resnet_50.hef>`_
-   * - clip_resnet_50x4
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/clip_resnet_50.hef>`_    
+   * - clip_resnet_50x4   
      - 50.31
-     - 47.69
-     - 26
-     - 55
+     - 2.41
+     - 25
+     - 60
      - 288x288x3
      - 87.0
      - 41.3
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/clip_resnet_50x4.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/clip_resnet_50x4.hef>`_

@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Facial Landmark Detection:
 
-Facial Landmark Detection
 -------------------------
 
 AFLW2k3d
@@ -39,10 +38,10 @@ AFLW2k3d
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - tddfa_mobilenet_v1  |star|
+     - Compiled       
+   * - tddfa_mobilenet_v1  |star| 
      - 3.68
-     - 3.38
+     - 7.72
      - 5170
      - 5170
      - 120x120x3
@@ -50,4 +49,4 @@ AFLW2k3d
      - 0.36
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tddfa_mobilenet_v1.zip>`_
      - `link <https://github.com/cleardusk/3DDFA_V2>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8l/tddfa_mobilenet_v1.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/tddfa_mobilenet_v1.hef>`_

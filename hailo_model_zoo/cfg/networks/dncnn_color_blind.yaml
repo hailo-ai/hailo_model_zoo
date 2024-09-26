@@ -18,8 +18,6 @@ preprocessing:
   meta_arch: dncnn3
 postprocessing:
   meta_arch: dncnn3
-evaluation:
-  network_type: image_denoising
 paths:
   alls_script: dncnn_color_blind.alls
   network_path:

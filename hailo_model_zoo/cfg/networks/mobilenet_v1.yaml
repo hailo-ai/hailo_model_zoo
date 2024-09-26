@@ -10,7 +10,7 @@ paths:
 parser:
   nodes:
   - input
-  - MobilenetV1/Predictions/Softmax
+  - - MobilenetV1/Predictions/Softmax
 info:
   task: classification
   input_shape: 224x224x3

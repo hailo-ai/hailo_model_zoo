@@ -285,12 +285,8 @@ To evaluate models on Hailo-8 / Hailo-10:
 
    hailomz eval <model_name> --target hardware
 
-<<<<<<< HEAD
-If multiple devices are available, it's possible to select a specific one
-=======
 If multiple devices are available, it's possible to select a specific one.
 Make sure to run on a device compatible to the compiled model.
->>>>>>> 7f4d38739cacbb969da4be9030f3e8d7f6f01672
 
 .. code-block::
 
@@ -327,11 +323,7 @@ To explore other options (for example: changing the default batch-size) use:
 
    hailomz eval --help
 
-<<<<<<< HEAD
-* MZ evaluation can be done on hailo8, hailo15, and hailo10h devices. The default device is hailo8.
-=======
 * Currently MZ evaluation can be done only on hailo8 and hailo10h.
->>>>>>> 7f4d38739cacbb969da4be9030f3e8d7f6f01672
 
 Visualization
 -------------

@@ -12,6 +12,7 @@ paths:
   - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/variables/variables.data-00000-of-00001
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet_mobilenet_v2.zip
 parser:
+  is_tf2_saved_model: true
   normalization_params:
     normalize_in_net: true
     std_list:
@@ -22,6 +23,9 @@ parser:
     - 0.0
     - 0.0
     - 0.0
+  nodes:
+  - input_2
+  - - Identity
 postprocessing:
   device_pre_post_layers:
     max_finder: false

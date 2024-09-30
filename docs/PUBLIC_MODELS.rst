@@ -1,3 +1,4 @@
+
 Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo devices.
 
 .. list-table::

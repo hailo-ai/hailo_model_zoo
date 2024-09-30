@@ -114,7 +114,7 @@ def convert_tf_record_to_bin_file(
     _logger.info("Initializing the runner...")
     runner = ClientRunner(hw_arch="hailo8")
     # Hack to filter out client_runner info logs
-    runner._logger.setLevel(logging.ERROR)
+    runner._logger.setLevel(logging.ERROR)  # noqa: SLF001 allow private member access
 
     _logger.info("Loading HEF file ...")
     try:

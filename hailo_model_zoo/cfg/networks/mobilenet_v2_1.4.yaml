@@ -10,7 +10,7 @@ paths:
 parser:
   nodes:
   - input
-  - MobilenetV2/Logits/Conv2d_1c_1x1/BiasAdd
+  - - MobilenetV2/Logits/Conv2d_1c_1x1/BiasAdd
 info:
   task: classification
   input_shape: 224x224x3

@@ -4,6 +4,5 @@ post_quantization_optimization(finetune, policy=disabled)
 quantization_param({*}, max_elementwise_feed_repeat=1)
 model_optimization_config(calibration, batch_size=2, calibset_size=64)
 
-# allocation params
 resources_param(max_utilization=0.9)
 allocator_param(enable_post_split_average_buffers=False)

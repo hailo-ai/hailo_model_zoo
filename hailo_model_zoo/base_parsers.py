@@ -163,6 +163,12 @@ def make_evaluation_base():
         help="Path to external tfrecord for evaluation. In case you use --visualize \
             you can give a directory of images in jpg or png format",
     ).complete = TFRECORD_COMPLETE
+    evaluation_base_parser.add_argument(
+        "--ap-per-class",
+        action="store_true",
+        dest="show_results_per_class",
+        help="Print AP results per class, relevant only for object detection and instance segmentation tasks",
+    )
     evaluation_base_parser.set_defaults(
         print_num_examples=1e9,
         visualize_results=False,

@@ -7,8 +7,10 @@ def _channel_remove(db, layer, mask, orig_shape, npz):
             db["layers"][layer]["output_shapes"][i] = [sh[0], sh[1], sh[2], int(sum(mask))]
     for i, sh in enumerate(db["layers"][layer]["input_shapes"]):
         if sh[3] == orig_shape:
-            db["layers"][layer]["input_shapes"][i] = [sh[0], sh[1], sh[2], int(sum(mask))]
             pred_layer = db["layers"][layer]["input"][i]
+            if db["layers"][layer]["type"] == "conv" and db["layers"][pred_layer]["type"] == "conv":
+                break
+            db["layers"][layer]["input_shapes"][i] = [sh[0], sh[1], sh[2], int(sum(mask))]
             _channel_remove(db, pred_layer, mask, orig_shape, npz)
     if "params" in db["layers"][layer].keys() and "kernel_shape" in db["layers"][layer]["params"]:
         for k, v in npz.items():
@@ -19,13 +21,8 @@ def _channel_remove(db, layer, mask, orig_shape, npz):
                 elif len(npz[k].shape) == 4:
                     # kernel
                     sh = db["layers"][layer]["params"]["kernel_shape"]
-                    if sh[2] == orig_shape:
-                        tmp = v[:, :, :, np.array(mask, bool)]
-                        npz[k] = tmp[:, :, np.array(mask, bool), :]
-                        db["layers"][layer]["params"]["kernel_shape"] = [sh[0], sh[1], int(sum(mask)), int(sum(mask))]
-                    else:
-                        npz[k] = v[:, :, :, np.array(mask, bool)]
-                        db["layers"][layer]["params"]["kernel_shape"] = [sh[0], sh[1], sh[2], int(sum(mask))]
+                    npz[k] = v[:, :, :, np.array(mask, bool)]
+                    db["layers"][layer]["params"]["kernel_shape"] = [sh[0], sh[1], sh[2], int(sum(mask))]
 
 
 def channel_remove(runner, remove_info):
@@ -41,8 +38,8 @@ def channel_remove(runner, remove_info):
     tmp_params = runner.get_params()
     num_of_anchors = remove_info["num_of_anchors"] if "num_of_anchors" in remove_info else None
     for idx, (layer, mask) in enumerate(zip(remove_info["layer_name"], remove_info["mask"])):
-        assert layer in db["layers"], "Layer does not exist in the HN"
-        assert db["layers"][layer]["type"] == "output_layer", "Chosen layer is not an output"
+        assert layer in db["layers"], f"Layer {layer} does not exist in the HN"
+        assert db["layers"][layer]["type"] == "output_layer", f"Chosen layer {layer} is not an output"
         sh = db["layers"][layer]["output_shapes"][0]
         mask_tile = list(mask) if num_of_anchors is None else list(np.tile(mask, [num_of_anchors[idx]]))
         if not sh[3] == 1:

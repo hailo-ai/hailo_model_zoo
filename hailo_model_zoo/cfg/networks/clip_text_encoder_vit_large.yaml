@@ -1,0 +1,29 @@
+base:
+- base/clip_text_encoder.yaml
+postprocessing:
+  postprocess_config_file: models_files/clip/vit_large/coco_10xtd/2024-08-25/openai-clip-vit-large-patch14.npz
+evaluation:
+  data_set: models_files/clip/vit_large/coco_10xtd/2024-08-25/coco_xtd10_en_clip_vit_large.tfrecord
+quantization:
+  calib_set:
+  - models_files/clip/vit_large/coco_10xtd/2024-08-25/coco_xtd10_en_clip_vit_large.tfrecord
+network:
+  network_name: clip_text_encoder_vit_large
+parser:
+  nodes:
+  - /embeddings/Add
+  - output
+paths:
+  alls_script: clip_text_encoder_vit_large.alls
+  network_path:
+  - models_files/clip/vit_large/2024-08-25/clip_text_encoder_vit_large.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vit_large/2024-08-25/clip_text_encoder_vit_large.zip
+info:
+  input_shape: 1x77x768
+  output_shape: 1x77x768
+  operations: 13.85G
+  parameters: 59.1M
+  framework: pytorch
+  full_precision_result: 91.8
+  source: https://huggingface.co/openai/clip-vit-large-patch14
+  license_url: https://github.com/openai/CLIP/blob/main/LICENSE

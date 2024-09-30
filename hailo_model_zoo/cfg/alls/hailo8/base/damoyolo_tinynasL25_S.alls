@@ -1,0 +1,10 @@
+post_quantization_optimization(finetune, policy=disabled)
+model_optimization_flavor(compression_level=1)
+
+allocator_param(max_auto_merge_depth=3, merge_min_layer_utilization=0)
+resources_param(max_utilization=0.975, max_compute_utilization=0.975, max_compute_16bit_utilization=0.975, max_memory_utilization=0.90, max_input_aligner_utilization=0.975, max_apu_utilization=0.975)
+damoyolo_tinynasL25_S = network_group([damoyolo_tinynasL25_S])
+
+place(2, [concat6, conv2, conv4, conv5, conv61, conv81, conv83])
+place(3, [concat11, conv57, conv59, conv60, conv73, conv74, ew_add21, ew_add22, ew_add23])
+place(4, [concat1, conv28, conv70, conv71, conv72, maxpool2, resize2])

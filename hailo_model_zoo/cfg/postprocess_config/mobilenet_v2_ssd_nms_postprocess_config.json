@@ -21,8 +21,8 @@
         0.282842712474619,
         0.1414213562373095
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv28",
-      "cls_layer": "ssd_mobilenet_v2/conv29"
+      "reg_layer": "conv28",
+      "cls_layer": "conv29"
     },
     {
       "name": "bbox_decoder39",
@@ -42,8 +42,8 @@
         0.20206249033405482,
         0.4183300132670378
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv39",
-      "cls_layer": "ssd_mobilenet_v2/conv40"
+      "reg_layer": "conv39",
+      "cls_layer": "conv40"
     },
     {
       "name": "bbox_decoder43",
@@ -63,8 +63,8 @@
         0.2886607004772212,
         0.570087712549569
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv43",
-      "cls_layer": "ssd_mobilenet_v2/conv44"
+      "reg_layer": "conv43",
+      "cls_layer": "conv44"
     },
     {
       "name": "bbox_decoder47",
@@ -84,8 +84,8 @@
         0.3752589106203876,
         0.7211102550927979
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv47",
-      "cls_layer": "ssd_mobilenet_v2/conv48"
+      "reg_layer": "conv47",
+      "cls_layer": "conv48"
     },
     {
       "name": "bbox_decoder51",
@@ -105,8 +105,8 @@
         0.46185712076355395,
         0.8717797887081347
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv51",
-      "cls_layer": "ssd_mobilenet_v2/conv52"
+      "reg_layer": "conv51",
+      "cls_layer": "conv52"
     },
     {
       "name": "bbox_decoder54",
@@ -126,8 +126,8 @@
         0.5484553309067203,
         0.9746794344808963
       ],
-      "reg_layer": "ssd_mobilenet_v2/conv54",
-      "cls_layer": "ssd_mobilenet_v2/conv55"
+      "reg_layer": "conv54",
+      "cls_layer": "conv55"
     }
   ]
 }

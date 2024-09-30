@@ -400,6 +400,7 @@ def evaluate(args):
             dump_results=False,
             input_conversion_args=args.input_conversion,
             resize_args=args.resize,
+            show_results_per_class=args.show_results_per_class,
         )
 
 

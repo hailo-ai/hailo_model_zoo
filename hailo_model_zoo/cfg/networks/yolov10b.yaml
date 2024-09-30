@@ -1,0 +1,36 @@
+base:
+- base/yolov10.yaml
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  hpp: true
+network:
+  network_name: yolov10b
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov10b/pretrained/2024-07-02/yolov10b.onnx
+  alls_script: yolov10b.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov10b/pretrained/2024-07-02/yolov10b.zip
+parser:
+  nodes:
+  - null
+  - - /model.23/one2one_cv2.0/one2one_cv2.0.2/Conv
+    - /model.23/one2one_cv3.0/one2one_cv3.0.2/Conv
+    - /model.23/one2one_cv2.1/one2one_cv2.1.2/Conv
+    - /model.23/one2one_cv3.1/one2one_cv3.1.2/Conv
+    - /model.23/one2one_cv2.2/one2one_cv2.2.2/Conv
+    - /model.23/one2one_cv3.2/one2one_cv3.2.2/Conv
+info:
+  task: object detection
+  input_shape: 640x640x3
+  output_shape: 80x5x100
+  operations: 92.09G
+  parameters: 20.15M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 52.0
+  source: https://github.com/THU-MIG/yolov10
+  license_url: https://github.com/THU-MIG/yolov10/blob/main/LICENSE
+  license_name: AGPL-3.0

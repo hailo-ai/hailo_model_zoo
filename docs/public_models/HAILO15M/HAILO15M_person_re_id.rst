@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Person Re-ID:
 
-Person Re-ID
 ------------
 
 Market1501
@@ -39,26 +38,26 @@ Market1501
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - osnet_x1_0
+     - Compiled    
+   * - osnet_x1_0   
      - 94.43
-     - 93.73
-     - 113
-     - 320
+     - 0.76
+     - 0
+     - 119
      - 256x128x3
      - 2.19
      - 1.98
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/osnet_x1_0.hef>`_
-   * - repvgg_a0_person_reid_512  |star|
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/osnet_x1_0.hef>`_     
+   * - repvgg_a0_person_reid_512  |star| 
      - 89.9
-     - 89.5
-     - 2632
-     - 2632
+     - 0.37
+     - 0
+     - 2630
      - 256x128x3
      - 7.68
      - 1.78
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/repvgg_a0_person_reid_512.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/repvgg_a0_person_reid_512.hef>`_

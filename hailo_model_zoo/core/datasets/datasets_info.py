@@ -245,6 +245,21 @@ CLASS_NAMES_D2S_FRUITS = (
 
 D2S_FRUITS_LABEL_MAP = {i + 1: i + 1 for i in range(len(CLASS_NAMES_D2S_FRUITS))}
 
+CLASS_NAMES_NUSCENES = (
+    "car",
+    "truck",
+    "construction_vehicle",
+    "bus",
+    "trailer",
+    "barrier",
+    "motorcycle",
+    "bicycle",
+    "pedestrian",
+    "traffic_cone",
+)
+
+NUSCENES_LABEL_MAP = {i: i for i in range(len(CLASS_NAMES_NUSCENES))}
+
 
 class DatasetInfo(object):
     def __init__(self, class_names, label_map):
@@ -264,12 +279,14 @@ class BasicDatasetsEnum(Enum):
     COCO = "coco_detection"
     D2S = "d2s_detection"
     D2S_FRUITS = "d2s_fruits_detection"
+    NUSCENES = "nuscenes"
 
 
 DATASETS_INFO = {
     BasicDatasetsEnum.COCO.value: DatasetInfo(class_names=CLASS_NAMES_COCO, label_map=COCO_LABEL_MAP),
     BasicDatasetsEnum.D2S.value: DatasetInfo(class_names=CLASS_NAMES_D2S, label_map=D2S_LABEL_MAP),
     BasicDatasetsEnum.D2S_FRUITS.value: DatasetInfo(class_names=CLASS_NAMES_D2S_FRUITS, label_map=D2S_FRUITS_LABEL_MAP),
+    BasicDatasetsEnum.NUSCENES.value: DatasetInfo(class_names=CLASS_NAMES_NUSCENES, label_map=NUSCENES_LABEL_MAP),
 }
 
 

@@ -32,5 +32,5 @@ info:
   eval_metric: mAP
   full_precision_result: 52.8
   source: https://github.com/WongKinYiu/yolov9
-  license_url: https://github.com/WongKinYiu/yolov7/blob/main/LICENSE.md
+  license_url: https://github.com/WongKinYiu/yolov9/blob/main/LICENSE.md
   license_name: GPL-3.0

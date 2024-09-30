@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Depth Estimation:
 
-Depth Estimation
 ----------------
 
 NYU
@@ -39,26 +38,26 @@ NYU
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - fast_depth  |star|
+     - Compiled       
+   * - fast_depth  |star| 
      - 0.6
-     - 0.62
-     - 321
-     - 715
+     - 1.21
+     - 0
+     - 350
      - 224x224x3
      - 1.35
      - 0.74
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_
      - `link <https://github.com/dwofk/fast-depth>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/fast_depth.hef>`_
-   * - scdepthv3
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/fast_depth.hef>`_      
+   * - scdepthv3   
      - 0.48
-     - 0.51
-     - 153
-     - 275
+     - 0.96
+     - 0
+     - 158
      - 256x320x3
      - 14.8
      - 10.7
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_
      - `link <https://github.com/JiawangBian/sc_depth_pl/>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo15m/scdepthv3.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/scdepthv3.hef>`_

@@ -4,8 +4,6 @@ preprocessing:
   network_type: super_resolution
 postprocessing:
   meta_arch: espcn
-evaluation:
-  network_type: super_resolution
 inference:
   full_precision_batch_size: 1
   emulator_batch_size: 1

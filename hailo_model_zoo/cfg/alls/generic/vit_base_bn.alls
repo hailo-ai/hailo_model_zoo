@@ -1,9 +1,13 @@
+allocator_param(disable_row_per_cut=True, enable_post_split_average_buffers=False)
+conv49_d0, conv49_d1, conv49_d2, conv49_d3, conv49_dc = defuse(conv49, 4)
+norm_layer1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+
 # model_optimization_config commands
 model_optimization_config(calibration, batch_size=16, calibset_size=64)
 post_quantization_optimization(finetune, policy=enabled, batch_size=4, warmup_epochs=0, learning_rate=0.00005)
 pre_quantization_optimization(equalization, policy=enabled)
 model_optimization_flavor(optimization_level=2, compression_level=0)
-normalization0 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+pre_quantization_optimization(matmul_equalization,layers={matmul*}, policy=disabled)
 
 pre_quantization_optimization(activation_clipping, layers=[conv49], mode=percentile, clipping_values=[0.01, 99.9])
 pre_quantization_optimization(activation_clipping, layers=[conv47], mode=percentile, clipping_values=[0.01, 99.5])

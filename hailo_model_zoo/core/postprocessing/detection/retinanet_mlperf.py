@@ -186,7 +186,9 @@ class retinanet_postproc(object):
         with tf.name_scope("Postprocessor"):
             # Collect all output branches into Boxes/classes objects
             box_predictions, classes_predictions = collect_box_class_predictions(
-                endnodes, self._num_classes, self._anchors._type
+                endnodes,
+                self._num_classes,
+                self._anchors._type,  # noqa: SLF001 allow private member access
             )
             image_boxes = []
             image_scores = []

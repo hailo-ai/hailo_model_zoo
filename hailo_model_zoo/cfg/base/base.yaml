@@ -2,8 +2,7 @@ inference:
   full_precision_batch_size: 8
   emulator_batch_size: 8
 quantization:
-  calib_set_name: null
-  calib_batch_size: null
+  calib_set_name: ${evaluation.dataset_name}
 hn_editor:
   yuv2rgb: false
   yuy2: false
@@ -24,7 +23,6 @@ hn_editor:
     split_output: false
 paths:
   alls_script: null
-  hailo_archive_path: null
 preprocessing:
   meta_arch: null
   centered: true
@@ -73,12 +71,13 @@ postprocessing:
   postprocess_config_file: null
 evaluation:
   data_set: null
+  validation_data_set: ${evaluation.data_set}
   labels_offset: 0
   limit_num_images: 1000000000.0
   infer_type: model_infer
   classes: 1
   two_stage_arch: false
-  network_type: null
+  network_type: ${preprocessing.network_type}
   gt_json_path: null
   labels_map: null
   meta_arch: null

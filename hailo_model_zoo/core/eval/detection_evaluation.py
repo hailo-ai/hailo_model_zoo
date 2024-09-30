@@ -1,11 +1,13 @@
 from collections import OrderedDict
 
 import numpy as np
+from prettytable import PrettyTable
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.factory import EVAL_FACTORY
+from hailo_model_zoo.core.postprocessing.detection_postprocessing import _get_labels
 
 
 @EVAL_FACTORY.register(name="detection")
@@ -36,13 +38,17 @@ class DetectionEval(Eval):
         ]
         self._metrics_vals = [0, 0]
         self._centered = kwargs["centered"]
+        self.labels_offset = kwargs["labels_offset"]
         self._channels_remove = kwargs["channels_remove"] if kwargs["channels_remove"]["enabled"] else None
         if self._channels_remove:
             self._cls_mapping, self._filtered_classes = self._create_class_mapping()
+        self.show_results_per_class = kwargs["show_results_per_class"]
+        self.dataset_name = kwargs["dataset_name"]
+        self.mask = kwargs["channels_remove"].get("mask")
         self.reset()
 
     def _create_class_mapping(self):
-        mask_list = list(np.where(np.array(self._channels_remove["mask"][0]) == 0)[0])
+        mask_list = list(np.where(np.array(self._channels_remove["mask"][0]) == 0)[0] + self.labels_offset)
         num_classes = len(self._channels_remove["mask"][0])
         cls_mapping = {}
         idx = 0
@@ -220,6 +226,26 @@ class DetectionEval(Eval):
 
         return 0
 
+    def _print_per_class(self, coco_eval):
+        if self.mask:
+            coco_eval.params.catIds = [
+                self._cls_mapping[id] for id in coco_eval.params.catIds if id in list(self._cls_mapping.keys())
+            ]
+        s = coco_eval.eval["precision"][
+            ..., coco_eval.params.areaRngLbl.index("all"), coco_eval.params.maxDets.index(100)
+        ]
+        table = PrettyTable()
+        table.field_names = ["Class Name", "Average Precision (AP)"]
+        ap_values = np.mean(s, axis=(0, 1))
+        labels = _get_labels(self.dataset_name)
+
+        class_names = [
+            labels[k]["name"] for k in coco_eval.params.catIds if k - self.labels_offset in np.where(ap_values > -1)[0]
+        ]
+        for class_name, ap in zip(class_names, ap_values[ap_values > -1]):
+            table.add_row([class_name, f"{ap:.2f}"])
+        print(table)
+
     def evaluate(self):
         """Evaluates with detections from all images in our data set with COCO API.
 
@@ -236,6 +262,8 @@ class DetectionEval(Eval):
         coco_eval.evaluate()
         coco_eval.accumulate()
         coco_eval.summarize()
+        if self.show_results_per_class:
+            self._print_per_class(coco_eval)
         self._metrics_vals = np.array(coco_eval.stats, dtype=np.float32)
 
     def _get_accuracy(self):

@@ -3,6 +3,8 @@ from pathlib import Path
 
 from omegaconf.listconfig import ListConfig
 
+from hailo_sdk_client.exposed_definitions import States
+
 from hailo_model_zoo.core.augmentations import make_model_callback
 from hailo_model_zoo.core.eval import eval_factory
 from hailo_model_zoo.core.hn_editor.activations_changer import change_activations
@@ -22,7 +24,7 @@ unsupported_data_folder = {"stereonet"}
 
 
 def _get_input_shape(runner):
-    return runner.get_native_hn_model().get_input_shapes(ignore_conversion=True)[0][1:3]
+    return runner.get_native_hn_model().get_input_shapes(ignore_conversion=True)[0][1:4]
 
 
 def _get_output_shapes(runner):
@@ -170,7 +172,7 @@ def make_preprocessing(runner, network_info, input_conversion_args=None, resize_
     )
     normalize_in_net, mean_list, std_list = get_normalization_params(network_info)
     normalization_params = [mean_list, std_list] if not normalize_in_net else None
-    height, width = _get_input_shape(runner)
+    height, width, channels = _get_input_shape(runner)
     flip = runner.get_hn_model().is_transposed()
     preproc_callback = preprocessing_factory.get_preprocessing(
         meta_arch,
@@ -185,6 +187,7 @@ def make_preprocessing(runner, network_info, input_conversion_args=None, resize_
         normalization_params=normalization_params,
         output_shapes=_get_output_shapes(runner),
         network_name=network_info.network.network_name,
+        channels=channels,
         **preprocessing_args,
     )
 
@@ -234,7 +237,7 @@ def make_evalset_callback(network_info, preproc_callback, override_path, return_
 
 
 def make_calibset_callback(network_info, preproc_callback, override_path):
-    dataset_name = network_info.quantization.calib_set_name or network_info.evaluation.dataset_name
+    dataset_name = network_info.quantization.calib_set_name
     if override_path is None and network_info.quantization.calib_set is None:
         raise ValueError("Optimization requires calibration data, please modify YAML or use --calib-path")
     calib_path = override_path or path_resolver.resolve_data_path(network_info.quantization.calib_set[0])
@@ -283,6 +286,8 @@ def prepare_calibration_data(runner, network_info, calib_path, logger, input_con
 
 def optimize_full_precision_model(runner, calib_feed_callback, logger, model_script, resize, input_conversion, classes):
     runner.load_model_script(model_script)
+    if runner.state != States.HAILO_MODEL:
+        return
     if classes is not None:
         _handle_classes_argument(runner, logger, classes)
     input_layers = runner.get_hn_model().get_input_layers()
@@ -349,7 +354,7 @@ def make_visualize_callback(network_info):
 
 
 def _gather_postprocessing_dictionary(runner, network_info):
-    height, width = _get_input_shape(runner)
+    height, width, _ = _get_input_shape(runner)
     postproc_info = {"img_dims": (height, width)}
     postproc_info.update(network_info.hn_editor)
     postproc_info.update(network_info.evaluation)
@@ -380,13 +385,19 @@ def get_postprocessing_callback(runner, network_info):
     return postprocessing_callback
 
 
-def make_eval_callback(network_info, runner):
-    network_type = network_info.evaluation.network_type or network_info.preprocessing.network_type
+def make_eval_callback(network_info, runner, show_results_per_class, logger):
+    network_type = network_info.evaluation.network_type
+    if show_results_per_class and network_type not in ["detection", "instance_segmentation"]:
+        logger.info(
+            "print-AP-per-class flag is available only for object detection or "
+            "instance segmentation tasks, ignoring flag"
+        )
+        show_results_per_class = False
     net_name = network_info.network.network_name
     gt_json_path = network_info.evaluation.gt_json_path
     meta_arch = network_info.evaluation.meta_arch
     gt_json_path = path_resolver.resolve_data_path(gt_json_path) if gt_json_path else None
-    input_shape = _get_input_shape(runner)
+    input_shape = _get_input_shape(runner)[:2]
     eval_args = {
         "net_name": net_name,
         "network_type": network_type,
@@ -404,6 +415,7 @@ def make_eval_callback(network_info, runner):
         "input_shape": input_shape,
         "meta_arch": meta_arch,
         "mask_thresh": network_info.postprocessing.mask_threshold,
+        "show_results_per_class": show_results_per_class,
     }
 
     evaluation_constructor = eval_factory.get_evaluation(network_type)
@@ -453,6 +465,7 @@ def infer_model_tf2(
     dump_results=False,
     input_conversion_args=None,
     resize_args=None,
+    show_results_per_class=False,
 ):
     logger.info("Initializing the dataset ...")
     if eval_num_examples:
@@ -462,7 +475,7 @@ def infer_model_tf2(
     dataset = make_evalset_callback(network_info, preproc_callback, data_path)
     # TODO refactor
     postprocessing_callback = get_postprocessing_callback(runner, network_info)
-    eval_callback = make_eval_callback(network_info, runner)
+    eval_callback = make_eval_callback(network_info, runner, show_results_per_class, logger)
     visualize_callback = make_visualize_callback(network_info) if visualize_results else None
 
     model_wrapper_callback = make_model_callback(network_info)
@@ -498,6 +511,7 @@ def infer_model_tf1(
     video_outpath=None,
     dump_results=False,
     network_groups=None,
+    show_results_per_class=False,
 ):
     logger.info("Initializing the dataset ...")
     if eval_num_examples:
@@ -519,7 +533,7 @@ def infer_model_tf1(
         return sdk_export
 
     postprocessing_callback = get_postprocessing_callback(runner, network_info)
-    eval_callback = make_eval_callback(network_info, runner)
+    eval_callback = make_eval_callback(network_info, runner, show_results_per_class, logger)
     visualize_callback = make_visualize_callback(network_info) if visualize_results else None
 
     infer_type = network_info.evaluation.infer_type
@@ -551,6 +565,7 @@ def compile_model(runner, network_info, results_dir, allocator_script_filename, 
     model_name = network_info.network.network_name
     model_script_parent = None
     if allocator_script_filename is not None:
+        allocator_script_filename = Path(allocator_script_filename)
         runner.load_model_script(allocator_script_filename)
         model_script_parent = allocator_script_filename.parent.name
     if performance:

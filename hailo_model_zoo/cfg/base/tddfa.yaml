@@ -27,5 +27,4 @@ parser:
 evaluation:
   dataset_name: aflw2k3d_tddfa
   data_set: models_files/aflw2k3d_tddfa/2021-03-16/aflw2k3d_tddfa.tfrecord
-  validation_data_set: models_files/aflw2k3d_tddfa/2021-03-16/aflw2k3d_tddfa.tfrecord
   gt_json_path: models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tri.pkl

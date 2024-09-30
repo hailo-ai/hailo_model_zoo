@@ -1,6 +1,8 @@
 import tensorflow as tf
 from tqdm import tqdm
 
+from hailo_sdk_client import InferenceContext
+
 from hailo_model_zoo.core.factory import INFER_FACTORY
 from hailo_model_zoo.core.infer.infer_utils import aggregate, log_accuracy, to_numpy, visualize, write_results
 
@@ -30,14 +32,22 @@ def model_infer(
     if eval_num_examples:
         dataset = dataset.take(eval_num_examples)
     batched_dataset = dataset.batch(batch_size)
+
     logger.info("Running inference...")
     with context as ctx, tqdm(
         total=None, desc="Processed", unit="images", disable=None if not print_num_examples < 1 else True
     ) as pbar:
         model = runner.get_keras_model(ctx)
+        is_jit_compile_supported = model.is_jit_compile_supported(training=False)
         model = model_augmentation_callback(model)
 
-        @tf.function()
+        jit_compile = is_jit_compile_supported and ctx.infer_context in [
+            InferenceContext.SDK_QUANTIZED,
+            InferenceContext.SDK_NATIVE,
+            InferenceContext.SDK_FP_OPTIMIZED,
+        ]
+
+        @tf.function(jit_compile=jit_compile, reduce_retracing=True)
         def predict_function(data):
             return model(data, training=False)
 

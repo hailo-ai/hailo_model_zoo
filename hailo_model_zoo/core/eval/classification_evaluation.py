@@ -8,6 +8,7 @@ from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 @EVAL_FACTORY.register(name="zero_shot_classification")
 @EVAL_FACTORY.register(name="classification")
+@EVAL_FACTORY.register(name="video_classification")
 class ClassificationEval(Eval):
     def __init__(self, **kwargs):
         self._metric_names = ["top1", "top5"]

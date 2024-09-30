@@ -1,0 +1,51 @@
+base:
+- base/base.yaml
+network:
+  network_name: petrv2_repvggB0_transformer_pp_800x320
+paths:
+  alls_script: petrv2_repvggB0_transformer_pp_800x320.alls
+  network_path:
+  - models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip
+parser:
+  nodes:
+  - null
+  - - Concat_4964
+    - Add_4920
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0
+    std_list:
+    - 1
+quantization:
+  calib_set:
+  - models_files/nuscenes/2024-09-17/nuscenes_calib.tfrecord
+preprocessing:
+  meta_arch: petrv2_transformer
+  network_type: object_detection_3d
+postprocessing:
+  postprocess_config_file: models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-08-13/reference_points.npy
+evaluation:
+  dataset_name: nuscenes
+  data_set: models_files/nuscenes/2024-09-17/nuscenes_val.tfrecord
+  validation_data_set: models_files/nuscenes/2024-09-17/nuscenes_val.tfrecord
+  gt_json_path: models_files/nuscenes/2024-08-21/
+  classes: 10
+inference:
+  full_precision_batch_size: 1
+  emulator_batch_size: 1
+info:
+  task: object detection 3D
+  input_shape: 12x250x1280, 12x250x256
+  output_shape: 1x304x10, 1x304x10
+  operations: 11.7G
+  parameters: 6.7M
+  framework: pytorch
+  training_data: nuScenes train
+  validation_data: nuScenes val
+  eval_metric: mAP
+  full_precision_result: 25.87
+  source: https://github.com/megvii-research/petr
+  license_url: https://github.com/megvii-research/PETR/blob/main/LICENSE
+  license_name: Apache-2.0

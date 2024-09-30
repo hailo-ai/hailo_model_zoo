@@ -27,7 +27,6 @@ parser:
     - 57.12
     - 57.375
 evaluation:
-  network_type: single_person_pose_estimation
   infer_type: np_infer
 info:
   task: single person pose estimation

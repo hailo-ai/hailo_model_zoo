@@ -4,7 +4,6 @@ evaluation:
   classes: 35
   dataset_name: peta
   data_set: models_files/peta/2022-06-09/peta_val.tfrecord
-  validation_data_set: models_files/peta/2022-06-09/peta_val.tfrecord
 quantization:
   calib_set:
   - models_files/peta/2022-06-09/peta_train.tfrecord

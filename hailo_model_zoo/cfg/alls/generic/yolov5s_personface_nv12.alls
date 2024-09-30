@@ -1,5 +1,7 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(sigmoid)
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=4, dataset_size=4000, loss_factors=[1.0, 1.0, 1.0], loss_types=[l2rel, l2rel, l2rel], loss_layer_names=[conv70, conv63, conv55])
-reshape, yuv_to_rgb1 = input_conversion(input_layer1, nv12_to_rgb, emulator_support = True)
+yuv_to_rgb1 = input_conversion(yuv_to_rgb)
+nv_format_conversion = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support = True)
 nms_postprocess("../../postprocess_config/yolov5s_personface.json", yolov5, engine=cpu)
+allocator_param(timeout=1000, cluster_timeout=1000, automatic_ddr=disabled)

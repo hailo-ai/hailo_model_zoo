@@ -7,7 +7,6 @@ postprocessing:
   anchors:
     predefined: true
 evaluation:
-  validation_data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord
   labels_offset: 1
   classes: 80
   data_set: models_files/coco/2021-06-18/coco_val2017.tfrecord

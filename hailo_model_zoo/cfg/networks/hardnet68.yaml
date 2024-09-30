@@ -5,7 +5,7 @@ network:
 paths:
   alls_script: hardnet68.alls
   network_path:
-  - models_files/hardnet68/2021-07-20/hardnet68.onnx
+  - models_files/hardnet68/2022-07-07/hardnet68.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/hardnet68/pretrained/2021-07-20/hardnet68.zip
 parser:
   nodes:

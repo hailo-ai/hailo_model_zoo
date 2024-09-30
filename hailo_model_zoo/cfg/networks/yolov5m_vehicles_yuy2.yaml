@@ -33,7 +33,6 @@ evaluation:
   classes: 1
   dataset_name: vehicle_detection
   data_set: null
-  validation_data_set: null
 info:
   task: pipeline
   input_shape: 1080x1920x2

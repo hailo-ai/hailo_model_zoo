@@ -13,13 +13,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.28.0
+* All models were compiled using Hailo Dataflow Compiler v3.29.0
 
 
 
 .. _Face Attribute:
 
-Face Attribute
 --------------
 
 CELEBA
@@ -39,10 +38,10 @@ CELEBA
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled
-   * - face_attr_resnet_v1_18
+     - Compiled    
+   * - face_attr_resnet_v1_18   
      - 81.19
-     - 80.99
+     - 0.35
      - 2928
      - 2928
      - 218x178x3
@@ -50,4 +49,4 @@ CELEBA
      - 3
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_
      - `link <https://github.com/d-li14/face-attribute-prediction>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.12.0/hailo8/face_attr_resnet_v1_18.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/face_attr_resnet_v1_18.hef>`_

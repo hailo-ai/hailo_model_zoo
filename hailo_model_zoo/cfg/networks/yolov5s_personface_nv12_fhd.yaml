@@ -22,7 +22,6 @@ evaluation:
   classes: 2
   dataset_name: personface_detection
   data_set: null
-  validation_data_set: null
 hn_editor:
   yuv2rgb: true
   nv12: true

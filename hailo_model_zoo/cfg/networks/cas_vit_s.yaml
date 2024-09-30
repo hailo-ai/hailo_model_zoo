@@ -1,0 +1,14 @@
+base:
+- base/cas_vit.yaml
+network:
+  network_name: cas_vit_s
+paths:
+  network_path:
+  - models_files/Classification/cas_vit_s/pretrained/2024-08-13/cas_vit_s.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/cas_vit_s/pretrained/2024-08-13/cas_vit_s.zip
+  alls_script: cas_vit_s.alls
+info:
+  input_shape: 384x384x3
+  operations: 5.4G
+  parameters: 5.5M
+  full_precision_result: 79.93

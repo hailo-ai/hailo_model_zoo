@@ -4,7 +4,7 @@ network:
   network_name: hardnet39ds
 paths:
   network_path:
-  - models_files/hardnet39ds/2021-07-20/hardnet39ds.onnx
+  - models_files/hardnet39ds/2021-09-26/hardnet39ds.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/hardnet39ds/pretrained/2021-07-20/hardnet39ds.zip
   alls_script: hardnet39ds.alls
 parser:

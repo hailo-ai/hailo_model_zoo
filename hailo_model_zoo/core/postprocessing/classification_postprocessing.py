@@ -30,6 +30,7 @@ def softmax(logits):
 
 @POSTPROCESS_FACTORY.register(name="person_attr")
 @POSTPROCESS_FACTORY.register(name="classification")
+@POSTPROCESS_FACTORY.register(name="video_classification")
 def classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     if device_pre_post_layers is not None and device_pre_post_layers["softmax"]:
         probs = endnodes
@@ -53,6 +54,12 @@ def _get_peta_labels():
     peta_names = json.load(open(os.path.join(os.path.dirname(__file__), "peta_names.json")))
     peta_names = [peta_names[str(i)] for i in range(35)]
     return peta_names
+
+
+def _get_kinetics400_labels():
+    imagenet_names = json.load(open(os.path.join(os.path.dirname(__file__), "kinetics400_names.json")))
+    imagenet_names = [imagenet_names[str(i)] for i in range(400)]
+    return imagenet_names[0:]
 
 
 @VISUALIZATION_FACTORY.register(name="classification")
@@ -90,6 +97,22 @@ def visualize_multi_classification_result(logits, img, **kwargs):
         label, _ = match
         draw.text(text_position, label, fill="blue")
         text_position = (text_position[0], text_position[1] + 10)
+    return np.array(img_orig, np.uint8)
+
+
+@VISUALIZATION_FACTORY.register(name="video_classification")
+def visualize_kinetics400_classification_result(logits, img, **kwargs):
+    logits = logits["predictions"]
+    if len(logits.shape) == 4:
+        logits = logits.squeeze((1, 2))
+    labels_offset = kwargs.get("labels_offset", 0)
+    top1 = np.argmax(logits, axis=1)
+    conf = np.squeeze(logits[0, top1])
+    kinetics400_labels = _get_kinetics400_labels()
+    img_orig = Image.fromarray(img[0])
+    ImageDraw.Draw(img_orig).text(
+        (0, 0), "{} ({:.2f})".format(kinetics400_labels[int(top1[0] - labels_offset)], conf), (255, 0, 0)
+    )
     return np.array(img_orig, np.uint8)
 
 

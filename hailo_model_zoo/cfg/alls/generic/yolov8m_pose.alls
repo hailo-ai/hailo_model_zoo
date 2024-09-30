@@ -5,4 +5,6 @@ change_output_activation(conv60, sigmoid)
 quantization_param(output_layer3, precision_mode=a16_w16)
 quantization_param(output_layer6, precision_mode=a16_w16)
 quantization_param(output_layer9, precision_mode=a16_w16)
-post_quantization_optimization(finetune, policy=enabled, epochs=10, learning_rate=0.00015, loss_layer_names=[output_layer1, output_layer2, output_layer3, output_layer4, output_layer5, output_layer6, output_layer7, output_layer8, output_layer9, conv83, conv67, conv51, conv89, conv72, conv58], loss_factors=[1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 2, 2, 1, 1, 1])
+post_quantization_optimization(finetune, policy=enabled, epochs=10, learning_rate=0.00015,
+loss_layer_names=[output_layer1, output_layer2, output_layer3, output_layer4, output_layer5, output_layer6, output_layer7, output_layer8, output_layer9, conv83, conv67, conv51, conv89, conv72 , conv58],
+loss_factors= [1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 2, 2, 1, 1, 1])

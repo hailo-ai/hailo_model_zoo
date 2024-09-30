@@ -68,6 +68,21 @@ Once optimization is finished and met our accuracy requirements, we can compile 
 Citations
 ---------
 
+
+.. _Finkelstein2022:
+
+Finkelstein2022
+^^^^^^^^^^^^^^^
+
+.. code-block::
+
+   @InProceedings{Finkelstein2022,
+     title = {QFT: Post-training quantization via fast joint finetuning of all degrees of freedom},
+     author = {Alex Finkelstein and Ella Fuchs and Idan Tal and Mark Grobman and Niv Vosco and Eldad Meller},
+     booktitle = {ECCV},
+     year = {2022}
+   }
+
 .. _Vosco2021:
 
 Vosco2021

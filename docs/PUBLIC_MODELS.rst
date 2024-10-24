@@ -131,3 +131,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15H/HAILO15H_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO15M/HAILO15M_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO10/HAILO10_zero_shot_instance_segmentation.rst>`_
+   * - Text Image Retrieval
+     - `Link <public_models/HAILO8/HAILO8_text_image_retrieval.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_text_image_retrieval.rst>`_
+     - `Link <public_models/HAILO15H/HAILO15H_text_image_retrieval.rst>`_
+     - `Link <public_models/HAILO15M/HAILO15M_text_image_retrieval.rst>`_
+     - `Link <public_models/HAILO10/HAILO10_text_image_retrieval.rst>`_

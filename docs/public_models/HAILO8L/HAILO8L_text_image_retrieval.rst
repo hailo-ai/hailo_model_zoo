@@ -47,7 +47,7 @@ ImageNet
      - 1x77x640
      - 59.1
      - 9.3
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/resnet_50x4/2024-09-16/clip_text_encoder_resnet50x4.zip>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/resnet_50x4/2024-08-25/clip_text_encoder_resnet50x4.zip>`_
      - `link <https://huggingface.co/timm/resnet50x4_clip.openai>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/clip_text_encoder_resnet50x4.hef>`_    
    * - clip_text_encoder_vit_large   

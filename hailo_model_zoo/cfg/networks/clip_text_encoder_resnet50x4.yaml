@@ -12,7 +12,7 @@ network:
 paths:
   network_path:
   - models_files/clip/resnet_50x4/2024-09-16/clip_text_encoder_resnet50x4.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/resnet_50x4/2024-09-16/clip_text_encoder_resnet50x4.zip
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/resnet_50x4/2024-08-25/clip_text_encoder_resnet50x4.zip
   alls_script: clip_text_encoder_resnet50x4.alls
 parser:
   nodes:

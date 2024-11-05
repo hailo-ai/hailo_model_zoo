@@ -3,7 +3,7 @@ import copy
 import motmetrics as mm
 import numpy as np
 
-mm.lap.default_solver = "lap"
+mm.lap.default_solver = "scipy.optimize"
 
 
 class Evaluator(object):
@@ -22,7 +22,7 @@ class Evaluator(object):
         keep = np.ones(len(trk_tlwhs), dtype=bool)
         iou_distance = mm.distances.iou_matrix(ignore_tlwhs, trk_tlwhs, max_iou=0.5)
         if len(iou_distance) > 0:
-            match_is, match_js = mm.lap.linear_sum_assignment(iou_distance)
+            match_is, match_js = linear_sum_assignment(iou_distance)
             match_is, match_js = (np.asarray(a, dtype=int) for a in [match_is, match_js])
             match_ious = iou_distance[match_is, match_js]
 

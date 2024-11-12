@@ -30,7 +30,7 @@ Cityscapes
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ Cityscapes
      - Compiled    
    * - fcn8_resnet_v1_18   
      - 69.41
-     - 0.15
+     - 69.28
      - 24
      - 28
      - 1024x1920x3
@@ -52,7 +52,7 @@ Cityscapes
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/fcn8_resnet_v1_18.hef>`_    
    * - segformer_b0_bn   
      - 69.81
-     - 1.63
+     - 67.96
      - 11
      - 26
      - 512x1024x3
@@ -63,7 +63,7 @@ Cityscapes
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/segformer_b0_bn.hef>`_      
    * - stdc1 |rocket|  
      - 74.55
-     - 0.6
+     - 73.87
      - 13
      - 27
      - 1024x1920x3
@@ -82,7 +82,7 @@ Oxford-IIIT Pet
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -93,7 +93,7 @@ Oxford-IIIT Pet
      - Compiled    
    * - unet_mobilenet_v2   
      - 77.32
-     - 0.3
+     - 77.17
      - 218
      - 410
      - 256x256x3
@@ -112,7 +112,7 @@ Pascal VOC
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -123,7 +123,7 @@ Pascal VOC
      - Compiled    
    * - deeplab_v3_mobilenet_v2   
      - 76.04
-     - 1.47
+     - 74.62
      - 90
      - 90
      - 513x513x3
@@ -134,7 +134,7 @@ Pascal VOC
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/deeplab_v3_mobilenet_v2.hef>`_    
    * - deeplab_v3_mobilenet_v2_wo_dilation   
      - 71.46
-     - 0.41
+     - 70.93
      - 96
      - 189
      - 513x513x3

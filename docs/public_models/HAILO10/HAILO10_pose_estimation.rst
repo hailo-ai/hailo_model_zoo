@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ COCO
      - Compiled     
    * - centerpose_regnetx_1.6gf_fpn  |star| 
      - 53.54
-     - -0.2
+     - 53.42
      - 0
      - 640x640x3
      - 14.28
@@ -50,7 +50,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centerpose_regnetx_1.6gf_fpn.hef>`_    
    * - centerpose_regnetx_800mf   
      - 44.06
-     - 0.89
+     - 42.93
      - 0
      - 512x512x3
      - 12.31
@@ -60,7 +60,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centerpose_regnetx_800mf.hef>`_    
    * - centerpose_repvgg_a0   
      - 30.0
-     - -0.13
+     - 29.93
      - 0
      - 416x416x3
      - 11.71
@@ -70,7 +70,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centerpose_repvgg_a0.hef>`_    
    * - yolov8m_pose   
      - 64.26
-     - 8.06
+     - 61.82
      - 0
      - 640x640x3
      - 26.4
@@ -80,7 +80,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8m_pose.hef>`_    
    * - yolov8s_pose   
      - 59.2
-     - 2.72
+     - 56.34
      - 0
      - 640x640x3
      - 11.6

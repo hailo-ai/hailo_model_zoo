@@ -30,7 +30,7 @@ KITTI Stereo 2015
 
    * - Network Name
      - EPE
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)

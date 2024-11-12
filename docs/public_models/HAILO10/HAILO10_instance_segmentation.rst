@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ COCO
      - Compiled    
    * - yolact_regnetx_1.6gf   
      - 27.57
-     - 0.24
+     - 27.26
      - 0
      - 512x512x3
      - 30.09
@@ -50,7 +50,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolact_regnetx_1.6gf.hef>`_    
    * - yolact_regnetx_800mf   
      - 25.61
-     - 0.18
+     - 25.42
      - 0
      - 512x512x3
      - 28.3
@@ -60,7 +60,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolact_regnetx_800mf.hef>`_    
    * - yolov5l_seg   
      - 39.78
-     - 0.43
+     - 39.36
      - 0
      - 640x640x3
      - 47.89
@@ -70,7 +70,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5l_seg.hef>`_    
    * - yolov5m_seg   
      - 37.05
-     - 0.37
+     - 36.61
      - 0
      - 640x640x3
      - 32.60
@@ -80,7 +80,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_seg.hef>`_     
    * - yolov5n_seg  |star| 
      - 23.35
-     - 0.29
+     - 23.06
      - 0
      - 640x640x3
      - 1.99
@@ -90,7 +90,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5n_seg.hef>`_    
    * - yolov5s_seg   
      - 31.57
-     - 0.78
+     - 30.82
      - 0
      - 640x640x3
      - 7.61
@@ -100,7 +100,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s_seg.hef>`_    
    * - yolov8m_seg   
      - 40.6
-     - 0.34
+     - 40.2
      - 0
      - 640x640x3
      - 27.3
@@ -110,7 +110,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8m_seg.hef>`_    
    * - yolov8n_seg   
      - 30.32
-     - 0.55
+     - 29.75
      - 0
      - 640x640x3
      - 3.4
@@ -120,7 +120,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8n_seg.hef>`_    
    * - yolov8s_seg   
      - 36.63
-     - 0.31
+     - 36.27
      - 0
      - 640x640x3
      - 11.8

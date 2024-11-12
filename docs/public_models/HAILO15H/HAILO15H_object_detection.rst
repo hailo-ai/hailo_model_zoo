@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ COCO
      - Compiled    
    * - centernet_resnet_v1_18_postprocess   
      - 26.37
-     - 1.41
+     - 25.02
      - 125
      - 201
      - 512x512x3
@@ -52,7 +52,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centernet_resnet_v1_18_postprocess.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centernet_resnet_v1_18_postprocess_nv12.hef>`_    
    * - centernet_resnet_v1_50_postprocess   
      - 31.77
-     - 2.54
+     - 29.27
      - 80
      - 116
      - 512x512x3
@@ -63,7 +63,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centernet_resnet_v1_50_postprocess.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/centernet_resnet_v1_50_postprocess_nv12.hef>`_    
    * - damoyolo_tinynasL20_T   
      - 42.8
-     - 0.59
+     - 41.32
      - 144
      - 293
      - 640x640x3
@@ -74,7 +74,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL20_T.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL20_T_nv12.hef>`_    
    * - damoyolo_tinynasL25_S   
      - 46.53
-     - 1.22
+     - 45.31
      - 109
      - 229
      - 640x640x3
@@ -85,7 +85,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL25_S.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL25_S_nv12.hef>`_    
    * - damoyolo_tinynasL35_M   
      - 49.7
-     - 1.86
+     - 47.97
      - 58
      - 105
      - 640x640x3
@@ -96,7 +96,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL35_M.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/damoyolo_tinynasL35_M_nv12.hef>`_    
    * - detr_resnet_v1_18_bn   
      - 33.91
-     - 2.43
+     - 31.59
      - 31
      - 64
      - 800x800x3
@@ -107,7 +107,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/detr_resnet_v1_18_bn.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/detr_resnet_v1_18_bn_nv12.hef>`_    
    * - detr_resnet_v1_50   
      - 35.38
-     - 0.4
+     - 34.89
      - 12
      - 18
      - 800x800x3
@@ -118,7 +118,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/detr_resnet_v1_50.hef>`_    
    * - efficientdet_lite0   
      - 27.32
-     - 0.78
+     - 26.54
      - 117
      - 294
      - 320x320x3
@@ -129,7 +129,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite0.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite0_nv12.hef>`_    
    * - efficientdet_lite1   
      - 32.27
-     - 0.45
+     - 31.82
      - 79
      - 176
      - 384x384x3
@@ -140,7 +140,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite1.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite1_nv12.hef>`_    
    * - efficientdet_lite2   
      - 35.95
-     - 1.2
+     - 34.75
      - 51
      - 99
      - 448x448x3
@@ -151,7 +151,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite2.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/efficientdet_lite2_nv12.hef>`_     
    * - nanodet_repvgg  |star| 
      - 29.3
-     - 0.67
+     - 28.59
      - 705
      - 707
      - 416x416x3
@@ -162,7 +162,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg_nv12.hef>`_    
    * - nanodet_repvgg_a12   
      - 33.73
-     - 2.24
+     - 31.5
      - 156
      - 260
      - 640x640x3
@@ -173,7 +173,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg_a12.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg_a12_nv12.hef>`_    
    * - nanodet_repvgg_a1_640   
      - 33.28
-     - 0.34
+     - 32.94
      - 181
      - 181
      - 640x640x3
@@ -184,7 +184,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg_a1_640.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/nanodet_repvgg_a1_640_nv12.hef>`_       
    * - ssd_mobilenet_v1 |rocket| |star| 
      - 23.19
-     - 0.77
+     - 22.41
      - 1147
      - 1147
      - 300x300x3
@@ -195,7 +195,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/ssd_mobilenet_v1.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/ssd_mobilenet_v1_nv12.hef>`_    
    * - ssd_mobilenet_v2   
      - 24.18
-     - 1.16
+     - 23.02
      - 175
      - 345
      - 300x300x3
@@ -206,7 +206,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/ssd_mobilenet_v2.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/ssd_mobilenet_v2_nv12.hef>`_    
    * - tiny_yolov3   
      - 14.66
-     - 0.25
+     - 14.42
      - 1045
      - 1045
      - 416x416x3
@@ -217,7 +217,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/tiny_yolov3.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/tiny_yolov3_nv12.hef>`_    
    * - tiny_yolov4   
      - 19.18
-     - 1.37
+     - 17.62
      - 907
      - 907
      - 416x416x3
@@ -228,7 +228,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/tiny_yolov4.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/tiny_yolov4_nv12.hef>`_    
    * - yolov10b   
      - 52.0
-     - 0.85
+     - 51.16
      - 33
      - 54
      - 640x640x3
@@ -239,7 +239,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10b.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10b_nv12.hef>`_    
    * - yolov10n   
      - 38.5
-     - 1.38
+     - 37.12
      - 182
      - 426
      - 640x640x3
@@ -250,7 +250,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10n.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10n_nv12.hef>`_    
    * - yolov10s   
      - 45.86
-     - 0.7
+     - 45.16
      - 96
      - 208
      - 640x640x3
@@ -261,7 +261,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10s.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10s_nv12.hef>`_    
    * - yolov10x   
      - 53.7
-     - 1.75
+     - 51.92
      - 18
      - 28
      - 640x640x3
@@ -272,7 +272,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10x.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov10x_nv12.hef>`_    
    * - yolov3   
      - 38.42
-     - 0.04
+     - 38.31
      - 34
      - 45
      - 608x608x3
@@ -283,7 +283,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_nv12.hef>`_    
    * - yolov3_416   
      - 37.73
-     - 0.16
+     - 37.52
      - 52
      - 80
      - 416x416x3
@@ -294,7 +294,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_416.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_416_nv12.hef>`_    
    * - yolov3_gluon   
      - 37.28
-     - 1.5
+     - 35.77
      - 36
      - 47
      - 608x608x3
@@ -305,7 +305,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_gluon.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_gluon_nv12.hef>`_    
    * - yolov3_gluon_416   
      - 36.27
-     - 2.06
+     - 34.15
      - 52
      - 80
      - 416x416x3
@@ -316,7 +316,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_gluon_416.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov3_gluon_416_nv12.hef>`_    
    * - yolov4_leaky   
      - 42.37
-     - -4.74
+     - 41.08
      - 44
      - 69
      - 512x512x3
@@ -327,7 +327,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov4_leaky.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov4_leaky_nv12.hef>`_    
    * - yolov5m   
      - 42.59
-     - 1.27
+     - 41.44
      - 78
      - 123
      - 640x640x3
@@ -338,7 +338,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_nv12.hef>`_    
    * - yolov5m6_6.1   
      - 50.68
-     - 1.17
+     - 49.36
      - 25
      - 32
      - 1280x1280x3
@@ -349,7 +349,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m6_6.1.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m6_6.1_nv12.hef>`_    
    * - yolov5m_6.1   
      - 44.74
-     - 1.36
+     - 43.47
      - 80
      - 125
      - 640x640x3
@@ -360,7 +360,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_6.1.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_6.1_nv12.hef>`_       
    * - yolov5m_wo_spp |rocket| |star| 
      - 43.06
-     - 1.47
+     - 41.56
      - 108
      - 202
      - 640x640x3
@@ -371,7 +371,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_wo_spp.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5m_wo_spp_nv12.hef>`_    
    * - yolov5s   
      - 35.33
-     - 1.22
+     - 34.1
      - 162
      - 278
      - 640x640x3
@@ -382,7 +382,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s.hef>`_    
    * - yolov5s_c3tr   
      - 37.13
-     - 1.33
+     - 35.83
      - 141
      - 285
      - 640x640x3
@@ -393,7 +393,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s_c3tr.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s_c3tr_nv12.hef>`_    
    * - yolov5s_wo_spp   
      - 34.79
-     - 0.98
+     - 33.81
      - 182
      - 303
      - 640x640x3
@@ -404,7 +404,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s_wo_spp.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5s_wo_spp_nv12.hef>`_    
    * - yolov5xs_wo_spp   
      - 33.18
-     - 1.02
+     - 32.26
      - 246
      - 484
      - 512x512x3
@@ -415,7 +415,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5xs_wo_spp.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5xs_wo_spp_nv12.hef>`_    
    * - yolov5xs_wo_spp_nms_core   
      - 32.73
-     - 0.95
+     - 31.93
      - 246
      - 484
      - 512x512x3
@@ -426,7 +426,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5xs_wo_spp_nms_core.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov5xs_wo_spp_nms_core_nv12.hef>`_    
    * - yolov6n   
      - 34.29
-     - 1.82
+     - 32.45
      - 240
      - 492
      - 640x640x3
@@ -437,7 +437,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov6n.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov6n_nv12.hef>`_    
    * - yolov6n_0.2.1   
      - 35.16
-     - 1.03
+     - 33.97
      - 249
      - 519
      - 640x640x3
@@ -448,7 +448,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov6n_0.2.1.hef>`_    
    * - yolov6n_0.2.1_nms_core   
      - 35.16
-     - 1.0
+     - 34.02
      - 120
      - 179
      - 640x640x3
@@ -459,7 +459,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov6n_0.2.1_nms_core.hef>`_    
    * - yolov7   
      - 50.6
-     - 1.71
+     - 48.9
      - 40
      - 59
      - 640x640x3
@@ -470,7 +470,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7_nv12.hef>`_    
    * - yolov7_tiny   
      - 37.07
-     - 0.84
+     - 36.22
      - 182
      - 311
      - 640x640x3
@@ -481,7 +481,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7_tiny.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7_tiny_nv12.hef>`_    
    * - yolov7e6   
      - 55.37
-     - 2.19
+     - 53.21
      - 9
      - 11
      - 1280x1280x3
@@ -492,7 +492,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7e6.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov7e6_nv12.hef>`_    
    * - yolov8l   
      - 52.44
-     - 0.59
+     - 51.84
      - 26
      - 39
      - 640x640x3
@@ -503,7 +503,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8l.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8l_nv12.hef>`_     
    * - yolov8m  |star| 
      - 49.91
-     - 0.74
+     - 49.32
      - 72
      - 141
      - 640x640x3
@@ -514,7 +514,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8m.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8m_nv12.hef>`_    
    * - yolov8n   
      - 37.02
-     - 0.61
+     - 36.46
      - 289
      - 535
      - 640x640x3
@@ -525,7 +525,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8n.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8n_nv12.hef>`_    
    * - yolov8s   
      - 44.58
-     - 0.5
+     - 43.98
      - 124
      - 212
      - 640x640x3
@@ -536,7 +536,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8s.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8s_nv12.hef>`_    
    * - yolov8x   
      - 53.45
-     - 0.7
+     - 52.8
      - 19
      - 27
      - 640x640x3
@@ -547,7 +547,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8x.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov8x_nv12.hef>`_    
    * - yolov9c   
      - 52.6
-     - 1.27
+     - 51.29
      - 34
      - 49
      - 640x640x3
@@ -558,7 +558,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov9c.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolov9c_nv12.hef>`_     
    * - yolox_l_leaky  |star| 
      - 48.68
-     - 2.16
+     - 46.48
      - 31
      - 43
      - 640x640x3
@@ -569,7 +569,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_l_leaky.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_l_leaky_nv12.hef>`_    
    * - yolox_s_leaky   
      - 38.13
-     - 0.86
+     - 37.29
      - 129
      - 214
      - 640x640x3
@@ -580,7 +580,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_s_leaky.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_s_leaky_nv12.hef>`_    
    * - yolox_s_wide_leaky   
      - 42.0
-     - 1.0
+     - 41.0
      - 77
      - 115
      - 640x640x3
@@ -591,7 +591,7 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_s_wide_leaky.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/yolox_s_wide_leaky_nv12.hef>`_    
    * - yolox_tiny   
      - 32.64
-     - 1.21
+     - 31.4
      - 268
      - 583
      - 416x416x3

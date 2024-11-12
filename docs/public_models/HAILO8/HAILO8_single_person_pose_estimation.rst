@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - AP
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ COCO
      - Compiled     
    * - mspn_regnetx_800mf  |star| 
      - 70.8
-     - 1.03
+     - 70.43
      - 2132
      - 2132
      - 256x192x3
@@ -52,7 +52,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mspn_regnetx_800mf.hef>`_    
    * - vit_pose_small   
      - 72.56
-     - -0.21
+     - 72.25
      - 41
      - 133
      - 256x192x3
@@ -63,7 +63,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_pose_small.hef>`_    
    * - vit_pose_small_bn   
      - 72.01
-     - 1.06
+     - 70.82
      - 75
      - 307
      - 256x192x3

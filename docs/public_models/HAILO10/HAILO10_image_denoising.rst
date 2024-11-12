@@ -30,7 +30,7 @@ BSD68
 
    * - Network Name
      - PSNR
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ BSD68
      - Compiled    
    * - dncnn3   
      - 31.46
-     - 0.17
+     - 31.27
      - 0
      - 321x481x1
      - 0.66
@@ -58,7 +58,7 @@ CBSD68
 
    * - Network Name
      - PSNR
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -68,7 +68,7 @@ CBSD68
      - Compiled    
    * - dncnn_color_blind   
      - 33.87
-     - 0.93
+     - 32.98
      - 0
      - 321x481x3
      - 0.66

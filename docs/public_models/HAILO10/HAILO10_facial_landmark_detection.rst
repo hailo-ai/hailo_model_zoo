@@ -30,7 +30,7 @@ AFLW2k3d
 
    * - Network Name
      - NME
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ AFLW2k3d
      - Compiled       
    * - tddfa_mobilenet_v1  |star| 
      - 3.68
-     - 7.72
+     - 4.05
      - 0
      - 120x120x3
      - 3.26

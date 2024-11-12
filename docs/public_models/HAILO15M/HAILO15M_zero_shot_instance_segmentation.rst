@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - AR1000
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ COCO
      - Compiled    
    * - fast_sam_s   
      - 40.1
-     - 1.22
+     - 38.88
      - 1
      - 12
      - 640x640x3

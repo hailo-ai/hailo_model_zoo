@@ -37,8 +37,8 @@ Hand Landmark
      - Source
      - Compiled    
    * - hand_landmark_lite   
-     - 2671
-     - 2671
+     - 0
+     - 0
      - 224x224x3
      - 1.01
      - 0.3

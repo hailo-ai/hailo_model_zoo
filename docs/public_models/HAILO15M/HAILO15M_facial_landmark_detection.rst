@@ -42,7 +42,7 @@ AFLW2k3d
    * - tddfa_mobilenet_v1  |star| 
      - 3.68
      - 4.04
-     - 0
+     - 4482
      - 4482
      - 120x120x3
      - 3.26

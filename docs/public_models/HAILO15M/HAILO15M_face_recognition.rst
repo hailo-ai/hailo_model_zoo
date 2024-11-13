@@ -30,7 +30,7 @@ LFW
 
    * - Network Name
      - lfw verification accuracy
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ LFW
      - Compiled     
    * - arcface_mobilefacenet  |star| 
      - 99.43
-     - -0.03
-     - 0
+     - 99.4
      - 464
+     - 1302
      - 112x112x3
      - 2.04
      - 0.88
@@ -52,9 +52,9 @@ LFW
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/arcface_mobilefacenet.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/arcface_mobilefacenet_nv12.hef>`_    
    * - arcface_r50   
      - 99.72
-     - -0.02
-     - 0
+     - 99.7
      - 117
+     - 237
      - 112x112x3
      - 31.0
      - 12.6

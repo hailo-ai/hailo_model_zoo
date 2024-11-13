@@ -30,7 +30,7 @@ Cityscapes
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ Cityscapes
      - Compiled    
    * - fcn8_resnet_v1_18   
      - 69.41
-     - 0.15
-     - 0
+     - 69.26
      - 18
+     - 20
      - 1024x1920x3
      - 11.20
      - 142.82
@@ -52,9 +52,9 @@ Cityscapes
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/fcn8_resnet_v1_18.hef>`_    
    * - segformer_b0_bn   
      - 69.81
-     - 1.63
-     - 1
+     - 68.18
      - 11
+     - 19
      - 512x1024x3
      - 3.72
      - 35.76
@@ -63,9 +63,9 @@ Cityscapes
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/segformer_b0_bn.hef>`_      
    * - stdc1 |rocket|  
      - 74.55
-     - 0.6
-     - 0
+     - 73.95
      - 16
+     - 24
      - 1024x1920x3
      - 8.27
      - 126.47
@@ -82,7 +82,7 @@ Oxford-IIIT Pet
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -93,9 +93,9 @@ Oxford-IIIT Pet
      - Compiled    
    * - unet_mobilenet_v2   
      - 77.32
-     - 0.3
-     - 0
+     - 77.02
      - 146
+     - 245
      - 256x256x3
      - 10.08
      - 28.88
@@ -112,7 +112,7 @@ Pascal VOC
 
    * - Network Name
      - mIoU
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -123,9 +123,9 @@ Pascal VOC
      - Compiled    
    * - deeplab_v3_mobilenet_v2   
      - 76.04
-     - 1.47
-     - 1
+     - 74.58
      - 43
+     - 57
      - 513x513x3
      - 2.10
      - 17.65
@@ -134,9 +134,9 @@ Pascal VOC
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/deeplab_v3_mobilenet_v2.hef>`_    
    * - deeplab_v3_mobilenet_v2_wo_dilation   
      - 71.46
-     - 0.41
-     - 0
+     - 71.05
      - 86
+     - 119
      - 513x513x3
      - 2.10
      - 3.21

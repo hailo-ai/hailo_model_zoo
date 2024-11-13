@@ -30,7 +30,7 @@ CIFAR100
 
    * - Network Name
      - Accuracy (top1)
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ CIFAR100
      - Compiled    
    * - clip_resnet_50   
      - 42.07
-     - 2.75
+     - 39.28
      - 68
      - 193
      - 224x224x3
@@ -51,8 +51,8 @@ CIFAR100
      - `link <https://github.com/openai/CLIP>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/clip_resnet_50.hef>`_    
    * - clip_resnet_50x4   
-     - 50.31
-     - 2.41
+     - 50.3
+     - 48.8
      - 25
      - 60
      - 288x288x3

@@ -30,7 +30,7 @@ LOL
 
    * - Network Name
      - PSNR
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ LOL
      - Compiled    
    * - zero_dce   
      - 16.23
-     - -0.01
+     - 16.22
      - 115
      - 132
      - 400x600x3
@@ -52,7 +52,7 @@ LOL
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/zero_dce.hef>`_    
    * - zero_dce_pp   
      - 15.95
-     - 0.03
+     - 15.92
      - 29
      - 29
      - 400x600x3

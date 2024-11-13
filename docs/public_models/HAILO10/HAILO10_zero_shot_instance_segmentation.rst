@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - AR1000
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ COCO
      - Compiled    
    * - fast_sam_s   
      - 40.1
-     - 1.22
+     - 39.0
      - 0
      - 640x640x3
      - 11.1

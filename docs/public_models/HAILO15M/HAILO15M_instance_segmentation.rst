@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ COCO
      - Compiled    
    * - yolact_regnetx_1.6gf   
      - 27.57
-     - 0.24
-     - 0
+     - 27.33
      - 34
+     - 44
      - 512x512x3
      - 30.09
      - 125.34
@@ -52,9 +52,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolact_regnetx_1.6gf.hef>`_    
    * - yolact_regnetx_800mf   
      - 25.61
-     - 0.18
-     - 0
+     - 25.44
      - 41
+     - 51
      - 512x512x3
      - 28.3
      - 116.75
@@ -63,9 +63,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolact_regnetx_800mf.hef>`_    
    * - yolov5l_seg   
      - 39.78
-     - 0.43
-     - 0
+     - 39.35
      - 20
+     - 24
      - 640x640x3
      - 47.89
      - 147.88
@@ -74,9 +74,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov5l_seg.hef>`_    
    * - yolov5m_seg   
      - 37.05
-     - 0.37
-     - 0
+     - 36.68
      - 42
+     - 55
      - 640x640x3
      - 32.60
      - 70.94
@@ -85,9 +85,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov5m_seg.hef>`_     
    * - yolov5n_seg  |star| 
      - 23.35
-     - 0.29
-     - 0
+     - 23.06
      - 153
+     - 172
      - 640x640x3
      - 1.99
      - 7.1
@@ -96,9 +96,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov5n_seg.hef>`_    
    * - yolov5s_seg   
      - 31.57
-     - 0.78
-     - 0
+     - 30.78
      - 85
+     - 115
      - 640x640x3
      - 7.61
      - 26.42
@@ -107,9 +107,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov5s_seg.hef>`_    
    * - yolov8m_seg   
      - 40.6
-     - 0.34
-     - 0
+     - 40.26
      - 30
+     - 41
      - 640x640x3
      - 27.3
      - 110.2
@@ -118,9 +118,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov8m_seg.hef>`_    
    * - yolov8n_seg   
      - 30.32
-     - 0.55
-     - 0
+     - 29.77
      - 148
+     - 244
      - 640x640x3
      - 3.4
      - 12.04
@@ -129,9 +129,9 @@ COCO
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/yolov8n_seg.hef>`_    
    * - yolov8s_seg   
      - 36.63
-     - 0.31
-     - 0
+     - 36.32
      - 68
+     - 94
      - 640x640x3
      - 11.8
      - 42.6

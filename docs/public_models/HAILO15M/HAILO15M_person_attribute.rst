@@ -30,7 +30,7 @@ PETA
 
    * - Network Name
      - Mean Accuracy
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ PETA
      - Compiled    
    * - person_attr_resnet_v1_18   
      - 82.5
-     - -0.11
-     - 0
+     - 82.39
      - 379
+     - 826
      - 224x224x3
      - 11.19
      - 3.64

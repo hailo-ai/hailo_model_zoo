@@ -17,20 +17,20 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. _Facial Landmark Detection:
+.. _Face Attribute:
 
--------------------------
+--------------
 
-AFLW2k3d
-^^^^^^^^
+CELEBA
+^^^^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
-     - NME
-     - Quantized
+     - Mean Accuracy
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -38,15 +38,15 @@ AFLW2k3d
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled       
-   * - tddfa_mobilenet_v1  |star| 
-     - 3.68
-     - 7.72
-     - 5170
-     - 5170
-     - 120x120x3
-     - 3.26
-     - 0.36
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tddfa_mobilenet_v1.zip>`_
-     - `link <https://github.com/cleardusk/3DDFA_V2>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/tddfa_mobilenet_v1.hef>`_
+     - Compiled    
+   * - face_attr_resnet_v1_18   
+     - 81.19
+     - 81.04
+     - 670
+     - 670
+     - 218x178x3
+     - 11.74
+     - 3
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_
+     - `link <https://github.com/d-li14/face-attribute-prediction>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/face_attr_resnet_v1_18.hef>`_

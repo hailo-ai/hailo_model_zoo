@@ -30,7 +30,7 @@ ImageNet
 
    * - Network Name
      - Accuracy (top1)
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ ImageNet
      - Compiled    
    * - cas_vit_m   
      - 81.2
-     - 0.19
-     - 0
+     - 81.01
      - 37
+     - 71
      - 384x384x3
      - 12.42
      - 10.89
@@ -52,9 +52,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/cas_vit_m.hef>`_    
    * - cas_vit_s   
      - 79.93
-     - 0.25
-     - 0
+     - 79.68
      - 50
+     - 102
      - 384x384x3
      - 5.5
      - 5.4
@@ -63,9 +63,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/cas_vit_s.hef>`_    
    * - cas_vit_t   
      - 81.9
-     - 0.29
-     - 0
+     - 81.61
      - 25
+     - 39
      - 384x384x3
      - 21.76
      - 20.85
@@ -74,9 +74,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/cas_vit_t.hef>`_    
    * - deit_base   
      - 80.93
-     - 0.58
-     - 0
+     - 80.35
      - 28
+     - 59
      - 224x224x3
      - 80.26
      - 35.22
@@ -85,9 +85,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/deit_base.hef>`_    
    * - deit_small   
      - 76.25
-     - -0.74
-     - 0
+     - 75.51
      - 40
+     - 90
      - 224x224x3
      - 20.52
      - 9.4
@@ -96,20 +96,108 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/deit_small.hef>`_    
    * - deit_tiny   
      - 69.07
-     - 0.62
-     - 0
+     - 68.45
      - 73
+     - 227
      - 224x224x3
      - 5.3
      - 2.57
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/deit_tiny/pretrained/2024-05-21/deit_tiny.zip>`_
      - `link <https://github.com/facebookresearch/deit>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/deit_tiny.hef>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/deit_tiny.hef>`_    
+   * - efficientnet_l   
+     - 80.47
+     - 79.3
+     - 83
+     - 163
+     - 300x300x3
+     - 10.55
+     - 19.4
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_l/pretrained/2023-07-18/efficientnet_l.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_l.hef>`_    
+   * - efficientnet_lite0   
+     - 74.99
+     - 73.85
+     - 282
+     - 749
+     - 224x224x3
+     - 4.63
+     - 0.78
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite0/pretrained/2023-07-18/efficientnet_lite0.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_lite0.hef>`_    
+   * - efficientnet_lite1   
+     - 76.67
+     - 76.3
+     - 206
+     - 482
+     - 240x240x3
+     - 5.39
+     - 1.22
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite1/pretrained/2023-07-18/efficientnet_lite1.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_lite1.hef>`_    
+   * - efficientnet_lite2   
+     - 77.46
+     - 76.73
+     - 143
+     - 319
+     - 260x260x3
+     - 6.06
+     - 1.74
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite2/pretrained/2023-07-18/efficientnet_lite2.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_lite2.hef>`_    
+   * - efficientnet_lite3   
+     - 79.29
+     - 78.66
+     - 109
+     - 226
+     - 280x280x3
+     - 8.16
+     - 2.8
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite3/pretrained/2023-07-18/efficientnet_lite3.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_lite3.hef>`_    
+   * - efficientnet_lite4   
+     - 80.79
+     - 80.08
+     - 74
+     - 150
+     - 300x300x3
+     - 12.95
+     - 5.10
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_lite4/pretrained/2023-07-18/efficientnet_lite4.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_lite4.hef>`_    
+   * - efficientnet_m   
+     - 78.91
+     - 78.48
+     - 136
+     - 266
+     - 240x240x3
+     - 6.87
+     - 7.32
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_m/pretrained/2023-07-18/efficientnet_m.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_m.hef>`_    
+   * - efficientnet_s   
+     - 77.63
+     - 77.3
+     - 182
+     - 380
+     - 224x224x3
+     - 5.41
+     - 4.72
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/efficientnet_s/pretrained/2023-07-18/efficientnet_s.zip>`_
+     - `link <https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/efficientnet_s.hef>`_    
    * - fastvit_sa12   
      - 76.8
-     - 0.1
-     - 0
+     - 76.7
      - 157
+     - 427
      - 224x224x3
      - 11.99
      - 3.59
@@ -118,9 +206,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/fastvit_sa12.hef>`_    
    * - hardnet39ds   
      - 73.43
-     - 0.44
-     - 0
+     - 73.0
      - 296
+     - 817
      - 224x224x3
      - 3.48
      - 0.86
@@ -129,9 +217,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/hardnet39ds.hef>`_    
    * - hardnet68   
      - 75.47
-     - 0.26
-     - 0
+     - 75.21
      - 128
+     - 259
      - 224x224x3
      - 17.56
      - 8.5
@@ -140,9 +228,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/hardnet68.hef>`_    
    * - inception_v1   
      - 69.74
-     - 0.21
-     - 0
+     - 69.54
      - 257
+     - 546
      - 224x224x3
      - 6.62
      - 3
@@ -151,8 +239,8 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/inception_v1.hef>`_    
    * - mobilenet_v1   
      - 70.97
-     - 0.69
-     - 0
+     - 70.28
+     - 1426
      - 1426
      - 224x224x3
      - 4.22
@@ -162,8 +250,8 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/mobilenet_v1.hef>`_      
    * - mobilenet_v2_1.0 |rocket|  
      - 71.78
-     - 0.86
-     - 0
+     - 70.92
+     - 869
      - 869
      - 224x224x3
      - 3.49
@@ -173,9 +261,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/mobilenet_v2_1.0.hef>`_    
    * - mobilenet_v2_1.4   
      - 74.18
-     - 0.93
-     - 0
+     - 73.25
      - 281
+     - 666
      - 224x224x3
      - 6.09
      - 1.18
@@ -184,9 +272,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/mobilenet_v2_1.4.hef>`_    
    * - mobilenet_v3   
      - 72.21
-     - 0.4
-     - 0
+     - 71.81
      - 330
+     - 782
      - 224x224x3
      - 4.07
      - 2
@@ -195,9 +283,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/mobilenet_v3.hef>`_    
    * - mobilenet_v3_large_minimalistic   
      - 72.12
-     - 1.52
-     - 1
+     - 70.6
      - 463
+     - 1287
      - 224x224x3
      - 3.91
      - 0.42
@@ -206,9 +294,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/mobilenet_v3_large_minimalistic.hef>`_    
    * - regnetx_1.6gf   
      - 77.05
-     - 0.28
-     - 0
+     - 76.77
      - 311
+     - 782
      - 224x224x3
      - 9.17
      - 3.22
@@ -217,9 +305,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/regnetx_1.6gf.hef>`_    
    * - regnetx_800mf   
      - 75.16
-     - 0.33
-     - 0
+     - 74.82
      - 422
+     - 1118
      - 224x224x3
      - 7.24
      - 1.6
@@ -228,9 +316,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/regnetx_800mf.hef>`_    
    * - repghost_1_0x   
      - 73.03
-     - 0.78
-     - 0
+     - 72.25
      - 196
+     - 481
      - 224x224x3
      - 4.1
      - 0.28
@@ -239,9 +327,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/repghost_1_0x.hef>`_    
    * - repghost_2_0x   
      - 77.18
-     - 0.3
-     - 0
+     - 76.88
      - 123
+     - 311
      - 224x224x3
      - 9.8
      - 1.04
@@ -250,9 +338,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/repghost_2_0x.hef>`_    
    * - repvgg_a1   
      - 74.4
-     - 1.7
-     - 1
+     - 72.7
      - 321
+     - 719
      - 224x224x3
      - 12.79
      - 4.7
@@ -261,9 +349,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/repvgg_a1.hef>`_    
    * - repvgg_a2   
      - 76.52
-     - 2.04
-     - 2
+     - 74.48
      - 185
+     - 334
      - 224x224x3
      - 25.5
      - 10.2
@@ -272,9 +360,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/repvgg_a2.hef>`_    
    * - resmlp12_relu   
      - 75.27
-     - 0.33
-     - 0
+     - 74.94
      - 88
+     - 310
      - 224x224x3
      - 15.77
      - 6.04
@@ -283,9 +371,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resmlp12_relu.hef>`_    
    * - resnet_v1_18   
      - 71.27
-     - 0.52
-     - 0
+     - 70.74
      - 404
+     - 858
      - 224x224x3
      - 11.68
      - 3.64
@@ -294,9 +382,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resnet_v1_18.hef>`_    
    * - resnet_v1_34   
      - 72.7
-     - 0.51
-     - 0
+     - 72.19
      - 210
+     - 472
      - 224x224x3
      - 21.79
      - 7.34
@@ -305,9 +393,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resnet_v1_34.hef>`_       
    * - resnet_v1_50 |rocket| |star| 
      - 75.21
-     - 0.63
-     - 0
+     - 74.58
      - 236
+     - 616
      - 224x224x3
      - 25.53
      - 6.98
@@ -316,9 +404,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resnet_v1_50.hef>`_    
    * - resnext26_32x4d   
      - 76.17
-     - 0.22
-     - 0
+     - 75.95
      - 263
+     - 510
      - 224x224x3
      - 15.37
      - 4.96
@@ -327,9 +415,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resnext26_32x4d.hef>`_    
    * - resnext50_32x4d   
      - 79.3
-     - 0.97
-     - 0
+     - 78.33
      - 153
+     - 331
      - 224x224x3
      - 24.99
      - 8.48
@@ -338,9 +426,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/resnext50_32x4d.hef>`_    
    * - squeezenet_v1.1   
      - 59.85
-     - 0.55
-     - 0
+     - 59.29
      - 671
+     - 1270
      - 224x224x3
      - 1.24
      - 0.78
@@ -349,9 +437,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/squeezenet_v1.1.hef>`_    
    * - vit_base   
      - 84.5
-     - 1.33
-     - 1
+     - 83.17
      - 28
+     - 59
      - 224x224x3
      - 86.5
      - 35.188
@@ -360,9 +448,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/vit_base.hef>`_      
    * - vit_base_bn |rocket|  
      - 79.98
-     - 0.71
-     - 0
+     - 79.27
      - 57
+     - 141
      - 224x224x3
      - 86.5
      - 35.188
@@ -371,9 +459,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/vit_base_bn.hef>`_    
    * - vit_small   
      - 81.5
-     - 1.49
-     - 1
+     - 80.01
      - 48
+     - 117
      - 224x224x3
      - 21.12
      - 8.62
@@ -382,9 +470,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/vit_small.hef>`_    
    * - vit_small_bn   
      - 78.12
-     - 1.03
-     - 1
+     - 77.09
      - 111
+     - 331
      - 224x224x3
      - 21.12
      - 8.62
@@ -393,9 +481,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/vit_small_bn.hef>`_    
    * - vit_tiny   
      - 75.51
-     - 1.62
-     - 1
+     - 73.89
      - 76
+     - 253
      - 224x224x3
      - 5.73
      - 2.2
@@ -404,9 +492,9 @@ ImageNet
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/vit_tiny.hef>`_    
    * - vit_tiny_bn   
      - 68.95
-     - 1.81
-     - 1
+     - 67.14
      - 192
+     - 773
      - 224x224x3
      - 5.73
      - 2.2

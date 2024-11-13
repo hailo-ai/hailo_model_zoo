@@ -30,7 +30,7 @@ COCO
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ COCO
      - Compiled    
    * - centernet_resnet_v1_18_postprocess   
      - 26.37
-     - 1.41
+     - 25.04
      - 79
      - 121
      - 512x512x3
@@ -52,7 +52,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/centernet_resnet_v1_18_postprocess.hef>`_    
    * - centernet_resnet_v1_50_postprocess   
      - 31.77
-     - 2.54
+     - 29.4
      - 52
      - 81
      - 512x512x3
@@ -63,7 +63,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/centernet_resnet_v1_50_postprocess.hef>`_    
    * - damoyolo_tinynasL20_T   
      - 42.8
-     - 0.59
+     - 42.29
      - 93
      - 175
      - 640x640x3
@@ -74,7 +74,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/damoyolo_tinynasL20_T.hef>`_    
    * - damoyolo_tinynasL25_S   
      - 46.53
-     - 1.22
+     - 45.33
      - 76
      - 147
      - 640x640x3
@@ -85,7 +85,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/damoyolo_tinynasL25_S.hef>`_    
    * - damoyolo_tinynasL35_M   
      - 49.7
-     - 1.86
+     - 47.64
      - 31
      - 55
      - 640x640x3
@@ -96,7 +96,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/damoyolo_tinynasL35_M.hef>`_    
    * - detr_resnet_v1_18_bn   
      - 33.91
-     - 2.43
+     - 31.7
      - 18
      - 39
      - 800x800x3
@@ -107,7 +107,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/detr_resnet_v1_18_bn.hef>`_    
    * - detr_resnet_v1_50   
      - 35.38
-     - 0.4
+     - 34.86
      - 7
      - 10
      - 800x800x3
@@ -118,7 +118,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/detr_resnet_v1_50.hef>`_    
    * - efficientdet_lite0   
      - 27.32
-     - 0.78
+     - 26.49
      - 74
      - 182
      - 320x320x3
@@ -129,7 +129,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/efficientdet_lite0.hef>`_    
    * - efficientdet_lite1   
      - 32.27
-     - 0.45
+     - 31.82
      - 45
      - 95
      - 384x384x3
@@ -140,7 +140,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/efficientdet_lite1.hef>`_    
    * - efficientdet_lite2   
      - 35.95
-     - 1.2
+     - 34.75
      - 26
      - 48
      - 448x448x3
@@ -151,7 +151,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/efficientdet_lite2.hef>`_     
    * - nanodet_repvgg  |star| 
      - 29.3
-     - 0.67
+     - 28.57
      - 176
      - 321
      - 416x416x3
@@ -162,7 +162,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/nanodet_repvgg.hef>`_    
    * - nanodet_repvgg_a12   
      - 33.73
-     - 2.24
+     - 31.8
      - 110
      - 171
      - 640x640x3
@@ -173,7 +173,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/nanodet_repvgg_a12.hef>`_    
    * - nanodet_repvgg_a1_640   
      - 33.28
-     - 0.34
+     - 32.94
      - 83
      - 119
      - 640x640x3
@@ -184,7 +184,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/nanodet_repvgg_a1_640.hef>`_       
    * - ssd_mobilenet_v1 |rocket| |star| 
      - 23.19
-     - 0.77
+     - 22.41
      - 367
      - 367
      - 300x300x3
@@ -195,7 +195,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/ssd_mobilenet_v1.hef>`_    
    * - ssd_mobilenet_v2   
      - 24.18
-     - 1.16
+     - 22.97
      - 109
      - 241
      - 300x300x3
@@ -206,7 +206,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/ssd_mobilenet_v2.hef>`_      
    * - tiny_yolov3 |rocket|  
      - 14.66
-     - 0.25
+     - 14.36
      - 899
      - 899
      - 416x416x3
@@ -217,7 +217,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/tiny_yolov3.hef>`_    
    * - tiny_yolov4   
      - 19.18
-     - 1.37
+     - 17.72
      - 474
      - 474
      - 416x416x3
@@ -228,7 +228,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/tiny_yolov4.hef>`_    
    * - yolov10b   
      - 52.0
-     - 0.85
+     - 50.82
      - 23
      - 39
      - 640x640x3
@@ -239,7 +239,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov10b.hef>`_    
    * - yolov10n   
      - 38.5
-     - 1.38
+     - 36.59
      - 126
      - 280
      - 640x640x3
@@ -250,7 +250,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov10n.hef>`_    
    * - yolov10s   
      - 45.86
-     - 0.7
+     - 45.05
      - 63
      - 127
      - 640x640x3
@@ -261,7 +261,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov10s.hef>`_    
    * - yolov10x   
      - 53.7
-     - 1.75
+     - 51.84
      - 11
      - 18
      - 640x640x3
@@ -272,7 +272,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov10x.hef>`_    
    * - yolov3   
      - 38.42
-     - 0.04
+     - 38.41
      - 15
      - 19
      - 608x608x3
@@ -283,7 +283,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov3.hef>`_    
    * - yolov3_416   
      - 37.73
-     - 0.16
+     - 37.62
      - 25
      - 38
      - 416x416x3
@@ -294,7 +294,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov3_416.hef>`_    
    * - yolov3_gluon   
      - 37.28
-     - 1.5
+     - 35.76
      - 16
      - 21
      - 608x608x3
@@ -305,7 +305,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov3_gluon.hef>`_    
    * - yolov3_gluon_416   
      - 36.27
-     - 2.06
+     - 34.25
      - 25
      - 38
      - 416x416x3
@@ -316,7 +316,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov3_gluon_416.hef>`_    
    * - yolov4_leaky   
      - 42.37
-     - -4.74
+     - 41.19
      - 21
      - 31
      - 512x512x3
@@ -327,7 +327,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov4_leaky.hef>`_    
    * - yolov5m   
      - 42.59
-     - 1.27
+     - 41.29
      - 45
      - 72
      - 640x640x3
@@ -338,7 +338,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5m.hef>`_    
    * - yolov5m6_6.1   
      - 50.68
-     - 1.17
+     - 49.35
      - 15
      - 19
      - 1280x1280x3
@@ -349,7 +349,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5m6_6.1.hef>`_    
    * - yolov5m_6.1   
      - 44.74
-     - 1.36
+     - 43.47
      - 52
      - 82
      - 640x640x3
@@ -360,7 +360,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5m_6.1.hef>`_     
    * - yolov5m_wo_spp  |star| 
      - 43.06
-     - 1.47
+     - 41.5
      - 49
      - 77
      - 640x640x3
@@ -371,7 +371,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5m_wo_spp.hef>`_    
    * - yolov5s   
      - 35.33
-     - 1.22
+     - 34.08
      - 93
      - 167
      - 640x640x3
@@ -382,7 +382,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5s.hef>`_    
    * - yolov5s_c3tr   
      - 37.13
-     - 1.33
+     - 35.68
      - 89
      - 163
      - 640x640x3
@@ -393,7 +393,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5s_c3tr.hef>`_    
    * - yolov5s_wo_spp   
      - 34.79
-     - 0.98
+     - 33.88
      - 107
      - 195
      - 640x640x3
@@ -404,7 +404,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5s_wo_spp.hef>`_    
    * - yolov5xs_wo_spp   
      - 33.18
-     - 1.02
+     - 32.23
      - 138
      - 299
      - 512x512x3
@@ -415,7 +415,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5xs_wo_spp.hef>`_    
    * - yolov5xs_wo_spp_nms_core   
      - 32.73
-     - 0.95
+     - 31.75
      - 138
      - 299
      - 512x512x3
@@ -426,7 +426,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov5xs_wo_spp_nms_core.hef>`_    
    * - yolov6n   
      - 34.29
-     - 1.82
+     - 32.48
      - 355
      - 355
      - 640x640x3
@@ -437,7 +437,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov6n.hef>`_    
    * - yolov6n_0.2.1   
      - 35.16
-     - 1.03
+     - 33.98
      - 160
      - 339
      - 640x640x3
@@ -448,7 +448,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov6n_0.2.1.hef>`_    
    * - yolov6n_0.2.1_nms_core   
      - 35.16
-     - 1.0
+     - 34.05
      - 69
      - 120
      - 640x640x3
@@ -459,7 +459,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov6n_0.2.1_nms_core.hef>`_    
    * - yolov7   
      - 50.6
-     - 1.71
+     - 48.75
      - 25
      - 35
      - 640x640x3
@@ -470,7 +470,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov7.hef>`_    
    * - yolov7_tiny   
      - 37.07
-     - 0.84
+     - 36.28
      - 115
      - 197
      - 640x640x3
@@ -481,7 +481,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov7_tiny.hef>`_    
    * - yolov7e6   
      - 55.37
-     - 2.19
+     - 53.69
      - 4
      - 5
      - 1280x1280x3
@@ -492,7 +492,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov7e6.hef>`_    
    * - yolov8l   
      - 52.44
-     - 0.59
+     - 51.78
      - 19
      - 27
      - 640x640x3
@@ -503,7 +503,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov8l.hef>`_     
    * - yolov8m  |star| 
      - 49.91
-     - 0.74
+     - 49.11
      - 38
      - 60
      - 640x640x3
@@ -514,7 +514,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov8m.hef>`_    
    * - yolov8n   
      - 37.02
-     - 0.61
+     - 36.43
      - 182
      - 464
      - 640x640x3
@@ -525,7 +525,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov8n.hef>`_    
    * - yolov8s   
      - 44.58
-     - 0.5
+     - 43.9
      - 88
      - 151
      - 640x640x3
@@ -536,7 +536,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov8s.hef>`_    
    * - yolov8x   
      - 53.45
-     - 0.7
+     - 52.92
      - 11
      - 14
      - 640x640x3
@@ -547,7 +547,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov8x.hef>`_    
    * - yolov9c   
      - 52.6
-     - 1.27
+     - 51.25
      - 18
      - 27
      - 640x640x3
@@ -558,7 +558,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolov9c.hef>`_     
    * - yolox_l_leaky  |star| 
      - 48.68
-     - 2.16
+     - 46.53
      - 20
      - 27
      - 640x640x3
@@ -569,7 +569,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolox_l_leaky.hef>`_    
    * - yolox_s_leaky   
      - 38.13
-     - 0.86
+     - 37.31
      - 107
      - 216
      - 640x640x3
@@ -580,7 +580,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolox_s_leaky.hef>`_    
    * - yolox_s_wide_leaky   
      - 42.0
-     - 1.0
+     - 40.0
      - 49
      - 70
      - 640x640x3
@@ -591,7 +591,7 @@ COCO
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/yolox_s_wide_leaky.hef>`_    
    * - yolox_tiny   
      - 32.64
-     - 1.21
+     - 31.39
      - 155
      - 334
      - 416x416x3

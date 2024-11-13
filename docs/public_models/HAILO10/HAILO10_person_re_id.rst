@@ -30,7 +30,7 @@ Market1501
 
    * - Network Name
      - rank1
-     - Quantized
+     - HW Accuracy
      - FPS
      - Input Resolution (HxWxC)
      - Params (M)
@@ -40,7 +40,7 @@ Market1501
      - Compiled    
    * - osnet_x1_0   
      - 94.43
-     - 0.76
+     - 93.67
      - 0
      - 256x128x3
      - 2.19
@@ -50,7 +50,7 @@ Market1501
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/osnet_x1_0.hef>`_     
    * - repvgg_a0_person_reid_512  |star| 
      - 89.9
-     - 0.37
+     - 89.29
      - 0
      - 256x128x3
      - 7.68

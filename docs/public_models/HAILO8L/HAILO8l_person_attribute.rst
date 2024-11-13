@@ -17,12 +17,12 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. _Face Attribute:
+.. _Person Attribute:
 
---------------
+----------------
 
-CELEBA
-^^^^^^
+PETA
+^^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7
@@ -30,7 +30,7 @@ CELEBA
 
    * - Network Name
      - Mean Accuracy
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -39,14 +39,14 @@ CELEBA
      - Pretrained
      - Source
      - Compiled    
-   * - face_attr_resnet_v1_18   
-     - 81.19
-     - 0.35
-     - 670
-     - 670
-     - 218x178x3
-     - 11.74
-     - 3
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_
-     - `link <https://github.com/d-li14/face-attribute-prediction>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/face_attr_resnet_v1_18.hef>`_
+   * - person_attr_resnet_v1_18   
+     - 82.5
+     - 82.42
+     - 1062
+     - 1062
+     - 224x224x3
+     - 11.19
+     - 3.64
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip>`_
+     - `link <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/person_attr_resnet_v1_18.hef>`_

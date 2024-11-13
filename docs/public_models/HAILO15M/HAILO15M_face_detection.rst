@@ -30,7 +30,7 @@ WiderFace
 
    * - Network Name
      - mAP
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ WiderFace
      - Compiled     
    * - lightface_slim  |star| 
      - 39.7
-     - 0.5
-     - 0
+     - 39.2
      - 710
+     - 1656
      - 240x320x3
      - 0.26
      - 0.16
@@ -52,9 +52,9 @@ WiderFace
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/lightface_slim.hef>`_/`nv12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/lightface_slim_nv12.hef>`_    
    * - retinaface_mobilenet_v1   
      - 81.27
-     - 0.04
-     - 0
+     - 81.23
      - 49
+     - 63
      - 736x1280x3
      - 3.49
      - 25.14
@@ -63,9 +63,9 @@ WiderFace
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/retinaface_mobilenet_v1.hef>`_    
    * - scrfd_10g   
      - 82.13
-     - 0.06
-     - 0
+     - 82.07
      - 91
+     - 131
      - 640x640x3
      - 4.23
      - 26.74
@@ -74,9 +74,9 @@ WiderFace
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/scrfd_10g.hef>`_    
    * - scrfd_2.5g   
      - 76.59
-     - 0.2
-     - 0
+     - 76.38
      - 212
+     - 346
      - 640x640x3
      - 0.82
      - 6.88
@@ -85,9 +85,9 @@ WiderFace
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/scrfd_2.5g.hef>`_    
    * - scrfd_500m   
      - 68.98
-     - 0.14
-     - 0
+     - 68.84
      - 238
+     - 392
      - 640x640x3
      - 0.63
      - 1.5

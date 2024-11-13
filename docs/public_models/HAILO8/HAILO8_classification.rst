@@ -30,7 +30,7 @@ ImageNet
 
    * - Network Name
      - Accuracy (top1)
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ ImageNet
      - Compiled    
    * - cas_vit_m   
      - 81.2
-     - 0.19
+     - 81.01
      - 36
      - 106
      - 384x384x3
@@ -52,7 +52,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/cas_vit_m.hef>`_    
    * - cas_vit_s   
      - 79.93
-     - 0.25
+     - 79.75
      - 52
      - 155
      - 384x384x3
@@ -63,7 +63,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/cas_vit_s.hef>`_    
    * - cas_vit_t   
      - 81.9
-     - 0.29
+     - 81.58
      - 23
      - 63
      - 384x384x3
@@ -74,7 +74,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/cas_vit_t.hef>`_    
    * - deit_base   
      - 80.93
-     - 0.58
+     - 80.19
      - 28
      - 107
      - 224x224x3
@@ -85,7 +85,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/deit_base.hef>`_    
    * - deit_small   
      - 76.25
-     - -0.74
+     - 75.38
      - 38
      - 125
      - 224x224x3
@@ -96,7 +96,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/deit_small.hef>`_    
    * - deit_tiny   
      - 69.07
-     - 0.62
+     - 68.62
      - 74
      - 302
      - 224x224x3
@@ -107,7 +107,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/deit_tiny.hef>`_    
    * - efficientnet_l   
      - 80.47
-     - 1.17
+     - 79.3
      - 221
      - 221
      - 300x300x3
@@ -118,7 +118,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_l.hef>`_    
    * - efficientnet_lite0   
      - 74.99
-     - 1.14
+     - 73.85
      - 1731
      - 1731
      - 224x224x3
@@ -129,7 +129,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_lite0.hef>`_    
    * - efficientnet_lite1   
      - 76.67
-     - 0.37
+     - 76.3
      - 934
      - 934
      - 240x240x3
@@ -140,7 +140,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_lite1.hef>`_    
    * - efficientnet_lite2   
      - 77.46
-     - 0.73
+     - 76.73
      - 429
      - 429
      - 260x260x3
@@ -151,7 +151,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_lite2.hef>`_    
    * - efficientnet_lite3   
      - 79.29
-     - 0.63
+     - 78.66
      - 223
      - 223
      - 280x280x3
@@ -162,7 +162,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_lite3.hef>`_    
    * - efficientnet_lite4   
      - 80.79
-     - 0.71
+     - 80.08
      - 85
      - 250
      - 300x300x3
@@ -173,7 +173,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_lite4.hef>`_      
    * - efficientnet_m |rocket|  
      - 78.91
-     - 0.43
+     - 78.48
      - 984
      - 984
      - 240x240x3
@@ -184,7 +184,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_m.hef>`_    
    * - efficientnet_s   
      - 77.63
-     - 0.33
+     - 77.3
      - 1036
      - 1036
      - 224x224x3
@@ -195,7 +195,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/efficientnet_s.hef>`_    
    * - fastvit_sa12   
      - 76.8
-     - 0.1
+     - 76.49
      - 273
      - 273
      - 224x224x3
@@ -206,7 +206,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/fastvit_sa12.hef>`_    
    * - hardnet39ds   
      - 73.43
-     - 0.44
+     - 73.01
      - 333
      - 1296
      - 224x224x3
@@ -217,7 +217,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/hardnet39ds.hef>`_    
    * - hardnet68   
      - 75.47
-     - 0.26
+     - 75.27
      - 123
      - 358
      - 224x224x3
@@ -228,7 +228,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/hardnet68.hef>`_    
    * - inception_v1   
      - 69.74
-     - 0.21
+     - 69.52
      - 928
      - 928
      - 224x224x3
@@ -239,7 +239,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/inception_v1.hef>`_    
    * - mobilenet_v1   
      - 70.97
-     - 0.69
+     - 70.3
      - 3100
      - 3100
      - 224x224x3
@@ -250,7 +250,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mobilenet_v1.hef>`_      
    * - mobilenet_v2_1.0 |rocket|  
      - 71.78
-     - 0.86
+     - 70.95
      - 2596
      - 2596
      - 224x224x3
@@ -261,7 +261,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mobilenet_v2_1.0.hef>`_    
    * - mobilenet_v2_1.4   
      - 74.18
-     - 0.93
+     - 73.18
      - 1668
      - 1668
      - 224x224x3
@@ -272,7 +272,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mobilenet_v2_1.4.hef>`_    
    * - mobilenet_v3   
      - 72.21
-     - 0.4
+     - 71.8
      - 2400
      - 2401
      - 224x224x3
@@ -283,7 +283,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mobilenet_v3.hef>`_    
    * - mobilenet_v3_large_minimalistic   
      - 72.12
-     - 1.52
+     - 70.61
      - 3005
      - 3005
      - 224x224x3
@@ -294,7 +294,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/mobilenet_v3_large_minimalistic.hef>`_    
    * - regnetx_1.6gf   
      - 77.05
-     - 0.28
+     - 76.71
      - 2321
      - 2321
      - 224x224x3
@@ -305,7 +305,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/regnetx_1.6gf.hef>`_    
    * - regnetx_800mf   
      - 75.16
-     - 0.33
+     - 74.83
      - 3505
      - 3505
      - 224x224x3
@@ -316,7 +316,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/regnetx_800mf.hef>`_    
    * - repghost_1_0x   
      - 73.03
-     - 0.78
+     - 72.28
      - 205
      - 861
      - 224x224x3
@@ -327,7 +327,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/repghost_1_0x.hef>`_    
    * - repghost_2_0x   
      - 77.18
-     - 0.3
+     - 76.91
      - 115
      - 480
      - 224x224x3
@@ -338,7 +338,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/repghost_2_0x.hef>`_    
    * - repvgg_a1   
      - 74.4
-     - 1.7
+     - 72.35
      - 2545
      - 2545
      - 224x224x3
@@ -349,7 +349,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/repvgg_a1.hef>`_    
    * - repvgg_a2   
      - 76.52
-     - 2.04
+     - 74.48
      - 911
      - 911
      - 224x224x3
@@ -360,7 +360,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/repvgg_a2.hef>`_    
    * - resmlp12_relu   
      - 75.27
-     - 0.33
+     - 74.87
      - 1429
      - 1429
      - 224x224x3
@@ -371,7 +371,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resmlp12_relu.hef>`_    
    * - resnet_v1_18   
      - 71.27
-     - 0.52
+     - 71.09
      - 2533
      - 2533
      - 224x224x3
@@ -382,7 +382,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resnet_v1_18.hef>`_    
    * - resnet_v1_34   
      - 72.7
-     - 0.51
+     - 72.27
      - 1346
      - 1346
      - 224x224x3
@@ -393,7 +393,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resnet_v1_34.hef>`_       
    * - resnet_v1_50 |rocket| |star| 
      - 75.21
-     - 0.63
+     - 74.67
      - 1371
      - 1371
      - 224x224x3
@@ -404,7 +404,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resnet_v1_50.hef>`_    
    * - resnext26_32x4d   
      - 76.17
-     - 0.22
+     - 75.94
      - 1630
      - 1630
      - 224x224x3
@@ -415,7 +415,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resnext26_32x4d.hef>`_    
    * - resnext50_32x4d   
      - 79.3
-     - 0.97
+     - 78.4
      - 414
      - 414
      - 224x224x3
@@ -426,7 +426,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/resnext50_32x4d.hef>`_    
    * - squeezenet_v1.1   
      - 59.85
-     - 0.55
+     - 59.39
      - 3034
      - 3034
      - 224x224x3
@@ -437,7 +437,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/squeezenet_v1.1.hef>`_    
    * - vit_base   
      - 84.5
-     - 1.33
+     - 83.16
      - 23
      - 72
      - 224x224x3
@@ -448,7 +448,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_base.hef>`_      
    * - vit_base_bn |rocket|  
      - 79.98
-     - 0.71
+     - 78.82
      - 39
      - 139
      - 224x224x3
@@ -459,7 +459,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_base_bn.hef>`_    
    * - vit_small   
      - 81.5
-     - 1.49
+     - 79.91
      - 48
      - 187
      - 224x224x3
@@ -470,7 +470,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_small.hef>`_    
    * - vit_small_bn   
      - 78.12
-     - 1.03
+     - 77.24
      - 128
      - 617
      - 224x224x3
@@ -481,7 +481,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_small_bn.hef>`_    
    * - vit_tiny   
      - 75.51
-     - 1.62
+     - 73.6
      - 75
      - 303
      - 224x224x3
@@ -492,7 +492,7 @@ ImageNet
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/vit_tiny.hef>`_    
    * - vit_tiny_bn   
      - 68.95
-     - 1.81
+     - 67.28
      - 191
      - 1033
      - 224x224x3

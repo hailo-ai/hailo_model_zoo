@@ -30,7 +30,7 @@ BSD100
 
    * - Network Name
      - PSNR
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,8 +41,8 @@ BSD100
      - Compiled    
    * - espcn_x2   
      - 31.22
-     - 0.46
-     - 0
+     - 30.77
+     - 1679
      - 1679
      - 156x240x1
      - 0.02
@@ -52,8 +52,8 @@ BSD100
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/espcn_x2.hef>`_    
    * - espcn_x3   
      - 28.29
-     - 0.17
-     - 0
+     - 28.12
+     - 1924
      - 1924
      - 104x160x1
      - 0.02
@@ -63,9 +63,9 @@ BSD100
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/espcn_x3.hef>`_    
    * - espcn_x4   
      - 26.83
-     - 0.18
-     - 0
+     - 26.65
      - 1908
+     - 1907
      - 78x120x1
      - 0.02
      - 0.46

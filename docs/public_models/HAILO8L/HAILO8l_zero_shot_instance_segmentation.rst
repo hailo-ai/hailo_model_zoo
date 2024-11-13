@@ -17,20 +17,20 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. _Low Light Enhancement:
+.. _zero-shot instance segmentation:
 
----------------------
+-------------------------------
 
-LOL
-^^^
+COCO
+^^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
-     - PSNR
-     - Quantized
+     - AR1000
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -39,25 +39,14 @@ LOL
      - Pretrained
      - Source
      - Compiled    
-   * - zero_dce   
-     - 16.23
-     - -0.01
-     - 70
-     - 69
-     - 400x600x3
-     - 0.21
-     - 38.2
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_
-     - `link <Internal>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/zero_dce.hef>`_    
-   * - zero_dce_pp   
-     - 15.95
-     - 0.03
-     - 43
-     - 43
-     - 400x600x3
-     - 0.02
-     - 4.84
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_
-     - `link <Internal>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/zero_dce_pp.hef>`_
+   * - fast_sam_s   
+     - 40.1
+     - 38.53
+     - 29
+     - 35
+     - 640x640x3
+     - 11.1
+     - 42.4
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_
+     - `link <https://github.com/CASIA-IVA-Lab/FastSAM>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/fast_sam_s.hef>`_

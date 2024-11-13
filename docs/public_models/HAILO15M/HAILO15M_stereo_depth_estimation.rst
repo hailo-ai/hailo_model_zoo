@@ -23,14 +23,11 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 KITTI Stereo 2015
 ^^^^^^^^^^^^^^^^^
-
+    
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
-     - EPE
-     - Quantized
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -40,8 +37,6 @@ KITTI Stereo 2015
      - Source
      - Compiled    
    * - stereonet   
-     - 91.79
-     - 89.71
      - 0
      - 0
      - 368x1232x3, 368x1232x3

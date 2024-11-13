@@ -30,7 +30,7 @@ CELEBA
 
    * - Network Name
      - Mean Accuracy
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,7 +41,7 @@ CELEBA
      - Compiled    
    * - face_attr_resnet_v1_18   
      - 81.19
-     - 0.35
+     - 80.96
      - 2928
      - 2928
      - 218x178x3

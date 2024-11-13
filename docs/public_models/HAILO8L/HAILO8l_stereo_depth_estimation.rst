@@ -17,20 +17,20 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. _zero-shot instance segmentation:
+.. _Stereo Depth Estimation:
 
--------------------------------
+-----------------------
 
-COCO
-^^^^
+KITTI Stereo 2015
+^^^^^^^^^^^^^^^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
-     - AR1000
-     - Quantized
+     - EPE
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -39,14 +39,14 @@ COCO
      - Pretrained
      - Source
      - Compiled    
-   * - fast_sam_s   
-     - 40.1
-     - 1.22
-     - 29
-     - 35
-     - 640x640x3
-     - 11.1
-     - 42.4
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_
-     - `link <https://github.com/CASIA-IVA-Lab/FastSAM>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/fast_sam_s.hef>`_
+   * - stereonet   
+     - 91.79
+     - 89.71
+     - 0
+     - 0
+     - 368x1232x3, 368x1232x3
+     - 5.91
+     - 126.28
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_
+     - `link <https://github.com/nivosco/StereoNet>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/stereonet.hef>`_

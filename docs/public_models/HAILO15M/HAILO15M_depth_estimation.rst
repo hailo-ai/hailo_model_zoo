@@ -30,7 +30,7 @@ NYU
 
    * - Network Name
      - RMSE
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ NYU
      - Compiled       
    * - fast_depth  |star| 
      - 0.6
-     - 1.21
-     - 0
+     - 0.61
      - 350
+     - 754
      - 224x224x3
      - 1.35
      - 0.74
@@ -52,9 +52,9 @@ NYU
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/fast_depth.hef>`_      
    * - scdepthv3   
      - 0.48
-     - 0.96
-     - 0
+     - 0.48
      - 158
+     - 279
      - 256x320x3
      - 14.8
      - 10.7

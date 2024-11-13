@@ -30,7 +30,7 @@ CIFAR100
 
    * - Network Name
      - Accuracy (top1)
-     - Quantized
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -41,9 +41,9 @@ CIFAR100
      - Compiled    
    * - clip_resnet_50   
      - 42.07
-     - 2.75
-     - 2
+     - 39.32
      - 93
+     - 204
      - 224x224x3
      - 38.72
      - 11.62
@@ -52,9 +52,9 @@ CIFAR100
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15m/clip_resnet_50.hef>`_    
    * - clip_resnet_50x4   
      - 50.31
-     - 2.41
-     - 2
+     - 47.9
      - 32
+     - 61
      - 288x288x3
      - 87.0
      - 41.3

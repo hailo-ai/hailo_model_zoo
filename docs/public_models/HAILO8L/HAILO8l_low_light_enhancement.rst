@@ -17,20 +17,20 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. _Stereo Depth Estimation:
+.. _Low Light Enhancement:
 
------------------------
+---------------------
 
-KITTI Stereo 2015
-^^^^^^^^^^^^^^^^^
+LOL
+^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 7 7 7
    :header-rows: 1
 
    * - Network Name
-     - EPE
-     - Quantized
+     - PSNR
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -39,14 +39,25 @@ KITTI Stereo 2015
      - Pretrained
      - Source
      - Compiled    
-   * - stereonet   
-     - 91.79
-     - 89.71
-     - 0
-     - 0
-     - 368x1232x3, 368x1232x3
-     - 5.91
-     - 126.28
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_
-     - `link <https://github.com/nivosco/StereoNet>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/stereonet.hef>`_
+   * - zero_dce   
+     - 16.23
+     - 16.22
+     - 70
+     - 69
+     - 400x600x3
+     - 0.21
+     - 38.2
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_
+     - `link <Internal>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/zero_dce.hef>`_    
+   * - zero_dce_pp   
+     - 15.95
+     - 15.92
+     - 43
+     - 43
+     - 400x600x3
+     - 0.02
+     - 4.84
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_
+     - `link <Internal>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8l/zero_dce_pp.hef>`_

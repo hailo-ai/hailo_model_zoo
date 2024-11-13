@@ -39,7 +39,7 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 def main():
     reqs = [
         "numba",
-        "imageio==2.9.0",
+        "imageio>=2.9.0",
         "matplotlib",
         "numpy",
         "opencv-python",
@@ -48,13 +48,12 @@ def main():
         "termcolor",
         "tqdm",
         "pycocotools",
-        "lap==0.4.0",
-        "motmetrics==1.2.5",
-        "omegaconf==2.3.0",
-        "pillow<=9.2.0",
-        "detection-tools==0.3",
-        "scikit-image==0.19.3",
-        "nuscenes-devkit==1.1.10",
+        "motmetrics>=1.2.5",
+        "omegaconf>=2.3.0",
+        "pillow>=9.2.0",
+        "detection-tools>=0.3",
+        "scikit-image>=0.19.3",
+        "nuscenes-devkit>=1.1.10",
     ]
 
     model_zoo_version = "2.13.0"

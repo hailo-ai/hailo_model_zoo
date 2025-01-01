@@ -7,11 +7,6 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_50/2024-03-05/detr_resnet_v1_50.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_50/2024-03-05/detr_resnet_v1_50.zip
-parser:
-  nodes:
-  - test_input
-  - - /class_embed/Add
-    - /Sigmoid
 info:
   task: object detection
   input_shape: 800x800x3

@@ -134,6 +134,12 @@ class Box3D:
         return self.tensor.shape[0]
 
 
+def _tf_to_numpy(tensor):
+    if hasattr(tensor, "numpy"):
+        tensor = tensor.numpy()
+    return tensor
+
+
 def output_to_nusc_box(detection):
     """Convert the output to the box class in the nuScenes.
 
@@ -148,12 +154,17 @@ def output_to_nusc_box(detection):
         list[:obj:`NuScenesBox`]: List of standard NuScenesBoxes.
     """
     box3d = Box3D(detection["boxes_3d"])
-    scores = detection["scores_3d"].numpy()
-    labels = detection["labels_3d"].numpy()
+    scores = detection["scores_3d"]
+    labels = detection["labels_3d"]
 
     box_gravity_center = box3d.gravity_center
-    box_dims = box3d.dims.numpy()
-    box_yaw = box3d.yaw.numpy()
+    box_dims = box3d.dims
+    box_yaw = box3d.yaw
+
+    scores = _tf_to_numpy(scores)
+    labels = _tf_to_numpy(labels)
+    box_dims = _tf_to_numpy(box_dims)
+    box_yaw = _tf_to_numpy(box_yaw)
 
     # TODO: check whether this is necessary
     # with dir_offset & dir_limit in the head
@@ -398,3 +409,120 @@ class PETRv2BackboneEval(Eval):
 
     def reset(self):
         return
+
+
+class PETRv2EvalCascade(Eval):
+    def __init__(self, **kwargs):
+        self.version = "v1.0-trainval"
+        self.eval_version = "detection_cvpr_2019"
+        self.eval_detection_configs = config_factory(self.eval_version)
+        self.DefaultAttribute = DefaultAttribute
+        self.dataroot = str(kwargs.get("gt_json_path", None))
+
+        self.modality = {
+            "use_lidar": False,
+            "use_camera": True,
+            "use_radar": False,
+            "use_map": False,
+            "use_external": True,
+        }
+        dataset_name = kwargs.get("dataset_name", None)
+        dataset_info = get_dataset_info(dataset_name=dataset_name)
+        self.classes = dataset_info.class_names
+        self.reset()
+
+    def _parse_net_output(self, net_output):
+        return net_output["predictions"]
+
+    def update_op(self, net_output, img_info):
+        net_output = self._parse_net_output(net_output)
+        dets = []
+        boxes = output_to_nusc_box(net_output)
+
+        data_info = {
+            "lidar2ego_rotation": img_info["lidar2ego_rotation"],
+            "lidar2ego_translation": img_info["lidar2ego_translation"],
+            "ego2global_rotation": img_info["ego2global_rotation"],
+            "ego2global_translation": img_info["ego2global_translation"],
+        }
+        sample_token = img_info["token"].decode("utf-8")
+        boxes = lidar_nusc_box_to_global(data_info, boxes, self.classes, self.eval_detection_configs, self.eval_version)
+
+        for _, box in enumerate(boxes):
+            name = self.classes[box.label]
+            if np.sqrt(box.velocity[0] ** 2 + box.velocity[1] ** 2) > 0.2:
+                if name in [
+                    "car",
+                    "construction_vehicle",
+                    "bus",
+                    "truck",
+                    "trailer",
+                ]:
+                    attr = "vehicle.moving"
+                elif name in ["bicycle", "motorcycle"]:
+                    attr = "cycle.with_rider"
+                else:
+                    attr = self.DefaultAttribute[name]
+            else:
+                if name in ["pedestrian"]:
+                    attr = "pedestrian.standing"
+                elif name in ["bus"]:
+                    attr = "vehicle.stopped"
+                else:
+                    attr = self.DefaultAttribute[name]
+
+            nusc_det = {
+                "sample_token": sample_token,
+                "translation": box.center.tolist(),
+                "size": box.wlh.tolist(),
+                "rotation": box.orientation.elements.tolist(),
+                "velocity": box.velocity[:2].tolist(),
+                "detection_name": name,
+                "detection_score": box.score,
+                "attribute_name": attr,
+            }
+            dets.append(nusc_det)
+        self.nusc_dets[sample_token] = dets
+
+    def evaluate(self):
+        nusc_submissions = {
+            "meta": self.modality,
+            "results": self.nusc_dets,
+        }
+
+        self.res_path = os.path.join(os.getcwd(), "results_nusc.json")
+        print("Writing detection results to ", self.res_path)
+        with open(self.res_path, "w") as f:
+            json.dump(nusc_submissions, f)
+
+        output_dir = os.path.join(*os.path.split(self.res_path)[:-1])
+        nusc = NuScenes(
+            version=self.version,
+            dataroot=self.dataroot,
+            verbose=False,
+        )
+        nusc_eval = NuScenesEval(
+            nusc,
+            config=self.eval_detection_configs,
+            result_path=self.res_path,
+            eval_set="val",
+            output_dir=output_dir,
+            verbose=False,
+        )
+        nusc_eval.main(render_curves=False)
+
+        # record metrics
+        metrics = json.load(open(os.path.join(output_dir, "metrics_summary.json"), "rb"))
+
+        self.mAP = metrics["mean_ap"]
+        self.NDS = metrics["nd_score"]
+
+    def _get_accuracy(self):
+        return OrderedDict([("mAP", self.mAP), ("NDS", self.NDS)])
+
+    def reset(self):
+        self.mAP = 0
+        self.NDS = 0
+        self.count = 0
+        self.nusc_dets = {}
+        self.res_path = None

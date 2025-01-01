@@ -15,12 +15,6 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m_spp/pretrained/2023-04-25/yolov5m.zip
-parser:
-  nodes:
-  - images
-  - - Conv_289
-    - Conv_273
-    - Conv_257
 info:
   task: object detection
   input_shape: 640x640x3

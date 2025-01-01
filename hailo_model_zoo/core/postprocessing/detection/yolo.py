@@ -132,8 +132,8 @@ class YoloPostProc(object):
             endnodes = self.reorganize_split_output(endnodes)
 
         for output_ind, output_branch in enumerate(endnodes):  # iterating over the output layers:
-            stride = strides[::-1][output_ind]
-            anchors_for_stride = np.array(anchors_list[::-1][output_ind])
+            stride = strides[output_ind]
+            anchors_for_stride = np.array(anchors_list[output_ind])
             anchors_for_stride = np.reshape(anchors_for_stride, (1, 1, -1, 2))  # dim [1, 1, 3, 2]
             output_branch_and_data = [output_branch, anchors_for_stride, stride]
             detection_boxes, detection_scores = tf.numpy_function(

@@ -16,12 +16,6 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_50_postprocess/pretrained/2023-07-18/centernet_res50_with_postprocess.tflite
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/centernet/centernet_resnet_v1_50_postprocess/pretrained/2023-07-18/centernet_resnet_v1_50_postprocess.zip
-parser:
-  nodes:
-  - zero_padding2d/Pad
-  - - centernet0_conv3/BiasAdd
-    - centernet0_conv5/BiasAdd
-    - threshold_confidence/threshold_activation/threshold_confidence/re_lu/Relu
 info:
   task: object detection
   input_shape: 512x512x3

@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.29.0
+* All models were compiled using Hailo Dataflow Compiler v3.30.0
 
 
 
@@ -25,7 +25,7 @@ PETA
 ^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
@@ -38,15 +38,17 @@ PETA
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
+     - Compiled
+     - Profile Html    
    * - person_attr_resnet_v1_18   
      - 82.5
-     - 82.39
+     - 82.41
      - 2523
-     - 2522
+     - 2523
      - 224x224x3
      - 11.19
      - 3.64
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip>`_
      - `link <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo8/person_attr_resnet_v1_18.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/person_attr_resnet_v1_18.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/person_attr_resnet_v1_18_profiler_results_compiled.html>`_

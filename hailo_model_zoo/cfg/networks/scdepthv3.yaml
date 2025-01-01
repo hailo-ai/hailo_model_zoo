@@ -15,9 +15,6 @@ paths:
   - models_files/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip
 parser:
-  nodes:
-  - null
-  - Conv_265
   normalization_params:
     normalize_in_net: true
     mean_list:

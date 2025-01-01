@@ -49,31 +49,34 @@ def model_infer_lite(
             return model(data, training=False)
 
         num_of_images = 0
+        try:
+            for preprocessed_data, img_info in batched_dataset:
+                output_tensors = predict_function(preprocessed_data)
+                if np_infer:
+                    output_tensors = to_numpy(output_tensors)
+                    img_info = to_numpy(img_info)
+                logits_batch = postprocessing_callback(output_tensors, gt_images=img_info)
+                current_batch_size = (
+                    output_tensors[0].shape[0] if isinstance(output_tensors, list) else output_tensors.shape[0]
+                )
+                num_of_images += current_batch_size
+                if writer:
+                    logits_batch = to_numpy(logits_batch)
+                    image_info = to_numpy(img_info)
+                    writer.visualize(logits_batch, image_info)
 
-        for preprocessed_data, img_info in batched_dataset:
-            output_tensors = predict_function(preprocessed_data)
-            if np_infer:
-                output_tensors = to_numpy(output_tensors)
-                img_info = to_numpy(img_info)
-            logits_batch = postprocessing_callback(output_tensors, gt_images=img_info)
-            current_batch_size = (
-                output_tensors[0].shape[0] if isinstance(output_tensors, list) else output_tensors.shape[0]
-            )
-            num_of_images += current_batch_size
-            if writer:
-                logits_batch = to_numpy(logits_batch)
+                if "img_orig" in img_info:
+                    del img_info["img_orig"]
+                if "img_resized" in img_info:
+                    del img_info["img_resized"]
                 image_info = to_numpy(img_info)
-                writer.visualize(logits_batch, image_info)
-
-            if "img_orig" in img_info:
-                del img_info["img_orig"]
-            if "img_resized" in img_info:
-                del img_info["img_resized"]
-            image_info = to_numpy(img_info)
-            if not visualize_callback and not dump_results:
-                logits_batch = to_numpy(logits_batch)
-                eval_metric.update_op(logits_batch, image_info)
-            pbar.update(current_batch_size)
+                if not visualize_callback and not dump_results:
+                    logits_batch = to_numpy(logits_batch)
+                    eval_metric.update_op(logits_batch, image_info)
+                pbar.update(current_batch_size)
+        except KeyboardInterrupt:
+            pbar.close()
+            logger.info("Inference interrupted by user, displaying partial results")
 
     accuracy = None
     if not visualize_callback and not dump_results:

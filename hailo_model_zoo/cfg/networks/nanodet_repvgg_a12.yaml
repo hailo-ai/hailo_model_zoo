@@ -7,18 +7,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a12/pretrained/2024-01-31/nanodet_repvgg_a12_640x640.onnx
   alls_script: nanodet_repvgg_a12.alls
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a12/pretrained/2024-01-31/nanodet_repvgg_a12_640x640.zip
-parser:
-  nodes:
-  - null
-  - - Conv_70
-    - Sigmoid_72
-    - Sigmoid_73
-    - Conv_86
-    - Sigmoid_88
-    - Sigmoid_89
-    - Conv_102
-    - Sigmoid_104
-    - Sigmoid_105
 postprocessing:
   device_pre_post_layers:
     nms: true

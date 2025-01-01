@@ -15,9 +15,6 @@ paths:
   - models_files/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fastdepth.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip
 parser:
-  nodes:
-  - null
-  - null
   normalization_params:
     normalize_in_net: true
     fold_normalization: true

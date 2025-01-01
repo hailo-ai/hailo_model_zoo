@@ -7,12 +7,6 @@ paths:
   network_path:
   - models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.zip
-parser:
-  nodes:
-  - images
-  - - Conv_234
-    - Conv_218
-    - Conv_202
 preprocessing:
   max_pad: 500
 quantization:
@@ -22,6 +16,7 @@ evaluation:
   classes: 2
   dataset_name: personface_detection
   data_set: null
+  validation_data_set: null
 hn_editor:
   yuv2rgb: true
   nv12: true

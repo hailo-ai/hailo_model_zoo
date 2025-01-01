@@ -54,24 +54,29 @@ def model_infer(
         num_of_images = 0
         logits = []
         gt = []
-        for preprocessed_data, img_info in batched_dataset:
-            output_tensors = predict_function(preprocessed_data)
-            if np_infer:
-                output_tensors = to_numpy(output_tensors)
-                img_info = to_numpy(img_info)
-            logits_batch = postprocessing_callback(output_tensors, gt_images=img_info)
-            current_batch_size = (
-                output_tensors[0].shape[0] if isinstance(output_tensors, list) else output_tensors.shape[0]
-            )
-            num_of_images += current_batch_size
-            pbar.update(current_batch_size)
-            logits.append(logits_batch)
-            if not visualize_callback:
-                if "img_orig" in img_info:
-                    del img_info["img_orig"]
-                if "img_resized" in img_info:
-                    del img_info["img_resized"]
-            gt.append(to_numpy(img_info))
+        try:
+            for preprocessed_data, img_info in batched_dataset:
+                output_tensors = predict_function(preprocessed_data)
+                if np_infer:
+                    output_tensors = to_numpy(output_tensors)
+                    img_info = to_numpy(img_info)
+                logits_batch = postprocessing_callback(output_tensors, gt_images=img_info)
+                current_batch_size = (
+                    output_tensors[0].shape[0] if isinstance(output_tensors, list) else output_tensors.shape[0]
+                )
+                num_of_images += current_batch_size
+                pbar.update(current_batch_size)
+                logits.append(logits_batch)
+                if not visualize_callback:
+                    if "img_orig" in img_info:
+                        del img_info["img_orig"]
+                    if "img_resized" in img_info:
+                        del img_info["img_resized"]
+                gt.append(to_numpy(img_info))
+        except KeyboardInterrupt:
+            pbar.close()
+            logger.info("Inference interrupted by user, displaying partial results")
+
     labels_keys = list(gt[0].keys())
     labels = {k: aggregate([p[k] for p in gt]) for k in labels_keys}
     probs = {k: aggregate([p[k] for p in logits]) for k in logits[0].keys()}

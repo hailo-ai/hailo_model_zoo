@@ -8,9 +8,6 @@ paths:
   - models_files/PersonAttr/resnet_v1_18/2022-06-09/person_attr_resnet_v1_18.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip
 parser:
-  nodes:
-  - null
-  - null
   normalization_params:
     normalize_in_net: true
     std_list:
@@ -42,3 +39,5 @@ info:
   eval_metric: Mean Accuracy
   full_precision_result: 82.504
   source: https://github.com/dangweili/pedestrian-attribute-recognition-pytorch
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

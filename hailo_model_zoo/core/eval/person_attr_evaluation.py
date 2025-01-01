@@ -16,20 +16,28 @@ class PersonAttrEval(Eval):
         self.reset()
 
     def reset(self):
-        self.gt_pos = np.zeros((self.num_attributes,))
-        self.gt_neg = np.zeros((self.num_attributes,))
-        self.pt_pos = np.zeros((self.num_attributes,))
-        self.pt_neg = np.zeros((self.num_attributes,))
+        shape = (1, 1, 1, self.num_attributes)
+        self.gt_pos = np.zeros(shape)
+        self.gt_neg = np.zeros(shape)
+        self.pt_pos = np.zeros(shape)
+        self.pt_neg = np.zeros(shape)
         self.top1 = []
 
     def _parse_net_output(self, net_output):
-        return net_output["predictions"]
+        predictions = net_output["predictions"]
+        if len(predictions.shape) == 2:
+            # expands rank2 output to rank4 output
+            predictions = predictions[:, None, None, :]
+        return predictions
 
     def update_op(self, net_output, img_info):
         net_output = self._parse_net_output(net_output)
         label_index = img_info["attributes"]
+
         preds = np.array(net_output >= 0, np.int64)
-        gt = label_index[:, : self.num_attributes]
+        # expands gt to match the shape of the predictions (rank4 output)
+        gt = label_index[:, None, None, : self.num_attributes]
+
         self.gt_pos += np.sum(gt == 1, axis=0)
         self.gt_neg += np.sum(gt == 0, axis=0)
         self.pt_pos += np.sum((gt == 1).astype(float) * (preds == 1).astype(float), axis=0)

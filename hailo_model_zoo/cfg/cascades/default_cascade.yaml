@@ -1,0 +1,7 @@
+results_dir: "./"
+models: {}
+cascade: ""
+target: full_precision
+pipe_kwargs:
+  batch_size: 1
+  eval_num_examples: null

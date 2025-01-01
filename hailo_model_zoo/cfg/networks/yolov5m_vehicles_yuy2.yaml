@@ -22,12 +22,6 @@ paths:
   network_path:
   - models_files/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/2023-04-25/yolov5m_vehicles.zip
-parser:
-  nodes:
-  - images
-  - - Conv_289
-    - Conv_273
-    - Conv_257
 evaluation:
   labels_offset: 0
   classes: 1
@@ -41,4 +35,4 @@ info:
   parameters: 21.47M
   framework: pytorch
   eval_metric: mAP
-  full_precision_result: 44.69
+  full_precision_result: 46.05

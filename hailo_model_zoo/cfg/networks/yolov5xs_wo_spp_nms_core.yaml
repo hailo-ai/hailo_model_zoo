@@ -12,12 +12,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2022-05-10/yolov5s512.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2022-05-10/yolov5xs_wo_spp_nms.zip
   alls_script: yolov5xs_wo_spp_nms_core.alls
-parser:
-  nodes:
-  - null
-  - - Conv_252
-    - Conv_235
-    - Conv_218
 postprocessing:
   device_pre_post_layers:
     nms: true
@@ -32,7 +26,7 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 32.57
+  full_precision_result: 32.72
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
   license_name: GPL-3.0

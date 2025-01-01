@@ -7,10 +7,6 @@ paths:
   - models_files/Classification/vit_tiny_bn/pretrained/2023-08-29/vit_tiny_patch16_224_un.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_tiny_bn/pretrained/2023-08-29/vit_tiny_bn.zip
   alls_script: vit_tiny_bn.alls
-parser:
-  nodes:
-  - input.1
-  - '1230'
 evaluation:
   infer_type: runner_infer
 info:

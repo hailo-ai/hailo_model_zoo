@@ -23,9 +23,6 @@ parser:
     - 0.0
     - 0.0
     - 0.0
-  nodes:
-  - input_2
-  - - Identity
 postprocessing:
   device_pre_post_layers:
     max_finder: false

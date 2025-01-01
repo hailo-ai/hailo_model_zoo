@@ -9,21 +9,21 @@ postprocessing:
   meta_arch: yolo_v3
   anchors:
     strides:
-    - 16
     - 32
+    - 16
     sizes:
-    - - 23
-      - 27
-      - 37
-      - 58
-      - 81
-      - 82
     - - 81
       - 82
       - 135
       - 169
       - 344
       - 319
+    - - 23
+      - 27
+      - 37
+      - 58
+      - 81
+      - 82
 network:
   network_name: tiny_yolov3
 paths:

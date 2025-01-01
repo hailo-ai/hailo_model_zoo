@@ -10,12 +10,6 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr_simp.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_c3tr/pretrained/2023-04-25/yolov5s_c3tr.zip
-parser:
-  nodes:
-  - images
-  - - Conv_383
-    - Conv_332
-    - Conv_281
 postprocessing:
   device_pre_post_layers:
     nms: true

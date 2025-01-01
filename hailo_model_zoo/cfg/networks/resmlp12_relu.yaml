@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/resmlp12_relu/pretrained/2022-03-03/resmlp_12_224_bn_relu.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resmlp12_relu/pretrained/2022-03-03/resmlp12_relu.zip
-parser:
-  nodes:
-  - input.1
-  - '404'
 preprocessing:
   network_type: classification
   meta_arch: resmlp

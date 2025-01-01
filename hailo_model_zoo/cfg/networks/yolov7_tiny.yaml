@@ -14,12 +14,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov7_tiny/pretrained/2023-04-25/yolov7_tiny.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov7_tiny/pretrained/2023-04-25/yolov7_tiny.zip
   alls_script: yolov7_tiny.alls
-parser:
-  nodes:
-  - null
-  - - Conv_166
-    - Conv_150
-    - Conv_134
 info:
   task: object detection
   input_shape: 640x640x3

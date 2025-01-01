@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/regnetx_800mf/pretrained/2021-07-11/RegNetX-800MF_dds_8gpu.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/regnetx_800mf/pretrained/2021-07-11/regnetx_800mf.zip
-parser:
-  nodes:
-  - input.1
-  - Softmax_179
 info:
   task: classification
   input_shape: 224x224x3

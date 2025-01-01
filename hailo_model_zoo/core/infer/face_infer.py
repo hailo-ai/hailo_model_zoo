@@ -27,7 +27,7 @@ def facenet_infer(
         iterator = data_feed_callback()
         [preprocessed_data, image_info] = iterator.get_next()
         preprocessed_data = tf.reshape(
-            tf.concat([preprocessed_data, tf.image.flip_left_right(preprocessed_data)], axis=1),
+            tf.concat([preprocessed_data, tf.image.flip_left_right(preprocessed_data)], axis=-1),
             [-1, int(preprocessed_data.shape[1]), int(preprocessed_data.shape[2]), 3],
         )
         image_info = image_info["image_name"], image_info["is_same"]

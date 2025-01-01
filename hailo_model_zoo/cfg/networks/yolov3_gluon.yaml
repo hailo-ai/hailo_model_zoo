@@ -38,9 +38,9 @@ paths:
 parser:
   nodes:
   - zero_padding2d/Pad
-  - - yolov30_yolooutputv30_conv0/BiasAdd
+  - - yolov30_yolooutputv32_conv0/BiasAdd
     - yolov30_yolooutputv31_conv0/BiasAdd
-    - yolov30_yolooutputv32_conv0/BiasAdd
+    - yolov30_yolooutputv30_conv0/BiasAdd
   normalization_params:
     std_list:
     - 58.395

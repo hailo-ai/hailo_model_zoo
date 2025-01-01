@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.29.0
+* All models were compiled using Hailo Dataflow Compiler v3.30.0
 
 
 
@@ -25,54 +25,62 @@ BSD68
 ^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
      - PSNR
      - HW Accuracy
-     - FPS
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
+     - Compiled
+     - Profile Html    
    * - dncnn3   
      - 31.46
-     - 31.27
-     - 0
+     - 31.32
+     - 21
+     - 22
      - 321x481x1
      - 0.66
      - 205.26
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/dncnn3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15h/dncnn3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15h/dncnn3_profiler_results_compiled.html>`_
 
 CBSD68
 ^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7
+   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
    :header-rows: 1
 
    * - Network Name
      - PSNR
      - HW Accuracy
-     - FPS
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
      - Pretrained
      - Source
-     - Compiled    
+     - Compiled
+     - Profile Html    
    * - dncnn_color_blind   
      - 33.87
-     - 32.98
-     - 0
+     - 33.05
+     - 21
+     - 22
      - 321x481x3
      - 0.66
      - 205.97
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.13.0/hailo15h/dncnn_color_blind.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15h/dncnn_color_blind.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15h/dncnn_color_blind_profiler_results_compiled.html>`_

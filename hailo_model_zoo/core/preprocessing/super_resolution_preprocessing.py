@@ -71,7 +71,7 @@ def srgan(image, image_info, height, width, output_shapes=None, **kwargs):
     """
     if width and height:
         image = tf.expand_dims(image, axis=0)
-        image = tf.image.resize_with_crop_or_pad(image, height, width)
+        image = tf.image.resize(image, (height, width))
         image = tf.cast(tf.squeeze(image, axis=0), tf.float32)
         if image_info:
             image_info["img_orig"] = image
@@ -79,7 +79,7 @@ def srgan(image, image_info, height, width, output_shapes=None, **kwargs):
             if hr_img is not None:
                 hr_img = tf.expand_dims(hr_img, axis=0)
                 assert len(output_shapes) == 1, f"expects 1 output shape but got {len(output_shapes)}"
-                hr_img = tf.image.resize_with_crop_or_pad(hr_img, output_shapes[0][1], output_shapes[0][2])
+                hr_img = tf.image.resize(hr_img, (output_shapes[0][1], output_shapes[0][2]))
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info["hr_img"] = tf.cast(hr_img, tf.uint8)
     # return {'input_layer1': image, 'input_layer1_new': image}, image_info # removed due to hn_editor in srgan

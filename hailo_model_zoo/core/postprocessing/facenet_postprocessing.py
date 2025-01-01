@@ -9,7 +9,7 @@ from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACT
 
 @POSTPROCESS_FACTORY.register(name="face_verification")
 def facenet_postprocessing(endnodes, device_pre_post_layers, **kwargs):
-    embeddings = tf.nn.l2_normalize(endnodes, 1, 1e-10, name="embeddings")
+    embeddings = tf.nn.l2_normalize(endnodes, -1, 1e-10, name="embeddings")
     return {"predictions": embeddings}
 
 

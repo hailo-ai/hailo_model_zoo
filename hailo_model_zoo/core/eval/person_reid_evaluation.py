@@ -35,7 +35,9 @@ class PersonReidEval(Eval):
         gallery_label = np.stack(gallery_label)  # (15913,)
         query_label = np.stack(query_label)  # (3287, )
         gallery_cam_id = np.asarray(gallery_cam_id)  # (15913,)
-        dist_mat = 1 - np.matmul(query_emb, gallery_emb.T)  # (3287, 2048)x(2048, 15913)=(3287, 15913)
+        dist_mat = 1 - np.matmul(
+            np.squeeze(query_emb), np.squeeze(gallery_emb).T
+        )  # (3287, 2048)x(2048, 15913)=(3287, 15913)
 
         indices = np.argsort(dist_mat, axis=1)  # sort dist_mat to get embeddings similarity in order
 

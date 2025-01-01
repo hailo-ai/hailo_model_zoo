@@ -13,7 +13,8 @@ def parse_petrv2_backbone_record(serialized_example):
             "width": tf.io.FixedLenFeature([], tf.int64),
         },
     )
-    img = tf.io.decode_raw(features["img"], tf.float32)
+    img = tf.io.decode_jpeg(features["img"], channels=3, dct_method="INTEGER_ACCURATE")
+    img = img[..., ::-1]  # BGR --> RGB
     height = tf.cast(features["height"], tf.int32)
     width = tf.cast(features["width"], tf.int32)
     img = tf.reshape(img, (height, width, 3))
@@ -79,3 +80,60 @@ def parse_petrv2_transformer_record(serialized_example):
     }
 
     return [images, image_info]
+
+
+@DATASET_FACTORY.register(name="nuscenes_cascade")
+def parse_petrv2_cascade_record(serialized_example):
+    features = tf.io.parse_single_example(
+        serialized_example,
+        features={
+            "img": tf.io.VarLenFeature(tf.string),
+            "height": tf.io.FixedLenFeature([], tf.int64),
+            "width": tf.io.FixedLenFeature([], tf.int64),
+            "ind": tf.io.FixedLenFeature([], tf.int64),
+            "timestamp": tf.io.VarLenFeature(tf.float32),
+            "token": tf.io.FixedLenFeature([], tf.string),
+            "lidar2ego_rotation": tf.io.VarLenFeature(tf.float32),
+            "lidar2ego_translation": tf.io.VarLenFeature(tf.float32),
+            "ego2global_rotation": tf.io.VarLenFeature(tf.float32),
+            "ego2global_translation": tf.io.VarLenFeature(tf.float32),
+            "coords3d": tf.io.FixedLenFeature([], tf.string),
+        },
+    )
+    imgs = tf.sparse.to_dense(features["img"])
+    img = tf.stack(
+        tf.map_fn(
+            lambda img: tf.io.decode_jpeg(img, channels=3, dct_method="INTEGER_ACCURATE"),
+            imgs,
+            fn_output_signature=tf.TensorSpec(shape=(None, None, 3), dtype=tf.uint8),
+        )
+    )
+    img = img[..., ::-1]  # RGB --> BGR
+    height = tf.cast(features["height"], tf.int32)
+    width = tf.cast(features["width"], tf.int32)
+    img = tf.reshape(img, (-1, height, width, 3))
+
+    ind = tf.cast(features["ind"], tf.int32)
+    token = tf.cast(features["token"], tf.string)
+    lidar2ego_rotation = tf.sparse.to_dense(features["lidar2ego_rotation"], default_value=0)
+    lidar2ego_translation = tf.sparse.to_dense(features["lidar2ego_translation"], default_value=0)
+    ego2global_rotation = tf.sparse.to_dense(features["ego2global_rotation"], default_value=0)
+    ego2global_translation = tf.sparse.to_dense(features["ego2global_translation"], default_value=0)
+    timestamp = tf.sparse.to_dense(features["timestamp"], default_value=0)
+    coords3d = tf.io.decode_raw(features["coords3d"], tf.float32)
+    coords3d = tf.reshape(coords3d, (12, 250, 256))
+
+    image_info = {
+        "orig_height": height,
+        "orig_width": width,
+        "ind": ind,
+        "token": token,
+        "timestamp": timestamp,
+        "lidar2ego_rotation": lidar2ego_rotation,
+        "lidar2ego_translation": lidar2ego_translation,
+        "ego2global_rotation": ego2global_rotation,
+        "ego2global_translation": ego2global_translation,
+        "coords3d": coords3d,
+    }
+
+    return [img, image_info]

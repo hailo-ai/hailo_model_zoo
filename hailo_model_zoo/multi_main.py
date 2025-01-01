@@ -29,7 +29,7 @@ def get_quantized_model(model_name, network_info, results_dir):
     logger.info("Initializing the runner...")
     runner = ClientRunner()
 
-    parse_model(runner, network_info, results_dir=results_dir, logger=logger)
+    runner = parse_model(runner, network_info, results_dir=results_dir, logger=logger)
 
     logger.info("Start Optimization...")
     model_script = resolve_alls_path(network_info.paths.alls_script)

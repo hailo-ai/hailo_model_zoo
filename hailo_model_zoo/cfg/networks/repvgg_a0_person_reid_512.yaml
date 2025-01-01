@@ -8,9 +8,6 @@ paths:
   - models_files/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip
 parser:
-  nodes:
-  - test_input
-  - - test_output
   normalization_params:
     normalize_in_net: true
     mean_list:

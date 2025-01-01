@@ -39,15 +39,6 @@ paths:
   network_path:
   - models_files/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg_a0.zip
-parser:
-  nodes:
-  - input.1
-  - - Conv_71
-    - Conv_74
-    - Conv_77
-    - Conv_80
-    - Conv_83
-    - Conv_86
 info:
   task: pose estimation
   input_shape: 416x416x3

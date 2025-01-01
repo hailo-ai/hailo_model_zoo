@@ -13,9 +13,6 @@ paths:
   - models_files/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip
 parser:
-  nodes:
-  - x.1
-  - - '1126'
   normalization_params:
     normalize_in_net: true
     mean_list:

@@ -17,8 +17,8 @@ def _accuracy(threshold, dist, actual_issame):
 
 
 def _distance(embeddings1, embeddings2):
-    dot = np.sum(np.multiply(embeddings1, embeddings2), axis=1)
-    norm = np.linalg.norm(embeddings1, axis=1) * np.linalg.norm(embeddings2, axis=1)
+    dot = np.sum(np.multiply(embeddings1, embeddings2), axis=-1)
+    norm = np.linalg.norm(embeddings1, axis=-1) * np.linalg.norm(embeddings2, axis=-1)
     similarity = dot / norm
     dist = np.arccos(similarity) / math.pi
     return dist
@@ -34,7 +34,7 @@ class FaceVerificationEval(Eval):
         self.reset()
 
     def _parse_net_output(self, net_output):
-        return net_output["predictions"]
+        return np.squeeze(net_output["predictions"])
 
     def _parse_gt_data(self, gt_data):
         # facenet_infer tf1 legacy support
@@ -49,12 +49,12 @@ class FaceVerificationEval(Eval):
         for logits, name, same in zip(logits_batch, image_name, is_same):
             if idx % 2 == 0:
                 # Create pairs gt from tf-record or by filename
-                if self._tf_path:
-                    self._actual_issame.append(same)
-                else:
-                    self._actual_issame.append(
-                        re.sub(b"[0-9]", b"_", name) == re.sub(b"[0-9]", b"_", image_name[idx + 1])
-                    )
+                same_bool = (
+                    same
+                    if self._tf_path
+                    else re.sub(b"[0-9]", b"_", name) == re.sub(b"[0-9]", b"_", image_name[idx + 1])
+                )
+                self._actual_issame.append(same_bool)
                 self._embeddings1.append(logits)
             else:
                 self._embeddings2.append(logits)

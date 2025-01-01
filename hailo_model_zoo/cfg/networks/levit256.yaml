@@ -1,9 +1,5 @@
 base:
 - base/levit.yaml
-parser:
-  nodes:
-  - input.1
-  - - '995'
 paths:
   alls_script: levit256.alls
   network_path:

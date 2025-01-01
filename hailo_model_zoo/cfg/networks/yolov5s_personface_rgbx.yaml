@@ -10,3 +10,4 @@ hn_editor:
 info:
   task: pipeline
   input_shape: 640x640x4
+  full_precision_result: 47.6

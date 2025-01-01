@@ -3,7 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "3.29.0"
+CUR_DFC_VERSION = "v3.30.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -39,7 +39,7 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 def main():
     reqs = [
         "numba",
-        "imageio==2.9.0",
+        "imageio==2.22.4",
         "matplotlib",
         "numpy",
         "opencv-python",
@@ -51,13 +51,13 @@ def main():
         "lap==0.4.0",
         "motmetrics==1.2.5",
         "omegaconf==2.3.0",
-        "pillow<=9.2.0",
+        "pillow<=9.3.0",
         "detection-tools==0.3",
         "scikit-image==0.19.3",
         "nuscenes-devkit==1.1.10",
     ]
 
-    model_zoo_version = "2.13.0"
+    model_zoo_version = "2.14.0"
 
     package_data = {
         "hailo_model_zoo": [

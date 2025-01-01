@@ -14,9 +14,6 @@ paths:
   - models_files/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip
 parser:
-  nodes:
-  - input.1
-  - - Add_55
   normalization_params:
     normalize_in_net: true
     mean_list:

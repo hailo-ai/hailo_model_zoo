@@ -38,15 +38,6 @@ paths:
   - models_files/centerpose_regnetx_1.6gf_fpn/2022-03-23/centerpose_regnet.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip
   alls_script: centerpose_regnetx_1.6gf_fpn.alls
-parser:
-  nodes:
-  - input.1
-  - - Conv_164
-    - Conv_167
-    - Conv_170
-    - Conv_173
-    - Conv_176
-    - Conv_179
 info:
   task: pose estimation
   input_shape: 640x640x3

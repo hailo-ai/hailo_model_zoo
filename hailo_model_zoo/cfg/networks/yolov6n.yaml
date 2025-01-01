@@ -8,17 +8,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2023-05-31/yolov6n.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov6n/pretrained/2023-05-31/yolov6n.zip
 parser:
-  nodes:
-  - null
-  - - Conv_102
-    - Sigmoid_104
-    - Sigmoid_105
-    - Conv_158
-    - Sigmoid_160
-    - Sigmoid_161
-    - Conv_214
-    - Sigmoid_216
-    - Sigmoid_217
   normalization_params:
     normalize_in_net: true
     mean_list:

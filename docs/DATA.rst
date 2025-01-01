@@ -1046,7 +1046,9 @@ NUSCENES
 
    .. code-block::
 
-      python hailo_model_zoo/datasets/create_nuscenes_tfrecord.py calib --ann_file <train_annotation_file.pkl>
-      python hailo_model_zoo/datasets/create_nuscenes_tfrecord.py val --ann_file <val_annotation_file.pkl>
+      python hailo_model_zoo/datasets/create_nuscenes_petrv2_cascade_tfrecord.py calib --ann_file <train_annotation_file.pkl> --coords-dir <coords3d_directory_path>
+      python hailo_model_zoo/datasets/create_nuscenes_petrv2_cascade_tfrecord.py val --ann_file <val_annotation_file.pkl> --coords-dir <coords3d_directory_path>
 
-   where <\*_annotation_file.pkl> is the train / val .pkl annotation file generated from the PETR training environment.
+   Where <\*_annotation_file.pkl> is the train / val .pkl annotation file generated from the `PETR training environment <https://github.com/hailo-ai/PETR>`_.
+
+   Notice: In order to benchmark our PETRv2 cascade (petrv2), please download the annotation .pkl file from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/mmdet3d_nuscenes_30f_infos_val_2024_08_21.pkl>`_ and create a symbolic link (softlink) from */fastdata/data/nuscenes/nuesence/* to your nuscenes dataset folder.

@@ -1162,4 +1162,4 @@ def visualize_instance_segmentation_result(detections, img, **kwargs):
             class_names=dataset_info.class_names,
         )
     else:
-        raise NotImplementedError(f"Visualization {meta_arch} not found")
+        raise NotImplementedError(f"Visualization for {meta_arch} is not implemented")

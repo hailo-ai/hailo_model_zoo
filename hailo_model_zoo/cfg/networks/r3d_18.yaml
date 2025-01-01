@@ -1,0 +1,37 @@
+base:
+- base/kinetics400.yaml
+network:
+  network_name: r3d_18
+paths:
+  alls_script: r3d_18.alls
+  network_path:
+  - models_files/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18_112x112_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    std_list:
+    - 1.0
+preprocessing:
+  network_type: video_classification
+  meta_arch: r3d_18
+  input_shape:
+  - 112
+  - 112
+  - 48
+info:
+  task: video classification
+  input_shape: 112x112x48
+  output_shape: '400'
+  operations: 40.7G
+  parameters: 33.37M
+  framework: pytorch
+  training_data: kinetics400
+  validation_data: kinetics400 (partial)
+  eval_metric: Accuracy (top1)
+  full_precision_result: 48.9
+  source: https://pytorch.org/vision/stable/models.html#video-classification
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

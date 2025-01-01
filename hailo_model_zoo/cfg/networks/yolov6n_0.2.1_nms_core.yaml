@@ -7,18 +7,18 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov6n_0.2.1/pretrained/2023-04-17/yolov6n_0.2.1.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov6n_0.2.1/pretrained/2023-04-17/yolov6n_0.2.1.zip
-parser:
-  nodes:
-  - null
-  - - Conv_133
-    - Sigmoid_134
-    - Conv_147
-    - Sigmoid_148
-    - Conv_161
-    - Sigmoid_162
 postprocessing:
   device_pre_post_layers:
     nms: true
+parser:
+  nodes:
+  - null
+  - - Conv_161
+    - Sigmoid_162
+    - Conv_147
+    - Sigmoid_148
+    - Conv_133
+    - Sigmoid_134
 info:
   task: object detection
   input_shape: 640x640x3

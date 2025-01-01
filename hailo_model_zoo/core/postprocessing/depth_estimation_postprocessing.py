@@ -27,6 +27,10 @@ def mono_depth_postprocessing(endnodes):
     return {"predictions": depth * depth_scale_factor}
 
 
+def depth_anything_postprocessing(logits):
+    return {"predictions": logits}
+
+
 @VISUALIZATION_FACTORY.register(name="depth_estimation")
 def visualize_depth_estimation_result(logits, image, **kwargs):
     logits = logits["predictions"]
@@ -55,6 +59,7 @@ archs_postprocess_dict = {
     "scdepthv3": scdepthv3_postprocessing,
     "fast_depth": fast_depth_postprocessing,
     "mono_depth": mono_depth_postprocessing,
+    "depth_anything": depth_anything_postprocessing,
 }
 
 

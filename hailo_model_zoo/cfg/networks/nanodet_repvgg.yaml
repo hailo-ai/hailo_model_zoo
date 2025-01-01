@@ -12,12 +12,6 @@ paths:
   alls_script: nanodet_repvgg.alls
   network_path:
   - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg/pretrained/2024-11-01/nanodet.onnx
-parser:
-  nodes:
-  - null
-  - - Conv_65
-    - Conv_81
-    - Conv_97
 postprocessing:
   device_pre_post_layers:
     nms: true

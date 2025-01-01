@@ -7,18 +7,6 @@ paths:
   network_path:
   - models_files/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet720p.tflite
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip
-parser:
-  nodes:
-  - retina_face/mobile_net_v1/stage1/Pad
-  - - retina_face/bbox_head/0.conv1x1/BiasAdd
-    - retina_face/class_head/0.conv1x1/BiasAdd
-    - retina_face/landmark_head/0.conv1x1/BiasAdd
-    - retina_face/bbox_head_1/1.conv1x1/BiasAdd
-    - retina_face/class_head_1/1.conv1x1/BiasAdd
-    - retina_face/landmark_head_1/1.conv1x1/BiasAdd
-    - retina_face/bbox_head_2/2.conv1x1/BiasAdd
-    - retina_face/class_head_2/2.conv1x1/BiasAdd
-    - retina_face/landmark_head_2/2.conv1x1/BiasAdd
 info:
   task: face detection
   input_shape: 736x1280x3

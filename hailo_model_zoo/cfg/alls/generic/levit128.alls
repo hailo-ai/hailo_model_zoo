@@ -1,0 +1,10 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+
+model_optimization_config(calibration, batch_size=16, calibset_size=1024)
+model_optimization_config(globals, multiproc_policy=disabled)
+model_optimization_config(negative_exponent, layers={*}, rank=0)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+post_quantization_optimization(finetune, policy=enabled, batch_size=4, learning_rate=1e-5)
+quantization_param({levit128/ew_add*}, precision_mode=a16_w16)
+model_optimization_flavor(optimization_level=2, compression_level=0)

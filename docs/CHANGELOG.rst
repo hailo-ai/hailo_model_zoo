@@ -1,5 +1,38 @@
-Changelog
-=========
+**v2.14**
+
+* Update to use Dataflow Compiler v3.30.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.20.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New cascade API (experimental)
+
+  * Currently supports PETRv2, bird-eye-view network for 3D object detection, see ``petrv2_repvggB0.yaml`` for configurations.
+
+  * The user needs existing hars/hefs: both ``petrv2_repvggB0_backbone_pp_800x320`` & ``petrv2_repvggB0_transformer_pp_800x320``
+
+  * full_precision evaluation: ``hailomz cascade eval petrv2``
+
+  * hardware evaluation: ``hailomz cascade eval petrv2 --override target=hardware``
+
+* New task:
+
+  * Human Action Recognition
+
+    * Added support for (partial) Kinetics-400 dataset
+
+    * Added r3d_18 to support this task
+
+* New Models:
+
+  * `YOLOv11 <https://arxiv.org/pdf/2410.17725>`_ - nano, small, medium, large, x-large - Latest YOLO detectors
+  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ ViT-Large-14-Laion2B - Contrastive Language-Image Pre-training model [H15H and H10H only]
+  * `SWIN <https://arxiv.org/pdf/2103.14030>`_ - tiny, small - Shifted-Windows Transformer based classification model
+  * `DaViT <https://arxiv.org/pdf/2204.03645>`_ - tiny - Dual Attention Vision Transformer classification model [H15H and H10H only]
+  * `LeViT <https://arxiv.org/pdf/2104.01136>`_ - levit128, levit192, levit384 - Transformer based classification model
+  * `EfficientFormer <https://arxiv.org/pdf/2212.08059>`_ - l1 - Transformer based classification model
+  * `Real-ESRGAN <https://arxiv.org/pdf/2107.10833>`_ - x2 - Super Resolution model
+  * `R3D_18 <https://pytorch.org/vision/stable/models.html#video-classification>`_ - r3d_18 - Video Classification network for Human Action Recognition [H8 only]
+
+* Bug fixes
 
 **v2.13**
 

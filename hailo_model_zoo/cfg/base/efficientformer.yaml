@@ -1,0 +1,20 @@
+base:
+- base/imagenet.yaml
+preprocessing:
+  meta_arch: resmlp
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+info:
+  framework: pytorch
+  training_data: imagenet train
+  validation_data: imagenet val
+  eval_metric: Accuracy (top1)

@@ -10,15 +10,15 @@ paths:
 parser:
   nodes:
   - null
-  - - Conv_307
-    - Sigmoid_309
-    - Sigmoid_310
+  - - Conv_339
+    - Sigmoid_341
+    - Sigmoid_342
     - Conv_323
     - Sigmoid_325
     - Sigmoid_326
-    - Conv_339
-    - Sigmoid_341
-    - Sigmoid_342
+    - Conv_307
+    - Sigmoid_309
+    - Sigmoid_310
 postprocessing:
   device_pre_post_layers:
     nms: true

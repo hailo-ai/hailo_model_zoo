@@ -8,9 +8,6 @@ paths:
   alls_script: arcface_r50.alls
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip
 parser:
-  nodes:
-  - null
-  - null
   normalization_params:
     normalize_in_net: true
     std_list:

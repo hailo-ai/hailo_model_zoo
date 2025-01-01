@@ -1,0 +1,11 @@
+normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=enabled)
+
+# allocator commands
+allocator_param(enable_partial_row_buffers=disabled)
+performance_param(optimization_level=1)
+# TODO: SDK-30581 remove defuse and compilation_param commands after fix
+dw3_fs, dw3_d0, dw3_d1, dw3_d2, dw3_d3, dw3_d4, dw3_dc = defuse(dw3, 5, defuse_type=INPUT_FEATURES)
+compilation_param(dw3_dc, layer_output_buffers_format=row_per_cut)
+performance_param(compiler_optimization_level=max)

@@ -18,3 +18,4 @@ info:
   output_shape: 80x5x80
   operations: 52.89G
   parameters: 22.67M
+  full_precision_result: 43.04

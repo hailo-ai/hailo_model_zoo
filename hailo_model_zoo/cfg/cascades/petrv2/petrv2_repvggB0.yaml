@@ -1,0 +1,17 @@
+models:
+  backbone:
+    network_name: petrv2_repvggB0_backbone_pp_800x320
+    target: ${target}
+    har: ${.network_name}_quantized.har
+    hef: ${.network_name}.hef
+  transformer:
+    network_name: petrv2_repvggB0_transformer_pp_800x320
+    target: ${target}
+    har: ${.network_name}_quantized.har
+    hef: ${.network_name}.hef
+cascade: "petrv2"
+batch_size: 12
+data_count: null
+data_path: models_files/nuscenes/2024-12-22/nuscenes_val.tfrecord
+gt_json_path: models_files/nuscenes/2024-08-21/
+ref_points_path: models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-08-13/reference_points.npy

@@ -9,10 +9,6 @@ quantization:
   - models_files/clip/vit_large/coco_10xtd/2024-08-25/coco_xtd10_en_clip_vit_large.tfrecord
 network:
   network_name: clip_text_encoder_vit_large
-parser:
-  nodes:
-  - /embeddings/Add
-  - output
 paths:
   alls_script: clip_text_encoder_vit_large.alls
   network_path:

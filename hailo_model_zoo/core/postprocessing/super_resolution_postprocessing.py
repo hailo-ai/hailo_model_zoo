@@ -45,9 +45,9 @@ def create_mosaic_real_ratio(combined_images, input_resized):
     return mosaic
 
 
-def draw_patch(image, h_center, w_center, width):
-    h_min = max([h_center - int(width / 2), 0])
-    h_max = min([h_center + int(width / 2), image.shape[0]])
+def draw_patch(image, h_center, w_center, height, width):
+    h_min = max([h_center - int(height / 2), 0])
+    h_max = min([h_center + int(height / 2), image.shape[0]])
     w_min = max([w_center - int(width / 2), 0])
     w_max = min([w_center + int(width / 2), image.shape[1]])
     for h in range(h_min, h_min + THICKNESS):
@@ -85,6 +85,8 @@ def visualize_srgan_result(logits, img, **kwargs):
     h_center = 380
     w_center = 490
     width = 400
+    h_ratio = logits["predictions"].shape[1] / img.shape[1]
+    w_ratio = logits["predictions"].shape[2] / img.shape[2]
     logits = logits["predictions"]
     input_resized = np.clip(
         cv2.resize(img[0], (logits.shape[2], logits.shape[1]), interpolation=cv2.INTER_CUBIC), 0, 255
@@ -95,7 +97,9 @@ def visualize_srgan_result(logits, img, **kwargs):
     img_sr_patch = focus_on_patch(img_sr, h_center, w_center, width)
     combined_images = np.concatenate([input_resized_patch, img_sr_patch], 0)
     small_input = img[0]
-    small_input_with_patch_drawn = draw_patch(small_input, int(h_center / 4), int(w_center / 4), int(width / 4))
+    small_input_with_patch_drawn = draw_patch(
+        small_input, int(h_center / h_ratio), int(w_center / w_ratio), int(width / h_ratio), int(width / w_ratio)
+    )
     mosaic_image = create_mosaic_real_ratio(combined_images, small_input_with_patch_drawn)
     return mosaic_image
 

@@ -4,28 +4,28 @@ postprocessing:
   meta_arch: yolo_v4
   anchors:
     strides:
-    - 8
-    - 16
     - 32
+    - 16
+    - 8
     sizes:
-    - - 12
-      - 16
-      - 19
-      - 36
-      - 40
-      - 28
-    - - 36
-      - 75
-      - 76
-      - 55
-      - 72
-      - 146
     - - 142
       - 110
       - 192
       - 243
       - 459
       - 401
+    - - 36
+      - 75
+      - 76
+      - 55
+      - 72
+      - 146
+    - - 12
+      - 16
+      - 19
+      - 36
+      - 40
+      - 28
 hn_editor:
   output_scheme:
     outputs_to_split:
@@ -49,12 +49,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2022-03-17/yolov4_1_3_512_512_static.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov4/pretrained/2022-03-17/yolov4.zip
   alls_script: yolov4_leaky.alls
-parser:
-  nodes:
-  - null
-  - - Conv_946
-    - Conv_585
-    - Conv_224
 inference:
   emulator_batch_size: 4
 info:

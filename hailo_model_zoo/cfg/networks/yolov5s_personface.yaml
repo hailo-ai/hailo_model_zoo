@@ -7,12 +7,6 @@ paths:
   network_path:
   - models_files/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2023-04-25/yolov5s_personface.zip
-parser:
-  nodes:
-  - images
-  - - Conv_234
-    - Conv_218
-    - Conv_202
 preprocessing:
   max_pad: 500
 postprocessing:
@@ -37,6 +31,6 @@ info:
   training_data: Hailo internal
   validation_data: Hailo internal
   eval_metric: mAP
-  full_precision_result: 47.7
+  full_precision_result: 47.59
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE

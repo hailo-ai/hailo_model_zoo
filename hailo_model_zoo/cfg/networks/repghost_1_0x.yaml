@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/repghost/repghostnet_1_0x/pretrained/2023-04-03/repghostnet_1_0x.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repghost/repghostnet_1_0x/pretrained/2023-04-03/repghostnet_1_0x.zip
-parser:
-  nodes:
-  - null
-  - null
 info:
   task: classification
   input_shape: 224x224x3

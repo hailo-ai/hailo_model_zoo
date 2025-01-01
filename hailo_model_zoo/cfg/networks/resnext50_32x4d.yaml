@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/resnext50_32x4d/pretrained/2023-07-18/resnext50_32x4d.tflite
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnext50_32x4d/pretrained/2023-07-18/resnext50_32x4d.zip
-parser:
-  nodes:
-  - input_layer
-  - - output/BiasAdd
 info:
   task: classification
   input_shape: 224x224x3

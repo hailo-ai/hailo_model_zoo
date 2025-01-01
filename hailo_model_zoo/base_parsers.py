@@ -37,7 +37,7 @@ def make_parsing_base():
         type=str,
         default="hailo8",
         metavar="",
-        choices=["hailo8", "hailo8l", "hailo15h", "hailo15m", "hailo10h"],
+        choices=["hailo8", "hailo8l", "hailo15h", "hailo15m", "hailo15l", "hailo10h", "hailo10h2", "mars"],
         help="Which hw arch to run: hailo8 / hailo8l/ hailo15h/ hailo15m / hailo10h. By default using hailo8.",
     )
     parsing_base_parser.add_argument(
@@ -168,6 +168,13 @@ def make_evaluation_base():
         action="store_true",
         dest="show_results_per_class",
         help="Print AP results per class, relevant only for object detection and instance segmentation tasks",
+    )
+
+    evaluation_base_parser.add_argument(
+        "--custom-infer-config",
+        type=Path,
+        dest="custom_infer_config",
+        help="A file that indicates witch elements to set lossless or lossy",
     )
     evaluation_base_parser.set_defaults(
         print_num_examples=1e9,

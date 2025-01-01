@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY
+from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.utils import path_resolver
 
 
@@ -19,3 +19,8 @@ def text_encoding_postprocessing(
     result = final_state_token @ text_projection.T
     result = tf.math.l2_normalize(result, axis=-1)
     return {"predictions": result}
+
+
+@VISUALIZATION_FACTORY.register(name="text_encoder")
+def visualize_text_encoder_result(logits, image, **kwargs):
+    raise NotImplementedError(f"Visualization for {kwargs['meta_arch']} is not implemented")

@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/mobilenet_v2_1.4/pretrained/2023-07-18/mobilenet_v2_1.4_224.tflite
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v2_1.4/pretrained/2021-07-11/mobilenet_v2_1.4.zip
-parser:
-  nodes:
-  - input
-  - - MobilenetV2/Logits/Conv2d_1c_1x1/BiasAdd
 info:
   task: classification
   input_shape: 224x224x3

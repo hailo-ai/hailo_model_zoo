@@ -23,7 +23,7 @@ info:
   training_data: cityscapes train
   validation_data: cityscapes val
   eval_metric: mIoU
-  full_precision_result: 70.17
+  full_precision_result: 69.81
   source: https://github.com/NVlabs/SegFormer
   license_url: https://github.com/NVlabs/SegFormer/blob/master/LICENSE
   license_name: NVIDIA

@@ -8,9 +8,6 @@ paths:
   - models_files/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip
 parser:
-  nodes:
-  - null
-  - - Gemm_59
   normalization_params:
     normalize_in_net: true
     std_list:

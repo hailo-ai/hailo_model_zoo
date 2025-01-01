@@ -7,10 +7,6 @@ paths:
   - models_files/Classification/mobilenet_v3/pretrained/2023-07-18/mobilenet_v3_edgetpu.tflite
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/mobilenet_v3/pretrained/2023-07-18/mobilenet_v3.zip
   alls_script: mobilenet_v3.alls
-parser:
-  nodes:
-  - MobilenetEdgeTPU/input
-  - - MobilenetEdgeTPU/Predictions/Softmax
 info:
   task: classification
   input_shape: 224x224x3

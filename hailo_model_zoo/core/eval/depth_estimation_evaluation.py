@@ -102,12 +102,14 @@ class DepthEstimationEval(Eval):
 
         rmse = (gt - pred) ** 2
         rmse = np.sqrt(rmse.mean())  # root mean squared error
-        rmse_log = (np.log(gt) - np.log(pred)) ** 2
+        rmse_log = (np.log(gt + 1e-10) - np.log(pred + 1e-10)) ** 2
         rmse_log = np.sqrt(rmse_log.mean())  # root mean squared error in the logarithm domain
 
         abs_rel = np.mean(np.abs(gt - pred) / gt)  # mean absolute relative error
         sq_rel = np.mean(((gt - pred) ** 2) / gt)  # squared relative error
-        log10 = np.mean(np.abs((np.log10(gt) - np.log10(pred))))  # mean absolute error in the logarithm domain (log10)
+        log10 = np.mean(
+            np.abs((np.log10(gt + 1e-10) - np.log10(pred + 1e-10)))
+        )  # mean absolute error in the logarithm domain (log10)
 
         return rmse, rmse_log, abs_rel, sq_rel, log10, delta1, delta2, delta3
 
@@ -126,9 +128,19 @@ class DepthEstimationEval(Eval):
             # For fast_depth, only use a mask to filter out invalid depth values (<= 0).
             valid_mask = ((gt > 0) + (pred > 0)) > 0
             return gt[valid_mask], pred[valid_mask]
-
         # For other meta_archs:
+        gt, pred = self.apply_valid_masks(gt, pred)
 
+        # Align scales
+        ratio = np.median(gt) / np.median(pred)
+        pred *= ratio
+
+        # Clip values in predicted depth map to be within [self.min_depth, self.max_depth]
+        np.clip(pred, self.min_depth, self.max_depth, out=pred)
+
+        return gt, pred
+
+    def apply_valid_masks(self, gt, pred):
         # Resize the predicted depth map to the same dimensions as the ground truth depth map (gt)
         gt_h, gt_w = gt.shape[:2]
         pred = cv2.resize(pred, (gt_w, gt_h))
@@ -142,17 +154,7 @@ class DepthEstimationEval(Eval):
         valid_mask = np.logical_and(range_mask, crop_mask)
 
         # Apply the mask
-        pred = pred[valid_mask]
-        gt = gt[valid_mask]
-
-        # Align scales
-        ratio = np.median(gt) / np.median(pred)
-        pred *= ratio
-
-        # Clip values in predicted depth map to be within [self.min_depth, self.max_depth]
-        np.clip(pred, self.min_depth, self.max_depth, out=pred)
-
-        return gt, pred
+        return gt[valid_mask], pred[valid_mask]
 
     def update_op(self, net_output, img_info):
         """
@@ -203,3 +205,86 @@ class DepthEstimationEval(Eval):
         Reset the full_errors list for the next evaluation.
         """
         self.full_errors = []
+
+
+@EVAL_FACTORY.register(name="zero_shot_depth_estimation")
+class ZeroShotDepthEstimationEval(DepthEstimationEval):
+    """
+    ZeroShotDepthEstimationEval is a class to evaluate zero-shot depth estimation models.
+
+    Attributes:
+        meta_arch (str): Name of the meta architecture being evaluated (lowercased).
+        full_errors (list): List to store depth error metrics for all samples.
+        avg (None or numpy array): Variable to store the average depth error metrics.
+        min_depth (float): Minimum valid depth value for the dataset.
+        max_depth (float): Maximum valid depth value for the dataset.
+        crop (numpy array): Array specifying crop dimensions for the dataset.
+
+    """
+
+    def get_valid_depthmaps(self, gt, pred):
+        """
+        Get valid depth maps by applying crop and range filters.
+
+        Args:
+            gt (numpy array): Ground truth depth map.
+            pred (numpy array): Predicted depth map.
+
+        Returns:
+            tuple: Tuple containing the filtered ground truth and predicted depth maps.
+        """
+        gt, pred = self.apply_valid_masks(gt, pred)
+
+        scale, shift = self.compute_scale_and_shift(pred, 1 / gt)
+        pred_aligned = scale * pred + shift
+        prediction_depth = 1 / pred_aligned
+
+        # Clip values in predicted depth map to be within [self.min_depth, self.max_depth]
+        np.clip(prediction_depth, self.min_depth, self.max_depth, out=prediction_depth)
+
+        return gt, prediction_depth
+
+    def compute_scale_and_shift(self, prediction, ground_truth):
+        """
+        Calculate scale and shift for prediction compare to ground truth using linear regression
+
+        Parameters:
+        - prediction: np.array, prediction after masking (N,)
+        - target: np.array, ground truth after masking (N,)
+
+        Returns:
+        - scale: scale for predictions
+        - shift: shift for predictions
+        """
+        a_00 = np.sum(prediction * prediction)
+        a_01 = np.sum(prediction)
+        a_11 = np.prod(prediction.shape)
+
+        b_0 = np.sum(prediction * ground_truth)
+        b_1 = np.sum(ground_truth)
+        det = a_00 * a_11 - a_01 * a_01
+
+        scale = (a_11 * b_0 - a_01 * b_1) / det
+        shift = (-a_01 * b_0 + a_00 * b_1) / det
+
+        return scale, shift
+
+    def _get_accuracy(self):
+        """
+        Return the computed depth error metrics in an ordered dictionary.
+
+        Returns:
+            OrderedDict: Dictionary containing depth error metrics with keys and their corresponding values.
+        """
+        return OrderedDict(
+            [
+                ("abs_rel", self.avg[2]),
+                ("rmse", self.avg[0]),
+                ("rmse_log", self.avg[1]),
+                ("sq_rel", self.avg[3]),
+                ("log10", self.avg[4]),
+                ("delta1", self.avg[5]),
+                ("delta2", self.avg[6]),
+                ("delta3", self.avg[7]),
+            ]
+        )

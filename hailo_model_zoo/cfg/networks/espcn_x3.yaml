@@ -11,9 +11,6 @@ paths:
   - models_files/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3_104x160.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip
 parser:
-  nodes:
-  - input.1
-  - - '12'
   normalization_params:
     normalize_in_net: true
     mean_list:
@@ -30,7 +27,7 @@ info:
   training_data: T91
   validation_data: BSD100
   eval_metric: PSNR
-  full_precision_result: 28.412
+  full_precision_result: 28.28
   source: https://github.com/Lornatang/ESPCN-PyTorch
   license_url: https://github.com/Lornatang/ESPCN-PyTorch/blob/master/LICENSE
   license_name: Apache-2.0

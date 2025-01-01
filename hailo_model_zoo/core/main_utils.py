@@ -1,9 +1,11 @@
+import argparse
 import json
 from pathlib import Path
 
 from omegaconf.listconfig import ListConfig
 
 from hailo_sdk_client.exposed_definitions import States
+from hailo_sdk_client.tools.parser_cli import NetParser
 
 from hailo_model_zoo.core.augmentations import make_model_callback
 from hailo_model_zoo.core.eval import eval_factory
@@ -18,7 +20,7 @@ from hailo_model_zoo.core.info_utils import get_network_info  # noqa (F401) - ex
 from hailo_model_zoo.core.postprocessing import postprocessing_factory
 from hailo_model_zoo.core.preprocessing import preprocessing_factory
 from hailo_model_zoo.utils import data, downloader, path_resolver
-from hailo_model_zoo.utils.parse_utils import get_normalization_params, translate_model
+from hailo_model_zoo.utils.parse_utils import get_normalization_params
 
 unsupported_data_folder = {"stereonet"}
 
@@ -96,7 +98,30 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
     if ckpt_path is None:
         ckpt_path = download_model(network_info, logger)
 
-    model_name = translate_model(runner, network_info, ckpt_path, tensor_shapes=start_node_shapes)
+    model_name = network_info.network.network_name
+    start_node_names, end_node_names = network_info.parser.nodes[0:2]
+
+    parser_args = argparse.Namespace(
+        net_name=model_name,
+        input_framework=str(ckpt_path).split(".")[-1],
+        input_format=None,
+        model_path=str(ckpt_path),
+        tensor_shapes=start_node_shapes,
+        start_node_names=start_node_names,
+        end_node_names=end_node_names,
+        y=True,
+        hw_arch=runner.hw_arch,
+        har_path=None,
+        augmented_path=None,
+        disable_rt_metadata_extraction=False,
+        parsing_report_path=None,
+        compare=False,
+    )
+    parser = NetParser(argparse.ArgumentParser(description="HailoMZ parser"))
+    try:
+        runner = parser.run(parser_args, save_model=False)
+    except Exception as err:
+        raise Exception(f"Encountered error during parsing: {err}") from None
 
     _apply_output_scheme(runner, network_info)
 
@@ -118,7 +143,9 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
     _add_postprocess(runner, network_info)
 
     # save model
-    runner.save_har(results_dir / f"{model_name}.har")
+    runner.save_har(results_dir / f"{network_info.network.network_name}.har")
+
+    return runner
 
 
 def load_model(runner, har_path, logger):
@@ -337,6 +364,18 @@ def make_visualize_callback(network_info):
     labels_offset = network_info.evaluation.labels_offset
     classes = network_info.evaluation.classes
     visualize_function = postprocessing_factory.get_visualization(network_type)
+
+    # TODO NET-4282: Move this logic to the relevant place once pipeline flow is in place
+    if isinstance(visualize_function, type):
+        vis_args = {
+            "network_type": network_type,
+            "meta_arch": meta_arch,
+            "dataset_name": dataset_name,
+            "channels_remove": channels_remove,
+            "labels_offset": labels_offset,
+            "classes": classes,
+        }
+        visualize_function = visualize_function(**vis_args)
 
     def visualize_callback(logits, image, **kwargs):
         return visualize_function(

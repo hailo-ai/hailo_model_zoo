@@ -13,9 +13,6 @@ paths:
   - models_files/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet_300x75_4M.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.zip
 parser:
-  nodes:
-  - input
-  - - Conv_61
   normalization_params:
     normalize_in_net: true
     mean_list:
@@ -41,3 +38,5 @@ info:
   framework: pytorch
   eval_metric: Accuracy
   full_precision_result: 99.86
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

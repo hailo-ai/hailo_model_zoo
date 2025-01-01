@@ -7,16 +7,10 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5s_spp/pretrained/2023-04-25/yolov5s.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5s_spp/pretrained/2023-04-25/yolov5s.zip
-parser:
-  nodes:
-  - images
-  - - Conv_234
-    - Conv_218
-    - Conv_202
 postprocessing:
   device_pre_post_layers:
     nms: true
-  meta_arch: yolo
+  meta_arch: yolo_v5
   hpp: true
 info:
   task: object detection

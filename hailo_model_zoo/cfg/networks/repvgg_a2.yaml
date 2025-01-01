@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/repvgg/repvgg_a2/pretrained/2022-10-02/RepVGG-A2.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/repvgg/repvgg_a2/pretrained/2022-10-02/RepVGG-A2.zip
-parser:
-  nodes:
-  - null
-  - null
 info:
   task: classification
   input_shape: 224x224x3

@@ -11,15 +11,6 @@ paths:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.onnx
   alls_script: yolov8m.alls
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.zip
-parser:
-  nodes:
-  - null
-  - - /model.22/cv2.0/cv2.0.2/Conv
-    - /model.22/cv3.0/cv3.0.2/Conv
-    - /model.22/cv2.1/cv2.1.2/Conv
-    - /model.22/cv3.1/cv3.1.2/Conv
-    - /model.22/cv2.2/cv2.2.2/Conv
-    - /model.22/cv3.2/cv3.2.2/Conv
 info:
   task: object detection
   input_shape: 640x640x3
@@ -30,7 +21,7 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 50.08
+  full_precision_result: 49.9
   source: https://github.com/ultralytics/ultralytics
   license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
-  license_name: GPL-3.0
+  license_name: AGPL-3.0

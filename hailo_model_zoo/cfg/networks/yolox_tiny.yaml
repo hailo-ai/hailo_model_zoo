@@ -25,15 +25,15 @@ parser:
     - 103.53
   nodes:
   - null
-  - - Conv_261
-    - Sigmoid_263
-    - Sigmoid_264
+  - - Conv_303
+    - Sigmoid_305
+    - Sigmoid_306
     - Conv_282
     - Sigmoid_284
     - Sigmoid_285
-    - Conv_303
-    - Sigmoid_305
-    - Sigmoid_306
+    - Conv_261
+    - Sigmoid_263
+    - Sigmoid_264
 postprocessing:
   device_pre_post_layers:
     nms: true

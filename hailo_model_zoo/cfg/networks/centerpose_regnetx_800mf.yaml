@@ -7,15 +7,6 @@ paths:
   network_path:
   - models_files/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnet.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip
-parser:
-  nodes:
-  - input.1
-  - - Conv_182
-    - Conv_185
-    - Conv_188
-    - Conv_191
-    - Conv_194
-    - Conv_197
 info:
   task: pose estimation
   input_shape: 512x512x3

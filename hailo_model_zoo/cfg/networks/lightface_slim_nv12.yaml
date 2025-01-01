@@ -10,3 +10,4 @@ hn_editor:
 info:
   task: pipeline_hailo15
   input_shape: 120x320x3
+  full_precision_result: 38.92

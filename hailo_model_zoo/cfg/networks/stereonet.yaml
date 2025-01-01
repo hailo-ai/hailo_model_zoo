@@ -18,10 +18,6 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip
   alls_script: stereonet.alls
 parser:
-  nodes:
-  - - input.1
-    - input.83
-  - - '524'
   normalization_params:
     normalize_in_net: true
     mean_list:
@@ -45,6 +41,7 @@ info:
   training_data: kitti stereo 2015
   validation_data: kitti stereo 2015
   eval_metric: EPE
-  full_precision_result: 91.313
+  full_precision_result: 91.77
   source: https://github.com/nivosco/StereoNet
-  license_url: N/A
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

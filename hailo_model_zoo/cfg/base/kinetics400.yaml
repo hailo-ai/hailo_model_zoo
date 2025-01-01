@@ -1,0 +1,13 @@
+base:
+- base/base.yaml
+evaluation:
+  dataset_name: kinetics400
+  labels_offset: 0
+  classes: 400
+  data_set: models_files/k400/2024-09-03/k400_val.tfrecord
+  meta_arch: video_classification
+preprocessing:
+  network_type: video_classification
+quantization:
+  calib_set:
+  - models_files/k400/2024-09-03/k400_calib.tfrecord

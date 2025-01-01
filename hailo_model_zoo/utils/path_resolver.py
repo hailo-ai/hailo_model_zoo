@@ -9,6 +9,7 @@ BASE_CFG_DIR = _MODEL_ZOO_ROOT / "cfg"
 NETWORK_CFG_DIR = BASE_CFG_DIR / "networks"
 ALLS_DIR = BASE_CFG_DIR / "alls"
 MULTI_NETWORKS_DIR = BASE_CFG_DIR / "multi-networks"
+CASCADES_DIR = BASE_CFG_DIR / "cascades"
 
 # ensure env var HMZ_DATA exists
 os.environ["HMZ_DATA"] = os.environ.get("HMZ_DATA", str(_DATA_DEFAULT_DIRECTORY))

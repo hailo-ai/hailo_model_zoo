@@ -7,10 +7,6 @@ paths:
   - models_files/Classification/vit_base_bn/pretrained/2023-01-25/vit_base_patch16_224_unfilt.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/vit_base_bn/pretrained/2023-01-25/vit_base.zip
   alls_script: vit_base_bn.alls
-parser:
-  nodes:
-  - input.1
-  - '1353'
 info:
   task: classification
   input_shape: 224x224x3

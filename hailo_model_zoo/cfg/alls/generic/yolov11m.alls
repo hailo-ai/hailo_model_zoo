@@ -1,0 +1,7 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(conv74, sigmoid)
+change_output_activation(conv90, sigmoid)
+change_output_activation(conv105, sigmoid)
+nms_postprocess("../../postprocess_config/yolov11m_nms_config.json", meta_arch=yolov8, engine=cpu)
+model_optimization_config(calibration, batch_size=2)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.00001)

@@ -7,12 +7,6 @@ paths:
   network_path:
   - models_files/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2024-01-25/nanodet_repvgg_a1_640.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/nanodet/nanodet_repvgg_a1_640/pretrained/2024-01-25/nanodet_repvgg_a1_640.zip
-parser:
-  nodes:
-  - null
-  - - Conv_65
-    - Conv_81
-    - Conv_97
 postprocessing:
   device_pre_post_layers:
     nms: true

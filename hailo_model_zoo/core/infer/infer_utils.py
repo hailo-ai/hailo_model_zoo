@@ -170,14 +170,15 @@ class WriterHook:
 
         for image_index_in_batch, (image_logits, img_info) in enumerate(zip(logits_per_image, image_info)):
             image_index = image_index_in_batch + self.image_index
-            original_image = img_info["img_orig"]
-            original_image = to_numpy(original_image)
+            original_image = img_info.get("img_orig")
             image_name = img_info.get("image_name", f"image{image_index}")
             image_name = to_numpy(image_name, decode=True)
             # Decode image if needed
-            if isinstance(original_image, bytes):
-                original_image = cv2.imdecode(np.fromstring(original_image, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
-            original_image = np.expand_dims(original_image, axis=0)
+            if original_image is not None:
+                original_image = to_numpy(original_image)
+                if isinstance(original_image, bytes):
+                    original_image = cv2.imdecode(np.fromstring(original_image, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
+                original_image = np.expand_dims(original_image, axis=0)
 
             image = self.visualize_callback(image_logits, original_image, img_info=img_info, image_name=image_name)
             self.writer.write(image, image_name)

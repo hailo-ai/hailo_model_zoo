@@ -5,8 +5,8 @@ network:
 paths:
   alls_script: petrv2_repvggB0_backbone_pp_800x320.alls
   network_path:
-  - models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.onnx
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip
+  - models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip
 parser:
   nodes:
   - Conv_4
@@ -23,14 +23,14 @@ parser:
     - 58.395
 quantization:
   calib_set:
-  - models_files/nuscenes/2024-10-09/nuscenes_calib.tfrecord
+  - models_files/nuscenes/2024-12-24/nuscenes_calib.tfrecord
 preprocessing:
   meta_arch: petrv2_backbone
   network_type: object_detection_3d_backbone
 evaluation:
   dataset_name: nuscenes_backbone
-  data_set: models_files/nuscenes/2024-10-09/nuscenes_val.tfrecord
-  validation_data_set: models_files/nuscenes/2024-10-09/nuscenes_val.tfrecord
+  data_set: models_files/nuscenes/2024-12-23/nuscenes_val.tfrecord
+  validation_data_set: models_files/nuscenes/2024-12-23/nuscenes_val.tfrecord
   gt_json_path: models_files/ObjectDetection3d/Detection3d-NuScenes/petrv2/pretrained/2024-08-13/coords3d_positional_embedding/
   infer_type: np_infer
 inference:

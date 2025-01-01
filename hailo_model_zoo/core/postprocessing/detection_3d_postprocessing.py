@@ -1,11 +1,29 @@
+import json
 import os
+from typing import List, Tuple
 
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from nuscenes.eval.detection.config import config_factory
+from nuscenes.utils.color_map import get_colormap
+from nuscenes.utils.data_classes import Box
+from nuscenes.utils.geometry_utils import BoxVisibility, box_in_image
+from nuscenes.utils.map_mask import MapMask
+from pyquaternion import Quaternion
+from tqdm import tqdm
 
+from hailo_model_zoo.core.datasets.datasets_info import get_dataset_info
+from hailo_model_zoo.core.eval.detection_3d_evaluation import (
+    DefaultAttribute,
+    lidar_nusc_box_to_global,
+    output_to_nusc_box,
+)
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.visualize_3d import visualization3Dbox
+from hailo_model_zoo.core.postprocessing.visualize_3d.utils.visual_nuscenes import NuScenesExplorer, category_mapping
 from hailo_model_zoo.utils import path_resolver
+from hailo_model_zoo.utils.logger import get_logger
 
 """
 KITTI_KS and KITTI_TRANS_MATS are from KITTI image calibration files.
@@ -168,10 +186,24 @@ class NMSFreeCoder:
 
 @POSTPROCESS_FACTORY.register(name="object_detection_3d")
 def petrv2_transformer(endnodes, device_pre_post_layers=None, **kwargs):
+    postprocess_config_file = kwargs["postprocess_config_file"]
+    ref_points_path = postprocess_config_file
+    ref_points_path = str(path_resolver.resolve_data_path(ref_points_path)) if ref_points_path else None
+    if not os.path.isfile(ref_points_path):
+        raise FileNotFoundError(f"Could not find {ref_points_path}")
+
+    ref_points = np.load(ref_points_path)
+    return petrv2_postprocess(
+        endnodes,
+        timestamp=kwargs["gt_images"]["timestamp"],
+        ref_points=ref_points,
+        classes=kwargs["classes"],
+    )
+
+
+def petrv2_postprocess(endnodes, timestamp, ref_points, classes):
     batch_size = endnodes[0].shape[0]
 
-    img_info = kwargs.get("gt_images", None)
-    timestamp = img_info["timestamp"]
     timestamp = tf.reshape(timestamp, [batch_size, -1, 6])
     mean_time_stamp = tf.math.reduce_mean((timestamp[:, 1, :] - timestamp[:, 0, :]), -1)
     mean_time_stamp = tf.expand_dims(tf.expand_dims(mean_time_stamp, -1), -1)
@@ -180,16 +212,6 @@ def petrv2_transformer(endnodes, device_pre_post_layers=None, **kwargs):
     reg_branches = endnodes[:num_pred]
     cls_branches = endnodes[num_pred:]
 
-    def _get_reference_points(ref_points_path):
-        ref_points = np.load(ref_points_path)
-        return ref_points
-
-    ref_points_path = kwargs.get("postprocess_config_file", None)
-    ref_points_path = path_resolver.resolve_data_path(ref_points_path) if ref_points_path else None
-    if not os.path.isfile(ref_points_path):
-        raise FileNotFoundError(f"Could not find {ref_points_path}")
-    ref_points_path = tf.constant(str(ref_points_path))
-    ref_points = tf.numpy_function(_get_reference_points, [ref_points_path], ["float32"])[0]
     ref_points = tf.reshape(ref_points, [reg_branches[0].shape[0], reg_branches[0].shape[1], 3])
 
     outputs_coords = []
@@ -220,7 +242,7 @@ def petrv2_transformer(endnodes, device_pre_post_layers=None, **kwargs):
     assert all_bbox_pred.shape == all_bbox_preds.shape
 
     preds_dict = {"cls_scores": all_cls_scores, "bbox_pred": all_bbox_pred}
-    num_classes = kwargs.get("classes", None)
+    num_classes = classes
     bbox_coder = NMSFreeCoder(
         post_center_range=[-61.2, -61.2, -10.0, 61.2, 61.2, 10.0],
         pc_range=pc_range,
@@ -618,3 +640,376 @@ def visualize_3d_detection_result(
     with open(calib_file_path) as data:
         KITTI_KS = get_calibration_matrix_from_data(data)
     return visualization3Dbox.visualize_hailo(logits, image, image_name.decode("utf-8"), threshold, KITTI_KS)
+
+
+@VISUALIZATION_FACTORY.register(name="object_detection_3d")
+class PETRV2Visualizer:
+    dataroot = "/fastdata/data/nuscenes/nuesence/"
+
+    def __init__(
+        self,
+        score_threshold=0.25,
+        map_resolution: float = 0.1,
+        version="v1.0-trainval",
+        eval_version="detection_cvpr_2019",
+        show_lidarseg=False,
+        show_panoptic=False,
+        box_vis_level=BoxVisibility.ANY,
+        nsweeps=1,
+        filter_lidarseg_labels=None,
+        lidarseg_preds_bin_path=None,
+        **kwargs,
+    ):
+        self.eval_version = eval_version
+        self.modality = {
+            "use_lidar": False,
+            "use_camera": True,
+            "use_radar": False,
+            "use_map": False,
+            "use_external": True,
+        }
+
+        self.logger = get_logger()
+        self.version = version
+        self.map_resolution = map_resolution
+        self.score_threshold = score_threshold
+        self.show_lidarseg = show_lidarseg
+        self.show_panoptic = show_panoptic
+        self.box_vis_level = box_vis_level
+        self.nsweeps = nsweeps
+        self.filter_lidarseg_labels = filter_lidarseg_labels
+        self.lidarseg_preds_bin_path = lidarseg_preds_bin_path
+
+        # Initialize the colormap which maps from class names to RGB values.
+        self.colormap = get_colormap()
+
+        self.table_names = ["sample", "sample_data", "calibrated_sensor", "sensor", "map", "log", "ego_pose", "scene"]
+        self.sample = self.__load_table__("sample")
+        self.scene = self.__load_table__("scene")
+        self.sample_data = self.__load_table__("sample_data")
+        self.calibrated_sensor = self.__load_table__("calibrated_sensor")
+        self.sensor = self.__load_table__("sensor")
+        self.map = self.__load_table__("map")
+        self.log = self.__load_table__("log")
+        self.ego_pose = self.__load_table__("ego_pose")
+
+        # Initialize map mask for each map record.
+        for map_record in self.map:
+            map_record["mask"] = MapMask(os.path.join(self.dataroot, map_record["filename"]), resolution=map_resolution)
+
+        # Make reverse indexes for common lookups.
+        self.__make_reverse_index__()
+
+        # Initialize NuScenesExplorer class.
+        self.explorer = NuScenesExplorer(self)
+
+    def __load_table__(self, table_name) -> dict:
+        table_path = os.path.join(self.dataroot, self.version, f"{table_name}.json")
+        with open(table_path) as f:
+            table = json.load(f)
+        return table
+
+    def __make_reverse_index__(self) -> None:
+        # Store the mapping from token to table index for each table.
+        self.logger.info("Reverse indexing ...")
+        self._token2ind = {}
+        for table_name in self.table_names:
+            self._token2ind[table_name] = {}
+            for ind, member in tqdm(enumerate(getattr(self, table_name))):
+                self._token2ind[table_name][member["token"]] = ind
+
+        # Decorate (adds short-cut) sample_data with sensor information.
+        for record in self.sample_data:
+            cs_record = self.get("calibrated_sensor", record["calibrated_sensor_token"])
+            sensor_record = self.get("sensor", cs_record["sensor_token"])
+            record["sensor_modality"] = sensor_record["modality"]
+            record["channel"] = sensor_record["channel"]
+
+        # Reverse-index samples with sample_data
+        for record in self.sample:
+            record["data"] = {}
+            record["anns"] = []
+
+        for record in self.sample_data:
+            if record["is_key_frame"]:
+                sample_record = self.get("sample", record["sample_token"])
+                sample_record["data"][record["channel"]] = record["token"]
+
+        log_to_map = {}
+        for map_record in self.map:
+            for log_token in map_record["log_tokens"]:
+                log_to_map[log_token] = map_record["token"]
+        for log_record in self.log:
+            log_record["map_token"] = log_to_map[log_record["token"]]
+
+    def getind(self, table_name: str, token: str) -> int:
+        """
+        This returns the index of the record in a table in constant runtime.
+        :param table_name: Table name.
+        :param token: Token of the record.
+        :return: The index of the record in table, table is an array.
+        """
+        return self._token2ind[table_name][token]
+
+    def get_box(self, sample_annotation_token: str) -> Box:
+        """
+        Instantiates a Box class from a sample annotation record.
+        :param sample_annotation_token: Unique sample_annotation identifier.
+        """
+        record = self.get("sample_annotation", sample_annotation_token)
+        return Box(
+            record["translation"],
+            record["size"],
+            Quaternion(record["rotation"]),
+            name=record["category_name"],
+            token=record["token"],
+        )
+
+    def get_boxes(self, sample_data_token: str) -> List[Box]:
+        """
+        Instantiates Boxes for all annotation for a particular sample_data record. If the sample_data is a
+        keyframe, this returns the annotations for that sample. But if the sample_data is an intermediate
+        sample_data, a linear interpolation is applied to estimate the location of the boxes at the time the
+        sample_data was captured.
+        :param sample_data_token: Unique sample_data identifier.
+        """
+
+        # Retrieve sensor & pose records
+        sd_record = self.get("sample_data", sample_data_token)
+        curr_sample_record = self.get("sample", sd_record["sample_token"])
+
+        if curr_sample_record["prev"] == "" or sd_record["is_key_frame"]:
+            # If no previous annotations available, or if sample_data is keyframe just return the current ones.
+            boxes = list(map(self.get_box, curr_sample_record["anns"]))
+
+        else:
+            prev_sample_record = self.get("sample", curr_sample_record["prev"])
+
+            curr_ann_recs = [self.get("sample_annotation", token) for token in curr_sample_record["anns"]]
+            prev_ann_recs = [self.get("sample_annotation", token) for token in prev_sample_record["anns"]]
+
+            # Maps instance tokens to prev_ann records
+            prev_inst_map = {entry["instance_token"]: entry for entry in prev_ann_recs}
+
+            t0 = prev_sample_record["timestamp"]
+            t1 = curr_sample_record["timestamp"]
+            t = sd_record["timestamp"]
+
+            # There are rare situations where the timestamps in the DB are off so ensure that t0 < t < t1.
+            t = max(t0, min(t1, t))
+
+            boxes = []
+            for curr_ann_rec in curr_ann_recs:
+                if curr_ann_rec["instance_token"] in prev_inst_map:
+                    # If the annotated instance existed in the previous frame, interpolate center & orientation.
+                    prev_ann_rec = prev_inst_map[curr_ann_rec["instance_token"]]
+
+                    # Interpolate center.
+                    center = [
+                        np.interp(t, [t0, t1], [c0, c1])
+                        for c0, c1 in zip(prev_ann_rec["translation"], curr_ann_rec["translation"])
+                    ]
+
+                    # Interpolate orientation.
+                    rotation = Quaternion.slerp(
+                        q0=Quaternion(prev_ann_rec["rotation"]),
+                        q1=Quaternion(curr_ann_rec["rotation"]),
+                        amount=(t - t0) / (t1 - t0),
+                    )
+
+                    box = Box(
+                        center,
+                        curr_ann_rec["size"],
+                        rotation,
+                        name=curr_ann_rec["category_name"],
+                        token=curr_ann_rec["token"],
+                    )
+                else:
+                    # If not, simply grab the current annotation.
+                    box = self.get_box(curr_ann_rec["token"])
+
+                boxes.append(box)
+        return boxes
+
+    def get(self, table_name: str, token: str) -> dict:
+        """
+        Returns a record from table in constant runtime.
+        :param table_name: Table name.
+        :param token: Token of the record.
+        :return: Table record. See README.md for record details for each table.
+        """
+        if table_name != "sample_annotation":
+            assert table_name in self.table_names, "Table {} not found".format(table_name)
+
+        return getattr(self, table_name)[self.getind(table_name, token)]
+
+    def get_sample_data_path(self, sample_data_token: str) -> str:
+        """Returns the path to a sample_data."""
+
+        sd_record = self.get("sample_data", sample_data_token)
+        return os.path.join(self.dataroot, sd_record["filename"])
+
+    def get_sample_data(
+        self,
+        sample_data_token: str,
+        box_vis_level: BoxVisibility = BoxVisibility.ANY,
+        selected_anntokens: List[str] = None,
+        use_flat_vehicle_coordinates: bool = False,
+    ) -> Tuple[str, List[Box], np.array]:
+        """
+        Returns the data path as well as all annotations related to that sample_data.
+        Note that the boxes are transformed into the current sensor's coordinate frame.
+        :param sample_data_token: Sample_data token.
+        :param box_vis_level: If sample_data is an image, this sets required visibility for boxes.
+        :param selected_anntokens: If provided only return the selected annotation.
+        :param use_flat_vehicle_coordinates: Instead of the current sensor's coordinate frame, use ego frame which is
+                                             aligned to z-plane in the world.
+        :return: (data_path, boxes, camera_intrinsic <np.array: 3, 3>)
+        """
+
+        # Retrieve sensor & pose records
+        sd_record = self.get("sample_data", sample_data_token)
+        cs_record = self.get("calibrated_sensor", sd_record["calibrated_sensor_token"])
+        sensor_record = self.get("sensor", cs_record["sensor_token"])
+        pose_record = self.get("ego_pose", sd_record["ego_pose_token"])
+
+        data_path = self.get_sample_data_path(sample_data_token)
+
+        if sensor_record["modality"] == "camera":
+            cam_intrinsic = np.array(cs_record["camera_intrinsic"])
+            imsize = (sd_record["width"], sd_record["height"])
+        else:
+            cam_intrinsic = None
+            imsize = None
+
+        # Retrieve all sample annotations and map to sensor coordinate system.
+        if selected_anntokens is not None:
+            boxes = list(map(self.get_box, selected_anntokens))
+        else:
+            boxes = self.get_boxes(sample_data_token)
+
+        # Make list of Box objects including coord system transforms.
+        box_list = []
+        for box in boxes:
+            if use_flat_vehicle_coordinates:
+                # Move box to ego vehicle coord system parallel to world z plane.
+                yaw = Quaternion(pose_record["rotation"]).yaw_pitch_roll[0]
+                box.translate(-np.array(pose_record["translation"]))
+                box.rotate(Quaternion(scalar=np.cos(yaw / 2), vector=[0, 0, np.sin(yaw / 2)]).inverse)
+            else:
+                # Move box to ego vehicle coord system.
+                box.translate(-np.array(pose_record["translation"]))
+                box.rotate(Quaternion(pose_record["rotation"]).inverse)
+
+                #  Move box to sensor coord system.
+                box.translate(-np.array(cs_record["translation"]))
+                box.rotate(Quaternion(cs_record["rotation"]).inverse)
+
+            if sensor_record["modality"] == "camera" and not box_in_image(
+                box, cam_intrinsic, imsize, vis_level=box_vis_level
+            ):
+                continue
+
+            box_list.append(box)
+
+        return data_path, box_list, cam_intrinsic
+
+    def __call__(self, logits, img, **kwargs):
+        dataset_name = kwargs.get("dataset_name", None)
+        dataset_info = get_dataset_info(dataset_name=dataset_name)
+        classes = dataset_info.class_names
+        eval_detection_configs = config_factory(self.eval_version)
+
+        img_info = kwargs.get("img_info", None)
+        sample_token = img_info["token"].numpy().decode("utf-8")
+        data_info = {
+            "lidar2ego_rotation": img_info["lidar2ego_rotation"],
+            "lidar2ego_translation": img_info["lidar2ego_translation"],
+            "ego2global_rotation": img_info["ego2global_rotation"],
+            "ego2global_translation": img_info["ego2global_translation"],
+        }
+
+        boxes = output_to_nusc_box(logits["predictions"])
+        boxes = lidar_nusc_box_to_global(data_info, boxes, classes, eval_detection_configs, self.eval_version)
+
+        nusc_dets = {}
+        dets = []
+        for _, box in enumerate(boxes):
+            name = classes[box.label]
+            if np.sqrt(box.velocity[0] ** 2 + box.velocity[1] ** 2) > 0.2:
+                if name in [
+                    "car",
+                    "construction_vehicle",
+                    "bus",
+                    "truck",
+                    "trailer",
+                ]:
+                    attr = "vehicle.moving"
+                elif name in ["bicycle", "motorcycle"]:
+                    attr = "cycle.with_rider"
+                else:
+                    attr = DefaultAttribute[name]
+            else:
+                if name in ["pedestrian"]:
+                    attr = "pedestrian.standing"
+                elif name in ["bus"]:
+                    attr = "vehicle.stopped"
+                else:
+                    attr = DefaultAttribute[name]
+
+            nusc_det = {
+                "sample_token": sample_token,
+                "translation": box.center.tolist(),
+                "size": box.wlh.tolist(),
+                "rotation": box.orientation.elements.tolist(),
+                "velocity": box.velocity[:2].tolist(),
+                "detection_name": name,
+                "detection_score": box.score,
+                "attribute_name": attr,
+            }
+            dets.append(nusc_det)
+        nusc_dets[sample_token] = dets
+
+        self.sample_annotation = {
+            "meta": self.modality,
+            "results": nusc_dets,
+        }
+        # Format predictions results
+        results_pred = []
+        token = 0
+        for _, sample_anno in self.sample_annotation["results"].items():
+            for record in sample_anno:
+                if record["detection_score"] > self.score_threshold and record["detection_name"] in category_mapping:
+                    record["token"] = str(token)
+                    record["category_name"] = category_mapping[record["detection_name"]]
+                    results_pred.append(record)
+                    token = token + 1
+        self.sample_annotation = results_pred
+
+        self._token2ind["sample_annotation"] = {}
+        for ind, member in enumerate(self.sample_annotation):
+            self._token2ind["sample_annotation"][member["token"]] = ind
+
+        for pred_record in self.sample_annotation:
+            sample_pred = self.get("sample", pred_record["sample_token"])
+            sample_pred["anns"].append(pred_record["token"])
+
+        # Plot detections
+        self.logger.info(f"Rendering sample token {sample_token}...")
+        fig = self.explorer.render_sample(
+            sample_token,
+            self.box_vis_level,
+            nsweeps=self.nsweeps,
+            show_lidarseg=self.show_lidarseg,
+            filter_lidarseg_labels=self.filter_lidarseg_labels,
+            lidarseg_preds_bin_path=self.lidarseg_preds_bin_path,
+            verbose=False,
+            show_panoptic=self.show_panoptic,
+        )
+
+        fig.canvas.draw()
+        data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep="")
+        drawn_image = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        plt.close("all")
+
+        return drawn_image

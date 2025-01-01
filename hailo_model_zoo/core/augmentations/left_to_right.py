@@ -8,4 +8,4 @@ class AugmentedLRModel(tf.keras.Model):
 
     def call(self, x):
         flipped = tf.image.flip_left_right(x)
-        return tf.concat([self._m(x), self._m(flipped)], axis=1)
+        return tf.concat([self._m(x), self._m(flipped)], axis=-1)

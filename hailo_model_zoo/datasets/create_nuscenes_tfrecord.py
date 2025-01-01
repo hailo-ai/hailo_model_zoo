@@ -12,8 +12,8 @@ from hailo_model_zoo.utils import path_resolver
 
 TF_RECORD_TYPE = "val", "calib"
 TF_RECORD_LOC = {
-    "val": "models_files/nuscenes/2024-10-09/nuscenes_val.tfrecord",
-    "calib": "models_files/nuscenes/2024-10-09/nuscenes_calib.tfrecord",
+    "val": "models_files/nuscenes/2024-12-23/nuscenes_val.tfrecord",
+    "calib": "models_files/nuscenes/2024-12-23/nuscenes_calib.tfrecord",
 }
 
 SENSORS = [
@@ -33,7 +33,9 @@ def _int64_feature(values):
 
 
 def _bytes_feature(values):
-    return tf.train.Feature(bytes_list=tf.train.BytesList(value=[values]))
+    if not isinstance(values, (tuple, list)):
+        values = [values]
+    return tf.train.Feature(bytes_list=tf.train.BytesList(value=values))
 
 
 def _float_list_feature(value):
@@ -415,12 +417,13 @@ def _create_tfrecord(data_infos, name, num_images):
         for i, _ in enumerate(progress_bar):
             info_dict = _get_input_dict(data_infos[i])
             images = info_dict["img"]
-            for img in images:
+            for img_idx, img in enumerate(images):
+                img_jpeg = open(info_dict["img_metas"]["filename"][img_idx], "rb").read()
                 height, width = img.shape[:2]
                 example = tf.train.Example(
                     features=tf.train.Features(
                         feature={
-                            "img": _bytes_feature(img.tobytes()),
+                            "img": _bytes_feature(img_jpeg),
                             "height": _int64_feature(height),
                             "width": _int64_feature(width),
                             "ind": _int64_feature(idx),

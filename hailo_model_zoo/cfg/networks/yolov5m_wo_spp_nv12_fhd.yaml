@@ -10,9 +10,9 @@ paths:
 parser:
   nodes:
   - images
-  - - Conv_283
+  - - Conv_251
     - Conv_267
-    - Conv_251
+    - Conv_283
 hn_editor:
   yuv2rgb: true
   nv12: true
@@ -31,7 +31,7 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 42.65
+  full_precision_result: 43.23
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
   license_name: GPL-3.0

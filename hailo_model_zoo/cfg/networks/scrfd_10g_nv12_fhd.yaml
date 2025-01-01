@@ -28,6 +28,6 @@ info:
   training_data: wider train
   validation_data: wider val
   eval_metric: mAP
-  full_precision_result: 82.426
+  full_precision_result: 81.42
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT

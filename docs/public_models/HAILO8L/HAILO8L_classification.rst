@@ -76,18 +76,6 @@ ImageNet
      - `link <https://github.com/Tianfang-Zhang/CAS-ViT>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/cas_vit_t.hef>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/cas_vit_t_profiler_results_compiled.html>`_    
-   * - davit_tiny   
-     - 82.7
-     - 82.18
-     - 0
-     - 0
-     - 224x224x3
-     - 28.36
-     - 9.1
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/davit_tiny/pretrained/2024-10-01/davit_tiny.zip>`_
-     - `link <https://huggingface.co/timm/davit_tiny.msft_in1k>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/davit_tiny.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/davit_tiny_profiler_results_compiled.html>`_    
    * - deit_base   
      - 80.93
      - 79.78

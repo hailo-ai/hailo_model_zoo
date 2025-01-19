@@ -66,24 +66,3 @@ CIFAR100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/clip_resnet_50x4_profiler_results_compiled.html>`_    
 .. list-table::
    :header-rows: 1
-
-   * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Html    
-   * - clip_vit_l_14_laion2B_16b   
-     - 0
-     - 0
-     - 224x224x3
-     - 304.16
-     - 164.43
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_l_14/pretrained/2024-09-23/CLIP-ViT-L-14-laion2B-s32B-b82K_with_projection_op15_sim.zip>`_
-     - `link <https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/clip_vit_l_14_laion2B_16b.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/clip_vit_l_14_laion2B_16b_profiler_results_compiled.html>`_

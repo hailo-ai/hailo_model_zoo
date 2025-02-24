@@ -136,10 +136,12 @@ License
 
 The Hailo Model Zoo is released under the MIT license. Please see the `LICENSE <https://github.com/hailo-ai/hailo_model_zoo/blob/master/LICENSE>`_ file for more information.
 
-Support
--------
+Support & Issues
+----------------
 
-If you need support, please post your question on our `Hailo community Forum <https://community.hailo.ai/>`_ for assistance.
+⚠️ **Issue reporting is disabled in this repository.**
+
+For bug reports, feature requests, or discussions, please visit our `Hailo Community Forum <https://community.hailo.ai/>`_.
 
 Changelog
 ---------

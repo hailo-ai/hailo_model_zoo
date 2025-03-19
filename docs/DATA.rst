@@ -518,6 +518,8 @@ Manual Download (Optional)
 
       python hailo_model_zoo/datasets/create_aflw2k3d_tddfa_tfrecord.py --dir /path/to/aflw2k3d_tddfa
 
+* BFM files are removed from face_landmarks_3d_postprocessing. From now on, users must download them manually. For more information, please refer to: https://github.com/cleardusk/3DDFA_V2/tree/master/bfm
+
 .. _Hand Landmark:
 
 Hand Landmark

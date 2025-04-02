@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 
 
@@ -39,28 +39,28 @@ Market1501
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - osnet_x1_0   
+     - Profile Html
+   * - osnet_x1_0
      - 94.43
-     - 93.67
-     - 116
-     - 327
+     - 93.73
+     - 163
+     - 504
      - 256x128x3
      - 2.19
      - 1.98
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_
      - `link <https://github.com/KaiyangZhou/deep-person-reid>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/osnet_x1_0.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/osnet_x1_0_profiler_results_compiled.html>`_     
-   * - repvgg_a0_person_reid_512  |star| 
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/osnet_x1_0.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/osnet_x1_0_profiler_results_compiled.html>`_
+   * - repvgg_a0_person_reid_512  |star|
      - 89.9
      - 89.87
-     - 3526
-     - 3526
+     - 4580
+     - 4580
      - 256x128x3
      - 7.68
      - 1.78
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_
      - `link <https://github.com/DingXiaoH/RepVGG>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/repvgg_a0_person_reid_512.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/repvgg_a0_person_reid_512_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/repvgg_a0_person_reid_512.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/repvgg_a0_person_reid_512_profiler_results_compiled.html>`_

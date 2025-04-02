@@ -5,4 +5,4 @@ nms_postprocess(meta_arch=ssd, engine=nn_core)
 
 # allocation params
 nms1_d0, nms1_d0_output, nms1_d1, nms1_d1_output = defuse(nms1, 2, defuse_type=NMS)
-performance_param(compiler_optimization_level=max)
+resources_param(max_apu_utilization=1.0, max_compute_16bit_utilization=1.0, max_compute_utilization=1.0, max_control_utilization=1.0250000000000006, max_input_aligner_utilization=1.0, max_memory_utilization=0.9, max_utilization=0.0)

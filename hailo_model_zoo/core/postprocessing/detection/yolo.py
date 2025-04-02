@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.image import combined_non_max_suppression
 
 from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
@@ -90,7 +89,7 @@ class YoloPostProc(object):
         return box_centers, box_scales, objness, class_pred
 
     def iou_nms(self, detection_boxes, detection_scores):
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
             boxes=detection_boxes,
             scores=detection_scores,
             score_threshold=self.score_threshold,
@@ -160,7 +159,7 @@ class YoloPostProc(object):
                 detection_boxes_full = tf.concat([detection_boxes_full, detection_boxes], axis=1)
                 detection_scores_full = tf.concat([detection_scores_full, detection_scores], axis=1)
 
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
             boxes=detection_boxes_full,
             scores=detection_scores_full,
             score_threshold=self.score_threshold,

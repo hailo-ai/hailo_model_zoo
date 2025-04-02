@@ -1,0 +1,28 @@
+base:
+- base/clip_text_encoder.yaml
+postprocessing:
+  postprocess_config_file: models_files/clip/vitb_32/pretrained/2024-11-13/openai-clip-vit-base-patch32.npz
+evaluation:
+  data_set: models_files/clip/vitb_32/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_32.tfrecord
+quantization:
+  calib_set:
+  - models_files/clip/vitb_32/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_32.tfrecord
+network:
+  network_name: clip_text_encoder_vitb_32
+paths:
+  network_path:
+  - models_files/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.zip
+  alls_script: clip_text_encoder_vitb_32.alls
+parser:
+  nodes:
+  - Add_1
+  - - Add_1515
+info:
+  input_shape: 1x77x512
+  output_shape: 1x77x512
+  operations: 6.0G
+  parameters: 37.8M
+  framework: pytorch
+  full_precision_result: 90.6
+  source: https://huggingface.co/openai/clip-vit-base-patch32

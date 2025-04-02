@@ -3,6 +3,7 @@ base:
 preprocessing:
   meta_arch: resnet_pruned
 info:
+  task: classification
   input_shape: 224x224x3
   output_shape: '1000'
   framework: pytorch

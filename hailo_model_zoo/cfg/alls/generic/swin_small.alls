@@ -4,3 +4,6 @@ model_optimization_config(globals, multiproc_policy=disabled)
 post_quantization_optimization(finetune, policy=enabled, batch_size=4)
 pre_quantization_optimization(ew_add_fusing, policy=disabled)
 model_optimization_flavor(optimization_level=0, compression_level=0)
+
+compilation_param(precision_change6, layer_output_buffers_format=consecutive)
+buffers(precision_change6, ew_add9, 11, 11, FULL_ROW)

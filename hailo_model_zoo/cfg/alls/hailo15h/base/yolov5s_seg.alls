@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+quantization_param(output_layer1, precision_mode=a16_w16)
+quantization_param(output_layer2, precision_mode=a16_w16)
+quantization_param(output_layer3, precision_mode=a16_w16)
+performance_param(optimize_for_batch=8)

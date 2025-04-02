@@ -1,15 +1,15 @@
 {
-	"nms_scores_th": 0.2,
-	"nms_iou_th": 0.6,
-	"image_dims": [
-		640,
-		640
-	],
-	"max_proposals_per_class": 80,
-	"background_removal": false,
-	"classes": 80,
-	"bbox_decoders": [
-		{
+    "nms_scores_th": 0.2,
+    "nms_iou_th": 0.6,
+    "image_dims": [
+        640,
+        640
+    ],
+    "max_proposals_per_class": 80,
+    "background_removal": false,
+    "classes": 80,
+    "bbox_decoders": [
+        {
             "name": "bbox_decoder53",
             "w": [
                 10,
@@ -54,5 +54,5 @@
             "stride": 32,
             "encoded_layer": "conv69"
         }
-	]
+    ]
 }

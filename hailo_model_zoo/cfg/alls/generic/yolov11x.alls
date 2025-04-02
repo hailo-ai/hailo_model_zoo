@@ -8,3 +8,5 @@ post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [con
                                 loss_types = [l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,ce,ce,ce],
                                 loss_factors=[1,1,1,2,2,2,2,2,2], epochs=4, batch_size=2)
 nms_postprocess("../../postprocess_config/yolov11x_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+resources_param(max_control_utilization=0.7, max_compute_utilization=0.7, max_compute_16bit_utilization=0.7, max_memory_utilization=0.7, max_input_aligner_utilization=0.7, max_apu_utilization=0.7)

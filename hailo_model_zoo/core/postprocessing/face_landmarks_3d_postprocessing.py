@@ -171,6 +171,11 @@ class BFMModel(object):
         tri_path = resolve_data_path(
             "models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2021-11-28/tri.pkl"
         )
+        if not bfm_path.exists() or not tri_path.exists():
+            raise FileNotFoundError(
+                "Please sign the license and download the face model manually. "
+                "For further information, see: https://github.com/cleardusk/3DDFA_V2/tree/master/bfm"
+            )
         with open(bfm_path, "rb") as f:
             bfm = pickle.load(f)
         self._u = bfm.get("u").astype(np.float32)  # fix bug

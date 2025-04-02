@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.image import combined_non_max_suppression
 
 from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
@@ -133,7 +132,7 @@ class NanoDetPostProc:
             boxes = self._box_decoding(raw_boxes)
 
         # nms
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
             boxes=boxes,
             scores=scores,
             score_threshold=self._score_threshold,

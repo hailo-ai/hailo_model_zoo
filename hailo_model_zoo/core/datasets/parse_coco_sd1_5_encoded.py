@@ -4,6 +4,7 @@ from hailo_model_zoo.core.factory import DATASET_FACTORY
 
 
 @DATASET_FACTORY.register(name="coco_sd1.5_encoded")
+@DATASET_FACTORY.register(name="ip_adapter_faces_sd1_5")
 def vae(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information"""
     features = tf.io.parse_single_example(

@@ -1,0 +1,7 @@
+normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
+post_quantization_optimization(bias_correction, policy=enabled)
+post_quantization_optimization(finetune, policy=disabled)
+quantization_param({*}, max_elementwise_feed_repeat=1)
+model_optimization_config(calibration, batch_size=2, calibset_size=64)
+
+resources_param(max_apu_utilization=0.8, max_compute_16bit_utilization=0.8, max_compute_utilization=0.8, max_control_utilization=0.8, max_input_aligner_utilization=0.8, max_memory_utilization=0.8, max_utilization=0.0)

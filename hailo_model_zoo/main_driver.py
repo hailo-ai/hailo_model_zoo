@@ -70,7 +70,7 @@ def _ensure_compiled(runner, logger, args, network_info):
 
 
 def _ensure_optimized(runner, logger, args, network_info):
-    runner = _ensure_parsed(runner, logger, network_info, args)
+    _ensure_parsed(runner, logger, network_info, args)
 
     integrated_postprocessing = get_integrated_postprocessing(network_info)
     if integrated_postprocessing and integrated_postprocessing.enabled and args.model_script_path is not None:
@@ -80,7 +80,7 @@ def _ensure_optimized(runner, logger, args, network_info):
         )
 
     if runner.state != States.HAILO_MODEL:
-        return runner
+        return
     model_script = _extract_model_script_path(
         network_info.paths.alls_script, args.model_script_path, args.hw_arch, args.performance
     )
@@ -100,14 +100,12 @@ def _ensure_optimized(runner, logger, args, network_info):
         args.classes,
     )
 
-    return runner
-
 
 def _ensure_parsed(runner, logger, network_info, args):
     if runner.state != States.UNINITIALIZED:
-        return runner
+        return
 
-    return parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
+    parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
 def configure_hef_tf1(hef_path, target):
@@ -123,7 +121,7 @@ def configure_hef_tf2(runner, hef_path):
 
 
 def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
-    runner = _ensure_parsed(runner, logger, network_info, args)
+    _ensure_parsed(runner, logger, network_info, args)
     if isinstance(target, SdkFPOptimized) or (isinstance(target, PcieDevice) and args.hef_path is not None):
         if runner.state == States.HAILO_MODEL:
             calib_feed_callback = prepare_calibration_data(
@@ -132,7 +130,7 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
             integrated_postprocessing = get_integrated_postprocessing(network_info)
             if integrated_postprocessing and integrated_postprocessing.enabled:
                 runner.optimize_full_precision(calib_data=calib_feed_callback)
-                return runner, None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
+                return configure_hef_tf1(args.hef_path, target) if args.hef_path else None
             # We intentionally use base model script and assume its modifications
             # compatible to the performance model script
             model_script = _extract_model_script_path(
@@ -143,29 +141,29 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
                 runner, calib_feed_callback, logger, model_script, args.resize, args.input_conversion, args.classes
             )
 
-        return runner, None if not args.hef_path else configure_hef_tf1(args.hef_path, target)
+        return configure_hef_tf1(args.hef_path, target) if args.hef_path else None
 
     if args.hef_path:
-        return runner, configure_hef_tf1(args.hef_path, target)
+        return configure_hef_tf1(args.hef_path, target)
 
-    runner = _ensure_optimized(runner, logger, args, network_info)
+    _ensure_optimized(runner, logger, args, network_info)
 
     if isinstance(target, SdkPartialNumeric):
-        return runner, None
+        return
 
     assert isinstance(target, PcieDevice)
     _ensure_compiled(runner, logger, args, network_info)
-    return runner, None
+    return None
 
 
 def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
-    runner = _ensure_parsed(runner, logger, network_info, args)
+    _ensure_parsed(runner, logger, network_info, args)
     if target == InferenceContext.SDK_FP_OPTIMIZED or (
         target == InferenceContext.SDK_HAILO_HW and args.hef_path is not None
     ):
         if runner.state != States.HAILO_MODEL:
             configure_hef_tf2(runner, args.hef_path)
-            return runner
+            return
 
         # We intentionally use base model script and assume its modifications
         # compatible to the performance model script
@@ -183,12 +181,12 @@ def _ensure_runnable_state_tf2(args, logger, network_info, runner, target):
     else:
         configure_hef_tf2(runner, args.hef_path)
 
-        runner = _ensure_optimized(runner, logger, args, network_info)
+        _ensure_optimized(runner, logger, args, network_info)
 
         if target != InferenceContext.SDK_QUANTIZED:
             _ensure_compiled(runner, logger, args, network_info)
 
-    return runner
+    return
 
 
 def parse(args):
@@ -215,7 +213,7 @@ def optimize(args):
 
     logger.info(f"Initializing the {args.hw_arch} runner...")
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
-    runner = _ensure_parsed(runner, logger, network_info, args)
+    _ensure_parsed(runner, logger, network_info, args)
 
     model_script = _extract_model_script_path(
         network_info.paths.alls_script, args.model_script_path, args.hw_arch, args.performance
@@ -247,7 +245,7 @@ def compile(args):
     logger.info(f"Initializing the {args.hw_arch} runner...")
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
 
-    runner = _ensure_optimized(runner, logger, args, network_info)
+    _ensure_optimized(runner, logger, args, network_info)
 
     model_script = _extract_model_script_path(
         network_info.paths.alls_script, args.model_script_path, args.hw_arch, args.performance
@@ -275,7 +273,7 @@ def profile(args):
     logger.info(f"Initializing the {args.hw_arch} runner...")
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
 
-    runner = _ensure_parsed(runner, logger, network_info, args)
+    _ensure_parsed(runner, logger, network_info, args)
 
     if args.hef_path and runner.state == States.HAILO_MODEL:
         model_script = _extract_model_script_path(
@@ -366,7 +364,7 @@ def evaluate(args):
     ]:
         hailo_target = TARGETS[args.target]
         with hailo_target() as target:
-            runner, network_groups = _ensure_runnable_state_tf1(args, logger, network_info, runner, target)
+            network_groups = _ensure_runnable_state_tf1(args, logger, network_info, runner, target)
             return infer_model_tf1(
                 runner,
                 network_info,
@@ -385,7 +383,7 @@ def evaluate(args):
     else:
         # new tf2 inference flow
         target = INFERENCE_TARGETS[args.target]
-        runner = _ensure_runnable_state_tf2(args, logger, network_info, runner, target)
+        _ensure_runnable_state_tf2(args, logger, network_info, runner, target)
 
         device_info = DEVICES.get(args.target)
         # overrides nms score threshold if postprocess on-host

@@ -118,8 +118,10 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
         compare=False,
     )
     parser = NetParser(argparse.ArgumentParser(description="HailoMZ parser"))
+    parser.runner = runner
+
     try:
-        runner = parser.run(parser_args, save_model=False)
+        parser.run(parser_args, save_model=False)
     except Exception as err:
         raise Exception(f"Encountered error during parsing: {err}") from None
 
@@ -144,8 +146,6 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     # save model
     runner.save_har(results_dir / f"{network_info.network.network_name}.har")
-
-    return runner
 
 
 def load_model(runner, har_path, logger):

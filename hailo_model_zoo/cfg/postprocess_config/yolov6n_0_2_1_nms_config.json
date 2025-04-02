@@ -11,20 +11,20 @@
         {
             "name": "fused_bbox_decoder_8",
             "stride": 8,
-            "reg_layer":"", 
-            "cls_layer":""
+            "reg_layer": "",
+            "cls_layer": ""
         },
         {
             "name": "fused_bbox_decoder_16",
             "stride": 16,
-            "reg_layer":"", 
-            "cls_layer":""
+            "reg_layer": "",
+            "cls_layer": ""
         },
         {
             "name": "fused_bbox_decoder_32",
             "stride": 32,
-            "reg_layer":"",
-            "cls_layer":""
+            "reg_layer": "",
+            "cls_layer": ""
         }
     ]
 }

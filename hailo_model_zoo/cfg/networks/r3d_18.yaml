@@ -25,8 +25,8 @@ info:
   task: video classification
   input_shape: 112x112x48
   output_shape: '400'
-  operations: 40.7G
-  parameters: 33.37M
+  operations: 81.4G
+  parameters: 33.4M
   framework: pytorch
   training_data: kinetics400
   validation_data: kinetics400 (partial)

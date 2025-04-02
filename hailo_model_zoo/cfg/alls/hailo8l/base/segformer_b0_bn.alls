@@ -1,0 +1,5 @@
+normalization199 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_config(calibration, batch_size=1, calibset_size=64)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+
+resources_param(max_apu_utilization=0.8, max_compute_16bit_utilization=0.8, max_compute_utilization=0.8, max_control_utilization=0.8, max_input_aligner_utilization=0.8, max_memory_utilization=0.8, max_utilization=0.0)

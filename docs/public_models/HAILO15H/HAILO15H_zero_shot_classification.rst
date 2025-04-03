@@ -68,6 +68,8 @@ CIFAR100
    :header-rows: 1
 
    * - Network Name
+     - Accuracy (top1)
+     - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -78,8 +80,10 @@ CIFAR100
      - Compiled
      - Profile Html
    * - clip_vit_b_32
-     - 0
-     - 0
+     - 90.6
+     - 88.8
+     - 36
+     - 74
      - 224x224x3
      - 87.8
      - 8.8
@@ -88,6 +92,8 @@ CIFAR100
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_vit_b_32.hef>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_vit_b_32_profiler_results_compiled.html>`_
    * - clip_vit_l_14_laion2B_16b
+     - 78.6
+     - 75.7
      - 4
      - 7
      - 224x224x3

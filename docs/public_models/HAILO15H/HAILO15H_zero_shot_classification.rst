@@ -93,7 +93,7 @@ CIFAR100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_vit_l_14_laion2B_16b_profiler_results_compiled.html>`_
    * - clip_vit_l_14_336_16b
      - 77.2
-     - 75.7
+     - 68
      - 3
      - 4
      - 336x336x3
@@ -165,7 +165,7 @@ CIFAR100
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_text_encoder_vitb_32_profiler_results_compiled.html>`_
    * - clip_vit_b_32
      - 65.2
-     - 62.8
+     - NA
      - 73
      - 358
      - 224x224x3

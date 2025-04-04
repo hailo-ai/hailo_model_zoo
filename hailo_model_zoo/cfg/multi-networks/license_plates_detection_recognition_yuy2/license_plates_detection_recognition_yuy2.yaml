@@ -1,0 +1,7 @@
+models:
+  - tiny_yolov4_license_plates_yuy2
+  - lprnet_yuy2
+alls_script: "license_plates_detection_recognition_yuy2.alls"
+release_model_zoo:
+  default: false
+release_tappas: true

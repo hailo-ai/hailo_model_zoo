@@ -1,0 +1,7 @@
+models:
+  - lightface_slim_yuy2
+  - tddfa_mobilenet_v1_yuy2
+alls_script: "face_detection_landmarks_yuy2.alls"
+release_model_zoo:
+  default: false
+release_tappas: true

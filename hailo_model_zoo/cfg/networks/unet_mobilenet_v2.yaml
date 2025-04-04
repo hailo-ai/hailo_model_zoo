@@ -7,12 +7,9 @@ network:
 paths:
   alls_script: unet_mobilenet_v2.alls
   network_path:
-  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/saved_model.pb
-  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/variables/variables.index
-  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet/variables/variables.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2022-02-03/unet_mobilenet_v2.zip
+  - models_files/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2025-01-15/unet_mobilenet_v2.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2025-01-15/unet_mobilenet_v2.zip
 parser:
-  is_tf2_saved_model: true
   normalization_params:
     normalize_in_net: true
     std_list:

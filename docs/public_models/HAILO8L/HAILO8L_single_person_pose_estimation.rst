@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 
 
@@ -39,40 +39,40 @@ COCO
      - Pretrained
      - Source
      - Compiled
-     - Profile Html     
-   * - mspn_regnetx_800mf  |star| 
+     - Profile Html
+   * - mspn_regnetx_800mf  |star|
      - 70.8
-     - 69.8
-     - 209
-     - 582
+     - 70.49
+     - 795
+     - 795
      - 256x192x3
      - 7.17
      - 2.94
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_
      - `link <https://github.com/open-mmlab/mmpose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/mspn_regnetx_800mf.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/mspn_regnetx_800mf_profiler_results_compiled.html>`_    
-   * - vit_pose_small   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/mspn_regnetx_800mf.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/mspn_regnetx_800mf_profiler_results_compiled.html>`_
+   * - vit_pose_small
      - 74.16
-     - 73.04
-     - 31
-     - 82
+     - 73.05
+     - 41
+     - 121
      - 256x192x3
      - 24.29
      - 17.17
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_
      - `link <https://github.com/ViTAE-Transformer/ViTPose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/vit_pose_small.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/vit_pose_small_profiler_results_compiled.html>`_    
-   * - vit_pose_small_bn   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/vit_pose_small.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/vit_pose_small_profiler_results_compiled.html>`_
+   * - vit_pose_small_bn
      - 72.01
-     - 71.17
-     - 59
-     - 200
+     - 70.97
+     - 70
+     - 245
      - 256x192x3
      - 24.32
      - 17.17
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small_bn/pretrained/2023-07-20/vit_pose_small_bn.zip>`_
      - `link <https://github.com/ViTAE-Transformer/ViTPose>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/vit_pose_small_bn.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/vit_pose_small_bn_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/vit_pose_small_bn.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/vit_pose_small_bn_profiler_results_compiled.html>`_

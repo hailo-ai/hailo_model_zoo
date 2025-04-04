@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 
 
@@ -39,19 +39,19 @@ BSD68
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - dncnn3   
+     - Profile Html
+   * - dncnn3
      - 31.46
      - 31.32
-     - 29
-     - 29
+     - 31
+     - 31
      - 321x481x1
      - 0.66
      - 205.26
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/dncnn3.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/dncnn3_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn3_profiler_results_compiled.html>`_
 
 CBSD68
 ^^^^^^
@@ -71,16 +71,16 @@ CBSD68
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - dncnn_color_blind   
+     - Profile Html
+   * - dncnn_color_blind
      - 33.87
-     - 33.05
-     - 29
-     - 29
+     - 33.02
+     - 31
+     - 31
      - 321x481x3
      - 0.66
      - 205.97
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_
      - `link <https://github.com/cszn/KAIR>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/dncnn_color_blind.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8l/dncnn_color_blind_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn_color_blind.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn_color_blind_profiler_results_compiled.html>`_

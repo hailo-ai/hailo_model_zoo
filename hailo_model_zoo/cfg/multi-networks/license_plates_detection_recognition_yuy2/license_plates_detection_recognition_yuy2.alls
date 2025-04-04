@@ -1,0 +1,4 @@
+allocator_param(automatic_ddr=disabled)
+tiny_yolov4_license_plates_yuy2/reshape_yuy2 = input_conversion(tiny_yolov4_license_plates_yuy2/input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
+lprnet_yuy2/reshape_yuy2 = input_conversion(lprnet_yuy2/input_layer1, yuy2_to_hailo_yuv, emulator_support=True)
+performance_param(fps=null)

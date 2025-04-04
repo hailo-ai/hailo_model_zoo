@@ -1,0 +1,5 @@
+models:
+  - tiny_yolov4_license_plates
+  - lprnet
+release_model_zoo:
+  default: false

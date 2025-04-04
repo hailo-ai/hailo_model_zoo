@@ -1,3 +1,16 @@
+**v2.15**
+
+* Update to use Dataflow Compiler v3.31.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.21.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New Models:
+
+  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ - ViT-Base-16, ViT-Base-32, ViT-Large-14 (336x336 resolution) - Contrastive Language-Image Pre-training model [Hailo-15H and Hailo-10H only]
+  * `Real-ESRGAN <https://arxiv.org/pdf/2107.10833>`_ - x4 - Super Resolution model [Hailo-15H and Hailo-10H only]
+  * `PoolFormer <https://arxiv.org/pdf/2111.11418>`_ - s12 - Vision Transformer classification model [Hailo-15M/H and Hailo-10H only]
+
+* Bug fixes
+
 **v2.14**
 
 * Update to use Dataflow Compiler v3.30.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
@@ -24,7 +37,7 @@
 * New Models:
 
   * `YOLOv11 <https://arxiv.org/pdf/2410.17725>`_ - nano, small, medium, large, x-large - Latest YOLO detectors
-  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ ViT-Large-14-Laion2B - Contrastive Language-Image Pre-training model [H15H and H10H only]
+  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ - ViT-Large-14-Laion2B - Contrastive Language-Image Pre-training model [H15H and H10H only]
   * `SWIN <https://arxiv.org/pdf/2103.14030>`_ - tiny, small - Shifted-Windows Transformer based classification model
   * `DaViT <https://arxiv.org/pdf/2204.03645>`_ - tiny - Dual Attention Vision Transformer classification model [H15H and H10H only]
   * `LeViT <https://arxiv.org/pdf/2104.01136>`_ - levit128, levit192, levit384 - Transformer based classification model

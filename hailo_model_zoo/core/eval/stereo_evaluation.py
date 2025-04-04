@@ -14,6 +14,9 @@ class StereoNetEval(Eval):
         self.avgEPE = 0
         self.reset()
 
+    def is_bigger_better(self):
+        return False
+
     def _parse_net_output(self, net_output):
         return net_output["predictions"]
 
@@ -31,7 +34,7 @@ class StereoNetEval(Eval):
                 diff[index[:, 0], index[:, 1], index[:, 2]] < true_disp[index[:, 0], index[:, 1], index[:, 2]] * 0.05
             )
             # pixel prediction is true if diff is smaller than 3 or 5%
-            three_pixel_correct_rate = float(np.sum(correct)) / float(len(index[:, 0]))
+            three_pixel_correct_rate = 1 - float(np.sum(correct)) / float(len(index[:, 0]))
             self.TotalEPE += three_pixel_correct_rate
 
         self.count += net_output.shape[0]

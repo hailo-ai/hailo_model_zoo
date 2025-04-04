@@ -135,6 +135,7 @@ TEMPLATES = [
 TF_RECORD_TYPE = ["val", "calib"]
 CLASS_TOKEN_LOC = {
     "laion/CLIP-ViT-L-14-laion2B-s32B-b82K": "models_files/cifar100/test/class_token_vit_l_14_laion2B.npy",
+    "openai/clip-vit-large-patch14-336": "models_files/cifar100/2025-01-13/class_token_vit_l_14_336.npy",
 }
 TF_RECORD_LOC = {
     "val": "models_files/cifar100/test/cifar100_val.tfrecord",

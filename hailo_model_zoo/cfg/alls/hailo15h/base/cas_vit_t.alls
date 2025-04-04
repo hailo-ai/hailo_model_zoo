@@ -1,0 +1,5 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+reshape_rgb = input_conversion(input_layer1, bgr_to_rgb)
+pre_quantization_optimization(se_optimization, method=tse, mode=sequential, count=6, tile_height=8)
+post_quantization_optimization(finetune, policy=enabled, batch_size=4)
+allocator_param(optimize_pipeline_stoppage=True)

@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.28.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.31.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.18.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.21.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -65,7 +65,7 @@ The models are divided to:
 
     * For Hailo-15M - `Classification <docs/public_models/HAILO15M/HAILO15M_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO15M_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO15M_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-    * For Hailo-10 - `Classification <docs/public_models/HAILO10/HAILO10_classification.rst>`_, `Object Detection <docs/public_models/HAILO10/HAILO10_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10/HAILO10_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+    * For Hailo-10H - `Classification <docs/public_models/HAILO10H/HAILO10H_classification.rst>`_, `Object Detection <docs/public_models/HAILO10H/HAILO10H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10H/HAILO10H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 

@@ -3,8 +3,9 @@ base:
 network:
   network_name: tddfa_mobilenet_v1
 paths:
-  network_path: ["models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1_120x120.onnx"]
-  url: "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip"
+  network_path:
+  - models_files/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1_120x120.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip
   alls_script: tddfa_mobilenet_v1.alls
 info:
   task: facial landmark detection

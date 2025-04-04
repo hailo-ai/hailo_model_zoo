@@ -2,7 +2,6 @@ import math
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.image import combined_non_max_suppression
 
 
 def collect_box_class_predictions(output_branches, num_classes, type):
@@ -206,7 +205,7 @@ class retinanet_postproc(object):
                 image_scores.append(top_k_scores)
             image_boxes = tf.expand_dims(tf.concat(image_boxes, axis=1), axis=-2) / self._image_dims[0]
             image_scores = tf.concat(image_scores, axis=1)
-            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
                 boxes=image_boxes,
                 scores=image_scores,
                 iou_threshold=self._nms_iou_thresh,

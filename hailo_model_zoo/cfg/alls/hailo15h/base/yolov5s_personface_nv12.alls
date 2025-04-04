@@ -7,4 +7,4 @@ nms_postprocess("../../../postprocess_config/yolov5s_personface.json", yolov5, e
 allocator_param(timeout=1000, cluster_timeout=1000, automatic_ddr=disabled)
 
 context_switch_param(allow_auto_merge_in_multicontext=True)
-performance_param(optimization_level=max)
+resources_param(max_apu_utilization=1.0, max_compute_16bit_utilization=1.0, max_compute_utilization=1.0, max_control_utilization=1.2, max_input_aligner_utilization=1.0, max_memory_utilization=0.9, max_utilization=0.0)

@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 
 
@@ -39,8 +39,8 @@ BSD100
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - espcn_x2   
+     - Profile Html
+   * - espcn_x2
      - 31.22
      - 30.78
      - 1164
@@ -50,9 +50,9 @@ BSD100
      - 1.6
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x2.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x2_profiler_results_compiled.html>`_    
-   * - espcn_x3   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x2.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x2_profiler_results_compiled.html>`_
+   * - espcn_x3
      - 28.29
      - 28.12
      - 2217
@@ -62,9 +62,9 @@ BSD100
      - 0.76
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x3.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x3_profiler_results_compiled.html>`_    
-   * - espcn_x4   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x3_profiler_results_compiled.html>`_
+   * - espcn_x4
      - 26.83
      - 26.65
      - 2189
@@ -74,8 +74,8 @@ BSD100
      - 0.46
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_
      - `link <https://github.com/Lornatang/ESPCN-PyTorch>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x4.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/espcn_x4_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x4.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/espcn_x4_profiler_results_compiled.html>`_
 
 N/A
 ^^^
@@ -95,16 +95,16 @@ N/A
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - real_esrgan_x2   
+     - Profile Html
+   * - real_esrgan_x2
      - 28.27
      - 27.68
      - 1
-     - 0
+     - 1
      - 512x512x3
      - 16.7
      - 2350
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_
      - `link <https://github.com/ai-forever/Real-ESRGAN>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/real_esrgan_x2.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/real_esrgan_x2_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/real_esrgan_x2.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/real_esrgan_x2_profiler_results_compiled.html>`_

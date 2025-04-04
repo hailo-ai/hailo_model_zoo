@@ -14,3 +14,4 @@ quantization_param({clip_vit_l_14_laion2B_16b/ew_sub_softmax*}, precision_mode=a
 quantization_param({clip_vit_l_14_laion2B_16b/reduce_sum_softmax*}, precision_mode=a8_w8)
 quantization_param({clip_vit_l_14_laion2B_16b/ew_mult_softmax*}, precision_mode=a8_w8)
 
+hef_param(should_run_full_validation=False)

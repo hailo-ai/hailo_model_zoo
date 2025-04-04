@@ -1,56 +1,59 @@
 {
-  "nms_scores_th": 0.01,
-  "nms_iou_th": 1.0,
-  "image_dims": [512, 512],
-  "max_proposals_per_class": 80,
-  "background_removal": false,
-  "input_division_factor": 8,
-  "classes": 20,
-  "bbox_decoders": [
-      {
-          "name": "bbox_decoder53",
-          "w": [
-              10,
-              16,
-              33
-          ],
-          "h": [
-              13,
-              30,
-              23
-          ],
-          "stride": 8,
-          "encoded_layer": "conv53"
-      },
-      {
-          "name": "bbox_decoder61",
-          "w": [
-              30,
-              62,
-              59
-          ],
-          "h": [
-              61,
-              45,
-              119
-          ],
-          "stride": 16,
-          "encoded_layer": "conv61"
-      },
-      {
-          "name": "bbox_decoder69",
-          "w": [
-              116,
-              156,
-              373 
-          ],
-          "h": [
-              90,
-              198,
-              326
-          ],
-          "stride": 32,
-          "encoded_layer": "conv69"
-      }
-  ]
+    "nms_scores_th": 0.01,
+    "nms_iou_th": 1.0,
+    "image_dims": [
+        512,
+        512
+    ],
+    "max_proposals_per_class": 80,
+    "background_removal": false,
+    "input_division_factor": 8,
+    "classes": 20,
+    "bbox_decoders": [
+        {
+            "name": "bbox_decoder53",
+            "w": [
+                10,
+                16,
+                33
+            ],
+            "h": [
+                13,
+                30,
+                23
+            ],
+            "stride": 8,
+            "encoded_layer": "conv53"
+        },
+        {
+            "name": "bbox_decoder61",
+            "w": [
+                30,
+                62,
+                59
+            ],
+            "h": [
+                61,
+                45,
+                119
+            ],
+            "stride": 16,
+            "encoded_layer": "conv61"
+        },
+        {
+            "name": "bbox_decoder69",
+            "w": [
+                116,
+                156,
+                373
+            ],
+            "h": [
+                90,
+                198,
+                326
+            ],
+            "stride": 32,
+            "encoded_layer": "conv69"
+        }
+    ]
 }

@@ -1,7 +1,6 @@
 # ruff: noqa: SLF001 allow access to private member
 import numpy as np
 import tensorflow as tf
-from tensorflow.image import combined_non_max_suppression
 
 from hailo_model_zoo.core.postprocessing.detection.detection_common import tf_postproc_nms
 
@@ -278,7 +277,7 @@ class SSDPostProc(object):
             # detection_boxes = tf.identity(tf.expand_dims(detection_boxes, axis=[2]), 'raw_box_locations')
             detection_boxes = tf.expand_dims(detection_boxes, axis=[2])
 
-            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = combined_non_max_suppression(
+            (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
                 boxes=detection_boxes,
                 scores=detection_scores,
                 score_threshold=self._score_threshold,

@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 
 
@@ -39,112 +39,112 @@ COCO
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - yolact_regnetx_1.6gf   
+     - Profile Html
+   * - yolact_regnetx_1.6gf
      - 27.57
-     - 27.25
-     - 47
-     - 86
+     - 27.21
+     - 58
+     - 96
      - 512x512x3
      - 30.09
      - 125.34
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_1.6gf/pretrained/2022-11-30/yolact_regnetx_1.6gf.zip>`_
      - `link <https://github.com/dbolya/yolact>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolact_regnetx_1.6gf.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolact_regnetx_1.6gf_profiler_results_compiled.html>`_    
-   * - yolact_regnetx_800mf   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolact_regnetx_1.6gf.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolact_regnetx_1.6gf_profiler_results_compiled.html>`_
+   * - yolact_regnetx_800mf
      - 25.61
-     - 25.4
-     - 54
+     - 25.37
+     - 55
      - 98
      - 512x512x3
      - 28.3
      - 116.75
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolact_regnetx_800mf/pretrained/2022-11-30/yolact_regnetx_800mf.zip>`_
      - `link <https://github.com/dbolya/yolact>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolact_regnetx_800mf.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolact_regnetx_800mf_profiler_results_compiled.html>`_    
-   * - yolov5l_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolact_regnetx_800mf.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolact_regnetx_800mf_profiler_results_compiled.html>`_
+   * - yolov5l_seg
      - 39.78
      - 39.33
-     - 33
-     - 52
+     - 35
+     - 60
      - 640x640x3
      - 47.89
      - 147.88
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5l/pretrained/2022-10-30/yolov5l-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5l_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5l_seg_profiler_results_compiled.html>`_    
-   * - yolov5m_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5l_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5l_seg_profiler_results_compiled.html>`_
+   * - yolov5m_seg
      - 37.05
-     - 36.52
-     - 60
-     - 105
+     - 36.55
+     - 68
+     - 125
      - 640x640x3
      - 32.60
      - 70.94
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5m/pretrained/2022-10-30/yolov5m-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5m_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5m_seg_profiler_results_compiled.html>`_     
-   * - yolov5n_seg  |star| 
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5m_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5m_seg_profiler_results_compiled.html>`_
+   * - yolov5n_seg  |star|
      - 23.35
-     - 22.94
-     - 184
-     - 184
+     - 22.93
+     - 466
+     - 466
      - 640x640x3
      - 1.99
      - 7.1
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5n/pretrained/2022-10-30/yolov5n-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5n_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5n_seg_profiler_results_compiled.html>`_    
-   * - yolov5s_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5n_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5n_seg_profiler_results_compiled.html>`_
+   * - yolov5s_seg
      - 31.57
-     - 30.75
-     - 92
-     - 92
+     - 30.78
+     - 331
+     - 331
      - 640x640x3
      - 7.61
      - 26.42
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov5/yolov5s/pretrained/2022-10-30/yolov5s-seg.zip>`_
      - `link <https://github.com/ultralytics/yolov5>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5s_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov5s_seg_profiler_results_compiled.html>`_    
-   * - yolov8m_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5s_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5s_seg_profiler_results_compiled.html>`_
+   * - yolov8m_seg
      - 40.6
-     - 40.2
-     - 45
-     - 87
+     - 40.26
+     - 51
+     - 103
      - 640x640x3
      - 27.3
      - 110.2
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov8/yolov8m/pretrained/2023-03-06/yolov8m-seg.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8m_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8m_seg_profiler_results_compiled.html>`_    
-   * - yolov8n_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8m_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8m_seg_profiler_results_compiled.html>`_
+   * - yolov8n_seg
      - 30.32
-     - 29.64
-     - 191
-     - 433
+     - 29.69
+     - 528
+     - 528
      - 640x640x3
      - 3.4
      - 12.04
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov8/yolov8n/pretrained/2023-03-06/yolov8n-seg.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8n_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8n_seg_profiler_results_compiled.html>`_    
-   * - yolov8s_seg   
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8n_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8n_seg_profiler_results_compiled.html>`_
+   * - yolov8s_seg
      - 36.63
-     - 36.4
-     - 105
-     - 201
+     - 36.34
+     - 107
+     - 202
      - 640x640x3
      - 11.8
      - 42.6
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolov8/yolov8s/pretrained/2023-03-06/yolov8s-seg.zip>`_
      - `link <https://github.com/ultralytics/ultralytics>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8s_seg.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo8/yolov8s_seg_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8s_seg.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov8s_seg_profiler_results_compiled.html>`_

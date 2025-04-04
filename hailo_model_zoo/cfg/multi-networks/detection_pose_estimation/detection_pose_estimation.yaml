@@ -1,0 +1,6 @@
+models:
+  - yolov5m_wo_spp_60p
+  - centerpose_repvgg_a0
+alls_script: "detection_pose_estimation.alls"
+release_model_zoo:
+  default: false

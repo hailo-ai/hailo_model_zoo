@@ -62,5 +62,4 @@ class PolyLaneNetPostProcessHailo(object):
         decoded = tf.numpy_function(self.decode, [endnodes], [tf.float32])
         # network always returns 5 lane predictions.
         postprocessed = tf.numpy_function(self.polynomize_pred, [decoded], [tf.float32])
-        # import ipdb; ipdb.set_trace()
         return {"predictions": postprocessed[0]}

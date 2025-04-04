@@ -1,34 +1,34 @@
 {
-	"nms_scores_th": 0.2,
-	"nms_iou_th": 0.65,
-	"number_of_detection_heads": 3,
-	"image_dims": [
-		640,
-		640
-	],
-	"max_proposals_per_class": 100,
-	"classes": 80,
-	"bbox_decoders": [
-		{
-			"name": "bbox_decoder_8",
-			"stride": 8,
-			"reg_layer": "conv55",
-			"objectness_layer": "conv56",
-			"cls_layer": "conv54"
-		},
-		{
-			"name": "bbox_decoder_16",
-			"stride": 16,
-			"reg_layer": "conv69",
-			"objectness_layer": "conv70",
-			"cls_layer": "conv68"
-		},
-		{
-			"name": "bbox_decoder_32",
-			"stride": 32,
-			"reg_layer": "conv82",
-			"objectness_layer": "conv83",
-			"cls_layer": "conv81"
-		}
-	]
+    "nms_scores_th": 0.2,
+    "nms_iou_th": 0.65,
+    "number_of_detection_heads": 3,
+    "image_dims": [
+        640,
+        640
+    ],
+    "max_proposals_per_class": 100,
+    "classes": 80,
+    "bbox_decoders": [
+        {
+            "name": "bbox_decoder_8",
+            "stride": 8,
+            "reg_layer": "conv55",
+            "objectness_layer": "conv56",
+            "cls_layer": "conv54"
+        },
+        {
+            "name": "bbox_decoder_16",
+            "stride": 16,
+            "reg_layer": "conv69",
+            "objectness_layer": "conv70",
+            "cls_layer": "conv68"
+        },
+        {
+            "name": "bbox_decoder_32",
+            "stride": 32,
+            "reg_layer": "conv82",
+            "objectness_layer": "conv83",
+            "cls_layer": "conv81"
+        }
+    ]
 }

@@ -15,13 +15,11 @@ network:
 paths:
   alls_script: ssd_mobilenet_v2.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2023-03-16/model.ckpt.meta
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2023-03-16/model.ckpt.index
-  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2023-03-16/model.ckpt.data-00000-of-00001
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2023-03-16/ssd_mobilenet_v2.zip
+  - models_files/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2025-01-15/ssd_mobilenet_v2.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/ssd/ssd_mobilenet_v2/pretrained/2025-01-15/ssd_mobilenet_v2.zip
 parser:
   nodes:
-  - FeatureExtractor/MobilenetV2/MobilenetV2/input
+  - FeatureExtractor/MobilenetV2/Conv/Relu6;FeatureExtractor/MobilenetV2/Conv/BatchNorm/batchnorm/add_1;FeatureExtractor/MobilenetV2/expanded_conv_5/project/Conv2D;FeatureExtractor/MobilenetV2/Conv/Conv2D;FeatureExtractor/MobilenetV2/Conv/BatchNorm/batchnorm/sub
   - - BoxPredictor_0/BoxEncodingPredictor/BiasAdd
     - BoxPredictor_0/ClassPredictor/BiasAdd
     - BoxPredictor_1/BoxEncodingPredictor/BiasAdd

@@ -4,8 +4,7 @@ post_quantization_optimization(bias_correction, policy=enabled)
 
 # allocator commands
 allocator_param(enable_partial_row_buffers=disabled)
-performance_param(optimization_level=1)
 # TODO: SDK-30581 remove defuse and compilation_param commands after fix
 dw3_fs, dw3_d0, dw3_d1, dw3_d2, dw3_d3, dw3_d4, dw3_dc = defuse(dw3, 5, defuse_type=INPUT_FEATURES)
 compilation_param(dw3_dc, layer_output_buffers_format=row_per_cut)
-performance_param(compiler_optimization_level=max)
+resources_param(max_apu_utilization=1.0, max_compute_16bit_utilization=1.0, max_compute_utilization=1.0, max_control_utilization=1.2, max_input_aligner_utilization=1.0, max_memory_utilization=0.9, max_utilization=0.0)

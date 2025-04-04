@@ -7,13 +7,13 @@ import zipfile
 from datetime import datetime
 from pathlib import Path
 
+import gdown
 import numpy as np
 import PIL
 import tensorflow as tf
 from tqdm import tqdm
 
 from hailo_model_zoo.utils import path_resolver
-from hailo_model_zoo.utils.downloader import download_from_drive
 
 LOL_DATASET_PAPER = "https://arxiv.org/abs/1808.04560v1"
 DESCRIPTION = (
@@ -65,15 +65,17 @@ def create_tf_example(img_path, ll_enhanced_dir):
 
 
 def _download_dataset(dataset_dir):
+    dataset_dir = Path(dataset_dir)
     if dataset_dir.is_dir():
         print(f"{dataset_dir} already exists, skipping download.")
         return
-    dataset_dir.mkdir()
-    with tempfile.NamedTemporaryFile() as outfile:
-        download_from_drive(DOWNLOAD_URL, outfile, desc=LOL_ZIP_NAME)
-        with zipfile.ZipFile(outfile, "r") as zip_ref:
-            zip_ref.extractall(str(dataset_dir))
-    print(f"Downloaded dataset to {dataset_dir}")
+    dataset_dir.mkdir(parents=True, exist_ok=True)
+    temp_zip_path = tempfile.NamedTemporaryFile(delete=False).name  # Get a temporary file path
+    gdown.download(DOWNLOAD_URL, temp_zip_path, quiet=False)
+    print("Extracting dataset...")
+    with zipfile.ZipFile(temp_zip_path, "r") as zip_ref:
+        zip_ref.extractall(str(dataset_dir))
+    print(f"Downloaded and extracted dataset to {dataset_dir}")
 
 
 def _create_tf_record(ll_dir, ll_enhanced_dir, name, num_images=None):
@@ -98,6 +100,11 @@ def _create_tf_record(ll_dir, ll_enhanced_dir, name, num_images=None):
     writer = tf.io.TFRecordWriter(str(tfrecord_filename))
     images = [os.path.join(dp, f) for dp, dn, fn in os.walk(os.path.expanduser(ll_dir)) for f in fn if f[-3:] == "png"]
     images = images[:num_images]
+    if not images:
+        writer.close()
+        raise FileNotFoundError(
+            f"No images found in {ll_dir}\nYou can download the dataset by not providing ll and lle arguments.\n"
+        )
     for i, img_path in enumerate(tqdm(images, desc="Converting images")):
         try:
             tf_example = create_tf_example(img_path, ll_enhanced_dir)

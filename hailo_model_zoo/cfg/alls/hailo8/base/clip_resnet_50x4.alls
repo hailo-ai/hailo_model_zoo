@@ -3,3 +3,4 @@ post_quantization_optimization(adaround, policy=enabled, epochs=100)
 normalization1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
 
 compilation_param(matmul2, balance_output_multisplit=enabled, buffer_in_l4=False, defuse_num_layers=1, defuse_spatial_w=False, enable_ew_add_optimization=allowed, layer_output_buffers_format=consecutive, mixed_mem=disabled, no_contexts=disabled, number_of_apus=1, number_of_input_aligners=1, number_of_subclusters=8, parallel_activation=disabled, resize_bilinear_streaming=disabled, resources_allocation_strategy=manual_scs_selection, use_16x4_sc=disabled)
+performance_param(compiler_optimization_level=max)

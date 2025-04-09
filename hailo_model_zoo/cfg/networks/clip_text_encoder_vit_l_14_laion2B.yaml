@@ -3,7 +3,8 @@ base:
 postprocessing:
   postprocess_config_file: models_files/clip/vit_l_14_laion2B/pretrained/2024-09-24/hg-clip-vit-l-14-laion2b.npz
 evaluation:
-  data_set: models_files/clip/vit_l_14_laion2B/pretrained/2024-09-24/coco_xtd10_en_clip_vit_l_14_laion2B.tfrecord
+  data_set:
+  - models_files/clip/vit_l_14_laion2B/pretrained/2024-09-24/coco_xtd10_en_clip_vit_l_14_laion2B.tfrecord
 quantization:
   calib_set:
   - models_files/clip/vit_l_14_laion2B/pretrained/2024-09-24/coco_xtd10_en_clip_vit_l_14_laion2B.tfrecord

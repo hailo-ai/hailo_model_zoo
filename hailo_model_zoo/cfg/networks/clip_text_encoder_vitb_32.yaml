@@ -1,7 +1,7 @@
 base:
 - base/clip_text_encoder.yaml
 postprocessing:
-  postprocess_config_file: models_files/clip/vitb_32/pretrained/2024-11-13/openai-clip-vit-base-patch32.npz
+  postprocess_config_file: models_files/clip/vitb_32/pretrained/2024-12-04/openai-clip-vit-base-patch32.npz
 evaluation:
   data_set: models_files/clip/vitb_32/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_32.tfrecord
 quantization:

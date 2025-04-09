@@ -3,7 +3,8 @@ base:
 postprocessing:
   postprocess_config_file: models_files/clip/vitb_16/pretrained/2024-12-04/openai-clip-vit-base-patch16.npz
 evaluation:
-  data_set: models_files/clip/vitb_16/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_16.tfrecord
+  data_set: 
+  - models_files/clip/vitb_16/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_16.tfrecord
 quantization:
   calib_set: models_files/clip/vitb_16/coco_10xtd/2024-11-13/coco_xtd10_en_clip_vitb_16.tfrecord
 network:

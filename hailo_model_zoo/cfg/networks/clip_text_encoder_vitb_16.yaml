@@ -9,7 +9,8 @@ quantization:
 network:
   network_name: clip_text_encoder_vitb_16
 paths:
-  network_path: models_files/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.onnx
+  network_path: 
+  - models_files/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip
   alls_script: clip_text_encoder_vitb_16.alls
 parser:

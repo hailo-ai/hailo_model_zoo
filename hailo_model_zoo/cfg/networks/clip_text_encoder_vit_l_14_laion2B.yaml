@@ -16,7 +16,7 @@ parser:
 paths:
   alls_script: clip_text_encoder_vit_l_14_laion2B.alls
   network_path:
-  - models_files/clip/vit_l_14_laion2B/pretrained/2024-09-26/clip_text_encoder_vit_l_14_laion2B.onnx
+  - models_files/clip/vit_l_14_laion2B/pretrained/2024-09-24/clip_text_encoder_vit_l_14_laion2B.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vit_l_14_laion2B/pretrained/2024-09-24/clip-vit-l-14-laion2b-s32b-b82k_text_op15.zip
 info:
   input_shape: 1x77x768

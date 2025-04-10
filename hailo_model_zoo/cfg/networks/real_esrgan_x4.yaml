@@ -1,0 +1,41 @@
+base: 
+- base/base.yaml
+evaluation:
+  data_set: "models_files/div2k/2020-12-06/hailo_validation_set_div2k_super_resolution.tfrecord"
+  dataset_name: "div2k"
+  network_type: "srgan"
+preprocessing:
+  network_type: "super_resolution_srgan"
+  meta_arch: "srgan"
+quantization:
+  calib_set: 
+  - models_files/div2k/2020-12-06/hailo_calib_set_div2k_super_resolution.tfrecord
+postprocessing:
+  meta_arch: "sr_resnet"
+paths:
+  alls_script: real_esrgan_x4.alls
+  network_path: 
+  - models_files/SuperResolution/Real-ESRGAN/Real_ESRGAN_x4/pretrained/2024-10-31/RealESRGAN_x4_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x4/pretrained/2024-10-31/RealESRGAN_x4_sim.zip
+network:
+  network_name: "real_esrgan_x4"
+parser:
+  nodes: ["input.1", ["1895"]]
+  normalization_params:
+    normalize_in_net: true
+    mean_list: [0, 0 ,0]
+    std_list: [255, 255, 255]
+info:
+  task: super resolution
+  input_shape: 512x512x3
+  output_shape: 2048x2048x3
+  operations: 9400G
+  parameters: 16.7M
+  framework: pytorch
+  training_data: DIV2K
+  validation_data: DIV2K
+  eval_metric: PSNR
+  full_precision_result: 26.23
+  source: "https://github.com/ai-forever/Real-ESRGAN"
+  license_url: "https://github.com/ai-forever/Real-ESRGAN/blob/main/LICENSE"
+  license_name: BSD3-Clause

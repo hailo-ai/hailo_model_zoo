@@ -1,11 +1,12 @@
-base: 
+base:
 - base/clip.yaml
 network:
   network_name: clip_vit_b_32_16b
 postprocessing:
   postprocess_config_file: models_files/cifar100/2023-03-09/class_token_vit_b_32.npy
 paths:
-  network_path: models_files/Classification/clip_vit_b_32/pretrained/2023-03-09/clip_vit_b_32.onnx
+  network_path:
+  - models_files/Classification/clip_vit_b_32/pretrained/2023-03-09/clip_vit_b_32.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_b_32/pretrained/2023-03-09/clip_vit_b_32.zip
   alls_script: clip_vit_b_32_16b.alls
 info:
@@ -18,7 +19,7 @@ info:
   training_data: internal
   validation_data: cifar100
   eval_metric: Accuracy (top1)
-  source: "https://github.com/openai/CLIP"
+  source: https://github.com/openai/CLIP
   full_precision_result: 65.27
-  license_url: "https://opensource.org/licenses/MIT"
-  license_name: "MIT"
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

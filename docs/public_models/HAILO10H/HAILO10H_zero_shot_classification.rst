@@ -115,18 +115,6 @@ CIFAR100
      - `link <https://github.com/openai/CLIP>`_
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_vit_b_32_16b.hef>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_vit_b_32_16b_profiler_results_compiled.html>`_
-   * - clip_text_encoder_vitb_16
-     - 90.9
-     - 90.7
-     - 24
-     - 77
-     - 224x224x3
-     - 25
-     - 39
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip>`_
-     - `link <https://huggingface.co/openai/clip-vit-base-patch16>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_text_encoder_vitb_16.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
    * - clip_vit_b_16
      - 68.58
      - 66.3

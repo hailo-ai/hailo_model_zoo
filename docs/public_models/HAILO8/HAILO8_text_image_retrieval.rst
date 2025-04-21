@@ -50,5 +50,27 @@ CIFAR100
      - `link <https://huggingface.co/openai/clip-vit-base-patch16>`_
      - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16.hef>`_
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
-
-
+   * - clip_text_encoder_vit_l_14_laion2B
+     - 94.7
+     - 94
+     - 15
+     - 73
+     - 1x77x768
+     - 78.8
+     - 13.8
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vit_l_14_laion2B/pretrained/2024-09-24/clip-vit-l-14-laion2b-s32b-b82k_text_op15.zip>`_
+     - `link <https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vit_l_14_laion2B.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vit_l_14_laion2B_profiler_results_compiled.html>`_
+   * - clip_text_encoder_vitb_32
+     - 90.6
+     - 88.8
+     - 31
+     - 102
+     - 1x77x512
+     - 37.8
+     - 6
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.zip>`_
+     - `link <https://huggingface.co/openai/clip-vit-base-patch32>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_32.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_32_profiler_results_compiled.html>`_

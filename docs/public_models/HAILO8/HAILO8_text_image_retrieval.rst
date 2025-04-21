@@ -15,4 +15,40 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark and TAPPAS  networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.31.0
 
+.. _text_image_retrieval:
+
+------------------------
+
+CIFAR100
+^^^^^^^^
+
+.. list-table::
+   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :header-rows: 1
+
+   * - Network Name
+     - Accuracy (top1)
+     - HW Accuracy
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+     - Pretrained
+     - Source
+     - Compiled
+     - Profile Html
+   * - clip_text_encoder_vitb_16
+     - 90.9
+     - 90.7
+     - 33
+     - 107
+     - 224x224x3
+     - 25
+     - 39
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip>`_
+     - `link <https://huggingface.co/openai/clip-vit-base-patch16>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
+
 

@@ -20,7 +20,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 --------------
 
-ImageNet
+kinetics400
 ^^^^^^^^
 
 .. list-table::

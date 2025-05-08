@@ -17,7 +17,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 
 
 
-.. vedio_classification:
+.. video_classification:
 
 --------------
 
@@ -40,7 +40,7 @@ kinetics400
      - Source
      - Compiled
      - Profile Html
-   * - cas_vit_m
+   * - r3d_18
      - 48.9
      - 49.2
      - 40

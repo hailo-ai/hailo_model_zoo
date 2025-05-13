@@ -38,8 +38,8 @@ Hand Landmark
      - Compiled
      - Profile Html
    * - hand_landmark_lite
-     - 0
-     - 0
+     - 1652
+     - 1652
      - 224x224x3
      - 1.01
      - 0.3

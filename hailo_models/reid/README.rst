@@ -64,8 +64,8 @@ Download
 The pre-compiled network can be download from:
 
 
-* | `512-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.hef>`_
-* | `2048-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_2048/2022-04-18/repvgg_a0_person_reid_2048.hef>`_
+* | `512-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/repvgg_a0_person_reid_512.hef>`_
+* | `2048-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/repvgg_a0_person_reid_2048.hef>`_
   | Use the following command to measure model performance on hailo’s HW:
 
   .. code-block::

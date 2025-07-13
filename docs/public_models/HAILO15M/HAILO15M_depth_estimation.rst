@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.30.0
 
 
 
@@ -39,28 +39,28 @@ NYU
      - Pretrained
      - Source
      - Compiled
-     - Profile Html
-   * - fast_depth  |star|
+     - Profile Html       
+   * - fast_depth  |star| 
      - 0.6
      - 0.61
-     - 0
-     - 410
+     - 368
+     - 763
      - 224x224x3
      - 1.35
      - 0.74
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_
      - `link <https://github.com/dwofk/fast-depth>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/fast_depth.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/fast_depth_profiler_results_compiled.html>`_
-   * - scdepthv3
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/fast_depth.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/fast_depth_profiler_results_compiled.html>`_      
+   * - scdepthv3   
      - 0.48
      - 0.48
-     - 0
-     - 175
+     - 164
+     - 281
      - 256x320x3
      - 14.8
      - 10.7
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_
      - `link <https://github.com/JiawangBian/sc_depth_pl/>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/scdepthv3.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/scdepthv3_profiler_results_compiled.html>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/scdepthv3.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/scdepthv3_profiler_results_compiled.html>`_

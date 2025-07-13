@@ -1,7 +1,0 @@
-normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-change_output_activation(conv64, sigmoid)
-change_output_activation(conv77, sigmoid)
-change_output_activation(conv89, sigmoid)
-model_optimization_flavor(optimization_level=0)
-nms_postprocess("../../postprocess_config/yolov10b_nms_config.json", meta_arch=yolov8, engine=cpu)
-performance_param(optimize_for_batch=8)

@@ -6,6 +6,9 @@ class AugmentedLRModel(tf.keras.Model):
         super().__init__()
         self._m = m
 
+    def build(self, input_shape):
+        self._m.build(input_shape)
+
     def call(self, x):
         flipped = tf.image.flip_left_right(x)
         return tf.concat([self._m(x), self._m(flipped)], axis=-1)

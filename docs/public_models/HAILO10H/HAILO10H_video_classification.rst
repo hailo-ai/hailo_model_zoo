@@ -15,6 +15,19 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark and TAPPAS  networks run in performance mode
 * All models were compiled using Hailo Dataflow Compiler v3.31.0
 
+Link Legend
+
+The following shortcuts are used in the table below to indicate available resources for each model:
+
+* S – Source: Link to the model’s open-source code repository.
+* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
+* H, NV, X – Compiled Models: Links to the compiled model in various formats:
+            * H: regular HEF with RGBX format
+            * NV: HEF with NV12 format
+            * X: HEF with RGBX format
+
+* PR – Profiler Report: Download the model’s performance profiling report.
+
 
 
 .. video_classification:
@@ -25,7 +38,7 @@ kinetics400
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 7
    :header-rows: 1
 
    * - Network Name
@@ -33,22 +46,16 @@ kinetics400
      - HW Accuracy
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Html
    * - r3d_18
      - 48.9
      - 49.2
      - 40
      - 78
+     - `S <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_ `PT <https://pytorch.org/vision/stable/models.html#video-classification>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/r3d_18.hef>`_ `NV <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/r3d_18_profiler_results_compiled.html>`_
      - 112x112x48
      - 33.42
      - 81.4
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_
-     - `link <https://pytorch.org/vision/stable/models.html#video-classification>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/r3d_18.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/r3d_18_profiler_results_compiled.html>`_

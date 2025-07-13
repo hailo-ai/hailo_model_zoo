@@ -29,13 +29,13 @@ network:
 paths:
   alls_script: tiny_yolov3.alls
   network_path:
-  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2021-07-11/frozen_tiny_yolo_v3.pb
-  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2021-07-11/tiny_yolov3.zip
+  - models_files/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2025-06-25/tiny_yolov3.sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/tiny_yolov3/pretrained/2025-06-25/tiny_yolov3.zip
 parser:
   nodes:
-  - import/detector/yolo-v3-tiny/Conv/Conv2D
-  - - import/detector/yolo-v3-tiny/Conv_9/BiasAdd
-    - import/detector/yolo-v3-tiny/Conv_12/BiasAdd
+  - null
+  - - Conv_38
+    - Conv_391
 info:
   task: object detection
   input_shape: 416x416x3
@@ -46,7 +46,7 @@ info:
   training_data: coco train2017
   validation_data: coco val2017
   eval_metric: mAP
-  full_precision_result: 14.656
+  full_precision_result: 14.591
   source: https://github.com/Tianxiaomo/pytorch-YOLOv4
   license_url: https://www.apache.org/licenses/LICENSE-2.0
   license_name: Apache-2.0

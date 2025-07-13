@@ -15,11 +15,11 @@ Architecture (2048 / 512)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-* | RepVGG_A0 
+* | RepVGG_A0
 * | Number of parameters: 9.65M / 7.68M
 * | GMACS: 0.89 / 0.89
 * | Rank1* : 89.8% / 89.3%
-  | \* Evaluated on Market1501 dataset 
+  | \* Evaluated on Market1501 dataset
 
 Inputs
 ^^^^^^
@@ -28,7 +28,7 @@ Inputs
 
   * Image resize to 256x128x3 occurs on-chip
 
-* 
+*
   Image normalization occurs on-chip
 
 Outputs
@@ -64,8 +64,8 @@ Download
 The pre-compiled network can be download from:
 
 
-* | `512-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/repvgg_a0_person_reid_512.hef>`_
-* | `2048-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/repvgg_a0_person_reid_2048.hef>`_
+* | `512-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/repvgg_a0_person_reid_512.hef>`_
+* | `2048-dim <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/repvgg_a0_person_reid_2048.hef>`_
   | Use the following command to measure model performance on hailo’s HW:
 
   .. code-block::

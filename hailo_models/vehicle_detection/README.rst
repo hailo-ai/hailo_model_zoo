@@ -25,7 +25,7 @@ Inputs
 
   * Image resize to 640x640x3 occurs on-chip
 
-* 
+*
   Image normalization occurs on-chip
 
 Outputs
@@ -71,8 +71,8 @@ The table below shows the performance of our trained network on an internal vali
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5m_vehicles.hef>`_.
-| 
+| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/yolov5m_vehicles.hef>`_.
+|
 | Use the following command to measure model performance on hailo’s HW:
 
 .. code-block::

@@ -3,16 +3,19 @@ from typing import List
 import tensorflow as tf
 from contextlib2 import ExitStack
 
-from hailo_platform import (
-    HEF,
-    ConfigureParams,
-    FormatType,
-    HailoStreamInterface,
-    InferVStreams,
-    InputVStreamParams,
-    OutputVStreamParams,
-    VDevice,
-)
+from hailo_model_zoo.utils.platform_discovery import PLATFORM_AVAILABLE
+
+if PLATFORM_AVAILABLE:
+    from hailo_platform import (
+        HEF,
+        ConfigureParams,
+        FormatType,
+        HailoStreamInterface,
+        InferVStreams,
+        InputVStreamParams,
+        OutputVStreamParams,
+        VDevice,
+    )
 
 from hailo_sdk_client import ClientRunner
 

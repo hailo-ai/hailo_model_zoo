@@ -37,8 +37,8 @@ def make_parsing_base():
         type=str,
         default="hailo8",
         metavar="",
-        choices=["hailo8", "hailo8l", "hailo15h", "hailo15m", "hailo15l", "hailo10h", "hailo10h2", "mars"],
-        help="Which hw arch to run: hailo8 / hailo8l/ hailo15h/ hailo15m / hailo10h. By default using hailo8.",
+        choices=["hailo8", "hailo8l"],
+        help="Which hw arch to run: hailo8 / hailo8l. By default using hailo8.",
     )
     parsing_base_parser.add_argument(
         "--start-node-names",

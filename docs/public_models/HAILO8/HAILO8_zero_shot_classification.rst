@@ -48,8 +48,8 @@ CIFAR100
      - 11.62
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_resnet_50.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_resnet_50_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50_profiler_results_compiled.html>`_
    * - clip_resnet_50x4
      - 50.31
      - 48.88
@@ -60,8 +60,8 @@ CIFAR100
      - 41.3
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_resnet_50x4.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_resnet_50x4_profiler_results_compiled.html>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4_profiler_results_compiled.html>`_
    * - clip_vit_b_16
      - 68.58
      - 68.3
@@ -72,7 +72,7 @@ CIFAR100
      - 39
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_b_16/pretrained/2023-03-09/clip_vit_b_16.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_vit_b_16.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_vit_b_16_profiler_results_compiled.html>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16_profiler_results_compiled.html>`_
 
 

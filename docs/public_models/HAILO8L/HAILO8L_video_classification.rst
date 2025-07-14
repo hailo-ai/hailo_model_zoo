@@ -55,7 +55,7 @@ kinetics400
      - 48.9
      - 28
      - 45
-     - `S <https://pytorch.org/vision/stable/models.html#video-classification>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/r3d_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/r3d_18_profiler_results_compiled.html>`_
+     - `S <https://pytorch.org/vision/stable/models.html#video-classification>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/r3d_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/r3d_18_profiler_results_compiled.html>`_
      - 112x112x48
      - 33.4
      - 81.4

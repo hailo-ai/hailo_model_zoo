@@ -1,3 +1,15 @@
+**v5.0**
+
+* Update to use Dataflow Compiler v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New Models:
+
+  * `SigLip <https://arxiv.org/pdf/2303.15343>`_ - SigLip2-base-32 - Contrastive Language-Image Pre-training model
+
+* Bug fixes
+
+
 **v2.15**
 
 * Update to use Dataflow Compiler v3.31.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

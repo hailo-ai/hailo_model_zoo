@@ -20,7 +20,7 @@ RUN sed -i "1s/GPU=0/GPU=1/" Makefile && \
 RUN make
 
 RUN cd /workspace/darknet && \
-    wget https://pjreddie.com/media/files/yolov3.weights -q && \
-    wget https://pjreddie.com/media/files/yolov3-tiny.weights -q && \
+    wget https://data.pjreddie.com/files/yolov3.weights -q && \
+    wget https://data.pjreddie.com/files/yolov3-tiny.weights -q && \
     wget https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3.cfg -O ./cfg/yolov3.cfg -q && \
     wget https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3-tiny.cfg -O ./cfg/yolov3-tiny.cfg -q

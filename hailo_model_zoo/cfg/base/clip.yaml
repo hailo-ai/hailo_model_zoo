@@ -14,3 +14,6 @@ parser:
     - 68.5005327
     - 66.6321579
     - 70.32316304999999
+quantization:
+  calib_set:
+  - models_files/coco/2025-07-02/coco_clip_calib2017.tfrecord

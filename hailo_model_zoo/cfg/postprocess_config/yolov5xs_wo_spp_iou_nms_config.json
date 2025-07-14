@@ -1,5 +1,5 @@
 {
-    "nms_scores_th": 0.001,
+    "nms_scores_th": 0.2,
     "nms_iou_th": 0.6,
     "image_dims": [
         512,

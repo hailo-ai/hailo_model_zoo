@@ -1,1 +1,4 @@
 model_optimization_flavor(optimization_level=2, compression_level=1)
+
+# SDK-60055 - Debug why this fails on hailo15m
+allocator_param(fps_ratio_impact=0)

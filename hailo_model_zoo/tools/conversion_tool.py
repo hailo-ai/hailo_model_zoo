@@ -112,7 +112,7 @@ def convert_tf_record_to_bin_file(
     network_info = get_network_info(network_name)
 
     _logger.info("Initializing the runner...")
-    runner = ClientRunner(hw_arch="hailo8")
+    runner = ClientRunner(hw_arch="hailo10h")
     # Hack to filter out client_runner info logs
     runner._logger.setLevel(logging.ERROR)  # noqa: SLF001 allow private member access
 

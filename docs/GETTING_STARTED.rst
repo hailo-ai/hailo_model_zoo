@@ -33,7 +33,7 @@ The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS a
 
 .. _sw_suite_figure:
 
-.. figure:: images/new_overview_2023-05.svg
+.. figure:: images/software_suite_block_diagram_2025.svg
    :alt: Detailed block diagram of Hailo software packages
 
    Detailed block diagram of Hailo software packages

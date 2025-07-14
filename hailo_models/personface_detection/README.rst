@@ -69,7 +69,7 @@ The table below shows the performance of our trained network on an internal vali
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/yolov5s_personface.hef>`_
+| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.hef>`_
 |
 | Use the following command to measure model performance on hailo’s HW:
 

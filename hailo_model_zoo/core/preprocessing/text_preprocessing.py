@@ -15,3 +15,10 @@ def text_encoder_preprocessing(image, image_info, height, width, **kwargs):
     # We find the first end of text token, which is the maximum
     image_info["last_token"] = tf.argmax(image_info["input_ids"])
     return image, image_info
+
+
+@PREPROCESS_FACTORY.register(name="text_encoder_siglip")
+def text_encoder_siglip_preprocessing(image, image_info, height, width, **kwargs):
+    sequence_length = width
+    image = tf.reshape(image, [1, sequence_length, kwargs["channels"]])
+    return image, image_info

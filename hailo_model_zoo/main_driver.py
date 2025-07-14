@@ -341,6 +341,12 @@ def evaluate(args):
     logger.info(f"Start run for network {model_name} ...")
 
     logger.info("Initializing the runner...")
+    if args.hef_path and not args.har_path:
+        logger.info(
+            "Using HEF without specifying har_path requires a calibration set "
+            "to build the network. Please refer to the DATA.rst file for detailed "
+            "instructions on creating a calibration set"
+        )
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
     network_groups = None
 

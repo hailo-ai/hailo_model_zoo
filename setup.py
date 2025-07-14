@@ -3,7 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "v3.31.0"
+CUR_DFC_VERSION = "5.0.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -57,13 +57,14 @@ def main():
         "nuscenes-devkit==1.1.10",
     ]
 
-    model_zoo_version = "2.15.0"
+    model_zoo_version = "5.0.0"
 
     package_data = {
         "hailo_model_zoo": [
             "cfg/base/*.yaml",
             "cfg/networks/*.yaml",
             "cfg/alls/**/*.alls",
+            "cfg/cascades/**",
             "datasets/*",
             "cfg/multi-networks/*.yaml",
             "cfg/multi-networks/*.yaml",

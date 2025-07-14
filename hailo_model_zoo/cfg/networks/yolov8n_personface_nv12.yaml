@@ -1,0 +1,13 @@
+base:
+- networks/yolov8n_personface.yaml
+network:
+  network_name: yolov8n_personface_nv12
+paths:
+  alls_script: yolov8n_personface_nv12.alls
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+info:
+  task: pipeline
+  input_shape: 320x640x3
+  full_precision_result: 44.746

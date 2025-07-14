@@ -47,8 +47,8 @@ class TextRetrievalEval(Eval):
         gt_queries = np.concatenate(self.gt)
         gt_queries = gt_queries.squeeze((1, 2))
 
-        corpus = corpus.squeeze((1, 2))
-        queries = queries.squeeze((1,))
+        corpus = corpus.squeeze()
+        queries = queries.squeeze()
 
         corpus_size = len(corpus)
         assert len(corpus) == len(queries)

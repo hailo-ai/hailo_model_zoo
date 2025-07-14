@@ -254,6 +254,7 @@ class DetectionEval(Eval):
             coco-style evaluation metrics.
         """
         self.coco_gt.dataset = self.dataset
+        self.coco_gt.dataset["info"] = {}
         self.coco_gt.createIndex()
         detections = self.detections
         coco_dt = self.coco_gt.loadRes(detections)

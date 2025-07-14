@@ -1,0 +1,24 @@
+base:
+- base/clip_text_encoder.yaml
+postprocessing:
+  postprocess_config_file: models_files/ZeroShotClassification/clip/clip_resnet_50x4/coco_10xtd/2024-08-25/clip-resnet50x4.npz
+evaluation:
+  data_set: models_files/ZeroShotClassification/clip/clip_resnet_50x4/coco_10xtd/2024-08-25/coco_xtd10_en_clip_resnet50x4.tfrecord
+quantization:
+  calib_set:
+  - models_files/ZeroShotClassification/clip/clip_resnet_50x4/coco_10xtd/2024-08-25/coco_xtd10_en_clip_resnet50x4.tfrecord
+network:
+  network_name: clip_resnet_50x4_text_encoder
+paths:
+  network_path:
+  - models_files/ZeroShotClassification/clip/clip_resnet_50x4/text_encoder/pretrained/2024-09-16/clip_text_encoder_resnet50x4.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_resnet_50x4/text_encoder/pretrained/2024-09-16/clip_text_encoder_resnet50x4.zip
+  alls_script: clip_resnet_50x4_text_encoder.alls
+info:
+  input_shape: 1x77x640
+  output_shape: 1x77x640
+  operations: 9.3G
+  parameters: 59.1M
+  framework: pytorch
+  full_precision_result: 91.2
+  source: https://huggingface.co/timm/resnet50x4_clip.openai

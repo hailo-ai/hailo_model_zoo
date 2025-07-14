@@ -1,4 +1,5 @@
 
+
 Public Pre-Trained Models
 =========================
 
@@ -13,7 +14,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.30.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 
 
@@ -39,51 +40,28 @@ CIFAR100
      - Pretrained
      - Source
      - Compiled
-     - Profile Html    
-   * - clip_resnet_50   
+     - Profile Html
+   * - clip_resnet_50
      - 42.07
      - 40.09
-     - 98
-     - 207
+     - 40
+     - 106
      - 224x224x3
      - 38.72
      - 11.62
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_resnet_50.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_resnet_50_profiler_results_compiled.html>`_    
-   * - clip_resnet_50x4   
-     - 50.3
-     - 48.8
-     - 33
-     - 62
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/clip_resnet_50.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/clip_resnet_50_profiler_results_compiled.html>`_
+   * - clip_resnet_50x4
+     - 50.31
+     - 48.45
+     - 48
+     - 35
      - 288x288x3
      - 87.0
      - 41.3
      - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_
      - `link <https://github.com/openai/CLIP>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_resnet_50x4.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_resnet_50x4_profiler_results_compiled.html>`_    
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Html    
-   * - clip_vit_l_14_laion2B_16b   
-     - 0
-     - 0
-     - 224x224x3
-     - 304.16
-     - 164.43
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_l_14/pretrained/2024-09-23/CLIP-ViT-L-14-laion2B-s32B-b82K_with_projection_op15_sim.zip>`_
-     - `link <https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_vit_l_14_laion2B_16b.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.14.0/hailo15m/clip_vit_l_14_laion2B_16b_profiler_results_compiled.html>`_
+     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/clip_resnet_50x4.hef>`_
+     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15m/clip_resnet_50x4_profiler_results_compiled.html>`_

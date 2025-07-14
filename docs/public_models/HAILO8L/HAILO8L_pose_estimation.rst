@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -49,8 +49,8 @@ COCO
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - centerpose_regnetx_800mf   
+     - OPS (G)
+   * - centerpose_regnetx_800mf
      - 43.01
      - 41.96
      - 84
@@ -58,8 +58,8 @@ COCO
      - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/centerpose_regnetx_800mf.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/centerpose_regnetx_800mf_profiler_results_compiled.html>`_
      - 512x512x3
      - 12.31
-     - 86.12      
-   * - yolov8m_pose |rocket|  
+     - 86.12
+   * - yolov8m_pose |rocket|
      - 61.37
      - 58.48
      - 48
@@ -67,8 +67,8 @@ COCO
      - `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8m/pretrained/2023-06-11/yolov8m_pose.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/yolov8m_pose.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/yolov8m_pose_profiler_results_compiled.html>`_
      - 640x640x3
      - 26.4
-     - 81.02    
-   * - yolov8s_pose   
+     - 81.02
+   * - yolov8s_pose
      - 56.36
      - 53.53
      - 107

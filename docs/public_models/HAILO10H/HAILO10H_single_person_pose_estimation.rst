@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -49,8 +49,8 @@ COCO
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - mspn_regnetx_800mf  |star| 
+     - OPS (G)
+   * - mspn_regnetx_800mf  |star|
      - 70.8
      - 69.89
      - 1910
@@ -58,8 +58,8 @@ COCO
      - `S <https://github.com/open-mmlab/mmpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/mspn_regnetx_800mf.hef>`_/`NV <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/mspn_regnetx_800mf_nv12.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/mspn_regnetx_800mf_profiler_results_compiled.html>`_
      - 256x192x3
      - 7.17
-     - 2.94    
-   * - vit_pose_small   
+     - 2.94
+   * - vit_pose_small
      - 74.16
      - 72.99
      - 79
@@ -67,8 +67,8 @@ COCO
      - `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/vit_pose_small.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/vit_pose_small_profiler_results_compiled.html>`_
      - 256x192x3
      - 24.29
-     - 17.17    
-   * - vit_pose_small_bn   
+     - 17.17
+   * - vit_pose_small_bn
      - 72.01
      - 71.14
      - 128

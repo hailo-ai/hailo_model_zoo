@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -49,8 +49,8 @@ BSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - dncnn3   
+     - OPS (G)
+   * - dncnn3
      - 31.46
      - 31.3
      - 49
@@ -75,8 +75,8 @@ CBSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - dncnn_color_blind   
+     - OPS (G)
+   * - dncnn_color_blind
      - 33.87
      - 32.98
      - 49

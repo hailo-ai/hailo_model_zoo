@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -36,7 +36,7 @@ The following shortcuts are used in the table below to indicate available resour
 
 Hand Landmark
 ^^^^^^^^^^^^^
-    
+
 .. list-table::
    :header-rows: 1
 
@@ -46,8 +46,8 @@ Hand Landmark
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)  
-   * - hand_landmark_lite   
+     - OPS (G)
+   * - hand_landmark_lite
      - 0
      - 0
      - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/hand_landmark_lite_profiler_results_compiled.html>`_

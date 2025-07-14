@@ -14,7 +14,7 @@
 
 **v2.15**
 
-* Update to use Dataflow Compiler v3.31.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use Dataflow Compiler v3.32.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * Update to use HailoRT 4.21.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 * New Models:

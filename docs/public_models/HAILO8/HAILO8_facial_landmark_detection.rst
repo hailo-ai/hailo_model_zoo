@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -49,8 +49,8 @@ AFLW2k3d
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)        
-   * - tddfa_mobilenet_v1  |star| 
+     - OPS (G)
+   * - tddfa_mobilenet_v1  |star|
      - 4.04
      - 4.4
      - 11321

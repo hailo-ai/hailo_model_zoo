@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
 Link Legend
 
@@ -49,8 +49,8 @@ Cityscapes
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - fcn8_resnet_v1_18   
+     - OPS (G)
+   * - fcn8_resnet_v1_18
      - 69.27
      - 69.13
      - 42
@@ -58,8 +58,8 @@ Cityscapes
      - `S <https://mmsegmentation.readthedocs.io/en/latest>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2023-06-22/fcn8_resnet_v1_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/fcn8_resnet_v1_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/fcn8_resnet_v1_18_profiler_results_compiled.html>`_
      - 1024x1920x3
      - 11.20
-     - 142.82    
-   * - segformer_b0_bn   
+     - 142.82
+   * - segformer_b0_bn
      - 69.01
      - 68.2
      - 12
@@ -67,8 +67,8 @@ Cityscapes
      - `S <https://github.com/NVlabs/SegFormer>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/segformer_b0_bn.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/segformer_b0_bn_profiler_results_compiled.html>`_
      - 512x1024x3
      - 3.72
-     - 35.76    
-   * - stdc1   
+     - 35.76
+   * - stdc1
      - 73.9
      - 73.25
      - 57
@@ -93,8 +93,8 @@ Oxford-IIIT Pet
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - unet_mobilenet_v2   
+     - OPS (G)
+   * - unet_mobilenet_v2
      - 77.02
      - 76.71
      - 662
@@ -119,8 +119,8 @@ Pascal VOC
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - deeplab_v3_mobilenet_v2   
+     - OPS (G)
+   * - deeplab_v3_mobilenet_v2
      - 74.62
      - 73.21
      - 121
@@ -128,8 +128,8 @@ Pascal VOC
      - `S <https://github.com/bonlime/keras-deeplab-v3-plus>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2_dilation/pretrained/2023-08-22/deeplab_v3_mobilenet_v2_dilation.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/deeplab_v3_mobilenet_v2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/deeplab_v3_mobilenet_v2_profiler_results_compiled.html>`_
      - 513x513x3
      - 2.10
-     - 17.65    
-   * - deeplab_v3_mobilenet_v2_wo_dilation   
+     - 17.65
+   * - deeplab_v3_mobilenet_v2_wo_dilation
      - 71.01
      - 70.56
      - 262

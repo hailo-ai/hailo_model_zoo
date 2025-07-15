@@ -2,7 +2,7 @@
 Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo devices.
 
 .. list-table::
-   :widths: 31 9 7 11 9 9
+   :widths: 31 9 7 7 7
    :header-rows: 1
 
    * - Task Type
@@ -89,12 +89,6 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO8/HAILO8_zero_shot_classification.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_zero_shot_classification.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_zero_shot_classification.rst>`_
-     - NA
-   * - Stereo Depth Estimation
-     - `Link <public_models/HAILO8/HAILO8_stereo_depth_estimation.rst>`_
-     - NA
-     - NA
-     - NA
      - NA
    * - Low Light Enhancement
      - `Link <public_models/HAILO8/HAILO8_low_light_enhancement.rst>`_

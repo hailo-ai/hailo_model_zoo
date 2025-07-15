@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Benchmark Networks are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v5.0.0
 
 Link Legend
 
@@ -49,13 +49,13 @@ CELEBA
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - face_attr_resnet_v1_18
-     - 81.19
-     - 80.78
+     - OPS (G)    
+   * - face_attr_resnet_v1_18   
+     - 81.2
+     - 80.8
      - 2941
      - 2941
-     - `S <https://github.com/d-li14/face-attribute-prediction>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/face_attr_resnet_v1_18.hef>`_/`NV <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/face_attr_resnet_v1_18_nv12.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/face_attr_resnet_v1_18_profiler_results_compiled.html>`_
+     - `S <https://github.com/d-li14/face-attribute-prediction>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/face_attr_resnet_v1_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/face_attr_resnet_v1_18_profiler_results_compiled.html>`_
      - 218x178x3
      - 11.74
      - 3

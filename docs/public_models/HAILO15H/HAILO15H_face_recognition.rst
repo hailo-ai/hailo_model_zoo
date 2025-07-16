@@ -43,13 +43,10 @@ LFW
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report      
+     - OPS (G)        
    * - arcface_mobilefacenet  |star| 
      - 4254
      - 4254
@@ -74,13 +71,10 @@ N/A
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report      
+     - OPS (G)         
    * - lprnet  |star| 
      - 307
      - 307

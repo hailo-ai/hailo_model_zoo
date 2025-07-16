@@ -14,9 +14,6 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Object Detection
      - `Link <public_models/HAILO15H/HAILO15H_object_detection.rst>`_
      - NA
-   * - Object Detection 3D
-     - NA
-     - NA
    * - Semantic Segmentation
      - `Link <public_models/HAILO15H/HAILO15H_semantic_segmentation.rst>`_
      - NA
@@ -30,8 +27,8 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15H/HAILO15H_face_detection.rst>`_
      - NA
    * - Instance Segmentation
-     - `Link <public_models/HAILO8/HAILO8_instance_segmentation.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_instance_segmentation.rst>`_
+     - `Link <public_models/HAILO15H/HAILO15H_instance_segmentation.rst>`_
+     - NA
    * - Depth Estimation
      - `Link <public_models/HAILO15H/HAILO15H_depth_estimation.rst>`_
      - NA

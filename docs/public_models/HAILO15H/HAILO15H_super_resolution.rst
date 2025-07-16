@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -49,8 +49,8 @@ BSD100
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - espcn_x2   
+     - OPS (G)
+   * - espcn_x2
      - 31.2
      - 30.8
      - 1637
@@ -58,8 +58,8 @@ BSD100
      - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/espcn_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/espcn_x2_profiler_results_compiled.html>`_
      - 156x240x1
      - 0.02
-     - 1.6    
-   * - espcn_x3   
+     - 1.6
+   * - espcn_x3
      - 28.3
      - 28.1
      - 1924
@@ -67,8 +67,8 @@ BSD100
      - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/espcn_x3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/espcn_x3_profiler_results_compiled.html>`_
      - 104x160x1
      - 0.02
-     - 0.76    
-   * - espcn_x4   
+     - 0.76
+   * - espcn_x4
      - 26.8
      - 26.7
      - 1908
@@ -93,8 +93,8 @@ N/A
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - real_esrgan_x2   
+     - OPS (G)
+   * - real_esrgan_x2
      - 28.3
      - 27.7
      - 2

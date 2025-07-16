@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -49,8 +49,8 @@ BSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - dncnn3   
+     - OPS (G)
+   * - dncnn3
      - 31.5
      - 31.3
      - 49
@@ -75,8 +75,8 @@ CBSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - dncnn_color_blind   
+     - OPS (G)
+   * - dncnn_color_blind
      - 33.9
      - 33.0
      - 49

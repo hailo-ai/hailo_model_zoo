@@ -53,14 +53,14 @@ nuScenes 2019
    * - petrv2_repvggB0_backbone_pp_800x320
      - 0
      - 0
-     - `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/petrv2_repvggB0_backbone_pp_800x320.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/petrv2_repvggB0_backbone_pp_800x320_profiler_results_compiled.html>`_
+     - `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/petrv2_repvggB0_backbone_pp_800x320.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/petrv2_repvggB0_backbone_pp_800x320_profiler_results_compiled.html>`_
      - 320x800x3
      - 13.39
      - 31.19
    * - petrv2_repvggB0_transformer_pp_800x320
      - 0
      - 0
-     - `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/petrv2_repvggB0_transformer_pp_800x320.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/petrv2_repvggB0_transformer_pp_800x320_profiler_results_compiled.html>`_
+     - `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/petrv2_repvggB0_transformer_pp_800x320.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/petrv2_repvggB0_transformer_pp_800x320_profiler_results_compiled.html>`_
      - 12x250x1280, 12x250x256
      - 6.7
      - 11.7

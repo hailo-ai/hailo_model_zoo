@@ -1,6 +1,5 @@
 normalization199 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=1, calibset_size=64)
 model_optimization_flavor(optimization_level=2, compression_level=0)
-post_quantization_optimization(finetune, policy=disabled)
 
 allocator_param(enable_partial_row_buffers=disabled)

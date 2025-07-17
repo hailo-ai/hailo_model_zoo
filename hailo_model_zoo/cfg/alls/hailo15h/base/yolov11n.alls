@@ -1,0 +1,7 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(conv54, sigmoid)
+change_output_activation(conv65, sigmoid)
+change_output_activation(conv80, sigmoid)
+nms_postprocess("../../postprocess_config/yolov11n_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+allocator_param(width_splitter_defuse=disabled, optimize_pipeline_stoppage=True)

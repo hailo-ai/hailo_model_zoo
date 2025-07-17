@@ -4,8 +4,8 @@ def get_version(package_name):
     # We assume that the installed package is actually the same one we import. This assumption may
     # break in some edge cases e.g. if the user modifies sys.path manually.
     try:
-        from importlib.metadata import version
+        import pkg_resources
 
-        return version(package_name)
+        return pkg_resources.get_distribution(package_name).version
     except Exception:
         return "unknown"

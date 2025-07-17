@@ -1,7 +1,3 @@
-from hailo_sdk_client.tools.tf_proto_helper import TF_OPTIONAL_EXTENSIONS
-from hailo_sdk_common.hailo_nn.exceptions import UnsupportedModelError
-
-
 def get_normalize_in_net(network):
     normalization_params = network["parser"].get("normalization_params", {})
     return normalization_params.get("normalize_in_net", False)
@@ -18,7 +14,7 @@ def get_normalization_params(network_info):
     return normalize_in_net, mean_list, std_list
 
 
-def translate_model(runner, network_info, ckpt_path):
+def translate_model(runner, network_info, ckpt_path, *, tensor_shapes=None):
     model_name = network_info.network.network_name
     start_node, end_node = network_info.parser.nodes[0:2]
 
@@ -34,19 +30,14 @@ def translate_model(runner, network_info, ckpt_path):
             model_name,
             start_node_names=start_node,
             end_node_names=end_node,
+            net_input_shapes=tensor_shapes,
         )
-    elif ckpt_path.endswith(TF_OPTIONAL_EXTENSIONS):
+    else:
         runner.translate_tf_model(
             ckpt_path,
             model_name,
             start_node_names=start_node,
             end_node_names=end_node,
-        )
-    else:
-        raise UnsupportedModelError(
-            "Failed to analyze the model, it appears the model provided is in an unsupported format. "
-            "If you are using a TF1.x model (such as .ckpt or .pb), or a TF2.x model "
-            "(such as .h5 or saved_model.pb), please refer to the user guide for details on how to "
-            "convert to TensorFlow Lite format.",
+            tensor_shapes=tensor_shapes,
         )
     return model_name

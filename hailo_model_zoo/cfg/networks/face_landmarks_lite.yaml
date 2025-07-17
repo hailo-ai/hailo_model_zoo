@@ -1,0 +1,48 @@
+base:
+- base/base.yaml
+network:
+  network_name: face_landmarks_lite
+paths:
+  network_path:
+  - models_files/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.tflite
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip
+  alls_script: face_landmarks_lite.alls
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+  nodes:
+  - null
+  - - conv2d_21
+    - conv2d_31
+quantization:
+  calib_set: null
+  calib_set_name: 300w-lp_tddfa
+preprocessing:
+  network_type: face_landmarks_lite
+  meta_arch: face_landmark_cnn
+postprocessing:
+  meta_arch: face_landmarks_lite
+evaluation:
+  dataset_name: aflw2k3d_tddfa
+info:
+  task: facial landmark detection
+  input_shape: 192x192x3
+  output_shape: 1x1x1404, 1x1x1
+  operations: 0.07G
+  parameters: 0.6M
+  framework: tflite
+  training_data: internal
+  validation_data: internal
+  eval_metric: NME
+  full_precision_result: 4.28
+  source: https://github.com/google-ai-edge/mediapipe
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

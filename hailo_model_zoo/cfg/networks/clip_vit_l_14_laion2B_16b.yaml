@@ -1,0 +1,25 @@
+base:
+- base/clip.yaml
+network:
+  network_name: clip_vit_l_14_laion2B_16b
+postprocessing:
+  postprocess_config_file: models_files/cifar100/test/class_token_vit_l_14_laion2B.npy
+paths:
+  network_path:
+  - models_files/Classification/clip_vit_l_14/pretrained/2024-09-23/CLIP-ViT-L-14-laion2B-s32B-b82K_with_projection_op15_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_l_14/pretrained/2024-09-23/CLIP-ViT-L-14-laion2B-s32B-b82K_with_projection_op15_sim.zip
+  alls_script: clip_vit_l_14_laion2B_16b.alls
+info:
+  task: zero-shot classification
+  input_shape: 224x224x3
+  output_shape: 1x1x768
+  operations: 164.43G
+  parameters: 304.16M
+  framework: pytorch
+  training_data: internal
+  validation_data: cifar100
+  eval_metric: Accuracy (top1)
+  source: https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K
+  full_precision_result: 78.6
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT

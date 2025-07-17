@@ -5,7 +5,7 @@ Person-Face Detection
 .. image:: src/img.png
 
 
-Hailo's person-face detection network (\ *yolov5s_personface*\ ) is based on YOLOv5s and was trained in-house with two classes [person, face]. It can work under various lighting conditions, number of people, and numerous camera angles.
+Hailo's person-face detection network (\ *yolov5s_personface*\ ) is based on YOLOv5s and was trained in-house with two classes [person, face]. It can work under various lighting conditions, number of people, and numerous camera angles.   
 
 Model Details
 -------------
@@ -13,7 +13,7 @@ Model Details
 Architecture
 ^^^^^^^^^^^^
 
-* | YOLOv5s
+* | YOLOv5s 
 * | Number of parameters: 7.25M
 * | GMACS: 8.38G
 * | Accuracy* : 47.5 mAP
@@ -26,7 +26,7 @@ Inputs
 
   * Image resize to 640x640x3 occurs on-chip
 
-*
+* 
   Image normalization occurs on-chip
 
 Outputs
@@ -69,7 +69,7 @@ The table below shows the performance of our trained network on an internal vali
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/yolov5s_personface.hef>`_
+| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/personface_detector/yolov5s_personface/2022-04-01/yolov5s_personface.hef>`_
 |
 | Use the following command to measure model performance on hailo’s HW:
 

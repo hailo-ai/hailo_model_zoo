@@ -35,10 +35,11 @@ def make_parsing_base():
     parsing_base_parser.add_argument(
         "--hw-arch",
         type=str,
-        default="hailo8",
+        default="hailo10h",
         metavar="",
-        choices=["hailo8", "hailo8l"],
-        help="Which hw arch to run: hailo8 / hailo8l. By default using hailo8.",
+        choices=["hailo15h", "hailo15m", "hailo15l", "hailo10h", "hailo10p"],
+        help="Which hw arch to run: hailo15h / hailo15m / hailo15l / hailo10h. \
+            By default using hailo10h.",
     )
     parsing_base_parser.add_argument(
         "--start-node-names",

@@ -1,0 +1,13 @@
+base:
+- base/lightface_slim_base.yaml
+paths:
+  alls_script: lightface_slim_nv12.alls
+network:
+  network_name: lightface_slim_nv12
+hn_editor:
+  yuv2rgb: true
+  nv12: true
+info:
+  task: pipeline_hailo15
+  input_shape: 120x320x3
+  full_precision_result: 38.92

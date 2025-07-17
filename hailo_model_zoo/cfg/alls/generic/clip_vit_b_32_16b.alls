@@ -1,0 +1,18 @@
+norm1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+
+# 16-bit layers
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param({norm*}, precision_mode=a16_w16)
+quantization_param([slice1, fc1, format_conversion1], precision_mode=a16_w16)
+
+# Re-set conv_feature to 8-bit
+quantization_param({conv_feature*}, precision_mode=a8_w8)
+
+# LN decomp
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
+
+# Conv decomp
+quantization_param({conv[0-9]*}, bias_mode=double_scale_initialization)
+pre_quantization_optimization(layer_decomposition, layers={conv[0-9]*}, policy=enabled)

@@ -33,7 +33,7 @@ The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS a
 
 .. _sw_suite_figure:
 
-.. figure:: images/new_overview_2023-05.svg
+.. figure:: images/software_suite_block_diagram_2025.svg
    :alt: Detailed block diagram of Hailo software packages
 
    Detailed block diagram of Hailo software packages
@@ -128,11 +128,11 @@ The pre-trained models are stored on AWS S3 and will be downloaded automatically
 
    hailomz parse <model_name>
 
-* The default compilation target is Hailo-8. To compile for different architecture (Hailo-8L for example), use ``--hw_arch hailo8l`` as CLI argument:
+* The default compilation target is Hailo-8. To compile for different architecture (Hailo-15H for example), use ``--hw_arch hailo15h`` as CLI argument:
 
 .. code-block::
 
-   hailomz parse <model_name> --hw-arch hailo8l
+   hailomz parse <model_name> --hw-arch hailo15h
 
 * To customize the parsing behavior, use ``--start-node-names`` and\or ``--end-node-names`` flags:
 
@@ -223,7 +223,7 @@ By default the compilation target is Hailo-8. To compile for a different archite
 
 .. code-block::
 
-   hailomz compile <model_name> --hw-arch hailo8l
+   hailomz compile <model_name> --hw-arch hailo15h
 
 To generate the HEF starting from a previously generated HAR file:
 

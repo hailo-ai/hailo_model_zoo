@@ -1,0 +1,3 @@
+model_optimization_flavor(compression_level=0, optimization_level=4)
+post_quantization_optimization(adaround, policy=enabled, epochs=100)
+normalization1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])

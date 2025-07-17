@@ -1,0 +1,7 @@
+norm_layer1 = normalization([127, 127, 127], [128, 128, 128])
+quantization_param({conv*}, bias_mode=double_scale_initialization)
+model_optimization_config(calibration, batch_size=32, calibset_size=64)
+post_quantization_optimization(bias_correction, policy=enabled)
+post_quantization_optimization(finetune, policy=disabled)
+
+allocator_param(max_auto_defuse=16)

@@ -114,7 +114,7 @@ CIFAR100
      - 304.16
      - 164.43
    * - siglip2_b_32_256_image_encoder
-     - 74.7
+     - 74.4
      - 70.8
      - 28
      - 62
@@ -122,23 +122,3 @@ CIFAR100
      - 256x256x3
      - 93.9
      - 11.5
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report
-   * - siglip2_b_16_image_encoder
-     - 0
-     - 0
-     - `S <https://huggingface.co/google/siglip2-base-patch16-224>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_base_patch16_224/image_encoder/pretrained/2025-05-06/siglip2-base-patch16-224_vision_encoder.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_16_image_encoder.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_16_image_encoder_profiler_results_compiled.html>`_
-     - 224x224x3
-     - 92.1
-     - 35.4

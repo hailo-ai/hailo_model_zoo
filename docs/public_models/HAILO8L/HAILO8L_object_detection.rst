@@ -302,15 +302,6 @@ COCO
      - 416x416x3
      - 61.92
      - 65.94
-   * - yolov3_gluon
-     - 35.75
-     - 34.21
-     - 0
-     - 0
-     - `S <https://cv.gluon.ai/model_zoo/detection.html>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov3_gluon/pretrained/2023-07-18/yolov3_gluon.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/yolov3_gluon.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/yolov3_gluon_profiler_results_compiled.html>`_
-     - 608x608x3
-     - 68.79
-     - 140.7
    * - yolov3_gluon_416
      - 34.22
      - 32.17

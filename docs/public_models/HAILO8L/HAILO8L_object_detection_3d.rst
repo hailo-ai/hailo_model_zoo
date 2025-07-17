@@ -63,15 +63,12 @@ nuScenes 2019
    :header-rows: 1
 
    * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
+     - float mAP
+     - Hardware mAP
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report
    * - petrv2_repvggB0_backbone_pp_800x320
      - 0
      - 0

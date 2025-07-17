@@ -248,6 +248,7 @@ class InstanceSegmentationEval(Eval):
             coco-style evaluation metrics.
         """
         self._coco_gt.dataset = self._dataset
+        self._coco_gt.dataset["info"] = {}
         self._coco_gt.createIndex()
         if self.eval_mask:
             self._evaluate_mask()

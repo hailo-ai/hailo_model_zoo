@@ -1,8 +1,0 @@
-centerpose_regnetx_1_6gf_fpn/norm_layer1 = normalization([104.04, 113.985, 119.85], [73.695, 69.87, 70.89], centerpose_regnetx_1_6gf_fpn/input_layer1)
-centerpose_regnetx_1_6gf_fpn/input_conversion = input_conversion(centerpose_regnetx_1_6gf_fpn/input_layer1, bgr_to_rgb)
-model_optimization_config(calibration, batch_size=4, calibset_size=32)
-change_output_activation(centerpose_regnetx_1_6gf_fpn/conv79, sigmoid)
-change_output_activation(centerpose_regnetx_1_6gf_fpn/conv75, sigmoid)
-quantization_param([centerpose_regnetx_1_6gf_fpn/conv75, centerpose_regnetx_1_6gf_fpn/conv79], precision_mode=a16_w16)
-quantization_param({center_nms/*}, precision_mode=a16_w16)
-quantization_param({joint_nms/*}, precision_mode=a16_w16)

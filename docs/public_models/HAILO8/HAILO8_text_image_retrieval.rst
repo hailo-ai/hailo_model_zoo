@@ -13,64 +13,54 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.31.0
+* All models were compiled using Hailo Dataflow Compiler v3.32.0
 
-.. _text_image_retrieval:
+Link Legend
+
+The following shortcuts are used in the table below to indicate available resources for each model:
+
+* S – Source: Link to the model’s open-source code repository.
+* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
+* H, NV, X – Compiled Models: Links to the compiled model in various formats:
+            * H: regular HEF with RGB format
+            * NV: HEF with NV12 format
+            * X: HEF with RGBX format
+
+* PR – Profiler Report: Download the model’s performance profiling report.
+
+.. _Text Image Retrieval:
 
 ------------------------
 
-CIFAR100
-^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
-     - Accuracy (top1)
-     - HW Accuracy
+     - float mAP
+     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Html
    * - clip_text_encoder_vitb_16
      - 90.9
-     - 90.7
-     - 33
-     - 107
-     - 224x224x3
-     - 25
-     - 39
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip>`_
-     - `link <https://huggingface.co/openai/clip-vit-base-patch16>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
-   * - clip_text_encoder_vit_l_14_laion2B
-     - 94.7
-     - 94
-     - 15
-     - 73
-     - 1x77x768
-     - 78.8
-     - 13.8
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vit_l_14_laion2B/pretrained/2024-09-24/clip-vit-l-14-laion2b-s32b-b82k_text_op15.zip>`_
-     - `link <https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vit_l_14_laion2B.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vit_l_14_laion2B_profiler_results_compiled.html>`_
-   * - clip_text_encoder_vitb_32
-     - 90.6
-     - 88.8
-     - 31
-     - 102
+     - 89.8
+     - 33.7
+     - 110
+     - `S <https://huggingface.co/openai/clip-vit-base-patch16>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_16.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
      - 1x77x512
      - 37.8
      - 6
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.zip>`_
-     - `link <https://huggingface.co/openai/clip-vit-base-patch32>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_32.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/clip_text_encoder_vitb_32_profiler_results_compiled.html>`_
+   * - clip_text_encoder_vitb_32
+     - 90.6
+     - 89.3
+     - 31
+     - 134
+     - `S <https://huggingface.co/openai/clip-vit-base-patch32>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_32.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_32_profiler_results_compiled.html>`_
+     - 1x77x512
+     - 37.8
+     - 6

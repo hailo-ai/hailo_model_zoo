@@ -164,7 +164,7 @@ def get_input_modifications(runner, network_info, input_conversion_args=None, re
         return conversion_type in ["nv12_to_hailo_yuv", "nv12_to_rgb"]
 
     def _is_rgbx(conversion_type):
-        return conversion_type == "tf_rgbx_to_hailo_rgb"
+        return conversion_type in ["tf_rgbx_to_hailo_rgb", "rgbx_to_rgb"]
 
     hn_editor = network_info.hn_editor
     yuv2rgb = hn_editor.yuv2rgb if not input_conversion_args else _is_yuv2rgb(input_conversion_args)

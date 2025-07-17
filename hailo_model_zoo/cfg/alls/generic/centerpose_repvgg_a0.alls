@@ -1,9 +1,0 @@
-centerpose_repvgg_a0/normalization1 = normalization([119.85, 113.985, 104.04], [70.89, 69.87, 73.695], centerpose_repvgg_a0/input_layer1)
-
-model_optimization_config(calibration, batch_size=8, calibset_size=2048)
-change_output_activation(centerpose_repvgg_a0/conv40, sigmoid)
-change_output_activation(centerpose_repvgg_a0/conv36, sigmoid)
-
-quantization_param([centerpose_repvgg_a0/conv36, centerpose_repvgg_a0/conv40], precision_mode=a16_w16)
-quantization_param({center_nms/*}, precision_mode=a16_w16)
-quantization_param({joint_nms/*}, precision_mode=a16_w16)

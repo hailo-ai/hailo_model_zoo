@@ -22,8 +22,8 @@ VAL_LOCATION = "models_files/arcface_lfw/2022-12-12/arcface_lfw_pairs_val.tfreco
 TFRECORD_LOCATION = {"calib": CALIB_LOCATION, "val": VAL_LOCATION}
 CALIB_PAIR_COUNT = 128
 
-TGZ_PATH = "http://vis-www.cs.umass.edu/lfw/lfw.tgz"
-PAIRS_PATH = "http://vis-www.cs.umass.edu/lfw/pairs.txt"
+TGZ_PATH = "https://ndownloader.figshare.com/files/5976018"  # lfw.tgz
+PAIRS_PATH = "https://ndownloader.figshare.com/files/5976006"  # pairs.txt
 
 DEFAULT_KPS_URL = "https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/data/lfw/2022-08-30/lfw.json"
 

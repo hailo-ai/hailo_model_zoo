@@ -1,2 +1,0 @@
-normalization1 = normalization([0., 0. , 0.], [255., 255., 255.])
-model_optimization_config(calibration, batch_size=1)

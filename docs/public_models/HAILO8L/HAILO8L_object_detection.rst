@@ -549,15 +549,12 @@ COCO
    :header-rows: 1
 
    * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
+     - float mAP
+     - Hardware mAP
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report
    * - yolov5xs_wo_spp_nms_core
      - 0
      - 0

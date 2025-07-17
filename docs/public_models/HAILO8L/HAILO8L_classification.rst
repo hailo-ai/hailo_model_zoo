@@ -452,8 +452,6 @@ ImageNet
    * - Network Name
      - float mAP
      - Hardware mAP
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
      - Params (M)

@@ -26,7 +26,7 @@ CIFAR100
 ^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 7 7 7 7
+   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
@@ -42,37 +42,35 @@ CIFAR100
      - 42.07
      - 40.8
      - 89
-     - 377
+     - 375
+     - `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50_profiler_results_compiled.html>`_
      - 224x224x3
      - 38.72
      - 11.62
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50/pretrained/2023-03-09/clip_resnet_50.zip>`_
-     - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50_profiler_results_compiled.html>`_
    * - clip_resnet_50x4
      - 50.31
-     - 48.88
+     - 49
      - 39
      - 118
+     - `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4_profiler_results_compiled.html>`_
      - 288x288x3
      - 87.0
      - 41.3
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_resnet_50x4/pretrained/2023-03-09/clip_resnet_50x4.zip>`_
-     - `link <https://github.com/openai/CLIP>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_resnet_50x4_profiler_results_compiled.html>`_
    * - clip_vit_b_16
      - 68.58
-     - 68.3
+     - 67.3
      - 14
      - 45
+     - `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_b_16/pretrained/2023-03-09/clip_vit_b_16.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16_profiler_results_compiled.html>`_
      - 224x224x3
-     - 25
-     - 39
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_b_16/pretrained/2023-03-09/clip_vit_b_16.zip>`_
-     - `link <https://github.com/openai/CLIP>`_
-     - `rgbx <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16.hef>`_
-     - `download <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_16_profiler_results_compiled.html>`_
-
-
+     - 86
+     - 35
+   * - clip_vit_b_32
+     - 65.3
+     - 0
+     - 17
+     - 99
+     - `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/clip_vit_b_32/pretrained/2023-03-09/clip_vit_b_32.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_32.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_vit_b_32_profiler_results_compiled.html>`_
+     - 224x224x3
+     - 87.8
+     - 8.8

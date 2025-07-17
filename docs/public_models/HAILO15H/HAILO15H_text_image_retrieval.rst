@@ -85,4 +85,21 @@ The following shortcuts are used in the table below to indicate available resour
      - 1x77x768
      - 51.1
      - 13.85
-
+   * - siglip2_b_16_text_encoder
+     - 97.4
+     - 97.4
+     - 23
+     - 45
+     - `S <https://huggingface.co/google/siglip2-base-patch16-224>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_base_patch16_224/text_encoder/pretrained/2025-05-12/siglip2_base_patch16_224_text_encoder.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_16_text_encoder.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_16_text_encoder_profiler_results_compiled.html>`_
+     - 1x64x768
+     - 85.6
+     - 11.1
+   * - siglip2_b_32_256_text_encoder
+     - 96.1
+     - 96.5
+     - 22
+     - 50
+     - `S <https://huggingface.co/google/siglip2-base-patch32-256>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_base_patch32_256/text_encoder/pretrained/2025-05-21/siglip2_base_patch32_256_text_encoder.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_32_256_text_encoder.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/siglip2_b_32_256_text_encoder_profiler_results_compiled.html>`_
+     - 1x64x768
+     - 85.6
+     - 11.1

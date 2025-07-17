@@ -92,14 +92,10 @@ WiderFace
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report
-     - NV12 Compiled
    * - scrfd_10g
      - 289
      - 289

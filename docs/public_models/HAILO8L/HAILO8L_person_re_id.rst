@@ -50,15 +50,6 @@ Market1501
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-   * - osnet_x1_0
-     - 93.73
-     - 93.03
-     - 124
-     - 324
-     - `S <https://github.com/KaiyangZhou/deep-person-reid>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/osnet_x1_0.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/osnet_x1_0_profiler_results_compiled.html>`_
-     - 256x128x3
-     - 2.19
-     - 1.98
    * - repvgg_a0_person_reid_512  |star|
      - 89.87
      - 89.84

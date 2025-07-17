@@ -450,15 +450,14 @@ ImageNet
    :header-rows: 1
 
    * - Network Name
+     - float mAP
+     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report
    * - davit_tiny
      - 0
      - 0

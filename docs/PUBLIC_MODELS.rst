@@ -95,6 +95,11 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
      - NA
      - NA
+   * - Video Classification
+     - `Link <public_models/HAILO8/HAILO8_video_classification.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_video_classification.rst>`_
+     - `Link <public_models/HAILO15H/HAILO15H_video_classification.rst>`_
+     - `Link <public_models/HAILO10H/HAILO10H_video_classification.rst>`_
    * - Low Light Enhancement
      - `Link <public_models/HAILO8/HAILO8_low_light_enhancement.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_low_light_enhancement.rst>`_

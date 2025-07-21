@@ -2,7 +2,6 @@
 YOLOv3 Retraining
 =================
 
-* DEPRECATION WARNING: This Docker will be deprecated in next release.
 * To learn more about yolov3 look `here <https://github.com/hailo-ai/darknet>`_
 
 -------

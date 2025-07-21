@@ -1,14 +1,16 @@
-**v5.0**
+**v2.16**
 
-* Update to use Dataflow Compiler v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Update to use HailoRT v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use Dataflow Compiler v3.32.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT 4.22.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
-* New Models:
-
-  * `SigLip <https://arxiv.org/pdf/2303.15343>`_ - SigLip2-base-32 - Contrastive Language-Image Pre-training model
+* Removed support for hailo15h, hailo15m, hailo15l and hailo10h
+* Removed support for clip_vit_l_14 and clip_vit_l_14_laion2B models
 
 * Bug fixes
 
+**v2.15.1**
+
+* Included missing files for CLIP models
 
 **v2.15**
 

@@ -24,7 +24,7 @@ Inputs
 ^^^^^^
 
 * RGB image with size of 416x416x3
-* 
+*
   Image normalization occurs on-chip
 
 Outputs
@@ -46,7 +46,7 @@ Outputs
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.hef>`_.
+| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/tiny_yolov4_license_plates.hef>`_.
 | Use the following command to measure model performance on hailo’s HW:
 
 .. code-block::

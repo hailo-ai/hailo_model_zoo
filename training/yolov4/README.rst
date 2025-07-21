@@ -2,7 +2,6 @@
 YOLOv4-leaky Retraining
 =======================
 
-* DEPRECATION WARNING: This Docker will be deprecated in next release.
 * To learn more about yolov4 look `here <https://github.com/hailo-ai/darknet>`_    
 
 ------------

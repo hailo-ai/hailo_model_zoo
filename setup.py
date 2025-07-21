@@ -3,7 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "5.0.0"
+CUR_DFC_VERSION = "v3.32.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -38,7 +38,7 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 
 def main():
     reqs = [
-        "numba==0.58.1",
+        "numba==0.59.0",
         "imageio==2.22.4",
         "matplotlib",
         "numpy",
@@ -48,24 +48,26 @@ def main():
         "termcolor",
         "tqdm",
         "pycocotools",
-        "lap==0.4.0",
+        "lap==0.5.12",
         "motmetrics==1.2.5",
         "omegaconf==2.3.0",
         "pillow<=9.3.0",
         "detection-tools==0.3",
-        "scikit-image==0.19.3",
-        "nuscenes-devkit==1.1.10",
+        "scikit-image==0.20.0",
+        "nuscenes-devkit",
+        "pyquaternion==0.9.9",
+        "Shapely>=2.0.0",
     ]
 
-    model_zoo_version = "5.0.0"
+    model_zoo_version = "2.16.0"
 
     package_data = {
         "hailo_model_zoo": [
             "cfg/base/*.yaml",
             "cfg/networks/*.yaml",
             "cfg/alls/**/*.alls",
-            "cfg/cascades/**",
             "datasets/*",
+            "cfg/cascades/**",
             "cfg/multi-networks/*.yaml",
             "cfg/multi-networks/*.yaml",
             "core/postprocessing/*.json",

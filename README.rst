@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.0.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.32.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.0.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.22.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -48,7 +48,7 @@ Hailo Model Zoo
 |python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
 
-The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo's device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo's. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
+The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo-8 device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
 
 Models
 Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo devices.
@@ -62,6 +62,10 @@ The models are divided to:
     * For Hailo-8L - `Classification <docs/public_models/HAILO8L/HAILO8L_classification.rst>`_, `Object Detection <docs/public_models/HAILO8L/HAILO8L_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8L/HAILO8L_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
     * For Hailo-15H - `Classification <docs/public_models/HAILO15H/HAILO15H_classification.rst>`_, `Object Detection <docs/public_models/HAILO15H/HAILO15H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15H/HAILO15H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
+    * For Hailo-15M - `Classification <docs/public_models/HAILO15M/HAILO15M_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO15M_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO15M_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
+    * For Hailo-10H - `Classification <docs/public_models/HAILO10H/HAILO10H_classification.rst>`_, `Object Detection <docs/public_models/HAILO10H/HAILO10H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10H/HAILO10H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 

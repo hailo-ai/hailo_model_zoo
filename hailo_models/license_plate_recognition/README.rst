@@ -31,7 +31,7 @@ Inputs
 ^^^^^^
 
 * RGB license plate image with size of 75x300x3
-* 
+*
   Image normalization occurs on-chip
 
 Outputs
@@ -51,8 +51,8 @@ Outputs
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.hef>`_.
-| 
+| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/lprnet.hef>`_.
+|
 | Use the following command to measure model performance on hailo’s HW:
 
 .. code-block::
@@ -65,7 +65,7 @@ Training on Custom Dataset
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Hailo's LPRNet was trained on a synthetic auto-generated dataset containing 4 million license plate images. Auto-generation of synthetic data for training is cheap, allows one to obtain a large annotated dataset easily and can be adapted quickly for other domains
-* A notebook for auto-generation of synthetic training data for LPRNet can be found `here <./src/lp_autogenerate.ipynb>`_ 
+* A notebook for auto-generation of synthetic training data for LPRNet can be found `here <./src/lp_autogenerate.ipynb>`_
 * For more details on the training data autogeneration, please see the training guide
 
 .. include:: docs/TRAINING_GUIDE.rst

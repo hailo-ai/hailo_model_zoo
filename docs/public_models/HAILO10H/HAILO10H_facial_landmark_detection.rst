@@ -67,15 +67,12 @@ Face Landmark
    :header-rows: 1
 
    * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
+     - float mAP
+     - Hardware mAP
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
+     - OPS (G)   
    * - face_landmarks_lite   
      - 0
      - 0

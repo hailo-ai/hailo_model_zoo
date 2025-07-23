@@ -53,8 +53,8 @@ nuScenes 2019
    * - petrv2_repvggB0_transformer_pp_800x320
      - 23.28
      - 20.69
-     - 0
-     - 0
+     - 26
+     - 33
      - `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/petrv2_repvggB0_transformer_pp_800x320.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/petrv2_repvggB0_transformer_pp_800x320_profiler_results_compiled.html>`_
      - 12x250x1280, 12x250x256
      - 6.7

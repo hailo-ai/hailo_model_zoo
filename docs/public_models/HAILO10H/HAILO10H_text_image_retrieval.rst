@@ -34,8 +34,6 @@ The following shortcuts are used in the table below to indicate available resour
 
 --------------------
 
-N/A
-^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 9

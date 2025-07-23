@@ -558,10 +558,10 @@ COCO
      - Params (M)
      - OPS (G)
    * - yolov5xs_wo_spp_nms_core
-     -
-     - 0
-     - 0
-     - 0
+     - 35.2
+     - 34.1
+     - 237
+     - 237
      - `S <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2022-05-10/yolov5xs_wo_spp_nms.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/yolov5xs_wo_spp_nms_core.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/yolov5xs_wo_spp_nms_core_profiler_results_compiled.html>`_
      - 512x512x3
      - 7.85

@@ -43,13 +43,10 @@ Hand Landmark
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
+     - OPS (G)   
    * - hand_landmark_lite   
      - 1339
      - 1339

@@ -59,17 +59,17 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO8/HAILO8_facial_landmark_detection.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_facial_landmark_detection.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_facial_landmark_detection.rst>`_
-     - `Link <public_models/HAILO15H/HAILO10H_facial_landmark_detection.rst>`_
+     - `Link <public_models/HAILO10H/HAILO10H_facial_landmark_detection.rst>`_
    * - Person Re-ID
      - `Link <public_models/HAILO8/HAILO8_person_re_id.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_person_re_id.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_person_re_id.rst>`_
-     - `Link <public_models/HAILO15H/HAILO10H_person_re_id.rst>`_
+     - `Link <public_models/HAILO10H/HAILO10H_person_re_id.rst>`_
    * - Super Resolution
      - `Link <public_models/HAILO8/HAILO8_super_resolution.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_super_resolution.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_super_resolution.rst>`_
-     - `Link <public_models/HAILO15H/HAILO10H_super_resolution.rst>`_
+     - `Link <public_models/HAILO10H/HAILO10H_super_resolution.rst>`_
    * - Face Recognition
      - `Link <public_models/HAILO8/HAILO8_face_recognition.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_face_recognition.rst>`_

@@ -69,7 +69,7 @@ LFW
      - 31.0
      - 12.6
 
-N/A
+LPR
 ^^^
 
 .. list-table::

@@ -43,7 +43,7 @@ Manual Installation
 ^^^^^^^^^^^^^^^^^^^
 
 #. Install the Hailo Dataflow compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
-#. Install the HailoRT - required only for inference on Hailo-8 / Hailo-10H (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
+#. Install the HailoRT - required only for inference on Hailo-8  (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
 #. Clone the Hailo Model Zoo repo:
 
    .. code-block::
@@ -325,7 +325,7 @@ To explore other options (for example: changing the default batch-size) use:
 
    hailomz eval --help
 
-* Currently MZ evaluation can be done only on Hailo-8 and Hailo-10H.
+* Currently MZ evaluation can be done only on Hailo-8.
 
 Visualization
 -------------

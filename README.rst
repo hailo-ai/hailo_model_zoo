@@ -1,9 +1,9 @@
 Hailo Model Zoo
 ===============
 
-.. |python| image:: https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue.svg
+.. |python| image:: https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg
    :target: https://www.python.org/downloads/release/python-380/
-   :alt: Python 3.8
+   :alt: Python 3.12
    :width: 150
    :height: 20
 

@@ -23,10 +23,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/yolov5
       docker build --build-arg timezone=`cat /etc/timezone` -t yolov5:v0 .
-      
+
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -36,16 +36,16 @@ Environment Preparations
    * ``uid`` - user id for a local non-root user.
    * ``gid`` - group id for a local non-root user.
 
-   | * This command will build the docker image with the necessary requirements using the Dockerfile exists in yolov5 directory.  
+   | * This command will build the docker image with the necessary requirements using the Dockerfile exists in yolov5 directory.
 
 
 #. | Start your docker:
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all --ipc=host -v  /path/to/local/data/dir:/path/to/docker/data/dir yolov5:v0
-      
+
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -65,20 +65,20 @@ Training and exporting to ONNX
    * | Prepare your custom dataset - Follow the steps described `here <https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data#1-create-dataset>`_ in order to create:
 
      * ``dataset.yaml`` configuration file
-     * Labels - each image should have labels in YOLO format with corresponding txt file for each image.  
+     * Labels - each image should have labels in YOLO format with corresponding txt file for each image.
      * Make sure to include number of classes field in the yaml, for example: ``nc: 80``
 
-   * | Start training - The following command is an example for training a *yolov5s* model.  
+   * | Start training - The following command is an example for training a *yolov5s* model.
 
      .. code-block::
-  
-        
+
+
         python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt --cfg models/yolov5s.yaml
-        
+
 
      * ``yolov5s.pt`` - pretrained weights. You can find the pretrained weights for *yolov5s*\ , *yolov5m*\ , *yolov5l*\ , *yolov5x* and *yolov5m_wo_spp* in your working directory.
      * ``models/yolov5s.yaml`` - configuration file of the yolov5 variant you would like to train. In order to change the number of classes make sure you update this file.
-    
+
      | **NOTE:**\  We recommend to use *yolov5m_wo_spp* for best performance on Hailo-8
 
 #. | Export to ONNX:
@@ -87,24 +87,24 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       python models/export.py --weights /path/to/trained/model.pt --img 640 --batch 1  # export at 640x640 with batch size 1
-      
+
 
 ----
 
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
-| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov5s.yaml``\ , and run compilation using the model zoo:  
+| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov5s.yaml``\ , and run compilation using the model zoo:
 
 .. code-block::
 
-   
-   hailomz compile --ckpt yolov5s.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolov5s.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80 
-   
+
+   hailomz compile --ckpt yolov5s.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolov5s.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80
+
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
@@ -115,7 +115,7 @@ Compile the Model using Hailo Model Zoo
 
 .. note::
   - Make sure to also update ``preprocessing.input_shape`` field on `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_, if it was changed on retraining.
-  
+
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.
 
 Anchors Extraction
@@ -126,8 +126,8 @@ Anchors Extraction
 
 .. code-block::
 
-   
+
    m = torch.load("last.pt")["model"]
    detect = list(m.children())[0][-1]
    print(detect.anchor_grid)
-   
+

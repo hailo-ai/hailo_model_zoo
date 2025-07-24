@@ -24,10 +24,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/yolov3
       docker build --build-arg timezone=`cat /etc/timezone` -t yolov3:v0 .
-      
+
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -42,10 +42,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir yolov3:v0
-      
-   
+
+
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
    * ``-it`` runs the command interactively.
@@ -82,21 +82,21 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       ./darknet detector train data/obj.data cfg/yolov3.cfg yolov3.weights -map -clear
-      
+
 
    | Final trained weights will be available in ``backup/`` directory.
-     
+
 
 #. | Export to ONNX:
    | In order to export your trained YOLOv3 model to ONNX run the following script:
 
    .. code-block::
 
-      
+
       python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/yolov3.cfg /path/to/trained.weights /path/to/some/image.jpg 1
-      
+
 
    * The ONNX would be available in ``/workspace/darknet/``
 
@@ -106,7 +106,7 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov3_416.yaml`` (for the default YOLOv3 model).
 |
@@ -116,9 +116,9 @@ Compile the Model using Hailo Model Zoo
 
 .. code-block::
 
-  
+
   hailomz compile  yolov3_416 --ckpt yolov3_1_416_416.onnx  --calib-path /path/to/calibration/imgs/dir/
-  
+
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format

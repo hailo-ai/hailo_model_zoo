@@ -3,7 +3,7 @@ YOLOv4-leaky Retraining
 =======================
 
 * DEPRECATION WARNING: This Docker will be deprecated in next release.
-* To learn more about yolov4 look `here <https://github.com/hailo-ai/darknet>`_    
+* To learn more about yolov4 look `here <https://github.com/hailo-ai/darknet>`_
 
 ------------
 
@@ -23,10 +23,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/yolov4
       docker build --build-arg timezone=`cat /etc/timezone` -t yolov4:v0 .
-      
+
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -41,9 +41,9 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir yolov4:v0
-      
+
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -81,21 +81,21 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       ./darknet detector train data/obj.data cfg/yolov4-leaky.cfg  -map -clear
-      
+
 
    | Final trained weights will be available in ``backup/`` directory.
 
 #. | Export to ONNX:
- 
+
    | In order to export your trained YOLOv4 model to ONNX run the following script:
 
    .. code-block::
 
-      
+
       python ../pytorch-YOLOv4/demo_darknet2onnx.py cfg/yolov4-leaky.cfg /path/to/trained.weights /path/to/some/image.jpg 1
-      
+
 
    * | The ONNX will be available in ``/workspace/darknet/``
 
@@ -104,15 +104,15 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
-| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov4_leaky.yaml``\ , and run compilation using the model zoo:  
+| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolov4_leaky.yaml``\ , and run compilation using the model zoo:
 
 .. code-block::
 
-   
+
    hailomz compile --ckpt yolov4_1_3_512_512.onnx --calib-path /path/to/calibration/imgs/ --yaml path/to/yolov4_leaky.yaml --start-node-names name1 name2 --end-node-names name1
-   
+
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
@@ -121,11 +121,11 @@ Compile the Model using Hailo Model Zoo
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::
-  - On your desired YOLOv4 YAML, update ``postprocessing.anchors.sizes`` property if anchors changed, and ``preprocessing.input_shape`` if the network is 
+  - On your desired YOLOv4 YAML, update ``postprocessing.anchors.sizes`` property if anchors changed, and ``preprocessing.input_shape`` if the network is
     trained on other resolution.
   - On `yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_,
     change ``evaluation.classes`` if classes amount is changed.
-  
+
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.
 
 

@@ -23,10 +23,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/yolox_hailo
       docker build --build-arg timezone=`cat /etc/timezone` -t yolox_hailo:v0 .
-      
+
 
    | The following optional arguments can be passed via --build-arg:
 
@@ -40,9 +40,9 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir yolox_hailo:v0
-      
+
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -65,9 +65,9 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       python tools/train.py -n yolox_hailo -d 1 -b 8 -expn train1 --fp16
-      
+
 
    * -f: experiment description file
    * -d: number of gpu devices
@@ -80,9 +80,9 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       python tools/export_onnx.py -n yolox_hailo --output-name yolox_hailo.onnx -o 11 -c yolox_hailo_outputs/train1/best_ckpt.pth
-      
+
 
 
  **NOTE:**\  Your trained model will be found under the following path: ``/workspace/YOLOX/yolox_hailo_outputs/train1/``\ , and the exported onnx will be written to ``/workspace/YOLOX/yolox_hailo.onnx``
@@ -93,15 +93,15 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolox_hailo_pp.yaml``\ , and run compilation using the model zoo:
 
 .. code-block::
 
-   
+
    hailomz compile --ckpt yolox_hailo.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolox_hailo_pp_pruned50.yaml --start-node-names name1 name2 --end-node-names name1
-   
+
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format

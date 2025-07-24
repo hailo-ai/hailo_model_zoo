@@ -19,10 +19,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/mspn
       docker build -t mspn:v0 --build-arg timezone=`cat /etc/timezone` .
-      
+
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -37,9 +37,9 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  mspn:v0
-      
+
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -53,7 +53,7 @@ Environment Preparations
 Training and exporting to ONNX
 ------------------------------
 
-#. | Prepare your data: 
+#. | Prepare your data:
 
    | Data is expected to be in coco format, and by default should be in /workspace/data/<dataset_name>.
    | The expected structure is as follows:
@@ -86,10 +86,10 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       cd /workspace/mmpose
       ./tools/dist_train.sh ./configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/regnetx_800mf_256x192.py 4 --work-dir exp0
-      
+
 
    Where 4 is the number of GPUs used for training. In this example, the trained model will be saved under ``exp0`` directory.
 
@@ -99,27 +99,27 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       cd /workspace/mmpose
       python tools/deployment/pytorch2onnx.py ./configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/regnetx_800mf_256x192.py exp0/best_AP_epoch_310.pth --output-file mspn_regnetx_800mf.onnx
-      
 
-   where ``exp0/best_AP_epoch_310.pth`` should be replaced by the trained model file path.     
+
+   where ``exp0/best_AP_epoch_310.pth`` should be replaced by the trained model file path.
 
 ----
 
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
-| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/mspn_regnetx_800mf.yaml``\ , and run compilation using the model zoo:  
+| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/mspn_regnetx_800mf.yaml``\ , and run compilation using the model zoo:
 
 .. code-block::
 
-   
+
    hailomz compile --ckpt mspn_regnetx_800mf.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/mspn_regnetx_800mf.yaml --start-node-names name1 name2 --end-node-names name1
-   
+
 
 
 * | ``--ckpt`` - path to  your ONNX file.

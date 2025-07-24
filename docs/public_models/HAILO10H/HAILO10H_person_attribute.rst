@@ -49,13 +49,13 @@ PETA
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - person_attr_resnet_v1_18   
-     - 82.6
+     - OPS (G)
+   * - person_attr_resnet_v1_18
      - 82.5
-     - 2418
-     - 2418
-     - `S <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo10h/person_attr_resnet_v1_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo10h/person_attr_resnet_v1_18_profiler_results_compiled.html>`_
+     - 82.43
+     - 0
+     - 0
+     - `S <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/person_attr_resnet_v1_18.hef>`_/`NV <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/person_attr_resnet_v1_18_nv12.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/person_attr_resnet_v1_18_profiler_results_compiled.html>`_
      - 224x224x3
      - 11.19
      - 3.64

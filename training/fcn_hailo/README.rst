@@ -22,10 +22,10 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       cd hailo_model_zoo/training/fcn_hailo
       docker build -t fcn_hailo:v0 --build-arg timezone=`cat /etc/timezone` .
-      
+
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -39,9 +39,9 @@ Environment Preparations
 
    .. code-block::
 
-      
+
       docker run --name "your_docker_name" -it --gpus all  -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  fcn_hailo:v0
-      
+
 
    * ``docker run`` create a new docker container.
    * ``--name <docker-name>`` name for your container.
@@ -96,10 +96,10 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       cd /workspace/mmsegmentation
       ./tools/dist_train.sh configs/fcn/fcn_hailo_10classes.py 2
-      
+
 
    | Where 2 is the number of GPUs used for training.
 
@@ -109,10 +109,10 @@ Training and exporting to ONNX
 
    .. code-block::
 
-      
+
       cd /workspace/mmsegmentation
       python ./tools/pytorch2onnx.py configs/fcn/fcn_hailo_10classes.py --checkpoint ./work_dirs/fcn_hailo_10classes/iter_74400.pth --shape 736 960 --postprocess --soft_weights_loading --out_name fcn_hailo.onnx
-      
+
 
 
 ----
@@ -120,15 +120,15 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/fcn_hailo_pruned50.yaml``\ , and run compilation using the model zoo:
 
 .. code-block::
 
-   
+
    hailomz compile --ckpt fcn_hailo.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/fcn_hailo_pruned50.yaml --start-node-names name1 name2 --end-node-names name1
-   
+
 
 
 * | ``--ckpt`` - path to  your ONNX file.

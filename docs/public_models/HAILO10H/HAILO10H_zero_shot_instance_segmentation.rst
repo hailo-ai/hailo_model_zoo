@@ -49,13 +49,13 @@ COCO
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - fast_sam_s   
-     - 38.9
-     - 37.7
-     - 36
-     - 42
-     - `S <https://github.com/CASIA-IVA-Lab/FastSAM>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo10h/fast_sam_s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo10h/fast_sam_s_profiler_results_compiled.html>`_
+     - OPS (G)
+   * - fast_sam_s
+     - 40.1
+     - 38.91
+     - 0
+     - 0
+     - `S <https://github.com/CASIA-IVA-Lab/FastSAM>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/fast_sam_s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/fast_sam_s_profiler_results_compiled.html>`_
      - 640x640x3
      - 11.1
      - 42.4

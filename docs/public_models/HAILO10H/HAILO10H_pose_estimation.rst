@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -49,49 +49,60 @@ COCO
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
+     - OPS (G)    
+   * - centerpose_regnetx_800mf   
+     - 43.0
+     - 41.9
+     - 125
+     - 182
+     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_regnetx_800mf.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_regnetx_800mf_profiler_results_compiled.html>`_
+     - 512x512x3
+     - 12.31
+     - 86.12    
+   * - centerpose_repvgg_a0   
+     - 38.9
+     - 38.6
+     - 398
+     - 398
+     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg_a0.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_repvgg_a0.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_repvgg_a0_profiler_results_compiled.html>`_
+     - 416x416x3
+     - 11.71
+     - 28.27      
+   * - yolov8m_pose |rocket|  
+     - 61.6
+     - 58.9
+     - 79
+     - 121
+     - `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8m/pretrained/2023-06-11/yolov8m_pose.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/yolov8m_pose.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/yolov8m_pose_profiler_results_compiled.html>`_
+     - 640x640x3
+     - 26.4
+     - 81.02    
+   * - yolov8s_pose   
+     - 56.9
+     - 54.6
+     - 161
+     - 214
+     - `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8s/pretrained/2023-06-11/yolov8s_pose.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/yolov8s_pose.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/yolov8s_pose_profiler_results_compiled.html>`_
+     - 640x640x3
+     - 11.6
+     - 30.2    
+.. list-table::
+   :header-rows: 1
+
+   * - Network Name
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Input Resolution (HxWxC)
+     - Params (M)
      - OPS (G)
-   * - centerpose_regnetx_1.6gf_fpn  |star|
-     - 53.54
-     - 53.54
+     - Pretrained
+     - Source
+     - Compiled
+     - Profile Report      
+   * - centerpose_regnetx_1.6gf_fpn  |star| 
      - 0
      - 0
-     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_regnetx_1.6gf_fpn.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_regnetx_1.6gf_fpn_profiler_results_compiled.html>`_
+     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_1.6gf_fpn/pretrained/2022-03-23/centerpose_regnetx_1.6gf_fpn.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_regnetx_1.6gf_fpn.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/centerpose_regnetx_1.6gf_fpn_profiler_results_compiled.html>`_
      - 640x640x3
      - 14.28
      - 64.58
-   * - centerpose_regnetx_800mf
-     - 44.06
-     - 42.96
-     - 0
-     - 0
-     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_regnetx_800mf/pretrained/2021-07-11/centerpose_regnetx_800mf.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_regnetx_800mf.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_regnetx_800mf_profiler_results_compiled.html>`_
-     - 512x512x3
-     - 12.31
-     - 86.12
-   * - centerpose_repvgg_a0
-     - 39.16
-     - 39.03
-     - 0
-     - 0
-     - `S <https://github.com/tensorboy/centerpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/centerpose_repvgg_a0/pretrained/2021-09-26/centerpose_repvgg_a0.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_repvgg_a0.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/centerpose_repvgg_a0_profiler_results_compiled.html>`_
-     - 416x416x3
-     - 11.71
-     - 28.27
-   * - yolov8m_pose |rocket|
-     - 64.26
-     - 61.68
-     - 0
-     - 0
-     - `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8m/pretrained/2023-06-11/yolov8m_pose.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/yolov8m_pose.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/yolov8m_pose_profiler_results_compiled.html>`_
-     - 640x640x3
-     - 26.4
-     - 81.02
-   * - yolov8s_pose
-     - 59.2
-     - 56.68
-     - 0
-     - 0
-     - `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PoseEstimation/yolov8/yolov8s/pretrained/2023-06-11/yolov8s_pose.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/yolov8s_pose.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/yolov8s_pose_profiler_results_compiled.html>`_
-     - 640x640x3
-     - 11.6
-     - 30.2

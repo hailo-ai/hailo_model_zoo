@@ -1,5 +1,4 @@
 
-
 Public Pre-Trained Models
 =========================
 
@@ -39,7 +38,6 @@ Hand Landmark
 ^^^^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
@@ -52,8 +50,8 @@ Hand Landmark
      - Params (M)
      - OPS (G)
    * - hand_landmark_lite
-     - 12.0
-     - 0.0
+     - 0
+     - 12
      - 1339
      - 1339
      - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/hand_landmark_lite_profiler_results_compiled.html>`_

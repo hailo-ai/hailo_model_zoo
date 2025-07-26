@@ -49,43 +49,43 @@ WiderFace
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)      
-   * - lightface_slim  |star| 
+     - OPS (G)
+   * - lightface_slim  |star|
      - 39.3
      - 38.9
      - 903
      - 779
-     - `S <https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/lightface_slim/2021-07-18/lightface_slim.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/lightface_slim.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/lightface_slim_profiler_results_compiled.html>`_
+     - `S <https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/lightface_slim/2021-07-18/lightface_slim.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/lightface_slim.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/lightface_slim_profiler_results_compiled.html>`_
      - 240x320x3
      - 0.26
-     - 0.16    
-   * - retinaface_mobilenet_v1   
+     - 0.16
+   * - retinaface_mobilenet_v1
      - 81.2
      - 81.1
      - 115
      - 160
-     - `S <https://github.com/biubug6/Pytorch_Retinaface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/retinaface_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/retinaface_mobilenet_v1_profiler_results_compiled.html>`_
+     - `S <https://github.com/biubug6/Pytorch_Retinaface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/retinaface_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/retinaface_mobilenet_v1_profiler_results_compiled.html>`_
      - 736x1280x3
      - 3.49
-     - 25.14    
-   * - scrfd_2.5g   
+     - 25.14
+   * - scrfd_2.5g
      - 76.3
      - 76.0
      - 393
      - 417
-     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_2.5g/pretrained/2022-09-07/scrfd_2.5g.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_2.5g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_2.5g_profiler_results_compiled.html>`_
+     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_2.5g/pretrained/2022-09-07/scrfd_2.5g.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_2.5g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_2.5g_profiler_results_compiled.html>`_
      - 640x640x3
      - 0.82
-     - 6.88    
-   * - scrfd_500m   
+     - 6.88
+   * - scrfd_500m
      - 68.7
      - 68.4
      - 392
      - 423
-     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_500m/pretrained/2022-09-07/scrfd_500m.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_500m.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_500m_profiler_results_compiled.html>`_
+     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_500m/pretrained/2022-09-07/scrfd_500m.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_500m.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_500m_profiler_results_compiled.html>`_
      - 640x640x3
      - 0.63
-     - 1.5    
+     - 1.5
 .. list-table::
    :header-rows: 1
 
@@ -99,11 +99,11 @@ WiderFace
      - Source
      - Compiled
      - Profile Report
-     - NV12 Compiled    
-   * - scrfd_10g   
+     - NV12 Compiled
+   * - scrfd_10g
      - 290
      - 290
-     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_10g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0.0/hailo15h/scrfd_10g_profiler_results_compiled.html>`_
+     - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g.zip>`_ `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_10g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.0.0/hailo15h/scrfd_10g_profiler_results_compiled.html>`_
      - 640x640x3
      - 4.23
      - 26.74

@@ -104,15 +104,6 @@ COCO
      - 800x800x3
      - 32.42
      - 61.87
-   * - detr_resnet_v1_50
-     - 35.11
-     - 31.84
-     - 12
-     - 28
-     - `S <https://github.com/facebookresearch/detr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/detr/detr_resnet_v1_50/2024-03-05/detr_resnet_v1_50.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/detr_resnet_v1_50.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/detr_resnet_v1_50_profiler_results_compiled.html>`_
-     - 800x800x3
-     - 41.1
-     - 120.4
    * - efficientdet_lite0
      - 26.56
      - 25.81

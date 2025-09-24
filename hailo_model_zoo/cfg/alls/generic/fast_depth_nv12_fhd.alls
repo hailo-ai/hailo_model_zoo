@@ -1,7 +1,0 @@
-model_optimization_config(calibration, batch_size=8, calibset_size=128)
-post_quantization_optimization(finetune, policy=disabled)
-post_quantization_optimization(bias_correction, policy=enabled)
-pre_quantization_optimization(activation_clipping, layers=[conv20], mode=manual, clipping_values=[0, 15])
-resize_input1 = resize(input_layer1, resize_shapes=[1080, 1920])
-yuv_to_rgb1 = input_conversion(yuv_to_rgb)
-reshape = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support=True)

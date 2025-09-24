@@ -301,15 +301,13 @@ def evaluate(args):
 
     if args.target == "hardware" and not HEF_EXISTS:
         raise ModuleNotFoundError(
-            f"HailoRT is not available, in case you want to run on {args.target} you should install HailoRT first"
+            f"HailoRT is not available, so for cases requiring evaluation with hef on {args.target}, \
+            HailoRT must be installed first"
         )
-
-    if (args.hw_arch == ["hailo15h", "hailo15m"] and args.target == "hardware") and not args.use_service:
-        raise ValueError("Evaluation of hw_arch hailo15h is currently not supported in the Hailo Model Zoo")
 
     if args.hef_path and not HEF_EXISTS:
         raise ModuleNotFoundError(
-            "HailoRT is not available, in case you want to evaluate with hef you should install HailoRT first"
+            "HailoRT is not available, so for cases requiring evaluation with hef, HailoRT must be installed first"
         )
 
     hardware_targets = set(DEVICE_NAMES)
@@ -341,19 +339,8 @@ def evaluate(args):
     logger.info(f"Start run for network {model_name} ...")
 
     logger.info("Initializing the runner...")
-    if args.hef_path and not args.har_path:
-        logger.info(
-            "Using HEF without specifying har_path requires a calibration set "
-            "to build the network. Please refer to the DATA.rst file for detailed "
-            "instructions on creating a calibration set"
-        )
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
     network_groups = None
-
-    #  Enabling service for hailo15h
-    if args.use_service:
-        # This property will print a warning when set.
-        runner.use_service = args.use_service
 
     logger.info(f"Chosen target is {args.target}")
     batch_size = args.batch_size or __get_batch_size(network_info, args.target)

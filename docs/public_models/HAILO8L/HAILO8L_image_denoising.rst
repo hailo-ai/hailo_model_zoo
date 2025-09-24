@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8l-ai-accelerator-for-ai-light-applications/#hailo8l-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.32.0
+* All models were compiled using Hailo Dataflow Compiler v3.33.0
 
 Link Legend
 
@@ -51,11 +51,11 @@ BSD68
      - Params (M)
      - OPS (G)
    * - dncnn3
-     - 31.32
-     - 31.17
-     - 29
-     - 29
-     - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/dncnn3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/dncnn3_profiler_results_compiled.html>`_
+     - 31.5
+     - 0.2
+     - 0
+     - 31
+     - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn3_profiler_results_compiled.html>`_
      - 321x481x1
      - 0.66
      - 205.26
@@ -77,11 +77,11 @@ CBSD68
      - Params (M)
      - OPS (G)
    * - dncnn_color_blind
-     - 33.02
-     - 32.18
-     - 29
-     - 29
-     - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/dncnn_color_blind.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8l/dncnn_color_blind_profiler_results_compiled.html>`_
+     - 33.9
+     - 0.9
+     - 0
+     - 31
+     - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn_color_blind.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/dncnn_color_blind_profiler_results_compiled.html>`_
      - 321x481x3
      - 0.66
      - 205.97

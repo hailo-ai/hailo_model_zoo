@@ -1,35 +1,35 @@
 Hailo Model Zoo
 ===============
 
-.. |python| image:: https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue.svg
-   :target: https://www.python.org/downloads/release/python-380/
-   :alt: Python 3.8
+.. |python| image:: https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg
+   :target: https://www.python.org/downloads/release/python-3123/
+   :alt: Python 3.12
    :width: 150
    :height: 20
 
 
-.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.12.0-blue.svg
-   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.12.0
+.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.18.0-blue.svg
+   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.18.0
    :alt: Tensorflow
    :width: 110
    :height: 20
 
 
-.. |cuda| image:: https://img.shields.io/badge/CUDA-11.8-blue.svg
+.. |cuda| image:: https://img.shields.io/badge/CUDA-12.5.1-blue.svg
    :target: https://developer.nvidia.com/cuda-toolkit
    :alt: Cuda
    :width: 80
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.0.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.33.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.0.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.23.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -48,9 +48,7 @@ Hailo Model Zoo
 |python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
 
-* Note: The master branch supports only the Hailo-10 and Hailo-15 device families. For Hailo-8, Hailo-8R, and Hailo-8L devices, please use the v2.x branch.
-
-The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo's device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
+The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator and measure the accuracy on the Hailo-8 device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed-up development and generate high quality applications accelerated with Hailo-8. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use-cases on internal datasets.
 
 Models
 Hailo provides different pre-trained models in ONNX / TF formats and pre-compiled HEF (Hailo Executable Format) binary file to execute on the Hailo devices.
@@ -65,9 +63,11 @@ The models are divided to:
 
     * For Hailo-15H - `Classification <docs/public_models/HAILO15H/HAILO15H_classification.rst>`_, `Object Detection <docs/public_models/HAILO15H/HAILO15H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15H/HAILO15H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
+    * For Hailo-15M - `Classification <docs/public_models/HAILO15M/HAILO15M_classification.rst>`_, `Object Detection <docs/public_models/HAILO15M/HAILO15M_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15M/HAILO15M_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
     * For Hailo-10H - `Classification <docs/public_models/HAILO10H/HAILO10H_classification.rst>`_, `Object Detection <docs/public_models/HAILO10H/HAILO10H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10H/HAILO10H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
-* Note that this version does not support Hailo-8 devices, for Hailo-8 please checkout to Hailo-8 branch.
+
 
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.

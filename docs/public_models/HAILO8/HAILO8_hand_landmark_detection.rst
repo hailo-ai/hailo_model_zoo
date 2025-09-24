@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.32.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 Link Legend
 
@@ -38,6 +38,7 @@ Hand Landmark
 ^^^^^^^^^^^^^
 
 .. list-table::
+   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
@@ -48,13 +49,13 @@ Hand Landmark
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - hand_landmark_lite
-     -
-     - 0
+     - OPS (G)    
+   * - hand_landmark_lite   
+     - 12.0
+     - 0.0
      - 3091
      - 3092
-     - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/hand_landmark_lite_profiler_results_compiled.html>`_
+     - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/hand_landmark_lite_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.01
      - 0.3

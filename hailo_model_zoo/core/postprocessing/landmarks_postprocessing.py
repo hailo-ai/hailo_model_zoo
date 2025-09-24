@@ -12,7 +12,6 @@ def face_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwarg
 
 
 @POSTPROCESS_FACTORY.register(name="landmark_detection")
-@POSTPROCESS_FACTORY.register(name="face_landmarks_lite")
 def hand_landmarks_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     return {"predictions": endnodes[0]}
 
@@ -24,16 +23,6 @@ def visualize_face_landmarks_result(logits, image, **kwargs):
     img_draw = ImageDraw.Draw(img)
     img_draw.point(logits[0], fill=(255, 255, 255))
     return np.array(img)
-
-
-@VISUALIZATION_FACTORY.register(name="face_landmarks_lite")
-def visualize_face_landmarks_lite_result(logits, image, **kwargs):
-    logits = logits["predictions"][0]
-    pts = np.reshape(logits, (-1, 3)).astype(dtype=int)
-    img = image[0]
-    for pt in pts:
-        img = cv2.circle(img, (pt[0], pt[1]), radius=1, color=(0, 0, 255), thickness=2)
-    return img
 
 
 @VISUALIZATION_FACTORY.register(name="landmark_detection")

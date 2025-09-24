@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.32.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 Link Legend
 
@@ -28,39 +28,4 @@ The following shortcuts are used in the table below to indicate available resour
 
 * PR – Profiler Report: Download the model’s performance profiling report.
 
-.. _Text Image Retrieval:
 
-------------------------
-
-
-.. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
-   :header-rows: 1
-
-   * - Network Name
-     - float mAP
-     - Hardware mAP
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Links
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-   * - clip_text_encoder_vitb_16
-     - 90.9
-     - 89.8
-     - 33.7
-     - 110
-     - `S <https://huggingface.co/openai/clip-vit-base-patch16>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_16/pretrained/2024-12-04/clip_text_encoder_vitb_16_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_16.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_16_profiler_results_compiled.html>`_
-     - 1x77x512
-     - 37.8
-     - 6
-   * - clip_text_encoder_vitb_32
-     - 90.6
-     - 89.3
-     - 31
-     - 134
-     - `S <https://huggingface.co/openai/clip-vit-base-patch32>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/clip/vitb_32/pretrained/2024-12-04/clip_text_encoder_vitb_32_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_32.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/clip_text_encoder_vitb_32_profiler_results_compiled.html>`_
-     - 1x77x512
-     - 37.8
-     - 6

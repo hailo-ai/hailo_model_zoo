@@ -745,16 +745,14 @@ CLIP_CIFAR100
 ------
 
 To evaluate/optimize/compile the CLIP models of the
-Hailo Model Zoo you should generate the CIFAR100 & COCO2017 TFRecord files.
-COCO2017 TFRecord file is used for calibration and CIFAR100 TFRecord file is used for evaluation.
-We found that calibrating with COCO2017 data yields improved performance on real-world scenes without compromising evaluation results on CIFAR100.
+Hailo Model Zoo you should generate the CIFAR100 TFRecord files.
 
 Run the creation scripts:
 
 .. code-block::
 
-    python hailo_model_zoo/datasets/create_clip_vision_tfrecord.py val
-    python hailo_model_zoo/datasets/create_clip_vision_tfrecord.py calib
+    python hailo_model_zoo/datasets/create_clip_cifar100_tfrecord.py val
+    python hailo_model_zoo/datasets/create_clip_cifar100_tfrecord.py calib
 
 
 .. _LOL:

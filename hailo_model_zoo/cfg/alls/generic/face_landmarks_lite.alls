@@ -1,3 +1,0 @@
-normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-post_quantization_optimization(finetune, policy=disabled)
-change_output_activation(conv25, sigmoid)

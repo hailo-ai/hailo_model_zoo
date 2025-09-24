@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.32.0
+* All models were compiled using Hailo Dataflow Compiler v3.31.0
 
 Link Legend
 
@@ -49,13 +49,13 @@ COCO
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - fast_sam_s
-     - 38.55
-     - 37.0
+     - OPS (G)    
+   * - fast_sam_s   
+     - 40.1
+     - 1.6
      - 48
      - 65
-     - `S <https://github.com/CASIA-IVA-Lab/FastSAM>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/fast_sam_s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/fast_sam_s_profiler_results_compiled.html>`_
+     - `S <https://github.com/CASIA-IVA-Lab/FastSAM>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SegmentAnything/coco/fast_sam/fast_sam_s/pretrained/2023-03-06/fast_sam_s.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/fast_sam_s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8/fast_sam_s_profiler_results_compiled.html>`_
      - 640x640x3
      - 11.1
      - 42.4

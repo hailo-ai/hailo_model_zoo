@@ -22,10 +22,10 @@ Environment Preparations
 
    .. code-block::
 
-
+      
       cd hailo_model_zoo/training/nanodet
       docker build -t nanodet:v0 --build-arg timezone=`cat /etc/timezone` .
-
+      
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -34,15 +34,15 @@ Environment Preparations
    * ``group`` - default group for a local non-root user. Defaults to 'hailo'.
    * ``uid`` - user id for a local non-root user.
    * ``gid`` - group id for a local non-root user.
-
+  
 
 #. | Start your docker:
 
    .. code-block::
 
-
+      
       docker run --name "your_docker_name" -it --gpus all -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  nanodet:v0
-
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -61,7 +61,7 @@ Training and exporting to ONNX
 
    | Data is expected to be in coco format. More information can be found `here <https://cocodataset.org/#format-data>`_
 
-#. | Training:
+#. | Training: 
 
    | Configure your model in a .yaml file. We'll use /workspace/nanodet/config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml in this guide.
    | Modify the path for the dataset in the .yaml configuration file:
@@ -84,12 +84,12 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       cd /workspace/nanodet
       ln -s /workspace/data/coco/ /coco
       python tools/train.py ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml
-
-
+      
+   
    | In case you want to use the pretrained nanodet-RepVGG-A0_416.ckpt, which was predownloaded into your docker modify your configurationf file:
 
    .. code-block::
@@ -112,27 +112,27 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       python tools/export_onnx.py --cfg_path ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml --model_path /workspace/nanodet/workspace/RepVGG-A0-416/model_last.ckpt
-
+      
 
 **NOTE:**\  Your trained model will be found under the following path: /workspace/nanodet/workspace/<backbone-name> /model_last.ckpt, and exported onnx will be written to /workspace/nanodet/nanodet.onnx
-
+ 
 
 ----
 
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo device from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
-| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/nanodet_repvgg.yaml``\ , and run compilation using the model zoo:
+| Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/nanodet_repvgg.yaml``\ , and run compilation using the model zoo:  
 
 .. code-block::
 
-
-   hailomz compile --ckpt nanodet.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/nanodet_repvgg.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80
-
+   
+   hailomz compile --ckpt nanodet.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/nanodet_repvgg.yaml --start-node-names name1 name2 --end-node-names name1 --classes 80 
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
@@ -143,5 +143,5 @@ Compile the Model using Hailo Model Zoo
 
 .. note::
   - On your desired YAML file, change ``preprocessing.input_shape`` if changed on retraining.
-
+  
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.

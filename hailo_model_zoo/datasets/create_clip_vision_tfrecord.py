@@ -17,11 +17,15 @@ except ModuleNotFoundError as err:
         "Modules AutoModel & AutoTokenizer are not installed. Please install them using pip install transformers."
     ) from err
 try:
-    from transformers import CLIPModel, CLIPTokenizer
+    from transformers import CLIPModel, CLIPProcessor, CLIPTokenizer
 except ModuleNotFoundError as err:
     raise ModuleNotFoundError(
         "Modules CLIPModel & CLIPTokenizer are not installed. Please install them using pip install transformers."
     ) from err
+try:
+    import clip
+except ModuleNotFoundError:
+    raise ModuleNotFoundError("Module 'clip' not found. Please run: pip install clip-by-openai") from None
 
 from hailo_model_zoo.utils import downloader, path_resolver
 
@@ -149,7 +153,12 @@ TEMPLATES = [
 ]
 TF_RECORD_TYPE = ["val", "calib"]
 CLASS_TOKEN_LOC = {
-    "laion/CLIP-ViT-L-14-laion2B-s32B-b82K": "models_files/cifar100/test/class_token_vit_l_14_laion2B.npy",
+    "RN50": "models_files/cifar100/2025-08-18/class_token_resnet50.npy",
+    "RN50x4": "models_files/cifar100/2025-08-18/class_token_resnet50x4.npy",
+    "openai/clip-vit-base-patch16": "models_files/cifar100/2025-08-18/class_token_vit_b_16.npy",
+    "openai/clip-vit-base-patch32": "models_files/cifar100/2025-08-18/class_token_vit_b_32.npy",
+    "openai/clip-vit-large-patch14": "models_files/cifar100/2025-08-18/class_token_vit_l_14.npy",
+    "laion/CLIP-ViT-L-14-laion2B-s32B-b82K": "models_files/cifar100/2025-08-18/class_token_vit_l_14_laion2B.npy",
     "openai/clip-vit-large-patch14-336": "models_files/cifar100/2025-01-13/class_token_vit_l_14_336.npy",
     "google/siglip-base-patch16-224": "models_files/cifar100/2025-03-17/class_token_siglip_base_16_224.npy",
     "google/siglip-so400m-patch14-224": "models_files/cifar100/2025-03-17/class_token_siglip_so400_16_224.npy",
@@ -157,6 +166,18 @@ CLASS_TOKEN_LOC = {
     "google/siglip2-base-patch16-224": "models_files/cifar100/2025-03-17/class_token_siglip2_base_16_224.npy",
     "google/siglip2-large-patch16-256": "models_files/cifar100/2025-03-17/class_token_siglip2_large_16_256.npy",
     "google/siglip2-base-patch32-256": "models_files/cifar100/2025-03-17/class_token_siglip2_base_32_256.npy",
+    "wkcn/TinyCLIP-ViT-61M-32-Text-29M-LAION400M": (
+        "models_files/cifar100/2025-07-21/class_token_tinyclip_vit_61m_32_text_29m_laion400m.npy"
+    ),
+    "wkcn/TinyCLIP-ViT-40M-32-Text-19M-LAION400M": (
+        "models_files/cifar100/2025-07-21/class_token_tinyclip_vit_40m_32_text_19m_laion400m.npy"
+    ),
+    "wkcn/TinyCLIP-ViT-39M-16-Text-19M-YFCC15M": (
+        "models_files/cifar100/2025-07-21/class_token_tinyclip_vit_39m_16_text_19m_yfcc15m.npy"
+    ),
+    "wkcn/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M": (
+        "models_files/cifar100/2025-07-21/class_token_tinyclip_vit_8m_16_text_3m_yfcc15m.npy"
+    ),
 }
 TF_RECORD_LOC = {
     "val": "models_files/cifar100/test/cifar100_val.tfrecord",
@@ -177,22 +198,28 @@ def _generate_class_tokens(model, tokenizer, classnames, templates, model_name):
     zeroshot_weights = []
     for classname in tqdm(classnames):
         texts = [template.format(classname) for template in templates]  # format with class
-        if model_name.startswith("google/siglip"):
-            padding_length = PADDING_LENGTH[model_name]
-            inputs = tokenizer(
-                texts, return_tensors="pt", padding="max_length", max_length=padding_length, truncation=True
-            )
+        if model_name.startswith("RN50"):
+            with torch.no_grad():
+                texts = clip.tokenize(texts).cpu()
+                outputs = model.encode_text(texts)
         else:
-            inputs = tokenizer(texts, return_tensors="pt", padding=True, truncation=True)
-        input_ids = inputs["input_ids"]
-        attention_mask = inputs.get("attention_mask", None)
+            if model_name.startswith("google/siglip"):
+                padding_length = PADDING_LENGTH[model_name]
+                inputs = tokenizer(
+                    texts, return_tensors="pt", padding="max_length", max_length=padding_length, truncation=True
+                )
+            else:
+                inputs = tokenizer(texts, return_tensors="pt", padding=True, truncation=True)
+            input_ids = inputs["input_ids"]
+            attention_mask = inputs.get("attention_mask", None)
 
-        with torch.no_grad():
-            outputs = model.get_text_features(input_ids=input_ids, attention_mask=attention_mask)
-            class_embeddings = outputs / outputs.norm(dim=-1, keepdim=True)
-            class_embeddings = class_embeddings.mean(dim=0)
-            class_embeddings = class_embeddings.detach().cpu().numpy()
-            zeroshot_weights.append(class_embeddings)
+            with torch.no_grad():
+                outputs = model.get_text_features(input_ids=input_ids, attention_mask=attention_mask)
+
+        class_embeddings = outputs / outputs.norm(dim=-1, keepdim=True)
+        class_embeddings = class_embeddings.mean(dim=0)
+        class_embeddings = class_embeddings.detach().cpu().numpy()
+        zeroshot_weights.append(class_embeddings)
 
     zeroshot_weights = np.stack(zeroshot_weights, axis=0)
     return zeroshot_weights
@@ -240,6 +267,12 @@ def _create_class_tokens(model_name):
     if model_name.startswith("google/siglip"):
         model = AutoModel.from_pretrained(model_name)
         tokenizer = AutoTokenizer.from_pretrained(model_name)
+    elif model_name.startswith("RN50"):
+        model, _ = clip.load(model_name)
+        tokenizer = clip.tokenize
+    elif model_name.startswith("wkcn/TinyCLIP"):
+        model = CLIPModel.from_pretrained(model_name, trust_remote_code=True)
+        tokenizer = CLIPProcessor.from_pretrained(model_name, trust_remote_code=True)
     else:
         model = CLIPModel.from_pretrained(model_name)
         tokenizer = CLIPTokenizer.from_pretrained(model_name)

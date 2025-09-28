@@ -4,4 +4,6 @@ post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, e
 yuv_to_rgb1 = input_conversion(yuv_to_rgb)
 nv_format_conversion = input_conversion(input_layer1, nv12_to_hailo_yuv, emulator_support = True)
 nms_postprocess("../../postprocess_config/yolov5s_personface.json", yolov5, engine=cpu)
+
 allocator_param(timeout=1000, cluster_timeout=1000, automatic_ddr=disabled)
+performance_param(optimize_for_power=True)

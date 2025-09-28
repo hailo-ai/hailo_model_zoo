@@ -13,6 +13,8 @@ from hailo_model_zoo.utils.completions import (
 )
 from hailo_model_zoo.utils.constants import DEVICE_NAMES, TARGETS
 
+HW_ARCH_CHOICES = ["hailo15h", "hailo15m", "hailo15l", "hailo10h", "hailo10p", "hailo12l"]
+
 
 def make_parsing_base():
     parsing_base_parser = argparse.ArgumentParser(add_help=False)
@@ -23,22 +25,22 @@ def make_parsing_base():
         type=str,
         default=None,
         dest="yaml_path",
-        help=("Path to YAML for network configuration." "By default using the default configuration"),
+        help=("Path to YAML for network configuration. By default using the default configuration"),
     ).complete = YAML_COMPLETE
     parsing_base_parser.add_argument(
         "--ckpt",
         type=str,
         default=None,
         dest="ckpt_path",
-        help=("Path to onnx or ckpt to use for parsing." " By default using the model cache location"),
+        help=("Path to onnx or ckpt to use for parsing. By default using the model cache location"),
     ).complete = CKPT_COMPLETE
     parsing_base_parser.add_argument(
         "--hw-arch",
         type=str,
         default="hailo10h",
         metavar="",
-        choices=["hailo15h", "hailo15m", "hailo15l", "hailo10h", "hailo10p"],
-        help="Which hw arch to run: hailo15h / hailo15m / hailo15l / hailo10h. \
+        choices=HW_ARCH_CHOICES,
+        help=f"Which hw arch to run: {', '.join(HW_ARCH_CHOICES)}. \
             By default using hailo10h.",
     )
     parsing_base_parser.add_argument(
@@ -181,6 +183,6 @@ def make_evaluation_base():
         print_num_examples=1e9,
         visualize_results=False,
         use_lite_inference=False,
-        use_service=False,
+        hailort_server_ip=None,
     )
     return evaluation_base_parser

@@ -1,3 +1,0 @@
-nms_postprocess("../../../postprocess_config/yolov6n_0_2_1_nms_config.json", meta_arch=yolov6, engine=nn_core)
-buffers(conv36, fused_bbox_decoder_8, 80, 80)
-nms1_d0, nms1_d0_out, nms1_d1, nms1_d1_out = defuse(nms1, 2, defuse_type=NMS)

@@ -1,7 +1,8 @@
 norm1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 
 context_switch_param(mode=enabled)
-allocator_param(enable_partial_row_buffers=disabled)
+allocator_param(enable_partial_row_buffers=disabled, spatial_defuse_legacy=True)
+allocator_param(automatic_reshapes=disabled)
 
 resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=0.95, max_memory_utilization=0.8)
 
@@ -19,3 +20,19 @@ quantization_param([deit_tiny/conv33], precision_mode=a16_w16)
 
 quantization_param({deit_tiny/ew_add*}, precision_mode=a16_w16)
 quantization_param({deit_tiny/ew_add1}, precision_mode=a8_w8)
+
+allocator_param(enable_auto_spatial_reshapes=False)
+auto_spatial_reshape_from_concat1_to_ew_add1 = format_conversion(concat1, ew_add1, spatial_reshape, 25, 8, collapse=False, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(const_input2, ew_add1, spatial_reshape, 25, 8, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice3, matmul2, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice6, matmul4, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice9, matmul6, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice12, matmul8, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice15, matmul10, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice18, matmul12, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice21, matmul14, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice24, matmul16, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice27, matmul18, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice30, matmul20, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice33, matmul22, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(conv_slice36, matmul24, transpose_matmul, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])

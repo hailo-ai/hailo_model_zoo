@@ -32,3 +32,5 @@ quantization_param(output_layer1, precision_mode=a8_w8)
 quantization_param(output_layer2, precision_mode=a8_w8)
 quantization_param(output_layer3, precision_mode=a8_w8)
 reshape, yuv_to_rgb1 = input_conversion(input_layer1, nv12_to_rgb, emulator_support=True)
+
+performance_param(optimize_for_power=True)

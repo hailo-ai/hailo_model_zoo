@@ -2,7 +2,7 @@
     "nms_scores_th": 0.6,
     "nms_iou_th": 0.6,
     "image_dims": [
-        640,
+        480,
         640
     ],
     "max_proposals_per_class": 100,
@@ -12,7 +12,7 @@
     "max_total_proposals": 100,
     "bbox_decoders": [
         {
-            "name": "bbox_decoder_48",
+            "name": "bbox_decoder_47",
             "w": [
                 10,
                 16,
@@ -24,7 +24,7 @@
                 23
             ],
             "stride": 8,
-            "encoded_layer": "conv48"
+            "encoded_layer": "conv47"
         },
         {
             "name": "bbox_decoder_55",

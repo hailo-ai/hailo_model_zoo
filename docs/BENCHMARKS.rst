@@ -1,8 +1,8 @@
 Benchmarks
 ==========
 
-| In order to measure FPS, power and latency of the Hailo Model Zoo networks you can use the HailoRT command line interface.
-| For more information please refer to the HailoRT documentation in `hailo.ai <https://hailo.ai/>`_.
+| To measure FPS, power and latency of the Hailo Model Zoo networks, use the HailoRT command line interface.
+| For more information, please refer to the HailoRT documentation at `hailo.ai <https://hailo.ai/>`_.
 
 Example
 -------
@@ -14,7 +14,7 @@ Example
 
    hailomz compile <model_name>
 
-| After building the HEF you will be able to measure the performance of the model by using the HailoRT command line interface. 
+| Only after first building the HEF, will it be possible to measure the performance of the model by using the HailoRT command line interface.
 | Example for measuring performance of resnet_v1_50:
 
 .. code-block::
@@ -44,7 +44,7 @@ To use datasets from the Hailo Model Zoo, you can use the command:
 
    python hailo_model_zoo/tools/conversion_tool.py /path/to/tfrecord_file resnet_v1_50
 
-which will generate a bin file with serialized images. This bin file can be used inside the HailoRT:
+which will generate a bin file with serialized images. This bin file can be used with HailoRT:
 
 .. code-block::
 

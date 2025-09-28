@@ -2,7 +2,6 @@
 
 import importlib
 
-import numpy as np
 import tensorflow as tf
 
 import hailo_model_zoo.core.preprocessing
@@ -15,15 +14,17 @@ discovered_plugins = {
 
 
 def convert_rgb_to_yuv(image):
-    transition_matrix = np.array(
+    transition_matrix = tf.constant(
         [
             [0.2568619, -0.14823364, 0.43923104],
             [0.5042455, -0.2909974, -0.367758],
             [0.09799913, 0.43923104, -0.07147305],
-        ]
+        ],
+        dtype=tf.float32,
     )
+    image = tf.cast(image, tf.float32)
     image = tf.matmul(image, transition_matrix)
-    image += [16, 128, 128]
+    image += tf.constant([16, 128, 128], dtype=tf.float32)
     return image
 
 

@@ -1,21 +1,21 @@
 Getting Started
 ===============
 
-| This document provides install instructions and basic usage examples of the Hailo Model Zoo.
+| This document provides installation instructions and basic usage examples of the Hailo Model Zoo.
 
 System Requirements
 -------------------
 
 
-* Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
-* Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v5.0.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 5.0.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo's hardware.
+* Ubuntu 22.04/24.04, 64 bit (supported also on Windows, under WSL2)
+* Python 3.10/3.11/3.12, including ``pip`` and ``virtualenv``
+* Hailo Dataflow Compiler v5.1.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT v5.1.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-10H.
 * The Hailo Model Zoo supports Hailo-10H connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 525
-* CUDA 11.8
-* CUDNN 8.9
+* CUDA 12.5.1
+* CUDNN 9.10
 
 
 Install Instructions
@@ -24,11 +24,11 @@ Install Instructions
 Hailo Software Suite
 ^^^^^^^^^^^^^^^^^^^^
 
-The model requires the corresponding Dataflow Compiler version, and the optional HailoRT version. Therefore it is recommended to use the
-`Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_, that includes all of Hailo's SW components and insures compatibility
-across products versions.
+The model requires the corresponding Dataflow Compiler version, and the optional HailoRT version. Therefore, it is recommended to use the
+`Hailo Software Suite <https://hailo.ai/developer-zone/sw-downloads/>`_, that includes all of Hailo's SW components and ensures compatibility
+across product versions.
 
-The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS and the Model Zoo (:ref:`see diagram below <sw_suite_figure>`).
+The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS and the Model Zoo see diagram below.
 
 
 .. _sw_suite_figure:
@@ -42,8 +42,8 @@ The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS a
 Manual Installation
 ^^^^^^^^^^^^^^^^^^^
 
-#. Install the Hailo Dataflow compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
-#. Install the HailoRT - required only for inference on Hailo-10H / Hailo-15H (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
+#. Install the Hailo Dataflow Compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
+#. Install the HailoRT - required only for inference on Hailo-10H (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
 #. Clone the Hailo Model Zoo repo:
 
    .. code-block::
@@ -56,9 +56,9 @@ Manual Installation
 
       cd hailo_model_zoo; pip install -e .
 
-#. For setting up datasets please see `DATA <DATA.rst>`_.
+#. For setting up datasets, please see `DATA <DATA.rst>`_.
 
-#. Verify Hailo-10H is connected via PCIe (required only to run on Hailo-10H Full-precision / emulation run on GPU.)
+#. Verify Hailo-10 is connected via PCIe (required only to run on Hailo-10. Full-precision / emulation runs on GPU.)
 
    .. code-block::
 
@@ -66,7 +66,7 @@ Manual Installation
 
    .. note::
 
-      `hailortcli` is HailoRT command-line tool for interacting with Hailo devices.
+      `hailortcli` is the HailoRT command-line tool for interacting with Hailo devices.
 
    Expected output:
 
@@ -75,13 +75,13 @@ Manual Installation
       (hailo) Running command 'fw-control' with 'hailortcli'
       Identifying board
       Control Protocol Version: 2
-      Firmware Version: 5.0.0 (release,app)
+      Firmware Version: 4.6.0 (release,app)
       Logger Version: 0
       Board Name: Hailo-10H
       Device Architecture: HAILO10H
       Serial Number: HLUTM20204900071
       Part Number: HM218B1C2FA
-      Product Name: HAILO-10H AI ACCELERATOR M.2 MODULE
+      Product Name: Hailo-10H AI ACCELERATOR M.2 MODULE
 
 Upgrade Instructions
 ^^^^^^^^^^^^^^^^^^^^
@@ -108,13 +108,13 @@ Usage
 Flow Diagram
 -------------
 
-The following scheme shows high-level view of the model-zoo evaluation process, and the different stages in between.
+The following scheme shows a high-level view of the model-zoo evaluation process, and the different stages involved.
 
 
 .. figure:: images/usage_flow.svg
 
 
-By default, each stage executes all of its previously necessary stages according to the above diagram. The post-parsing stages also have an option to start from the product of previous stages (i.e., the Hailo Archive (HAR) file), as explained below. The operations are configured through a YAML file that exist for each model in the cfg folder. For a description of the YAML structure please see `YAML <YAML.rst>`_.
+By default, each stage executes all of its previously necessary stages according to the above diagram. The post-parsing stages also have an option to start from the product of previous stages (i.e., the Hailo Archive (HAR) file), as explained below. The operations are configured through a YAML file that exists for each model in the cfg folder. For a description of the YAML structure, please see `YAML <YAML.rst>`_.
 
 **NOTE:**\  Hailo Model Zoo provides the following functionality for Model Zoo models only. If you wish to use your custom model, use the Dataflow Compiler directly.
 
@@ -134,7 +134,7 @@ The pre-trained models are stored on AWS S3 and will be downloaded automatically
 
    hailomz parse <model_name> --hw-arch hailo15h
 
-* To customize the parsing behavior, use ``--start-node-names`` and\or ``--end-node-names`` flags:
+* To customize the parsing behavior, use ``--start-node-names`` and/or ``--end-node-names`` flags:
 
 .. code-block::
 
@@ -161,16 +161,16 @@ You can use your own images by giving a directory path to the optimization proce
 
    hailomz optimize <model_name> --calib-path /path/to/calibration/imgs/dir/
 
-* This step requires data for calibration. For additional information please see `OPTIMIZATION <OPTIMIZATION.rst>`_.
+* This step requires data for calibration. For additional information, please see `OPTIMIZATION <OPTIMIZATION.rst>`_.
 
-In order to achieve highest performance, use the performance flag:
+To achieve the highest performance, use the performance flag:
 
 .. code-block::
 
     hailomz optimize <model_name> --performance
 
 The flag will be ignored on models that do not support this feature.
-The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
+The default and performance model scripts are located in `hailo_model_zoo/cfg/alls/`
 
 To add input conversion to the model, use the input conversion flag:
 
@@ -178,7 +178,7 @@ To add input conversion to the model, use the input conversion flag:
 
     hailomz optimize <model_name> --input-conversion nv12_to_rgb
 
-* Do not use the flag if an input conversion already exist in the alls or in the YAML.
+* Do not use the flag if an input conversion already exists in the alls or in the YAML.
 
 To add input resize to the model, use the resize flag:
 
@@ -186,7 +186,7 @@ To add input resize to the model, use the resize flag:
 
     hailomz optimize <model_name> --resize 1080 1920
 
-* Do not use the flag if resize already exist in the alls or in the YAML.
+* Do not use the flag if resize already exists in the alls or in the YAML.
 
 To adjust the number of classes in post-processing configuration, use classes flag:
 
@@ -219,7 +219,7 @@ To run the Hailo compiler and generate the Hailo Executable Format (HEF) file:
 
    hailomz compile <model_name>
 
-By default the compilation target is Hailo-10H. To compile for a different architecture use ``--hw-arch`` command line argument:
+By default, the compilation target is Hailo-10H. To compile for a different architecture, use the ``--hw-arch`` command line argument:
 
 .. code-block::
 
@@ -233,14 +233,14 @@ To generate the HEF starting from a previously generated HAR file:
 
 * When working with a generated HAR, the previously chosen architecture will be used.
 
-In order to achieve the best performance, use the performance flag:
+To achieve the best performance, use the performance flag:
 
 .. code-block::
 
     hailomz optimize <model_name> --performance --hw-arch hardware
 
 The flag will be ignored on models that do not support this feature.
-The default and performance model scripts are located on `hailo_model_zoo/cfg/alls/`
+The default and performance model scripts are located in `hailo_model_zoo/cfg/alls/`
 
 To add input conversion to the model, use the input conversion flag:
 
@@ -248,7 +248,7 @@ To add input conversion to the model, use the input conversion flag:
 
     hailomz compile <model_name> --input-conversion nv12_to_rgb
 
-Do not use the flag if an input conversion already exist in the alls or in the YAML.
+Do not use the flag if an input conversion already exists in the alls or in the YAML.
 
 To add input resize to the model, use the resize flag:
 
@@ -256,7 +256,7 @@ To add input resize to the model, use the resize flag:
 
     hailomz compile <model_name> --resize 1080 1920
 
-Do not use the flag if resize already exist in the alls or in the YAML.
+Do not use the flag if resize already exists in the alls or in the YAML.
 
 Evaluation
 ----------
@@ -286,9 +286,7 @@ To evaluate models on Hailo-10H:
    hailomz eval <model_name> --target hardware
 
 If multiple devices are available, it's possible to select a specific one.
-Make sure to run on a device compatible to the compiled model.
-
-Please pay attention that Hailo-15H is not supported for evaluation in our model zoo, although it is supported for compilation and optimization.
+Make sure to run on a device compatible with the compiled model.
 
 .. code-block::
 
@@ -297,27 +295,27 @@ Please pay attention that Hailo-15H is not supported for evaluation in our model
    # This command can be used to list available devices
    hailomz eval --help
 
-To limit the number of images for evaluation use the following flag:
+To limit the number of images for evaluation, use the following flag:
 
 .. code-block::
 
    hailomz eval <model_name> --data-count <num-images>
 
-To eval model with additional input conversion, use the input conversion flag:
+To evaluate a model with additional input conversion, use the input conversion flag:
 
 .. code-block::
 
     hailomz eval <model_name> --input-conversion nv12_to_rgb
 
-Do not use the flag if an input conversion already exist in the alls or in the YAML.
+Do not use the flag if an input conversion already exists in the alls or in the YAML.
 
-To eval model with input resize, use the resize flag:
+To evaluate a model with input resize, use the resize flag:
 
 .. code-block::
 
     hailomz eval <model_name> --resize 1080 1920
 
-Do not use the flag if resize already exist in the alls or in the YAML.
+Do not use the flag if resize already exists in the alls or in the YAML.
 
 To evaluate a cascade model please refer to `CASCADE <CASCADE.rst>`_.
 
@@ -327,7 +325,7 @@ To explore other options (for example: changing the default batch-size) use:
 
    hailomz eval --help
 
-* Currently MZ evaluation can be done only on Hailo-10H and Hailo-15H.
+* Currently MZ evaluation can be done only on Hailo-10H.
 
 Visualization
 -------------
@@ -347,7 +345,7 @@ To create a video file from the network predictions:
 Info
 ----
 
-You can easily print information of any network exists in the model zoo, to get a sense of its input/output shape, parameters, operations, framework etc.
+You can easily print information of any network that exists in the model zoo to get a sense of its input/output shape, parameters, operations, framework, etc.
 
 To print a model-zoo network information:
 
@@ -393,7 +391,7 @@ This is useful for running several small models on the device.
 TFRecord to NPY conversion
 ----------------------------
 
-In some situations you might want to convert the tfrecord file to npy file (for example, when explicitly using the Dataflow Compiler for quantization). In order to do so, run the command:
+There may be situations, where one might want to convert the tfrecord file to an npy file (for example, when explicitly using the Dataflow Compiler for quantization). To do so, run the command:
 
 .. code-block::
 

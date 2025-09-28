@@ -1,0 +1,23 @@
+base:
+- base/yolo_world.yaml
+network:
+  network_name: yolo_world_v2s
+paths:
+  network_path:
+  - models_files/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.onnx
+  alls_script: yolo_world_v2s.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip
+info:
+  task: zero shot object detection
+  input_shape: 640x640x3, 1x80x512
+  output_shape: 80x80x80, 40x40x80, 20x20x80, 80x80x4, 40x40x4, 20x20x4
+  operations: 32.7G
+  parameters: 9.3M
+  framework: pytorch
+  training_data: coco train2017
+  validation_data: coco val2017
+  eval_metric: mAP
+  full_precision_result: 36.4
+  source: https://github.com/AILab-CVC/YOLO-World
+  license_url: https://github.com/AILab-CVC/YOLO-World/blob/master/LICENSE
+  license_name: GPL-3.0

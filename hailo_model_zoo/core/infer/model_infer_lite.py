@@ -50,6 +50,7 @@ def model_infer_lite(
 
         num_of_images = 0
         try:
+            model.build(batched_dataset)  # build the model before inference
             for preprocessed_data, img_info in batched_dataset:
                 output_tensors = predict_function(preprocessed_data)
                 if np_infer:

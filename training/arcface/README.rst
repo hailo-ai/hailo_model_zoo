@@ -116,7 +116,7 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-You can generate an HEF file for inference on Hailo device from your trained ONNX model.
+You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:
 

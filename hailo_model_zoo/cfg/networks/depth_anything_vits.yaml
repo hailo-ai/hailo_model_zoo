@@ -1,0 +1,14 @@
+base:
+- base/depth_anything.yaml
+network:
+  network_name: depth_anything_vits
+paths:
+  alls_script: depth_anything_vits.alls
+  network_path:
+  - models_files/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.zip
+info:
+  source: https://huggingface.co/LiheYoung/depth-anything-small-hf
+  full_precision_result: 0.13
+  operations: 16.7G
+  parameters: 24.2M

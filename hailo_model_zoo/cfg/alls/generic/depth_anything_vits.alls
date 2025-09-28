@@ -1,0 +1,8 @@
+normalization = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+post_quantization_optimization(finetune, policy=enabled, epochs=8, dataset_size=128, batch_size=8, learning_rate=0.000001) 
+quantization_param(output_layer1, precision_mode=a16_w16)
+
+pre_quantization_optimization(matmul_equalization, layers={matmul*}, policy=disabled)
+model_optimization_config(globals, multiproc_policy=disabled)
+

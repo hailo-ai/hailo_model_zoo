@@ -1,6 +1,0 @@
-base:
-- base/lightface_slim_base.yaml
-paths:
-  alls_script: lightface_slim.alls
-network:
-  network_name: lightface_slim

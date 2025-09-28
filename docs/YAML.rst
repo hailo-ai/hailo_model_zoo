@@ -1,7 +1,16 @@
 
 .. _yaml_description:
 
-Hailo Model Zoo YAML Description
+Ha    * | **normaliz  * | **padding_color** *(['integer', '  * | **bgr2rgb** *(boolean)*\ - ``evaluation`` and ``postprocessing`` properties aren't needed for compilation as they are used by the Model Zoo for model evaluation 
+  (which isn't supported yet for retrained models). Also the ``info`` field is just used for description.
+  
+  - Only in the YOLOv4 family, the ``evaluation.classes`` and ``postprocessing.anchors.sizes`` fields are used for compilation,
+    that's these values should be updated even if just for compilation of the BGR to RGB layer.
+    | In some training frameworks, the models are trained on BGR inputs. When we want to feed RGB images to the network (whether in the MZ or in the user application), 
+      we need to transform the images from RGB to BGR. The MZ automatically inserts this layer into the on-chip model.
+    | We have already set the "bgr2rgb" flag in the yaml files that correspond to the relevant retraining dockers. Default: ``False``.'])*\ : In the training environments, the input images to the model have used this color to indicate "padding" around resized images. Default: ``114`` for YOLO architectures, ``0`` for others._in_net** *(boolean)*\ : Whether or not the network includes an on-chip normalization layer. If so, the normalization layer will appear in the .alls file that is used. Default: ``False``.
+      | Example alls command: ``normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])``
+      | If the alls doesn't include the required normalization, then the MZ (and the user application) will apply normalization before feeding inputs to the network Model Zoo YAML Description
 ================================
 
 Properties
@@ -32,7 +41,7 @@ Properties
     * | **std_list** *(['array', 'null'])*\ : Used only in case normalize_in_net=false: The MZ automatically performs normalization to the calibration set, so the network receives already-normalized
         input (saves the user the need to normalize the dataset). Default: ``None``.
 
-  * | **start_node_shapes** *(['array', 'null'])*\ : Dict for setting input shape of supported models that does not explicitly use it.
+  * | **start_node_shapes** *(['array', 'null'])*\ : Dict for setting input shape of supported models that do not explicitly use it.
     | For example, models with input shape of [?, ?, ?, 3] can be set with {"Preprocessor/sub:0": [1, 512, 512, 3]}. Default: ``None``.
 
 * | **preprocessing**
@@ -44,7 +53,7 @@ Properties
 
 * | **quantization**
 
-  * | **calib_set** *(['array', 'null'])*\ : List contains the calibration set path.
+  * | **calib_set** *(['array', 'null'])*\ : List containing the calibration set path.
     | For example: ['models_files/imagenet/2021-06-20/imagenet_calib.tfrecord']. Default: ``None``.
   * | **calib_set_name** *(['string', 'null'])*\ : Name of the dataset used for calibration. By default (null) uses the evaluation dataset name. Default: ``None``.
 
@@ -99,7 +108,7 @@ YAML hierarchies
     - Meaning it inherits from `base/yolov5.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolov5.yaml>`_
     - Which inherits from `base/yolo.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/yolo.yaml>`_
     - Which inherits from `base/base.yaml <https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/base/base.yaml>`_
-- Each property on the child hierarchies replaces the properties on the parent ones. For example, if `preprocessing.input_shape`
+- Each property in the child hierarchies replaces the properties in the parent ones. For example, if `preprocessing.input_shape`
   is defined both in `base/yolov5.yaml` and `base/base.yaml`, the one from `base/yolov5.yaml` will be used
 - Therefore, if we want to change some property, we can just update the last child file that is using that property
 
@@ -112,17 +121,17 @@ Notes for Retraining
   
   - Only on YOLOv4 family, the ``evaluation.classes`` and ``postprocessing.anchors.sizes`` fields are used for compilation,
     that’s why you should update those values even if just for compilation
-- You might want to update those default values on some advanced scenarios:
+- You might want to update those default values in some advanced scenarios:
 
   - preprocessing.padding_color
     
-    - Change those values only if you have used a different value for training your model
+    - Change these values only if you have used a different value for training your model
   - parser.normalization_params.normalize_in_net
 
-    - If you have manually changed the normalization values on the retraining docker, and `normalize_in_net=true`, remember to update the corresponding alls command
+    - If you have manually changed the normalization values in the retraining docker, and `normalize_in_net=true`, remember to update the corresponding alls command
   - parser.normalization_params.mean_list
     
-    - Update those values if `normalize_in_net=false` and you have manually changed the normalization values on the retraining docker
+    - Update these values if `normalize_in_net=false` and you have manually changed the normalization values in the retraining docker
   - parser.normalization_params.std_list
     
     - Update those values if `normalize_in_net=false` and you have manually changed the normalization values on the retraining docker

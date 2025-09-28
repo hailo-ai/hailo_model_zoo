@@ -1,0 +1,35 @@
+base:
+- base/base.yaml
+evaluation:
+  data_set: models_files/kitti/hailo_validation_set_kitti_depth_estimation.tfrecord
+  dataset_name: kitti_depth
+  network_type: zero_shot_depth_estimation
+  meta_arch: depth_anything
+preprocessing:
+  network_type: depth_estimation
+  meta_arch: scdepthv3
+quantization:
+  calib_set:
+  - models_files/kitti/hailo_calib_set_kitti_depth_estimation.tfrecord
+postprocessing:
+  meta_arch: depth_anything
+network:
+  network_name: depth_anything_vits
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+info:
+  task: zero-shot depth estimation
+  input_shape: 224x224x3
+  output_shape: 224x224x1
+  eval_metric: AbsRel
+  license_url: https://github.com/LiheYoung/Depth-Anything/blob/main/LICENSE
+  license_name: Apache-2.0

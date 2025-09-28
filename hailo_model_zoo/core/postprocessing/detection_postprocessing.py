@@ -10,10 +10,12 @@ from hailo_model_zoo.core.postprocessing.detection.efficientdet import Efficient
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage1_postprocessing import FasterRCNNStage1
 from hailo_model_zoo.core.postprocessing.detection.faster_rcnn_stage2_postprocessing import FasterRCNNStage2
 from hailo_model_zoo.core.postprocessing.detection.nanodet import NanoDetPostProc
+from hailo_model_zoo.core.postprocessing.detection.paddle_ocr_det import PaddleDetPostProc
 from hailo_model_zoo.core.postprocessing.detection.retinanet_mlperf import retinanet_postproc
 from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
 from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
+from hailo_model_zoo.core.postprocessing.detection.yolo_world import YoloWorldPostProc
 
 DETECTION_ARCHS = {
     "ssd": SSDPostProc,
@@ -26,6 +28,9 @@ DETECTION_ARCHS = {
     "nanodet": NanoDetPostProc,
     "detr": DetrPostProc,
     "retinanet_mlperf": retinanet_postproc,
+    "paddle_detection": PaddleDetPostProc,
+    "yworld": YoloWorldPostProc,  # mapping is done using prefix and there's already a
+    # key called 'yolo' so we need to use 'yworld'
 }
 
 
@@ -94,6 +99,8 @@ def _get_labels(dataset_name):
         labels = {1: {"name": "hand"}}
     elif "personface_detection" in dataset_name:
         labels = {1: {"name": "person"}, 2: {"name": "face"}}
+    elif "icdar15" in dataset_name:
+        labels = {0: {"name": "text"}}
     else:
         raise Exception("No Labels for dataset {}".format(dataset_name))
     return labels

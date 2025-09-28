@@ -8,3 +8,5 @@ quantization_param(input_layer1, precision_mode=a16_w16)
 quantization_param({ew_add*}, precision_mode=a16_w16)
 quantization_param({conv*}, precision_mode=a16_w16)
 quantization_param({conv_feature_splitter[0-9]*_[2-3]}, precision_mode=a8_w8)
+
+allocator_param(spatial_defuse_legacy=True)

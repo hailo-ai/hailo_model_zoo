@@ -4,8 +4,6 @@ import tensorflow as tf
 from PIL import Image
 from tqdm import tqdm
 
-from hailo_sdk_client import SdkFineTune
-
 from hailo_model_zoo.core.factory import INFER_FACTORY
 from hailo_model_zoo.core.infer.infer_utils import get_logits_per_image, log_accuracy, save_image, write_results
 
@@ -72,10 +70,6 @@ def tf_infer(
         video_writer = None
         with sdk_export.session.as_default(), runner.hef_infer_context(sdk_export):
             sdk_export.session.run([iterator.initializer])
-            if isinstance(target, SdkFineTune):
-                sdk_export.session.run(
-                    [delta.initializer for delta in sdk_export.kernels_delta + sdk_export.biases_delta]
-                )
             num_of_images = 0
             try:
                 with tqdm(

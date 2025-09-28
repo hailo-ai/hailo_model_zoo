@@ -4,11 +4,10 @@ Model Optimization
 Introduction
 ------------
 
-| Model optimization is the stage of converting a full precision model to an optimized model which will be compiled to the Hailo device. 
+| Model optimization is the stage of converting a full precision model to an optimized model which will be compiled for the Hailo device. 
 | This stage includes numeric translation of the input model into a compressed integer representation as well as optimizing the model architecture to best fit the Hailo hardware. 
-| Compressing deep learning model induce degradation for the model's accuracy. 
+| It is important to be aware that compressing deep learning models induces degradation in the model's accuracy, therefore the user should carefully evaluate the model's performance after optimization. 
 | For example, in the following table we compare the accuracy of full precision ResNet V1 18 with the compressed 8-bits weights and activation representation on ImageNet-1K:
-
 
 +------------------+-------+
 | Precision        | Top-1 |
@@ -19,7 +18,7 @@ Introduction
 +------------------+-------+
 
 
-The main goal of the model optimization step is to prepare the model for compilation with minimum degradation as possible.
+The main goal of the model optimization step is to prepare the model for compilation with minimum degradation possible.
 
 Optimization Workflow
 ---------------------
@@ -53,13 +52,13 @@ Both steps may degrade the model accuracy, therefore, evaluation is needed to ve
       hailomz optimize <model_name>
 
 #. 
-   Lastly, we verify the accuracy of the optimized model. In case the results are not good enough we should repeat the process with different configurations of the optimization/compression levels:
+   Lastly, we verify the accuracy of the optimized model. In case the results are not good enough, we should repeat the process with different configurations of the optimization/compression levels:
 
    .. code-block::
 
       hailomz eval <model_name> --target emulator --har <model_name>.har
 
-Once optimization is finished and met our accuracy requirements, we can compile the optimized model. For example:
+Once optimization has finished and meets our accuracy requirements, the optimized model can be compiled. For example:
 
 .. code-block::
 

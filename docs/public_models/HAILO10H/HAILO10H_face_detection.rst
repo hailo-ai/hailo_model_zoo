@@ -53,8 +53,8 @@ WiderFace
    * - scrfd_2.5g   
      - 76.6
      - 76.4
-     - 0
-     - 0
+     - 819
+     - 814
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_2.5g/pretrained/2022-09-07/scrfd_2.5g.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_2.5g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_2.5g_profiler_results_compiled.html>`_
      - 640x640x3
      - 0.82
@@ -62,8 +62,8 @@ WiderFace
    * - scrfd_500m   
      - 69.0
      - 68.8
-     - 0
-     - 0
+     - 808
+     - 929
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_500m/pretrained/2022-09-07/scrfd_500m.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_500m.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_500m_profiler_results_compiled.html>`_
      - 640x640x3
      - 0.63
@@ -83,15 +83,15 @@ WiderFace
      - Profile Report
      - NV12 Compiled    
    * - retinaface_mobilenet_v1   
-     - 0
-     - 0
+     - 115
+     - 176
      - `S <https://github.com/biubug6/Pytorch_Retinaface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/retinaface_mobilenet_v1_hd/2023-07-18/retinaface_mobilenet_v1_hd.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/retinaface_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/retinaface_mobilenet_v1_profiler_results_compiled.html>`_
      - 736x1280x3
      - 3.49
      - 25.14    
    * - scrfd_10g   
-     - 0
-     - 0
+     - 289
+     - 289
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceDetection/scrfd/scrfd_10g/pretrained/2022-09-07/scrfd_10g.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_10g.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scrfd_10g_profiler_results_compiled.html>`_
      - 640x640x3
      - 4.23

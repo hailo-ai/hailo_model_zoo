@@ -53,8 +53,8 @@ COCO
    * - mspn_regnetx_800mf  |star| 
      - 70.8
      - 69.8
-     - 0
-     - 0
+     - 2032
+     - 2032
      - `S <https://github.com/open-mmlab/mmpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/mspn_regnetx_800mf.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/mspn_regnetx_800mf_profiler_results_compiled.html>`_
      - 256x192x3
      - 7.17
@@ -62,8 +62,8 @@ COCO
    * - vit_pose_small   
      - 74.2
      - 73.0
-     - 0
-     - 0
+     - 81
+     - 247
      - `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/vit_pose_small.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/vit_pose_small_profiler_results_compiled.html>`_
      - 256x192x3
      - 24.29
@@ -71,8 +71,8 @@ COCO
    * - vit_pose_small_bn   
      - 72.0
      - 71.2
-     - 0
-     - 0
+     - 139
+     - 443
      - `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small_bn/pretrained/2023-07-20/vit_pose_small_bn.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/vit_pose_small_bn.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/vit_pose_small_bn_profiler_results_compiled.html>`_
      - 256x192x3
      - 24.32

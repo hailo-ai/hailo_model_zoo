@@ -53,8 +53,8 @@ NYU
    * - fast_depth  |star| 
      - 0.6
      - 0.58
-     - 0
-     - 0
+     - 2046
+     - 2046
      - `S <https://github.com/dwofk/fast-depth>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/fast_depth.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/fast_depth_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.35
@@ -72,8 +72,8 @@ NYU
      - Params (M)
      - OPS (G)    
    * - scdepthv3   
-     - 0
-     - 0
+     - 719
+     - 719
      - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3_profiler_results_compiled.html>`_
      - 256x320x3
      - 14.8

@@ -51,8 +51,8 @@ Hand Landmark
      - Compiled
      - Profile Report    
    * - hand_landmark_lite   
-     - 0
-     - 0
+     - 1339
+     - 1339
      - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/hand_landmark_lite_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.01

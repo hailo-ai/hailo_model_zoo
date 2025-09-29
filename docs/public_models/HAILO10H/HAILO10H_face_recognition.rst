@@ -53,8 +53,8 @@ LFW
    * - arcface_mobilefacenet  |star| 
      - 99.4
      - 99.5
-     - 0
-     - 0
+     - 4254
+     - 4254
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/arcface_mobilefacenet.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/arcface_mobilefacenet_profiler_results_compiled.html>`_
      - 112x112x3
      - 2.04
@@ -73,8 +73,8 @@ LFW
      - Compiled
      - Profile Report    
    * - arcface_r50   
-     - 0
-     - 0
+     - 191
+     - 520
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/arcface_r50.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/arcface_r50_profiler_results_compiled.html>`_
      - 112x112x3
      - 31.0
@@ -97,8 +97,8 @@ N/A
      - Compiled
      - Profile Report      
    * - lprnet  |star| 
-     - 0
-     - 0
+     - 297
+     - 297
      - `S <N/A>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/lprnet.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/lprnet_profiler_results_compiled.html>`_
      - 75x300x3
      - 7.14

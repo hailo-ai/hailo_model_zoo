@@ -42,8 +42,8 @@ AFLW2k3d
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links

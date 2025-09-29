@@ -42,8 +42,8 @@ PETA
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -51,9 +51,9 @@ PETA
      - Params (M)
      - OPS (G)
    * - person_attr_resnet_v1_18
+     - 82.61
      - 82.5
-     - -0.1
-     - 0
+     - 1312
      - 1312
      - `S <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/person_attr_resnet_v1_18/pretrained/2022-06-11/person_attr_resnet_v1_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/person_attr_resnet_v1_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/person_attr_resnet_v1_18_profiler_results_compiled.html>`_
      - 224x224x3

@@ -42,8 +42,8 @@ kinetics400
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -51,10 +51,10 @@ kinetics400
      - Params (M)
      - OPS (G)
    * - r3d_18
+     - 49.22
      - 48.9
-     - -0.4
-     - 0
      - 28
+     - 45
      - `S <https://pytorch.org/vision/stable/models.html#video-classification>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/r3d_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/r3d_18_profiler_results_compiled.html>`_
      - 112x112x48
      - 33.4

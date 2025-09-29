@@ -42,8 +42,8 @@ BSD68
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -51,10 +51,10 @@ BSD68
      - Params (M)
      - OPS (G)
    * - dncnn3
-     - 31.5
-     - 0.2
-     - 0
-     - 31
+     - 31.32
+     - 31.17
+     - 29
+     - 29
      - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/dncnn3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/dncnn3_profiler_results_compiled.html>`_
      - 321x481x1
      - 0.66
@@ -68,8 +68,8 @@ CBSD68
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -77,10 +77,10 @@ CBSD68
      - Params (M)
      - OPS (G)
    * - dncnn_color_blind
-     - 33.9
-     - 0.9
-     - 0
-     - 31
+     - 33.02
+     - 32.18
+     - 29
+     - 29
      - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/dncnn_color_blind.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/dncnn_color_blind_profiler_results_compiled.html>`_
      - 321x481x3
      - 0.66

@@ -37,3 +37,25 @@ The following shortcuts are used in the table below to indicate available resour
 CIFAR100
 ^^^^^^^^
 
+.. list-table::
+   :widths: 31 9 7 11 9 8 8 8 9
+   :header-rows: 1
+
+   * - Network Name
+     - float mAP
+     - Hardware mAP
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Links
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+   * - clip_vit_b_32_image_encoder
+     - 65.3
+     - 62.01
+     - 0
+     - 0
+     - `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_vit_base_patch32_224/image_encoder/pretrained/2023-03-09/clip_vit_b_32.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/clip_vit_b_32_image_encoder.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/clip_vit_b_32_image_encoder_profiler_results_compiled.html>`_
+     - 224x224x3
+     - 87.8
+     - 8.8

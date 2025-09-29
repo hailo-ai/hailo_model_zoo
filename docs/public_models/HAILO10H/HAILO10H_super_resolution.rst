@@ -49,30 +49,30 @@ BSD100
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - espcn_x2
+     - OPS (G)    
+   * - espcn_x2   
+     - 31.2
      - 30.8
-     - 30.4
-     - 1637
-     - 1636
+     - 0
+     - 0
      - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x2_profiler_results_compiled.html>`_
      - 156x240x1
      - 0.02
-     - 1.6
-   * - espcn_x3
+     - 1.6    
+   * - espcn_x3   
+     - 28.3
      - 28.1
-     - 27.9
-     - 1924
-     - 1924
+     - 0
+     - 0
      - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x3_profiler_results_compiled.html>`_
      - 104x160x1
      - 0.02
-     - 0.76
-   * - espcn_x4
+     - 0.76    
+   * - espcn_x4   
+     - 26.8
      - 26.7
-     - 26.6
-     - 1908
-     - 1908
+     - 0
+     - 0
      - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x4.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/espcn_x4_profiler_results_compiled.html>`_
      - 78x120x1
      - 0.02
@@ -93,11 +93,11 @@ DIV2K
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - real_esrgan_x2
+     - OPS (G)    
+   * - real_esrgan_x2   
+     - 28.3
      - 27.7
-     - 27.1
-     - 2
+     - 0
      - 0
      - `S <https://github.com/ai-forever/Real-ESRGAN>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/real_esrgan_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/real_esrgan_x2_profiler_results_compiled.html>`_
      - 512x512x3

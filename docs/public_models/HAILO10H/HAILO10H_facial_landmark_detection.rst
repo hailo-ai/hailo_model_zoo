@@ -49,12 +49,12 @@ AFLW2k3d
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - tddfa_mobilenet_v1  |star|
-     - 4.05
-     - 4.42
-     - 10255
-     - 10280
+     - OPS (G)        
+   * - tddfa_mobilenet_v1  |star| 
+     - 3.68
+     - 3.32
+     - 0
+     - 0
      - `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/tddfa_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
      - 120x120x3
      - 3.26
@@ -62,7 +62,7 @@ AFLW2k3d
 
 Face Landmark
 ^^^^^^^^^^^^^
-
+    
 .. list-table::
    :header-rows: 1
 
@@ -75,8 +75,8 @@ Face Landmark
      - Pretrained
      - Source
      - Compiled
-     - Profile Report
-   * - face_landmarks_lite
+     - Profile Report    
+   * - face_landmarks_lite   
      - 0
      - 0
      - `S <https://github.com/google-ai-edge/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10/face_landmarks_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10/face_landmarks_lite_profiler_results_compiled.html>`_

@@ -49,16 +49,16 @@ LOL
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - zero_dce_pp
+     - OPS (G)    
+   * - zero_dce_pp   
+     - 16.0
      - 15.9
-     - 15.8
-     - 96
-     - 96
+     - 0
+     - 0
      - `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/zero_dce_pp.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/zero_dce_pp_profiler_results_compiled.html>`_
      - 400x600x3
      - 0.02
-     - 4.84
+     - 4.84    
 .. list-table::
    :header-rows: 1
 
@@ -71,10 +71,10 @@ LOL
      - Pretrained
      - Source
      - Compiled
-     - Profile Report
-   * - zero_dce
-     - 218
-     - 218
+     - Profile Report    
+   * - zero_dce   
+     - 0
+     - 0
      - `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/zero_dce.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/zero_dce_profiler_results_compiled.html>`_
      - 400x600x3
      - 0.21

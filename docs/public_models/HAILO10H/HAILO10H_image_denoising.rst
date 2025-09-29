@@ -49,12 +49,12 @@ BSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - dncnn3
+     - OPS (G)    
+   * - dncnn3   
+     - 31.5
      - 31.3
-     - 31.1
-     - 49
-     - 49
+     - 0
+     - 0
      - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn3/2023-06-15/dncnn3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/dncnn3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/dncnn3_profiler_results_compiled.html>`_
      - 321x481x1
      - 0.66
@@ -75,12 +75,12 @@ CBSD68
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - dncnn_color_blind
-     - 33.0
-     - 32.1
-     - 49
-     - 49
+     - OPS (G)    
+   * - dncnn_color_blind   
+     - 33.9
+     - 33.1
+     - 0
+     - 0
      - `S <https://github.com/cszn/KAIR>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ImageDenoising/dncnn_color_blind/2023-06-25/dncnn_color_blind.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/dncnn_color_blind.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/dncnn_color_blind_profiler_results_compiled.html>`_
      - 321x481x3
      - 0.66

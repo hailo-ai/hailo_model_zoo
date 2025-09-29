@@ -49,12 +49,12 @@ kinetics400
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-   * - r3d_18
-     - 49.2
+     - OPS (G)    
+   * - r3d_18   
      - 48.9
-     - 52
-     - 81
+     - 49.1
+     - 0
+     - 0
      - `S <https://pytorch.org/vision/stable/models.html#video-classification>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/VideoClassification/r3d_18/pretrained/09-05-2024/r3d_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/r3d_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/r3d_18_profiler_results_compiled.html>`_
      - 112x112x48
      - 33.4

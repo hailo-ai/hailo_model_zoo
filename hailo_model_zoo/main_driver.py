@@ -304,7 +304,7 @@ def evaluate(args):
             f"HailoRT is not available, in case you want to run on {args.target} you should install HailoRT first"
         )
 
-    if (args.hw_arch == ["hailo15h", "hailo15m"] and args.target == "hardware") and not args.use_service:
+    if (args.hw_arch == ["hailo15h", "hailo15m"] and args.target == "hardware") and not args.hailort_server_ip:
         raise ValueError("Evaluation of hw_arch hailo15h is currently not supported in the Hailo Model Zoo")
 
     if args.hef_path and not HEF_EXISTS:
@@ -351,9 +351,9 @@ def evaluate(args):
     network_groups = None
 
     #  Enabling service for hailo15h
-    if args.use_service:
+    if args.hailort_server_ip:
         # This property will print a warning when set.
-        runner.use_service = args.use_service
+        runner.hailort_server_ip = args.hailort_server_ip
 
     logger.info(f"Chosen target is {args.target}")
     batch_size = args.batch_size or __get_batch_size(network_info, args.target)

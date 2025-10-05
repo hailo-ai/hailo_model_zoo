@@ -3,7 +3,7 @@ base:
 network:
   network_name: clip_vit_b_16_image_encoder
 postprocessing:
-  postprocess_config_file: models_files/cifar100/2023-03-09/class_token_vit_b_16.npy
+  postprocess_config_file: models_files/cifar100/2025-08-18/class_token_vit_b_16.npy
 paths:
   network_path:
   - models_files/ZeroShotClassification/clip/clip_vit_base_patch16_224/image_encoder/pretrained/2023-03-09/clip_vit_b_16.onnx

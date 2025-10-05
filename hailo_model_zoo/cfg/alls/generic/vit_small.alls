@@ -3,7 +3,7 @@ norm_layer1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 context_switch_param(mode=enabled)
 allocator_param(enable_partial_row_buffers=disabled)
 allocator_param(automatic_reshapes=disabled)
-buffers(space_to_depth1, conv1, 0, PARTIAL_ROW)
+buffers(conv1_s2d, conv1, 0, PARTIAL_ROW)
 resources_param(strategy=greedy, max_compute_utilization=0.8, max_control_utilization=1.0, max_memory_utilization=0.8)
 
 model_optimization_config(calibration, batch_size=16, calibset_size=1024)

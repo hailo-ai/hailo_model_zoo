@@ -6,4 +6,4 @@ change_output_activation(conv83, sigmoid)
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.000025)
 nms_postprocess("../../postprocess_config/yolov8m_nms_config.json", meta_arch=yolov8, engine=cpu)
 
-resources_param(max_apu_utilization=0.9, max_compute_16bit_utilization=0.9, max_compute_utilization=0.9, max_control_utilization=0.9, max_input_aligner_utilization=0.9, max_memory_utilization=0.85, max_utilization=0.0)
+performance_param(compiler_optimization_level=max)

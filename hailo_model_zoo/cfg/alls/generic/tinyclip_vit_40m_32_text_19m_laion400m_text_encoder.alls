@@ -1,0 +1,13 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
+model_optimization_config(globals, multiproc_policy=disabled)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+model_optimization_flavor(optimization_level=0, compression_level=0)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+pre_quantization_optimization(matmul_equalization, layers={matmul*}, policy=enabled, matmul_bias=enabled)
+quantization_param(input_layer1, precision_mode=a16_w16)
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param({conv*}, precision_mode=a16_w16)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.00001)
+quantization_param({conv_feature_splitter[0-9]*_[2-3]}, precision_mode=a8_w8)
+
+allocator_param(automatic_reshapes=enabled)

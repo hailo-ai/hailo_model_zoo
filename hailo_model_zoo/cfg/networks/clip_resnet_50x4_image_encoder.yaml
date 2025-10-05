@@ -3,7 +3,7 @@ base:
 network:
   network_name: clip_resnet_50x4_image_encoder
 postprocessing:
-  postprocess_config_file: models_files/cifar100/2023-03-09/class_token_resnet50x4.npy
+  postprocess_config_file: models_files/cifar100/2025-08-18/class_token_resnet50x4.npy
 paths:
   network_path:
   - models_files/ZeroShotClassification/clip/clip_resnet_50x4/image_encoder/pretrained/2023-03-09/clip_resnet_50x4.onnx

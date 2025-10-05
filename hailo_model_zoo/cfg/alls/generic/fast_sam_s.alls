@@ -1,3 +1,5 @@
+allocator_param(automatic_reshapes=disabled)
+
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(conv46, sigmoid)
 change_output_activation(conv62, sigmoid)

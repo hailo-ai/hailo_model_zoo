@@ -8,3 +8,5 @@ change_output_activation(conv74, sigmoid)
 change_output_activation(conv89, sigmoid)
 change_output_activation(conv103, sigmoid)
 nms_postprocess("../../postprocess_config/yolov8l_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+hef_param(enable_self_reset_optimization=disabled)

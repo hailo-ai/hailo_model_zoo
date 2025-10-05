@@ -6,3 +6,5 @@ quantization_param({output_layer*}, precision_mode=a16_w16)
 change_output_activation(detr_resnet_v1_50/conv149, linear)
 quantization_param({*layer_norm*}, precision_mode=a16_w16)
 pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+
+allocator_param(automatic_reshapes=enabled)

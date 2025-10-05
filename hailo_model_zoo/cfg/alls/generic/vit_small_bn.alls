@@ -4,3 +4,6 @@ post_quantization_optimization(finetune, policy=enabled, batch_size=4, learning_
 pre_quantization_optimization(equalization, policy=enabled)
 model_optimization_flavor(optimization_level=2, compression_level=0)
 normalization0 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+
+allocator_param(automatic_reshapes=enabled)
+

@@ -3,7 +3,7 @@ base:
 network:
   network_name: clip_resnet_50_image_encoder
 postprocessing:
-  postprocess_config_file: models_files/cifar100/2023-03-09/class_token_resnet50.npy
+  postprocess_config_file: models_files/cifar100/2025-08-18/class_token_resnet50.npy
 paths:
   network_path:
   - models_files/ZeroShotClassification/clip/clip_resnet_50/image_encoder/pretrained/2023-03-09/clip_resnet_50.onnx
@@ -20,6 +20,6 @@ info:
   validation_data: cifar100
   eval_metric: Accuracy (top1)
   source: https://github.com/openai/CLIP
-  full_precision_result: 42.07
+  full_precision_result: 42.06
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT

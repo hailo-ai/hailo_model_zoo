@@ -1,0 +1,13 @@
+base:
+- base/yolov7.yaml
+network:
+  network_name: yolov7x
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolov7/pretrained/2025-08-06/yolov7x.sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov7/pretrained/2025-08-06/yolov7x.zip
+  alls_script: yolov7x.alls
+info:
+  operations: 189.68G
+  parameters: 71.46M
+  full_precision_result: 52.41

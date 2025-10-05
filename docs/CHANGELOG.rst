@@ -1,7 +1,23 @@
+**v5.1**
+
+* Update to use Dataflow Compiler v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New Models:
+
+  * `YOLOv7x <https://arxiv.org/pdf/2207.02696>`_ - yolov7x
+  * `DepthAnything <https://arxiv.org/pdf/2406.09414>`_ - depthanything_vits, depthanything_v2_vits - Zero-shot depth estimation models
+  * `CLIP <https://arxiv.org/pdf/2103.00020>`_ - Performance improvements for clip image encoders
+  * `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_ - TinyCLIP family - Contrastive Language-Image Pre-training models (image & text encoders)
+  * `YOLO-World <https://arxiv.org/pdf/2401.17270>`_ - yolo_world_v2s - Zero-shot object detection model
+
+* Bug fixes
+
+
 **v5.0**
 
-* Update to use Dataflow Compiler v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Update to use HailoRT v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use Dataflow Compiler v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 * New Models:
 
@@ -141,9 +157,9 @@
   * ``--classes`` for adjusting the number of classes in post-processing configuration.
 
   The ``--performance`` flag, previously utilized for compiling models with their enhanced model script if available, now offers an additional functionality.
-  In instances where a model lacks an optimized model script, this flag triggers the compiler's Performance Mode to achieve the best performance
+  In instances where a model lacks an optimized model script, this flag triggers the compiler's Performance Mode to achieve the best performance.
 
-  These flags simplify the process of compiling models generated from our retrain dockers.
+  These flags simplify the process of compiling models generated from Hailo retrain dockers.
 
 * Bug fixes
 
@@ -158,13 +174,13 @@
 
 * Profiler change:
 
-  * Removal of ``--mode`` flag from ``hailomz profile`` command, which generates a report according to provided HAR state.
+  * Removal of the ``--mode`` flag from the ``hailomz profile`` command, which generates a report according to the provided HAR state.
 
 * CLI change:
 
-  * ``hailo8`` target is deprecated in favor of ``hardware``
+  * The ``hailo8`` target is deprecated in favor of ``hardware``.
 
-* Support KITTI Stereo Dataset
+* Support for the KITTI Stereo Dataset
 * New Models:
 
   * vit_pose_small - encoder based transformer with layernorm for pose estimation
@@ -231,15 +247,15 @@
   * yolov8
   * yolov8_seg
 
-* Enable compilation for hailo15h device
-* Enable evaluation of models with RGBX / NV12 input format
+* Enable compilation for the hailo15h device
+* Enable evaluation of models with RGBX/NV12 input format
 * Bug fixes
 
 **v2.7**
 
 * Update to use Dataflow Compiler v3.23.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * Updated to use HailoRT 4.13.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Inference flow was moved to new high-level APIs
+* The inference flow was moved to new high-level APIs
 * New object detection variants:
 
   * yolov8: yolov8n / yolov8s / yolov8m / yolov8l / yolov8x
@@ -254,7 +270,7 @@
 
   * yolov5m_hpp
 
-* Configuration YAMLs and model-scripts for networks with YUY2 input format
+* Configuration YAMLs and model scripts for networks with YUY2 input format
 * DAMO-YOLO retraining docker
 * Bug fixes
 
@@ -282,7 +298,7 @@
   * yolov5m6_6.1
 
 * New flag ``--performance`` to reproduce highest performance for a subset of networks
-* Hailo model-zoo log is now written into ``sdk_virtualenv/etc/hailo/modelzoo/hailo_examples.log``
+* The Hailo Model Zoo log is now written to ``sdk_virtualenv/etc/hailo/modelzoo/hailo_examples.log``
 * Bug fixes
 
 **v2.5**
@@ -299,8 +315,8 @@
 **v2.4**
 
 * Updated to use Dataflow Compiler v3.20 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Required FPS was moved from models YAML into the models scripts
-* Model scripts use new change activation syntax
+* The required FPS was moved from models' YAML into the model scripts
+* Model scripts use the new change activation syntax
 * New models:
 
   * Face Detection - scrfd_500m / scrfd_2.5g / scrfd_10g
@@ -320,7 +336,7 @@
       #. arcface_mobilefacenet
     * Retraining docker for arcface architecture
 
-* Added support for new hw-arch - hailo8l
+* Added support for new hw-arch: hailo8l
 
 **v2.3**
 
@@ -345,9 +361,9 @@
 * Updated to use Dataflow Compiler v3.18 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * CLI change:
 
-  * Hailo model zoo CLI is now working with an entry point - hailomz
-  * quantize sub command was changed to optimize
-  * Hailo model zoo data directory by default will be ``~/.hailomz``
+  * The Hailo Model Zoo CLI is now working with an entry point: hailomz
+  * The quantize sub-command was changed to optimize
+  * The Hailo Model Zoo data directory by default will be ``~/.hailomz``
 
 * New models:
 
@@ -361,16 +377,16 @@
 
 * ReID training docker for the Hailo model repvgg_a0_person_reid_512/2048
 
-**NOTE:**\  Ubuntu 18.04 will be deprecated in Hailo Model Zoo future version
+**NOTE:** Ubuntu 18.04 will be deprecated in a future version of Hailo Model Zoo.
 
-**NOTE:**\  Python 3.6 will be deprecated in Hailo Model Zoo future version
+**NOTE:** Python 3.6 will be deprecated in a future version of Hailo Model Zoo.
 
 **v2.1**
 
 * Updated to use Dataflow Compiler v3.17 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 * Parser commands were moved into model scripts
-* Support Market-1501 Dataset
-* Support a new model zoo task - ReID
+* Support for the Market-1501 Dataset
+* Support for a new Model Zoo task: ReID
 * New models:
 
   * | yolov5s_personface - person and face detector
@@ -398,12 +414,12 @@
   * tiny_yolov4_license_plates (license plate detection)
   * lprnet (license plate recognition)
 
-* Added new documentation to the `YAML structure <YAML.rst>`_
+* Added new documentation for the `YAML structure <YAML.rst>`_
 
 
 **v1.5**
 
-* Remove HailoRT installation dependency.
+* Remove the HailoRT installation dependency.
 * Retraining Dockers
 
   * YOLOv3
@@ -415,7 +431,7 @@
 
   * unet_mobilenet_v2
 
-* Support Oxford-IIIT Pet Dataset
+* Support for the Oxford-IIIT Pet Dataset
 * New multi-network example: detection_pose_estimation which combines the following networks:
 
   * yolov5m_wo_spp_60p
@@ -489,7 +505,7 @@
   * YUV to RGB on core can be added through YAML configuration.
   * Resize on core can be added through YAML configuration.
 
-* Support D2S Dataset
+* Support for the D2S Dataset
 * New task: instance segmentation
 
   * yolact_mobilenet_v1 (coco)
@@ -517,7 +533,7 @@
 
 **v1.1**
 
-* Support VisDrone Dataset
+* Support for the VisDrone Dataset
 * New task: pose estimation
 
   * centerpose_regnetx_200mf_fpn

@@ -8,3 +8,6 @@ pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_ty
 post_quantization_optimization(finetune, policy=enabled, batch_size=4, learning_rate=1e-5)
 quantization_param({levit128/ew_add*}, precision_mode=a16_w16)
 model_optimization_flavor(optimization_level=2, compression_level=0)
+allocator_param(optimize_pipeline_stoppage=True)
+
+allocator_param(automatic_reshapes=enabled)

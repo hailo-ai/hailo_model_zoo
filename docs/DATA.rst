@@ -10,7 +10,7 @@ Datasets
 
    ~/.hailomz
 
-We recommend to define the data directory path yourself, by setting the ``HMZ_DATA`` environment variable.
+It is recommended that the user defines the data directory path by setting the ``HMZ_DATA`` environment variable.
 
 .. code-block::
 
@@ -47,7 +47,7 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
 ImageNet
 --------
 
-To evaluate/optimize/compile the classification models of the Hailo Model Zoo you should generate the ImageNet TFRecord files (manual download is required).
+To evaluate/optimize/compile the classification models of the Hailo Model Zoo, generate the ImageNet TFRecord files (manual download is required).
 
 
 #. | Download the ImageNet dataset from `here <https://www.kaggle.com/c/imagenet-object-localization-challenge/data>`_. The expected dataset structure:

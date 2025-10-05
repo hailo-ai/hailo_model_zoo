@@ -1,0 +1,12 @@
+norm_layer1 = normalization([0, 0, 0], [255, 255, 255], input_layer1)
+change_output_activation(normalization3, sigmoid)
+change_output_activation(normalization5, sigmoid)
+change_output_activation(normalization7, sigmoid)
+
+model_optimization_config(calibration, batch_size=8, calibset_size=1024)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+quantization_param({concat*}, precision_mode=a16_w16)
+quantization_param({conv_feature_splitter*}, precision_mode=a16_w16)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+quantization_param([conv41, conv42, conv45, conv47, conv36, conv57, conv68, conv70], precision_mode=a16_w16)
+quantization_param([output_layer1, output_layer2, output_layer3, output_layer4, output_layer5, output_layer6], precision_mode=a16_w16)

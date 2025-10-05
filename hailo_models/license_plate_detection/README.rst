@@ -46,12 +46,12 @@ Outputs
 Download
 ^^^^^^^^
 
-| The pre-compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.hef>`_.
+| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/hailo10h/2025-09-17/tiny_yolov4_license_plates.hef>`_.
 | Use the following command to measure model performance on hailo’s HW:
 
 .. code-block::
 
-   hailortcli benchmark tiny_yolov4_license_plates.hef
+   hailortcli run2 set-net tiny_yolov4_license_plates.hef
 
 ----
 

@@ -19,6 +19,7 @@ pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, b
 # Compiler script:
 
 allocator_param(enable_auto_spatial_collapse=False, enable_auto_spatial_reshapes=False)
+allocator_param(automatic_reshapes=disabled)
 davit_tiny = network_group([davit_tiny])
 
 

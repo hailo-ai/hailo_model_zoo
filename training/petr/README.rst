@@ -19,10 +19,10 @@ Environment Preparations
 
    .. code-block::
 
-
+      
       cd hailo_model_zoo/training/petr
       docker build -t petr:v2 --build-arg timezone=`cat /etc/timezone` --build-arg user="username" .
-
+      
 
    | the following optional arguments can be passed via --build-arg:
 
@@ -37,29 +37,29 @@ Environment Preparations
 
    .. code-block::
 
-
+      
       docker run --name "your_docker_name" -it --gpus all --shm-size 32gb -u "username" --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  petr:v2
-
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
    * ``-it`` runs the command interactively.
    * ``--gpus all`` allows access to all GPUs.
-   * ``--shm-size`` container shared memory size
+   * ``--shm-size`` container shared memory size 
    * ``--ipc=host`` sets the IPC mode for the container.
    * ``-v /path/to/local/data/dir:/path/to/docker/data/dir`` maps ``/path/to/local/data/dir`` from the host to the container. You can use this command multiple times to mount multiple directories.
    * ``petr:v2`` the name of the docker image.
-
+   
    .. code-block::
-
+      
       docker start "your_docker_name"
       docker exec -it "your_docker_name" /bin/bash --login
-
+      
 
 Training and exporting to ONNX
 ------------------------------
 
-#. | Prepare your data:
+#. | Prepare your data: 
 
    | Data is expected to be in NuScenes format. For more information on obtaining datasets see `here <https://github.com/open-mmlab/mmdetection3d/blob/1.0/docs/en/data_preparation.md>`_
    | The expected structure is as follows:
@@ -83,10 +83,10 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       python tools/create_data.py nuscenes --root-path &lt;data_path&gt; --out-dir &lt;data_path&gt; --extra-tag nuscenes
       python tools/generate_sweep_pkl.py
-
+      
 
 #. Training:
 
@@ -95,10 +95,10 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       cd /workspace/PETR
       ./tools/dist_train.sh projects/configs/petrv2/petrv2_fcos3d_repvgg_b0x32_BN_q_304_decoder_3_UN_800x320.py 4 --work-dir work_dirs/petrv2_exp0/
-
+      
 
    Where 4 is the number of GPUs used for training. In this example, the trained model will be saved under ``work_dirs/petrv2_exp0/latest.pth`` directory.
 
@@ -108,17 +108,17 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       cd /workspace/PETR
       python tools/export_onnx.py &lt;cfg.py&gt; &lt;trained.pth&gt; --split backbone --out petrv2_backbone.onnx
-
+      
 
       Run the following script to export the transformer part of the model:
 
-
+        
       python tools/export_onnx.py &lt;cfg.py&gt; &lt;trained.pth&gt; --split transformer --out petrv2_transformer.onnx --reshape-cfg tools/onnx_reshape_cfg_repvgg_b0x32_BN2D_decoder_3_q_304_UN_800x320.json
-
-
+      
+    
    * | ``cfg.py`` - model config file path e.g., ``projects/configs/petrv2/petrv2_fcos3d_repvgg_b0x32_BN_q_304_decoder_3_UN_800x320.py``
    * | ``trained.pth`` - the trained model file path e.g., ``work_dirs/petrv2_exp0/latest.pth``
    * | ``--split`` - backbone or transformer export
@@ -132,29 +132,29 @@ Training and exporting to ONNX
    Run the following script to generate the 3D coordinates positional embeddings (.npy files) for the transformer model:
 
    .. raw:: html
-
-
+      
+      
       cd /workspace/PETR
       python tools/gen_coords3d_pe.py &lt;cfg.py&gt; &lt;trained.pth&gt;
-
+      
 
 ----
 
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-You can generate an HEF file for inference on Hailo device from your trained ONNX model.
+You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
-Choose the corresponding YAMLs from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/petrv2_repvggB0_transformer_pp_800x320.yaml``\ and run parsing, optimization and compilation using the model zoo.
+Choose the corresponding YAMLs from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/petrv2_repvggB0_transformer_pp_800x320.yaml``\ and run parsing, optimization and compilation using the model zoo. 
 
 
 #. Backbone
 
    .. code-block::
 
-
+      
       hailomz compile --ckpt petrv2_backbone.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/petrv2_repvggB0_backbone_pp_800x320.yaml --start-node-names name1 name2 --end-node-names name1
-
+      
 
 
    * | ``--ckpt`` - path to your ONNX file.
@@ -168,9 +168,9 @@ Choose the corresponding YAMLs from our networks configuration directory, i.e. `
 
    .. code-block::
 
-
+      
       hailomz compile --ckpt petrv2_transformer.onnx --calib-path /path/to/calibration/tfrecord --yaml path/to/petrv2_repvggB0_transformer_pp_800x320.yaml --start-node-names name1 name2 --end-node-names name1
-
+      
 
    * | ``--ckpt`` - path to your ONNX file.
    * | ``--calib-set-path`` - path to transformer calibration set in tfrecord format

@@ -22,10 +22,10 @@ Environment Preparations
 
    .. code-block::
 
-
+      
       cd hailo_model_zoo/training/yolact
       docker build --build-arg timezone=`cat /etc/timezone` -t yolact:v0 .
-
+      
 
 
 
@@ -43,9 +43,9 @@ Environment Preparations
 
    .. code-block::
 
-
+      
       docker run --name "your_docker_name" -it --gpus all --ipc=host -v /path/to/local/data/dir:/path/to/docker/data/dir  yolact:v0
-
+      
 
    * ``docker run`` create a new docker container.
    * ``--name <your_docker_name>`` name for your container.
@@ -89,21 +89,21 @@ Training and exporting to ONNX
 
    .. code-block::
 
-
+      
       cd /workspace/yolact
       ln -s /workspace/data/coco data/coco
       python train.py --config=yolact_regnetx_800MF_config
-
+      
 
    * ``yolact_regnetx_800MF_config`` - configuration using the regnetx_800MF backbone.
 
 #. | Export to ONNX: In order to export your trained YOLACT model to ONNX run the following script:
-
+    
    .. code-block::
 
-
+      
       python export.py --config=yolact_regnetx_800MF_config --trained_model=path/to/trained/model --export_path=path/to/export/model.onnx
-
+      
 
    * ``--config`` - same configuration used for training.
    * ``--trained_model`` - path to the weights produced by the training process.
@@ -114,15 +114,15 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-You can generate an HEF file for inference on Hailo device from your trained ONNX model.
+You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
-Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolact.yaml``\ , and run compilation using the model zoo:
+Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/yolact.yaml``\ , and run compilation using the model zoo:  
 
 .. code-block::
 
-
+   
    hailomz compile yolact --ckpt yolact.onnx --calib-path /path/to/calibration/imgs/dir/ --yaml path/to/yolact_regnetx_800mf_20classes.yaml --start-node-names name1 name2 --end-node-names name1
-
+   
 
 * | ``--ckpt`` - path to  your ONNX file.
 * | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
@@ -131,8 +131,8 @@ Choose the corresponding YAML from our networks configuration directory, i.e. ``
 * | The model zoo will take care of adding the input normalization to be part of the model.
 
 .. note::
-  - The `yolact_regnetx_800mf_20classes.yaml<https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolact_regnetx_800mf_20classes.yaml>`_
+  - The `yolact_regnetx_800mf_20classes.yaml<https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolact_regnetx_800mf_20classes.yaml>`_ 
     is an example yaml where some of the classes (out of 80) were removed. If you wish to change the number of classes, the easiest way is to retrain with the exact number
     of classes, erase the ``channels_remove`` section (lines 18 to 437).
-
+  
   More details about YAML files are presented `here <../../docs/YAML.rst>`_.

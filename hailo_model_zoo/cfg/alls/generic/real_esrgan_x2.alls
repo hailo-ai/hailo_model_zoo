@@ -1,5 +1,2 @@
 normalization1 = normalization([0., 0. , 0.], [255., 255., 255.])
 model_optimization_config(calibration, batch_size=2)
-
-# SDK-60055 - Debug why this fails on hailo15m
-allocator_param(fps_ratio_impact=0)

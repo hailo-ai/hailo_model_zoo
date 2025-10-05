@@ -13,7 +13,7 @@ Here, we give the full list of publicly pre-trained models supported by the Hail
 * Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
 * Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
 * Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.32.0
+* All models were compiled using Hailo Dataflow Compiler v3.33.0
 
 Link Legend
 
@@ -42,8 +42,8 @@ AFLW2k3d
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float
+     - Hardware
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -51,11 +51,11 @@ AFLW2k3d
      - Params (M)
      - OPS (G)
    * - tddfa_mobilenet_v1  |star|
-     - 4.04
-     - 4.4
+     - 3.68
+     - 7.71
      - 11321
      - 11323
-     - `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/tddfa_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.16.0/hailo8/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
+     - `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/tddfa_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
      - 120x120x3
      - 3.26
      - 0.36

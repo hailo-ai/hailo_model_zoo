@@ -15,8 +15,6 @@ quantization_param({ew_sub*}, activation_fit=disabled)
 quantization_param({output_layer*}, precision_mode=a16_w16)
 change_output_activation(detr_resnet_v1_18_bn/conv116, linear)
 
-allocator_param(enable_partial_row_buffers=disabled, spatial_defuse_legacy=True)
+allocator_param(enable_partial_row_buffers=disabled)
 context_switch_param(slotter_chances=600)
 allocator_param(timeout=43200)
-
-compilation_param(conv24, balance_output_multisplit=enabled)

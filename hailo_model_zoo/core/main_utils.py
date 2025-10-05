@@ -36,8 +36,7 @@ def _get_output_shapes(runner):
     ]
 
 
-def resolve_alls_path(path, hw_arch="hailo15h", performance=False):
-    hw_arch = "hailo15h" if hw_arch == "hailo10h" else hw_arch
+def resolve_alls_path(path, hw_arch="hailo8", performance=False):
     if not path:
         return None
     return path_resolver.resolve_alls_path(Path(hw_arch) / Path("base" if not performance else "performance") / path)
@@ -105,7 +104,7 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
     parser_args = argparse.Namespace(
         net_name=model_name,
         input_framework=str(ckpt_path).split(".")[-1],
-        input_format={},
+        input_format=None,
         model_path=str(ckpt_path),
         tensor_shapes=start_node_shapes,
         start_node_names=start_node_names,

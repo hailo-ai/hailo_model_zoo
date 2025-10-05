@@ -5,12 +5,15 @@ network:
 parser:
   nodes:
   - null
-  - null
+  - ArgMax_149
 paths:
   alls_script: stdc1.alls
   network_path:
   - models_files/Segmentation/Cityscapes/stdc1/pretrained/2023-06-12/stdc1-sim.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/stdc1/pretrained/2023-06-12/stdc1.zip
+inference:
+  full_precision_batch_size: 1
+  emulator_batch_size: 1
 info:
   task: semantic segmentation
   input_shape: 1024x1920x3

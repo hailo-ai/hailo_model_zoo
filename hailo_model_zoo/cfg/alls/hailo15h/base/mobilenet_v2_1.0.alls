@@ -1,7 +1,0 @@
-normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
-post_quantization_optimization(finetune, policy=disabled)
-post_quantization_optimization(bias_correction, policy=enabled)
-
-resources_param(max_apu_utilization=1.0, max_compute_16bit_utilization=1.0, max_compute_utilization=1.0, max_control_utilization=1.1000000000000003, max_input_aligner_utilization=1.0, max_memory_utilization=0.9, max_utilization=0.0)
-
-convert_to_dense(conv36)

@@ -1,3 +1,0 @@
-normalization1 = normalization([127, 127, 127], [128, 128, 128])
-
-resources_param(max_apu_utilization=0.6, max_compute_16bit_utilization=0.6, max_compute_utilization=0.6, max_control_utilization=0.6, max_input_aligner_utilization=0.6, max_memory_utilization=0.6, max_utilization=0.0)

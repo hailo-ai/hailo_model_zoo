@@ -7,15 +7,15 @@ System Requirements
 -------------------
 
 
-* Ubuntu 20.04/22.04, 64 bit (supported also on Windows, under WSL2)
-* Python 3.8/3.9/3.10, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v5.0.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT 5.0.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo's hardware.
-* The Hailo Model Zoo supports Hailo-10H connected via PCIe only.
+* Ubuntu 22.04/24.04, 64 bit (supported also on Windows, under WSL2)
+* Python 3.10/3.11/3.12, including ``pip`` and ``virtualenv``
+* Hailo Dataflow Compiler v3.33.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT 4.23.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-8.
+* The Hailo Model Zoo supports Hailo-8 connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
 * GPU driver version 525
-* CUDA 11.8
-* CUDNN 8.9
+* CUDA 12.5.1
+* CUDNN 9.10
 
 
 Install Instructions
@@ -33,7 +33,7 @@ The Hailo Software Suite is composed of the Dataflow Compiler, HailoRT, TAPPAS a
 
 .. _sw_suite_figure:
 
-.. figure:: images/software_suite_block_diagram_2025.svg
+.. figure:: images/new_overview_2023-05.svg
    :alt: Detailed block diagram of Hailo software packages
 
    Detailed block diagram of Hailo software packages
@@ -43,7 +43,7 @@ Manual Installation
 ^^^^^^^^^^^^^^^^^^^
 
 #. Install the Hailo Dataflow compiler and enter the virtualenv (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
-#. Install the HailoRT - required only for inference on Hailo-10H / Hailo-15H (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
+#. Install the HailoRT - required only for inference on Hailo-8 (visit `hailo.ai <http://hailo.ai>`_ for further instructions).
 #. Clone the Hailo Model Zoo repo:
 
    .. code-block::
@@ -58,7 +58,7 @@ Manual Installation
 
 #. For setting up datasets please see `DATA <DATA.rst>`_.
 
-#. Verify Hailo-10H is connected via PCIe (required only to run on Hailo-10H Full-precision / emulation run on GPU.)
+#. Verify Hailo-8 is connected via PCIe (required only to run on Hailo-8. Full-precision / emulation run on GPU.)
 
    .. code-block::
 
@@ -75,13 +75,13 @@ Manual Installation
       (hailo) Running command 'fw-control' with 'hailortcli'
       Identifying board
       Control Protocol Version: 2
-      Firmware Version: 5.0.0 (release,app)
+      Firmware Version: 4.6.0 (release,app)
       Logger Version: 0
-      Board Name: Hailo-10H
-      Device Architecture: HAILO10H
+      Board Name: Hailo-8
+      Device Architecture: HAILO8_B0
       Serial Number: HLUTM20204900071
       Part Number: HM218B1C2FA
-      Product Name: HAILO-10H AI ACCELERATOR M.2 MODULE
+      Product Name: HAILO-8 AI ACCELERATOR M.2 MODULE
 
 Upgrade Instructions
 ^^^^^^^^^^^^^^^^^^^^
@@ -128,11 +128,11 @@ The pre-trained models are stored on AWS S3 and will be downloaded automatically
 
    hailomz parse <model_name>
 
-* The default compilation target is Hailo-10H. To compile for different architecture (Hailo-15H for example), use ``--hw_arch hailo15h`` as CLI argument:
+* The default compilation target is Hailo-8. To compile for different architecture (Hailo-8L for example), use ``--hw_arch hailo8l`` as CLI argument:
 
 .. code-block::
 
-   hailomz parse <model_name> --hw-arch hailo15h
+   hailomz parse <model_name> --hw-arch hailo8l
 
 * To customize the parsing behavior, use ``--start-node-names`` and\or ``--end-node-names`` flags:
 
@@ -219,11 +219,11 @@ To run the Hailo compiler and generate the Hailo Executable Format (HEF) file:
 
    hailomz compile <model_name>
 
-By default the compilation target is Hailo-10H. To compile for a different architecture use ``--hw-arch`` command line argument:
+By default the compilation target is Hailo-8. To compile for a different architecture use ``--hw-arch`` command line argument:
 
 .. code-block::
 
-   hailomz compile <model_name> --hw-arch hailo15h
+   hailomz compile <model_name> --hw-arch hailo8l
 
 To generate the HEF starting from a previously generated HAR file:
 
@@ -279,7 +279,7 @@ To evaluate models with the Hailo emulator (after quantization to integer repres
 
    hailomz eval <model_name> --target emulator
 
-To evaluate models on Hailo-10H:
+To evaluate models on Hailo-8:
 
 .. code-block::
 
@@ -287,8 +287,6 @@ To evaluate models on Hailo-10H:
 
 If multiple devices are available, it's possible to select a specific one.
 Make sure to run on a device compatible to the compiled model.
-
-Please pay attention that Hailo-15H is not supported for evaluation in our model zoo, although it is supported for compilation and optimization.
 
 .. code-block::
 
@@ -327,7 +325,7 @@ To explore other options (for example: changing the default batch-size) use:
 
    hailomz eval --help
 
-* Currently MZ evaluation can be done only on Hailo-10H and Hailo-15H.
+* Currently MZ evaluation can be done only on Hailo-8.
 
 Visualization
 -------------

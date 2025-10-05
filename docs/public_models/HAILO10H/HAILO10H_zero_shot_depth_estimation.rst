@@ -50,14 +50,14 @@ N/A
    * - depth_anything_v2_vits
      - 54
      - 132
-     - `S <https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v2/vits/pretrained/2025-07-09/depth_anything_v2_vits_224X224_sim_hf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/depth_anything_v2_vits.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/depth_anything_v2_vits_profiler_results_compiled.html>`_
+     - `S <https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v2/vits/pretrained/2025-07-09/depth_anything_v2_vits_224X224_sim_hf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/depth_anything_v2_vits.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/depth_anything_v2_vits_profiler_results_compiled.html>`_
      - 224x224x3
      - 24.2
      - 16.7
    * - depth_anything_vits
      - 58
      - 147
-     - `S <https://huggingface.co/LiheYoung/depth-anything-small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/depth_anything_vits.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo15h/depth_anything_vits_profiler_results_compiled.html>`_
+     - `S <https://huggingface.co/LiheYoung/depth-anything-small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/depth_anything_vits.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/depth_anything_vits_profiler_results_compiled.html>`_
      - 224x224x3
      - 24.2
      - 16.7

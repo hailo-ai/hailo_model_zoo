@@ -75,6 +75,8 @@ LPRNetDataset
    :header-rows: 1
 
    * - Network Name
+     - float mAP
+     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)
@@ -85,6 +87,8 @@ LPRNetDataset
      - Compiled
      - Profile Report      
    * - lprnet  |star| 
+     - 99.86
+     - 99.86
      - 297
      - 297
      - `S <N/A>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/lprnet.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/lprnet_profiler_results_compiled.html>`_

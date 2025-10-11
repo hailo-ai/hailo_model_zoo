@@ -42,8 +42,8 @@ LFW
    :header-rows: 1
 
    * - Network Name
-     - float
-     - Hardware
+     - float mAP
+     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -51,20 +51,46 @@ LFW
      - Params (M)
      - OPS (G)
    * - arcface_mobilefacenet  |star|
-     - 99.45
      - 99.43
-     - 347
-     - 1131
+     - 99.43
+     - 1666
+     - 1666
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_mobilefacenet/pretrained/2022-08-24/arcface_mobilefacenet.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/arcface_mobilefacenet.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/arcface_mobilefacenet_profiler_results_compiled.html>`_
      - 112x112x3
      - 2.04
      - 0.88
    * - arcface_r50
      - 99.72
-     - 99.72
-     - 81
-     - 218
+     - 99.67
+     - 92
+     - 299
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/arcface_r50.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/arcface_r50_profiler_results_compiled.html>`_
      - 112x112x3
      - 31.0
      - 12.6
+
+LPRNetDataset
+^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 31 9 7 11 9 8 8 8 9
+   :header-rows: 1
+
+   * - Network Name
+     - float mAP
+     - Hardware mAP
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Links
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+   * - lprnet  |star|
+     - 99.86
+     - 99.86
+     - 189
+     - 189
+     - `S <N/A>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/2022-03-09/lprnet.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/lprnet.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/lprnet_profiler_results_compiled.html>`_
+     - 75x300x3
+     - 7.14
+     - 36.54

@@ -58,6 +58,16 @@ The following shortcuts are used in the table below to indicate available resour
             * X: HEF with RGBX format
 
 * PR – Profiler Report: Download the model’s performance profiling report.
+
+
+
+.. _text image retrieval:
+
+--------------------------
+
+Text Image Retrieval
+^^^^^^^^^^^^^^^^^^^^
+
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1

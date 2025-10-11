@@ -38,21 +38,17 @@ Hand Landmark
 ^^^^^^^^^^^^^
     
 .. list-table::
+   :widths: 31 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
    * - hand_landmark_lite   
-     - 12.0
-     - 12.0
      - 3091
      - 3092
      - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/hand_landmark_lite_profiler_results_compiled.html>`_

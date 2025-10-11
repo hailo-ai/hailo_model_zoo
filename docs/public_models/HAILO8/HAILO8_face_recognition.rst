@@ -82,8 +82,8 @@ LFW
      - 31.0
      - 12.6
 
-N/A
-^^^
+LPRNetDataset
+^^^^^^^^^^^^^
     
 .. list-table::
    :header-rows: 1

@@ -69,8 +69,8 @@ LFW
      - 31.0
      - 12.6
 
-N/A
-^^^
+LPRNetDataset
+^^^^^^^^^^^^^
 
 .. list-table::
    :widths: 31 9 7 11 9 8 8 8 9

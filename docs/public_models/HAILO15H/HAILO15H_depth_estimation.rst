@@ -59,18 +59,6 @@ NYU
      - 224x224x3
      - 1.35
      - 0.74    
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - float mAP
-     - Hardware mAP
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Links
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)    
    * - scdepthv3   
      - 719
      - 719

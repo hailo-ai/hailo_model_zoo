@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -55,7 +55,7 @@ NYU
      - 0.61
      - 1090
      - 1090
-     - `S <https://github.com/dwofk/fast-depth>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/fast_depth.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/fast_depth_profiler_results_compiled.html>`_
+     - `S <https://github.com/dwofk/fast-depth>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/fast_depth.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/fast_depth_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.35
      - 0.74
@@ -64,7 +64,7 @@ NYU
      - 0.48
      - 145
      - 355
-     - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/scdepthv3_profiler_results_compiled.html>`_
+     - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/scdepthv3_profiler_results_compiled.html>`_
      - 256x320x3
      - 14.8
      - 10.7

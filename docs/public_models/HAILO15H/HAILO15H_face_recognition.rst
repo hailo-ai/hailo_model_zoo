@@ -79,12 +79,10 @@ LPRNetDataset
      - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
      - Profile Report      
    * - lprnet  |star| 
      - 99.86

@@ -60,6 +60,8 @@ LFW
      - 2.04
      - 0.88    
    * - arcface_r50   
+     - 99.72
+     - 99.67
      - 191
      - 520
      - `S <https://github.com/deepinsight/insightface>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceRecognition/arcface/arcface_r50/pretrained/2022-08-24/arcface_r50.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/arcface_r50.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/arcface_r50_profiler_results_compiled.html>`_
@@ -83,7 +85,6 @@ LPRNetDataset
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-     - Profile Report      
    * - lprnet  |star| 
      - 99.86
      - 99.86

@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -51,7 +51,7 @@ Hand Landmark
    * - hand_landmark_lite
      - 1652
      - 1652
-     - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/hand_landmark_lite_profiler_results_compiled.html>`_
+     - `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/hand_landmark_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/hand_landmark_lite_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.01
      - 0.3

@@ -22,7 +22,7 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGBX format
+            * H: regular HEF with RGB format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
@@ -55,7 +55,7 @@ Market1501
      - 93.67
      - 163
      - 504
-     - `S <https://github.com/KaiyangZhou/deep-person-reid>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/osnet_x1_0.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/osnet_x1_0_profiler_results_compiled.html>`_
+     - `S <https://github.com/KaiyangZhou/deep-person-reid>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/osnet_x1_0.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/osnet_x1_0_profiler_results_compiled.html>`_
      - 256x128x3
      - 2.19
      - 1.98
@@ -64,7 +64,7 @@ Market1501
      - 89.05
      - 4580
      - 4580
-     - `S <https://github.com/DingXiaoH/RepVGG>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/repvgg_a0_person_reid_512.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.15.0/hailo8l/repvgg_a0_person_reid_512_profiler_results_compiled.html>`_
+     - `S <https://github.com/DingXiaoH/RepVGG>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/repvgg_a0_person_reid_512.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/2.17.0/hailo8l/repvgg_a0_person_reid_512_profiler_results_compiled.html>`_
      - 256x128x3
      - 7.68
      - 1.78

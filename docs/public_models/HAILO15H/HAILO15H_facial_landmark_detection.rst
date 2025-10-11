@@ -60,6 +60,7 @@ AFLW2k3d
      - 3.26
      - 0.36
 
+
 Face Landmark
 ^^^^^^^^^^^^^
     
@@ -69,17 +70,14 @@ Face Landmark
    * - Network Name
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
+     - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
+     - OPS (G)    
    * - face_landmarks_lite   
      - 998
      - 3064
-     - `S <https://github.com/google-ai-edge/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_landmarks_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_landmarks_lite_profiler_results_compiled.html>`_
+     - `S <https://github.com/google-ai-edge/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_landmarks_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10/face_landmarks_lite_profiler_results_compiled.html>`_
      - 192x192x3
      - 0.6
      - 0.07

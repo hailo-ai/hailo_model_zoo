@@ -59,19 +59,6 @@ LFW
      - 112x112x3
      - 2.04
      - 0.88    
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
    * - arcface_r50   
      - 99.7
      - 99.7
@@ -82,13 +69,16 @@ LFW
      - 31.0
      - 12.6
 
-N/A
-^^^
+LPRNetDataset
+^^^^^^^^^^^^^
     
 .. list-table::
+   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name
+     - float mAP
+     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Input Resolution (HxWxC)

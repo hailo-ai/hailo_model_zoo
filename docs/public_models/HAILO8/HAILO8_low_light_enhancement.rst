@@ -59,19 +59,6 @@ LOL
      - 400x600x3
      - 0.02
      - 4.84    
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-     - Pretrained
-     - Source
-     - Compiled
-     - Profile Report    
    * - zero_dce   
      - 16.2
      - 16.2

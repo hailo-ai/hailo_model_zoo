@@ -9,7 +9,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - Hailo-8
      - Hailo-8L
      - Hailo-15H
-     - Hailo-10
+     - Hailo-10H
    * - Classification
      - `Link <public_models/HAILO8/HAILO8_classification.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_classification.rst>`_

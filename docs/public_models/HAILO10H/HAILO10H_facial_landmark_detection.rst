@@ -64,6 +64,7 @@ Face Landmark
 ^^^^^^^^^^^^^
     
 .. list-table::
+   :widths: 31 9 9 8 8 8 9
    :header-rows: 1
 
    * - Network Name

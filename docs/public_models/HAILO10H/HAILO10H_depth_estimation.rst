@@ -59,19 +59,9 @@ NYU
      - 224x224x3
      - 1.35
      - 0.74    
-.. list-table::
-   :header-rows: 1
-
-   * - Network Name
-     - float mAP
-     - Hardware mAP
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Links
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)    
    * - scdepthv3   
+     - 0.48
+     - 0.48
      - 719
      - 719
      - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3_profiler_results_compiled.html>`_

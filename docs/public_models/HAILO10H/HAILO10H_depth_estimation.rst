@@ -60,6 +60,8 @@ NYU
      - 1.35
      - 0.74    
    * - scdepthv3   
+     - 0.48
+     - 0.48
      - 719
      - 719
      - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3_profiler_results_compiled.html>`_

@@ -3,14 +3,25 @@ base:
 preprocessing:
   meta_arch: yolo_world
 postprocessing:
-  meta_arch: yworld
   nms_max_output_per_class: 300
   post_nms_topk: 300
   nms_iou_thresh: 0.7
   score_threshold: 0.001
+  device_pre_post_layers:
+    nms: true
+  hpp: true
 evaluation:
   dataset_name: coco_with_text_embeddings
   data_set: models_files/coco_with_text_embeddings/2025-09-09/coco_val2017_with_text_embeddings.tfrecord
 quantization:
   calib_set:
   - models_files/coco_with_text_embeddings/2025-09-09/coco_val2017_with_text_embeddings.tfrecord
+parser:
+  nodes:
+  - null
+  - - /head_module/reg_preds.0/reg_preds.0.2/Conv
+    - /head_module/cls_contrasts.0/Add
+    - /head_module/reg_preds.1/reg_preds.1.2/Conv
+    - /head_module/cls_contrasts.1/Add
+    - /head_module/reg_preds.2/reg_preds.2.2/Conv
+    - /head_module/cls_contrasts.2/Add

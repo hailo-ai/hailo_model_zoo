@@ -16,8 +16,8 @@
 
 **v5.0**
 
-* Update to use Dataflow Compiler v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
-* Update to use HailoRT v5.1.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use Dataflow Compiler v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+* Update to use HailoRT v5.0.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 * New Models:
 

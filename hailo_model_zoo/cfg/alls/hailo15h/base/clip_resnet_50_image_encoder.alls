@@ -1,0 +1,7 @@
+normalization1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param([format_conversion1], precision_mode=a16_w16)
+quantization_param([conv56, conv57, conv58], precision_mode=a8_w8)
+allocator_param(optimize_pipeline_stoppage=True)

@@ -1,4 +1,6 @@
 
+
+
 Public Pre-Trained Models
 =========================
 
@@ -22,24 +24,18 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
+            * H: regular HEF with RGBX format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
 * PR – Profiler Report: Download the model’s performance profiling report.
 
-
-
-.. _Depth Estimation:
-
-----------------
-
-NYU
-^^^
+Nyu
+===
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
 
    * - Network Name
      - float mAP
@@ -49,22 +45,45 @@ NYU
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)        
-   * - fast_depth  |star| 
+     - OPS (G)
+   
+   
+   
+   
+
+   * - fast_depth 
      - 0.6
-     - 0.58
-     - 2046
-     - 2046
-     - `S <https://github.com/dwofk/fast-depth>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/fast_depth.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/fast_depth_profiler_results_compiled.html>`_
+     - 0.61
+     - 2163
+     - 2163
+     - |
+       `S <https://github.com/dwofk/fast-depth>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/fast_depth/pretrained/2021-10-18/fast_depth.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/fast_depth.hef>`_
+       
+       `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/fast_depth_rgbx.hef>`_
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/fast_depth_profiler_results_compiled.html>`_
      - 224x224x3
      - 1.35
-     - 0.74    
-   * - scdepthv3   
+     - 0.74
+   
+   
+   
+   
+
+   * - scdepthv3 
      - 0.48
      - 0.48
-     - 719
-     - 719
-     - `S <https://github.com/JiawangBian/sc_depth_pl/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/scdepthv3_profiler_results_compiled.html>`_
+     - 720
+     - 720
+     - |
+       `S <https://github.com/JiawangBian/sc_depth_pl/>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/indoor/scdepthv3/pretrained/2023-07-20/scdepthv3.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/scdepthv3.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/scdepthv3_profiler_results_compiled.html>`_
      - 256x320x3
      - 14.8
      - 10.7
+

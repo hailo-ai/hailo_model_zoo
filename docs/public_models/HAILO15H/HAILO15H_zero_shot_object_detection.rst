@@ -1,5 +1,6 @@
 
 
+
 Public Pre-Trained Models
 =========================
 
@@ -23,24 +24,18 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
+            * H: regular HEF with RGBX format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
 * PR – Profiler Report: Download the model’s performance profiling report.
 
-
-
-.. _Classification:
-
---------------
-
-ImageNet
-^^^^^^^^
+Coco
+====
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
 
    * - Network Name
      - float mAP
@@ -50,14 +45,25 @@ ImageNet
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - yolo_world_v2s
-     - 36
-     - 33
-     - 23
-     - 30
-     - `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s_profiler_results_compiled.html>`_
-     - 640x640x3, 1x80x512
+     - OPS (G)
+   
+   
+   
+   
+
+   * - yolo_world_v2s 
+     - 36.4
+     - 33.9
+     - 23.9
+     - 30.5
+     - |
+       `S <https://github.com/AILab-CVC/YOLO-World>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s_profiler_results_compiled.html>`_
+     - 640x640x3  1x80x512
      - 9.3
-     - 32.7  
+     - 32.7
 

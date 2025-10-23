@@ -3,8 +3,7 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "5.1.0"
-CUR_MZ_VERSION = "5.1.0"
+CUR_DFC_VERSION = CUR_MZ_VERSION = "5.2.0.dev0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -41,7 +40,7 @@ def main():
     reqs = [
         "numba==0.59.0",
         "imageio==2.22.4",
-        "matplotlib",
+        "matplotlib==3.5.2",
         "numpy",
         "opencv-python",
         "scipy",
@@ -60,7 +59,7 @@ def main():
         "Shapely>=2.0.0",
     ]
 
-    model_zoo_version = "5.1.0"
+    model_zoo_version = CUR_MZ_VERSION
 
     package_data = {
         "hailo_model_zoo": [

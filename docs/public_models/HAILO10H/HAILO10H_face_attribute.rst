@@ -1,4 +1,6 @@
 
+
+
 Public Pre-Trained Models
 =========================
 
@@ -22,24 +24,18 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
+            * H: regular HEF with RGBX format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
 * PR – Profiler Report: Download the model’s performance profiling report.
 
-
-
-.. _Face Attribute:
-
---------------
-
-CELEBA
-^^^^^^
+Celeba
+======
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
 
    * - Network Name
      - float mAP
@@ -49,13 +45,25 @@ CELEBA
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - face_attr_resnet_v1_18   
+     - OPS (G)
+   
+   
+   
+   
+
+   * - face_attr_resnet_v1_18 
      - 81.2
-     - 81.0
-     - 2941
-     - 2941
-     - `S <https://github.com/d-li14/face-attribute-prediction>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/face_attr_resnet_v1_18.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/face_attr_resnet_v1_18_profiler_results_compiled.html>`_
+     - 80.8
+     - 2199
+     - 2194
+     - |
+       `S <https://github.com/d-li14/face-attribute-prediction>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_attr_resnet_v1_18.hef>`_
+       
+       `X <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_attr_resnet_v1_18_rgbx.hef>`_
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/face_attr_resnet_v1_18_profiler_results_compiled.html>`_
      - 218x178x3
      - 11.74
      - 3
+

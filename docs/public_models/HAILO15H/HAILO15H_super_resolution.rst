@@ -1,4 +1,6 @@
 
+
+
 Public Pre-Trained Models
 =========================
 
@@ -22,24 +24,18 @@ The following shortcuts are used in the table below to indicate available resour
 * S – Source: Link to the model’s open-source code repository.
 * PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
 * H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
+            * H: regular HEF with RGBX format
             * NV: HEF with NV12 format
             * X: HEF with RGBX format
 
 * PR – Profiler Report: Download the model’s performance profiling report.
 
-
-
-.. _Super Resolution:
-
-----------------
-
-BSD100
-^^^^^^
+Bsd100
+======
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
 
    * - Network Name
      - float mAP
@@ -49,41 +45,76 @@ BSD100
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - espcn_x2   
+     - OPS (G)
+   
+   
+   
+   
+
+   * - espcn_x2 
      - 31.2
      - 30.8
      - 1636
      - 1636
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x2_profiler_results_compiled.html>`_
+     - |
+       `S <https://github.com/Lornatang/ESPCN-PyTorch>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x2.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x2_profiler_results_compiled.html>`_
      - 156x240x1
      - 0.02
-     - 1.6    
-   * - espcn_x3   
+     - 1.6
+   
+   
+   
+   
+
+   * - espcn_x3 
      - 28.3
      - 28.1
      - 1924
      - 1924
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x3_profiler_results_compiled.html>`_
+     - |
+       `S <https://github.com/Lornatang/ESPCN-PyTorch>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x3.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x3_profiler_results_compiled.html>`_
      - 104x160x1
      - 0.02
-     - 0.76    
-   * - espcn_x4   
+     - 0.76
+   
+   
+   
+   
+
+   * - espcn_x4 
      - 26.8
      - 26.7
      - 1907
      - 1907
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x4.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x4_profiler_results_compiled.html>`_
+     - |
+       `S <https://github.com/Lornatang/ESPCN-PyTorch>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x4.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/espcn_x4_profiler_results_compiled.html>`_
      - 78x120x1
      - 0.02
      - 0.46
 
-DIV2K
-^^^^^
+
+
+Div2K
+=====
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
 
    * - Network Name
      - float mAP
@@ -93,13 +124,45 @@ DIV2K
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - real_esrgan_x2   
+     - OPS (G)
+   
+   
+   
+   
+
+   * - real_esrgan_x2 
      - 28.3
      - 27.7
-     - 2
-     - 2
-     - `S <https://github.com/ai-forever/Real-ESRGAN>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x2_profiler_results_compiled.html>`_
+     - 2.09
+     - 
+     - |
+       `S <https://github.com/ai-forever/Real-ESRGAN>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x2.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x2_profiler_results_compiled.html>`_
      - 512x512x3
      - 16.7
      - 2350
+   
+   
+   
+   
+
+   * - real_esrgan_x4 
+     - 26.2
+     - 
+     - 0.55
+     - 
+     - |
+       `S <https://github.com/ai-forever/Real-ESRGAN>`_
+       `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x4/pretrained/2024-10-31/RealESRGAN_x4_sim.zip>`_
+       `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x4.hef>`_
+       
+       
+       `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/real_esrgan_x4_profiler_results_compiled.html>`_
+     - 512x512x3
+     - 16.7
+     - 9400
+

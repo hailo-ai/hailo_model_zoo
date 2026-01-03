@@ -1,0 +1,11 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+nms_postprocess("../../postprocess_config/yolov7x_nms_config.json", yolov5, engine=cpu)
+model_optimization_config(calibration, batch_size=2, calibset_size=512)
+model_optimization_flavor(compression_level=0)
+
+context_switch_param(auto_partition_to_buckets=True, berkitizer_bucket_size=30, berkitizer_min_size=100, mode=enabled, slotter_chances=600, toposort_mode=pushdown)
+allocator_param(enable_fixer=max_adjcents, enable_partial_row_buffers=disabled, enable_lcu_ecc=False)
+resources_param(max_utilization=0.9)
+hef_param(enable_csm_crc=disabled)
+performance_param(optimize_for_power=True)

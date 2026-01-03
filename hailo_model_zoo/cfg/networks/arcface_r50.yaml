@@ -31,3 +31,7 @@ info:
   parameters: 31.0M
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

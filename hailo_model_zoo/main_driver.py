@@ -1,7 +1,7 @@
 from pathlib import Path
 
 try:
-    from hailo_platform import HEF, PcieDevice
+    from hailo_platform import HEF, Device
 
     HEF_EXISTS = True
 except ModuleNotFoundError:
@@ -18,7 +18,6 @@ from hailo_model_zoo.core.main_utils import (
     get_hef_path,
     get_integrated_postprocessing,
     get_network_info,
-    infer_model_tf1,
     infer_model_tf2,
     is_network_performance,
     optimize_full_precision_model,
@@ -27,7 +26,7 @@ from hailo_model_zoo.core.main_utils import (
     prepare_calibration_data,
     resolve_alls_path,
 )
-from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, DEVICES, INFERENCE_TARGETS, TARGETS
+from hailo_model_zoo.utils.hw_utils import DEVICE_NAMES, DEVICES, INFERENCE_TARGETS
 from hailo_model_zoo.utils.logger import get_logger
 
 
@@ -105,6 +104,13 @@ def _ensure_parsed(runner, logger, network_info, args):
     if runner.state != States.UNINITIALIZED:
         return
 
+    if args.hw_arch not in network_info.info.supported_hw_arch:
+        msg = (
+            f"Model {args.model_name} is not supported with hw_arch: {args.hw_arch}. "
+            f"Supported hw_arch values: {network_info.info.supported_hw_arch}"
+        )
+        raise ValueError(msg)
+
     parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 
@@ -122,7 +128,7 @@ def configure_hef_tf2(runner, hef_path):
 
 def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
     _ensure_parsed(runner, logger, network_info, args)
-    if isinstance(target, SdkFPOptimized) or (isinstance(target, PcieDevice) and args.hef_path is not None):
+    if isinstance(target, SdkFPOptimized) or (isinstance(target, Device) and args.hef_path is not None):
         if runner.state == States.HAILO_MODEL:
             calib_feed_callback = prepare_calibration_data(
                 runner, network_info, args.calib_path, logger, args.input_conversion, args.resize
@@ -151,7 +157,7 @@ def _ensure_runnable_state_tf1(args, logger, network_info, runner, target):
     if isinstance(target, SdkPartialNumeric):
         return
 
-    assert isinstance(target, PcieDevice)
+    assert isinstance(target, Device)
     _ensure_compiled(runner, logger, args, network_info)
     return None
 
@@ -348,7 +354,6 @@ def evaluate(args):
             "instructions on creating a calibration set"
         )
     runner = ClientRunner(hw_arch=args.hw_arch, har=args.har_path)
-    network_groups = None
 
     #  Enabling service for hailo15h
     if args.hailort_server_ip:
@@ -357,70 +362,40 @@ def evaluate(args):
 
     logger.info(f"Chosen target is {args.target}")
     batch_size = args.batch_size or __get_batch_size(network_info, args.target)
-    infer_type = network_info.evaluation.infer_type
-    # legacy tf1 inference flow
-    if infer_type not in [
-        "runner_infer",
-        "model_infer",
-        "np_infer",
-        "facenet_infer",
-        "np_infer_lite",
-        "model_infer_lite",
-        "sd2_unet_infer",
-    ]:
-        hailo_target = TARGETS[args.target]
-        with hailo_target() as target:
-            network_groups = _ensure_runnable_state_tf1(args, logger, network_info, runner, target)
-            return infer_model_tf1(
-                runner,
-                network_info,
-                target,
-                logger,
-                args.eval_num_examples,
-                args.data_path,
-                batch_size,
-                args.print_num_examples,
-                args.visualize_results,
-                args.video_outpath,
-                dump_results=False,
-                network_groups=network_groups,
-            )
 
-    else:
-        # new tf2 inference flow
-        target = INFERENCE_TARGETS[args.target]
-        _ensure_runnable_state_tf2(args, logger, network_info, runner, target)
+    target = INFERENCE_TARGETS[args.target]
+    _ensure_runnable_state_tf2(args, logger, network_info, runner, target)
 
-        device_info = DEVICES.get(args.target)
-        # overrides nms score threshold if postprocess on-host
-        nms_score_threshold = (
-            network_info["postprocessing"].get("score_threshold", None)
-            if network_info["postprocessing"]["hpp"] and not network_info["postprocessing"]["bbox_decoding_only"]
-            else None
-        )
-        context = runner.infer_context(
-            target,
-            device_ids=device_info,
-            nms_score_threshold=nms_score_threshold,
-            custom_infer_config=args.custom_infer_config,
-        )
-        return infer_model_tf2(
-            runner,
-            network_info,
-            context,
-            logger,
-            args.eval_num_examples,
-            args.data_path,
-            batch_size,
-            args.print_num_examples,
-            args.visualize_results,
-            args.video_outpath,
-            args.use_lite_inference,
-            dump_results=False,
-            input_conversion_args=args.input_conversion,
-            resize_args=args.resize,
-            show_results_per_class=args.show_results_per_class,
-        )
+    device_info = DEVICES.get(args.target)
+    # overrides nms score threshold if postprocess on-host
+    nms_score_threshold = (
+        network_info["postprocessing"].get("score_threshold", None)
+        if network_info["postprocessing"]["hpp"] and not network_info["postprocessing"]["bbox_decoding_only"]
+        else None
+    )
+    context = runner.infer_context(
+        target,
+        device_ids=device_info,
+        nms_score_threshold=nms_score_threshold,
+        custom_infer_config=args.custom_infer_config,
+    )
+    return infer_model_tf2(
+        runner,
+        network_info,
+        context,
+        logger,
+        args.eval_num_examples,
+        args.data_path,
+        batch_size,
+        args.print_num_examples,
+        args.visualize_results,
+        args.video_outpath,
+        args.use_lite_inference,
+        dump_results=False,
+        input_conversion_args=args.input_conversion,
+        resize_args=args.resize,
+        show_results_per_class=args.show_results_per_class,
+    )
 
 
 def __get_batch_size(network_info, target):

@@ -1,0 +1,2 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+nms_postprocess("../../postprocess_config/yolov12n_nms_config.json", meta_arch=yolov8, engine=cpu)

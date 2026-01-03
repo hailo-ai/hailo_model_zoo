@@ -38,3 +38,6 @@ info:
   source: Internal
   license_url: https://github.com/hailo-ai/hailo_model_zoo/blob/master/LICENSE
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

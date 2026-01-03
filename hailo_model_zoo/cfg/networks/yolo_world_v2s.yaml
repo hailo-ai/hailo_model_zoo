@@ -21,3 +21,6 @@ info:
   source: https://github.com/AILab-CVC/YOLO-World
   license_url: https://github.com/AILab-CVC/YOLO-World/blob/master/LICENSE
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

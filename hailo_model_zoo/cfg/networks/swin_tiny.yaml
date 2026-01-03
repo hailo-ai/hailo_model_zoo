@@ -21,3 +21,6 @@ info:
   eval_metric: Accuracy (top1)
   source: https://huggingface.co/microsoft/swin-tiny-patch4-window7-224
   full_precision_result: 81.3
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

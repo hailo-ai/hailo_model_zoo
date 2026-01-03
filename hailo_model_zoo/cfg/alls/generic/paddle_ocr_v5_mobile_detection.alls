@@ -1,0 +1,5 @@
+normalization = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+pre_quantization_optimization(global_avgpool_reduction, layers=[avgpool1, avgpool10], division_factors=[2, 2])
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param({dw*}, precision_mode=a16_w16)
+post_quantization_optimization(finetune, policy=enabled, epochs=7, dataset_size=480, batch_size=2, learning_rate=0.000001)

@@ -99,6 +99,8 @@ def _get_labels(dataset_name):
         labels = {1: {"name": "hand"}}
     elif "personface_detection" in dataset_name:
         labels = {1: {"name": "person"}, 2: {"name": "face"}}
+    elif "hailo_object_detection" in dataset_name:
+        labels = {1: {"name": "person"}, 2: {"name": "vehicle"}, 3: {"name": "face"}, 4: {"name": "license_plate"}}
     elif "icdar15" in dataset_name:
         labels = {0: {"name": "text"}}
     else:

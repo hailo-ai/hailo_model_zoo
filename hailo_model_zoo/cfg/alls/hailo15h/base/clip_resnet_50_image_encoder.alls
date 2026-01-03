@@ -1,0 +1,6 @@
+normalization1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
+model_optimization_flavor(optimization_level=2, compression_level=0)
+post_quantization_optimization(finetune, policy=enabled , epochs=8, loss_layer_names=[conv59, concat1, ew_add17])
+quantization_param([conv49, conv47, conv54, conv55], precision_mode=a16_w16)
+quantization_param([format_conversion1], precision_mode=a16_w16)
+allocator_param(optimize_pipeline_stoppage=True)

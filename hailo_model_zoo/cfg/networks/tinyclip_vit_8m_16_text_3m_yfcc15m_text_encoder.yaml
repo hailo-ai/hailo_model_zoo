@@ -1,0 +1,33 @@
+base:
+- base/clip_text_encoder.yaml
+postprocessing:
+  postprocess_config_file: models_files/ZeroShotClassification/clip/tinyclip/tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder/pretrained/2025-07-21/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M.npz
+evaluation:
+  data_set: models_files/ZeroShotClassification/clip/tinyclip/tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder/coco_10xtd/2025-07-21/coco_xtd10_en_vit_8m_16.tfrecord
+quantization:
+  calib_set:
+  - models_files/ZeroShotClassification/clip/tinyclip/tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder/coco_10xtd/2025-07-21/coco_xtd10_en_vit_8m_16.tfrecord
+network:
+  network_name: tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder
+paths:
+  network_path:
+  - models_files/ZeroShotClassification/clip/tinyclip/tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder/pretrained/2025-07-21/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M_text_encoder.sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/tinyclip/tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder/pretrained/2025-07-21/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M_text_encoder.zip
+  alls_script: tinyclip_vit_8m_16_text_3m_yfcc15m_text_encoder.alls
+parser:
+  nodes:
+  - /embeddings/Add
+  - - /encoder/layers.2/Add_1
+info:
+  input_shape: 1x77x512
+  output_shape: 1x77x512
+  operations: 11.59G
+  parameters: 3M
+  framework: pytorch
+  full_precision_result: 84.4
+  source: https://huggingface.co/wkcn/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M
+  license_url: https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/mit.md
+  license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

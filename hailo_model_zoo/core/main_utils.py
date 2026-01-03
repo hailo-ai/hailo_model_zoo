@@ -115,6 +115,7 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
         har_path=None,
         augmented_path=None,
         disable_rt_metadata_extraction=False,
+        disable_onnx_simplifier=False,
         parsing_report_path=None,
         compare=False,
     )

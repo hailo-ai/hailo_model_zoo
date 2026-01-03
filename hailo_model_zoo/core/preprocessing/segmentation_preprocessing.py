@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 from hailo_model_zoo.core.factory import PREPROCESS_FACTORY
-from hailo_model_zoo.core.preprocessing.detection_preprocessing import MAX_PADDING_LENGTH
+from hailo_model_zoo.core.preprocessing.detection_preprocessing import MAX_PADDING_LENGTH, letterbox
 
 
 def _resize(image, new_height, new_width, is_mask):
@@ -86,3 +86,46 @@ def sparseinst(image, image_info=None, height=None, width=None, max_pad=MAX_PADD
             if key in image_info:
                 image_info[key] = _pad_tensor(image_info[key], max_pad)
     return image_resized, image_info
+
+
+@PREPROCESS_FACTORY.register(name="ss_dpm")
+def ss_dpm(image, image_info=None, height=None, width=None, **kwargs):
+    image_shape = tf.shape(image)
+    image_height = image_shape[0]
+    image_width = image_shape[1]
+    resized_image, new_width, new_height = tf.numpy_function(
+        lambda image, height, width: letterbox(
+            image,
+            height,
+            width,
+            True,
+            (0.0, 0.0, 0.0),
+            True,
+        ),
+        [image, height, width],
+        [tf.uint8, tf.int64, tf.int64],
+    )
+    resized_image.set_shape((height, width, 3))
+    image_info["height"] = image_height
+    image_info["width"] = image_width
+    image_info["letterbox_height"] = new_height
+    image_info["letterbox_width"] = new_width
+    image_info["horizontal_pad"] = width - new_width
+    image_info["vertical_pad"] = height - new_height
+    mask = image_info["mask"]
+    resized_mask, _, _ = tf.numpy_function(
+        lambda mask, height, width: letterbox(
+            mask,
+            height,
+            width,
+            True,
+            (0.0, 0.0, 0.0),
+            False,
+        ),
+        [mask, 1024, 1024],
+        [tf.uint8, tf.int64, tf.int64],
+    )
+    resized_mask.set_shape((1024, 1024, 3))
+    image_info["mask"] = resized_mask
+    image_info["img_orig"] = resized_image
+    return resized_image, image_info

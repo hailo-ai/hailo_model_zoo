@@ -107,6 +107,7 @@ def parse_segmentation_record(serialized_example):
 @DATASET_FACTORY.register(name="vehicle_detection")
 @DATASET_FACTORY.register(name="license_plates")
 @DATASET_FACTORY.register(name="personface_detection")
+@DATASET_FACTORY.register(name="hailo_object_detection")
 def parse_detection_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information"""
     features = tf.io.parse_single_example(

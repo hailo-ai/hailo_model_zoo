@@ -4,3 +4,10 @@ model_optimization_flavor(optimization_level=2, compression_level=0)
 post_quantization_optimization(finetune, policy=disabled)
 
 allocator_param(enable_partial_row_buffers=disabled)
+
+# with 2 apus, we get allocation timeout
+compilation_param(segformer_b0_bn/matmul1, number_of_apus=1)
+compilation_param(segformer_b0_bn/matmul3, number_of_apus=1)
+
+# performance_param(optimization_level=2)
+resources_param(max_control_utilization=0.8, max_compute_utilization=0.8, max_compute_16bit_utilization=0.8, max_memory_utilization=0.8, max_input_aligner_utilization=0.8, max_apu_utilization=0.8)

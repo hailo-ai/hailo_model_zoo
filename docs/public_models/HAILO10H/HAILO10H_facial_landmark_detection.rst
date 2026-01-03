@@ -1,83 +1,119 @@
 
-Public Pre-Trained Models
+
+
+Public Models
+=============
+
+All models were compiled using Hailo Dataflow Compiler v5.2.0.
+
+|
+
+Facial Landmark Detection
 =========================
 
-.. |rocket| image:: ../../images/rocket.png
-  :width: 18
-
-.. |star| image:: ../../images/star.png
-  :width: 18
-
-Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
-
-* Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
-* Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v5.1.0
+|
 
 Link Legend
+-----------
 
-The following shortcuts are used in the table below to indicate available resources for each model:
-
-* S – Source: Link to the model’s open-source code repository.
-* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
-* H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
-            * NV: HEF with NV12 format
-            * X: HEF with RGBX format
-
-* PR – Profiler Report: Download the model’s performance profiling report.
-
-
-
-.. _Facial Landmark Detection:
-
--------------------------
-
-AFLW2k3d
-^^^^^^^^
+|
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
+   :widths: 25 75
    :header-rows: 1
 
-   * - Network Name
-     - float mAP
-     - Hardware mAP
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Links
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)        
-   * - tddfa_mobilenet_v1  |star| 
-     - 3.68
-     - 3.32
-     - 10271
-     - 10281
-     - `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/tddfa_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
-     - 120x120x3
-     - 3.26
-     - 0.36
+   * - **Key / Icon**
+     - **Description**
+   * - ⭐
+     - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
+   * - **S**
+     - Source – Link to the model’s open-source repository.
+   * - **PT**
+     - Pretrained – Download the pretrained model file (ZIP format).
+   * - **HEF, NV12, RGBX**
+     - Compiled Models – Links to models in various formats:
+       - **HEF:** RGB format
+       - **NV12:** NV12 format
+       - **RGBX:** RGBX format
+   * - **PR**
+     - Profiler Report – Download the model’s performance profiling report.
+
+|
 
 Face Landmark
-^^^^^^^^^^^^^
-    
-.. list-table::
-   :widths: 31 9 9 8 8 8 9
-   :header-rows: 1
+-------------
 
+|
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   
    * - Network Name
+     - float NME
+     - Hardware NME
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - face_landmarks_lite   
-     - 998
-     - 3064
-     - `S <https://github.com/google-ai-edge/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/face_landmarks_lite.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo10h/face_landmarks_lite_profiler_results_compiled.html>`_
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
+   * - face_landmarks_lite
+     - 
+     - 
+     - 982
+     - 2405
+     - | `S <https://github.com/google-ai-edge/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/mediapipe/face_landmarks_lite/pretrained/2025-02-04/face_landmarks_lite.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/face_landmarks_lite_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/face_landmarks_lite.hef>`_
      - 192x192x3
      - 0.6
      - 0.07
+
+|
+
+Aflw2K3D
+--------
+
+|
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   
+   * - Network Name
+     - float NME
+     - Hardware NME
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Links
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
+   * - tddfa_mobilenet_v1
+     - 3.68
+     - 4.03
+     - 3577
+     - 3557
+     - | `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/tddfa_mobilenet_v1.hef>`_ `RGBX <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/tddfa_mobilenet_v1_rgbx.hef>`_
+     - 120x120x3
+     - 3.26
+     - 0.36

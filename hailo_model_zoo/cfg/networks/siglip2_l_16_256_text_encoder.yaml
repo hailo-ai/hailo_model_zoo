@@ -1,0 +1,32 @@
+base:
+- base/siglip_text_encoder.yaml
+evaluation:
+  data_set: models_files/ZeroShotClassification/siglip/siglip2_large_patch16_256/coco_10xtd/2025-05-12/coco_xtd10_en_siglip2_large_patch16_256.tfrecord
+quantization:
+  calib_set:
+  - models_files/ZeroShotClassification/siglip/siglip2_large_patch16_256/coco_10xtd/2025-05-12/coco_xtd10_en_siglip2_large_patch16_256.tfrecord
+network:
+  network_name: siglip2_l_16_256_text_encoder
+paths:
+  network_path:
+  - models_files/ZeroShotClassification/siglip/siglip2_large_patch16_256/text_encoder/pretrained/2025-05-12/siglip2-large-patch16-256_text_encoder.sim.onnx
+  - models_files/ZeroShotClassification/siglip/siglip2_large_patch16_256/text_encoder/pretrained/2025-05-12/siglip2-large-patch16-256_text_encoder.sim.onnx.data
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_large_patch16_256/text_encoder/pretrained/2025-05-12/siglip_large_patch16_256_text_encoder.zip
+  alls_script: siglip2_l_16_256_text_encoder.alls
+parser:
+  nodes:
+  - /model/embeddings/Add
+  - - '2544'
+info:
+  input_shape: 1x64x1024
+  output_shape: 1x64x1024
+  operations: 39.2G
+  parameters: 303.3M
+  framework: pytorch
+  full_precision_result: 97.0
+  source: https://huggingface.co/google/siglip2-large-patch16-256
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

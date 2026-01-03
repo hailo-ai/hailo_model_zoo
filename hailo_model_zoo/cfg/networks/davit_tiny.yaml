@@ -15,3 +15,7 @@ info:
   parameters: 28.36M
   source: https://huggingface.co/timm/davit_tiny.msft_in1k
   full_precision_result: 82.7
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

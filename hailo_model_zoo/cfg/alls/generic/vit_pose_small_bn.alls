@@ -1,5 +1,6 @@
 normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_flavor(optimization_level=2, compression_level=0)
+resources_param(max_control_utilization=0.8, max_compute_utilization=0.8, max_compute_16bit_utilization=0.8, max_memory_utilization=0.8, max_input_aligner_utilization=0.8, max_apu_utilization=0.8)
 post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4000)
 
-allocator_param(timeout=5h)
+allocator_param(timeout=5h, enable_post_split_average_buffers=False)

@@ -28,3 +28,7 @@ info:
   source: https://github.com/rwightman/pytorch-image-models/
   license_url: https://github.com/rwightman/pytorch-image-models/blob/master/LICENSE
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

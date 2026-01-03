@@ -41,3 +41,7 @@ info:
   full_precision_result: 0.604
   license_url: https://github.com/dwofk/fast-depth/blob/master/LICENSE
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

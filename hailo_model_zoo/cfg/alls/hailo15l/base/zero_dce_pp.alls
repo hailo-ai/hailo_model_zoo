@@ -1,0 +1,9 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+
+context_switch_param(toposort_mode=pushdown)
+
+#TODO remove once SDK-61404 is done
+sh1 = shortcut(conv7, [ew_mult7])
+sh2 = shortcut(ew_sub7, [ew_mult7])
+

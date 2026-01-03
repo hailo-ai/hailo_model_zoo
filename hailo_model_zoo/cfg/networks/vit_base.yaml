@@ -19,3 +19,7 @@ info:
   eval_metric: Accuracy (top1)
   source: https://github.com/rwightman/pytorch-image-models
   full_precision_result: 84.55
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

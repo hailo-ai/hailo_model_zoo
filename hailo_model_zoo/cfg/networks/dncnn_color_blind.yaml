@@ -36,3 +36,7 @@ info:
   source: https://github.com/cszn/KAIR
   license_url: https://github.com/cszn/KAIR/blob/master/LICENSE
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

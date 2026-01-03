@@ -1,47 +1,55 @@
 
 
-Public Pre-Trained Models
-=========================
 
-.. |rocket| image:: ../../images/rocket.png
-  :width: 18
+Public Models
+=============
 
-.. |star| image:: ../../images/star.png
-  :width: 18
+All models were compiled using Hailo Dataflow Compiler v5.2.0.
 
-Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
+|
 
-* Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
-* Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v5.1.0
+Zero Shot Object Detection
+==========================
+
+|
 
 Link Legend
+-----------
 
-The following shortcuts are used in the table below to indicate available resources for each model:
-
-* S – Source: Link to the model’s open-source code repository.
-* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
-* H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
-            * NV: HEF with NV12 format
-            * X: HEF with RGBX format
-
-* PR – Profiler Report: Download the model’s performance profiling report.
-
-
-
-.. _Classification:
-
---------------
-
-ImageNet
-^^^^^^^^
+|
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
+   :widths: 25 75
    :header-rows: 1
 
+   * - **Key / Icon**
+     - **Description**
+   * - ⭐
+     - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
+   * - **S**
+     - Source – Link to the model’s open-source repository.
+   * - **PT**
+     - Pretrained – Download the pretrained model file (ZIP format).
+   * - **HEF, NV12, RGBX**
+     - Compiled Models – Links to models in various formats:
+       - **HEF:** RGB format
+       - **NV12:** NV12 format
+       - **RGBX:** RGBX format
+   * - **PR**
+     - Profiler Report – Download the model’s performance profiling report.
+
+|
+
+Coco
+----
+
+|
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   
    * - Network Name
      - float mAP
      - Hardware mAP
@@ -50,14 +58,22 @@ ImageNet
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)    
-   * - yolo_world_v2s
-     - 36
-     - 33
-     - 23
-     - 30
-     - `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/yolo_world_v2s_profiler_results_compiled.html>`_
-     - 640x640x3, 1x80x512
-     - 9.3
-     - 32.7  
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
 
+   * - yolo_world_v2s
+     - 36.4
+     - 31.6
+     - 45.9
+     - 66.9
+     - | `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/yolo_world_v2s_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/yolo_world_v2s.hef>`_
+     - 640x640x3
+     - 9.3
+     - 32.7

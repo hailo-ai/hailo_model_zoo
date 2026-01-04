@@ -23,3 +23,6 @@ info:
   full_precision_result: 68.58
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

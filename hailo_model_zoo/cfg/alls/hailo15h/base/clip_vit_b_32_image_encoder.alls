@@ -7,9 +7,7 @@ quantization_param({norm*}, precision_mode=a16_w16)
 quantization_param([slice1], precision_mode=a16_w16)
 quantization_param([conv1, format_conversion1], precision_mode=a16_w16)
 
-resources_param(max_compute_utilization=1.0, max_control_utilization=0.95, max_memory_utilization=0.75)
-
-performance_param(optimize_for_batch=8)
-resources_param(max_apu_utilization=0.9, max_compute_16bit_utilization=0.9, max_compute_utilization=0.9, max_control_utilization=0.9, max_input_aligner_utilization=0.9, max_memory_utilization=0.85, max_utilization=0.0)
-
-context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=False, auto_partition_to_buckets=True, berkitizer_min_size=200, berkitizer_bucket_size=80)
+allocator_param(disable_row_per_cut=True, enable_fixer=max_adjcents, automatic_l4_portals=False, input_layer_max_successors=4, enable_post_split_average_buffers=False)
+performance_param(optimize_for_batch=63)
+resources_param(max_utilization=1.0)
+context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=True, auto_partition_to_buckets=True, berkitizer_min_size=200, berkitizer_bucket_size=28)

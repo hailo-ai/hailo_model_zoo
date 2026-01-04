@@ -96,7 +96,7 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
 
     def preprocessing_fn(image, image_info=None):
         image, image_info = preprocessing_callback(image, image_info, height, width, flip=flip, **kwargs)
-        if normalization_params:
+        if normalization_params and normalization_params[0] and normalization_params[1]:
             image = normalize(image, normalization_params)
         if input_resize.get("enabled", False):
             image = image_resize(image, input_resize.input_shape)

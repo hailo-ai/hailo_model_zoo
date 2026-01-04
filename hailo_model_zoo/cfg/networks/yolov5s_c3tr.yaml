@@ -29,3 +29,7 @@ info:
   source: https://github.com/ultralytics/yolov5/tree/v6.0
   license_url: https://github.com/ultralytics/yolov5/blob/v6.0/LICENSE
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

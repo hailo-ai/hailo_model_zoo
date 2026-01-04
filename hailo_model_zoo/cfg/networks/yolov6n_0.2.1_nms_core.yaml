@@ -33,3 +33,6 @@ info:
   license_url: https://github.com/meituan/YOLOv6/blob/main/LICENSE
   license_name: GPL-3.0
   full_precision_result: 35.16
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

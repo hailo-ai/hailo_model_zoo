@@ -1,0 +1,14 @@
+post_quantization_optimization(finetune, policy=disabled)
+post_quantization_optimization(bias_correction, policy=disabled)
+
+resources_param(max_utilization=0.95)
+allocator_param(enable_fixer=max_adjcents)
+context_switch_param(slotter_chances=600, toposort_mode=pushdown)
+
+conv13_d0, conv13_d1, conv13_dc = defuse(conv13, 2)
+conv14_d0, conv14_d1, conv14_dc = defuse(conv14, 2)
+conv15_d0, conv15_d1, conv15_dc = defuse(conv15, 2)
+conv17_d0, conv17_d1, conv17_d2, conv17_d3, conv17_dc = defuse(conv17, 4)
+conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_d4, conv18_d5, conv18_d6, conv18_d7, conv18_dc = defuse(conv18, 8)
+conv19_d0, conv19_d1, conv19_d2, conv19_d3, conv19_d4, conv19_d5, conv19_d6, conv19_d7, conv19_dc = defuse(conv19, 8)
+conv20_d0, conv20_d1, conv20_d2, conv20_d3, conv20_d4, conv20_d5, conv20_d6, conv20_d7, conv20_dc = defuse(conv20, 8)

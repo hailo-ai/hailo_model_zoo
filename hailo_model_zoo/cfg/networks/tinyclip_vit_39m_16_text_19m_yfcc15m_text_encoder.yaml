@@ -28,3 +28,6 @@ info:
   source: https://huggingface.co/wkcn/TinyCLIP-ViT-39M-16-Text-19M-YFCC15M
   license_url: https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/mit.md
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

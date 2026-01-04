@@ -1,0 +1,32 @@
+base:
+- base/clip.yaml
+network:
+  network_name: siglip_l_16_256_image_encoder
+postprocessing:
+  postprocess_config_file: models_files/cifar100/2025-03-17/class_token_siglip_large_16_256.npy
+paths:
+  network_path:
+  - models_files/ZeroShotClassification/siglip/siglip_large_patch16_256/image_encoder/pretrained/2025-03-25/siglip_large_patch16_256_vision_encoder.sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip_large_patch16_256/image_encoder/pretrained/2025-03-25/siglip_large_patch16_256_vision_encoder.zip
+  alls_script: siglip_l_16_256_image_encoder.alls
+parser:
+  nodes:
+  - input.1
+  - - '3237'
+info:
+  task: zero-shot classification
+  input_shape: 256x256x3
+  output_shape: 1x1x1024
+  operations: 163.1G
+  parameters: 315M
+  framework: pytorch
+  training_data: internal
+  validation_data: cifar100
+  eval_metric: Accuracy (top1)
+  source: https://huggingface.co/google/siglip-large-patch16-256
+  full_precision_result: 81.99
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

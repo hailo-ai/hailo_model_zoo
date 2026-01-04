@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.1.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.2.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.1.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.2.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -47,8 +47,6 @@ Hailo Model Zoo
 
 |python| |tensorflow| |cuda| |compiler| |runtime| |license|
 
-Note: The master branch supports only the Hailo-10 and Hailo-15 device families. For Hailo-8, Hailo-8R, and Hailo-8L devices, please use the v2.x branch.
-
 The Hailo Model Zoo provides pre-trained models for high-performance deep learning applications. Using the Hailo Model Zoo, you can measure the full precision accuracy of each model, the quantized accuracy using the Hailo Emulator, and measure the accuracy on Hailo's device. Finally, you will be able to generate the Hailo Executable Format (HEF) binary file to speed up development and generate high-quality applications accelerated with Hailo's technology. The Hailo Model Zoo also provides re-training instructions to train the models on custom datasets and models that were trained for specific use cases on internal datasets.
 
 Models
@@ -58,19 +56,43 @@ The models are divided to:
 
 * Public models - which were trained on publicly available datasets.
 
-    * For Hailo-8 - `Classification <docs/public_models/HAILO8/HAILO8_classification.rst>`_, `Object Detection <docs/public_models/HAILO8/HAILO8_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8/HAILO8_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
-
-    * For Hailo-8L - `Classification <docs/public_models/HAILO8L/HAILO8L_classification.rst>`_, `Object Detection <docs/public_models/HAILO8L/HAILO8L_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8L/HAILO8L_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
-
     * For Hailo-15H - `Classification <docs/public_models/HAILO15H/HAILO15H_classification.rst>`_, `Object Detection <docs/public_models/HAILO15H/HAILO15H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15H/HAILO15H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
     * For Hailo-10H - `Classification <docs/public_models/HAILO10H/HAILO10H_classification.rst>`_, `Object Detection <docs/public_models/HAILO10H/HAILO10H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10H/HAILO10H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
+    **⚙️  Compatibility Notice:** The Hailo-8 and Hailo-8L devices are supported on the **Hailo Model Zoo v2.x** branch, in combination with the **Hailo Dataflow Compiler v3.x** branch. The `master` branch is intended for **Hailo-10** and **Hailo-15** devices only.
+
+    * For Hailo-8 - `Classification <docs/public_models/HAILO8/HAILO8_classification.rst>`_, `Object Detection <docs/public_models/HAILO8/HAILO8_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8/HAILO8_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
+    * For Hailo-8L - `Classification <docs/public_models/HAILO8L/HAILO8L_classification.rst>`_, `Object Detection <docs/public_models/HAILO8L/HAILO8L_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8L/HAILO8L_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
 
 
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.
 
+What's new
+----------
+
+**Core stack updates** This release aligns with the latest version of the Hailo software stack, ensuring compatibility and performance improvements.
+
+* Upgraded to Dataflow Compiler v5.2.0
+
+* Upgraded to HailoRT v5.2.0
+
+**New model support** We have expanded the Model Zoo with state-of-the-art architectures for vision-language, detection, and OCR tasks:
+
+* YOLOv12: Added support for yolov12n, bringing the latest in real-time object detection efficiency.
+
+* PaddleOCR-v5: Added lightweight mobile versions for both text detection and recognition (paddle_ocr_v5_mobile_detection, paddle_ocr_v5_mobile_recognition).
+
+* StereoNet: Stereo depth estimation is now supported on Hailo-10H and Hailo-15H platforms.
+
+* SigLIP: Introduced the Sigmoid Loss for Language Image Pre-Training model family, including:
+
+   * Image Encoders: siglip_l_16_256, siglip2_l_16_256, siglip_b_16
+
+   * Text Encoders: siglip_l_16_256, siglip2_l_16_256, siglip_b_16
 
 Retraining
 ----------
@@ -146,3 +168,5 @@ Changelog
 ---------
 
 For further information please see our `CHANGELOG <docs/CHANGELOG.rst>`_ page.
+
+----

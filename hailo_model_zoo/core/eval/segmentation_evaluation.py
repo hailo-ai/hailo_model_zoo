@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+import cv2
 import numpy as np
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
@@ -13,6 +14,62 @@ def confusion_matrix(y_true, y_pred, N):
         y = np.concatenate((y, np.zeros((N * N - len(y),))))
     y = y.reshape(N, N)
     return y[: N - 1, : N - 1]
+
+
+@EVAL_FACTORY.register(name="ss_dpm")
+class DPMSegmentationEval(Eval):
+    def __init__(self, *, labels_map=None, **kwargs):
+        self._metric_names = ["mIoU"]
+        self._metrics_vals = [0]
+        self._classes = kwargs.get("classes", 2)
+        self.reset()
+
+    def reset(self):
+        self.mean_intersection_over_union = []
+
+    def evaluate(self):
+        mean_intersection_over_union = np.mean(self.mean_intersection_over_union)
+        self._metrics_vals[0] = mean_intersection_over_union
+
+    def calc_intersection(self, x, y):
+        return np.sum((x[:, :, 1] == y[:, :, 1]) & x[:, :, 1] == 1) + np.sum(
+            (x[:, :, 0] == y[:, :, 0]) & x[:, :, 0] == 1
+        )
+
+    def _get_accuracy(self):
+        return OrderedDict([(self._metric_names[0], self._metrics_vals[0])])
+
+    def _convert_letterbox_pred(self, pred, img_info, img_index):
+        # extract prediction segmentation from letterbox to original image size
+        # remove horizontal and vertical padding
+        horizontal_pad = img_info["horizontal_pad"][img_index]
+        vertical_pad = img_info["vertical_pad"][img_index]
+        letterbox_height = img_info["letterbox_height"][img_index]
+        letterbox_width = img_info["letterbox_width"][img_index]
+        cropped_pred = pred[
+            vertical_pad // 2 : vertical_pad // 2 + letterbox_height,
+            horizontal_pad // 2 : horizontal_pad // 2 + letterbox_width,
+        ]
+        # resize to original image size
+        image_height = img_info["height"][img_index]
+        image_width = img_info["width"][img_index]
+        resized_pred = cv2.resize(cropped_pred, (image_width, image_height), interpolation=cv2.INTER_LINEAR)
+        return resized_pred
+
+    def _convert_letterbox_mask(self, mask, img_info, img_index):
+        # extract ground truth segmentation from letterbox to original image size
+        return mask[: img_info["height"][img_index], : img_info["width"][img_index], 1:]
+
+    def update_op(self, net_output, img_info):
+        masks = img_info["mask"]
+        preds = net_output["predictions"]
+        for i, (pred, mask) in enumerate(zip(preds, masks)):
+            new_pred = self._convert_letterbox_pred(pred, img_info, i)
+            new_mask = self._convert_letterbox_mask(mask, img_info, i)
+            intersection = self.calc_intersection(new_mask, new_pred)
+            union = np.sum(np.bitwise_or(new_mask == 1, new_pred == 1))
+            per_image_iou = intersection / union
+            self.mean_intersection_over_union.append(per_image_iou)
 
 
 @EVAL_FACTORY.register(name="segmentation")

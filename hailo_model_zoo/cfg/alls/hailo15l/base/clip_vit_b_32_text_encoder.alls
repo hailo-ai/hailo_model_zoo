@@ -1,0 +1,128 @@
+model_optimization_config(calibration, batch_size=8, calibset_size=64)
+model_optimization_config(globals, multiproc_policy=disabled)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+model_optimization_flavor(optimization_level=0, compression_level=0)
+quantization_param(input_layer1, precision_mode=a16_w16)
+quantization_param([clip_vit_b_32_text_encoder/ew_add1, clip_vit_b_32_text_encoder/ew_add2, clip_vit_b_32_text_encoder/ew_add3, clip_vit_b_32_text_encoder/ew_add4, clip_vit_b_32_text_encoder/ew_add5, clip_vit_b_32_text_encoder/ew_add6, clip_vit_b_32_text_encoder/ew_add7, clip_vit_b_32_text_encoder/ew_add8, clip_vit_b_32_text_encoder/ew_add9, clip_vit_b_32_text_encoder/ew_add10, clip_vit_b_32_text_encoder/ew_add11, clip_vit_b_32_text_encoder/ew_add12, clip_vit_b_32_text_encoder/ew_add13, clip_vit_b_32_text_encoder/ew_add14, clip_vit_b_32_text_encoder/ew_add15, clip_vit_b_32_text_encoder/ew_add16, clip_vit_b_32_text_encoder/ew_add17, clip_vit_b_32_text_encoder/ew_add18, clip_vit_b_32_text_encoder/ew_add19, clip_vit_b_32_text_encoder/ew_add20, clip_vit_b_32_text_encoder/ew_add21, clip_vit_b_32_text_encoder/ew_add22, clip_vit_b_32_text_encoder/ew_add23, clip_vit_b_32_text_encoder/ew_add24, clip_vit_b_32_text_encoder/ew_add25], precision_mode=a16_w8_a16)
+quantization_param({ew_add*}, bias_mode=double_scale_initialization)
+quantization_param([clip_vit_b_32_text_encoder/normalization25], precision_mode=a16_w8_a16)
+quantization_param([clip_vit_b_32_text_encoder/conv2, clip_vit_b_32_text_encoder/conv3, clip_vit_b_32_text_encoder/conv4, clip_vit_b_32_text_encoder/conv6, clip_vit_b_32_text_encoder/conv7, clip_vit_b_32_text_encoder/conv8, clip_vit_b_32_text_encoder/conv10, clip_vit_b_32_text_encoder/conv11, clip_vit_b_32_text_encoder/conv12, clip_vit_b_32_text_encoder/conv14, clip_vit_b_32_text_encoder/conv15, clip_vit_b_32_text_encoder/conv16, clip_vit_b_32_text_encoder/conv18, clip_vit_b_32_text_encoder/conv19, clip_vit_b_32_text_encoder/conv20, clip_vit_b_32_text_encoder/conv22, clip_vit_b_32_text_encoder/conv23, clip_vit_b_32_text_encoder/conv24, clip_vit_b_32_text_encoder/conv26, clip_vit_b_32_text_encoder/conv27, clip_vit_b_32_text_encoder/conv28, clip_vit_b_32_text_encoder/conv30, clip_vit_b_32_text_encoder/conv31, clip_vit_b_32_text_encoder/conv32, clip_vit_b_32_text_encoder/conv34, clip_vit_b_32_text_encoder/conv35, clip_vit_b_32_text_encoder/conv36, clip_vit_b_32_text_encoder/conv38, clip_vit_b_32_text_encoder/conv39, clip_vit_b_32_text_encoder/conv40, clip_vit_b_32_text_encoder/conv42, clip_vit_b_32_text_encoder/conv43, clip_vit_b_32_text_encoder/conv44, clip_vit_b_32_text_encoder/conv46, clip_vit_b_32_text_encoder/conv47, clip_vit_b_32_text_encoder/conv48], precision_mode=a16_w8_a16)
+quantization_param([clip_vit_b_32_text_encoder/conv2, clip_vit_b_32_text_encoder/conv3, clip_vit_b_32_text_encoder/conv4, clip_vit_b_32_text_encoder/conv6, clip_vit_b_32_text_encoder/conv7, clip_vit_b_32_text_encoder/conv8, clip_vit_b_32_text_encoder/conv10, clip_vit_b_32_text_encoder/conv11, clip_vit_b_32_text_encoder/conv12, clip_vit_b_32_text_encoder/conv14, clip_vit_b_32_text_encoder/conv15, clip_vit_b_32_text_encoder/conv16, clip_vit_b_32_text_encoder/conv18, clip_vit_b_32_text_encoder/conv19, clip_vit_b_32_text_encoder/conv20, clip_vit_b_32_text_encoder/conv22, clip_vit_b_32_text_encoder/conv23, clip_vit_b_32_text_encoder/conv24, clip_vit_b_32_text_encoder/conv27, clip_vit_b_32_text_encoder/conv28, clip_vit_b_32_text_encoder/conv30, clip_vit_b_32_text_encoder/conv31, clip_vit_b_32_text_encoder/conv32, clip_vit_b_32_text_encoder/conv34, clip_vit_b_32_text_encoder/conv35, clip_vit_b_32_text_encoder/conv36, clip_vit_b_32_text_encoder/conv38, clip_vit_b_32_text_encoder/conv39, clip_vit_b_32_text_encoder/conv40, clip_vit_b_32_text_encoder/conv42, clip_vit_b_32_text_encoder/conv43, clip_vit_b_32_text_encoder/conv44, clip_vit_b_32_text_encoder/conv46, clip_vit_b_32_text_encoder/conv47, clip_vit_b_32_text_encoder/conv48], weight_group_size=128)
+quantization_param([clip_vit_b_32_text_encoder/conv26], weight_group_size=128)
+quantization_param({conv*}, bias_mode=double_scale_initialization)
+quantization_param({conv_feature_splitter[0-9]*_[1-3]}, precision_mode=a8_w8)
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
+pre_quantization_optimization(equalization, policy=enabled)
+
+allocator_param(enable_auto_spatial_collapse=False, enable_auto_spatial_reshapes=False, enable_post_split_average_buffers=False, automatic_reshapes=disabled)
+performance_param(optimize_for_batch=8)
+resources_param(max_control_utilization=0.90, max_memory_utilization=0.85, max_compute_utilization=0.90)
+context_switch_param(toposort_mode=pushdown, slotter_chances=600, mode=enabled, share_buckets_partition=True)
+
+
+placeholder = format_conversion(const_input1, ew_add1, spatial_reshape, 10, 8, collapse=True)
+spatial_reshape_from_input_layer1 = format_conversion(input_layer1, ew_add1, spatial_reshape, 10, 8, collapse=False)
+
+placeholder = format_conversion(const_input_softmax1, ew_mult2_softmax1, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax1, ew_mult3_softmax1, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax2, ew_mult2_softmax2, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax2, ew_mult3_softmax2, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax3, ew_mult2_softmax3, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax3, ew_mult3_softmax3, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax4, ew_mult2_softmax4, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax4, ew_mult3_softmax4, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax5, ew_mult2_softmax5, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax5, ew_mult3_softmax5, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax6, ew_mult2_softmax6, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax6, ew_mult3_softmax6, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax7, ew_mult2_softmax7, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax7, ew_mult3_softmax7, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax8, ew_mult2_softmax8, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax8, ew_mult3_softmax8, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax9, ew_mult2_softmax9, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax9, ew_mult3_softmax9, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax10, ew_mult2_softmax10, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax10, ew_mult3_softmax10, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax11, ew_mult2_softmax11, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax11, ew_mult3_softmax11, spatial_reshape, 10, 8, collapse=True)
+
+placeholder = format_conversion(const_input_softmax12, ew_mult2_softmax12, spatial_reshape, 10, 8, collapse=True)
+placeholder = format_conversion(const_input_softmax12, ew_mult3_softmax12, spatial_reshape, 10, 8, collapse=True)
+
+spatial_reshape_from_normalization25 = format_conversion(normalization25, output_layer1, spatial_reshape, 1, 77, collapse=False)
+
+
+conv2_d0, conv2_d1, conv2_d2, conv2_d3, conv2_d4, conv2_d5, conv2_dc = defuse(conv2, 6)
+conv3_d0, conv3_d1, conv3_d2, conv3_d3, conv3_d4, conv3_d5, conv3_dc = defuse(conv3, 6)
+conv4_d0, conv4_d1, conv4_d2, conv4_d3, conv4_d4, conv4_d5, conv4_dc = defuse(conv4, 6)
+
+conv6_d0, conv6_d1, conv6_d2, conv6_d3, conv6_d4, conv6_d5 ,conv6_dc = defuse(conv6, 6)
+conv7_d0, conv7_d1, conv7_d2, conv7_d3, conv7_d4, conv7_d5, conv7_dc = defuse(conv7, 6)
+conv8_d0, conv8_d1, conv8_d2, conv8_d3, conv8_d4, conv8_d5, conv8_dc = defuse(conv8, 6)
+
+conv10_d0, conv10_d1, conv10_d2, conv10_d3, conv10_d4, conv10_d5, conv10_dc = defuse(conv10, 6)
+conv11_d0, conv11_d1, conv11_d2, conv11_d3, conv11_d4, conv11_d5, conv11_dc = defuse(conv11, 6)
+conv12_d0, conv12_d1, conv12_d2, conv12_d3, conv12_d4, conv12_d5, conv12_dc = defuse(conv12, 6)
+
+conv14_d0, conv14_d1, conv14_d2, conv14_d3, conv14_d4, conv14_d5, conv14_dc = defuse(conv14, 6)
+conv15_d0, conv15_d1, conv15_d2, conv15_d3, conv15_d4, conv15_d5, conv15_dc = defuse(conv15, 6)
+conv16_d0, conv16_d1, conv16_d2, conv16_d3, conv16_d4, conv16_d5, conv16_dc = defuse(conv16, 6)
+
+conv18_d0, conv18_d1, conv18_d2, conv18_d3, conv18_d4, conv18_d5, conv18_dc = defuse(conv18, 6)
+conv19_d0, conv19_d1, conv19_d2, conv19_d3, conv19_d4, conv19_d5, conv19_dc = defuse(conv19, 6)
+conv20_d0, conv20_d1, conv20_d2, conv20_d3, conv20_d4, conv20_d5, conv20_dc = defuse(conv20, 6)
+
+conv22_d0, conv22_d1, conv22_d2, conv22_d3, conv22_d4, conv22_d5, conv22_dc = defuse(conv22, 6)
+conv23_d0, conv23_d1, conv23_d2, conv23_d3, conv23_d4, conv23_d5, conv23_dc = defuse(conv23, 6)
+conv24_d0, conv24_d1, conv24_d2, conv24_d3, conv24_d4, conv24_d5, conv24_dc = defuse(conv24, 6)
+
+conv26_d0, conv26_d1, conv26_d2, conv26_d3, conv26_d4, conv26_d5, conv26_dc = defuse(conv26, 6)
+conv27_d0, conv27_d1, conv27_d2, conv27_d3, conv27_d4, conv27_d5, conv27_dc = defuse(conv27, 6)
+conv28_d0, conv28_d1, conv28_d2, conv28_d3, conv28_d4, conv28_d5, conv28_dc = defuse(conv28, 6)
+
+conv30_d0, conv30_d1, conv30_d2, conv30_d3, conv30_d4, conv30_d5, conv30_dc = defuse(conv30, 6)
+conv31_d0, conv31_d1, conv31_d2, conv31_d3, conv31_d4, conv31_d5, conv31_dc = defuse(conv31, 6)
+conv32_d0, conv32_d1, conv32_d2, conv32_d3, conv32_d4, conv32_d5, conv32_dc = defuse(conv32, 6)
+
+conv34_d0, conv34_d1, conv34_d2, conv34_d3, conv34_d4, conv34_d5, conv34_dc = defuse(conv34, 6)
+conv35_d0, conv35_d1, conv35_d2, conv35_d3, conv35_d4, conv35_d5, conv35_dc = defuse(conv35, 6)
+conv36_d0, conv36_d1, conv36_d2, conv36_d3, conv36_d4, conv36_d5, conv36_dc = defuse(conv36, 6)
+
+conv38_d0, conv38_d1, conv38_d2, conv38_d3, conv38_d4, conv38_d5, conv38_dc = defuse(conv38, 6)
+conv39_d0, conv39_d1, conv39_d2, conv39_d3, conv39_d4, conv39_d5, conv39_dc = defuse(conv39, 6)
+conv40_d0, conv40_d1, conv40_d2, conv40_d3, conv40_d4, conv40_d5, conv40_dc = defuse(conv40, 6)
+
+conv42_d0, conv42_d1, conv42_d2, conv42_d3, conv42_d4, conv42_d5, conv42_dc = defuse(conv42, 6)
+conv43_d0, conv43_d1, conv43_d2, conv43_d3, conv43_d4, conv43_d5, conv43_dc = defuse(conv43, 6)
+conv44_d0, conv44_d1, conv44_d2, conv44_d3, conv44_d4, conv44_d5, conv44_dc = defuse(conv44, 6)
+
+conv46_d0, conv46_d1, conv46_d2, conv46_d3, conv46_d4, conv46_d5, conv46_dc = defuse(conv46, 6)
+conv47_d0, conv47_d1, conv47_d2, conv47_d3, conv47_d4, conv47_d5, conv47_dc = defuse(conv47, 6)
+conv48_d0, conv48_d1, conv48_d2, conv48_d3, conv48_d4, conv48_d5, conv48_dc = defuse(conv48, 6)
+
+pre_blocks = bucket([input_layer1, const_input1, ew_add1])
+
+block1 = bucket([layer_normalization1, ew_add2, ew_add3])
+block2 = bucket([layer_normalization3, ew_add4, ew_add5])
+block3 = bucket([layer_normalization5, ew_add6, ew_add7])
+block4 = bucket([layer_normalization7, ew_add8, ew_add9])
+block5 = bucket([layer_normalization9, ew_add10, ew_add11])
+block6 = bucket([layer_normalization11, ew_add12, ew_add13])
+block7 = bucket([layer_normalization13, ew_add14, ew_add15])
+block8 = bucket([layer_normalization15, ew_add16, ew_add17])
+block9 = bucket([layer_normalization17, ew_add18, ew_add19])
+block10 = bucket([layer_normalization19, ew_add20, ew_add21])
+block11 = bucket([layer_normalization21, ew_add22, ew_add23])
+block12 = bucket([layer_normalization23, ew_add24, ew_add25])
+
+post_blocks = bucket([layer_normalization25, output_layer1])

@@ -26,3 +26,6 @@ info:
   source: https://huggingface.co/google/siglip2-base-patch16-224
   license_url: https://www.apache.org/licenses/LICENSE-2.0
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

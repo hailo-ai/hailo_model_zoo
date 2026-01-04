@@ -39,3 +39,7 @@ info:
   source: https://github.com/ultralytics/yolov5/releases/tag/v2.0
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

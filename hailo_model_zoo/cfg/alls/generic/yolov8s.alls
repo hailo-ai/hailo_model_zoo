@@ -5,3 +5,4 @@ change_output_activation(conv63, sigmoid)
 nms_postprocess("../../postprocess_config/yolov8s_nms_config.json", meta_arch=yolov8, engine=cpu)
 
 performance_param(optimize_for_power=True)
+context_switch_param(auto_partition_to_buckets=False)

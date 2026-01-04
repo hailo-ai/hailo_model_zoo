@@ -486,7 +486,12 @@ def retinaface(image, image_info=None, height=None, width=None, max_pad=2048, **
 
 
 def letterbox(
-    img, height=608, width=1088, centered=True, color=(127.5, 127.5, 127.5)
+    img,
+    height=608,
+    width=1088,
+    centered=True,
+    color=(127.5, 127.5, 127.5),
+    resize=True,
 ):  # resize a rectangular image to a padded rectangular
     shape = img.shape[:2]  # shape = [height, width]
     ratio = min(float(height) / shape[0], float(width) / shape[1])
@@ -501,14 +506,22 @@ def letterbox(
     else:
         top, bottom = 0, dh
         left, right = 0, dw
-    img = cv2.resize(
-        img, new_shape, interpolation=(cv2.INTER_AREA if ratio < 1.0 else cv2.INTER_LINEAR)
-    )  # resized, no border
-    # cv2 uses bgr format, need to switch the color
-    color_bgr = color[::-1]
-    img = cv2.copyMakeBorder(
-        img, int(top), int(bottom), int(left), int(right), cv2.BORDER_CONSTANT, value=color_bgr
-    )  # padded rectangular
+    if resize:
+        img = cv2.resize(
+            img, new_shape, interpolation=(cv2.INTER_AREA if ratio < 1.0 else cv2.INTER_LINEAR)
+        )  # resized, no border
+        # cv2 uses bgr format, need to switch the color
+        color_bgr = color[::-1]
+        img = cv2.copyMakeBorder(
+            img, int(top), int(bottom), int(left), int(right), cv2.BORDER_CONSTANT, value=color_bgr
+        )  # padded rectangular
+    else:
+        # just pad the input image to twice the size of width/height without resizing
+        final_width = height - shape[1]
+        final_height = width - shape[0]
+        img = cv2.copyMakeBorder(
+            img, int(0), int(final_height), int(0), int(final_width), cv2.BORDER_CONSTANT, value=(0.0, 0.0, 0.0)
+        )  # padded rectangular
     return img, new_width, new_height
 
 

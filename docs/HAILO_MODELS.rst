@@ -4,6 +4,8 @@ Hailo Models
 
 Here, we give the full list of models trained in-house for specific use-cases.
 Each model is accompanied with its own README, retraining docker and retraining guide.
+The compiled models listed here target **Hailo-10H**; for **Hailo-8**, switch to the relevant branch
+`HAILO_MODELS.rst <https://github.com/hailo-ai/hailo_model_zoo/blob/v2.17/docs/HAILO_MODELS.rst>`_.
 
 
 * FLOPs in the table are counted as MAC operations.

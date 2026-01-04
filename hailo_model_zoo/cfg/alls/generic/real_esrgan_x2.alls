@@ -3,3 +3,4 @@ model_optimization_config(calibration, batch_size=2)
 
 # SDK-60055 - Debug why this fails on hailo15m
 allocator_param(fps_ratio_impact=0)
+context_switch_param(auto_partition_to_buckets=False)

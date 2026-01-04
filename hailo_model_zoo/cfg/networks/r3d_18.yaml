@@ -35,3 +35,7 @@ info:
   source: https://pytorch.org/vision/stable/models.html#video-classification
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

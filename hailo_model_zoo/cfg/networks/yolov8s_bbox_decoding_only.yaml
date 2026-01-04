@@ -13,6 +13,7 @@ paths:
   alls_script: yolov8s_bbox_decoding_only.alls
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8s/2023-02-02/yolov8s.zip
 info:
+  task: object detection
   input_shape: 640x640x3
   output_shape: 80x80x80, 80x80x64, 40x40x80, 40x40x64, 20x20x80, 20x20x64
   operations: 28.6G
@@ -25,3 +26,7 @@ info:
   source: https://github.com/ultralytics/ultralytics
   license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
   license_name: AGPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

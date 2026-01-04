@@ -23,3 +23,7 @@ info:
   eval_metric: Accuracy (top1)
   full_precision_result: 71.78
   source: https://github.com/tensorflow/models/tree/v1.13.0/research/slim
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

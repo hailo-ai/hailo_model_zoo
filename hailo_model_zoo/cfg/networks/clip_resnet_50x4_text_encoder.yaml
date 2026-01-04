@@ -22,3 +22,6 @@ info:
   framework: pytorch
   full_precision_result: 91.2
   source: https://huggingface.co/timm/resnet50x4_clip.openai
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

@@ -1,0 +1,48 @@
+base:
+- base/base.yaml
+preprocessing:
+  input_shape:
+  - 48
+  - 320
+  - 3
+  network_type: text_recognition
+  meta_arch: paddle_rec_preprocess
+postprocessing:
+  postprocess_config_file: models_files/icdar2015/2025-07-30/ppocrv5_char_dict.npz
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 127.5
+    - 127.5
+    - 127.5
+    std_list:
+    - 127.5
+    - 127.5
+    - 127.5
+quantization:
+  calib_set:
+  - models_files/icdar2015/2025-08-30/icdar15_text_rec_calib_set.tfrecord
+network:
+  network_name: paddle_ocr_v5_mobile_recognition
+paths:
+  alls_script: paddle_ocr_v5_mobile_recognition.alls
+  network_path:
+  - models_files/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip
+evaluation:
+  dataset_name: icdar15_rec
+  data_set: models_files/icdar2015/2025-08-30/icdar15_text_rec_val_set.tfrecord
+info:
+  input_shape: 48x320x3
+  output_shape: 1x40x18385
+  operations: 1.5G
+  parameters: 4.1M
+  full_precision_result: 62.318
+  source: https://github.com/PaddlePaddle/PaddleOCR/tree/main
+  license_url: https://github.com/PaddlePaddle/PaddleOCR/blob/main/LICENSE
+  license_name: Apache-2.0
+  task: text recognition
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

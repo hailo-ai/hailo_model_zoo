@@ -34,3 +34,7 @@ info:
   source: https://github.com/WongKinYiu/yolov9
   license_url: https://github.com/WongKinYiu/yolov9/blob/main/LICENSE.md
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

@@ -1,0 +1,19 @@
+norm1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
+pre_quantization_optimization(decompose_conv_factor, policy=enabled)
+model_optimization_flavor(optimization_level=0, compression_level=0)
+quantization_param([slice1], precision_mode=a16_w16)
+quantization_param({ew_add*}, precision_mode=a16_w8)
+quantization_param({norm*}, precision_mode=a16_w8)
+quantization_param([conv1_s2d, concat1, format_conversion1], precision_mode=a16_w16)
+quantization_param([conv1], precision_mode=a16_w8)
+quantization_param([conv1], weight_group_size=147)
+quantization_param({conv[0-9]*}, bias_mode=double_scale_initialization)
+quantization_param([conv53, conv98], precision_mode=a16_w8)
+quantization_param([conv53, conv98], weight_group_size=512)
+pre_quantization_optimization(activation_clipping, layers=[conv_feature_splitter23_1], mode=percentile, clipping_values=[0, 99.95], recollect_stats=True)
+model_optimization_config(calibration, calibset_size=64)
+
+allocator_param(enable_auto_spatial_reshapes=False, enable_muxer=False, automatic_ddr=False)
+
+# https://hailotech.atlassian.net/browse/HRT-19588
+hef_param(share_config=enabled)

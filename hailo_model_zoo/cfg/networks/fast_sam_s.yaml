@@ -42,3 +42,6 @@ info:
   source: https://github.com/CASIA-IVA-Lab/FastSAM
   license_url: https://github.com/CASIA-IVA-Lab/FastSAM/blob/main/LICENSE
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

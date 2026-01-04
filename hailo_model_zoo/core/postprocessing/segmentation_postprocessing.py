@@ -59,6 +59,13 @@ def get_dataset_colors(dataset):
                 [89.0, 197.0, 132.0, 115.0],
             ]
         ),
+        "ss_dpm": np.array(
+            [
+                [0.0, 0.0, 0.0, 0.0],  # background 0
+                [244.0, 35.0, 232.0, 115.0],  # orange - person/face 1
+                [70.0, 130.0, 180.0, 115.0],  # blue - vehicle 2
+            ]
+        ),
     }  # green  - tvmonitor 20
     return colors[dataset]
 
@@ -102,11 +109,18 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
     return {"predictions": predictions}
 
 
+@POSTPROCESS_FACTORY.register(name="ss_dpm")
+def dpm_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    endnodes = tf.math.round(endnodes)
+    return {"predictions": endnodes}
+
+
+@VISUALIZATION_FACTORY.register(name="ss_dpm")
 @VISUALIZATION_FACTORY.register(name="segmentation")
 def visualize_segmentation_result(logits, image, **kwargs):
     logits = logits["predictions"]
     dataset = kwargs["dataset_name"]
-    height, width = logits.squeeze().shape
+    height, width = logits.squeeze().shape[:2]
     image = Image.fromarray(image.astype(np.uint8).squeeze()).resize((width, height))
     image = np.array(image)
     if dataset == "coco_segmentation":
@@ -118,6 +132,8 @@ def visualize_segmentation_result(logits, image, **kwargs):
         img_out = color_segment_img(image, logits[0], dataset)
     elif dataset == "pascal":
         img_out = color_segment_img(image, logits[0], dataset)
+    elif dataset == "ss_dpm":
+        img_out = color_segment_img(image, np.argmax(logits[0], axis=-1), dataset)
     else:
         raise PostProcessingException("Visualization is not implemented for dataset {}".format(dataset))
     return img_out

@@ -28,3 +28,7 @@ info:
   source: https://github.com/tensorflow/tpu/tree/master/models/official/efficientnet
   license_url: https://github.com/Lornatang/ESPCN-PyTorch/blob/master/LICENSE
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

@@ -174,7 +174,8 @@ class YoloPostProc(object):
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
         nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        [nmsed_classes] = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
+        nmsed_classes = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
+        nmsed_classes = nmsed_classes[0] if isinstance(nmsed_classes, (list, tuple)) else nmsed_classes
         nmsed_classes.set_shape((BS, 100))
 
         return {

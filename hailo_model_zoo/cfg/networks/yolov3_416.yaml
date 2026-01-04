@@ -49,3 +49,7 @@ info:
   source: https://github.com/AlexeyAB/darknet
   license_url: https://github.com/AlexeyAB/darknet/blob/master/LICENSE
   license_name: YOLO
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

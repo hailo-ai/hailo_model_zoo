@@ -23,3 +23,7 @@ info:
   operations: 37.64G
   parameters: 16.25M
   full_precision_result: 46.53
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

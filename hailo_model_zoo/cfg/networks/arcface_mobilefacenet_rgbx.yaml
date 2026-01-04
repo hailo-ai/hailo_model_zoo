@@ -9,3 +9,7 @@ hn_editor:
 info:
   task: pipeline
   input_shape: 112x112x4
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

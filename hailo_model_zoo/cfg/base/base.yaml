@@ -95,3 +95,10 @@ info:
   full_precision_result: null
   source: N/A
   license_url: N/A
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h
+  - hailo15l
+  - hailo10p
+  - hailo12l
+  - hailo15m

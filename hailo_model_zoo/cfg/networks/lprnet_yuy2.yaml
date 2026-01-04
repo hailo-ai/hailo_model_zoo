@@ -41,3 +41,7 @@ info:
   framework: pytorch
   eval_metric: Accuracy
   full_precision_result: 54.075
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

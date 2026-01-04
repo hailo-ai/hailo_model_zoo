@@ -36,3 +36,7 @@ info:
   full_precision_result: 46.05
   license_url: https://github.com/ultralytics/yolov5/blob/master/LICENSE
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

@@ -46,7 +46,7 @@ Outputs
 Download
 ^^^^^^^^
 
-| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/hailo10h/2025-09-17/tiny_yolov4_license_plates.hef>`_.
+| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/hailo10h/2026-01-06/tiny_yolov4_license_plates.hef>`_.
 | Use the following command to measure model performance on hailo’s HW:
 
 .. code-block::

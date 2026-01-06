@@ -72,7 +72,7 @@ Kitti Stereo 2015
      - 10.3
      - 10.0
      - 10.3
-     - | `S <https://github.com/nivosco/StereoNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/stereonet_profiler_results_compiled.html>`_
+     - | `S <https://github.com/nivosco/StereoNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_
          `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/stereonet.hef>`_
      - 368x1232x3
      - 623.1

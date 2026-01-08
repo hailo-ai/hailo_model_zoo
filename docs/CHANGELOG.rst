@@ -1,5 +1,6 @@
 **v5.2.0**
 
+* Hailo-15L is now supported by the Model Zoo
 * Update to use Dataflow Compiler v5.2.0
 * Update to use HailoRT v5.2.0
 * Bug fixes

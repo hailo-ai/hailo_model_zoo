@@ -47,5 +47,4 @@ info:
   license_name: MIT
   supported_hw_arch:
   - hailo15h
-  - hailo15l
   - hailo10h

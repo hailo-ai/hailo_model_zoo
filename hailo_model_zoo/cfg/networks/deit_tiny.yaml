@@ -19,3 +19,6 @@ info:
   eval_metric: Accuracy (top1)
   source: https://github.com/facebookresearch/deit
   full_precision_result: 69.07
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

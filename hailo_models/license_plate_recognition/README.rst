@@ -51,7 +51,7 @@ Outputs
 Download
 ^^^^^^^^
 
-| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/hailo10h/2025-09-17/lprnet.hef>`_.
+| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/ocr/lprnet/hailo10h/2026-01-06/lprnet.hef>`_.
 | 
 | Use the following command to measure model performance on hailo’s HW:
 

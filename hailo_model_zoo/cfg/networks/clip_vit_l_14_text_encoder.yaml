@@ -23,3 +23,6 @@ info:
   full_precision_result: 91.8
   source: https://huggingface.co/openai/clip-vit-large-patch14
   license_url: https://github.com/openai/CLIP/blob/main/LICENSE
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

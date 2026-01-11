@@ -1,79 +1,115 @@
 
-Public Pre-Trained Models
-=========================
 
-.. |rocket| image:: ../../images/rocket.png
-  :width: 18
 
-.. |star| image:: ../../images/star.png
-  :width: 18
+Public Models
+=============
 
-Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
+All models were compiled using Hailo Dataflow Compiler v5.2.0.
 
-* Benchmark Networks are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
-* Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v5.1.0
+|
+
+Single Person Pose Estimation
+=============================
+
+|
 
 Link Legend
+-----------
 
-The following shortcuts are used in the table below to indicate available resources for each model:
-
-* S – Source: Link to the model’s open-source code repository.
-* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
-* H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
-            * NV: HEF with NV12 format
-            * X: HEF with RGBX format
-
-* PR – Profiler Report: Download the model’s performance profiling report.
-
-
-
-.. _Single Person Pose Estimation:
-
------------------------------
-
-COCO
-^^^^
+|
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
+   :widths: 25 75
    :header-rows: 1
 
+   * - **Key / Icon**
+     - **Description**
+   * - ⭐
+     - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
+   * - **S**
+     - Source – Link to the model’s open-source repository.
+   * - **PT**
+     - Pretrained – Download the pretrained model file (ZIP format).
+   * - **HEF, NV12, RGBX**
+     - Compiled Models – Links to models in various formats:
+       - **HEF:** RGB format
+       - **NV12:** NV12 format
+       - **RGBX:** RGBX format
+   * - **PR**
+     - Profiler Report – Download the model’s performance profiling report.
+
+|
+
+Coco
+----
+
+|
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   
    * - Network Name
-     - float mAP
-     - Hardware mAP
+     - float AP
+     - Hardware AP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
-     - OPS (G)      
-   * - mspn_regnetx_800mf  |star| 
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
+   * - mspn_regnetx_800mf
      - 70.8
-     - 69.8
+     - 69.9
      - 2032
      - 2032
-     - `S <https://github.com/open-mmlab/mmpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/mspn_regnetx_800mf.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/mspn_regnetx_800mf_profiler_results_compiled.html>`_
+     - | `S <https://github.com/open-mmlab/mmpose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/mspn_regnetx_800mf/pretrained/2022-07-12/mspn_regnetx_800mf.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/mspn_regnetx_800mf_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/mspn_regnetx_800mf.hef>`_ `NV12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/mspn_regnetx_800mf_nv12.hef>`_
      - 256x192x3
      - 7.17
-     - 2.94    
-   * - vit_pose_small   
+     - 2.94
+   
+   
+   
+   
+   
+   
+   
+
+   * - vit_pose_small
      - 74.2
      - 73.0
-     - 81
-     - 247
-     - `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/vit_pose_small.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/vit_pose_small_profiler_results_compiled.html>`_
+     - 68.7
+     - 215
+     - | `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small/pretrained/2023-11-14/vit_pose_small.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/vit_pose_small_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/vit_pose_small.hef>`_
      - 256x192x3
      - 24.29
-     - 17.17    
-   * - vit_pose_small_bn   
+     - 17.17
+   
+   
+   
+   
+   
+   
+   
+
+   * - vit_pose_small_bn
      - 72.0
-     - 71.2
-     - 139
-     - 443
-     - `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small_bn/pretrained/2023-07-20/vit_pose_small_bn.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/vit_pose_small_bn.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.1.0/hailo15h/vit_pose_small_bn_profiler_results_compiled.html>`_
+     - 70.9
+     - 114
+     - 353
+     - | `S <https://github.com/ViTAE-Transformer/ViTPose>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SinglePersonPoseEstimation/vit/vit_pose_small_bn/pretrained/2023-07-20/vit_pose_small_bn.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/vit_pose_small_bn_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/vit_pose_small_bn.hef>`_
      - 256x192x3
      - 24.32
      - 17.17

@@ -7,17 +7,8 @@ model_optimization_config(calibration, calibset_size=64)
 
 performance_param(optimize_for_batch=8)
 resources_param(max_utilization=0.9, max_memory_utilization=0.85)
-allocator_param(enable_fixer=max_adjcents, enable_auto_spatial_reshapes=True, disable_row_per_cut=True, enable_auto_spatial_reshapes=False)
-context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=False, auto_partition_to_buckets=True, berkitizer_min_size=300)
-
-placeholder = format_conversion(const_input2, ew_add1, spatial_reshape, 73, 8, collapse=True)
-remove_node(format_conversion1)
-transpose_width_features_from_conv1 = format_conversion(conv1, concat1, transpose_width_features, collapse=False)
-reshape_height_features_from_transpose_width_features_from_conv1 = format_conversion(transpose_width_features_from_conv1, concat1, reshape_height_features, 576, 1)
-transpose_width_features_from_const_input1 = format_conversion(const_input1, concat1, transpose_width_features, collapse=False)
-placeholder = format_conversion(concat1, ew_add1, spatial_reshape, 577, 1024, collapse=True)
-reshape_height_features_from_concat1 = format_conversion(concat1, ew_add1, reshape_height_features, 73, 8)
-transpose_width_features_from_concat1 = format_conversion(reshape_height_features_from_concat1, ew_add1, transpose_width_features, collapse=False)
+allocator_param(enable_fixer=max_adjcents, enable_auto_spatial_reshapes=True, disable_row_per_cut=True)
+context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=True, auto_partition_to_buckets=True, berkitizer_min_size=300)
 
 b0 = bucket([input_layer1, const_input1, const_input2, normalization1, reduce_mean1_layer_normalization2, ew_sub1_layer_normalization2, ew_add2, ew_add3, reduce_mean1_layer_normalization4, ew_sub1_layer_normalization4, ew_add4, ew_add5])
 b2 = bucket([reduce_mean1_layer_normalization6, ew_sub1_layer_normalization6, ew_add6, ew_add7, reduce_mean1_layer_normalization8, ew_sub1_layer_normalization8, ew_add8, ew_add9])
@@ -81,3 +72,6 @@ b22 = bucket([reduce_mean1_layer_normalization46, ew_sub1_layer_normalization46,
 {} = defuse_block(matmul47, defuse_count=4)
 ew_mult_softmax24_mult_reduce, ew_mult_softmax24_reshape_post_ew = defuse(ew_mult_softmax24, 2, defuse_type=EW_MULT_ON_MAC)
 {} = defuse_block(ew_mult_softmax24_mult_reduce, ew_mult_softmax24_reshape_post_ew, precision_change2, matmul48, defuse_count=3)
+
+# https://hailotech.atlassian.net/browse/HRT-19588
+hef_param(share_config=enabled)

@@ -37,3 +37,6 @@ info:
   full_precision_result: 0.481
   license_url: https://github.com/JiawangBian/sc_depth_pl/blob/master/LICENSE
   license_name: GPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

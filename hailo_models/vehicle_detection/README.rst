@@ -71,7 +71,7 @@ The table below shows the performance of our trained network on an internal vali
 Download
 ^^^^^^^^
 
-| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/hailo10h/2025-09-17/yolov5m_vehicles.hef>`_.
+| The compiled network can be downloaded from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/vehicle_detector/yolov5m_vehicles/hailo10h/2026-01-06/yolov5m_vehicles.hef>`_.
 | 
 | Use the following command to measure model performance on hailo’s HW:
 

@@ -52,3 +52,7 @@ info:
   framework: darknet
   eval_metric: mAP
   full_precision_result: 74.083
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

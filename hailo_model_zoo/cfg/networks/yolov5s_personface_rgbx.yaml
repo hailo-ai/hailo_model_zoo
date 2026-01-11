@@ -11,3 +11,7 @@ info:
   task: pipeline
   input_shape: 640x640x4
   full_precision_result: 47.6
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

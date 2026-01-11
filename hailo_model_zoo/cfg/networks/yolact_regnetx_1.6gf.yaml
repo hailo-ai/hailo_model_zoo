@@ -46,3 +46,6 @@ info:
   source: https://github.com/dbolya/yolact
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

@@ -1,4 +1,5 @@
 normalization111 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_flavor(optimization_level=2, compression_level=0)
+resources_param(max_control_utilization=0.9, max_compute_utilization=1, max_compute_16bit_utilization=1, max_memory_utilization=0.85, max_input_aligner_utilization=1, max_apu_utilization=1)
 
-allocator_param(spatial_defuse_legacy=True)
+allocator_param(spatial_defuse_legacy=True, enable_post_split_average_buffers=False, splitter_timeout=1000, timeout=1000, cluster_timeout=1000)

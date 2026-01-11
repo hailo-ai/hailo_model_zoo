@@ -26,3 +26,6 @@ info:
   framework: pytorch
   full_precision_result: 90.6
   source: https://huggingface.co/openai/clip-vit-base-patch32
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

@@ -1,0 +1,12 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [conv97, conv82, conv67, conv25, conv100, conv88, conv73, conv103, conv89, conv74],
+                                                       loss_types = [l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,ce,ce,ce],
+                                                        loss_factors=[1,1,1,1,2,2,2,2,2,2], epochs = 4, batch_size=2)
+model_optimization_flavor(compression_level=0)
+change_output_activation(conv74, sigmoid)
+change_output_activation(conv89, sigmoid)
+change_output_activation(conv103, sigmoid)
+nms_postprocess("../../postprocess_config/yolov8x_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+resources_param(max_utilization=0.9, max_memory_utilization=0.85)
+allocator_param(enable_post_split_average_buffers=False)

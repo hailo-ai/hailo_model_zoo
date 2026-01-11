@@ -9,4 +9,13 @@ post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [con
                                 loss_factors=[1,1,1,2,2,2,2,2,2], epochs=4, batch_size=2)
 nms_postprocess("../../postprocess_config/yolov11x_nms_config.json", meta_arch=yolov8, engine=cpu)
 
-resources_param(max_control_utilization=0.7, max_compute_utilization=0.7, max_compute_16bit_utilization=0.7, max_memory_utilization=0.7, max_input_aligner_utilization=0.7, max_apu_utilization=0.7)
+resources_param(max_control_utilization=0.7, max_compute_utilization=0.7, max_compute_16bit_utilization=0.7, max_memory_utilization=0.6, max_input_aligner_utilization=0.7, max_apu_utilization=0.7)
+
+# manual defuse these convs since titans in hailo15l defuse it to 9 only which isn't enough and cause (SDK-64283)
+conv36_d0, conv36_d1, conv36_d2, conv36_d3, conv36_d4, conv36_d5, conv36_d6, conv36_d7, conv36_d8, conv36_d9, conv36_d10, conv36_d11, conv36_d12, conv36_dc = defuse(conv36, 13)
+conv138_d0, conv138_d1, conv138_dc = defuse(conv138, 2)
+conv35_d0, conv35_d1, conv35_dc = defuse(conv35, 2)
+conv53_d0, conv53_d1, conv53_d2, conv53_d3, conv53_d4, conv53_d5, conv53_d6, conv53_d7, conv53_d8, conv53_d9, conv53_d10, conv53_d11, conv53_dc = defuse(conv53, 12)
+
+compilation_param({conv*}, enable_nested_defuse=True)
+allocator_param(width_splitter_defuse=enabled)

@@ -37,3 +37,7 @@ info:
   source: https://github.com/ViTAE-Transformer/ViTPose
   license_url: https://github.com/ViTAE-Transformer/ViTPose/blob/main/LICENSE
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

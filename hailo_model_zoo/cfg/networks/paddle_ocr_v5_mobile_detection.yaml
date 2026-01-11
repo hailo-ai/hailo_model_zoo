@@ -1,0 +1,49 @@
+base:
+- base/yolo.yaml
+preprocessing:
+  input_shape:
+  - 544
+  - 960
+  - 3
+postprocessing:
+  meta_arch: paddle_detection
+  unclip_ratio: 1.4
+  axis_aligned: true
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+quantization:
+  calib_set:
+  - models_files/icdar2015/2025-07-14/icdar15_calib_set.tfrecord
+network:
+  network_name: paddle_ocr_v5_mobile_detection
+paths:
+  alls_script: paddle_ocr_v5_mobile_detection.alls
+  network_path:
+  - models_files/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_det_544x960_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_det_544x960_sim.zip
+evaluation:
+  dataset_name: icdar15_det
+  data_set: models_files/icdar2015/2025-07-14/icdar15_val_set.tfrecord
+  classes: 1
+info:
+  input_shape: 544x960x3
+  output_shape: 544x960x1
+  operations: 6.5G
+  parameters: 1.2M
+  full_precision_result: 4.591
+  source: https://github.com/PaddlePaddle/PaddleOCR/tree/main
+  license_url: https://github.com/PaddlePaddle/PaddleOCR/blob/main/LICENSE
+  license_name: Apache-2.0
+  task: text detection
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

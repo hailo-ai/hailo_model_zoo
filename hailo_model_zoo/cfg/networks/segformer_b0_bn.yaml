@@ -27,3 +27,6 @@ info:
   source: https://github.com/NVlabs/SegFormer
   license_url: https://github.com/NVlabs/SegFormer/blob/master/LICENSE
   license_name: NVIDIA
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

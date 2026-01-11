@@ -47,3 +47,7 @@ info:
   source: https://github.com/ai-forever/Real-ESRGAN
   license_url: https://github.com/ai-forever/Real-ESRGAN/blob/main/LICENSE
   license_name: BSD3-Clause
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

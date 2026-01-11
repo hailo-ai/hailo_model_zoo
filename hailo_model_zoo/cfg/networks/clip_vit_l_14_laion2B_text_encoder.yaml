@@ -27,3 +27,6 @@ info:
   full_precision_result: 94.7
   source: https://huggingface.co/laion/CLIP-ViT-L-14-laion2B-s32B-b82K
   license_url: https://github.com/openai/CLIP/blob/main/LICENSE
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

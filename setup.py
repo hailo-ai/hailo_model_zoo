@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+import sys
 from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "5.1.0"
-CUR_MZ_VERSION = "5.1.0"
+CUR_DFC_VERSION = CUR_MZ_VERSION = "5.2.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -15,11 +15,12 @@ try:
             f"Current Hailo-Model-Zoo works best with DFC version {CUR_DFC_VERSION}. Please consider updating your DFC"
         )
 except PackageNotFoundError:
-    raise PackageNotFoundError(
-        f"\nThe Dataflow Compiler package {package_name!r} was not found.\n"
-        f"Please verify working in the correct virtualenv.\n"
-        f"If you are not an Hailo customer, please visit us at https://hailo.ai/"
-    ) from None
+    if sys.version_info <= (3, 10):
+        raise PackageNotFoundError(
+            f"\nThe Dataflow Compiler package {package_name!r} was not found.\n"
+            f"Please verify working in the correct virtualenv.\n"
+            f"If you are not an Hailo customer, please visit us at https://hailo.ai/"
+        ) from None
 
 try:
     import cpuinfo
@@ -41,7 +42,7 @@ def main():
     reqs = [
         "numba==0.59.0",
         "imageio==2.22.4",
-        "matplotlib",
+        "matplotlib==3.5.2",
         "numpy",
         "opencv-python",
         "scipy",
@@ -59,18 +60,21 @@ def main():
         "pyquaternion==0.9.9",
         "Shapely>=2.0.0",
     ]
+    if sys.version_info >= (3, 12):
+        reqs.append(f"hailo-dataflow-compiler=={CUR_DFC_VERSION}")
 
-    model_zoo_version = "5.1.0"
+    model_zoo_version = CUR_MZ_VERSION
 
     package_data = {
         "hailo_model_zoo": [
             "cfg/base/*.yaml",
             "cfg/networks/*.yaml",
             "cfg/alls/**/*.alls",
-            "cfg/cascades/**",
+            "cfg/cascades/**/*",
             "datasets/*",
             "cfg/multi-networks/*.yaml",
             "cfg/multi-networks/*.yaml",
+            "cfg/postprocess_config/*.json",
             "core/postprocessing/*.json",
             "core/postprocessing/src/*.cc",
             "core/postprocessing/cython_utils/cython_nms.pyx",

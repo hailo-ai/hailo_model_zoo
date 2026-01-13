@@ -30,32 +30,24 @@ The following shortcuts are used in the table below to indicate available resour
 
 
 
-.. _Facial Landmark Detection:
+.. _Text Recognition:
 
--------------------------
+---------------------
 
-AFLW2k3d
-^^^^^^^^
+Text Retection
+^^^^^^^^^^^^^^
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
+   :widths: 31 9 9 8 9
    :header-rows: 1
 
    * - Network Name
-     - float mAP
-     - Hardware mAP
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-   * - tddfa_mobilenet_v1  |star|
-     - 3.68
-     - 3.32
-     - 11321
-     - 11323
-     - `S <https://github.com/cleardusk/3DDFA_V2>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceLandmarks3d/tddfa/tddfa_mobilenet_v1/pretrained/2025-03-18/tddfa_mobilenet_v1.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/tddfa_mobilenet_v1.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/tddfa_mobilenet_v1_profiler_results_compiled.html>`_
-     - 120x120x3
-     - 3.26
-     - 0.36
+   * - paddle_ocr_v3_recognition
+     - 123
+     - 508
+     - `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8l/paddle_ocr_v3_recognition.hef>`_
+     - 48x320x3

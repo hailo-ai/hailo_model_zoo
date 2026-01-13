@@ -43,7 +43,7 @@ PETA
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links

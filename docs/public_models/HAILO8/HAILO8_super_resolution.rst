@@ -43,7 +43,7 @@ BSD100
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -87,7 +87,7 @@ DIV2K
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links

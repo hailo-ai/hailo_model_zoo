@@ -43,7 +43,7 @@ Cityscapes
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -87,7 +87,7 @@ Oxford-IIIT Pet
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
@@ -113,7 +113,7 @@ Pascal VOC
 
    * - Network Name
      - float
-     - Hardware
+     - Hardware Degradation
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links

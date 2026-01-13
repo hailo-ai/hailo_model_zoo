@@ -60,6 +60,8 @@ The models are divided to:
 
     * For Hailo-10H - `Classification <docs/public_models/HAILO10H/HAILO10H_classification.rst>`_, `Object Detection <docs/public_models/HAILO10H/HAILO10H_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO10H/HAILO10H_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
 
+    * For Hailo-15L - `Classification <docs/public_models/HAILO15L/HAILO15L_classification.rst>`_, `Object Detection <docs/public_models/HAILO15L/HAILO15L_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO15L/HAILO15L_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_
+
     **⚙️  Compatibility Notice:** The Hailo-8 and Hailo-8L devices are supported on the **Hailo Model Zoo v2.x** branch, in combination with the **Hailo Dataflow Compiler v3.x** branch. The `master` branch is intended for **Hailo-10** and **Hailo-15** devices only.
 
     * For Hailo-8 - `Classification <docs/public_models/HAILO8/HAILO8_classification.rst>`_, `Object Detection <docs/public_models/HAILO8/HAILO8_object_detection.rst>`_, `Segmentation <docs/public_models/HAILO8/HAILO8_semantic_segmentation.rst>`_, `other tasks <docs/PUBLIC_MODELS.rst>`_

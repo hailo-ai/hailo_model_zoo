@@ -130,6 +130,12 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
      - NA
      - NA
+   * - Text Recognition
+     - `Link <public_models/HAILO10H/HAILO10H_text_recognition.rst>`_
+     - `Link <public_models/HAILO15H/HAILO15H_text_recognition.rst>`_
+     - NA
+     - `Link <public_models/HAILO8/HAILO8_text_recognition.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_text_recognition.rst>`_
    * - Text Image Retrieval
      - `Link <public_models/HAILO10H/HAILO10H_text_image_retrieval.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_text_image_retrieval.rst>`_

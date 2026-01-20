@@ -193,24 +193,6 @@ Cifar100
    
    
 
-   * - siglip2_l_16_256_image_encoder
-     - 82.4
-     - 75.6
-     - 
-     - 
-     - | `S <https://huggingface.co/google/siglip2-large-patch16-256>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_large_patch16_256/image_encoder/pretrained/2025-05-06/siglip2-large-patch16-256_vision_encoder.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/siglip2_l_16_256_image_encoder_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/siglip2_l_16_256_image_encoder.hef>`_
-     - 256x256x3
-     - 315
-     - 162.9
-   
-   
-   
-   
-   
-   
-   
-
    * - siglip_b_16_image_encoder
      - 72.2
      - 71.8

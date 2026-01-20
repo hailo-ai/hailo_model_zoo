@@ -6,7 +6,7 @@
 * Bug fixes
 * New Models:
 
-  * `SigLIP <https://arxiv.org/abs/2303.15343>`_ - Released siglip_l_16_256_image_encoder, siglip_l_16_256_text_encoder, siglip2_l_16_256_image_encoder, siglip2_l_16_256_text_encoder, siglip_b_16_image_encoder, siglip_b_16_text_encodersiglip_b_16_text_encoder
+  * `SigLIP <https://arxiv.org/abs/2303.15343>`_ - Released siglip_l_16_256_image_encoder, siglip_l_16_256_text_encoder, siglip_b_16_image_encoder, siglip_b_16_text_encoder, siglip_b_16_text_encoder
   * `YOLOv12 <https://arxiv.org/abs/2502.12524>`_ - Released yolov12n
   * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Text detection and recognition models - released paddle_ocr_v5_mobile_detection, paddle_ocr_v5_mobile_recognition
   * `StereoNet <https://arxiv.org/pdf/1807.08865>`_ - stereo depth estimation model - now also available for Hailo-10H/15H

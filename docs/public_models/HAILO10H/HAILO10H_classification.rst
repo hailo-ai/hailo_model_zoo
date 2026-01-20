@@ -563,7 +563,25 @@ Imagenet
      - 224x224x3
      - 4.07
      - 2
-   
+
+
+
+
+
+
+
+
+   * - nextvit_base
+     - 83.2
+     - 83.3
+     - 40.5
+     - 157
+     - | `S <https://github.com/bytedance/Next-ViT>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/nextvit_base/pretrained/2024-08-22/nextvit_base_timm_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/nextvit_base_profiler_results_compiled.html>`_
+         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/nextvit_base.hef>`_
+     - 224x224x3
+     - 44.8
+     - 16.6
+
    
    
    

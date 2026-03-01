@@ -78,7 +78,7 @@ class FaceLandmark3DEval(Eval):
         self._metrics_vals.insert(0, np.mean(self._metrics_vals))
 
     def _get_accuracy(self):
-        return OrderedDict(zip(self._metric_names, self._metrics_vals))
+        return OrderedDict(zip(self._metric_names, self._metrics_vals, strict=True))
 
     def is_bigger_better(self):
         return False

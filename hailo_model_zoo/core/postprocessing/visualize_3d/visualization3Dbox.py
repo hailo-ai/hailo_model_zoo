@@ -162,7 +162,7 @@ def visualization(save_path, label_path, calib_matrix, predictions, pred_path, i
 
         if draw_labels:
             with open(label_file) as f1, open(prediction_file) as f2:
-                for line_gt, line_p in zip(f1, f2):
+                for line_gt, line_p in zip(f1, f2, strict=True):
                     line_gt = line_gt.strip().split(" ")
                     line_p = line_p.strip().split(" ")
                     try:

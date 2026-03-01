@@ -13,7 +13,7 @@ def _bbox_xywh2cs(bbox, aspect_ratio, pixel_std=200.0, padding=1.25):
     Args:
         bbox (ndarray): Single bbox in (x, y, w, h)
         aspect_ratio (float): The expected bbox aspect ratio (w over h)
-        padding (float): Bbox padding factor that will be multilied to scale.
+        padding (float): Bbox padding factor that will be multiplied to scale.
             Default: 1.25
         pixel_std (float): The scale normalization factor. Default: 200.0
     Returns:

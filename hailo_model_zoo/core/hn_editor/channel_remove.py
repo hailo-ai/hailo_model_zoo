@@ -37,7 +37,7 @@ def channel_remove(runner, remove_info):
     db = runner.get_hn()
     tmp_params = runner.get_params()
     num_of_anchors = remove_info["num_of_anchors"] if "num_of_anchors" in remove_info else None
-    for idx, (layer, mask) in enumerate(zip(remove_info["layer_name"], remove_info["mask"])):
+    for idx, (layer, mask) in enumerate(zip(remove_info["layer_name"], remove_info["mask"], strict=True)):
         assert layer in db["layers"], f"Layer {layer} does not exist in the HN"
         assert db["layers"][layer]["type"] == "output_layer", f"Chosen layer {layer} is not an output"
         sh = db["layers"][layer]["output_shapes"][0]

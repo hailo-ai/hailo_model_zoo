@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
-from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
 
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
+from hailo_model_zoo.core.postprocessing.detection.visualization_utils import visualize_boxes_and_labels_on_image_array
 
 
 @POSTPROCESS_FACTORY.register(name="multiple_object_tracking")
@@ -53,7 +53,6 @@ def visualize_tracking_result(
         logits["detection_classes"][0],
         logits["detection_scores"][0],
         labels,
-        instance_masks=logits.get("detection_masks"),
         use_normalized_coordinates=use_normalized_coordinates,
         max_boxes_to_draw=max_boxes_to_draw,
         line_thickness=4,

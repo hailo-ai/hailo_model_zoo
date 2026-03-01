@@ -133,7 +133,7 @@ def get_img_labels_list(dataset_dir, seg_dir, val_images, mask_extension):
         if os.path.splitext(img)[0] in img_val_list:
             image_file_names.append(os.path.join(dataset_dir, img))
             mask_file_names.append(os.path.join(seg_dir, img.replace(".jpg", mask_extension)))
-    return zip(image_file_names, mask_file_names)
+    return zip(image_file_names, mask_file_names, strict=True)
 
 
 def run(dataset_name, name, root):

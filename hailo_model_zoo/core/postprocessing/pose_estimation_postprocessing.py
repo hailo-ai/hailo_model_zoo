@@ -164,7 +164,7 @@ def visualize_pose_estimation_result(
     else:
         image = img[0]
     for detection_box, detection_score, detection_keypoints, detection_keypoints_score in zip(
-        box, score, keypoint, keypoint_score
+        box, score, keypoint, keypoint_score, strict=True
     ):
         if detection_score < detection_threshold:
             continue
@@ -176,7 +176,7 @@ def visualize_pose_estimation_result(
         joint_visible = detection_keypoints_score > joint_threshold
 
         detection_keypoints = detection_keypoints.reshape(17, 2)
-        for joint, joint_score in zip(detection_keypoints, detection_keypoints_score):
+        for joint, joint_score in zip(detection_keypoints, detection_keypoints_score, strict=True):
             if joint_score < joint_threshold:
                 continue
             cv2.circle(image, (int(joint[0]), int(joint[1])), 1, (255, 0, 255), -1)
@@ -211,7 +211,7 @@ def extract_keypoints(heatmap, all_keypoints, total_keypoint_num):
         & (heatmap_center > heatmap_down)
     )
     heatmap_peaks = heatmap_peaks[1 : heatmap_center.shape[0] - 1, 1 : heatmap_center.shape[1] - 1]
-    keypoints = list(zip(np.nonzero(heatmap_peaks)[1], np.nonzero(heatmap_peaks)[0]))  # (w, h)
+    keypoints = list(zip(np.nonzero(heatmap_peaks)[1], np.nonzero(heatmap_peaks)[0], strict=True))  # (w, h)
     keypoints = sorted(keypoints, key=itemgetter(0))
 
     suppressed = np.zeros(len(keypoints), np.uint8)
@@ -502,7 +502,7 @@ def _yolov8_decoding(
 ):
     boxes = None
     decoded_kpts = None
-    for box_distribute, kpts, stride, _j in zip(raw_boxes, raw_kpts, strides, np.arange(3)):
+    for box_distribute, kpts, stride, _j in zip(raw_boxes, raw_kpts, strides, np.arange(3), strict=True):
         # create grid
         shape = [int(x / stride) for x in image_dims]
         grid_x = np.arange(shape[1]) + 0.5

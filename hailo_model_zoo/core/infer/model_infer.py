@@ -34,9 +34,10 @@ def model_infer(
     batched_dataset = dataset.batch(batch_size)
 
     logger.info("Running inference...")
-    with context as ctx, tqdm(
-        total=None, desc="Processed", unit="images", disable=None if not print_num_examples < 1 else True
-    ) as pbar:
+    with (
+        context as ctx,
+        tqdm(total=None, desc="Processed", unit="images", disable=None if not print_num_examples < 1 else True) as pbar,
+    ):
         model = runner.get_keras_model(ctx)
         is_jit_compile_supported = model.is_jit_compile_supported(training=False)
         model = model_augmentation_callback(model)

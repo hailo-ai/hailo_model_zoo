@@ -8,8 +8,8 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.18.0-blue.svg
-   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.18.0
+.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.19.1-blue.svg
+   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.19.1
    :alt: Tensorflow
    :width: 110
    :height: 20

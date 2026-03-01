@@ -22,7 +22,7 @@ def info_model(model_name, network_info, logger):
             "license_url",
         ]
         info_vals = [info[key_curr] for key_curr in keys_list]
-        info_dict = dict(zip(keys_list, info_vals))
+        info_dict = dict(zip(keys_list, info_vals, strict=True))
         return keys_list, info_dict
 
     keys_list, info_dict = build_dict(network_info["info"])

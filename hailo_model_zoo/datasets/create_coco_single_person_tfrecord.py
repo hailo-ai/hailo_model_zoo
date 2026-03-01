@@ -99,7 +99,7 @@ def get_img_labels_list(dataset_dir, det_file):
     for img in sorted(dataset_dir.iterdir()):
         det_annotations.append(img_to_obj_annotation[img.name])
         orig_file_names.append(str(img))
-    files = list(zip(orig_file_names, det_annotations))
+    files = list(zip(orig_file_names, det_annotations, strict=True))
     random.seed(0)
     random.shuffle(files)
     return files

@@ -96,7 +96,7 @@ def main(args):
     model, preprocess_train, preprocess_val = open_clip.create_model_and_transforms(args.model)
     tokenizer = open_clip.get_tokenizer(args.model)
 
-    npz_path = f"{args.model.replace('/','-')}.npz"
+    npz_path = f"{args.model.replace('/', '-')}.npz"
     print(f"Saving model parameters to {colored(npz_path, 'cyan')}")
     with torch.no_grad():
         np.savez(
@@ -156,7 +156,7 @@ def main(args):
             cur_input_embeds,
             cur_image_embeds,
             cur_text_embeds,
-        ) in tqdm(zip(input_ids, input_embeds, image_embeds, text_embeds)):
+        ) in tqdm(zip(input_ids, input_embeds, image_embeds, text_embeds, strict=True)):
             cur_input_embeds = cur_input_embeds.squeeze()
             writer.write(
                 {

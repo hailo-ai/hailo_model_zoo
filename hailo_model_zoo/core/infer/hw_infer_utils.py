@@ -75,7 +75,7 @@ class HefModel:
         )
 
     def call(self, *inp):
-        inp = dict(zip(self.inputs, inp))
+        inp = dict(zip(self.inputs, inp, strict=True))
         x = self.model(inp)
         x = [x[output] for output in self.outputs]
         return x

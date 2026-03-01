@@ -111,7 +111,7 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
 
 @POSTPROCESS_FACTORY.register(name="ss_dpm")
 def dpm_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
-    endnodes = tf.math.round(endnodes)
+    endnodes = tf.math.round(tf.concat(endnodes, axis=-1))
     return {"predictions": endnodes}
 
 

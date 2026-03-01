@@ -34,7 +34,13 @@ def _create_tfrecord(labels_left, labels_right, images_left, images_right, num_i
     writer = tf.io.TFRecordWriter(str(tfrecords_filename))
 
     progress_bar = tqdm(
-        zip(images_left[:num_images], images_right[:num_images], labels_left[:num_images], labels_right[:num_images])
+        zip(
+            images_left[:num_images],
+            images_right[:num_images],
+            labels_left[:num_images],
+            labels_right[:num_images],
+            strict=True,
+        )
     )
     for _i, (img_l_path, img_r_path, label_l_path, label_r_path) in enumerate(progress_bar):
         img_l = np.array(Image.open(img_l_path), dtype=np.uint8)

@@ -79,7 +79,7 @@ def visualize_multi_classification_result(logits, img, **kwargs):
     labels = _get_labels(dataset_name)
     preds = np.array(logits >= 0, np.int64)
     confidences = softmax(logits)
-    matches = [(label, conf) for label, conf, pred in zip(labels, confidences, preds) if pred == 1]
+    matches = [(label, conf) for label, conf, pred in zip(labels, confidences, preds, strict=True) if pred == 1]
     matches = sorted(matches, key=lambda match: match[1], reverse=True)  # Sort by confidence
     matches_to_visualize = matches[:MAX_CLASSES_TO_VISUALIZE]
 

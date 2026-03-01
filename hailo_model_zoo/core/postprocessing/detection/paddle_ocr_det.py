@@ -32,7 +32,7 @@ class PaddleDetPostProc(object):
     def unclip(self, box, unclip_ratio):
         """
         Unclip a polygon by expanding it outward while preserving the original aspect ratio.
-        box: numpy array of shape (4, 2) polygon vertice
+        box: numpy array of shape (4, 2) polygon vertex
         unclip_ratio: float, how far to expand (scaling factor)
         returns: numpy array of shape (4, 2)
         """

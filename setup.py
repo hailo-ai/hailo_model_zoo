@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 import sys
 from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = CUR_MZ_VERSION = "5.2.0"
+_versions = {}
+exec(Path(__file__).resolve().parent.parent.parent.joinpath("versions.py").read_text(), _versions)
+CUR_DFC_VERSION = _versions["DFC_VERSION"]
+CUR_MZ_VERSION = _versions["MZ_VERSION"]
 package_name = "hailo-dataflow-compiler"
 
 try:

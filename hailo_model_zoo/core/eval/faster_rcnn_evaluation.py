@@ -53,7 +53,7 @@ class FasterRCNNEval(Eval):
         batch_dets = net_output["detection_boxes"]
         image_ids = net_output["image_id"]
         new_dets = []
-        for _i, (img_dets, image_id) in enumerate(zip(batch_dets, image_ids)):
+        for _i, (img_dets, image_id) in enumerate(zip(batch_dets, image_ids, strict=True)):
             if self._last_image_id is None:
                 self._last_image_id = image_id
             new_img_dets = self._faster_proposlas_nms.convert_resize_and_pad(img_dets, image_id)
@@ -68,7 +68,7 @@ class FasterRCNNEval(Eval):
         return self._update_op(*update_inputs)
 
     def _update_op(self, image_ids, detection_boxes, detection_scores):
-        for _i, (image_id, bboxes, scores) in enumerate(zip(image_ids, detection_boxes, detection_scores)):
+        for _i, (image_id, bboxes, scores) in enumerate(zip(image_ids, detection_boxes, detection_scores, strict=True)):
             self._faster_proposlas_nms.init_image_id_det_results(image_id, bboxes, scores)
         return 0
 

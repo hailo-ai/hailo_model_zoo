@@ -701,7 +701,7 @@ bool eval_class (FILE *fp_det, FILE *fp_ori, CLASSES current_class,
       aos[i] = *max_element(aos.begin()+i, aos.end());
   }
 
-  // save statisics and finish with success
+  // save statistics and finish with success
   saveStats(precision, aos, fp_det, fp_ori);
     return true;
 }

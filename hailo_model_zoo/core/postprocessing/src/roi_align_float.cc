@@ -180,7 +180,7 @@ num_threads(12)
     const float count = roi_bin_grid_h * roi_bin_grid_w;  // e.g. = 4
 
     // we want to precalculate indices and weights shared by all channels,
-    // this is the key point of optimiation
+    // this is the key point of optimization
     std::vector<PreCalc> pre_calc(
         roi_bin_grid_h * roi_bin_grid_w * pooled_width * pooled_height);
     pre_calc_for_bilinear_interpolate(

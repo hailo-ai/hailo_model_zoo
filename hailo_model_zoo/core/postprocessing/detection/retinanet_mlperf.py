@@ -40,7 +40,8 @@ class AnchorGen(object):
             self.feature_maps_sizes = self.calc_feature_maps_size()
             self.scale_factors = [1.0, 1.0, 1.0, 1.0]
         self.cell_anchors = [
-            self.generate_anchors(size, aspect_ratio) for size, aspect_ratio in zip(self.scales, self.aspect_ratios)
+            self.generate_anchors(size, aspect_ratio)
+            for size, aspect_ratio in zip(self.scales, self.aspect_ratios, strict=True)
         ]
         self.anchors = self.get_anchors(self.orig_image_size, list(self.feature_maps_sizes))
 
@@ -76,7 +77,7 @@ class AnchorGen(object):
                 "feature maps passed and the number of sizes / aspect ratios specified."
             )
 
-        for size, stride, base_anchors in zip(grid_sizes, strides, cell_anchors):
+        for size, stride, base_anchors in zip(grid_sizes, strides, cell_anchors, strict=True):
             grid_height, grid_width = size
             stride_height, stride_width = stride
 
@@ -192,7 +193,7 @@ class retinanet_postproc(object):
             image_boxes = []
             image_scores = []
             for class_per_level, box_per_level, anchors_per_level in zip(
-                classes_predictions, box_predictions, self._anchors.anchors
+                classes_predictions, box_predictions, self._anchors.anchors, strict=True
             ):
                 top_k_scores, top_k_box, top_k_anchors = tf.numpy_function(
                     self.np_select_best_pred,

@@ -19,9 +19,9 @@ parser:
   - /embeddings/Add
   - - /encoder/layers.2/Add_1
 info:
-  input_shape: 1x77x512
-  output_shape: 1x77x512
-  operations: 11.59G
+  input_shape: 1x77x256
+  output_shape: 1x77x256
+  operations: 0.38G
   parameters: 3M
   framework: pytorch
   full_precision_result: 84.4

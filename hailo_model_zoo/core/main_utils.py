@@ -302,7 +302,7 @@ def _handle_classes_argument(runner, logger, classes):
         arg_to_append = f'config_path="{tmp_path}"'
 
     nms_args.append(arg_to_append)
-    script_commands[nms_idx] = f'nms_postprocess({", ".join(nms_args)})'
+    script_commands[nms_idx] = f"nms_postprocess({', '.join(nms_args)})"
     runner.load_model_script("\n".join(script_commands))
 
 
@@ -333,7 +333,7 @@ def optimize_full_precision_model(runner, calib_feed_callback, logger, model_scr
         if hailo_conversion_type in ["yuy2_to_rgb", "nv12_to_rgb"]:
             conversion_layers.append(f"{scope_name}/yuv_to_rgb1")
         runner.load_model_script(
-            f'{", ".join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)',
+            f"{', '.join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)",
             append=True,
         )
     runner.optimize_full_precision(calib_data=calib_feed_callback)

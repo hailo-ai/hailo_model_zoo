@@ -1,8 +1,6 @@
 import json
 import os
 
-from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
-
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
 from hailo_model_zoo.core.postprocessing.detection.detr import DetrPostProc
@@ -14,7 +12,11 @@ from hailo_model_zoo.core.postprocessing.detection.paddle_ocr_det import PaddleD
 from hailo_model_zoo.core.postprocessing.detection.retinanet_mlperf import retinanet_postproc
 from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
 from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
+from hailo_model_zoo.core.postprocessing.detection.visualization_utils import (
+    visualize_boxes_and_labels_on_image_array,
+)
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
+from hailo_model_zoo.core.postprocessing.detection.yolo_obb import YoloOBBPostProc
 from hailo_model_zoo.core.postprocessing.detection.yolo_world import YoloWorldPostProc
 
 DETECTION_ARCHS = {
@@ -31,6 +33,7 @@ DETECTION_ARCHS = {
     "paddle_detection": PaddleDetPostProc,
     "yworld": YoloWorldPostProc,  # mapping is done using prefix and there's already a
     # key called 'yolo' so we need to use 'yworld'
+    "yobb": YoloOBBPostProc,
 }
 
 
@@ -68,6 +71,12 @@ def _get_visdrone_labels():
     return visdrone_names
 
 
+def _get_dotav1_labels():
+    dotav1_names = json.load(open(os.path.join(os.path.dirname(__file__), "dotav1_names.json")))
+    dotav1_names = {int(k): {"id": int(k), "name": str(v)} for (k, v) in dotav1_names.items()}
+    return dotav1_names
+
+
 def _get_face_detection_visualization_data(logits):
     boxes = logits["detection_boxes"][0]
 
@@ -103,6 +112,8 @@ def _get_labels(dataset_name):
         labels = {1: {"name": "person"}, 2: {"name": "vehicle"}, 3: {"name": "face"}, 4: {"name": "license_plate"}}
     elif "icdar15" in dataset_name:
         labels = {0: {"name": "text"}}
+    elif "dotav1" in dataset_name:
+        labels = _get_dotav1_labels()
     else:
         raise Exception("No Labels for dataset {}".format(dataset_name))
     return labels
@@ -114,7 +125,6 @@ def visualize_detection_result(
     logits,
     image,
     threshold=0.2,
-    image_info=None,
     use_normalized_coordinates=True,
     max_boxes_to_draw=20,
     dataset_name="coco",
@@ -125,14 +135,12 @@ def visualize_detection_result(
     labels = _get_labels(dataset_name)
     if "widerface" in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
-
     return visualize_boxes_and_labels_on_image_array(
         image[0],
         boxes,
         logits["detection_classes"][0],
         logits["detection_scores"][0],
         labels,
-        instance_masks=logits.get("detection_masks"),
         use_normalized_coordinates=use_normalized_coordinates,
         max_boxes_to_draw=max_boxes_to_draw,
         line_thickness=4,

@@ -50,7 +50,7 @@ def _get_name(output_file_name, name):
         return output_file_name
 
     original_suffix = output_file_name.suffix
-    new_suffix = f'{name.replace("/","@")}{original_suffix}'
+    new_suffix = f"{name.replace('/', '@')}{original_suffix}"
     path = output_file_name.parent / f"{output_file_name.with_suffix('').name}|{new_suffix}"
     return path
 

@@ -3,7 +3,7 @@ base:
 network:
   network_name: yolov5m_wo_spp_nv12_fhd
 paths:
-  alls_script: yolov5m_wo_spp_60p_nv12_fhd.alls
+  alls_script: yolov5m_wo_spp_nv12_fhd.alls
   network_path:
   - models_files/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2023-04-25/yolov5m_wo_spp.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2023-04-25/yolov5m_wo_spp.zip

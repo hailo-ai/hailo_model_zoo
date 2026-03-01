@@ -111,7 +111,7 @@ def create_tfrecord(dataset_dir, dataset_type, num_images):
     progress_bar = tqdm(image_files[:num_images])
     with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
         for i, img_path in enumerate(progress_bar):
-            progress_bar.set_description(f"{dataset_type} #{i+1}: {img_path}")
+            progress_bar.set_description(f"{dataset_type} #{i + 1}: {img_path}")
 
             ann_name = "gt_" + img_path.stem.split(".")[0] + ".txt"
             ann_path = annotations_dir / ann_name

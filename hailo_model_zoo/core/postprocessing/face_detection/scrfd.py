@@ -45,7 +45,7 @@ class SCRFDPostProc(object):
 
     def extract_anchors(self, min_sizes, steps):
         anchors = []
-        for stride, min_size in zip(steps, min_sizes):
+        for stride, min_size in zip(steps, min_sizes, strict=True):
             height = self._image_dims[0] // stride
             width = self._image_dims[1] // stride
             num_anchors = len(min_size)

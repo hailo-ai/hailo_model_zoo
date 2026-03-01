@@ -22,7 +22,7 @@ parser:
     - 127.5
 quantization:
   calib_set:
-  - models_files/icdar2015/2025-08-30/icdar15_text_rec_calib_set.tfrecord
+  - models_files/icdar2015/2026-01-14/icdar15_text_rec_calib_set.tfrecord
 network:
   network_name: paddle_ocr_v5_mobile_recognition
 paths:
@@ -32,7 +32,7 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip
 evaluation:
   dataset_name: icdar15_rec
-  data_set: models_files/icdar2015/2025-08-30/icdar15_text_rec_val_set.tfrecord
+  data_set: models_files/icdar2015/2026-01-14/icdar15_text_rec_val_set.tfrecord
 info:
   input_shape: 48x320x3
   output_shape: 1x40x18385

@@ -26,7 +26,7 @@ class OCREval(Eval):
         net_output = self._parse_net_output(net_output)  # (B x 19)
         pred_labels = self._greedy_decode(net_output)
         plates = ["".join([CHARS[int(x)] for x in label]) for label in pred_labels]
-        acc = [(np.asarray(x) == np.asarray(y)).all() for (x, y) in zip(gt_plates, plates)]
+        acc = [(np.asarray(x) == np.asarray(y)).all() for (x, y) in zip(gt_plates, plates, strict=True)]
         self.accuracy += acc
 
     def evaluate(self):

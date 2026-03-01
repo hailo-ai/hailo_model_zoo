@@ -81,7 +81,7 @@ class KITTILoader:
 
     def get_average_dimension(self):
         dims_avg = {key: np.array([0, 0, 0]) for key in self._KITTI_cat}
-        dims_cnt = {key: 0 for key in self._KITTI_cat}
+        dims_cnt = dict.fromkeys(self._KITTI_cat, 0)
 
         for i in range(len(self._image_data)):
             current_data = self._image_data[i]

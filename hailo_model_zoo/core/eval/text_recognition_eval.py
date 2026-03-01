@@ -57,7 +57,7 @@ class TextRecognitionEval(Eval):
         pred_text = net_output["text"]
         gt_text = img_info["text_tag"]
 
-        for pred, gt in zip(pred_text, gt_text):
+        for pred, gt in zip(pred_text, gt_text, strict=True):
             if isinstance(pred, bytes):
                 pred = pred.decode("utf-8")
             if isinstance(gt, bytes):

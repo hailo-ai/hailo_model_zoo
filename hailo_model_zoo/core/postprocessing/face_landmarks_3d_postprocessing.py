@@ -247,7 +247,7 @@ def similar_transform(pts3d, roi_box, size):
 
 def face_3dmm_to_landmarks_batch(face_3dmm_params, img_dims, roi_box):
     ptds3d_list = []
-    for params, box in zip(face_3dmm_params, roi_box):
+    for params, box in zip(face_3dmm_params, roi_box, strict=True):
         pts3d = face_3dmm_to_landmarks_np(params, img_dims, box)
         ptds3d_list.append(pts3d)
     return np.array(ptds3d_list)

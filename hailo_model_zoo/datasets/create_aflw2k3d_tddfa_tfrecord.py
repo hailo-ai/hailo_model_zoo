@@ -52,7 +52,7 @@ def run(dataset_dir):
     created_tfrecord_path = dataset_dir / "aflw2k3d_tddfa.tfrecord"
     with tf.io.TFRecordWriter(str(created_tfrecord_path)) as writer:
         for file_name, yaw, labels, labels_re, boxes in tqdm(
-            zip(file_list, yaws_list, pts68_all_ori, pts68_all_re, roi_boxes)
+            zip(file_list, yaws_list, pts68_all_ori, pts68_all_re, roi_boxes, strict=True)
         ):
             with open(images_dir / AFLW2000 / file_name, "rb") as f:
                 image_original = f.read()

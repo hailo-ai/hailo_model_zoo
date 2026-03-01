@@ -33,9 +33,11 @@ from hailo_model_zoo.utils.logger import get_logger
 def _ensure_performance(model_name, model_script, performance, hw_arch, logger):
     if not performance and is_network_performance(model_name, hw_arch):
         # Check whether the model has a performance
-        logger.info(f"Running {model_name} with default model script.\n\
+        logger.info(
+            f"Running {model_name} with default model script.\n\
                        To obtain maximum performance use --performance:\n\
-                       hailomz <command> {model_name} --performance")
+                       hailomz <command> {model_name} --performance"
+        )
     if performance and model_script:
         if model_script.parent.name == "base":
             logger.info(f"Using base alls script found in {model_script} because there is no performance alls")

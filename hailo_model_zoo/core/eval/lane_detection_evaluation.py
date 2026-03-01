@@ -52,7 +52,7 @@ class LaneDetectionEval(Eval):
         assert im_data["raw_file"] == image_path, "Image paths in label json and tfrecord do not match"
         y_samples = im_data["h_samples"]
         gt_lanes = im_data["lanes"]
-        lanes = [[(x, y) for (x, y) in zip(lane, y_samples) if x >= 0] for lane in gt_lanes]
+        lanes = [[(x, y) for (x, y) in zip(lane, y_samples, strict=True) if x >= 0] for lane in gt_lanes]
         lanes = [lane for lane in lanes if len(lane) > 0]
         return {"y_samples": y_samples, "gt_lanes": gt_lanes, "lanes": lanes}
 
@@ -137,7 +137,7 @@ class LaneDetectionEval(Eval):
         fp, fn = 0.0, 0.0
         matched = 0.0
         """now, running over the gt lanes, each time trying to match a detection with the gt lane:"""
-        for gt_org_lane, thresh in zip(gt_org_lanes, thresholds):
+        for gt_org_lane, thresh in zip(gt_org_lanes, thresholds, strict=True):
             """generating a detection accuracy list for the predictions list over that specific gt lane:"""
             accs = [self.get_line_accuracy(pred_xvals, gt_org_lane, thresh, img_w) for pred_xvals in pred_lanes]
 
@@ -199,7 +199,7 @@ class LaneDetectionEval(Eval):
         line_accs = []
         fp, fn = 0.0, 0.0
         matched = 0.0
-        for gt_org_lane, thresh in zip(gt_org_lanes, thresholds):
+        for gt_org_lane, thresh in zip(gt_org_lanes, thresholds, strict=True):
             """generating a detection accuracy list for the predictions list over that specific gt lane:"""
             accs = [self.get_line_accuracy(pred_xvals, gt_org_lane, thresh, img_w) for pred_xvals in pred_lanes]
 

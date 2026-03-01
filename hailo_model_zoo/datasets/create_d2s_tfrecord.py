@@ -115,7 +115,7 @@ def _get_img_labels_list(dataset_dir, det_file):
         det_annotations.append(img_to_obj_annotation[img_filename])
         orig_file_names.append(os.path.join(dataset_dir, img_filename))
         imgs_shape.append((img["height"], img["width"]))
-    files = list(zip(orig_file_names, det_annotations, imgs_shape))
+    files = list(zip(orig_file_names, det_annotations, imgs_shape, strict=True))
     random.seed(0)
     random.shuffle(files)
     return files

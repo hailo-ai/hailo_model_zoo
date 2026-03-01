@@ -36,6 +36,7 @@ PADDING_LENGTH = {
     "google/siglip2-base-patch16-224": 64,
     "google/siglip2-large-patch16-256": 64,
     "google/siglip2-base-patch32-256": 64,
+    "google/siglip-so400m-patch14-384": 64,
 }
 
 TF_RECORD_LOC = {
@@ -70,6 +71,10 @@ TF_RECORD_LOC = {
     "google/siglip2-base-patch32-256": (
         "models_files/ZeroShotClassification/siglip/siglip2_base_patch32_256"
         "/coco_10xtd/2025-05-21/coco_xtd10_en_siglip2_base_patch32_256.tfrecord"
+    ),
+    "google/siglip-so400m-patch14-384": (
+        "models_files/ZeroShotClassification/siglip/siglip_so400m_p_14_384"
+        "/coco_10xtd/2026-21-01/coco_xtd10_en_siglip_so400m_p_14_384.tfrecord"
     ),
     "wkcn/TinyCLIP-ViT-61M-32-Text-29M-LAION400M": (
         "models_files/ZeroShotClassification/clip/tinyclip/tinyclip_vit_61m_32_text_29m_laion400m_text_encoder/coco_10xtd/2025-07-21/coco_xtd10_en_vit_61m_32.tfrecord"
@@ -269,7 +274,7 @@ def main(args):
             cur_input_embeds,
             cur_image_embeds,
             cur_text_embeds,
-        ) in tqdm(zip(input_ids, input_embeds, image_embeds, text_embeds)):
+        ) in tqdm(zip(input_ids, input_embeds, image_embeds, text_embeds, strict=True)):
             cur_input_embeds = cur_input_embeds.squeeze()
             example = tf.train.Example(
                 features=tf.train.Features(

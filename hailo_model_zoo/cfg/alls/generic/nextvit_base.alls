@@ -9,4 +9,3 @@ post_quantization_optimization(finetune, policy=enabled, batch_size=4)
 model_optimization_flavor(optimization_level=0, compression_level=0)
 
 allocator_param(enable_auto_spatial_reshapes=False, enable_auto_spatial_collapse=False)
-context_switch_param(auto_partition_to_buckets=False)

@@ -30,7 +30,7 @@ def _create_tfrecord(labels, images, split, limit):
     tfrecords_filename = os.path.join("./", TF_RECORD_LOC["val" if split == "val" else "calib"])
     writer = tf.io.TFRecordWriter(tfrecords_filename)
     i = 0
-    for img_path, label in tqdm.tqdm(zip(images, labels), desc="Image:"):
+    for img_path, label in tqdm.tqdm(zip(images, labels, strict=True), desc="Image:"):
         img = np.array(Image.open(img_path), np.uint8)
         image_height = img.shape[0]
         image_width = img.shape[1]

@@ -13,7 +13,10 @@ quantization_param([conv53, conv98], weight_group_size=512)
 pre_quantization_optimization(activation_clipping, layers=[conv_feature_splitter23_1], mode=percentile, clipping_values=[0, 99.95], recollect_stats=True)
 model_optimization_config(calibration, calibset_size=64)
 
-allocator_param(enable_auto_spatial_reshapes=False, enable_muxer=False, automatic_ddr=False)
 
-# https://hailotech.atlassian.net/browse/HRT-19588
+allocator_param(disable_row_per_cut=True, automatic_ddr=False, enable_fixer=max_adjcents)
+performance_param(compiler_optimization_level=1, optimize_for_batch=8)
+resources_param(max_utilization=0.9)
+
+context_switch_param(slotter_chances=200, mode=enabled, berkitizer_bucket_size=30)
 hef_param(share_config=enabled)

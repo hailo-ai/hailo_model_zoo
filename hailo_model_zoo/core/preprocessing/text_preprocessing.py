@@ -22,3 +22,14 @@ def text_encoder_siglip_preprocessing(image, image_info, height, width, **kwargs
     sequence_length = width
     image = tf.reshape(image, [1, sequence_length, kwargs["channels"]])
     return image, image_info
+
+
+@PREPROCESS_FACTORY.register(name="text_classification")
+def text_classification_preprocessing(image, image_info, height, width, **kwargs):
+    attention_mask = tf.reshape(image_info["attention_mask"], [1, width, 1])
+    embeddings = tf.reshape(image, [1, width, image_info["channels"]])
+    model_inp = {
+        f"{kwargs['network_name']}/input_layer2": embeddings,
+        f"{kwargs['network_name']}/input_layer1": attention_mask,
+    }
+    return model_inp, image_info

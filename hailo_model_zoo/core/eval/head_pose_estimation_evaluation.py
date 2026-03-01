@@ -29,7 +29,7 @@ class HeadPoseEstimationEval(Eval):
         self._metrics_vals[0] = np.mean(self._metrics_vals[1:3])
 
     def _get_accuracy(self):
-        return OrderedDict(list(zip(self._metric_names, self._metrics_vals)))
+        return OrderedDict(list(zip(self._metric_names, self._metrics_vals, strict=True)))
 
     def reset(self):
         self.yaw_err = []

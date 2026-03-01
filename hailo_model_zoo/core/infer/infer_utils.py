@@ -50,7 +50,7 @@ def write_results(logits, img_info, results_directory):
 
 def log_degradation(logger, accuracies_output, accuracies_output_native):
     log = "Overall Degradation:"
-    for result_native, result_quantized in zip(accuracies_output_native, accuracies_output):
+    for result_native, result_quantized in zip(accuracies_output_native, accuracies_output, strict=True):
         norm_coeff = 100.0 if result_native.is_percentage else 1.0
         diff_coeff = 1 if result_native.is_bigger_better else -1.0
         diff = result_native.value - result_quantized.value
@@ -78,10 +78,10 @@ def get_logits_per_image(logits):
     if t is np.ndarray:
         # (BATCH, someshape) -> (BATCH, 1, someshape)
         expanded_vals = [np.expand_dims(v, axis=1) for v in logits.values()]
-        return [dict(zip(logits, v)) for v in zip(*expanded_vals)]
+        return [dict(zip(logits, v, strict=True)) for v in zip(*expanded_vals, strict=True)]
 
     if t is list:
-        return [dict(zip(logits, v)) for v in zip(*logits.values())]
+        return [dict(zip(logits, v, strict=True)) for v in zip(*logits.values(), strict=True)]
 
     raise ValueError("Unsupported type {} for logits".format(type(logits)))
 
@@ -168,7 +168,7 @@ class WriterHook:
         if not self.writer:
             self.writer = _make_writer(image_info, self.video_outpath)
 
-        for image_index_in_batch, (image_logits, img_info) in enumerate(zip(logits_per_image, image_info)):
+        for image_index_in_batch, (image_logits, img_info) in enumerate(zip(logits_per_image, image_info, strict=True)):
             image_index = image_index_in_batch + self.image_index
             original_image = img_info.get("img_orig")
             image_name = img_info.get("image_name", f"image{image_index}")

@@ -81,7 +81,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
      - NA
      - `Link <public_models/HAILO8/HAILO8_object_detection_3d.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_object_detection_3d.rst>`_
+     - NA
    * - Person Attribute
      - `Link <public_models/HAILO10H/HAILO10H_person_attribute.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_person_attribute.rst>`_
@@ -117,7 +117,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15H/HAILO15H_stereo_depth_estimation.rst>`_
      - NA
      - `Link <public_models/HAILO8/HAILO8_stereo_depth_estimation.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_stereo_depth_estimation.rst>`_
+     - NA
    * - Super Resolution
      - `Link <public_models/HAILO10H/HAILO10H_super_resolution.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_super_resolution.rst>`_
@@ -128,20 +128,20 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO10H/HAILO10H_text_detection.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_text_detection.rst>`_
      - NA
-     - NA
-     - NA
-   * - Text Recognition
-     - `Link <public_models/HAILO10H/HAILO10H_text_recognition.rst>`_
-     - `Link <public_models/HAILO15H/HAILO15H_text_recognition.rst>`_
-     - NA
-     - `Link <public_models/HAILO8/HAILO8_text_recognition.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_text_recognition.rst>`_
+     - `Link <public_models/HAILO8/HAILO8_text_detection.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_text_detection.rst>`_
    * - Text Image Retrieval
      - `Link <public_models/HAILO10H/HAILO10H_text_image_retrieval.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_text_image_retrieval.rst>`_
      - NA
      - `Link <public_models/HAILO8/HAILO8_text_image_retrieval.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_text_image_retrieval.rst>`_
+   * - Text Recognition
+     - `Link <public_models/HAILO10H/HAILO10H_text_recognition.rst>`_
+     - `Link <public_models/HAILO15H/HAILO15H_text_recognition.rst>`_
+     - NA
+     - `Link <public_models/HAILO8/HAILO8_text_recognition.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_text_recognition.rst>`_
    * - Video Classification
      - `Link <public_models/HAILO10H/HAILO10H_video_classification.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_video_classification.rst>`_
@@ -158,8 +158,8 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO10H/HAILO10H_zero_shot_depth_estimation.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_zero_shot_depth_estimation.rst>`_
      - NA
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_zero_shot_depth_estimation.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_zero_shot_depth_estimation.rst>`_
    * - Zero-shot Instance Segmentation
      - `Link <public_models/HAILO10H/HAILO10H_zero_shot_instance_segmentation.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_zero_shot_instance_segmentation.rst>`_

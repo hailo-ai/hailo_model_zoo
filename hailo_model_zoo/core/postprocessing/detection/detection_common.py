@@ -126,7 +126,8 @@ def tf_postproc_nms(endnodes, labels_offset, score_threshold, coco_2017_to_2014=
             back_prop=False,
         )
     if coco_2017_to_2014:
-        [post_processing_classes] = tf.numpy_function(translate_coco_2017_to_2014, [post_processing_classes], ["int32"])
+        # TF 2.19+ returns EagerTensor directly instead of list - handle both cases
+        post_processing_classes = tf.numpy_function(translate_coco_2017_to_2014, [post_processing_classes], tf.int32)
     return {
         "detection_boxes": post_processing_boxes,
         "detection_scores": post_processing_scores,
@@ -173,7 +174,8 @@ def tf_postproc_nms_centernet(endnodes, max_detections_per_class, coco_2017_to_2
             back_prop=False,
         )
     if coco_2017_to_2014:
-        [post_processing_classes] = tf.numpy_function(translate_coco_2017_to_2014, [post_processing_classes], ["int32"])
+        # TF 2.19+ returns EagerTensor directly instead of list - handle both cases
+        post_processing_classes = tf.numpy_function(translate_coco_2017_to_2014, [post_processing_classes], tf.int32)
     return {
         "detection_boxes": post_processing_boxes,
         "detection_scores": post_processing_scores,

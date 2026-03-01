@@ -216,8 +216,7 @@ if __name__ == "__main__":
         "-gt",
         type=Path,
         default="./widerface/wider_face_split/",
-        help="Path of gt `.mat` file. "
-        "See https://github.com/biubug6/Pytorch_Retinaface/tree/master/widerface_evaluate",
+        help="Path of gt `.mat` file. See https://github.com/biubug6/Pytorch_Retinaface/tree/master/widerface_evaluate",
     )
     parser.add_argument(
         "--hard_mat_path",

@@ -1,0 +1,13 @@
+norm1 = normalization([122.7709383, 116.7460125, 104.09373615000001], [68.5005327, 66.6321579, 70.32316304999999])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param({norm*}, precision_mode=a16_w16)
+quantization_param([slice1], precision_mode=a16_w16)
+quantization_param([conv1_s2d, concat1, conv1], precision_mode=a16_w16)
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
+model_optimization_config(calibration, calibset_size=64)
+pre_quantization_optimization(decompose_conv_factor, policy=enabled)
+
+allocator_param(enable_automatic_features_chunks=False, enable_partial_row_buffers=disabled, disable_row_per_cut=True, enable_auto_spatial_reshapes=True, automatic_ddr=False)
+resources_param(max_apu_utilization=0.9, max_compute_16bit_utilization=0.9, max_compute_utilization=0.9, max_control_utilization=0.9, max_input_aligner_utilization=0.9, max_memory_utilization=0.85, max_utilization=0.0)
+context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=True, auto_partition_to_buckets=True, berkitizer_min_size=200, berkitizer_bucket_size=40)

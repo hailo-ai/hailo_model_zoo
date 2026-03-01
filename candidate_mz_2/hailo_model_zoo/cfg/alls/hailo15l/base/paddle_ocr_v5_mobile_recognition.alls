@@ -1,0 +1,16 @@
+normalization = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=4096, loss_layer_names=[conv32, conv33])
+model_optimization_config(calibration, calibset_size=512)
+model_optimization_flavor(optimization_level=1, compression_level=0)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+model_optimization_config(precision_config, use_precision_8=enabled)
+
+allocator_param(enable_automatic_wgq=fast)
+resources_param(max_utilization=0.9)
+context_switch_param(toposort_mode=pushdown)
+allocator_param(enable_auto_spatial_reshapes=False)
+reshape1 = format_conversion(conv31, conv32, spatial_reshape, 5, 8)
+reshape2 = format_conversion(ew_mult_softmax3, output_layer1, spatial_reshape, 1, 40, collapse=True)
+reshape_to_fcr = format_conversion(ew_mult_softmax3, output_layer1, hailo_rgb_to_ppu)
+compilation_param(reshape_to_fcr, hw_layer_type_list=[lcu])
+

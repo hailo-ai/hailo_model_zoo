@@ -1,0 +1,36 @@
+base:
+- base/base.yaml
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0
+inference:
+  emulator_batch_size: 1
+  full_precision_batch_size: 1
+quantization:
+  calib_set:
+  - models_files/wikitext/wikitext2/2025-01-20/wikitext2_calib.tfrecord
+evaluation:
+  infer_type: model_infer_lite
+  dataset_name: wikitext2
+  data_set: models_files/wikitext/wikitext2/2025-01-20/wikitext2_val.tfrecord
+postprocessing:
+  meta_arch: text_classification
+preprocessing:
+  network_type: text_classification
+  meta_arch: text_classification
+info:
+  task: text_classification
+  framework: pytorch
+  training_data: N/A
+  validation_data: wikitext2
+  eval_metric: Accuracy
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0

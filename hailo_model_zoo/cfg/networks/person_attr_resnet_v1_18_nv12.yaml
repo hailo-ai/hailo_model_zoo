@@ -11,3 +11,6 @@ paths:
 info:
   task: pipeline
   input_shape: 112x224x3
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

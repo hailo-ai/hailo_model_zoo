@@ -1,0 +1,20 @@
+base:
+- base/base.yaml
+network:
+  network_name: whisper_tiny_10s_no_kqs_decoder
+paths:
+  alls_script: whisper_tiny_10s_no_kqs_decoder.alls
+evaluation:
+  dataset_name: LibriSpeech
+preprocessing:
+  network_type: automatic_speech_recognition
+info:
+  task: automatic speech recognition
+  input_shape: 1x500x384, 32x1x384
+  operations: 3.09G
+  parameters: 29.45M
+  full_precision_result: 0.01
+  eval_metric: WER
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

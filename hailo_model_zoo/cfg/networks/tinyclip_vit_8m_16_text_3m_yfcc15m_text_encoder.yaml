@@ -21,10 +21,13 @@ parser:
 info:
   input_shape: 1x77x512
   output_shape: 1x77x512
-  operations: null
+  operations: 382M
   parameters: 3M
   framework: pytorch
   full_precision_result: 84.4
   source: https://huggingface.co/wkcn/TinyCLIP-ViT-8M-16-Text-3M-YFCC15M
   license_url: https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/mit.md
   license_name: MIT
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

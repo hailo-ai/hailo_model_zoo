@@ -21,6 +21,19 @@ def text_encoding_postprocessing(
     return {"predictions": result}
 
 
+@POSTPROCESS_FACTORY.register(name="text_encoder_siglip")
+def text_encoding_postprocessing_siglip(
+    endnodes,
+    device_pre_post_layers,
+    postprocess_config_file,
+    gt_images,
+    **kwargs,
+):
+    result = tf.math.l2_normalize(endnodes, axis=-1)
+    return {"predictions": result}
+
+
 @VISUALIZATION_FACTORY.register(name="text_encoder")
+@VISUALIZATION_FACTORY.register(name="text_encoder_siglip")
 def visualize_text_encoder_result(logits, image, **kwargs):
     raise NotImplementedError(f"Visualization for {kwargs['meta_arch']} is not implemented")

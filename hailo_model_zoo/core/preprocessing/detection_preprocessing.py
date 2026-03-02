@@ -30,9 +30,9 @@ def _cast_image_info_types(image_info, image, max_padding_length=MAX_PADDING_LEN
     return image_info
 
 
-def _pad_tensor(x, max_tensor_padding=MAX_PADDING_LENGTH):
+def _pad_tensor(x, max_tensor_padding=MAX_PADDING_LENGTH, padding_value=-1):
     paddings = [(0, 0), (0, max_tensor_padding - tf.shape(x)[0])]
-    return tf.squeeze(tf.pad(tf.expand_dims(x, axis=0), paddings, "CONSTANT", constant_values=-1))
+    return tf.squeeze(tf.pad(tf.expand_dims(x, axis=0), paddings, "CONSTANT", constant_values=padding_value))
 
 
 @PREPROCESS_FACTORY.register(name="centernet")
@@ -196,6 +196,65 @@ def yolo_v5(image, image_info=None, height=None, width=None, scope=None, padding
         image_info["is_ignore"] = _pad_tensor(image_info["is_ignore"], max_pad)
 
     return image, image_info
+
+
+@PREPROCESS_FACTORY.register
+def yolo_world(image, image_info=None, height=None, width=None, scope=None, padding_color=114, **kwargs):
+    if height and width:
+        image_shape = tf.shape(image)
+        image_height = image_shape[0]
+        image_width = image_shape[1]
+
+        image, new_width, new_height = tf.numpy_function(
+            lambda image, height, width: letterbox(image, height, width, color=[padding_color] * 3, centered=True),
+            [image, height, width],
+            [tf.uint8, tf.int64, tf.int64],
+        )
+        image.set_shape((height, width, 3))
+
+    if image.dtype == tf.uint8:
+        image = tf.cast(image, tf.float32)
+
+    image_info["img_orig"] = tf.cast(image, tf.uint8)
+    if image_info and "num_boxes" in image_info.keys():
+        maxpad = kwargs.get("max_pad", MAX_PADDING_LENGTH)
+        image_info = _cast_image_info_types(image_info, image, max_padding_length=maxpad)
+        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, max_padding_length=maxpad, is_normalized=True)
+        w = xmax - xmin
+        h = ymax - ymin
+        image_info["bbox"] = tf.concat([xmin, ymin, w, h], axis=1)
+        image_info["height"] = image_height
+        image_info["width"] = image_width
+        image_info["area"] = tf.expand_dims(_pad_tensor(image_info["area"], maxpad), axis=1)
+        image_info["letterbox_height"] = new_height
+        image_info["letterbox_width"] = new_width
+        image_info["horizontal_pad"] = width - new_width
+        image_info["vertical_pad"] = height - new_height
+
+    # This is used for internal research with tracking working with MOT dataset
+    if image_info and "person_id" in image_info.keys():
+        max_pad = MAX_PADDING_LENGTH
+        image_info = _cast_image_info_types(image_info, image, max_pad)
+        xmin, xmax, ymin, ymax = _extract_box_from_image_info(image_info, max_pad, is_normalized=False)
+        w = xmax - xmin
+        h = ymax - ymin
+        image_info["bbox"] = tf.concat([xmin, ymin, w, h], axis=1)
+
+        image_info["height"] = height
+        image_info["width"] = width
+        image_info["original_height"] = image_height
+        image_info["original_width"] = image_width
+        image_info["horizontal_pad"] = width - new_width
+        image_info["vertical_pad"] = height - new_height
+        image_info["person_id"] = _pad_tensor(image_info["person_id"], max_pad)
+        image_info["label"] = _pad_tensor(image_info["label"], max_pad)
+        image_info["is_ignore"] = _pad_tensor(image_info["is_ignore"], max_pad)
+
+    network_name = kwargs.get("network_name", "yolo_world")
+    return {
+        f"{network_name}/input_layer1": image,
+        f"{network_name}/input_layer2": image_info["text_embeddings"],
+    }, image_info
 
 
 @PREPROCESS_FACTORY.register(name="resnet_ssd")

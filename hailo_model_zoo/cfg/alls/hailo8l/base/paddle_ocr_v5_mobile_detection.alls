@@ -1,0 +1,65 @@
+normalization = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+
+pre_quantization_optimization(global_avgpool_reduction, layers=[avgpool1, avgpool10], division_factors=[2, 2])
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param({dw*}, precision_mode=a16_w16)
+quantization_param({normalization*}, precision_mode=a16_w16)
+post_quantization_optimization(finetune, policy=disabled)
+
+
+
+
+dw7_sd0, dw7_sd1, dw7_sd2, dw7_sd3, dw7_sdc = defuse(dw7, 4, defuse_type=SPATIAL)
+dw7_sd0_defuse_width_feature_reshape, dw7_sd0_defuse_reshape_hxf_to_w_transposed, dw7_sd0_defuse_1x1 = defuse(dw7_sd0, 3, defuse_type=SUPER_DW)
+dw7_sd1_defuse_width_feature_reshape, dw7_sd1_defuse_reshape_hxf_to_w_transposed, dw7_sd1_defuse_1x1 = defuse(dw7_sd1, 3, defuse_type=SUPER_DW)
+dw7_sd2_defuse_width_feature_reshape, dw7_sd2_defuse_reshape_hxf_to_w_transposed, dw7_sd2_defuse_1x1 = defuse(dw7_sd2, 3, defuse_type=SUPER_DW)
+dw7_sd3_defuse_width_feature_reshape, dw7_sd3_defuse_reshape_hxf_to_w_transposed, dw7_sd3_defuse_1x1 = defuse(dw7_sd3, 3, defuse_type=SUPER_DW)
+
+
+dw8_sd0, dw8_sd1, dw8_sd2, dw8_sd3, dw8_sdc = defuse(dw8, 4, defuse_type=SPATIAL)
+dw8_sd0_defuse_width_feature_reshape, dw8_sd0_defuse_reshape_hxf_to_w_transposed, dw8_sd0_defuse_1x1 = defuse(dw8_sd0, 3, defuse_type=SUPER_DW)
+dw8_sd1_defuse_width_feature_reshape, dw8_sd1_defuse_reshape_hxf_to_w_transposed, dw8_sd1_defuse_1x1 = defuse(dw8_sd1, 3, defuse_type=SUPER_DW)
+dw8_sd2_defuse_width_feature_reshape, dw8_sd2_defuse_reshape_hxf_to_w_transposed, dw8_sd2_defuse_1x1 = defuse(dw8_sd2, 3, defuse_type=SUPER_DW)
+dw8_sd3_defuse_width_feature_reshape, dw8_sd3_defuse_reshape_hxf_to_w_transposed, dw8_sd3_defuse_1x1 = defuse(dw8_sd3, 3, defuse_type=SUPER_DW)
+
+
+dw9_fs, dw9_d0, dw9_d1, dw9_d2, dw9_d3, dw9_d4, dw9_d5, dw9_dc = defuse(dw9, 6, defuse_type=INPUT_FEATURES)
+dw9_d0_defuse_width_feature_reshape, dw9_d0_defuse_reshape_hxf_to_w_transposed, dw9_d0_defuse_1x1 = defuse(dw9_d0, 3, defuse_type=SUPER_DW)
+dw9_d1_defuse_width_feature_reshape, dw9_d1_defuse_reshape_hxf_to_w_transposed, dw9_d1_defuse_1x1 = defuse(dw9_d1, 3, defuse_type=SUPER_DW)
+dw9_d2_defuse_width_feature_reshape, dw9_d2_defuse_reshape_hxf_to_w_transposed, dw9_d2_defuse_1x1 = defuse(dw9_d2, 3, defuse_type=SUPER_DW)
+dw9_d3_defuse_width_feature_reshape, dw9_d3_defuse_reshape_hxf_to_w_transposed, dw9_d3_defuse_1x1 = defuse(dw9_d3, 3, defuse_type=SUPER_DW)
+dw9_d4_defuse_width_feature_reshape, dw9_d4_defuse_reshape_hxf_to_w_transposed, dw9_d4_defuse_1x1 = defuse(dw9_d4, 3, defuse_type=SUPER_DW)
+dw9_d5_defuse_width_feature_reshape, dw9_d5_defuse_reshape_hxf_to_w_transposed, dw9_d5_defuse_1x1 = defuse(dw9_d5, 3, defuse_type=SUPER_DW)
+
+
+dw10_fs, dw10_d0, dw10_d1, dw10_d2, dw10_d3, dw10_d4, dw10_d5, dw10_dc = defuse(dw10, 6, defuse_type=INPUT_FEATURES)
+dw10_d0_defuse_width_feature_reshape, dw10_d0_defuse_reshape_hxf_to_w_transposed, dw10_d0_defuse_1x1 = defuse(dw10_d0, 3, defuse_type=SUPER_DW)
+dw10_d1_defuse_width_feature_reshape, dw10_d1_defuse_reshape_hxf_to_w_transposed, dw10_d1_defuse_1x1 = defuse(dw10_d1, 3, defuse_type=SUPER_DW)
+dw10_d2_defuse_width_feature_reshape, dw10_d2_defuse_reshape_hxf_to_w_transposed, dw10_d2_defuse_1x1 = defuse(dw10_d2, 3, defuse_type=SUPER_DW)
+dw10_d3_defuse_width_feature_reshape, dw10_d3_defuse_reshape_hxf_to_w_transposed, dw10_d3_defuse_1x1 = defuse(dw10_d3, 3, defuse_type=SUPER_DW)
+dw10_d4_defuse_width_feature_reshape, dw10_d4_defuse_reshape_hxf_to_w_transposed, dw10_d4_defuse_1x1 = defuse(dw10_d4, 3, defuse_type=SUPER_DW)
+dw10_d5_defuse_width_feature_reshape, dw10_d5_defuse_reshape_hxf_to_w_transposed, dw10_d5_defuse_1x1 = defuse(dw10_d5, 3, defuse_type=SUPER_DW)
+
+
+concat_f_from_dw10_d0_defuse_1x1_dw10_d1_defuse_1x1_dw10_d2_defuse_1x1_dw10_d3_defuse_1x1_to_dw10_dc = concat([dw10_d0_defuse_1x1, dw10_d1_defuse_1x1, dw10_d2_defuse_1x1, dw10_d3_defuse_1x1], dw10_dc)
+dw11_sd0, dw11_sd1, dw11_sdc = defuse(dw11, 2, defuse_type=SPATIAL)
+dw11_sd0_defuse_width_feature_reshape, dw11_sd0_defuse_reshape_hxf_to_w_transposed, dw11_sd0_defuse_1x1 = defuse(dw11_sd0, 3, defuse_type=SUPER_DW)
+dw11_sd1_defuse_width_feature_reshape, dw11_sd1_defuse_reshape_hxf_to_w_transposed, dw11_sd1_defuse_1x1 = defuse(dw11_sd1, 3, defuse_type=SUPER_DW)
+
+
+dw12_sd0, dw12_sd1, dw12_sd2, dw12_sd3, dw12_sdc = defuse(dw12, 4, defuse_type=SPATIAL)
+dw12_sd0_defuse_width_feature_reshape, dw12_sd0_defuse_reshape_hxf_to_w_transposed, dw12_sd0_defuse_1x1 = defuse(dw12_sd0, 3, defuse_type=SUPER_DW)
+dw12_sd1_defuse_width_feature_reshape, dw12_sd1_defuse_reshape_hxf_to_w_transposed, dw12_sd1_defuse_1x1 = defuse(dw12_sd1, 3, defuse_type=SUPER_DW)
+dw12_sd2_defuse_width_feature_reshape, dw12_sd2_defuse_reshape_hxf_to_w_transposed, dw12_sd2_defuse_1x1 = defuse(dw12_sd2, 3, defuse_type=SUPER_DW)
+dw12_sd3_defuse_width_feature_reshape, dw12_sd3_defuse_reshape_hxf_to_w_transposed, dw12_sd3_defuse_1x1 = defuse(dw12_sd3, 3, defuse_type=SUPER_DW)
+dw13_sd0, dw13_sd1, dw13_sd2, dw13_sd3, dw13_sdc = defuse(dw13, 4, defuse_type=SPATIAL)
+dw13_sd0_defuse_width_feature_reshape, dw13_sd0_defuse_reshape_hxf_to_w_transposed, dw13_sd0_defuse_1x1 = defuse(dw13_sd0, 3, defuse_type=SUPER_DW)
+dw13_sd1_defuse_width_feature_reshape, dw13_sd1_defuse_reshape_hxf_to_w_transposed, dw13_sd1_defuse_1x1 = defuse(dw13_sd1, 3, defuse_type=SUPER_DW)
+dw13_sd2_defuse_width_feature_reshape, dw13_sd2_defuse_reshape_hxf_to_w_transposed, dw13_sd2_defuse_1x1 = defuse(dw13_sd2, 3, defuse_type=SUPER_DW)
+dw13_sd3_defuse_width_feature_reshape, dw13_sd3_defuse_reshape_hxf_to_w_transposed, dw13_sd3_defuse_1x1 = defuse(dw13_sd3, 3, defuse_type=SUPER_DW)
+dw14_sd0, dw14_sd1, dw14_sd2, dw14_sd3, dw14_sdc = defuse(dw14, 4, defuse_type=SPATIAL)
+dw14_sd0_defuse_width_feature_reshape, dw14_sd0_defuse_reshape_hxf_to_w_transposed, dw14_sd0_defuse_1x1 = defuse(dw14_sd0, 3, defuse_type=SUPER_DW)
+dw14_sd1_defuse_width_feature_reshape, dw14_sd1_defuse_reshape_hxf_to_w_transposed, dw14_sd1_defuse_1x1 = defuse(dw14_sd1, 3, defuse_type=SUPER_DW)
+dw14_sd2_defuse_width_feature_reshape, dw14_sd2_defuse_reshape_hxf_to_w_transposed, dw14_sd2_defuse_1x1 = defuse(dw14_sd2, 3, defuse_type=SUPER_DW)
+dw14_sd3_defuse_width_feature_reshape, dw14_sd3_defuse_reshape_hxf_to_w_transposed, dw14_sd3_defuse_1x1 = defuse(dw14_sd3, 3, defuse_type=SUPER_DW)
+

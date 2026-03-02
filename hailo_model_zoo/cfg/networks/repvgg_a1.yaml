@@ -21,3 +21,6 @@ info:
   source: https://github.com/DingXiaoH/RepVGG
   license_url: https://github.com/DingXiaoH/RepVGG/blob/main/LICENSE
   license_name: MIT
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

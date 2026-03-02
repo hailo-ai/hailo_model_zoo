@@ -1,105 +1,161 @@
 
-Public Pre-Trained Models
-=========================
 
-.. |rocket| image:: ../../images/rocket.png
-  :width: 18
 
-.. |star| image:: ../../images/star.png
-  :width: 18
+Public Models
+=============
 
-Here, we give the full list of publicly pre-trained models supported by the Hailo Model Zoo.
+All models were compiled using Hailo Dataflow Compiler v2.18.0.
 
-* Network available in `Hailo Benchmark <https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/#hailo8-benchmarks/>`_ are marked with |rocket|
-* Networks available in `TAPPAS <https://github.com/hailo-ai/tappas>`_ are marked with |star|
-* Benchmark and TAPPAS  networks run in performance mode
-* All models were compiled using Hailo Dataflow Compiler v3.33.0
+|
+
+Super Resolution
+================
+
+|
 
 Link Legend
+-----------
 
-The following shortcuts are used in the table below to indicate available resources for each model:
-
-* S – Source: Link to the model’s open-source code repository.
-* PT – Pretrained: Download the pretrained model file (compressed in ZIP format).
-* H, NV, X – Compiled Models: Links to the compiled model in various formats:
-            * H: regular HEF with RGB format
-            * NV: HEF with NV12 format
-            * X: HEF with RGBX format
-
-* PR – Profiler Report: Download the model’s performance profiling report.
-
-
-
-.. _Super Resolution:
-
-----------------
-
-BSD100
-^^^^^^
+|
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
+   :widths: 25 75
    :header-rows: 1
 
+   * - **Key / Icon**
+     - **Description**
+   * - ⭐
+     - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
+   * - **S**
+     - Source – Link to the model's open-source repository.
+   * - **PT**
+     - Pretrained – Download the pretrained model file (ZIP format).
+   * - **HEF, NV12, RGBX**
+     - Compiled Models – Links to models in various formats:
+       - **HEF:** RGB format
+       - **NV12:** NV12 format
+       - **RGBX:** RGBX format
+   * - **PR**
+     - Profiler Report – Download the model's performance profiling report.
+
+|
+
+Bsd100
+------
+
+|
+
+
+
+
+
+
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
    * - Network Name
-     - float
-     - Hardware Degradation
+     - float PSNR
+     - Hardware PSNR
      - FPS (Batch Size=1)
      - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
    * - espcn_x2
      - 31.2
-     - 0.4
+     - 30.8
      - 1164
      - 1164
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x2_profiler_results_compiled.html>`_
+     - | `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x2/2022-08-02/espcn_x2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x2_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x2.hef>`_
      - 156x240x1
      - 0.02
      - 1.6
+   
+   
+   
+   
+   
+   
+   
+
    * - espcn_x3
      - 28.3
-     - 0.2
+     - 28.1
      - 2217
      - 2217
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x3.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x3_profiler_results_compiled.html>`_
+     - | `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x3/2022-08-02/espcn_x3.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x3_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x3.hef>`_
      - 104x160x1
      - 0.02
      - 0.76
+   
+   
+   
+   
+   
+   
+   
+
    * - espcn_x4
      - 26.8
-     - 0.1
+     - 26.7
      - 2189
      - 2189
-     - `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x4.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/espcn_x4_profiler_results_compiled.html>`_
+     - | `S <https://github.com/Lornatang/ESPCN-PyTorch>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/espcn/espcn_x4/2022-08-02/espcn_x4.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x4_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/espcn_x4.hef>`_
      - 78x120x1
      - 0.02
      - 0.46
 
-DIV2K
-^^^^^
+|
+
+Div2K
+-----
+
+|
+
+
+
+
+
+
+
 
 .. list-table::
-   :widths: 31 9 7 11 9 8 8 8 9
    :header-rows: 1
+   :widths: 31 9 7 11 8 8 8 9
 
    * - Network Name
-     - float
-     - Hardware Degradation
+     - float PSNR
+     - Hardware PSNR
      - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
      - Links
      - Input Resolution (HxWxC)
      - Params (M)
      - OPS (G)
-   * - real_esrgan_x2
+   
+   
+   
+   
+   
+   
+   
+
+   * - real_esrgan_x2⭐
      - 28.3
-     - 0.6
-     - 1
-     - 1
-     - `S <https://github.com/ai-forever/Real-ESRGAN>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_ `H <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/real_esrgan_x2.hef>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.17.0/hailo8/real_esrgan_x2_profiler_results_compiled.html>`_
+     - 27.7
+     - 1.9
+     - | `S <https://github.com/ai-forever/Real-ESRGAN>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/Real-ESRGAN/Real_ESRGAN_x2/pretrained/2024-10-31/RealESRGAN_x2_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/real_esrgan_x2_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/real_esrgan_x2.hef>`_
      - 512x512x3
      - 16.7
      - 2350

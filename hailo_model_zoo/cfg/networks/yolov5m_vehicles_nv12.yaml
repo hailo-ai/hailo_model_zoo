@@ -36,3 +36,6 @@ info:
   framework: pytorch
   eval_metric: mAP
   full_precision_result: 46.059
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

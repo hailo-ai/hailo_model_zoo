@@ -95,3 +95,6 @@ info:
   full_precision_result: null
   source: N/A
   license_url: N/A
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

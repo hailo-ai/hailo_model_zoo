@@ -1,0 +1,37 @@
+model_optimization_flavor(optimization_level=2, compression_level=0)
+
+post_quantization_optimization(finetune, policy=enabled, dataset_size=2048, epochs=4, batch_size=4, learning_rate=0.00001)
+
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+
+model_optimization_config(calibration, batch_size=8, calibset_size=512)
+
+quantization_param(conv4, precision_mode=a16_w16)
+quantization_param(conv6, precision_mode=a16_w16)
+quantization_param(conv8, precision_mode=a16_w16)
+quantization_param(conv10, precision_mode=a16_w16)
+quantization_param(conv12, precision_mode=a16_w16)
+quantization_param(conv14, precision_mode=a16_w16)
+quantization_param(conv16, precision_mode=a16_w16)
+quantization_param(conv18, precision_mode=a16_w16)
+
+quantization_param(conv5, precision_mode=a16_w16)
+quantization_param(conv9, precision_mode=a16_w16)
+quantization_param(conv13, precision_mode=a16_w16)
+quantization_param(conv17, precision_mode=a16_w16)
+quantization_param(conv20, precision_mode=a16_w16)
+quantization_param(conv21, precision_mode=a16_w16)
+quantization_param(conv22, precision_mode=a16_w16)
+quantization_param(conv24, precision_mode=a16_w16)
+quantization_param(conv25, precision_mode=a16_w16)
+quantization_param(conv26, precision_mode=a16_w16)
+
+pre_quantization_optimization(matmul_equalization, layers={matmul*}, matmul_bias=enabled)
+
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param(ew_add1, precision_mode=a8_w8)
+
+performance_param(optimize_for_batch=1)
+
+model_optimization_config(checker_cfg, policy=enabled) 

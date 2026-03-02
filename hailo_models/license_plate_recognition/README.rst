@@ -1,5 +1,5 @@
 =========================
-Licesen Plate Recognition
+License Plate Recognition
 =========================
 
 .. image:: src/img.jpg

@@ -105,6 +105,13 @@ def _ensure_parsed(runner, logger, network_info, args):
     if runner.state != States.UNINITIALIZED:
         return
 
+    if args.hw_arch not in network_info.info.supported_hw_arch:
+        msg = (
+            f"Model {args.model_name} is not supported with hw_arch: {args.hw_arch}. "
+            f"Supported hw_arch values: {network_info.info.supported_hw_arch}"
+        )
+        raise ValueError(msg)
+
     parse_model(runner, network_info, ckpt_path=args.ckpt_path, results_dir=args.results_dir, logger=logger)
 
 

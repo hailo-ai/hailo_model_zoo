@@ -66,3 +66,6 @@ info:
   source: https://github.com/AlexeyAB/darknet/wiki/YOLOv4-model-zoo
   license_url: https://github.com/AlexeyAB/darknet/blob/master/LICENSE
   license_name: YOLO
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

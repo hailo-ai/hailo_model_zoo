@@ -1,0 +1,28 @@
+model_optimization_flavor(optimization_level=2, compression_level=0)
+model_optimization_config(calibration, batch_size=4, calibset_size=128)
+post_quantization_optimization(finetune, policy=enabled, dataset_size=1024, epochs=4, learning_rate=0.00001)
+
+
+model_optimization_config(checker_cfg, policy=enabled)
+
+
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param(conv12, precision_mode=a16_w16)
+quantization_param(conv14, precision_mode=a16_w16)
+quantization_param(conv16, precision_mode=a16_w16)
+quantization_param(conv18, precision_mode=a16_w16)
+quantization_param(conv20, precision_mode=a16_w16)
+quantization_param(conv22, precision_mode=a16_w16)
+quantization_param(conv24, precision_mode=a16_w16)
+quantization_param(conv26, precision_mode=a16_w16)
+quantization_param(conv28, precision_mode=a16_w16)
+quantization_param(conv30, precision_mode=a16_w16)
+quantization_param(conv32, precision_mode=a16_w16)
+
+quantization_param(conv25, precision_mode=a16_w16)
+quantization_param(conv31, precision_mode=a16_w16)
+
+quantization_param({output_layer*}, precision_mode=a16_w16)
+
+performance_param(optimize_for_batch=1)
+resources_param(max_utilization=0.8)

@@ -2,4 +2,5 @@ models:
   - lightface_slim
   - tddfa_mobilenet_v1
 alls_script: "face_detection_landmarks.alls"
-release_model_zoo: true
+release_model_zoo:
+  default: true

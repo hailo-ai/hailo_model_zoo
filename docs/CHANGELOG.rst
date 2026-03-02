@@ -1,3 +1,20 @@
+**v2.18**
+
+* Update to use Dataflow Compiler v3.33.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* New Models:
+  * `YOLO26 <https://arxiv.org/pdf/2509.25164`_ - End-to-end NMS-free object detection models - yolo26n, yolo26s, yolo26m
+  * `DepthAnything <https://arxiv.org/pdf/2406.09414>`_ - Zero-shot depth estimation models - depthanything_vits, depthanything_v2_vits.
+  * `Face landmarks detection <https://github.com/google-ai-edge/mediapipe>` - release face_landmarks_lite.
+  * `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_ - TinyCLIP family - Contrastive Language-Image Pre-training models (image & text encoders) - tinyclip_vit_40m_32_text_19m_laion400m
+  * `SigLip <https://arxiv.org/pdf/2303.15343>`_ - SigLip family - Contrastive Language-Image Pre-training model (image & text encoders)- siglip2_b_32_256, siglip_b_16
+  * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Text detection and recognition models - released paddle_ocr_v5_mobile_detection, paddle_ocr_v5_mobile_recognition
+  * `DaViT <https://arxiv.org/pdf/2204.03645>`_ - tiny - Dual Attention Vision Transformer classification model - davit_tiny.
+  * `Whisper <https://arxiv.org/pdf/2212.04356>`_ - Whisper family - Automatic Speech Recognition models - whisper_tiny, whisper_base, For pipeline please refer to https://github.com/hailocs/hailo-whisper
+
+
+* Bug fixes
+
 **v2.17**
 
 * Update to use Dataflow Compiler v3.33.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)

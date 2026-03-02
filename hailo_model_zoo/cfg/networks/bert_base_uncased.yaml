@@ -1,0 +1,24 @@
+base:
+- base/bert.yaml
+parser:
+  nodes:
+  - - /bert/embeddings/Add_1
+    - /bert/Mul_output_0
+  - null
+network:
+  network_name: bert_base_uncased
+paths:
+  network_path:
+  - models_files/LanguageModeling/bert_base_uncased/pretrained/2026-01-19/bert_base_uncased.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LanguageModeling/bert_base_uncased/pretrained/2026-01-19/bert_base_uncased.zip
+  alls_script: bert_base_uncased.alls
+info:
+  input_shape: 512x768, 1x1x512x1
+  output_shape: 1x512x30522
+  operations: 121.4G
+  parameters: 109.1M
+  source: https://huggingface.co/google-bert/bert-base-uncased
+  full_precision_result: 63.64
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

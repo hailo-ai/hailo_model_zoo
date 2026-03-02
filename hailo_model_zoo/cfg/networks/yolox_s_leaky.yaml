@@ -38,3 +38,6 @@ info:
   source: https://github.com/Megvii-BaseDetection/YOLOX
   license_url: https://www.apache.org/licenses/LICENSE-2.0
   license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

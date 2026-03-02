@@ -21,3 +21,6 @@ info:
   eval_metric: Accuracy (top1)
   source: https://github.com/apple/ml-fastvit/tree/main
   full_precision_result: 79.8
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

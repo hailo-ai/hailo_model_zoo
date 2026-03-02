@@ -1,0 +1,16 @@
+base:
+- base/yolo26.yaml
+network:
+  network_name: yolo26m
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolo26m/2026-02-16/yolo26m.onnx
+  alls_script: yolo26m.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolo26m/2026-02-16/yolo26m.zip
+info:
+  operations: 68.4G
+  parameters: 20.4M
+  full_precision_result: 51.67
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

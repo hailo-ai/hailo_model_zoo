@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = "3.33.0"
-MODEL_ZOO_VERSION = "2.17.0"
+_versions = {}
+exec(Path(__file__).resolve().parent.parent.parent.joinpath("versions.py").read_text(), _versions)
+DFC_VERSION = _versions["DFC_VERSION"]
+MODEL_ZOO_VERSION = _versions["MZ_VERSION"]
 package_name = "hailo-dataflow-compiler"
 
 try:
     dfc_version = version(package_name)
-    if dfc_version != CUR_DFC_VERSION:
+    if dfc_version != DFC_VERSION:
         print(
             f"Warning! The current version of the Dataflow Compiler is {dfc_version}.\n"
-            f"Current Hailo-Model-Zoo works best with DFC version {CUR_DFC_VERSION}. Please consider updating your DFC"
+            f"Current Hailo-Model-Zoo works best with DFC version {DFC_VERSION}. Please consider updating your DFC"
         )
 except PackageNotFoundError:
     raise PackageNotFoundError(
@@ -41,7 +44,7 @@ def main():
     reqs = [
         "numba==0.59.0",
         "imageio==2.22.4",
-        "matplotlib",
+        "matplotlib==3.5.2",
         "numpy",
         "opencv-python",
         "scipy",
@@ -58,6 +61,7 @@ def main():
         "nuscenes-devkit",
         "pyquaternion==0.9.9",
         "Shapely>=2.0.0",
+        "Levenshtein",
     ]
 
     package_data = {

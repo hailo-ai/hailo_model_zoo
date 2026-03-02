@@ -10,3 +10,5 @@ pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, b
 model_optimization_config(calibration, calibset_size=64)
 
 performance_param(compiler_optimization_level=max)
+
+conv1_d0, conv1_d1, conv1_d2, conv1_dc = defuse(conv1, 3)

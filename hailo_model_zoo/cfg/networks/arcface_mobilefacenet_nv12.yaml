@@ -20,3 +20,6 @@ info:
   parameters: 2.04M
   license_url: https://opensource.org/licenses/MIT
   license_name: MIT
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

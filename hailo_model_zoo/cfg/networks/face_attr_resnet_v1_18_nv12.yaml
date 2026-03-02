@@ -12,3 +12,6 @@ info:
   task: pipeline
   input_shape: 109x178x3
   output_shape: '80'
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

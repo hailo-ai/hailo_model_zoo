@@ -1,0 +1,18 @@
+norm1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block_3)
+pre_quantization_optimization(matmul_equalization, layers={matmul*}, policy=disabled)
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
+model_optimization_config(calibration, calibset_size=64)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param({ew_add*}, precision_mode=a16_w16)
+quantization_param({conv_feature*}, precision_mode=a8_w8)
+
+
+resources_param(max_memory_utilization=0.55)
+
+allocator_param(enable_auto_spatial_reshapes=False)
+allocator_param(automatic_reshapes=disabled)
+placeholder = format_conversion(const_input1, ew_add1, spatial_reshape, 8, 8, collapse=True, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+placeholder = format_conversion(precision_change1, ew_add1, spatial_reshape, 8, 8, collapse=False, input_windows=[1, 1, 1], output_windows=[1, 1, 1])

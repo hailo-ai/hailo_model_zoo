@@ -3,7 +3,8 @@
 * Update to use Dataflow Compiler v3.33.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)
 
 * New Models:
-  * `YOLO26 <https://arxiv.org/pdf/2509.25164`_ - End-to-end NMS-free object detection models - yolo26n, yolo26s, yolo26m
+
+  * `YOLO26 <https://arxiv.org/pdf/2509.25164>`_ - End-to-end NMS-free object detection models - yolo26n, yolo26s, yolo26m
   * `DepthAnything <https://arxiv.org/pdf/2406.09414>`_ - Zero-shot depth estimation models - depthanything_vits, depthanything_v2_vits.
   * `Face landmarks detection <https://github.com/google-ai-edge/mediapipe>` - release face_landmarks_lite.
   * `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_ - TinyCLIP family - Contrastive Language-Image Pre-training models (image & text encoders) - tinyclip_vit_40m_32_text_19m_laion400m

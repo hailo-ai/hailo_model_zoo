@@ -4,10 +4,8 @@ from pathlib import Path
 
 from setuptools import find_packages, setup
 
-_versions = {}
-exec(Path(__file__).resolve().parent.parent.parent.joinpath("versions.py").read_text(), _versions)
-DFC_VERSION = _versions["DFC_VERSION"]
-MODEL_ZOO_VERSION = _versions["MZ_VERSION"]
+DFC_VERSION = "3.33.1"
+MODEL_ZOO_VERSION = "2.18.0"
 package_name = "hailo-dataflow-compiler"
 
 try:

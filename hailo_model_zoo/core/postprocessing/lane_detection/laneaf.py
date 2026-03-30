@@ -69,7 +69,7 @@ class LaneAFPostProc(object):
                     C[r, c] = error
             # assign clusters to lane (in ascending order of error)
             row_ind, col_ind = np.unravel_index(np.argsort(C, axis=None), C.shape)
-            for r, c in zip(row_ind, col_ind):
+            for r, c in zip(row_ind, col_ind, strict=True):
                 if C[r, c] >= err_thresh:
                     break
                 if assigned[c]:

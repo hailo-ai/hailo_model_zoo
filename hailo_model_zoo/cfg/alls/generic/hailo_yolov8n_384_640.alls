@@ -1,0 +1,7 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+nms_postprocess("../../postprocess_config/unreleased/hailo_yolov8n_384_640_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, epochs=8, dataset_size=2048)
+
+allocator_param(width_splitter_defuse=disabled)
+performance_param(optimize_for_power=True)

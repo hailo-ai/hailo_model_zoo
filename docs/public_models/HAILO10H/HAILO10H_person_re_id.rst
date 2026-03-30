@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v5.2.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v5.3.0
+* Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
 
@@ -27,7 +29,7 @@ Link Legend
    * - ⭐
      - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
    * - **S**
-     - Source – Link to the model’s open-source repository.
+     - Source – Link to the model's open-source repository.
    * - **PT**
      - Pretrained – Download the pretrained model file (ZIP format).
    * - **HEF, NV12, RGBX**
@@ -36,7 +38,7 @@ Link Legend
        - **NV12:** NV12 format
        - **RGBX:** RGBX format
    * - **PR**
-     - Profiler Report – Download the model’s performance profiling report.
+     - Profiler Report – Download the model's performance profiling report.
 
 |
 
@@ -45,11 +47,17 @@ Market1501
 
 |
 
+
+
+
+
+
+
+
 .. list-table::
    :header-rows: 1
    :widths: 31 9 7 11 9 8 8 8 9
 
-   
    * - Network Name
      - float rank1
      - Hardware rank1
@@ -70,10 +78,9 @@ Market1501
    * - osnet_x1_0
      - 94.4
      - 93.5
-     - 290
-     - 815
-     - | `S <https://github.com/KaiyangZhou/deep-person-reid>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/osnet_x1_0_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/osnet_x1_0.hef>`_
+     - 286
+     - 821
+     - | `S <https://github.com/KaiyangZhou/deep-person-reid>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/PersonReID/osnet_x1_0/2022-05-19/osnet_x1_0.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/osnet_x1_0_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/osnet_x1_0.hef>`_
      - 256x128x3
      - 2.19
      - 1.98
@@ -87,11 +94,10 @@ Market1501
 
    * - repvgg_a0_person_reid_512
      - 89.9
-     - 89.5
-     - 3376
-     - 3352
-     - | `S <https://github.com/DingXiaoH/RepVGG>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/repvgg_a0_person_reid_512_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/repvgg_a0_person_reid_512.hef>`_
+     - 89.7
+     - 3538
+     - 3551
+     - | `S <https://github.com/DingXiaoH/RepVGG>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/MCPReID/reid/repvgg_a0_person_reid_512/2022-04-18/repvgg_a0_person_reid_512.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/repvgg_a0_person_reid_512_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/repvgg_a0_person_reid_512.hef>`_
      - 256x128x3
      - 7.68
      - 1.78

@@ -1,0 +1,17 @@
+base:
+- base/yolo26_seg.yaml
+network:
+  network_name: yolo26l_seg
+paths:
+  alls_script: yolo26l_seg.alls
+  network_path:
+  - models_files/InstanceSegmentation/coco/yolo26/yolo26l_seg/pretrained/2026-02-12/yolo26l-seg.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolo26/yolo26l_seg/pretrained/2026-02-12/yolo26l-seg.zip
+info:
+  operations: 150.2G
+  parameters: 28M
+  full_precision_result: 44.99
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

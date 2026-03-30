@@ -8,4 +8,6 @@ pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, b
 model_optimization_config(calibration, calibset_size=64)
 pre_quantization_optimization(decompose_conv_factor, policy=enabled)
 
-resources_param(max_compute_utilization=1.0, max_control_utilization=0.95, max_memory_utilization=0.75)
+allocator_param(enable_automatic_features_chunks=False, enable_partial_row_buffers=disabled, disable_row_per_cut=True, enable_auto_spatial_reshapes=True, automatic_ddr=False)
+resources_param(max_apu_utilization=0.9, max_compute_16bit_utilization=0.9, max_compute_utilization=0.9, max_control_utilization=0.9, max_input_aligner_utilization=0.9, max_memory_utilization=0.85, max_utilization=0.0)
+context_switch_param(toposort_mode=pushdown, slotter_chances=200, mode=enabled, share_buckets_partition=True, auto_partition_to_buckets=True, berkitizer_min_size=200, berkitizer_bucket_size=40)

@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v5.2.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v5.3.0
+* Measurement conditions: Measuring from the SoC, room temperature
 
 |
 
@@ -27,7 +29,7 @@ Link Legend
    * - ⭐
      - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
    * - **S**
-     - Source – Link to the model’s open-source repository.
+     - Source – Link to the model's open-source repository.
    * - **PT**
      - Pretrained – Download the pretrained model file (ZIP format).
    * - **HEF, NV12, RGBX**
@@ -36,7 +38,7 @@ Link Legend
        - **NV12:** NV12 format
        - **RGBX:** RGBX format
    * - **PR**
-     - Profiler Report – Download the model’s performance profiling report.
+     - Profiler Report – Download the model's performance profiling report.
 
 |
 
@@ -45,11 +47,17 @@ Coco
 
 |
 
+
+
+
+
+
+
+
 .. list-table::
    :header-rows: 1
    :widths: 31 9 7 11 9 8 8 8 9
 
-   
    * - Network Name
      - float mAP
      - Hardware mAP
@@ -69,11 +77,10 @@ Coco
 
    * - yolo_world_v2s
      - 36.4
-     - 31.6
-     - 45.9
-     - 66.9
-     - | `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/yolo_world_v2s_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/yolo_world_v2s.hef>`_
+     - 32.2
+     - 42.3
+     - 60.3
+     - | `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/yolo_world_v2s_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/yolo_world_v2s.hef>`_
      - 640x640x3
      - 9.3
      - 32.7

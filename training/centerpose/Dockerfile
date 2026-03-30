@@ -15,7 +15,9 @@ RUN apt-get update && \
 
 
 ARG repo=https://github.com/hailo-ai/centerpose
-RUN git clone $repo && \
+RUN pip install "cython<3" && \
+    pip install --no-build-isolation pycocotools==2.0.6 && \
+    git clone $repo && \
     cd centerpose && pip install -r requirements.txt
 
 ARG user=hailo

@@ -1,0 +1,32 @@
+base:
+- base/yolov8.yaml
+network:
+  network_name: hailo_yolov8m_480_640
+paths:
+  alls_script: hailo_yolov8m_480_640.alls
+  network_path:
+  - models_files/HailoNets/VPU/hailo_object_detection/yolov8m/2025-11-09/hailo_yolov8m_480_640.onnx
+quantization:
+  calib_set: null
+preprocessing:
+  max_pad: 500
+evaluation:
+  labels_offset: 1
+  classes: 4
+  dataset_name: hailo_object_detection
+  data_set: null
+postprocessing:
+  device_pre_post_layers:
+    nms: true
+  hpp: true
+info:
+  task: pipeline
+  input_shape: 480x640x3
+  output_shape: 2x5x80
+  operations: 59.0G
+  parameters: 25.9M
+  full_precision_result: 56.25
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

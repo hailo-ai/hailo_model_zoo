@@ -14,7 +14,7 @@ def bgr2rgb(runner):
     if channels == 3:
         params[parameter_name] = params[parameter_name][:, :, ::-1, :]
     if channels == 12:
-        # if the first convulution has 12 channels, we assume the network does space_to_depth as in yolov5 variants
+        # if the first convolution has 12 channels, we assume the network does space_to_depth as in yolov5 variants
         _verify_after_space_to_depth(runner, layer_name)
 
         k = params[parameter_name]

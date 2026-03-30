@@ -9,11 +9,11 @@ System Requirements
 
 * Ubuntu 22.04/24.04, 64 bit (supported also on Windows, under WSL2)
 * Python 3.10/3.11/3.12, including ``pip`` and ``virtualenv``
-* Hailo Dataflow Compiler v5.2.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
-* HailoRT v5.2.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-10H.
+* Hailo Dataflow Compiler v5.3.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
+* HailoRT v5.3.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-10H.
 * The Hailo Model Zoo supports Hailo-10H connected via PCIe only.
 * Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
-* GPU driver version 525
+* GPU driver version 555+
 * CUDA 12.5.1
 * CUDNN 9.10
 

@@ -163,6 +163,7 @@ class DetectionEval(Eval):
             gt_data_height,
             gt_data_width,
             gt_data_image_id,
+            strict=True,
         ):
             # Rearrange detections bbox to be in the coco format - xmin, ymin, width, height
             bbox = np.transpose(
@@ -192,6 +193,7 @@ class DetectionEval(Eval):
             gt_data_area,
             gt_data_category_id,
             gt_data_is_crowd,
+            strict=True,
         ):
 
             def _add_gt_bbox(annotation_id, image_id, category_id, bbox, is_crowd, area):
@@ -242,7 +244,7 @@ class DetectionEval(Eval):
         class_names = [
             labels[k]["name"] for k in coco_eval.params.catIds if k - self.labels_offset in np.where(ap_values > -1)[0]
         ]
-        for class_name, ap in zip(class_names, ap_values[ap_values > -1]):
+        for class_name, ap in zip(class_names, ap_values[ap_values > -1], strict=True):
             table.add_row([class_name, f"{ap:.2f}"])
         print(table)
 

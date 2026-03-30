@@ -17,7 +17,7 @@ def merge_matches(m1, m2, shape):
 
     mask = M1 * M2
     match = mask.nonzero()
-    match = list(zip(match[0], match[1]))
+    match = list(zip(match[0], match[1], strict=True))
     unmatched_O = tuple(set(range(O)) - {i for i, j in match})
     unmatched_Q = tuple(set(range(Q)) - {j for i, j in match})
 
@@ -25,7 +25,7 @@ def merge_matches(m1, m2, shape):
 
 
 def _indices_to_matches(cost_matrix, indices, thresh):
-    matched_cost = cost_matrix[tuple(zip(*indices))]
+    matched_cost = cost_matrix[tuple(zip(*indices, strict=True))]
     matched_mask = matched_cost <= thresh
 
     matches = indices[matched_mask]
@@ -82,7 +82,7 @@ def embedding_distance(tracks, detections, metric="cosine"):
     # for i, track in enumerate(tracks):
     # cost_matrix[i, :] = np.maximum(0.0, cdist(track.smooth_feat.reshape(1,-1), det_features, metric))
     track_features = np.asarray([track.smooth_feat for track in tracks], dtype=float)
-    cost_matrix = np.maximum(0.0, cdist(track_features, det_features, metric))  # Nomalized features
+    cost_matrix = np.maximum(0.0, cdist(track_features, det_features, metric))  # Normalized features
     return cost_matrix
 
 

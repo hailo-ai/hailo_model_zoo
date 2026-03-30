@@ -72,7 +72,7 @@ def _get_image_names(dataset_dir, type):
     return img_list
 
 
-def _get_annnotations(dataset_dir):
+def _get_annotations(dataset_dir):
     ann = {}
     with open(os.path.join(dataset_dir, ANNOTATIONS_FILE), encoding="utf-8") as f:
         for line in f.readlines():
@@ -88,7 +88,7 @@ def _get_files_and_labels_list(dataset_dir, type):
     """Get a list of filenames and labels from the dataset directory"""
     file_list = []
     img_names = _get_image_names(dataset_dir, type)
-    annotations = _get_annnotations(dataset_dir)
+    annotations = _get_annotations(dataset_dir)
     for image in img_names:
         labels = annotations[image].split(" ")
         labels = [np.int64(x) for x in labels[1:]]

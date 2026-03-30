@@ -91,7 +91,7 @@ choices = ["A", "B", "C", "D"]
 def format_example(line, include_answer=True):
     example = "Question: " + line["question"]
     for choice in choices:
-        example += f'\n{choice}. {line[f"{choice}"]}'
+        example += f"\n{choice}. {line[f'{choice}']}"
 
     if include_answer:
         example += "\nAnswer: " + line["answer"] + "\n\n"

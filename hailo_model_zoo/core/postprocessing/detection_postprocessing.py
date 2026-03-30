@@ -1,8 +1,6 @@
 import json
 import os
 
-from detection_tools.utils.visualization_utils import visualize_boxes_and_labels_on_image_array
-
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
 from hailo_model_zoo.core.postprocessing.detection.detr import DetrPostProc
@@ -14,6 +12,9 @@ from hailo_model_zoo.core.postprocessing.detection.paddle_ocr_det import PaddleD
 from hailo_model_zoo.core.postprocessing.detection.retinanet_mlperf import retinanet_postproc
 from hailo_model_zoo.core.postprocessing.detection.ssd import SSDPostProc
 from hailo_model_zoo.core.postprocessing.detection.ssd_mlperf_tf import SSDMLPerfPostProc
+from hailo_model_zoo.core.postprocessing.detection.visualization_utils import (
+    visualize_boxes_and_labels_on_image_array,
+)
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.core.postprocessing.detection.yolo_world import YoloWorldPostProc
 
@@ -114,7 +115,6 @@ def visualize_detection_result(
     logits,
     image,
     threshold=0.2,
-    image_info=None,
     use_normalized_coordinates=True,
     max_boxes_to_draw=20,
     dataset_name="coco",
@@ -125,14 +125,12 @@ def visualize_detection_result(
     labels = _get_labels(dataset_name)
     if "widerface" in dataset_name:
         boxes, labels, keypoints = _get_face_detection_visualization_data(logits)
-
     return visualize_boxes_and_labels_on_image_array(
         image[0],
         boxes,
         logits["detection_classes"][0],
         logits["detection_scores"][0],
         labels,
-        instance_masks=logits.get("detection_masks"),
         use_normalized_coordinates=use_normalized_coordinates,
         max_boxes_to_draw=max_boxes_to_draw,
         line_thickness=4,

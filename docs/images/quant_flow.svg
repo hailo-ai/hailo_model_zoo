@@ -57,7 +57,7 @@
 						class="st3" v:langID="1033">f</tspan>loating-point model)</text>		</g>
 		<g id="shape3-5" v:mID="3" v:groupContext="shape" transform="translate(47.8788,-18)">
 			<title>Rectangle.3</title>
-			<desc>Compile &#38; run on Hailo-8</desc>
+			<desc>Compile &#38; run on Hailo-10H</desc>
 			<v:userDefs>
 				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
 				<v:ud v:nameU="visMasterStencil" v:prompt="" v:val="VT4(Basic_M.vssx)"/>
@@ -65,7 +65,7 @@
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="56.6929" cy="347.811" width="113.39" height="28.3465"/>
 			<rect x="0" y="333.638" width="113.386" height="28.3465" class="st4"/>
-			<text x="12.01" y="350.21" class="st5" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Compile &#38; run on Hailo-8</text>		</g>
+			<text x="12.01" y="350.21" class="st5" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Compile &#38; run on Hailo-10H</text>		</g>
 		<g id="shape4-8" v:mID="4" v:groupContext="shape" transform="translate(47.8788,-258.945)">
 			<title>Rectangle.6</title>
 			<desc>Validate accuracy in full precision</desc>

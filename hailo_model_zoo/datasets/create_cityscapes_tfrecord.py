@@ -78,7 +78,7 @@ def _create_tfrecord(filenames, name, num_images):
             mask = np.array(Image.open(mask_path))
             mask = np.array(np.vectorize(classMap.get)(mask), np.uint8)
             img_jpeg = tf.image.encode_jpeg(img)
-            progress_bar.set_description(f"{name} #{i+1}: {img_path}")
+            progress_bar.set_description(f"{name} #{i + 1}: {img_path}")
             example = tf.train.Example(
                 features=tf.train.Features(
                     feature={

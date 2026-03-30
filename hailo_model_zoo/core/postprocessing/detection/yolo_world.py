@@ -47,7 +47,7 @@ class YoloWorldPostProc:
 
     def _box_decoding(self, raw_boxes):
         boxes = None
-        for box_distribute, stride in zip(raw_boxes, self._strides):
+        for box_distribute, stride in zip(raw_boxes, self._strides, strict=True):
             # create grid
             shape = [int(x / stride) for x in self._image_dims]
             grid_x = np.arange(shape[1])

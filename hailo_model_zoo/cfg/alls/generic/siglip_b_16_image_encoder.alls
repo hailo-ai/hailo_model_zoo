@@ -7,3 +7,6 @@ quantization_param([conv4, conv5, conv24, conv25], precision_mode=a16_w16)
 quantization_param({ew_add*}, precision_mode=a16_w16)
 
 resources_param(max_compute_utilization=1.0, max_control_utilization=0.95, max_memory_utilization=0.75)
+b1 = bucket([input_layer1, const_input1, conv17, ew_add8])
+b2 = bucket([ew_add9, reduce_mean1_layer_normalization9, ew_sub1_layer_normalization9, square1_layer_normalization9, conv_var_inv_layer_normalization9, ew_mult1_layer_normalization9, conv32, conv33, ew_add17])
+b3 = bucket([const_input2, reduce_mean1_layer_normalization17, ew_sub1_layer_normalization17, ew_add18, square1_layer_normalization17, conv_var_inv_layer_normalization17, ew_mult1_layer_normalization17, precision_change15, conv53, ew_add26, output_layer1])

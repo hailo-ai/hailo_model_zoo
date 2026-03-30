@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v5.2.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v5.3.0
+* Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
 
@@ -27,7 +29,7 @@ Link Legend
    * - ⭐
      - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
    * - **S**
-     - Source – Link to the model’s open-source repository.
+     - Source – Link to the model's open-source repository.
    * - **PT**
      - Pretrained – Download the pretrained model file (ZIP format).
    * - **HEF, NV12, RGBX**
@@ -36,7 +38,7 @@ Link Legend
        - **NV12:** NV12 format
        - **RGBX:** RGBX format
    * - **PR**
-     - Profiler Report – Download the model’s performance profiling report.
+     - Profiler Report – Download the model's performance profiling report.
 
 |
 
@@ -45,11 +47,17 @@ Lol
 
 |
 
+
+
+
+
+
+
+
 .. list-table::
    :header-rows: 1
    :widths: 31 9 7 11 9 8 8 8 9
 
-   
    * - Network Name
      - float PSNR
      - Hardware PSNR
@@ -72,8 +80,7 @@ Lol
      - 16.2
      - 200
      - 200
-     - | `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/zero_dce_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/zero_dce.hef>`_
+     - | `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce/pretrained/2023-04-23/zero_dce.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/zero_dce_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/zero_dce.hef>`_
      - 400x600x3
      - 0.21
      - 38.2
@@ -88,10 +95,9 @@ Lol
    * - zero_dce_pp
      - 16.0
      - 15.9
-     - 96.4
      - 96.5
-     - | `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/zero_dce_pp_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo10h/zero_dce_pp.hef>`_
+     - 96.5
+     - | `S <Internal>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/LowLightEnhancement/LOL/zero_dce_pp/pretrained/2023-07-03/zero_dce_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/zero_dce_pp_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/zero_dce_pp.hef>`_
      - 400x600x3
      - 0.02
      - 4.84

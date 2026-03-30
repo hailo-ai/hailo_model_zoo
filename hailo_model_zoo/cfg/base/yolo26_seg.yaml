@@ -1,0 +1,47 @@
+base:
+- base/yolov8_seg.yaml
+preprocessing:
+  network_type: instance_segmentation
+parser:
+  nodes:
+  - null
+  - - /model.23/one2one_cv2.2/one2one_cv2.2.2/Conv
+    - /model.23/one2one_cv2.1/one2one_cv2.1.2/Conv
+    - /model.23/one2one_cv2.0/one2one_cv2.0.2/Conv
+    - /model.23/one2one_cv3.2/one2one_cv3.2.2/Conv
+    - /model.23/one2one_cv3.1/one2one_cv3.1.2/Conv
+    - /model.23/one2one_cv3.0/one2one_cv3.0.2/Conv
+    - /model.23/one2one_cv4.2/one2one_cv4.2.2/Conv
+    - /model.23/one2one_cv4.1/one2one_cv4.1.2/Conv
+    - /model.23/one2one_cv4.0/one2one_cv4.0.2/Conv
+    - /model.23/proto/cv3/act/Mul
+postprocessing:
+  meta_arch: yolo26_seg
+  anchors:
+    regression_length: 1
+    strides:
+    - 32
+    - 16
+    - 8
+    sizes:
+    - - 1
+      - 1
+    - - 1
+      - 1
+    - - 1
+      - 1
+  device_pre_post_layers:
+    nms: false
+    sigmoid: false
+info:
+  task: instance segmentation
+  input_shape: 640x640x3
+  output_shape: 20x20x64, 20x20x80, 20x20x32, 40x40x64, 40x40x80, 40x40x32, 80x80x64,
+    80x80x80, 80x80x32, 160x160x32
+  framework: pytorch
+  training_data: coco instances train2017
+  validation_data: coco instances val2017
+  eval_metric: mAP
+  source: https://github.com/ultralytics/ultralytics
+  license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: AGPL-3.0

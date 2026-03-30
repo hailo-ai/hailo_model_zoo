@@ -166,6 +166,7 @@ CLASS_TOKEN_LOC = {
     "google/siglip2-base-patch16-224": "models_files/cifar100/2025-03-17/class_token_siglip2_base_16_224.npy",
     "google/siglip2-large-patch16-256": "models_files/cifar100/2025-03-17/class_token_siglip2_large_16_256.npy",
     "google/siglip2-base-patch32-256": "models_files/cifar100/2025-03-17/class_token_siglip2_base_32_256.npy",
+    "google/siglip-so400m-patch14-384": "models_files/cifar100/2026-01-21/class_token_siglip_so400m_patch14_384.npy",
     "wkcn/TinyCLIP-ViT-61M-32-Text-29M-LAION400M": (
         "models_files/cifar100/2025-07-21/class_token_tinyclip_vit_61m_32_text_29m_laion400m.npy"
     ),
@@ -190,6 +191,7 @@ PADDING_LENGTH = {
     "google/siglip2-base-patch16-224": 64,
     "google/siglip2-large-patch16-256": 64,
     "google/siglip2-base-patch32-256": 64,
+    "google/siglip-so400m-patch14-384": 64,
 }
 COCO_PATH = "http://images.cocodataset.org/zips/val2017.zip"
 
@@ -307,7 +309,7 @@ def create_calib_tfrecord(dataset_dir, type):
     progress_bar = tqdm(filenames)
     with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
         for i, img_path in enumerate(progress_bar):
-            progress_bar.set_description(f"{type} #{i+1}: {img_path}")
+            progress_bar.set_description(f"{type} #{i + 1}: {img_path}")
             img = Image.open(img_path).convert("RGB")
             width, height = img.size
             np_img = np.array(img)

@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v5.2.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v5.3.0
+* Measurement conditions: Measuring from the SoC, room temperature
 
 |
 
@@ -27,7 +29,7 @@ Link Legend
    * - ⭐
      - Networks used by `Hailo-apps <https://github.com/hailo-ai/hailo-apps-infra>`_.
    * - **S**
-     - Source – Link to the model’s open-source repository.
+     - Source – Link to the model's open-source repository.
    * - **PT**
      - Pretrained – Download the pretrained model file (ZIP format).
    * - **HEF, NV12, RGBX**
@@ -36,7 +38,7 @@ Link Legend
        - **NV12:** NV12 format
        - **RGBX:** RGBX format
    * - **PR**
-     - Profiler Report – Download the model’s performance profiling report.
+     - Profiler Report – Download the model's performance profiling report.
 
 |
 
@@ -45,11 +47,17 @@ Zero Shot Depth Estimation
 
 |
 
+
+
+
+
+
+
+
 .. list-table::
    :header-rows: 1
    :widths: 31 9 7 11 9 8 8 8 9
 
-   
    * - Network Name
      - float AbsRel
      - Hardware AbsRel
@@ -70,10 +78,9 @@ Zero Shot Depth Estimation
    * - depth_anything_v2_vits
      - 0.15
      - 0.19
-     - 52.3
-     - 120
-     - | `S <https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v2/vits/pretrained/2025-07-09/depth_anything_v2_vits_224X224_sim_hf.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/depth_anything_v2_vits_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/depth_anything_v2_vits.hef>`_
+     - 68.3
+     - 180
+     - | `S <https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v2/vits/pretrained/2025-07-09/depth_anything_v2_vits_224X224_sim_hf.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/depth_anything_v2_vits_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/depth_anything_v2_vits.hef>`_
      - 224x224x3
      - 24.2
      - 16.7
@@ -88,10 +95,9 @@ Zero Shot Depth Estimation
    * - depth_anything_vits
      - 0.13
      - 0.16
-     - 54.0
-     - 119
-     - | `S <https://huggingface.co/LiheYoung/depth-anything-small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/depth_anything_vits_profiler_results_compiled.html>`_
-         `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.2.0/hailo15h/depth_anything_vits.hef>`_
+     - 64.4
+     - 164
+     - | `S <https://huggingface.co/LiheYoung/depth-anything-small-hf>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/Depth_Anything/v1/vits/pretrained/2025-07-09/depth_anything_vits_224X224_sim_hf.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/depth_anything_vits_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/depth_anything_vits.hef>`_
      - 224x224x3
      - 24.2
      - 16.7

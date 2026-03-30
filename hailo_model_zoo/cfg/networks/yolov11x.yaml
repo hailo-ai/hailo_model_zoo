@@ -36,4 +36,5 @@ info:
   license_name: AGPL-3.0
   supported_hw_arch:
   - hailo15h
+  - hailo15l
   - hailo10h

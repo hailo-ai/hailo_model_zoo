@@ -39,5 +39,4 @@ info:
   license_name: Apache-2.0
   supported_hw_arch:
   - hailo15h
-  - hailo15l
   - hailo10h

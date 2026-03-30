@@ -15,7 +15,7 @@ postprocessing:
     nms: true
   meta_arch: yolo
   hpp: true
-  score_threshold: 0.001
+  score_threshold: 0.01
 info:
   task: object detection
   input_shape: 640x640x3

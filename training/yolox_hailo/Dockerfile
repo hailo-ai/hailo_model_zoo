@@ -24,10 +24,10 @@ ENV YOLOX_DATADIR=/workspace/data
 
 WORKDIR /workspace/YOLOX
 
-RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.pth -q
-RUN wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/yolox_hailo_before_prune.pth -q; \
-    wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/yolox_hailo_p50.pth -q; \
-    wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/README.md -q
+RUN wget https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.pth
+RUN wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/yolox_hailo_before_prune.pth && \
+    wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/yolox_hailo_p50.pth && \
+    wget https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/OD/yolox_hailo/2023-09-23/README.md
 
 RUN pip install "sparseml==1.5.4"
 

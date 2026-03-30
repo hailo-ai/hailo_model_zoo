@@ -64,7 +64,7 @@ class PoseEstimationEval(Eval):
             batch_kpts = net_output["keypoints"]
             new_dets = []
             new_kpts = []
-            for i, (img_dets, img_kpts) in enumerate(zip(batch_dets, batch_kpts)):
+            for i, (img_dets, img_kpts) in enumerate(zip(batch_dets, batch_kpts, strict=True)):
                 new_img_dets, new_img_kpts = self._convert_letterbox_detections(img_dets, img_kpts, img_info, i)
                 new_dets.append(new_img_dets)
                 new_kpts.append(new_img_kpts)
@@ -90,7 +90,7 @@ class PoseEstimationEval(Eval):
             # change boxes to coco format
             box[:, 2] -= box[:, 0]
             box[:, 3] -= box[:, 1]
-            for b, s, kps, kps_score in zip(box, score, keypoint, keypoint_score):
+            for b, s, kps, kps_score in zip(box, score, keypoint, keypoint_score, strict=True):
                 detection_keypoints = np.concatenate([kps.reshape(17, 2), kps_score.reshape(17, 1)], axis=1)
                 image_id = int(ground_truth["image_id"])
                 detection = {

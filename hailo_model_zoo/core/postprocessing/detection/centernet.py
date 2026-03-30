@@ -133,7 +133,7 @@ class CenternetPostProc(object):
             top_indices = np.unravel_index(np.argsort(topk_probs_im.ravel())[-TOPK:][::-1], topk_probs_im.shape)
             widths_im = box_widths[i]
             offsets_im = box_offsets[i]
-            for h, w, cls in zip(*top_indices):
+            for h, w, cls in zip(*top_indices, strict=True):
                 if topk_probs_im[h, w, cls] > 0:
                     topk_probs_list.append(topk_probs_im[h, w, cls])
                     topk_coors_list.append([h, w])

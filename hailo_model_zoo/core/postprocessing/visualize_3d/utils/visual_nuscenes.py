@@ -131,7 +131,7 @@ class NuScenesExplorer:
 
         # Plot lidar into a single subplot.
         if len(lidar_data) > 0:
-            for (_, sd_token), ax in zip(lidar_data.items(), axes.flatten()[num_radar_plots:]):
+            for (_, sd_token), ax in zip(lidar_data.items(), axes.flatten()[num_radar_plots:], strict=True):
                 self.render_sample_data(
                     sd_token,
                     box_vis_level=box_vis_level,
@@ -145,7 +145,8 @@ class NuScenesExplorer:
                 )
 
         # Plot cameras in separate subplots.
-        for (_, sd_token), ax in zip(camera_data.items(), axes.flatten()[num_radar_plots + num_lidar_plots :]):
+        camera_axes = axes.flatten()[num_radar_plots + num_lidar_plots :]
+        for (_, sd_token), ax in zip(camera_data.items(), camera_axes, strict=True):
             self.render_sample_data(
                 sd_token, box_vis_level=box_vis_level, ax=ax, nsweeps=nsweeps, show_lidarseg=False, verbose=False
             )

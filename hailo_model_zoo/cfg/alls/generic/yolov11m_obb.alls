@@ -1,0 +1,3 @@
+input_dataset_normalization = normalization([0.0, 0.0, 0.0],[255.0, 255.0, 255.0])
+model_optimization_config(calibration, calibset_size=64)
+post_quantization_optimization(finetune, policy=enabled, batch_size=4)

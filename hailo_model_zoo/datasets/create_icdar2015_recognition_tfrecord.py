@@ -14,8 +14,8 @@ from hailo_model_zoo.utils import downloader, path_resolver
 
 TF_RECORD_TYPE = "val", "calib"
 TF_RECORD_LOC = {
-    "val": "models_files/icdar2015/2025-08-30/icdar15_text_rec_val_set.tfrecord",
-    "calib": "models_files/icdar2015/2025-08-30/icdar15_text_rec_calib_set.tfrecord",
+    "val": "models_files/icdar2015/2026-01-14/icdar15_text_rec_val_set.tfrecord",
+    "calib": "models_files/icdar2015/2026-01-14/icdar15_text_rec_calib_set.tfrecord",
 }
 
 ICDAR2015_PATH = "https://www.kaggle.com/api/v1/datasets/download/bestofbests9/icdar2015"
@@ -185,7 +185,9 @@ def create_tfrecord(dataset_dir, dataset_type, num_images):
             ann_path = annotations_dir / ann_name
 
             annotations = get_anns(ann_path, img)
-            for cropped_text, tag in zip(annotations["cropped_text"], annotations["tags"]):
+            for ann_idx, (cropped_text, tag) in enumerate(
+                zip(annotations["cropped_text"], annotations["tags"], strict=True)
+            ):
                 if total_text_regions >= num_images:
                     break
 
@@ -199,6 +201,7 @@ def create_tfrecord(dataset_dir, dataset_type, num_images):
 
                 # assumes filename format like "img_123.jpg"
                 image_id = int(img_path.stem.split("_")[1])
+                image_name = img_path.stem + f"_{ann_idx}" + img_path.suffix
                 example = tf.train.Example(
                     features=tf.train.Features(
                         feature={
@@ -206,7 +209,7 @@ def create_tfrecord(dataset_dir, dataset_type, num_images):
                             "width": _int64_feature(width),
                             "text": _bytes_feature(str.encode(tag)),
                             "cropped_text": _bytes_feature(img_jpeg),
-                            "image_name": _bytes_feature(str.encode(img_path.name)),
+                            "image_name": _bytes_feature(str.encode(image_name)),
                             "image_id": _int64_feature(image_id),
                             "text_id": _int64_feature(total_text_regions + 1),
                         }

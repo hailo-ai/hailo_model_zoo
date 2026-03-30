@@ -11,3 +11,4 @@ model_optimization_flavor(optimization_level=0, compression_level=0)
 
 allocator_param(enable_partial_row_buffers=disabled)
 resources_param(max_utilization=0.95)
+context_switch_param(auto_partition_to_buckets=False)

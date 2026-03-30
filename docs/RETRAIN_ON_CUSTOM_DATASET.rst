@@ -18,8 +18,6 @@ Retraining is not available inside the docker version of Hailo Software Suite. I
 **Object Detection**
 
 
-* `YOLOv3 <../training/yolov3/README.rst>`_
-* `YOLOv4 <../training/yolov4/README.rst>`_
 * `YOLOv5 <../training/yolov5/README.rst>`_
 * `YOLOv8 <../training/yolov8/README.rst>`_
 * `YOLOX <../training/yolox/README.rst>`_

@@ -109,7 +109,7 @@ def _get_max_preds(heatmaps):
 
 
 def post_dark_udp(coords, batch_heatmaps, kernel=3):
-    """DARK post-pocessing. Implemented by udp. Paper ref: Huang et al. The
+    """DARK post-processing. Implemented by udp. Paper ref: Huang et al. The
     Devil is in the Details: Delving into Unbiased Data Processing for Human
     Pose Estimation (CVPR 2020). Zhang et al. Distribution-Aware Coordinate
     Representation for Human Pose Estimation (CVPR 2020).
@@ -225,7 +225,7 @@ def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixe
     height = ymax - ymin
 
     center = np.array([xmin + width * 0.5, ymin + height * 0.5], dtype=np.float32).T
-    for i, (w, h) in enumerate(zip(width, height)):
+    for i, (w, h) in enumerate(zip(width, height, strict=True)):
         if w > aspect_ratio * h:
             height[i] = w * 1.0 / aspect_ratio
         elif w < aspect_ratio * h:

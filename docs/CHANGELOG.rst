@@ -1,3 +1,16 @@
+**v5.3.0**
+
+* Updated to use with Dataflow Compiler v5.3.0
+* Updated to use with HailoRT v5.3.0
+* Bug fixes
+* New Models:
+
+  * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Added support for oriented bounding box detection models - YOLOv11-obb family
+  * `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
+  * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Added support for paddle_ocr_v5_mobile_detection and paddle_ocr_v5_mobile_recognition for Hailo-15L hardware architecture, and improved Hailo-10H/Hailo-15H FPS
+  * YOLOv5-seg-hpp - Added support for instance segmentation with HailoRT postprocessing - yolov5n_seg_hpp, yolov5s_seg_hpp, yolov5m_seg_hpp
+
+
 **v5.2.0**
 
 * Hailo-15L is now supported by the Model Zoo
@@ -6,7 +19,7 @@
 * Bug fixes
 * New Models:
 
-  * `SigLIP <https://arxiv.org/abs/2303.15343>`_ - Released siglip_l_16_256_image_encoder, siglip_l_16_256_text_encoder, siglip_b_16_image_encoder, siglip_b_16_text_encoder, siglip_b_16_text_encoder
+  * `SigLIP <https://arxiv.org/abs/2303.15343>`_ - Released siglip_l_16_256_image_encoder, siglip_l_16_256_text_encoder, siglip2_l_16_256_image_encoder, siglip2_l_16_256_text_encoder, siglip_b_16_image_encoder, siglip_b_16_text_encoder
   * `YOLOv12 <https://arxiv.org/abs/2502.12524>`_ - Released yolov12n
   * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Text detection and recognition models - released paddle_ocr_v5_mobile_detection, paddle_ocr_v5_mobile_recognition
   * `StereoNet <https://arxiv.org/pdf/1807.08865>`_ - stereo depth estimation model - now also available for Hailo-10H/15H

@@ -11,7 +11,7 @@ Prerequisites
 
 
 * docker (\ `installation instructions <https://docs.docker.com/engine/install/ubuntu/>`_\ )
-* nvidia-docker2 (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
+* nvidia-container-toolkit (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
 
      **NOTE:**\  In case you use Hailo Software Suite docker, make sure you are doing all the following instructions outside of this docker.
 
@@ -57,7 +57,7 @@ Training and exporting to ONNX
 
 #. | Prepare your data:
 
-   | For more information on obtraining datasets `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch#download-datasets-or-prepare-datasets>`_
+   | For more information on obtaining datasets `here <https://github.com/hailo-ai/insightface/tree/develop/recognition/arcface_torch#download-datasets-or-prepare-datasets>`_
    | The repository supports the following formats:
 
    #. | ImageFolder dataset - each class (person) has its own directory
@@ -116,7 +116,7 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+You can generate an HEF file for inference on Hailo-10H from your trained ONNX model.
 In order to do so you need a working model-zoo environment.
 Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/arcface_mobilefacenet.yaml``\ , and run compilation using the model zoo:
 

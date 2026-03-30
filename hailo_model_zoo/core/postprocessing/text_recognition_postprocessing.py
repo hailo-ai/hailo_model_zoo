@@ -23,7 +23,7 @@ def decode(endnodes, character):
     decoded_texts = []
     decoded_scores = []
 
-    for curr_pred, curr_conf in zip(preds_idx, preds_prob):
+    for curr_pred, curr_conf in zip(preds_idx, preds_prob, strict=True):
         char_list = []
         conf_list = []
 
@@ -81,3 +81,9 @@ def visualize_text_recognition(logits, img, **kwargs):
     text_position = (3, 38)
     draw.text(text_position, vis_string, fill="blue")
     return np.array(img_orig, np.uint8)
+
+
+@POSTPROCESS_FACTORY.register(name="text_classification")
+def text_classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    net_output = {"predictions": tf.nn.softmax(endnodes[:, 0, :, :], axis=-1)}
+    return net_output

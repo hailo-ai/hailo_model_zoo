@@ -41,12 +41,20 @@ class YoloPostProc(object):
             "yolo_v5": YoloPostProc._yolo5_decode,
             "yolox": YoloPostProc._yolox_decode,
             "yolo_v6": YoloPostProc._yolo6_decode,
+            "yolo26": YoloPostProc._yolo6_decode,
+            "yolo26_seg": YoloPostProc._yolo6_decode,
         }
         self._nms_on_device = False
         self._should_clip = should_clip
         if kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get("nms", False):
             self._nms_on_device = True
-        self.hpp = kwargs.get("hpp", False)  # not needed once SDK change the output shape of emulator
+        self.hpp = kwargs.get("hpp", False)
+        self._top_k_val = kwargs.get("post_nms_topk", 100)
+        self._sigmoid_on_device = kwargs["device_pre_post_layers"] and kwargs["device_pre_post_layers"].get(
+            "sigmoid", False
+        )
+        self._edit_classes = kwargs.get("edit_classes", True)
+        self._normalize_boxes = kwargs.get("normalize_boxes", True)
 
     @staticmethod
     def _yolo3_decode(raw_box_centers, raw_box_scales, objness, class_pred, anchors_for_stride, offsets, stride):
@@ -149,8 +157,9 @@ class YoloPostProc(object):
             W = W_input // stride
             num_anchors = anchors_for_stride.size // 2
             num_detections = H * W * num_anchors
-            detection_boxes.set_shape((BS, num_detections, 1, 4))
-            detection_scores.set_shape((BS, num_detections, num_classes))
+            if not detection_boxes.shape or not detection_scores.shape:  # TF case, shape is not set, skip for torch
+                detection_boxes.set_shape((BS, num_detections, 1, 4))
+                detection_scores.set_shape((BS, num_detections, num_classes))
             # concatenating the detections from the different output layers:
             if output_ind == 0:
                 detection_boxes_full = detection_boxes
@@ -159,31 +168,92 @@ class YoloPostProc(object):
                 detection_boxes_full = tf.concat([detection_boxes_full, detection_boxes], axis=1)
                 detection_scores_full = tf.concat([detection_scores_full, detection_scores], axis=1)
 
-        (nmsed_boxes, nmsed_scores, nmsed_classes, num_detections) = tf.image.combined_non_max_suppression(
-            boxes=detection_boxes_full,
-            scores=detection_scores_full,
-            score_threshold=self.score_threshold,
-            iou_threshold=self._nms_iou_thresh,
-            max_output_size_per_class=100,
-            max_total_size=100,
-            clip_boxes=self._should_clip,
-        )
+        mask = None
+        if "yolo26" in self._network_arch:
+            if not self._sigmoid_on_device:
+                detection_scores_full = tf.math.sigmoid(detection_scores_full)
+            boxes, scores, classes, num_detections, mask = self.yolo26_filter(
+                detection_boxes_full, detection_scores_full, **kwargs
+            )
+        else:
+            (boxes, scores, classes, num_detections) = tf.image.combined_non_max_suppression(
+                boxes=detection_boxes_full,
+                scores=detection_scores_full,
+                score_threshold=self.score_threshold,
+                iou_threshold=self._nms_iou_thresh,
+                max_output_size_per_class=100,
+                max_total_size=100,
+                clip_boxes=self._should_clip,
+            )
 
-        # adding offset to the class prediction and cast to integer
         def translate_coco_2017_to_2014(nmsed_classes):
             return np.vectorize(COCO_2017_TO_2014_TRANSLATION.get)(nmsed_classes).astype(np.int32)
 
-        nmsed_classes = tf.cast(tf.add(nmsed_classes, self._labels_offset), tf.int16)
-        nmsed_classes = tf.numpy_function(translate_coco_2017_to_2014, [nmsed_classes], ["int32"])
-        nmsed_classes = nmsed_classes[0] if isinstance(nmsed_classes, (list, tuple)) else nmsed_classes
-        nmsed_classes.set_shape((BS, 100))
+        if self._edit_classes:
+            selected_classes = tf.cast(tf.add(classes, self._labels_offset), tf.int16)
+            selected_classes = tf.numpy_function(translate_coco_2017_to_2014, [selected_classes], ["int32"])
+            selected_classes = selected_classes[0] if isinstance(selected_classes, (list, tuple)) else selected_classes
+        else:
+            selected_classes = classes
+        selected_classes.set_shape((BS, self._top_k_val))
 
-        return {
-            "detection_boxes": nmsed_boxes,
-            "detection_scores": nmsed_scores,
-            "detection_classes": nmsed_classes,
+        res = {
+            "detection_boxes": boxes,
+            "detection_scores": scores,
+            "detection_classes": selected_classes,
             "num_detections": num_detections,
         }
+        if mask is not None:
+            res["mask"] = mask
+        return res
+
+    def yolo26_filter(self, detection_boxes, detection_scores, **kwargs):
+        # Match ultralytics get_topk_index logic:
+        # Step 1: top-k anchors by max class score
+        # Step 2: from those k anchors × nc classes, pick top-k (anchor, class) pairs
+        # This allows multiple classes per anchor.
+        k = self._top_k_val
+        nc = tf.shape(detection_scores)[2]
+        BS = tf.shape(detection_boxes)[0]
+        boxes_squeezed = tf.squeeze(detection_boxes, axis=2)  # (BS, num_anchors, 4)
+
+        # Step 1: top-k anchors by max class score
+        max_scores = tf.reduce_max(detection_scores, axis=2)  # (BS, num_anchors)
+        _, ori_index = tf.math.top_k(max_scores, k=k, sorted=False)  # (BS, k)
+
+        # Gather class scores for top-k anchors: (BS, k, nc)
+        batch_idx = tf.tile(tf.range(BS)[:, None], [1, k])
+        gather_idx = tf.stack([batch_idx, ori_index], axis=-1)
+        topk_scores = tf.gather_nd(detection_scores, gather_idx)  # (BS, k, nc)
+
+        # Step 2: flatten k*nc and pick top-k (anchor, class) pairs
+        flat_scores = tf.reshape(topk_scores, [BS, -1])  # (BS, k*nc)
+        top_scores, flat_idx = tf.math.top_k(flat_scores, k=k, sorted=True)  # (BS, k)
+
+        # Decode flat index into anchor index and class index
+        anchor_in_topk = flat_idx // nc  # which of the k anchors
+        class_idx = tf.cast(flat_idx % nc, tf.int32)  # which class
+
+        # Map anchor_in_topk back to original anchor index
+        orig_anchor_idx = tf.gather(ori_index, anchor_in_topk, axis=1, batch_dims=1)  # (BS, k)
+
+        # Gather boxes
+        box_gather_idx = tf.stack(
+            [
+                tf.tile(tf.range(BS)[:, None], [1, k]),
+                orig_anchor_idx,
+            ],
+            axis=-1,
+        )
+        selected_boxes = tf.gather_nd(boxes_squeezed, box_gather_idx)  # (BS, k, 4)
+
+        num_valid = tf.reduce_sum(tf.cast(top_scores > self.score_threshold, tf.int32), axis=1)
+
+        masks = kwargs.get("mask_coeffs", None)
+        selected_masks = None
+        if masks is not None:
+            selected_masks = tf.gather_nd(masks, box_gather_idx)
+        return selected_boxes, top_scores, class_idx, num_valid, selected_masks
 
     def yolo_postprocess_numpy(self, net_out, anchors_for_stride, stride):
         """
@@ -236,14 +306,14 @@ class YoloPostProc(object):
         detection_boxes = np.reshape(bbox, (BS, -1, 1, 4))  # dim [N, num_detections, 1, 4]
         detection_scores = np.reshape(class_score, (BS, -1, num_classes))  # dim [N, num_detections, 80]
 
-        # switching scheme from xmin, ymin, xmanx, ymax to ymin, xmin, ymax, xmax and normalize to 1:
-        detection_boxes_tmp = np.zeros(detection_boxes.shape)
-        detection_boxes_tmp[:, :, :, 0] = detection_boxes[:, :, :, 1] / self._image_dims[0]
-        detection_boxes_tmp[:, :, :, 1] = detection_boxes[:, :, :, 0] / self._image_dims[1]
-        detection_boxes_tmp[:, :, :, 2] = detection_boxes[:, :, :, 3] / self._image_dims[0]
-        detection_boxes_tmp[:, :, :, 3] = detection_boxes[:, :, :, 2] / self._image_dims[1]
-
-        detection_boxes = detection_boxes_tmp  # now scheme is: ymin, xmin, ymax, xmax
+        if self._normalize_boxes:
+            # switching scheme from xmin, ymin, xmanx, ymax to ymin, xmin, ymax, xmax and normalize to 1:
+            detection_boxes_tmp = np.zeros(detection_boxes.shape)
+            detection_boxes_tmp[:, :, :, 0] = detection_boxes[:, :, :, 1] / self._image_dims[0]
+            detection_boxes_tmp[:, :, :, 1] = detection_boxes[:, :, :, 0] / self._image_dims[1]
+            detection_boxes_tmp[:, :, :, 2] = detection_boxes[:, :, :, 3] / self._image_dims[0]
+            detection_boxes_tmp[:, :, :, 3] = detection_boxes[:, :, :, 2] / self._image_dims[1]
+            detection_boxes = detection_boxes_tmp  # now scheme is: ymin, xmin, ymax, xmax
         return detection_boxes.astype(np.float32), detection_scores.astype(np.float32)
 
     def reorganize_split_output(self, endnodes):
@@ -269,6 +339,12 @@ class YoloPostProc(object):
                 scales = endnodes[branch_index][:, :, :, 2:]
                 probs = endnodes[branch_index + 1]
                 obj = tf.ones((1, 1, 1, 2))  # Create dummy objectness tensor
+            elif "yolo26" in self._network_arch:
+                branch_index = int(2 * index)
+                centers = endnodes[index][:, :, :, :2]
+                scales = endnodes[index][:, :, :, 2:]
+                probs = endnodes[index + 3]
+                obj = tf.ones((1, 1, 1, 2))
             else:
                 centers = endnodes[branch_index]
                 scales = endnodes[branch_index + 1]
@@ -281,7 +357,9 @@ class YoloPostProc(object):
                 name="yolov3_match_remodeled_output",
             )
 
-            reorganized_endnodes_list.append(branch_endnodes[0])  # because the py_func returns a list
+            reorganized_endnodes_list.append(
+                branch_endnodes[0] if isinstance(branch_endnodes, list) else branch_endnodes
+            )  # because the py_func returns a list when endnodes are tf tensors, otherwise it returns a single tensor
         return reorganized_endnodes_list
 
     def reorganize_split_output_numpy(self, centers, scales, obj, probs):

@@ -70,7 +70,7 @@ def main(args):
             target_images /= 255.0
             encoded = vae.encode(target_images).latent_dist
             encoded = encoded.sample(generator=generator)
-            for enc, image in zip(encoded, images):
+            for enc, image in zip(encoded, images, strict=True):
                 writer.write(
                     {
                         "encoded_image": (enc.permute(1, 2, 0).cpu().numpy().tobytes(), "byte"),

@@ -8,8 +8,8 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.18.0-blue.svg
-   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.18.0
+.. |tensorflow| image:: https://img.shields.io/badge/Tensorflow-2.19.1-blue.svg
+   :target: https://github.com/tensorflow/tensorflow/releases/tag/v2.19.1
    :alt: Tensorflow
    :width: 110
    :height: 20
@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.2.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.3.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.2.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.3.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170

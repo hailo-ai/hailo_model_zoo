@@ -91,7 +91,7 @@ def _convert_dataset(img_list, gt_list, dataset_dir, is_calibration=False):
     tfrecords_filename = os.path.join(
         dataset_dir, "arcface_lfw_pairs_{}.tfrecord".format("calib" if is_calibration else "val")
     )
-    image_label_pair = list(zip(img_list, gt_list))
+    image_label_pair = list(zip(img_list, gt_list, strict=True))
     if is_calibration:
         image_label_pair = image_label_pair[:CALIB_PAIR_COUNT]
     progress_bar = tqdm(image_label_pair)
@@ -229,9 +229,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
-            "examples:\n"
-            "  python create_arcface_lfw_tfrecord.py calib\n"
-            "  python create_arcface_lfw_tfrecord.py val\n"
+            "examples:\n  python create_arcface_lfw_tfrecord.py calib\n  python create_arcface_lfw_tfrecord.py val\n"
         ),
     )
     parser.add_argument("type", help="TFRecord of which dataset to create", type=str, choices=["calib", "val"])
@@ -247,7 +245,7 @@ if __name__ == "__main__":
     alignment_parser.add_argument(
         "--no-align",
         action="store_true",
-        help=("Assume images are already aligned," " does not use keypoints for alignment"),
+        help=("Assume images are already aligned, does not use keypoints for alignment"),
         default=False,
     )
     parser.add_argument("--force", "-f", help="override existing tfrecord", action="store_true", default=False)

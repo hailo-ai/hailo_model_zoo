@@ -1,0 +1,25 @@
+base:
+- base/yolov8.yaml
+preprocessing:
+  input_shape:
+  - 1024
+  - 1024
+  - 3
+  meta_arch: yolo_obb
+  network_type: detection_obb
+  max_pad: 2048
+postprocessing:
+  device_pre_post_layers:
+    sigmoid: false
+  meta_arch: yobb
+  score_threshold: 0.01
+quantization:
+  calib_set:
+  - models_files/dotav1/2025-12-01/dotav1_train.tfrecord
+evaluation:
+  labels_offset: 0
+  classes: 15
+  dataset_name: dotav1
+  data_set: models_files/dotav1/2025-12-01/dotav1_val.tfrecord
+  network_type: detection_obb
+  meta_arch: obb

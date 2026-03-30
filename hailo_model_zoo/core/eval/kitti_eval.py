@@ -47,7 +47,7 @@ def do_kitti_detection_evaluation(dataset, predictions, output_folder, logger):
 
     logger.info("Evaluate on KITTI dataset")
     MODELS_FILES_DIR = path_resolver.resolve_data_path("")
-    EVAL_PATH = str(MODELS_FILES_DIR / "models_files/" "smoke/smoke_regnet800/kitti_3d/evaluate_object_3d_offline_adk")
+    EVAL_PATH = str(MODELS_FILES_DIR / "models_files/smoke/smoke_regnet800/kitti_3d/evaluate_object_3d_offline_adk")
     label_dir = str(MODELS_FILES_DIR / "models_files/kitti_3d/label/")
     command = "{} {} {}".format(EVAL_PATH, label_dir, output_folder)
     output = subprocess.check_output(command, shell=True, universal_newlines=True).strip()

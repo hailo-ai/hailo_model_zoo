@@ -41,6 +41,7 @@ It is recommended that the user defines the data directory path by setting the `
   * `KITTI_STEREO`_
   * `KINETICS400`_
   * `NUSCENES`_
+  * `DOTAv1`_
 
 .. _ImageNet:
 
@@ -82,7 +83,7 @@ To evaluate/optimize/compile the classification models of the Hailo Model Zoo, g
 COCO2017
 --------
 
-| To evaluate/optimize/compile the object detection / pose estimation models of the Hailo Model Zoo you should generate the COCO (\ `link <https://cocodataset.org/#home>`_\ ) TFRecord files.
+| To evaluate/optimize/compile the object detection / pose estimation models of the Hailo Model Zoo, generate the COCO (\ `link <https://cocodataset.org/#home>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -90,14 +91,13 @@ COCO2017
    python hailo_model_zoo/datasets/create_coco_tfrecord.py val2017
    python hailo_model_zoo/datasets/create_coco_tfrecord.py calib2017
 
-| To evaluate/optimize/compile the single person pose estimation models of the Hailo Model Zoo you should generate the single-person COCO TFRecord files.
+| To evaluate/optimize/compile the single person pose estimation models of the Hailo Model Zoo, generate the single-person COCO TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
 
    python hailo_model_zoo/datasets/create_coco_single_person_tfrecord.py val2017
    python hailo_model_zoo/datasets/create_coco_single_person_tfrecord.py calib2017
-
 
 Manual Download (Optional)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -162,7 +162,7 @@ Manual Download (Optional)
 Cityscapes
 ----------
 
-To evaluate/optimize/compile the semantic segmentation models of the Hailo Model Zoo you should generate the Cityscapes TFRecord files (manual download is required).
+To evaluate/optimize/compile the semantic segmentation models of the Hailo Model Zoo, generate the Cityscapes TFRecord files (manual download is required).
 
 
 #. Download the Cityscapes dataset from `here <https://www.cityscapes-dataset.com/>`_. The expected dataset structure:
@@ -195,7 +195,7 @@ To evaluate/optimize/compile the semantic segmentation models of the Hailo Model
 WIDERFACE
 ---------
 
-| To evaluate/optimize/compile the face detection models of the Hailo Model Zoo you should generate the WIDERFACE (\ `link <http://shuoyang1213.me/WIDERFACE/>`_\ ) TFRecord files.
+| To evaluate/optimize/compile the face detection models of the Hailo Model Zoo, generate the WIDERFACE (\ `link <http://shuoyang1213.me/WIDERFACE/>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -259,7 +259,7 @@ Manual Download (Optional)
 VisDrone
 --------
 
-| To evaluate/optimize/compile the visdrone object detection models of the Hailo Model Zoo you should generate the VisDrone (\ `link <http://aiskyeye.com/download/object-detection-2/>`_\ ) TFRecord files.
+| To evaluate/optimize/compile the visdrone object detection models of the Hailo Model Zoo, generate the VisDrone (\ `link <http://aiskyeye.com/download/object-detection-2/>`_\ ) TFRecord files.
 | Run the create TFRecord scripts to download the dataset and generate the TFRecord files:
 
 .. code-block::
@@ -607,7 +607,7 @@ Manual Download (Optional)
 PETA
 ----
 To evaluate/optimize/compile the person attribute models of the
-Hailo Model Zoo you should generate the PETA TFRecord files
+Hailo Model Zoo, generate the PETA TFRecord files
 (manual download is required).
 
 #. Download the PETA dataset from `here <https://github.com/dangweili/pedestrian-attribute-recognition-pytorch>`_.
@@ -635,7 +635,7 @@ CelebA
 ------
 
 To evaluate/optimize/compile the face attribute models of the
-Hailo Model Zoo you should generate the CelebA TFRecord files
+Hailo Model Zoo, generate the CelebA TFRecord files
 (manual download is required).
 
 
@@ -665,7 +665,7 @@ LFW
 ------
 
 To evaluate/optimize/compile the face recognition models of the
-Hailo Model Zoo you should generate the arcface_lfw TFRecord files
+Hailo Model Zoo, generate the arcface_lfw TFRecord files
 
 
 Run the creation scripts:
@@ -693,7 +693,7 @@ BSD100
 ------
 
 To evaluate/optimize/compile the super resolution models of the
-Hailo Model Zoo you should generate the BSD100 TFRecord files.
+Hailo Model Zoo, generate the BSD100 TFRecord files.
 
 Run the creation scripts:
 
@@ -745,7 +745,7 @@ CLIP_CIFAR100
 ------
 
 To evaluate/optimize/compile the CLIP models of the
-Hailo Model Zoo you should generate the CIFAR100 & COCO2017 TFRecord files.
+Hailo Model Zoo, generate the CIFAR100 & COCO2017 TFRecord files.
 COCO2017 TFRecord file is used for calibration and CIFAR100 TFRecord file is used for evaluation.
 We found that calibrating with COCO2017 data yields improved performance on real-world scenes without compromising evaluation results on CIFAR100.
 
@@ -763,7 +763,7 @@ LOL
 ------
 
 To evaluate/optimize/compile the low light enhancement models of the
-Hailo Model Zoo you should generate the LOL TFRecord files.
+Hailo Model Zoo, generate the LOL TFRecord files.
 
 Run the creation scripts:
 
@@ -815,7 +815,7 @@ BSD68
 ------
 
 To evaluate/optimize/compile the image denoising models of the
-Hailo Model Zoo you should generate the BSD68 TFRecord files.
+Hailo Model Zoo, generate the BSD68 TFRecord files.
 
 Run the creation scripts:
 
@@ -863,7 +863,7 @@ CBSD68
 ------
 
 To evaluate/optimize/compile the image denoising models of the
-Hailo Model Zoo you should generate the CBSD68 TFRecord files.
+Hailo Model Zoo, generate the CBSD68 TFRecord files.
 
 Run the creation scripts:
 
@@ -910,7 +910,7 @@ KITTI_STEREO
 ------------
 
 To evaluate/optimize/compile the stereo models of the
-Hailo Model Zoo you should generate the KITTI Stereo TFRecord files.
+Hailo Model Zoo, generate the KITTI Stereo TFRecord files.
 
 Manual Download
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -956,7 +956,7 @@ KINETICS400
 ------------
 
 To evaluate/optimize/compile the video classification models of the
-Hailo Model Zoo you should generate the KINETICS400 TFRecord files.
+Hailo Model Zoo, generate the KINETICS400 TFRecord files.
 
 Manual Download
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1056,3 +1056,51 @@ NUSCENES
    Where <\*_annotation_file.pkl> is the train / val .pkl annotation file generated from the `PETR training environment <https://github.com/hailo-ai/PETR>`_.
 
    Notice: In order to benchmark our PETRv2 cascade (petrv2), please download the annotation .pkl file from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/mmdet3d_nuscenes_30f_infos_val_2024_08_21.pkl>`_ and create a symbolic link (softlink) from */fastdata/data/nuscenes/nuesence/* to your nuscenes dataset folder.
+
+.. _DOTAv1:
+
+DOTAv1
+------------
+
+To evaluate/optimize/compile the oriented object detection models of the
+Hailo Model Zoo, generate the DOTAv1 TFRecord files.
+
+Run the creation scripts:
+
+.. code-block::
+
+    python hailo_model_zoo/datasets/create_dotav1_tfrecord.py train
+    python hailo_model_zoo/datasets/create_dotav1_tfrecord.py val
+
+Manual Download (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#. Download the DOTAv1 dataset from `here <https://github.com/ultralytics/assets/releases/download/v0.0.0/DOTAv1.zip>`_ and extract.
+#. The expected dataset structure:
+
+   .. code-block::
+
+      DOTAv1
+      |_ images
+      |  |_ train
+      |  |_ |_ *.jpg
+      |  |_ val
+      |  |_ |_ *.jpg
+      |  |_ test
+      |  |_ |_ *.jpg
+      |_ labels
+      |  |_ train
+      |  |_ |_ *.txt
+      |  |_ train_original
+      |  |_ |_ *.txt
+      |  |_ val
+      |  |_ |_ *.txt
+      |  |_ val_original
+      |  |_ |_ *.txt
+
+#. Run the scripts:
+
+   .. code-block::
+      python hailo_model_zoo/datasets/create_dotav1_tfrecord.py train --img <path/to/DOTAv1>
+      python hailo_model_zoo/datasets/create_dotav1_tfrecord.py val --img <path/to/DOTAv1>
+

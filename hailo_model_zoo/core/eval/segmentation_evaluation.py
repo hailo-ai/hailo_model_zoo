@@ -63,7 +63,7 @@ class DPMSegmentationEval(Eval):
     def update_op(self, net_output, img_info):
         masks = img_info["mask"]
         preds = net_output["predictions"]
-        for i, (pred, mask) in enumerate(zip(preds, masks)):
+        for i, (pred, mask) in enumerate(zip(preds, masks, strict=True)):
             new_pred = self._convert_letterbox_pred(pred, img_info, i)
             new_mask = self._convert_letterbox_mask(mask, img_info, i)
             intersection = self.calc_intersection(new_mask, new_pred)

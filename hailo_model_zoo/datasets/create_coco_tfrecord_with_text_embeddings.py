@@ -207,7 +207,7 @@ def _create_tfrecord(filenames, name, num_images, imgs_name2id, text_embeddings)
     progress_bar = tqdm(filenames[:num_images])
     with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
         for i, (img_path, bbox_annotations) in enumerate(progress_bar):
-            progress_bar.set_description(f"{name} #{i+1}: {img_path}")
+            progress_bar.set_description(f"{name} #{i + 1}: {img_path}")
             xmin, xmax, ymin, ymax, category_id, is_crowd, area = [], [], [], [], [], [], []
             img_jpeg = open(img_path, "rb").read()
             print(img_path)
@@ -277,7 +277,7 @@ def get_img_labels_list(dataset_dir, det_file):
             no_anns_imgs += 1
         det_annotations.append(img_to_obj_annotation[img.name])
         orig_file_names.append(str(img))
-    files = list(zip(orig_file_names, det_annotations))
+    files = list(zip(orig_file_names, det_annotations, strict=True))
     print(f"{no_anns_imgs} / {len(files)} images have no annotations")
     random.seed(0)
     random.shuffle(files)

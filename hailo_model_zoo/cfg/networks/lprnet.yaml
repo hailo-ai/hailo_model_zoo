@@ -30,7 +30,7 @@ evaluation:
   dataset_name: lp_ocr
   data_set: null
 info:
-  task: face recognition
+  task: pipeline
   input_shape: 75x300x3
   output_shape: 5x19x11
   operations: 36.54G

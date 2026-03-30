@@ -46,7 +46,7 @@ class FaceVerificationEval(Eval):
         logits_batch = self._parse_net_output(logits_batch)
         image_name, is_same = self._parse_gt_data(gt_data)
         idx = 0
-        for logits, name, same in zip(logits_batch, image_name, is_same):
+        for logits, name, same in zip(logits_batch, image_name, is_same, strict=True):
             if idx % 2 == 0:
                 # Create pairs gt from tf-record or by filename
                 same_bool = (

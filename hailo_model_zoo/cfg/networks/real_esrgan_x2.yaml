@@ -4,6 +4,8 @@ evaluation:
   data_set: models_files/div2k/2020-12-06/hailo_validation_set_div2k_super_resolution.tfrecord
   dataset_name: div2k
   network_type: srgan
+inference:
+  emulator_batch_size: 2
 preprocessing:
   network_type: super_resolution_srgan
   meta_arch: srgan

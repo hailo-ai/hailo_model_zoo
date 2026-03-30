@@ -81,7 +81,8 @@ class Yolov5SegEval(InstSegEvalBase):
                 raise ValueError("Expected shape_in to be a tuple of size 2 when ratio is not provided but got None")
             gain = min(shape_in[0] / shape_out[0], shape_in[1] / shape_out[1])  # gain  = old / new
             pad = [
-                (shape_in - shape_out * gain) / 2 for shape_in, shape_out in zip(shape_in[:2], shape_out[:2])
+                (shape_in - shape_out * gain) / 2
+                for shape_in, shape_out in zip(shape_in[:2], shape_out[:2], strict=True)
             ]  # wh padding
         else:
             gain = ratio_pad[0][0]

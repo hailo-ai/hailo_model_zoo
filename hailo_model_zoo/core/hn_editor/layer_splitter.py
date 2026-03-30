@@ -24,9 +24,9 @@ class LayerSplitter(object):
         self._npz = self._runner.get_params()
         self._layer_names = network_info.hn_editor.output_scheme.outputs_to_split
         self._split_type = self._get_network_name()
-        assert (
-            self._split_type in supported_networks
-        ), "LayerSplitter does not yet support {} network architecture.".format(self._split_type)
+        assert self._split_type in supported_networks, (
+            "LayerSplitter does not yet support {} network architecture.".format(self._split_type)
+        )
         if network_info.postprocessing.anchors.sizes is not None:
             self._num_anchors = len(network_info.postprocessing.anchors.sizes[0]) // 2
         self._num_classes = network_info.evaluation.classes
@@ -61,7 +61,7 @@ class LayerSplitter(object):
             elif "smoke" in self._split_type:
                 output_layer_ordinals = [0, 1, 3, 4, 5, 6]
                 split_names, split_kernel_shapes = self.split_smoke_hn_layer(layer)
-            for split_name, split_kernel_shape in zip(split_names, split_kernel_shapes):
+            for split_name, split_kernel_shape in zip(split_names, split_kernel_shapes, strict=True):
                 output_index += 1
                 self._add_layer_to_hn(split_name, split_kernel_shape, layer, output_layer_ordinals[output_index])
             del self._hn_modified["layers"][layer]

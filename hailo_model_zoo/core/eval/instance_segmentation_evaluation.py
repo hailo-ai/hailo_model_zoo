@@ -134,6 +134,7 @@ class InstanceSegmentationEval(Eval):
             gt_data_area,
             gt_data_category_id,
             gt_data_is_crowd,
+            strict=True,
         ):
 
             def _add_gt_bbox(annotation_id, image_id, category_id, bbox, is_crowd, area):
@@ -200,7 +201,7 @@ class InstanceSegmentationEval(Eval):
         ap_values = np.mean(s, axis=(0, 1))
         labels = _get_labels(self.dataset_name)
         class_names = [labels[k]["name"] for k in seg_eval.params.catIds]
-        for class_name, ap in zip(class_names, ap_values[ap_values > -1]):
+        for class_name, ap in zip(class_names, ap_values[ap_values > -1], strict=True):
             table.add_row([class_name, f"{ap:.2f}"])
         print(table)
 

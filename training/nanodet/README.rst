@@ -10,7 +10,7 @@ Prerequisites
 -------------
 
 * docker (\ `installation instructions <https://docs.docker.com/engine/install/ubuntu/>`_\ )
-* nvidia-docker2 (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
+* nvidia-container-toolkit (\ `installation instructions <https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html>`_\ )
 
 **NOTE:**\  In case you are using the Hailo Software Suite docker, make sure to run all of the following instructions outside of that docker.
 
@@ -90,7 +90,7 @@ Training and exporting to ONNX
       python tools/train.py ./config/legacy_v0.x_configs/RepVGG/nanodet-RepVGG-A0_416.yml
       
    
-   | In case you want to use the pretrained nanodet-RepVGG-A0_416.ckpt, which was predownloaded into your docker modify your configurationf file:
+   | In case you want to use the pretrained nanodet-RepVGG-A0_416.ckpt, which was predownloaded into your docker modify your configuration file:
 
    .. code-block::
 
@@ -124,7 +124,7 @@ Training and exporting to ONNX
 Compile the Model using Hailo Model Zoo
 ---------------------------------------
 
-| You can generate an HEF file for inference on Hailo-8 from your trained ONNX model.
+| You can generate an HEF file for inference on Hailo-10H from your trained ONNX model.
 | In order to do so you need a working model-zoo environment.
 | Choose the corresponding YAML from our networks configuration directory, i.e. ``hailo_model_zoo/cfg/networks/nanodet_repvgg.yaml``\ , and run compilation using the model zoo:  
 

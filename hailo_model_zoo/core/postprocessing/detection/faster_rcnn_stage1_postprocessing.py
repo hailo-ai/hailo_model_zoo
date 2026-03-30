@@ -67,7 +67,7 @@ def _generate_anchors(base_size, scales, aspect_ratios):
 
 
 def _bbox_boundaries_to_whctrs(anchor):
-    """Trnasform (xmin, ymin, xmax, ymax) to (width, height, x_center, y_center) for an anchor (window)."""
+    """Transform (xmin, ymin, xmax, ymax) to (width, height, x_center, y_center) for an anchor (window)."""
     w = anchor[2] - anchor[0] + 1
     h = anchor[3] - anchor[1] + 1
     x_ctr = anchor[0] + 0.5 * (w - 1)

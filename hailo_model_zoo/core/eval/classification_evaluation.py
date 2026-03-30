@@ -6,6 +6,7 @@ from hailo_model_zoo.core.eval.eval_base_class import Eval
 from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 
+@EVAL_FACTORY.register(name="text_classification")
 @EVAL_FACTORY.register(name="zero_shot_classification")
 @EVAL_FACTORY.register(name="classification")
 @EVAL_FACTORY.register(name="video_classification")
@@ -16,15 +17,17 @@ class ClassificationEval(Eval):
         self._labels_offset = kwargs.get("labels_offset", 0)
         self.reset()
 
-    def _parse_net_output(self, net_output):
+    def _parse_net_output(self, net_output, mask_index=None):
         x = net_output["predictions"]
         # TODO: SDK-32906 (wrong shape for classifiers) remove this when sdk is fixed
-        if len(x.shape) == 4:
+        if mask_index is not None:
+            x = x[list(range(len(x))), mask_index]
+        elif len(x.shape) == 4:
             x = x.squeeze((1, 2))
         return x
 
     def update_op(self, net_output, img_info):
-        net_output = self._parse_net_output(net_output)
+        net_output = self._parse_net_output(net_output, img_info.get("mask_index", None))
         label_index = img_info["label_index"]
         self.top1 += list(np.argmax(net_output, 1) == (label_index + self._labels_offset))
         top5 = np.argpartition(net_output, -5, axis=1)[:, -5:]

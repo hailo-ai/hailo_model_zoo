@@ -157,7 +157,7 @@ class NMSFreeCoder:
 
         else:
             raise NotImplementedError(
-                "Need to reorganize output as a batch, only " "support post_center_range is not None for now!"
+                "Need to reorganize output as a batch, only support post_center_range is not None for now!"
             )
         return predictions_dict
 
@@ -807,7 +807,7 @@ class PETRV2Visualizer:
                     # Interpolate center.
                     center = [
                         np.interp(t, [t0, t1], [c0, c1])
-                        for c0, c1 in zip(prev_ann_rec["translation"], curr_ann_rec["translation"])
+                        for c0, c1 in zip(prev_ann_rec["translation"], curr_ann_rec["translation"], strict=True)
                     ]
 
                     # Interpolate orientation.

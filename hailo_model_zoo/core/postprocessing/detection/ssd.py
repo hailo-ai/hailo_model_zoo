@@ -82,7 +82,9 @@ class BoxSpecsCreator(object):
                     self._min_scale + (self._max_scale - self._min_scale) * i / (self._num_layers - 1)
                     for i in range(self._num_layers)
                 ] + [1.0]
-            for _layer, scale, scale_next in zip(range(self._num_layers), self._scales[:-1], self._scales[1:]):
+            for _layer, scale, scale_next in zip(
+                range(self._num_layers), self._scales[:-1], self._scales[1:], strict=True
+            ):
                 layer_box_specs = []
                 layer_box_specs.append((scale, self._aspect_ratios[0]))
                 layer_box_specs.append((np.sqrt(scale * scale_next), self._interpolated_scale_aspect_ratio))
@@ -93,7 +95,9 @@ class BoxSpecsCreator(object):
                     self._min_scale + (self._max_scale - self._min_scale) * i / (self._num_layers - 1)
                     for i in range(self._num_layers)
                 ] + [1.0]
-            for layer, scale, scale_next in zip(range(self._num_layers), self._scales[:-1], self._scales[1:]):
+            for layer, scale, scale_next in zip(
+                range(self._num_layers), self._scales[:-1], self._scales[1:], strict=True
+            ):
                 layer_box_specs = []
                 if layer == 0:
                     layer_box_specs = [(0.1, 1.0), (scale, 2.0), (scale, 0.5)]
@@ -183,16 +187,16 @@ class SSDPostProc(object):
         anchor_offsets = [(0.5 * stride[0], 0.5 * stride[1]) for stride in anchor_strides]
 
         for feature_map_index, (grid_size, anchor_stride, anchor_offset, box_spec) in enumerate(
-            zip(feature_map_shape_list, anchor_strides, anchor_offsets, box_specs_list)
+            zip(feature_map_shape_list, anchor_strides, anchor_offsets, box_specs_list, strict=True)
         ):
             grid_height, grid_width = grid_size[0], grid_size[1]
-            scale, aspect_ratio = zip(*box_spec)
+            scale, aspect_ratio = zip(*box_spec, strict=True)
 
             ratio_sqrts = tf.sqrt(aspect_ratio)
-            # TODO: HAVE A FACTOR FOR FIXING THE SCALE ACCORDING TO THE REALATION
+            # TODO: HAVE A FACTOR FOR FIXING THE SCALE ACCORDING TO THE RELATION
             # BETWEEN NEW IMAGE SIZE TO TRAINED IMAGE SIZE
             heights = scale / ratio_sqrts * scale_height * 1.0
-            # TODO: HAVE A FACTOR FOR FIXING THE SCALE ACCORDING TO THE REALATION
+            # TODO: HAVE A FACTOR FOR FIXING THE SCALE ACCORDING TO THE RELATION
             # BETWEEN NEW IMAGE SIZE TO TRAINED IMAGE SIZE
             widths = scale * ratio_sqrts * scale_width * 1.0
             # Get a grid of box centers

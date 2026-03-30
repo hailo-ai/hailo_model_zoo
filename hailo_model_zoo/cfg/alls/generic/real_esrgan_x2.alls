@@ -1,6 +1,6 @@
 normalization1 = normalization([0., 0. , 0.], [255., 255., 255.])
 model_optimization_config(calibration, batch_size=2)
 
-# SDK-60055 - Debug why this fails on hailo15m
-allocator_param(fps_ratio_impact=0)
-context_switch_param(auto_partition_to_buckets=False)
+allocator_param(disable_row_per_cut=True, automatic_ddr=False, enable_fixer=max_adjcents, automatic_l4_portals=False)
+performance_param(compiler_optimization_level=max)
+context_switch_param(buckets_equality_threshold=0.99, berkitizer_bucket_size=112)

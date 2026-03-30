@@ -16,7 +16,7 @@ def _visualize(logits_batch, img_info, num_of_images, visualize_callback, video_
     )
     info_per_image = [{k: v[i] for k, v in img_info.items()} for i in range(batch_size)]
     for image_logits, original_image, image_name, image_info in zip(
-        logits_per_image, img_info["img_orig"], image_names, info_per_image
+        logits_per_image, img_info["img_orig"], image_names, info_per_image, strict=True
     ):
         # Decode image if needed
         if isinstance(original_image, bytes):

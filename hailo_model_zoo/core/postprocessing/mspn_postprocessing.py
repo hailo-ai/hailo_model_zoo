@@ -162,7 +162,7 @@ def bbox_xyxy2cs(bbox, orig_height, orig_width, aspect_ratio, padding=1.25, pixe
     height = ymax - ymin
 
     center = np.array([xmin + width * 0.5, ymin + height * 0.5], dtype=np.float32).T
-    for i, (w, h) in enumerate(zip(width, height)):
+    for i, (w, h) in enumerate(zip(width, height, strict=True)):
         if w > aspect_ratio * h:
             height[i] = w * 1.0 / aspect_ratio
         elif w < aspect_ratio * h:

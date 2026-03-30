@@ -26,7 +26,7 @@ class HailoExamplesFormatter(logging.Formatter):
         level_no = record.levelno
         message = "%(message)s"
         level_fmt = (
-            f"{self.COLOR_PREFIX}{self.COLORS[level_no]}<Hailo Model Zoo " f"{level_name}> {message}{self.COLOR_SUFFIX}"
+            f"{self.COLOR_PREFIX}{self.COLORS[level_no]}<Hailo Model Zoo {level_name}> {message}{self.COLOR_SUFFIX}"
         )
         formatter = logging.Formatter(f"{level_fmt}")
         return formatter.format(record)

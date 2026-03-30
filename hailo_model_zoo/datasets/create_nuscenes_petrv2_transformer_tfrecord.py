@@ -356,7 +356,7 @@ if __name__ == "__main__":
         help=(
             "transformer input data folder containing NPZs. "
             "Each with 'input_layer1' and 'input_layer2' keys "
-            "holding backbone and 3d coords postional embedding data, "
+            "holding backbone and 3d coords positional embedding data, "
             "respectively"
         ),
         type=str,

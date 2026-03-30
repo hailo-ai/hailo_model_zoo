@@ -19,7 +19,7 @@ class PersonReidEval(Eval):
 
     def update_op(self, net_output, img_info):
         for emb, label, type, cam_id in zip(
-            net_output["predictions"], img_info["label"], img_info["type"], img_info["cam_id"]
+            net_output["predictions"], img_info["label"], img_info["type"], img_info["cam_id"], strict=True
         ):
             if type.decode() == "gallery":
                 self.gallery.append([emb, label, cam_id])
@@ -28,8 +28,8 @@ class PersonReidEval(Eval):
 
     def evaluate(self):
         # Compute distance matrix between gallery and queries
-        gallery_emb, gallery_label, gallery_cam_id = map(list, zip(*self.gallery))
-        query_emb, query_label, query_cam_id = map(list, zip(*self.query_list))
+        gallery_emb, gallery_label, gallery_cam_id = map(list, zip(*self.gallery, strict=True))
+        query_emb, query_label, query_cam_id = map(list, zip(*self.query_list, strict=True))
         gallery_emb = np.stack(gallery_emb)  # (15913, 2048)
         query_emb = np.stack(query_emb)  # (3287, 2048)
         gallery_label = np.stack(gallery_label)  # (15913,)

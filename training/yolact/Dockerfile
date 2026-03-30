@@ -12,7 +12,7 @@ RUN git clone https://github.com/hailo-ai/yolact.git --branch Model-Zoo-1.5 && \
     cd yolact && \
     pip install --upgrade pip && \
     pip install cython==0.29.30 && \
-    pip install opencv-python==4.5.5.64 pillow==8.1.0 pycocotools==2.0.6 matplotlib==3.5.2 && \
+    pip install opencv-python==4.5.5.64 pillow==8.1.0 --no-build-isolation pycocotools==2.0.6 matplotlib==3.5.2 && \
     pip install pycls==0.1.1
 
 ENV PYTHONPATH=/workspace/yolact

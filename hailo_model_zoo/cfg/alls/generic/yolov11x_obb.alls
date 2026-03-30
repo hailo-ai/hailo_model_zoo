@@ -1,0 +1,8 @@
+input_dataset_normalization = normalization([0.0, 0.0, 0.0],[255.0, 255.0, 255.0])
+model_optimization_config(calibration, calibset_size=64)
+post_quantization_optimization(finetune, policy=enabled, batch_size=2)
+
+
+conv36_d0, conv36_d1, conv36_d2, conv36_d3, conv36_d4, conv36_d5, conv36_d6, conv36_d7, conv36_dc = defuse(conv36, 8)
+conv53_d0, conv53_d1, conv53_d2, conv53_d3, conv53_d4, conv53_d5, conv53_d6, conv53_d7, conv53_dc = defuse(conv53, 8)
+conv140_d0, conv140_d1, conv140_d2, conv140_d3, conv140_d4, conv140_d5, conv140_d6, conv140_d7, conv140_dc = defuse(conv140, 8)

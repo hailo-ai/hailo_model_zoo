@@ -1,0 +1,40 @@
+base:
+- base/yolo_obb.yaml
+parser:
+  nodes:
+  - null
+  - - /model.23/cv2.0/cv2.0.2/Conv
+    - /model.23/cv3.0/cv3.0.2/Conv
+    - /model.23/cv2.1/cv2.1.2/Conv
+    - /model.23/cv3.1/cv3.1.2/Conv
+    - /model.23/cv2.2/cv2.2.2/Conv
+    - /model.23/cv3.2/cv3.2.2/Conv
+    - /model.23/cv4.0/cv4.0.2/Conv
+    - /model.23/cv4.1/cv4.1.2/Conv
+    - /model.23/cv4.2/cv4.2.2/Conv
+network:
+  network_name: yolov11s_obb
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-DOTA/yolo/yolov11s/2025-11-19/yolo11s-obb.onnx
+  alls_script: yolov11s_obb.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11s/2025-11-19/yolo11s-obb.zip
+info:
+  task: oriented object detection
+  input_shape: 1024x1024x3
+  output_shape: 128x128x64, 128x128x15, 64x64x64, 64x64x15, 32x32x64, 32x32x15, 128x128x1,
+    64x64x1, 32x32x1
+  operations: 57.94G
+  parameters: 12.6M
+  framework: pytorch
+  training_data: dotav1
+  validation_data: dotav1
+  eval_metric: mAP
+  full_precision_result: 53.18
+  source: https://github.com/ultralytics/ultralytics
+  license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: AGPL-3.0
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

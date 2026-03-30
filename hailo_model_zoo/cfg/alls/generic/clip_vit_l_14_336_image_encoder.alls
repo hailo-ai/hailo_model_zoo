@@ -23,6 +23,8 @@ b18 = bucket([reduce_mean1_layer_normalization38, ew_sub1_layer_normalization38,
 b20 = bucket([reduce_mean1_layer_normalization42, ew_sub1_layer_normalization42, ew_add42, ew_add43, reduce_mean1_layer_normalization44, ew_sub1_layer_normalization44, ew_add44, ew_add45])
 b22 = bucket([reduce_mean1_layer_normalization46, ew_sub1_layer_normalization46, ew_add46, ew_add47, reduce_mean1_layer_normalization48, ew_sub1_layer_normalization48, conv95, ew_add49, slice1, output_layer1])
 
+b22.resources_param(max_utilization=0.9, max_memory_utilization=0.85, max_compute_16bit_utilization=0.6)
+
 {} = defuse_block(matmul1, defuse_count=4)
 {} = defuse_block(matmul2, defuse_count=4)
 {} = defuse_block(matmul3, defuse_count=4)

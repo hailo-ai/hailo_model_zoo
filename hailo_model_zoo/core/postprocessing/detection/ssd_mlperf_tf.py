@@ -53,7 +53,7 @@ class DefaultBoxes(object):
             num_anchors_along_spatial = layer_shape[0] * layer_shape[1]
             list_w_on_image = []
             list_h_on_image = []
-            for _, scales in enumerate(zip(anchor_scale, extra_anchor_scale)):
+            for _, scales in enumerate(zip(anchor_scale, extra_anchor_scale, strict=True)):
                 list_w_on_image.append(scales[0])
                 list_h_on_image.append(scales[0])
                 list_w_on_image.append(math.sqrt(scales[0] * scales[1]))

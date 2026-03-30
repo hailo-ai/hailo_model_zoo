@@ -14,7 +14,9 @@ RUN apt-get update && \
 
 
 ARG repo=https://github.com/hailo-ai/nanodet.git
-RUN git clone $repo && \
+RUN pip install "cython<3" && \
+    pip install --no-build-isolation pycocotools==2.0.6 && \
+    git clone $repo && \
     cd nanodet && pip install -r requirements.txt
 
 WORKDIR /workspace/nanodet

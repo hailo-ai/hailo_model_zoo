@@ -101,11 +101,12 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     model_name = network_info.network.network_name
     start_node_names, end_node_names = network_info.parser.nodes[0:2]
+    input_format = network_info.parser.input_format
 
     parser_args = argparse.Namespace(
         net_name=model_name,
         input_framework=str(ckpt_path).split(".")[-1],
-        input_format={},
+        input_format=input_format,
         model_path=str(ckpt_path),
         tensor_shapes=start_node_shapes,
         start_node_names=start_node_names,
@@ -302,7 +303,7 @@ def _handle_classes_argument(runner, logger, classes):
         arg_to_append = f'config_path="{tmp_path}"'
 
     nms_args.append(arg_to_append)
-    script_commands[nms_idx] = f'nms_postprocess({", ".join(nms_args)})'
+    script_commands[nms_idx] = f"nms_postprocess({', '.join(nms_args)})"
     runner.load_model_script("\n".join(script_commands))
 
 
@@ -333,7 +334,7 @@ def optimize_full_precision_model(runner, calib_feed_callback, logger, model_scr
         if hailo_conversion_type in ["yuy2_to_rgb", "nv12_to_rgb"]:
             conversion_layers.append(f"{scope_name}/yuv_to_rgb1")
         runner.load_model_script(
-            f'{", ".join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)',
+            f"{', '.join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)",
             append=True,
         )
     runner.optimize_full_precision(calib_data=calib_feed_callback)

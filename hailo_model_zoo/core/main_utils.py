@@ -100,11 +100,14 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     model_name = network_info.network.network_name
     start_node_names, end_node_names = network_info.parser.nodes[0:2]
+    input_format = network_info.parser.input_format
+
+    input_format = network_info.parser.input_format if network_info.parser.input_format else {}
 
     parser_args = argparse.Namespace(
         net_name=model_name,
         input_framework=str(ckpt_path).split(".")[-1],
-        input_format=None,
+        input_format=input_format,
         model_path=str(ckpt_path),
         tensor_shapes=start_node_shapes,
         start_node_names=start_node_names,
@@ -455,6 +458,9 @@ def make_eval_callback(network_info, runner, show_results_per_class, logger):
         "meta_arch": meta_arch,
         "mask_thresh": network_info.postprocessing.mask_threshold,
         "show_results_per_class": show_results_per_class,
+        "tool_description_path": getattr(network_info.evaluation, "tool_description_path", None),
+        "candidate_embeddings_path": getattr(network_info.evaluation, "candidate_embeddings_path", None),
+        "corpus_embeddings_path": getattr(network_info.evaluation, "corpus_embeddings_path", None),
     }
 
     evaluation_constructor = eval_factory.get_evaluation(network_type)

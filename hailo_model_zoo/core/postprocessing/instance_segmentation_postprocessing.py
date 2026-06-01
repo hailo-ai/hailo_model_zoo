@@ -6,7 +6,12 @@ import numpy as np
 
 from hailo_model_zoo.core.datasets.datasets_info import CLASS_NAMES_COCO, get_dataset_info
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
-from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+
+try:
+    from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+except ImportError:
+    cnms = None
+from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.utils import path_resolver
 
 COLORS = (
@@ -417,6 +422,11 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, max_det=300
         conf = x[:, 4:5]
         preds = np.hstack([boxes.astype(np.float32), conf.astype(np.float32)])
 
+        if cnms is None:
+            raise ImportError(
+                "Cython NMS is not available. Install with: "
+                "apt-get install gcc python3-dev && pip install hailo_model_zoo[postprocessing]"
+            )
         keep = cnms(preds, iou_thres)
         if keep.shape[0] > max_det:
             keep = keep[:max_det]
@@ -1040,6 +1050,62 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     return outputs
 
 
+def yolo26_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
+    """
+    endnodes is a list of 10 tensors (grouped by head type, not interleaved):
+        endnodes[0]:  bbox output with shapes (BS, 20, 20, 64)
+        endnodes[1]:  bbox output with shapes (BS, 40, 40, 64)
+        endnodes[2]:  bbox output with shapes (BS, 80, 80, 64)
+        endnodes[3]:  scores output with shapes (BS, 20, 20, 80)
+        endnodes[4]:  scores output with shapes (BS, 40, 40, 80)
+        endnodes[5]:  scores output with shapes (BS, 80, 80, 80)
+        endnodes[6]:  mask coeff output with shapes (BS, 20, 20, 32)
+        endnodes[7]:  mask coeff output with shapes (BS, 40, 40, 32)
+        endnodes[8]:  mask coeff output with shapes (BS, 80, 80, 32)
+        endnodes[9]:  mask protos with shape (BS, 160, 160, 32)
+    Returns:
+        A list of per image detections, where each is a dictionary with the following structure:
+        {
+            'detection_boxes':   numpy.ndarray with shape (num_detections, 4),
+            'mask':              numpy.ndarray with shape (num_detections, 160, 160),
+            'detection_classes': numpy.ndarray with shape (num_detections, 80),
+            'detection_scores':  numpy.ndarray with shape (num_detections, 80)
+        }
+    """
+
+    detection_endnodes = endnodes[:6]
+    kwargs["device_pre_post_layers"] = device_pre_post_layers
+    kwargs["edit_classes"] = False
+    kwargs["normalize_boxes"] = False
+    detection_postproc = YoloPostProc(**kwargs)
+    mask_coeffs = [np.reshape(c, (c.shape[0], c.shape[1] * c.shape[2], c.shape[3])) for c in endnodes[6:9]]
+    mask_coeffs = np.concatenate(mask_coeffs, axis=1)
+    detection_results = detection_postproc.postprocessing(detection_endnodes, mask_coeffs=mask_coeffs)
+    proto_data = endnodes[9]
+    outputs = []
+    batch_size = proto_data.shape[0]
+    image_dims = tuple(kwargs["img_dims"])
+    for b in range(batch_size):
+        protos = proto_data[b]
+        masks = process_mask(
+            protos,
+            detection_results["mask"][b].numpy(),
+            detection_results["detection_boxes"][b].numpy(),
+            image_dims,
+            upsample=True,
+        )
+        output = {}
+        output["detection_boxes"] = np.array(detection_results["detection_boxes"].numpy()[b]) / np.tile(image_dims, 2)
+        output["detection_scores"] = np.array(detection_results["detection_scores"].numpy()[b])
+        output["detection_classes"] = np.array(detection_results["detection_classes"].numpy()[b]).astype(int)
+        if masks is not None:
+            output["mask"] = masks
+        else:
+            output["mask"] = masks
+        outputs.append(output)
+    return outputs
+
+
 @POSTPROCESS_FACTORY.register(name="instance_segmentation")
 def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     meta_arch = kwargs.get("meta_arch", "")
@@ -1051,6 +1117,8 @@ def instance_segmentation_postprocessing(endnodes, device_pre_post_layers=None, 
         predictions = yolact_postprocessing(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     elif "yolov8_seg" in meta_arch:
         predictions = yolov8_seg_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
+    elif "yolo26_seg" in meta_arch:
+        predictions = yolo26_seg_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     else:
         raise NotImplementedError(f"Postprocessing {meta_arch} not found")
     return {"predictions": predictions}

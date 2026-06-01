@@ -1,0 +1,13 @@
+base:
+- base/all_minilm.yaml
+network:
+  network_name: all_minilm_l6_v2
+paths:
+  network_path:
+  - models_files/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.onnx
+  alls_script: all_minilm_l6_v2.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip
+info:
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

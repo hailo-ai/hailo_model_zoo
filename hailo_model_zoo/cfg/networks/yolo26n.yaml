@@ -10,7 +10,7 @@ paths:
 info:
   operations: 5.5G
   parameters: 2.4M
-  full_precision_result: 39.17
+  full_precision_result: 40.027
   supported_hw_arch:
   - hailo8
   - hailo8l

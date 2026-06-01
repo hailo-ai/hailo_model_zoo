@@ -37,6 +37,7 @@ parser:
   nodes:
   - null
   - null
+  input_format: null
   start_node_shapes: null
   is_tf2_saved_model: false
   normalization_params:

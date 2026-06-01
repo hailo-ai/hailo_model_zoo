@@ -7,3 +7,5 @@ change_output_activation(conv74, sigmoid)
 change_output_activation(conv89, sigmoid)
 change_output_activation(conv103, sigmoid)
 nms_postprocess("../../postprocess_config/yolov8x_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+resources_param(max_control_utilization=0.8, max_compute_utilization=0.8, max_compute_16bit_utilization=0.8, max_memory_utilization=0.7, max_input_aligner_utilization=0.8, max_apu_utilization=0.8)

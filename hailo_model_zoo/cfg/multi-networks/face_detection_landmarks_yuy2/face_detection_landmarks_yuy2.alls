@@ -1,2 +1,0 @@
-allocator_param(merge_min_layer_utilization=0.7)
-performance_param(fps=120)

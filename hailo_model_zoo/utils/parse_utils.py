@@ -1,5 +1,25 @@
+from hailo_sdk_client.exposed_definitions import Dims
 from hailo_sdk_client.tools.tf_proto_helper import TF_OPTIONAL_EXTENSIONS
 from hailo_sdk_common.hailo_nn.exceptions import UnsupportedModelError
+
+_DIM_LETTER_TO_DIMS = {
+    "N": Dims.BATCH,
+    "G": Dims.GROUPS,
+    "H": Dims.HEIGHT,
+    "W": Dims.WIDTH,
+    "C": Dims.CHANNELS,
+}
+
+
+def _parse_input_format(input_format_entries):
+    """Convert YAML entries like ['masked_fill=NGWC'] into {'masked_fill': [Dims.BATCH, ...]}."""
+    if not input_format_entries:
+        return None
+    result = {}
+    for entry in input_format_entries:
+        name, _, fmt = entry.partition("=")
+        result[name.strip()] = [_DIM_LETTER_TO_DIMS[c] for c in fmt.strip()]
+    return result
 
 
 def get_normalize_in_net(network):
@@ -27,20 +47,30 @@ def translate_model(runner, network_info, ckpt_path):
     if isinstance(start_node, str):
         start_node = [start_node]
 
+    net_input_format = _parse_input_format(network_info.parser.get("input_format"))
+
     ckpt_path = str(ckpt_path)
     if ckpt_path.endswith(".onnx"):
+        kwargs = {}
+        if net_input_format:
+            kwargs["net_input_format"] = net_input_format
         runner.translate_onnx_model(
             ckpt_path,
             model_name,
             start_node_names=start_node,
             end_node_names=end_node,
+            **kwargs,
         )
     elif ckpt_path.endswith(TF_OPTIONAL_EXTENSIONS):
+        kwargs = {}
+        if net_input_format:
+            kwargs["net_input_format"] = net_input_format
         runner.translate_tf_model(
             ckpt_path,
             model_name,
             start_node_names=start_node,
             end_node_names=end_node,
+            **kwargs,
         )
     else:
         raise UnsupportedModelError(

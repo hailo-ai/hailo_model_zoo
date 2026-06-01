@@ -81,3 +81,21 @@ def visualize_text_recognition(logits, img, **kwargs):
     text_position = (3, 38)
     draw.text(text_position, vis_string, fill="blue")
     return np.array(img_orig, np.uint8)
+
+
+@POSTPROCESS_FACTORY.register(name="text_classification")
+def text_classification_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    net_output = {"predictions": tf.nn.softmax(endnodes[:, 0, :, :], axis=-1)}
+    return net_output
+
+
+@POSTPROCESS_FACTORY.register(name="sentence_embedding_generation")
+def text_classification_v2a_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    net_output = tf.squeeze(endnodes[0], axis=0)
+    mask = kwargs["gt_images"]["multiplicative_mask"][:, :, None]
+    sum_embeddings = tf.reduce_sum(net_output * mask, axis=1)
+    sum_mask = tf.clip_by_value(tf.reduce_sum(mask, axis=1), 1e-9, tf.float32.max)
+    pooled_embeddings = sum_embeddings / sum_mask
+    norm = tf.norm(pooled_embeddings, axis=-1)
+    pooled_embeddings = pooled_embeddings / norm
+    return {"predictions": pooled_embeddings[:, tf.newaxis, tf.newaxis, :]}

@@ -1,0 +1,47 @@
+base:
+- base/base.yaml
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+    std_list:
+    - 1.0
+    - 1.0
+    - 1.0
+  nodes:
+  - - embedding
+    - masked_fill
+  - - last_hidden_state
+  input_format:
+  - embedding=NWC
+  - masked_fill=NGWC
+inference:
+  emulator_batch_size: 1
+  full_precision_batch_size: 1
+quantization:
+  calib_set:
+  - models_files/all_minilm_l6_v2/2026-03-25/mteb_arguana_val.tfrecord
+evaluation:
+  dataset_name: mteb
+  data_set: models_files/all_minilm_l6_v2/2026-03-25/mteb_arguana_val.tfrecord
+  corpus_embeddings_path: models_files/all_minilm_l6_v2/2026-03-25/mteb_arguana_corpus_embeddings.npy
+postprocessing:
+  meta_arch: sentence_embedding_generation
+preprocessing:
+  network_type: sentence_embedding_generation
+  meta_arch: sentence_embedding_generation
+info:
+  task: sentence_embedding_generation
+  input_shape: 16x8x384, 16x8x1536
+  output_shape: 1x128x384
+  framework: pytorch
+  eval_metric: Retrieval@10
+  license_url: https://www.apache.org/licenses/LICENSE-2.0
+  license_name: Apache-2.0
+  source: https://github.com/huggingface/sentence-transformers/
+  full_precision_result: 61.74
+  operations: 2.9G
+  parameters: 10.6M

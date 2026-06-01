@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 from importlib.metadata import PackageNotFoundError, version
-from pathlib import Path
 
 from setuptools import find_packages, setup
 
-DFC_VERSION = "3.33.1"
-MODEL_ZOO_VERSION = "2.18.0"
+CUR_DFC_VERSION = "3.34.0"
+CUR_MZ_VERSION = "2.19.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
     dfc_version = version(package_name)
-    if dfc_version != DFC_VERSION:
+    if dfc_version != CUR_DFC_VERSION:
         print(
             f"Warning! The current version of the Dataflow Compiler is {dfc_version}.\n"
-            f"Current Hailo-Model-Zoo works best with DFC version {DFC_VERSION}. Please consider updating your DFC"
+            f"Current Hailo-Model-Zoo works best with DFC version {CUR_DFC_VERSION}. Please consider updating your DFC"
         )
 except PackageNotFoundError:
     raise PackageNotFoundError(
@@ -41,8 +40,8 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 def main():
     reqs = [
         "numba==0.59.0",
-        "imageio==2.22.4",
-        "matplotlib==3.5.2",
+        "imageio==2.36.1",
+        "matplotlib==3.9.4",
         "numpy",
         "opencv-python",
         "scipy",
@@ -53,9 +52,9 @@ def main():
         "lap==0.5.12",
         "motmetrics==1.2.5",
         "omegaconf==2.3.0",
-        "pillow<=9.3.0",
+        "pillow<=11.2.1",
         "detection-tools==0.3",
-        "scikit-image==0.20.0",
+        "scikit-image==0.24.0",
         "nuscenes-devkit",
         "pyquaternion==0.9.9",
         "Shapely>=2.0.0",
@@ -80,7 +79,7 @@ def main():
 
     setup(
         name="hailo_model_zoo",
-        version=MODEL_ZOO_VERSION,
+        version=CUR_MZ_VERSION,
         description="Hailo machine learning utilities and examples",
         url="https://hailo.ai/",
         author="Hailo team",
@@ -89,6 +88,9 @@ def main():
         license="MIT",
         packages=find_packages(),
         install_requires=reqs,
+        extras_require={
+            "postprocessing": ["Cython"],  # Cython NMS; requires: apt-get install gcc python3-dev
+        },
         zip_safe=False,
         package_data=package_data,
     )

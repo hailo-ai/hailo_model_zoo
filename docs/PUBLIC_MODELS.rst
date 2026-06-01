@@ -45,7 +45,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO8L/HAILO8L_object_detection.rst>`_
    * - Object Detection 3D
      - `Link <public_models/HAILO8/HAILO8_object_detection_3d.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_object_detection_3d.rst>`_
+     - NA
    * - Person Attribute
      - `Link <public_models/HAILO8/HAILO8_person_attribute.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_person_attribute.rst>`_
@@ -58,12 +58,15 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Semantic Segmentation
      - `Link <public_models/HAILO8/HAILO8_semantic_segmentation.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_semantic_segmentation.rst>`_
+   * - Sentence Embedding Generation
+     - `Link <public_models/HAILO8/HAILO8_sentence_embedding_generation.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_sentence_embedding_generation.rst>`_
    * - Single Person Pose Estimation
      - `Link <public_models/HAILO8/HAILO8_single_person_pose_estimation.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_single_person_pose_estimation.rst>`_
    * - Stereo Depth Estimation
      - `Link <public_models/HAILO8/HAILO8_stereo_depth_estimation.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_stereo_depth_estimation.rst>`_
+     - NA
    * - Super Resolution
      - `Link <public_models/HAILO8/HAILO8_super_resolution.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_super_resolution.rst>`_

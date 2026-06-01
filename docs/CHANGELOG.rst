@@ -1,3 +1,21 @@
+**v2.19.0**
+
+* Update to use Dataflow Compiler v3.34.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
+
+* Performance improvements for YOLO models
+
+* New Models:
+
+  * `All-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_ - all_minilm_l6_v2, all_minilm_l6_v2_v2a - Sentence embedding models
+  * `NextViT <https://github.com/bytedance/Next-ViT>`_ - nextvit_small - Vision Transformer classification model
+  * `PoolFormer <https://arxiv.org/pdf/2111.11418>`_ - poolformer_s12 - Vision Transformer classification model
+  * `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - yolo26m_seg, yolo26l_seg, yolo26x_seg - NMS-free instance segmentation models
+  * `YOLOv11 <https://arxiv.org/pdf/2410.17725>`_ - yolov11n_seg, yolov11s_seg, yolov11m_seg, yolov11l_seg, yolov11x_seg - Instance segmentation models
+  * `YOLOv12 <https://arxiv.org/abs/2502.12524>`_ - yolov12n - Object detection model
+  * `YOLOv7x <https://arxiv.org/pdf/2207.02696>`_ - yolov7x - Object detection model
+
+* Bug fixes
+
 **v2.18**
 
 * Update to use Dataflow Compiler v3.33.1 (`developer-zone <https://hailo.ai/developer-zone/>`_)

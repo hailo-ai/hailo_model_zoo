@@ -56,6 +56,14 @@ Manual Installation
 
       cd hailo_model_zoo; pip install -e .
 
+#. (Optional) For evaluation and postprocessing of detection, instance-segmentation, and pose-estimation models,
+   Cython NMS is required. Install the system build tools and the postprocessing extra:
+
+   .. code-block::
+
+      sudo apt-get install gcc python3-dev
+      pip install -e .[postprocessing]
+
 #. For setting up datasets please see `DATA <DATA.rst>`_.
 
 #. Verify Hailo-8 is connected via PCIe (required only to run on Hailo-8. Full-precision / emulation run on GPU.)

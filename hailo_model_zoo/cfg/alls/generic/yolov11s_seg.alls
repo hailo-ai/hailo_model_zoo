@@ -1,0 +1,8 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(conv60, sigmoid)
+change_output_activation(conv74, sigmoid)
+change_output_activation(conv92, sigmoid)
+
+shortcut1 = shortcut(matmul1, [reduce_max_softmax1, ew_sub_softmax1])
+
+allocator_param(automatic_reshapes=disabled)

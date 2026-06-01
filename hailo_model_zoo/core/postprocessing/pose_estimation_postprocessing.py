@@ -6,7 +6,11 @@ import numpy as np
 
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.centerpose_postprocessing import centerpose_postprocessing
-from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+
+try:
+    from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+except ImportError:
+    cnms = None
 from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import xywh2xyxy
 
 BODY_PARTS_KPT_IDS = [
@@ -477,6 +481,11 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45, max_det=100,
         conf = x[:, 4:5]
         preds = np.hstack([boxes.astype(np.float32), conf.astype(np.float32)])
 
+        if cnms is None:
+            raise ImportError(
+                "Cython NMS is not available. Install with: "
+                "apt-get install gcc python3-dev && pip install hailo_model_zoo[postprocessing]"
+            )
         keep = cnms(preds, iou_thres)
         if keep.shape[0] > max_det:
             keep = keep[:max_det]

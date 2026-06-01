@@ -1,0 +1,14 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(conv126, sigmoid)
+change_output_activation(conv152, sigmoid)
+change_output_activation(conv177, sigmoid)
+model_optimization_flavor(compression_level=0)
+model_optimization_config(calibration, batch_size=2)
+post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [conv120, conv148, conv173, conv125, conv151, conv176, conv126, conv152, conv177],
+                                loss_types = [l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,ce,ce,ce],
+                                loss_factors=[1,1,1,2,2,2,2,2,2], epochs=4, batch_size=4)
+
+shortcut1 = shortcut(matmul1, [reduce_max_softmax1, ew_sub_softmax1])
+shortcut2 = shortcut(matmul3, [reduce_max_softmax2, ew_sub_softmax2])
+
+allocator_param(automatic_reshapes=disabled)

@@ -15,6 +15,8 @@ info:
   parameters: 51.87M
   full_precision_result: 0.01
   eval_metric: WER
+  license_url: https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/mit.md
+  license_name: MIT
   supported_hw_arch:
   - hailo8
   - hailo8l

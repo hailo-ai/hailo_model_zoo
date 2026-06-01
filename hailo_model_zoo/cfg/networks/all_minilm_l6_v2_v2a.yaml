@@ -1,0 +1,24 @@
+base:
+- base/all_minilm.yaml
+network:
+  network_name: all_minilm_l6_v2_v2a
+paths:
+  network_path:
+  - models_files/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.onnx
+  alls_script: all_minilm_l6_v2_v2a.alls
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip
+quantization:
+  calib_set:
+  - models_files/all_minilm_l6_v2/2026-02-24/v2a_tool_description_calib.tfrecord
+evaluation:
+  network_type: sentence_embedding_generation_tool_classification
+  dataset_name: v2a_tool_description
+  data_set: models_files/all_minilm_l6_v2/2026-02-24/v2a_tool_description_val.tfrecord
+  tool_description_path: models_files/all_minilm_l6_v2/2026-02-24/tool_descriptions.json
+  candidate_embeddings_path: models_files/all_minilm_l6_v2/2026-02-24/tool_description_embeddings.npy
+info:
+  eval_metric: accuracy
+  full_precision_result: 96.37
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

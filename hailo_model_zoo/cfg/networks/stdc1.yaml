@@ -5,7 +5,7 @@ network:
 parser:
   nodes:
   - null
-  - ArgMax_149
+  - null
 paths:
   alls_script: stdc1.alls
   network_path:

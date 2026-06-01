@@ -1,0 +1,9 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=8, calibset_size=1024)
+model_optimization_flavor(optimization_level=4, compression_level=0)
+pre_quantization_optimization(ew_add_fusing, policy=disabled)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+nms_postprocess("../../postprocess_config/yolov12n_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+buffers(ew_sub_softmax4, reduce_sum_softmax4, 1, 1, FULL_ROW)
+buffers(ew_sub_softmax4, ew_mult_softmax4, 1, 1, FULL_ROW)

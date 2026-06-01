@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.33.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-3.34.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.23.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-4.24.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -66,6 +66,25 @@ The models are divided to:
 * | `HAILO MODELS <docs/HAILO_MODELS.rst>`_ which were trained in-house for specific use-cases on internal datasets.
   | Each Hailo Model is accompanied with retraining instructions.
 
+
+What's new
+----------
+
+**Core stack updates** This release aligns with the latest version of the Hailo software stack, ensuring compatibility and performance improvements.
+
+* Upgraded to Dataflow Compiler v3.34.0
+
+**Performance improvements** for YOLO models
+
+**New model support** We have expanded the Model Zoo with state-of-the-art architectures for detection, instance segmentation, classification and sentence embedding:
+
+* `All-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_ - Sentence embedding models - all_minilm_l6_v2, all_minilm_l6_v2_v2a
+* `NextViT <https://github.com/bytedance/Next-ViT>`_ - nextvit_small - Vision Transformer classification model
+* `PoolFormer <https://arxiv.org/pdf/2111.11418>`_ - poolformer_s12 - Vision Transformer classification model
+* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - NMS-free instance segmentation models - yolo26m_seg, yolo26l_seg, yolo26x_seg
+* `YOLOv11 <https://arxiv.org/pdf/2410.17725>`_ - Instance segmentation models - yolov11n_seg, yolov11s_seg, yolov11m_seg, yolov11l_seg, yolov11x_seg
+* `YOLOv12 <https://arxiv.org/abs/2502.12524>`_ - yolov12n - Object detection model
+* `YOLOv7x <https://arxiv.org/pdf/2207.02696>`_ - yolov7x - Object detection model
 
 Retraining
 ----------

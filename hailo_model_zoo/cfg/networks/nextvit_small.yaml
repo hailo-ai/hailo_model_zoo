@@ -1,0 +1,22 @@
+base:
+- base/efficientformer.yaml
+network:
+  network_name: nextvit_small
+preprocessing:
+  meta_arch: fastvit
+paths:
+  network_path:
+  - models_files/Classification/nextvit_small/pretrained/2024-08-22/nextvit_small_timm_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/nextvit_small/pretrained/2024-08-22/nextvit_small_timm_sim.zip
+  alls_script: nextvit_small.alls
+info:
+  task: classification
+  input_shape: 224x224x3
+  output_shape: '1000'
+  operations: 11.6G
+  parameters: 31.7M
+  source: https://github.com/bytedance/Next-ViT
+  full_precision_result: 82.6
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

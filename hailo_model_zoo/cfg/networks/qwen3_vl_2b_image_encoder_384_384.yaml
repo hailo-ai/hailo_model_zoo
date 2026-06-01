@@ -1,0 +1,21 @@
+base:
+- base/base.yaml
+network:
+  network_name: qwen3_vl_2b_image_encoder_384_384
+paths:
+  alls_script: qwen3_vl_2b_image_encoder_384_384.alls
+evaluation:
+  dataset_name: cifar100
+preprocessing:
+  network_type: zero_shot_classification
+info:
+  task: zero-shot classification
+  input_shape: 384x384x3
+  validation_data: cifar100
+  eval_metric: Accuracy (top1)
+  operations: 366G
+  parameters: 315M
+  full_precision_result: 0.01
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

@@ -85,7 +85,7 @@ What's new
 **New model support** We have expanded the Model Zoo with state-of-the-art architectures for detection, instance segmentation:
 
 * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Added support for oriented bounding box detection models - YOLOv11-obb family
-* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
+* `YOLO26 <https://arxiv.org/abs/2606.03748>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
 * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Added support for paddle_ocr_v5_mobile_detection and paddle_ocr_v5_mobile_recognition for Hailo-15L hardware architecture, and improved Hailo-10H/Hailo-15H FPS
 * YOLOv5-seg-hpp - Added support for instance segmentation with HailoRT postprocessing - yolov5n_seg_hpp, yolov5s_seg_hpp, yolov5m_seg_hpp
 

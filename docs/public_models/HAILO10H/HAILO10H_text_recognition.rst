@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v5.3.0
+* Hailo Dataflow Compiler Version v5.4.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -77,10 +77,10 @@ Icdar15 Recognition
 
    * - paddle_ocr_v5_mobile_recognition⭐
      - 62.3
-     - 60.3
+     - 60.1
      - 127
-     - 402
-     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/paddle_ocr_v5_mobile_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo10h/paddle_ocr_v5_mobile_recognition.hef>`_
+     - 399
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo10h/paddle_ocr_v5_mobile_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo10h/paddle_ocr_v5_mobile_recognition.hef>`_
      - 48x320x3
      - 4.1
      - 1.5

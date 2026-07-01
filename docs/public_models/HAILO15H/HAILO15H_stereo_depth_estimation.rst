@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v5.3.0
+* Hailo Dataflow Compiler Version v5.4.0
 * Measurement conditions: Measuring from the SoC, room temperature
 
 |
@@ -77,10 +77,10 @@ Kitti Stereo 2015
 
    * - stereonet⭐
      - 8.22
-     - 10.5
+     - 10.4
      - 16.7
-     - 16.7
-     - | `S <https://github.com/nivosco/StereoNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/stereonet.hef>`_
+     - 16.8
+     - | `S <https://github.com/nivosco/StereoNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DisparityEstimation/stereonet/pretrained/2023-05-31/stereonet.zip>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15h/stereonet.hef>`_
      - 368x1232x3
      - 623.1
      - 112.2

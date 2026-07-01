@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v5.3.0
+* Hailo Dataflow Compiler Version v5.4.0
 * Measurement conditions: Measuring from the SoC, room temperature
 
 |
@@ -77,10 +77,10 @@ Coco
 
    * - yolo_world_v2s
      - 36.4
-     - 32.2
-     - 42.3
-     - 60.3
-     - | `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/yolo_world_v2s_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.3.0/hailo15h/yolo_world_v2s.hef>`_
+     - 31.9
+     - 47.0
+     - 65.4
+     - | `S <https://github.com/AILab-CVC/YOLO-World>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotDetection/yolo_world_v2s/2025-09-07/yolo_world_v2s.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15h/yolo_world_v2s_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15h/yolo_world_v2s.hef>`_
      - 640x640x3
      - 9.3
      - 32.7

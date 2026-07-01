@@ -16,15 +16,15 @@ discovered_plugins = {
 def convert_rgb_to_yuv(image):
     transition_matrix = tf.constant(
         [
-            [0.2568619, -0.14823364, 0.43923104],
-            [0.5042455, -0.2909974, -0.367758],
-            [0.09799913, 0.43923104, -0.07147305],
+            [0.299, -0.16873589, 0.5],
+            [0.587, -0.33126411, -0.41868759],
+            [0.114, 0.5, -0.08131241],
         ],
         dtype=tf.float32,
     )
     image = tf.cast(image, tf.float32)
     image = tf.matmul(image, transition_matrix)
-    image += tf.constant([16, 128, 128], dtype=tf.float32)
+    image += tf.constant([0, 128, 128], dtype=tf.float32)
     return image
 
 

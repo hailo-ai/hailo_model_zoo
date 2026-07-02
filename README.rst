@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.3.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.4.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.3.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.4.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -78,16 +78,9 @@ What's new
 
 **Core stack updates** This release aligns with the latest version of the Hailo software stack, ensuring compatibility and performance improvements.
 
-* Upgraded to Dataflow Compiler v5.3.0
+* Upgraded to Dataflow Compiler v5.4.0
 
-* Upgraded to HailoRT v5.3.0
-
-**New model support** We have expanded the Model Zoo with state-of-the-art architectures for detection, instance segmentation:
-
-* `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Added support for oriented bounding box detection models - YOLOv11-obb family
-* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
-* `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Added support for paddle_ocr_v5_mobile_detection and paddle_ocr_v5_mobile_recognition for Hailo-15L hardware architecture, and improved Hailo-10H/Hailo-15H FPS
-* YOLOv5-seg-hpp - Added support for instance segmentation with HailoRT postprocessing - yolov5n_seg_hpp, yolov5s_seg_hpp, yolov5m_seg_hpp
+* Upgraded to HailoRT v5.4.0
 
 Retraining
 ----------
@@ -145,6 +138,18 @@ For further information about the Hailo Dataflow Compiler please contact `hailo.
 
 
 .. figure:: docs/images/usage_flow.svg
+
+
+Claude Code Skills
+------------------
+
+The Hailo Model Zoo ships three `Claude Code <https://claude.com/claude-code>`_ skills that walk you through the full DFC flow on a fresh model — auto-matching the Model Zoo's parser configs and ALLS optimization scripts when the model name is known, and falling back to interactive guidance when it is not:
+
+* ``/hailo-parse <path-to-model> [hw_arch]`` — parses an ONNX or TensorFlow model into a Hailo HAR, looking up start/end nodes from `cfg/networks/ <hailo_model_zoo/cfg/networks>`_ when available.
+* ``/hailo-optimize <parsed.har> [hw_arch]`` — applies a model script and quantizes the network, auto-loading a matching ALLS from `cfg/alls/ <hailo_model_zoo/cfg/alls>`_, validating calibration-set normalization, using GPU when available, and gating on the post-optimize SNR.
+* ``/hailo-compile <optimized.har> [hw_arch]`` — compiles the optimized HAR into a deployable HEF and provides triage for common compilation failures.
+
+The skills are auto-discovered when you launch Claude Code from inside the cloned Model Zoo (they live under ``.claude/skills/``). They use only the public ``hailo_sdk_client`` API from the DFC wheel, so the DFC remains a black box. See the DFC User Guide on the `developer-zone <https://hailo.ai/developer-zone/>`_ for the full DFC reference.
 
 
 License

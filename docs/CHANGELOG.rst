@@ -1,3 +1,9 @@
+**v5.4.0**
+
+* Updated to use with Dataflow Compiler v5.4.0
+* Updated to use with HailoRT v5.4.0
+* Added Claude Code skills for the DFC parse / optimize / compile flow (``/hailo-parse``, ``/hailo-optimize``, ``/hailo-compile``). The skills auto-discover Model Zoo parser configs and ALLS scripts when the model name is known, and fall back to interactive guidance otherwise. See the README *Claude Code Skills* section.
+
 **v5.3.0**
 
 * Updated to use with Dataflow Compiler v5.3.0

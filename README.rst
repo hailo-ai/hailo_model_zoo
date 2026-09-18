@@ -70,21 +70,18 @@ The models are divided to:
 What's new
 ----------
 
-**Core stack updates** This release aligns with the latest version of the Hailo software stack, ensuring compatibility and performance improvements.
+**Models-only update** v2.19.1 adds new models on top of v2.19.0. The software stack is unchanged: Dataflow Compiler v3.34.0 and HailoRT v4.24.0 (see `Changelog <docs/CHANGELOG.rst>`_).
 
-* Upgraded to Dataflow Compiler v3.34.0
+**New model support** We have expanded the Model Zoo with new tasks and architectures for image captioning, oriented object detection, OCR, audio classification, age/gender estimation and single-object tracking:
 
-**Performance improvements** for YOLO models
-
-**New model support** We have expanded the Model Zoo with state-of-the-art architectures for detection, instance segmentation, classification and sentence embedding:
-
-* `All-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_ - Sentence embedding models - all_minilm_l6_v2, all_minilm_l6_v2_v2a
-* `NextViT <https://github.com/bytedance/Next-ViT>`_ - nextvit_small - Vision Transformer classification model
-* `PoolFormer <https://arxiv.org/pdf/2111.11418>`_ - poolformer_s12 - Vision Transformer classification model
-* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - NMS-free instance segmentation models - yolo26m_seg, yolo26l_seg, yolo26x_seg
-* `YOLOv11 <https://arxiv.org/pdf/2410.17725>`_ - Instance segmentation models - yolov11n_seg, yolov11s_seg, yolov11m_seg, yolov11l_seg, yolov11x_seg
-* `YOLOv12 <https://arxiv.org/abs/2502.12524>`_ - yolov12n - Object detection model
-* `YOLOv7x <https://arxiv.org/pdf/2207.02696>`_ - yolov7x - Object detection model
+* `ViT-GPT2 <https://huggingface.co/nlpconnect/vit-gpt2-image-captioning>`_ - Image captioning models - vit_gpt2_encoder, vit_gpt2_decoder
+* `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Oriented bounding box detection models (DOTA v1) - yolov11n_obb, yolov11s_obb, yolov11m_obb, yolov11l_obb, yolov11x_obb
+* `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - Text detection and recognition models - paddle_ocr_v6_tiny_detection, paddle_ocr_v6_small_detection, paddle_ocr_v6_medium_detection, paddle_ocr_v6_small_recognition
+* `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - Cityscapes semantic segmentation models - yolo26n_sem, yolo26s_sem, yolo26l_sem, yolo26m_sem (Hailo-8 only)
+* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - NMS-free instance segmentation model - yolo26s_seg (Hailo-8 only)
+* `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet audio event classification, the first audio network in the Model Zoo
+* `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - Age and gender estimation (Hailo-8 only)
+* `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - stark_lightning_repvgg_a0 - Single-object tracker
 
 Retraining
 ----------

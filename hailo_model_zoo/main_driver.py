@@ -361,6 +361,7 @@ def evaluate(args):
         "np_infer_lite",
         "model_infer_lite",
         "sd2_unet_infer",
+        "tracker_infer",
     ]:
         hailo_target = TARGETS[args.target]
         with hailo_target() as target:

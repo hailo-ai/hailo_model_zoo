@@ -41,6 +41,10 @@ We recommend to define the data directory path yourself, by setting the ``HMZ_DA
   * `KITTI_STEREO`_
   * `KINETICS400`_
   * `NUSCENES`_
+  * `LaSOT`_
+  * `AudioSet`_
+  * `DOTAv1`_
+  * `Lagenda`_
 
 .. _ImageNet:
 
@@ -1056,3 +1060,147 @@ NUSCENES
    Where <\*_annotation_file.pkl> is the train / val .pkl annotation file generated from the `PETR training environment <https://github.com/hailo-ai/PETR>`_.
 
    Notice: In order to benchmark our PETRv2 cascade (petrv2), please download the annotation .pkl file from `here <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/mmdet3d_nuscenes_30f_infos_val_2024_08_21.pkl>`_ and create a symbolic link (softlink) from */fastdata/data/nuscenes/nuesence/* to your nuscenes dataset folder.
+
+.. _LaSOT:
+
+LaSOT
+-----
+
+| LaSOT is used by the single-object-tracking networks of the Hailo Model Zoo (e.g. ``stark_lightning_repvgg_a0``). Manual download is required — see `the LaSOT project page <http://vision.cs.stonybrook.edu/~lasot/>`_. Either the full LaSOT test split or the LaSOT-extension subset works; the builder discovers whatever categories are present.
+
+| Expected dataset structure — one directory per category, each holding its sequences:
+
+.. code-block::
+
+   LaSOT
+   |_ atv
+   |  |_ atv-1
+   |  |  |_ img
+   |  |  |  |_ 00000001.jpg
+   |  |  |  |_ ...
+   |  |  |_ groundtruth.txt
+   |  |_ atv-2
+   |  |_ ...
+   |_ badminton
+   |_ ...
+
+| ``groundtruth.txt`` is one comma-separated ``x,y,w,h`` box per frame.
+
+Tracking needs two different TFRecords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| **Evaluation** records hold whole frames. A tracker's search region is cropped around its *own previous prediction*, so it cannot be prepared ahead of inference — ``tracker_infer`` crops inside the closed loop and needs the full frame.
+
+| **Calibration** records hold pre-cropped template/search *pairs*: the template from frame ``t0`` and the search region from a later frame ``t1``, centred on the ``t0`` box, exactly as at inference. This matters — calibrating on independent still images instead measured **0.16 AUC worse**, because still crops contain none of the motion blur, lighting change or appearance drift the attention layers actually see on video.
+
+Run the creation scripts:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lasot_tfrecord.py val -d /path/to/LaSOT
+   python hailo_model_zoo/datasets/create_lasot_tfrecord.py calib_pairs -d /path/to/LaSOT
+
+Notes
+^^^^^
+
+* Sequences are selected **round-robin across categories**, not in sorted order — taking the first N alphabetically draws them all from one category (``atv-1``, ``atv-10``, ``atv-2``, ...), which is not representative of a multi-category benchmark.
+* ``--num-sequences`` (default 15, one per LaSOT-extension category) and ``--max-frames`` (default 120) bound the evaluation set. Full-length sequences over all categories are far more expensive: emulated inference runs at roughly 1 frame/s.
+* ``calib_pairs`` accepts ``--num-pairs`` (default 128) and ``--max-gap`` (default 100), the maximum frame distance between template and search.
+* Frames must stay in order and grouped by sequence in the evaluation TFRecord — ``tracker_infer`` re-initializes the tracker whenever ``video_name`` changes, which is the standard one-shot tracking protocol.
+
+.. _AudioSet:
+
+AudioSet
+--------
+
+| AudioSet is used by the audio-classification networks of the Hailo Model Zoo (``yamnet``). AudioSet is distributed as YouTube references rather than audio, so the clips have to be sourced rather than downloaded from one archive. The builder accepts three sources; ``--out-calib`` and/or ``--out-eval`` are required in all of them.
+
+| **From HuggingFace** (simplest — streams, no manual download):
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_audioset_tfrecord.py --hf \
+       --out-calib audioset_calib.tfrecord --out-eval audioset_eval.tfrecord
+
+| Defaults to the ``agkphysics/AudioSet`` dataset, config ``balanced`` split ``train`` for calibration and config ``balanced`` split ``test`` for evaluation; override with ``--calib-config`` / ``--calib-split`` / ``--eval-config`` / ``--eval-split``, and point the HuggingFace cache elsewhere with ``--hf-cache``.
+
+| **From a local copy** — a directory of 16 kHz mono WAVs named ``<yt_id>.wav`` plus the matching AudioSet segments CSV:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_audioset_tfrecord.py \
+       --audio-dir /path/to/audioset/wavs --csv /path/to/eval_segments.csv \
+       --out-eval audioset_eval.tfrecord
+
+| **Synthetic** (``--synthetic``) generates waveforms locally. It exists for CI and smoke tests only — never use it for an accuracy number.
+
+| AudioSet carries 527 labels while YamNet emits 521; the class map bundled at ``hailo_model_zoo/core/postprocessing/yamnet_class_map.json`` encodes that subset, so the builder and the postprocessor agree on ordering. The network consumes log-mel patches, so one clip yields several patches — the builder reports both counts when it finishes.
+
+.. _DOTAv1:
+
+DOTAv1
+------
+
+| DOTAv1 is used by the oriented-object-detection networks of the Hailo Model Zoo (``yolov11n_obb``, ``yolov11s_obb``, ``yolov11m_obb``, ``yolov11l_obb``, ``yolov11x_obb``).
+
+| Expected dataset structure:
+
+.. code-block::
+
+   DOTAv1
+   |_ images
+   |  |_ train
+   |  |  |_ P0000.jpg
+   |  |  |_ ...
+   |  |_ val
+   |_ labels
+   |  |_ train
+   |  |  |_ P0000.txt
+   |  |  |_ ...
+   |  |_ val
+
+| Each label file holds one oriented box per line as four corner points plus a class name.
+
+| Run the creation script:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_dotav1_tfrecord.py val --data-path /path/to/DOTAv1
+   python hailo_model_zoo/datasets/create_dotav1_tfrecord.py train --data-path /path/to/DOTAv1
+
+| Omit ``--data-path`` and the builder downloads DOTAv1 into the Model Zoo data directory itself. ``--num-images`` (default 5000) caps the number of images converted.
+
+.. _Lagenda:
+
+Lagenda
+-------
+
+| Lagenda is used by the age/gender networks of the Hailo Model Zoo (``mivolo_d1``). Manual download is required — see `the MiVOLO project <https://github.com/WildChlamydia/MiVOLO>`_ for the images and the split CSVs.
+
+| The builder calls MiVOLO's own ``ReaderAgeGender`` so that the stored crops are the exact 224x224 letterboxed face + person pair the reference implementation produces. That keeps the Model Zoo pipeline aligned with the reference preprocessing, but it means the crop step needs MiVOLO's dependencies (torch, cv2, timm, ultralytics) and a clone of the repository.
+
+| Where TensorFlow and the MiVOLO dependencies coexist, build in one phase:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split train --calib 4000 \
+       --images /path/to/Lagenda/images --annotations /path/to/Lagenda/annotations \
+       --mivolo-repo /path/to/MiVOLO
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split validation --num 12000 \
+       --images /path/to/Lagenda/images --annotations /path/to/Lagenda/annotations \
+       --mivolo-repo /path/to/MiVOLO
+
+| Where they do not — MiVOLO's requirements conflict with the Model Zoo environment often enough that this is the usual case — build in two phases, dumping crops from a MiVOLO virtualenv and converting them from the Model Zoo environment:
+
+.. code-block::
+
+   # phase A, in the MiVOLO environment (no TensorFlow needed)
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split train --calib 4000 \
+       --images /path/to/Lagenda/images --annotations /path/to/Lagenda/annotations \
+       --mivolo-repo /path/to/MiVOLO --crops-out lagenda_calib_crops.pkl
+
+   # phase B, in the Model Zoo environment (no MiVOLO needed)
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --calib 4000 \
+       --from-crops lagenda_calib_crops.pkl
+
+| ``--calib N`` builds a calibration subset of N instances and names the output accordingly; ``--num N`` caps the validation set to N instances, strided across the split rather than truncated. ``--out`` overrides the output directory.

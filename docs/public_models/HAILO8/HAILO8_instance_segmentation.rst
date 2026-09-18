@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.0
+* Hailo Dataflow Compiler Version v2.19.1
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -135,6 +135,23 @@ Coco
      - 640x640x3
      - 23.6
      - 131.8
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26s_seg
+     - 39.5
+     - 36.2
+     - 65.3
+     - 158
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/InstanceSegmentation/coco/yolo26/yolo26s_seg/pretrained/2026-02-12/yolo26s-seg.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26s_seg_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26s_seg.hef>`_
+     - 640x640x3
+     - 10.4
+     - 37
    
    
    

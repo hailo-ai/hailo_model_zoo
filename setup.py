@@ -1,25 +1,11 @@
 #!/usr/bin/env python
-from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
 CUR_DFC_VERSION = "3.34.0"
-CUR_MZ_VERSION = "2.19.0"
+CUR_MZ_VERSION = "2.19.1"
 package_name = "hailo-dataflow-compiler"
 
-try:
-    dfc_version = version(package_name)
-    if dfc_version != CUR_DFC_VERSION:
-        print(
-            f"Warning! The current version of the Dataflow Compiler is {dfc_version}.\n"
-            f"Current Hailo-Model-Zoo works best with DFC version {CUR_DFC_VERSION}. Please consider updating your DFC"
-        )
-except PackageNotFoundError:
-    raise PackageNotFoundError(
-        f"\nThe Dataflow Compiler package {package_name!r} was not found.\n"
-        f"Please verify working in the correct virtualenv.\n"
-        f"If you are not an Hailo customer, please visit us at https://hailo.ai/"
-    ) from None
 
 try:
     import cpuinfo
@@ -59,6 +45,7 @@ def main():
         "pyquaternion==0.9.9",
         "Shapely>=2.0.0",
         "Levenshtein",
+        f"{package_name}=={CUR_DFC_VERSION}",
     ]
 
     package_data = {

@@ -1,0 +1,47 @@
+base:
+- base/lagenda.yaml
+preprocessing:
+  network_type: mivolo
+  meta_arch: mivolo
+parser:
+  nodes:
+  - input
+  - - output
+  start_node_shapes:
+  - input=[1, 6, 224, 224]
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+    - 58.395
+    - 57.12
+    - 57.375
+paths:
+  alls_script: mivolo_d1.alls
+  network_path:
+  - models_files/mivolo_d1/2026-07-23/mivolo_hailo_full_sim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/AgeGender/mivolo_d1/2026-07-23/mivolo_d1.zip
+network:
+  network_name: mivolo_d1
+info:
+  task: age/gender classification
+  input_shape: 224x224x6
+  output_shape: 1x1x3
+  operations: 27.38G
+  parameters: 27.4M
+  source: https://github.com/WildChlamydia/MiVOLO
+  license_url: https://github.com/WildChlamydia/MiVOLO/blob/main/license
+  license_name: Apache-2.0
+  validation_data: Lagenda val
+  full_precision_result: 91.725
+  supported_hw_arch:
+  - hailo8

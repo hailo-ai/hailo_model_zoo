@@ -1,0 +1,4 @@
+normalization = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+
+pre_quantization_optimization(global_avgpool_reduction, layers=[avgpool1, avgpool2, avgpool13], division_factors=[136, 1])
+pre_quantization_optimization(global_avgpool_reduction, layers=[avgpool3, avgpool4, avgpool12], division_factors=[68, 1])

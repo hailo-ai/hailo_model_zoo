@@ -16,6 +16,8 @@ info:
   operations: 11.6G
   parameters: 31.7M
   source: https://github.com/bytedance/Next-ViT
+  license_url: https://github.com/bytedance/Next-ViT/blob/main/LICENSE
+  license_name: Apache-2.0
   full_precision_result: 82.6
   supported_hw_arch:
   - hailo8

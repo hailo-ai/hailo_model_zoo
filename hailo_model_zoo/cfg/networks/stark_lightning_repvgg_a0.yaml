@@ -1,0 +1,45 @@
+base:
+- base/lasot.yaml
+network:
+  network_name: stark_lightning_repvgg_a0
+paths:
+  alls_script: stark_lightning_repvgg_a0.alls
+  network_path:
+  - models_files/SingleObjectTracking/stark_lightning_repvgg_a0/pretrained/2026-08-03/stark_lightning_repvgg_a0_simp.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SingleObjectTracking/stark_lightning_repvgg_a0/pretrained/2026-08-03/stark_lightning_repvgg_a0.zip
+parser:
+  nodes:
+  - null
+  - /box_head/conv_tower/conv_tower.2/Conv
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+preprocessing:
+  input_shape:
+  - 320
+  - 320
+  - 3
+info:
+  task: single object tracking
+  input_shape: 320x320x3, 128x128x3
+  output_shape: 20x20x2
+  operations: 3.48G
+  parameters: 4.62M
+  framework: pytorch
+  training_data: lasot + got10k + coco17 + trackingnet
+  validation_data: lasot-extension (partial)
+  eval_metric: Success-plot AUC
+  full_precision_result: 56.9
+  source: https://github.com/researchmm/Stark
+  license_url: https://github.com/researchmm/Stark/blob/main/LICENSE
+  license_name: MIT
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

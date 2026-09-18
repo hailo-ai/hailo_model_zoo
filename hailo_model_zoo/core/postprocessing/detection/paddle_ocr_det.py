@@ -12,15 +12,15 @@ class PaddleDetPostProc(object):
 
     def __init__(
         self,
-        thresh=0.3,  # threshold for DB segmentation
-        box_thresh=0.6,  # threshold for filtering high confidence polygons
+        db_thresh=0.3,  # binarization threshold on the DB probability map
+        db_box_thresh=0.6,  # threshold for filtering high confidence polygons
         max_candidates=100,
         unclip_ratio=1.4,
         axis_aligned=True,
         **kwargs,
     ):
-        self.thresh = thresh
-        self.box_thresh = box_thresh
+        self.db_thresh = db_thresh
+        self.db_box_thresh = db_box_thresh
         self.max_candidates = max_candidates
         self.unclip_ratio = unclip_ratio
         self.min_size = 3
@@ -32,7 +32,7 @@ class PaddleDetPostProc(object):
     def unclip(self, box, unclip_ratio):
         """
         Unclip a polygon by expanding it outward while preserving the original aspect ratio.
-        box: numpy array of shape (4, 2) polygon vertice
+        box: numpy array of shape (4, 2) polygon vertex
         unclip_ratio: float, how far to expand (scaling factor)
         returns: numpy array of shape (4, 2)
         """
@@ -139,7 +139,7 @@ class PaddleDetPostProc(object):
         """
         # extract the segmentation mask from the prediction based on DB scheme
         pred = np.squeeze(pred, axis=-1)
-        mask = pred > self.thresh
+        mask = pred > self.db_thresh
 
         # Find Connected Components in the prediction mask
         height, width = mask.shape
@@ -166,7 +166,7 @@ class PaddleDetPostProc(object):
             else:
                 score = self.box_score(pred, points)
             # check segmentation confidence
-            if self.box_thresh > score:
+            if self.db_box_thresh > score:
                 continue
 
             box = self.unclip(points, self.unclip_ratio).reshape(-1, 1, 2)

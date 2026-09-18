@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.0
+* Hailo Dataflow Compiler Version v2.19.1
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -809,7 +809,7 @@ Coco
    * - yolov5xs_wo_spp_nms_core
      - 32.7
      - 31.0
-     - 57.2
+     - 67.4
      - 
      - | `S <https://github.com/ultralytics/yolov5/releases/tag/v2.0>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5xs/pretrained/2022-05-10/yolov5xs_wo_spp_nms.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/yolov5xs_wo_spp_nms_core_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/yolov5xs_wo_spp_nms_core.hef>`_
      - 512x512x3

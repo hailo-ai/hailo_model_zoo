@@ -1,0 +1,18 @@
+pre = bucket([decoder/const_input1, decoder/input_layer1, decoder/input_layer2, decoder/conv10, decoder/conv12, decoder/conv13, decoder/conv15, decoder/conv17, decoder/conv19, decoder/conv2, decoder/conv21, decoder/conv23, decoder/conv5, decoder/conv6, decoder/conv8, decoder/ew_add1, decoder/concat_matmul39, decoder/concat_matmul43, decoder/concat_matmul47, decoder/concat_matmul11, decoder/concat_matmul15, decoder/concat_matmul19, decoder/concat_matmul23, decoder/concat_matmul3, decoder/concat_matmul27, decoder/concat_matmul31, decoder/concat_matmul35, decoder/concat_matmul7])
+b0 = bucket([decoder/const_input_softmax1, decoder/const_input_softmax3, decoder/reduce_mean1_layer_normalization1, decoder/ew_sub1_layer_normalization1, decoder/ew_add2, decoder/matmul3, decoder/matmul4, decoder/matmul7, decoder/matmul8, decoder/ew_add9])
+b1 = bucket([decoder/const_input_softmax5, decoder/const_input_softmax7, decoder/reduce_mean1_layer_normalization7, decoder/ew_sub1_layer_normalization7, decoder/ew_add10, decoder/matmul11, decoder/matmul12, decoder/matmul15, decoder/matmul16, decoder/ew_add17])
+b2 = bucket([decoder/const_input_softmax11, decoder/const_input_softmax9, decoder/reduce_mean1_layer_normalization13, decoder/ew_sub1_layer_normalization13, decoder/ew_add18, decoder/matmul19, decoder/matmul20, decoder/matmul23, decoder/matmul24, decoder/ew_add25])
+b3 = bucket([decoder/const_input_softmax13, decoder/const_input_softmax15, decoder/reduce_mean1_layer_normalization19, decoder/ew_sub1_layer_normalization19, decoder/ew_add26, decoder/matmul27, decoder/matmul28, decoder/matmul31, decoder/matmul32, decoder/ew_add33])
+b4 = bucket([decoder/const_input_softmax17, decoder/const_input_softmax19, decoder/reduce_mean1_layer_normalization25, decoder/ew_sub1_layer_normalization25, decoder/ew_add34, decoder/matmul35, decoder/matmul36, decoder/matmul39, decoder/matmul40, decoder/ew_add41])
+b5 = bucket([decoder/const_input_softmax21, decoder/const_input_softmax23, decoder/reduce_mean1_layer_normalization31, decoder/ew_sub1_layer_normalization31, decoder/ew_add42, decoder/matmul43, decoder/matmul44, decoder/matmul47, decoder/matmul48, decoder/ew_add49])
+post = bucket([decoder/reduce_mean1_layer_normalization37, decoder/ew_sub1_layer_normalization37, decoder/output_layer1, decoder/output_layer2, decoder/output_layer3, decoder/output_layer4])
+
+allocator_param(automatic_reshapes=disabled, cluster_timeout=1800, splitter_timeout=1800, timeout=10800, seed=0)
+
+# The compiler spatially reshapes the 16-token tensors (1, 16, C) -> (2, 8, C) on
+# Hailo-8; external IOs it touches need an explicit conversion (validate_spatial_collapse_format).
+reshape_in2 = format_conversion(input_layer2, precision_change2, tf_rgb_to_hailo_rgb)
+reshape_out1 = format_conversion(conv121_part1, output_layer1, hailo_rgb_to_tf_rgb)
+reshape_out2 = format_conversion(conv121_part2, output_layer2, hailo_rgb_to_tf_rgb)
+reshape_out3 = format_conversion(conv121_part3, output_layer3, hailo_rgb_to_tf_rgb)
+reshape_out4 = format_conversion(conv121_part4, output_layer4, hailo_rgb_to_tf_rgb)

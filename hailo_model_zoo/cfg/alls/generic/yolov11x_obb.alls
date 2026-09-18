@@ -1,0 +1,2 @@
+input_dataset_normalization = normalization([0.0, 0.0, 0.0],[255.0, 255.0, 255.0])
+post_quantization_optimization(finetune, policy=enabled, batch_size=2)

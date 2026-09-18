@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.0
+* Hailo Dataflow Compiler Version v2.19.1
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |

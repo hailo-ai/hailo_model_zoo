@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.0
+* Hailo Dataflow Compiler Version v2.19.1
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -84,3 +84,37 @@ Coco
      - 544x960x3
      - 1.2
      - 6.5
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_small_detection
+     - 5.98
+     - 6.05
+     - 33.2
+     - 64.1
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-08-04/PP-OCRv6_small_det_544x960_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/paddle_ocr_v6_small_detection_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/paddle_ocr_v6_small_detection.hef>`_
+     - 544x960x3
+     - 2.45
+     - 11.48
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_tiny_detection
+     - 3.92
+     - 4.0
+     - 58.1
+     - 106
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-08-04/PP-OCRv6_tiny_det_544x960_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/paddle_ocr_v6_tiny_detection_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/paddle_ocr_v6_tiny_detection.hef>`_
+     - 544x960x3
+     - 0.43
+     - 3.57

@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.0
+* Hailo Dataflow Compiler Version v2.19.1
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -180,6 +180,57 @@ Cityscapes
      - 1024x1920x3
      - 8.27
      - 126.47
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26m_sem
+     - 81.3
+     - 80.8
+     - 13.7
+     - 16.7
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26m_sem/pretrained/2026-05-28/yolo26m-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26m_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26m_sem.hef>`_
+     - 1024x2048x3
+     - 14.30
+     - 305.6
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26n_sem
+     - 77.4
+     - 75.9
+     - 135
+     - 143
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26n_sem/pretrained/2026-05-28/yolo26n-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26n_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26n_sem.hef>`_
+     - 1024x2048x3
+     - 1.63
+     - 23.9
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26s_sem
+     - 80.0
+     - 79.4
+     - 36.7
+     - 47.1
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26s_sem/pretrained/2026-05-28/yolo26s-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26s_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolo26s_sem.hef>`_
+     - 1024x2048x3
+     - 6.49
+     - 91.1
 
 |
 

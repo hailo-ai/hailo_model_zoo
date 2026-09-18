@@ -1,0 +1,20 @@
+base:
+- base/base.yaml
+network:
+  network_name: vit_gpt2_encoder
+paths:
+  alls_script: vit_gpt2_encoder.alls
+evaluation:
+  dataset_name: coco_2017_detection
+preprocessing:
+  network_type: image_captioning
+info:
+  task: image captioning
+  input_shape: 224x224x3
+  operations: 35.2G
+  parameters: 85.68M
+  license_url: https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
+  license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

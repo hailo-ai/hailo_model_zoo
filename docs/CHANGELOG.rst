@@ -1,3 +1,17 @@
+**v2.19.1**
+
+* Released on Hailo-8: ``yolo26s_seg`` (instance segmentation) and ``yolo26m_sem`` (Cityscapes semantic segmentation)
+
+* New Models:
+
+  * `ViT-GPT2 image captioning <https://huggingface.co/nlpconnect/vit-gpt2-image-captioning>`_ - vit_gpt2_encoder, vit_gpt2_decoder - Image captioning models (Hailo-8, Hailo-8L)
+  * `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - yolo26n_sem, yolo26s_sem, yolo26l_sem - Cityscapes semantic segmentation models (Hailo-8, Hailo-8L)
+  * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Oriented bounding box detection models on DOTA v1 - yolov11n_obb, yolov11s_obb, yolov11m_obb, yolov11l_obb, yolov11x_obb. Introduces the ``detection_obb`` task type (preprocessor / postprocessor / oriented-box mAP eval) and the DOTA v1 dataset (Hailo-8, Hailo-8L)
+  * `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - Text detection and recognition models forming the PP-OCRv6 pipeline - paddle_ocr_v6_tiny_detection, paddle_ocr_v6_small_detection, paddle_ocr_v6_medium_detection, paddle_ocr_v6_small_recognition (Hailo-8, Hailo-8L)
+  * `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet 521-class audio event classification. First audio network in the Model Zoo; introduces the ``audio_classification`` task type (Hailo-8, Hailo-8L)
+  * `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - VOLO / Vision-Outlooker age and gender estimation from a 6-channel face+person input (Hailo-8)
+  * `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - stark_lightning_repvgg_a0 - Single-object tracker. Introduces the ``single_object_tracking`` task type, the ``tracker_infer`` closed-loop inference module and the LaSOT dataset. The corner-head soft-argmax runs on the host rather than on chip, because the 400-wide softmax it needs cannot be mapped on Hailo-8 / Hailo-8L (Hailo-8, Hailo-8L)
+
 **v2.19.0**
 
 * Update to use Dataflow Compiler v3.34.0 (`developer-zone <https://hailo.ai/developer-zone/>`_)
@@ -23,6 +37,7 @@
 * New Models:
 
   * `YOLO26 <https://arxiv.org/pdf/2509.25164>`_ - End-to-end NMS-free object detection models - yolo26n, yolo26s, yolo26m
+  * `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - Cityscapes semantic-segmentation models - yolo26n_sem, yolo26s_sem, yolo26m_sem, yolo26l_sem, yolo26x_sem
   * `DepthAnything <https://arxiv.org/pdf/2406.09414>`_ - Zero-shot depth estimation models - depthanything_vits, depthanything_v2_vits.
   * `Face landmarks detection <https://github.com/google-ai-edge/mediapipe>` - release face_landmarks_lite.
   * `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_ - TinyCLIP family - Contrastive Language-Image Pre-training models (image & text encoders) - tinyclip_vit_40m_32_text_19m_laion400m

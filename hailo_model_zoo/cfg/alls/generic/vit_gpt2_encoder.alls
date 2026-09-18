@@ -1,0 +1,1 @@
+allocator_param(automatic_reshapes=disabled, cluster_timeout=1800, splitter_timeout=1800, timeout=10800, seed=0)

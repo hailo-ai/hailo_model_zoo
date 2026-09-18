@@ -1,0 +1,31 @@
+base:
+- base/audioset.yaml
+network:
+  network_name: yamnet
+paths:
+  network_path:
+  - models_files/AudioClassification/yamnet/pretrained/2026-07-14/yamnet.onnx
+  - models_files/AudioClassification/yamnet/pretrained/2026-07-14/yamnet.onnx.data
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/AudioClassification/yamnet/pretrained/2026-07-14/yamnet.zip
+  alls_script: yamnet.alls
+parser:
+  nodes:
+  - null
+  - /model/classifier/Gemm
+info:
+  task: audio_classification
+  input_shape: 96x64x1
+  output_shape: '521'
+  operations: 0.14G
+  parameters: 3.73M
+  framework: onnx
+  training_data: audioset balanced_train (external)
+  validation_data: audioset eval (external)
+  eval_metric: mAP
+  full_precision_result: 45.76
+  source: https://github.com/tensorflow/models/tree/master/research/audioset/yamnet
+  license_url: https://github.com/tensorflow/models/blob/master/LICENSE
+  license_name: Apache-2.0
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

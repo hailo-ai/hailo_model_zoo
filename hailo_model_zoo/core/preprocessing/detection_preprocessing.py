@@ -9,6 +9,21 @@ from hailo_model_zoo.core.preprocessing.roi_align_wrapper import ROIAlignWrapper
 MAX_PADDING_LENGTH = 100
 
 
+def _extract_box_coords_from_image_info(image_info, max_padding_length=MAX_PADDING_LENGTH, is_normalized=True):
+    horizontal_scale = tf.cast(image_info["width"], tf.float32) if is_normalized else 1
+    vertical_scale = tf.cast(image_info["height"], tf.float32) if is_normalized else 1
+    x1 = tf.expand_dims(_pad_tensor(image_info.pop("x1") * horizontal_scale, max_padding_length), axis=1)
+    y1 = tf.expand_dims(_pad_tensor(image_info.pop("y1") * vertical_scale, max_padding_length), axis=1)
+    x2 = tf.expand_dims(_pad_tensor(image_info.pop("x2") * horizontal_scale, max_padding_length), axis=1)
+    y2 = tf.expand_dims(_pad_tensor(image_info.pop("y2") * vertical_scale, max_padding_length), axis=1)
+    x3 = tf.expand_dims(_pad_tensor(image_info.pop("x3") * horizontal_scale, max_padding_length), axis=1)
+    y3 = tf.expand_dims(_pad_tensor(image_info.pop("y3") * vertical_scale, max_padding_length), axis=1)
+    x4 = tf.expand_dims(_pad_tensor(image_info.pop("x4") * horizontal_scale, max_padding_length), axis=1)
+    y4 = tf.expand_dims(_pad_tensor(image_info.pop("y4") * vertical_scale, max_padding_length), axis=1)
+
+    return x1, x2, x3, x4, y1, y2, y3, y4
+
+
 def _extract_box_from_image_info(image_info, max_padding_length=MAX_PADDING_LENGTH, is_normalized=True):
     horizontal_scale = tf.cast(image_info["width"], tf.float32) if is_normalized else 1
     vertical_scale = tf.cast(image_info["height"], tf.float32) if is_normalized else 1

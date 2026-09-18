@@ -7,6 +7,12 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Task type
      - Hailo-8
      - Hailo-8L
+   * - Age Gender Classification
+     - `Link <public_models/HAILO8/HAILO8_age_gender_classification.rst>`_
+     - NA
+   * - Audio Classification
+     - `Link <public_models/HAILO8/HAILO8_audio_classification.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_audio_classification.rst>`_
    * - Automatic Speech Recognition
      - `Link <public_models/HAILO8/HAILO8_automatic_speech_recognition.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_automatic_speech_recognition.rst>`_
@@ -31,6 +37,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Hand Landmark Detection
      - `Link <public_models/HAILO8/HAILO8_hand_landmark_detection.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_hand_landmark_detection.rst>`_
+   * - Image Captioning
+     - `Link <public_models/HAILO8/HAILO8_image_captioning.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_image_captioning.rst>`_
    * - Image Denoising
      - `Link <public_models/HAILO8/HAILO8_image_denoising.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_image_denoising.rst>`_
@@ -46,6 +55,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Object Detection 3D
      - `Link <public_models/HAILO8/HAILO8_object_detection_3d.rst>`_
      - NA
+   * - Oriented Object Detection
+     - `Link <public_models/HAILO8/HAILO8_oriented_object_detection.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_oriented_object_detection.rst>`_
    * - Person Attribute
      - `Link <public_models/HAILO8/HAILO8_person_attribute.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_person_attribute.rst>`_
@@ -61,6 +73,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Sentence Embedding Generation
      - `Link <public_models/HAILO8/HAILO8_sentence_embedding_generation.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_sentence_embedding_generation.rst>`_
+   * - Single Object Tracking
+     - `Link <public_models/HAILO8/HAILO8_single_object_tracking.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_single_object_tracking.rst>`_
    * - Single Person Pose Estimation
      - `Link <public_models/HAILO8/HAILO8_single_person_pose_estimation.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_single_person_pose_estimation.rst>`_

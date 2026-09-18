@@ -1,0 +1,11 @@
+# The 18710-output classifier (conv42) is allocator-infeasible at the parsed 1x40 token
+# layout on Hailo-8 ("Minimum needed amount of subclusters was not reached. Needed: 19");
+# tiling it over a 5x8 spatial grid and collapsing back afterwards is the same trick
+# paddle_ocr_v5_mobile_recognition uses. adaround (optimization_level=4) recovers the
+# quantized accuracy the tiling costs.
+normalization = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_flavor(optimization_level=4)
+resources_param(max_utilization=0.9)
+allocator_param(enable_auto_spatial_reshapes=False)
+reshape1 = format_conversion(normalization5, conv42, spatial_reshape, 5, 8)
+reshape2 = format_conversion(conv42, output_layer1, spatial_reshape, 1, 40, collapse=True)

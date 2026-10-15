@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -80,7 +80,7 @@ Celeba
      - 81.0
      - 1299
      - 1299
-     - | `S <https://github.com/d-li14/face-attribute-prediction>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/face_attr_resnet_v1_18_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/face_attr_resnet_v1_18.hef>`_
+     - | `S <https://github.com/d-li14/face-attribute-prediction>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/FaceAttr/face_attr_resnet_v1_18/2022-06-09/face_attr_resnet_v1_18.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/face_attr_resnet_v1_18_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/face_attr_resnet_v1_18.hef>`_
      - 218x178x3
      - 11.74
      - 3

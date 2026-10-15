@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -77,10 +77,10 @@ Dotav1
 
    * - yolov11l_obb
      - 56.3
-     - 55.3
+     - 55.5
      - 17.0
-     - 28.3
-     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11l/2025-11-19/yolo11l-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11l_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11l_obb.hef>`_
+     - 27.6
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11l/2025-11-19/yolo11l-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11l_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11l_obb.hef>`_
      - 1024x1024x3
      - 26.1
      - 232.9
@@ -94,10 +94,10 @@ Dotav1
 
    * - yolov11m_obb
      - 55.1
-     - 54.1
+     - 53.9
      - 23.1
      - 38.5
-     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11m/2025-11-19/yolo11m-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11m_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11m_obb.hef>`_
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11m/2025-11-19/yolo11m-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11m_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11m_obb.hef>`_
      - 1024x1024x3
      - 33.99
      - 183.59
@@ -111,10 +111,10 @@ Dotav1
 
    * - yolov11n_obb
      - 49.7
-     - 48.8
+     - 48.7
      - 100
-     - 175
-     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11n/2025-11-19/yolo11n-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11n_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11n_obb.hef>`_
+     - 176
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11n/2025-11-19/yolo11n-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11n_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11n_obb.hef>`_
      - 1024x1024x3
      - 3.80
      - 17.25
@@ -128,10 +128,10 @@ Dotav1
 
    * - yolov11s_obb
      - 53.2
-     - 51.5
-     - 59.4
-     - 89.3
-     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11s/2025-11-19/yolo11s-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11s_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11s_obb.hef>`_
+     - 52.4
+     - 59.6
+     - 87.9
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11s/2025-11-19/yolo11s-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11s_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11s_obb.hef>`_
      - 1024x1024x3
      - 12.6
      - 57.94
@@ -147,8 +147,8 @@ Dotav1
      - 56.9
      - 56.2
      - 6.98
-     - 8.7
-     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11x/2025-11-19/yolo11x-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11x_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/yolov11x_obb.hef>`_
+     - 9.42
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-DOTA/yolo/yolov11x/2025-11-19/yolo11x-obb.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11x_obb_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolov11x_obb.hef>`_
      - 1024x1024x3
      - 60.08
      - 521.61

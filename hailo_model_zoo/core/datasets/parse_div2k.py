@@ -15,9 +15,11 @@ def parse_record(serialized_example):
             "lr_img": tf.io.FixedLenFeature([], tf.string),
             "hr_img": tf.io.FixedLenFeature([], tf.string),
             "format": tf.io.FixedLenFeature([], tf.string),
+            "upscale_factor": tf.io.FixedLenFeature([], tf.int64, default_value=4),
         },
     )
 
+    upscale_factor = tf.cast(features["upscale_factor"], tf.int32)
     height = tf.cast(features["height"], tf.int32)
     width = tf.cast(features["width"], tf.int32)
     image_name = tf.cast(features["image_name"], tf.string)
@@ -25,7 +27,12 @@ def parse_record(serialized_example):
     lr_image_shape = tf.stack([height, width, 3])
     lr_image = tf.reshape(lr_image, lr_image_shape)
     hr_image = tf.io.decode_raw(features["hr_img"], tf.uint8)
-    hr_image_shape = tf.stack([4 * height, 4 * width, 3])
+    hr_image_shape = tf.stack([upscale_factor * height, upscale_factor * width, 3])
     hr_image = tf.reshape(hr_image, hr_image_shape)
-    image_info = {"image_name": image_name, "hr_img": hr_image, "height": 4 * height, "width": 4 * width}
+    image_info = {
+        "image_name": image_name,
+        "hr_img": hr_image,
+        "height": upscale_factor * height,
+        "width": upscale_factor * width,
+    }
     return [lr_image, image_info]

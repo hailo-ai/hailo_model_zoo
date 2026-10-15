@@ -70,18 +70,23 @@ The models are divided to:
 What's new
 ----------
 
-**Models-only update** v2.19.1 adds new models on top of v2.19.0. The software stack is unchanged: Dataflow Compiler v3.34.0 and HailoRT v4.24.0 (see `Changelog <docs/CHANGELOG.rst>`_).
+**Models-only update** v2.20.0 adds new models on top of v2.19.0. The software stack is unchanged: Dataflow Compiler v3.34.0 and HailoRT v4.24.0 (see `Changelog <docs/CHANGELOG.rst>`_).
 
-**New model support** We have expanded the Model Zoo with new tasks and architectures for image captioning, oriented object detection, OCR, audio classification, age/gender estimation and single-object tracking:
+**New model support** We have expanded the Model Zoo with new tasks and architectures for image captioning, oriented object detection, OCR, semantic segmentation, super resolution, depth estimation, audio classification, age/gender estimation and single- and multi-object tracking:
 
 * `ViT-GPT2 <https://huggingface.co/nlpconnect/vit-gpt2-image-captioning>`_ - Image captioning models - vit_gpt2_encoder, vit_gpt2_decoder
 * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Oriented bounding box detection models (DOTA v1) - yolov11n_obb, yolov11s_obb, yolov11m_obb, yolov11l_obb, yolov11x_obb
 * `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - Text detection and recognition models - paddle_ocr_v6_tiny_detection, paddle_ocr_v6_small_detection, paddle_ocr_v6_medium_detection, paddle_ocr_v6_small_recognition
-* `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - Cityscapes semantic segmentation models - yolo26n_sem, yolo26s_sem, yolo26l_sem, yolo26m_sem (Hailo-8 only)
+* `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - Cityscapes semantic segmentation models - yolo26n_sem, yolo26s_sem, yolo26m_sem (Hailo-8 only)
 * `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - NMS-free instance segmentation model - yolo26s_seg (Hailo-8 only)
 * `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet audio event classification, the first audio network in the Model Zoo
 * `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - Age and gender estimation (Hailo-8 only)
+* `BiSeNetV2 <https://github.com/CoinCheung/BiSeNet>`_ - bisenetv2 - Real-time Cityscapes semantic segmentation
 * `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - stark_lightning_repvgg_a0 - Single-object tracker
+* `ByteTrack <https://github.com/ifzhang/ByteTrack>`_ - Multi-object tracking (MOT17) - bytetrack_nano_mot17, bytetrack_tiny_mot17, bytetrack_s_mot17, bytetrack_m_mot17, bytetrack_l_mot17, bytetrack_x_mot17
+* `DDRNet <https://github.com/ydhongHIT/DDRNet>`_ - ddrnet_23_slim - Real-time Cityscapes semantic segmentation
+* `PP-LiteSeg <https://arxiv.org/abs/2204.02681>`_ - pp_liteseg_t, pp_liteseg_b - Real-time Cityscapes semantic segmentation
+* `SPAN <https://github.com/hongyuanyu/SPAN>`_ - span_x2, span_x4, spanf_x4 - Super resolution
 
 Retraining
 ----------

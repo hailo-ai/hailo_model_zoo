@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -76,7 +76,7 @@ Hand Landmark
    * - hand_landmark_lite
      - 3091
      - 3091
-     - | `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/hand_landmark_lite_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/hand_landmark_lite.hef>`_
+     - | `S <https://github.com/google/mediapipe>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HandLandmark/hand_landmark_lite/2023-07-18/hand_landmark_lite.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/hand_landmark_lite_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/hand_landmark_lite.hef>`_
      - 224x224x3
      - 1.01
      - 0.3

@@ -3,7 +3,7 @@
 from setuptools import find_packages, setup
 
 CUR_DFC_VERSION = "3.34.0"
-CUR_MZ_VERSION = "2.19.1"
+CUR_MZ_VERSION = "2.20.0"
 package_name = "hailo-dataflow-compiler"
 
 
@@ -35,8 +35,7 @@ def main():
         "termcolor",
         "tqdm",
         "pycocotools",
-        "lap==0.5.12",
-        "motmetrics==1.2.5",
+        "motmetrics==1.4.0",
         "omegaconf==2.3.0",
         "pillow<=11.2.1",
         "detection-tools==0.3",

@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -76,10 +76,10 @@ Link Legend
    * - vit_gpt2_decoder
      - 11.6
      - 54.2
-     - |  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/vit_gpt2_decoder.hef>`_
+     - |  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/vit_gpt2_decoder.hef>`_
      - 1x197x768
      - 152.43
-     - 5.05
+     - 10.12
    
    
    
@@ -91,7 +91,7 @@ Link Legend
    * - vit_gpt2_encoder
      - 20.8
      - 58.7
-     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/vit_gpt2_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/vit_gpt2_encoder.hef>`_
+     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/vit_gpt2_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/vit_gpt2_encoder.hef>`_
      - 224x224x3
      - 85.68
-     - 35.2
+     - 35.22

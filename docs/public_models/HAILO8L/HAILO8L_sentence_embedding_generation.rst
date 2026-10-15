@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -80,7 +80,7 @@ Mteb
      - 61.6
      - 121
      - 492
-     - | `S <https://github.com/huggingface/sentence-transformers/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/all_minilm_l6_v2_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/all_minilm_l6_v2.hef>`_
+     - | `S <https://github.com/huggingface/sentence-transformers/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/all_minilm_l6_v2_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/all_minilm_l6_v2.hef>`_
      - 16x8x384
      - 10.6
      - 2.9
@@ -95,9 +95,9 @@ Mteb
    * - all_minilm_l6_v2_v2a
      - 96.4
      - 94.7
-     - 121
+     - 120
      - 492
-     - | `S <https://github.com/huggingface/sentence-transformers/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/all_minilm_l6_v2_v2a_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8l/all_minilm_l6_v2_v2a.hef>`_
+     - | `S <https://github.com/huggingface/sentence-transformers/>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/all_minilm_l6_v2/2026-02-24/all_minilm_l6_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/all_minilm_l6_v2_v2a_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8l/all_minilm_l6_v2_v2a.hef>`_
      - 16x8x384
      - 10.6
      - 2.9

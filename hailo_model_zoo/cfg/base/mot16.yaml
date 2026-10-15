@@ -1,0 +1,12 @@
+quantization:
+  calib_set:
+  - models_files/mot16/2020-07-09/mot16calibration_set.tfrecord
+evaluation:
+  dataset_name: mot16
+  classes: 1
+  labels_offset: 1
+  data_set: models_files/mot16/2020-07-09/mot16val.tfrecord
+info:
+  task: multiple object tracking
+  validation_data: mot16 train
+  eval_metric: MOTA

@@ -1,0 +1,8 @@
+normalization1 = normalization([83.054, 94.095, 82.187], [53.856, 54.774, 53.933])
+# LCU keeps the author's half_pixels upsample; the PPU streaming kernel is align_corners-only (-0.76 mIoU)
+resize4 = resize(conv48, resize_shapes=[1024, 2048], resize_method=bilinear, pixels_mode=half_pixels, hw_layer_type=lcu)
+logits_layer1 = logits_layer(resize4, argmax, -1)
+model_optimization_config(calibration, batch_size=1)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+# Hailo-8 fits the net in a single context only by starving conv3; force the multi-context flow
+context_switch_param(mode=enabled)

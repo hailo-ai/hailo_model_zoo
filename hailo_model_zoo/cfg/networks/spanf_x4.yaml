@@ -1,0 +1,33 @@
+base:
+- base/span.yaml
+- base/div2k_x4.yaml
+network:
+  network_name: spanf_x4
+paths:
+  alls_script: spanf_x4.alls
+  network_path:
+  - models_files/SuperResolution/span/spanf_x4/pretrained/2026-09-16/spanf_x4.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/SuperResolution/span/spanf_x4/pretrained/2026-09-16/spanf_x4.zip
+parser:
+  normalization_params:
+    mean_list:
+    - 0
+    - 0
+    - 0
+    std_list:
+    - 255
+    - 255
+    - 255
+info:
+  input_shape: 512x512x3
+  output_shape: 2048x2048x3
+  operations: 77.59G
+  parameters: 0.15M
+  training_data: DIV2K+LSDIR
+  full_precision_result: 30.303
+  source: https://github.com/Amazingren/NTIRE2025_ESR
+  license_url: https://github.com/Amazingren/NTIRE2025_ESR/blob/main/LICENSE
+  license_name: MIT
+  supported_hw_arch:
+  - hailo8
+  - hailo8l

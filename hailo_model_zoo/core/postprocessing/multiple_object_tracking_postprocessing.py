@@ -4,6 +4,7 @@ from detection_tools.utils.visualization_utils import visualize_boxes_and_labels
 
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
+from hailo_model_zoo.core.postprocessing.detection_postprocessing import detection_postprocessing
 
 # STARK corner-head geometry. The head emits two score maps (top-left and bottom-right
 # corner) over a FEAT_SIZE x FEAT_SIZE grid of the SEARCH_SIZE search crop; the soft-argmax
@@ -46,8 +47,10 @@ def single_object_tracking_postprocessing(endnodes, device_pre_post_layers=None,
 @POSTPROCESS_FACTORY.register(name="multiple_object_tracking")
 def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     kwargs["meta_arch"] = kwargs.get("meta_arch", {})
+    if kwargs["meta_arch"] == "yolox":
+        return detection_postprocessing(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     if kwargs["meta_arch"] != "fair_mot":
-        raise NotImplementedError("Tracking post-processing currently supports only FairMOT based architectures")
+        raise NotImplementedError("Tracking post-processing currently supports only FairMOT and YOLOX architectures")
 
     centernet_postprocessing = CenternetPostProc(
         device_pre_post_layers=device_pre_post_layers, score_threshold=kwargs["score_threshold"]
@@ -58,7 +61,8 @@ def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=Non
 
     re_id_values = tf.nn.l2_normalize(endnodes[0], axis=-1)
     top_indices = tf.numpy_function(_get_top_indices, [re_id_values, detection_dict["top_k_indices"]], [tf.int64])
-    detection_dict["re_id_values"] = tf.gather_nd(re_id_values, top_indices)
+    # lts: gather_nd on the numpy_function list gives (1, B, K, 128); put B first so batches concat to (N, 1, K, 128)
+    detection_dict["re_id_values"] = tf.transpose(tf.gather_nd(re_id_values, top_indices), [1, 0, 2, 3])
     return {**detection_dict}
 
 

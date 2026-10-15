@@ -1,0 +1,5 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_flavor(optimization_level=2, compression_level=0)
+quantization_param({conv*}, precision_mode=a16_w16)
+quantization_param({dw*}, precision_mode=a16_w16)
+allocator_param(width_splitter_defuse=disabled)

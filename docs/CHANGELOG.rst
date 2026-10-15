@@ -1,15 +1,19 @@
-**v2.19.1**
-
-* Released on Hailo-8: ``yolo26s_seg`` (instance segmentation) and ``yolo26m_sem`` (Cityscapes semantic segmentation)
+**v2.20.0**
 
 * New Models:
 
+  * `SPAN <https://github.com/hongyuanyu/SPAN>`_ - span_x4, span_x2 - Swift Parameter-free Attention Network super-resolution (NTIRE 2024 Efficient SR winner), plus its lighter NTIRE 2025 successor `SPANF <https://github.com/Amazingren/NTIRE2025_ESR>`_ - spanf_x4. Evaluated by Y-PSNR on DIV2K; introduces the ``span`` pad-to-input super-resolution preprocessing and the DIV2K x2 dataset (Hailo-8, Hailo-8L)
+  * `DDRNet <https://github.com/ydhongHIT/DDRNet>`_ - ddrnet_23_slim - Real-time Cityscapes semantic segmentation with a deep dual-resolution pure-conv design and a DAPPM context head (1024x2048 input, 19 classes, 5.7M parameters). The x8 bilinear upsample and the argmax run on-chip, added from the model script rather than the ONNX (Hailo-8, Hailo-8L)
+  * `PP-LiteSeg <https://arxiv.org/abs/2204.02681>`_ - pp_liteseg_t, pp_liteseg_b - Real-time Cityscapes semantic-segmentation models from PaddleSeg (1024x2048 input, 19 classes). Pure-conv design: an STDC1 / STDC2 encoder (as in stdc1 / stdc2), a Simple Pyramid Pooling Module and a Flexible and Lightweight Decoder whose Unified Attention Fusion Modules weight the two branches by a learned spatial attention (Hailo-8, Hailo-8L)
+  * `ByteTrack <https://github.com/ifzhang/ByteTrack>`_ - bytetrack_nano_mot17, bytetrack_tiny_mot17, bytetrack_s_mot17, bytetrack_m_mot17, bytetrack_l_mot17, bytetrack_x_mot17 - Multi-object pedestrian tracking by associating every detection box, low-score ones included. One-class YOLOX detectors (608x1088 input for nano/tiny/s, 800x1440 for m/l/x) trained on MOT17 and CrowdHuman; the BYTE association runs on the host in the ``multiple_object_tracking`` eval, scored by MOTA on MOT16. Box decoding and NMS run on the host without clipping, since MOT ground-truth boxes extend past the frame (Hailo-8, Hailo-8L)
   * `ViT-GPT2 image captioning <https://huggingface.co/nlpconnect/vit-gpt2-image-captioning>`_ - vit_gpt2_encoder, vit_gpt2_decoder - Image captioning models (Hailo-8, Hailo-8L)
-  * `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - yolo26n_sem, yolo26s_sem, yolo26l_sem - Cityscapes semantic segmentation models (Hailo-8, Hailo-8L)
+  * `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - yolo26n_sem, yolo26s_sem, yolo26m_sem - Cityscapes semantic segmentation models (Hailo-8, Hailo-8L; yolo26m_sem Hailo-8 only)
+  * `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - yolo26s_seg - NMS-free instance segmentation model (Hailo-8)
   * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Oriented bounding box detection models on DOTA v1 - yolov11n_obb, yolov11s_obb, yolov11m_obb, yolov11l_obb, yolov11x_obb. Introduces the ``detection_obb`` task type (preprocessor / postprocessor / oriented-box mAP eval) and the DOTA v1 dataset (Hailo-8, Hailo-8L)
   * `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - Text detection and recognition models forming the PP-OCRv6 pipeline - paddle_ocr_v6_tiny_detection, paddle_ocr_v6_small_detection, paddle_ocr_v6_medium_detection, paddle_ocr_v6_small_recognition (Hailo-8, Hailo-8L)
   * `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet 521-class audio event classification. First audio network in the Model Zoo; introduces the ``audio_classification`` task type (Hailo-8, Hailo-8L)
   * `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - VOLO / Vision-Outlooker age and gender estimation from a 6-channel face+person input (Hailo-8)
+  * `BiSeNetV2 <https://github.com/CoinCheung/BiSeNet>`_ - bisenetv2 - Real-time Cityscapes semantic-segmentation network with a bilateral design: a wide shallow detail branch and a narrow deep semantic branch fused by a guided aggregation layer (1024x2048 input, 19 classes). The x8 bilinear upsample and the argmax run on-chip, added from the model script rather than the ONNX (Hailo-8, Hailo-8L)
   * `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - stark_lightning_repvgg_a0 - Single-object tracker. Introduces the ``single_object_tracking`` task type, the ``tracker_infer`` closed-loop inference module and the LaSOT dataset. The corner-head soft-argmax runs on the host rather than on chip, because the 400-wide softmax it needs cannot be mapped on Hailo-8 / Hailo-8L (Hailo-8, Hailo-8L)
 
 **v2.19.0**

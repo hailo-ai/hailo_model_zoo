@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -76,7 +76,7 @@ Link Legend
    * - whisper_base_5s_encoder
      - 51.4
      - 161
-     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_base_5s_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_base_5s_encoder.hef>`_
+     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_base_5s_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_base_5s_encoder.hef>`_
      - 1x500x80
      - 19.85
      - 10.73
@@ -89,9 +89,9 @@ Link Legend
    
 
    * - whisper_base_5s_no_kqs_decoder
-     - 48.5
+     - 47.2
      - 254
-     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_base_5s_no_kqs_decoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_base_5s_no_kqs_decoder.hef>`_
+     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_base_5s_no_kqs_decoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_base_5s_no_kqs_decoder.hef>`_
      - 1x250x512
      - 51.87
      - 3.99
@@ -104,9 +104,9 @@ Link Legend
    
 
    * - whisper_tiny_10s_encoder
-     - 68.1
+     - 68.2
      - 195
-     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_tiny_10s_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_tiny_10s_encoder.hef>`_
+     - | `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_tiny_10s_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_tiny_10s_encoder.hef>`_
      - 1x1000x80
      - 7.65
      - 9.26
@@ -119,9 +119,9 @@ Link Legend
    
 
    * - whisper_tiny_10s_no_kqs_decoder
-     - 79.8
-     - 311
-     - |  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/whisper_tiny_10s_no_kqs_decoder.hef>`_
+     - 79.7
+     - 310
+     - |  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/whisper_tiny_10s_no_kqs_decoder.hef>`_
      - 1x500x384
      - 29.45
      - 3.09

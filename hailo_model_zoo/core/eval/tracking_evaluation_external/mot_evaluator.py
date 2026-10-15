@@ -3,7 +3,7 @@ import copy
 import motmetrics as mm
 import numpy as np
 
-mm.lap.default_solver = "lap"
+mm.lap.default_solver = "scipy"
 
 
 class Evaluator(object):

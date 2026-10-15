@@ -123,3 +123,35 @@ def espcn(image, image_info, height, width, output_shapes, **kwargs):
                 hr_img = tf.squeeze(hr_img, axis=0)
                 image_info["hr_img"] = tf.cast(hr_img, tf.float32)
     return image, image_info
+
+
+@PREPROCESS_FACTORY.register
+def span(image, image_info, height, width, output_shapes, **kwargs):
+    """Fixed-shape input for a fully convolutional RGB super-resolution net: portrait images are transposed
+    to landscape and the low-res image is center-padded to (height, width). The high-res image gets the same
+    offsets times the scale, so the centered shave in SRGANEval covers real pixels only.
+    """
+    if not (height and width):
+        return image, image_info
+    scale = output_shapes[0][1] // height
+    transpose = tf.shape(image)[0] > tf.shape(image)[1]
+    image = tf.cond(transpose, lambda: tf.transpose(image, [1, 0, 2]), lambda: image)
+    pad_h = height - tf.shape(image)[0]
+    pad_w = width - tf.shape(image)[1]
+    top, left = pad_h // 2, pad_w // 2
+    # symmetric rather than zero padding: a hard black border costs ~0.25 dB inside the shave margin
+    image = tf.pad(image, [[top, pad_h - top], [left, pad_w - left], [0, 0]], mode="SYMMETRIC")
+    image = tf.cast(tf.ensure_shape(image, [height, width, 3]), tf.float32)
+    if image_info:
+        image_info["img_orig"] = image
+        hr_img = image_info.get("hr_img")
+        if hr_img is not None:
+            hr_img = tf.cond(transpose, lambda: tf.transpose(hr_img, [1, 0, 2]), lambda: hr_img)
+            hr_pad = [[scale * top, scale * (pad_h - top)], [scale * left, scale * (pad_w - left)], [0, 0]]
+            image_info["hr_img"] = tf.ensure_shape(tf.pad(hr_img, hr_pad), [scale * height, scale * width, 3])
+            image_info["height"], image_info["width"] = tf.cond(
+                transpose,
+                lambda: (image_info["width"], image_info["height"]),
+                lambda: (image_info["height"], image_info["width"]),
+            )
+    return image, image_info

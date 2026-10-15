@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v2.19.1
+* Hailo Dataflow Compiler Version v2.20.0
 * Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
@@ -80,7 +80,7 @@ Nuscenes 2019
      - 
      - 573
      - 573
-     - | `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/petrv2_repvggB0_backbone_pp_800x320_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/petrv2_repvggB0_backbone_pp_800x320.hef>`_
+     - | `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-09-30/petrv2_repvggB0_BN1d_2d_backbone_800x320_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/petrv2_repvggB0_backbone_pp_800x320_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/petrv2_repvggB0_backbone_pp_800x320.hef>`_
      - 320x800x3
      - 13.39
      - 31.19
@@ -97,7 +97,7 @@ Nuscenes 2019
      - 23.3
      - 26.4
      - 33.3
-     - | `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/petrv2_repvggB0_transformer_pp_800x320_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.19.0/hailo8/petrv2_repvggB0_transformer_pp_800x320.hef>`_
+     - | `S <https://github.com/megvii-research/petr>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection3d/Detection3d-Nuscenes/petrv2/pretrained/2024-08-13/petrv2_repvggB0_BN1d_2d_transformer_800x320_pp.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/petrv2_repvggB0_transformer_pp_800x320_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/petrv2_repvggB0_transformer_pp_800x320.hef>`_
      - 12x250x1280
      - 6.7
      - 11.7

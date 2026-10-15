@@ -49,6 +49,9 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
    * - Low Light Enhancement
      - `Link <public_models/HAILO8/HAILO8_low_light_enhancement.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_low_light_enhancement.rst>`_
+   * - Multiple Object Tracking
+     - `Link <public_models/HAILO8/HAILO8_multiple_object_tracking.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_multiple_object_tracking.rst>`_
    * - Object Detection
      - `Link <public_models/HAILO8/HAILO8_object_detection.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_object_detection.rst>`_

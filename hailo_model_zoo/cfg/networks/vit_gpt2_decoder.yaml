@@ -11,7 +11,7 @@ preprocessing:
 info:
   task: image captioning
   input_shape: 1x197x768, 1x16x768
-  operations: 5.05G
+  operations: 10.12G
   parameters: 152.43M
   license_url: https://huggingface.co/nlpconnect/vit-gpt2-image-captioning
   license_name: Apache-2.0

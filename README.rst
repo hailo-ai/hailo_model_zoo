@@ -78,7 +78,7 @@ What's new
 * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Oriented bounding box detection models (DOTA v1) - yolov11n_obb, yolov11s_obb, yolov11m_obb, yolov11l_obb, yolov11x_obb
 * `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - Text detection and recognition models - paddle_ocr_v6_tiny_detection, paddle_ocr_v6_small_detection, paddle_ocr_v6_medium_detection, paddle_ocr_v6_small_recognition
 * `YOLO26-sem <https://docs.ultralytics.com/tasks/semantic/>`_ - Cityscapes semantic segmentation models - yolo26n_sem, yolo26s_sem, yolo26m_sem (Hailo-8 only)
-* `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - yolo26s_seg - Added to the YOLO26 NMS-free instance segmentation family
+* `YOLO26-seg <https://arxiv.org/abs/2509.25164>`_ - yolo26s_seg - Added to the NMS-free instance segmentation family
 * `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet audio event classification, the first audio network in the Model Zoo
 * `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - Age and gender estimation (Hailo-8 only)
 * `BiSeNetV2 <https://github.com/CoinCheung/BiSeNet>`_ - bisenetv2 - Real-time Cityscapes semantic segmentation

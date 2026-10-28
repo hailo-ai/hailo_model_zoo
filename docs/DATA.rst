@@ -42,6 +42,10 @@ It is recommended that the user defines the data directory path by setting the `
   * `KINETICS400`_
   * `NUSCENES`_
   * `DOTAv1`_
+  * `AudioSet`_
+  * `Lagenda`_
+  * `MTEB ArguAna`_
+  * `LaSOT`_
 
 .. _ImageNet:
 
@@ -1104,3 +1108,219 @@ Manual Download (Optional)
       python hailo_model_zoo/datasets/create_dotav1_tfrecord.py train --img <path/to/DOTAv1>
       python hailo_model_zoo/datasets/create_dotav1_tfrecord.py val --img <path/to/DOTAv1>
 
+
+.. _AudioSet:
+
+AudioSet
+--------
+
+| The AudioSet dataset is used by audio-classification networks (e.g., YamNet). Unlike image datasets, AudioSet itself is **not redistributed** by Hailo — it only contains the labels and audio segment references; users must source the audio themselves (license: see `the AudioSet project page <https://research.google.com/audioset/>`_). The Model Zoo ships a TFRecord builder that converts raw audio + AudioSet ontology labels into log-mel patches ready for ``hailomz optimize`` and ``hailomz eval``.
+
+| The builder supports three input sources. The HuggingFace path is the fastest way to get going because the audio is pre-downloaded and re-hosted; the local-files path is the right choice if you already have an AudioSet mirror.
+
+Source 1 — HuggingFace dataset (recommended for first-time setup)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| The community mirror at `agkphysics/AudioSet <https://huggingface.co/datasets/agkphysics/AudioSet>`_ hosts the raw FLAC clips. Streaming mode means you only download what you read, so calibration (~1024 clips ≈ 1 GB) takes about 2 minutes on a typical connection.
+
+.. code-block::
+
+   pip install datasets soundfile
+
+   python hailo_model_zoo/datasets/create_audioset_tfrecord.py \
+       --hf-dataset agkphysics/AudioSet \
+       --calib-clips 1024 --eval-clips 500
+
+| With no ``--out-*`` flags the builder writes both TFRecords to their canonical $HMZ_DATA locations (``models_files/audioset/2026-06-01/audioset_{calib,eval}.tfrecord``), which is where ``cfg/base/audioset.yaml`` expects them — so ``hailomz optimize / eval yamnet`` then works out of the box. The full eval split (~17 K clips, ~30 minutes) yields ~325 K patches. The AudioSet ontology MID → YamNet index mapping is read from the vendored ``hailo_model_zoo/core/postprocessing/yamnet_class_map.json`` automatically; clips whose labels are entirely outside YamNet's 521-class subset are skipped.
+
+Source 2 — Local AudioSet mirror
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| If you already have AudioSet WAVs and the official segment CSVs (``eval_segments.csv``, ``balanced_train_segments.csv`` from `the AudioSet project page <https://research.google.com/audioset/download.html>`_):
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_audioset_tfrecord.py \
+       --audio-dir /path/to/audioset/wavs \
+       --csv /path/to/audioset/eval_segments.csv \
+       --calib-clips 1024 --eval-clips 500
+
+| WAVs must be 16 kHz mono (the rate YamNet was trained on). If your mirror uses different rates, resample with ``sox`` or ``ffmpeg`` first.
+
+Source 3 — Synthetic (CI / smoke test)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| For CI or when AudioSet is unavailable, the builder can generate tone / chirp / noise / silence waveforms with random labels. The TFRecord schema is identical to the real-data path, so ``hailomz parse / optimize / compile`` work the same way — only the actual quantization and mAP numbers are meaningless.
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_audioset_tfrecord.py \
+       --synthetic --calib-clips 8 --eval-clips 16 \
+       --out-calib /tmp/audioset_calib.tfrecord \
+       --out-eval  /tmp/audioset_eval.tfrecord
+
+Notes
+^^^^^
+
+* Each TFRecord entry is one (96, 64, 1) log-mel patch + a clip-level multi-hot label vector (521-d). A 10-second AudioSet clip yields ~19 patches (96-frame patches at a 0.48 s hop).
+* Audio preprocessing follows Google's reference YamNet: 16 kHz mono, 25 ms Hann window, 10 ms hop, 64 mel bands (125–7500 Hz), log(mel + 0.001).
+* Pass calibration / evaluation paths to ``hailomz`` with ``--calib-path`` / ``--data-path`` — they are not on the Hailo S3 release mirror because AudioSet redistribution is not under Hailo's control.
+
+.. _Lagenda:
+
+Lagenda
+-------
+
+| The Lagenda age/gender dataset is used by the age-gender networks of the Hailo Model Zoo (e.g. ``mivolo_d1``). Manual download is required — Lagenda is not redistributed by Hailo (license / download: see `the LAGENDA project page <https://wildchlamydia.github.io/lagenda/>`_).
+
+| The TFRecord builder drives MiVOLO's own ``ReaderAgeGender``, so the crops stored in the TFRecord are the exact 224x224 letterboxed face + person crops the reference implementation feeds the network. Each record holds both crops (JPEG) plus the GT age and gender. Because MiVOLO's dependencies (torch / timm / ultralytics / opencv) clash with the TensorFlow stack the Model Zoo runs on, crop generation and TFRecord writing can be split into two phases run in two environments.
+
+Step 1 — download the dataset
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| Download the Lagenda **images** and **annotations** archives from `the LAGENDA project page <https://wildchlamydia.github.io/lagenda/>`_ and extract them, e.g.:
+
+.. code-block::
+
+   Lagenda
+   |_ images
+   |  |_ 0000000.jpg
+   |  |_ ...
+   |_ annotations
+      |_ lagenda_train.csv
+      |_ lagenda_validation.csv
+
+| The annotation CSVs carry the upstream MiVOLO columns (``img_name``, ``age``, ``gender``, ``face_x0..face_y1``, ``person_x0..person_y1``); ``img_name`` is resolved relative to the images directory passed with ``--images``. The reader picks up every CSV in ``--annotations`` whose **filename contains the split name**, so keep ``train`` / ``validation`` in the file names (rename if the archive uses different ones) and select one with ``--split``.
+
+Step 2 — set up the MiVOLO environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| Clone MiVOLO and install its requirements in a dedicated virtualenv:
+
+.. code-block::
+
+   git clone https://github.com/WildChlamydia/MiVOLO.git path/to/MiVOLO
+   python3 -m venv path/to/mivolo-venv
+   source path/to/mivolo-venv/bin/activate
+   pip install -r path/to/MiVOLO/requirements.txt
+
+| The builder verifies MiVOLO is importable before doing any work and prints these setup instructions if it is not.
+
+Step 3 — create the TFRecords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| **Two-phase (recommended)** — dump the crops to a pickle from the MiVOLO env (no TensorFlow needed):
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split train --calib 4000 \
+       --images path/to/Lagenda/images --annotations path/to/Lagenda/annotations \
+       --mivolo-repo path/to/MiVOLO --crops-out lagenda_calib_crops.pkl
+
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split validation --num 12000 \
+       --images path/to/Lagenda/images --annotations path/to/Lagenda/annotations \
+       --mivolo-repo path/to/MiVOLO --crops-out lagenda_val_crops.pkl
+
+| then convert each pickle to a TFRecord from the Model Zoo env (no MiVOLO needed):
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --calib 4000 --from-crops lagenda_calib_crops.pkl
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --from-crops lagenda_val_crops.pkl
+
+| **Single-phase** — if MiVOLO and TensorFlow coexist in the same environment, drop ``--crops-out`` and the TFRecord is written directly:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lagenda_tfrecord.py --split train --calib 4000 \
+       --images path/to/Lagenda/images --annotations path/to/Lagenda/annotations \
+       --mivolo-repo path/to/MiVOLO
+
+Notes
+^^^^^
+
+* With no ``--out`` the TFRecords are written to their canonical $HMZ_DATA locations (``models_files/lagenda/2026-07-23/lagenda_{calib,val}.tfrecord``), which is where ``cfg/base/lagenda.yaml`` expects them — so ``hailomz optimize / eval mivolo_d1`` then works out of the box. Use ``--out path/to/dir`` to write elsewhere, and pass it to ``hailomz`` with ``--calib-path`` / ``--data-path``.
+* ``--calib N`` builds a calibration set of N instances and names the output ``lagenda_calib.tfrecord``; without it the output is ``lagenda_val.tfrecord`` and ``--num N`` caps the validation set. Both subsets are strided over the split (deterministic, no shuffling), so re-running yields the same instances.
+* Instances whose age and gender are both unlabeled (``-1``) are skipped, so the record count is slightly below the requested cap.
+
+
+.. _MTEB ArguAna:
+
+MTEB ArguAna
+------------
+
+| `ArguAna <https://huggingface.co/datasets/mteb/arguana>`_ is the retrieval task from the `MTEB <https://github.com/embeddings-benchmark/mteb>`_ benchmark used by the sentence-embedding networks (e.g., all_minilm_l6_v2). It is pulled straight from HuggingFace — no manual download is required.
+
+| Evaluation is Retrieval@10: each query embedding is compared by cosine similarity against embeddings of the whole document corpus, and the metric is how often the ground-truth document lands in the top 10. That means **two** artifacts are needed — the query TFRecord and a corpus-embeddings ``.npy`` — and the corpus embeddings must be produced by the full-precision model, since they are the reference the quantized model is scored against.
+
+Step 1 — corpus embeddings
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block::
+
+   pip install datasets transformers torch
+
+   python hailo_model_zoo/datasets/create_mteb_tfrecord.py --save-embeddings
+
+| This encodes every corpus entry with the full-precision ``sentence-transformers/all-MiniLM-L6-v2`` and writes two files: the L2-normalized embeddings, and a companion ``*_ids.npy`` holding the corpus document IDs in matching order. Both are required — the evaluation derives the IDs path from the embeddings path, and raises ``FileNotFoundError`` if it is missing.
+
+Step 2 — query TFRecord
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_mteb_tfrecord.py
+
+Notes
+^^^^^
+
+* With no ``--output`` / ``--embeddings-output`` the builder writes to the canonical $HMZ_DATA locations (``models_files/all_minilm_l6_v2/2026-03-25/mteb_arguana_{val.tfrecord,corpus_embeddings.npy,corpus_embeddings_ids.npy}``), which is where ``cfg/base/all_minilm.yaml`` expects them — so ``hailomz optimize / eval all_minilm_l6_v2`` then works out of the box. Use the flags to write elsewhere, and pass them to ``hailomz`` with ``--calib-path`` / ``--data-path``.
+* The same TFRecord serves as both the calibration and the evaluation set.
+* ``--limit N`` caps the number of queries (default 2048) and ``--pad N`` sets the tokenizer padding length (default 128, matching the network input). Queries shorter than ``--min-length`` characters are skipped.
+
+.. _LaSOT:
+
+LaSOT
+-----
+
+| LaSOT is used by the single-object-tracking networks of the Hailo Model Zoo (e.g. ``stark_lightning_repvgg_a0``). Manual download is required — see `the LaSOT project page <http://vision.cs.stonybrook.edu/~lasot/>`_. Either the full LaSOT test split or the LaSOT-extension subset works; the builder discovers whatever categories are present.
+
+| Expected dataset structure — one directory per category, each holding its sequences:
+
+.. code-block::
+
+   LaSOT
+   |_ atv
+   |  |_ atv-1
+   |  |  |_ img
+   |  |  |  |_ 00000001.jpg
+   |  |  |  |_ ...
+   |  |  |_ groundtruth.txt
+   |  |_ atv-2
+   |  |_ ...
+   |_ badminton
+   |_ ...
+
+| ``groundtruth.txt`` is one comma-separated ``x,y,w,h`` box per frame.
+
+Tracking needs two different TFRecords
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+| **Evaluation** records hold whole frames. A tracker's search region is cropped around its *own previous prediction*, so it cannot be prepared ahead of inference — ``tracker_infer`` crops inside the closed loop and needs the full frame.
+
+| **Calibration** records hold pre-cropped template/search *pairs*: the template from frame ``t0`` and the search region from a later frame ``t1``, centred on the ``t0`` box, exactly as at inference. This matters — calibrating on independent still images instead measured **0.16 AUC worse**, because still crops contain none of the motion blur, lighting change or appearance drift the attention layers actually see on video.
+
+Run the creation scripts:
+
+.. code-block::
+
+   python hailo_model_zoo/datasets/create_lasot_tfrecord.py val -d /path/to/LaSOT
+   python hailo_model_zoo/datasets/create_lasot_tfrecord.py calib_pairs -d /path/to/LaSOT
+
+Notes
+^^^^^
+
+* Sequences are selected **round-robin across categories**, not in sorted order — taking the first N alphabetically draws them all from one category (``atv-1``, ``atv-10``, ``atv-2``, ...), which is not representative of a multi-category benchmark.
+* ``--num-sequences`` (default 15, one per LaSOT-extension category) and ``--max-frames`` (default 120) bound the evaluation set. Full-length sequences over all categories are far more expensive: emulated inference runs at roughly 1 frame/s.
+* ``calib_pairs`` accepts ``--num-pairs`` (default 128) and ``--max-gap`` (default 100), the maximum frame distance between template and search.
+* Frames must stay in order and grouped by sequence in the evaluation TFRecord — ``tracker_infer`` re-initializes the tracker whenever ``video_name`` changes, which is the standard one-shot tracking protocol.

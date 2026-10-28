@@ -2,7 +2,10 @@ from functools import namedtuple
 
 import numpy as np
 
-from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+try:
+    from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+except ImportError:
+    cnms = None
 
 PadInfo = namedtuple("PadInfo", ["height_pad", "width_pad", "scaling_factor"])
 
@@ -121,6 +124,11 @@ class FasterRCNNProposalsNMS(object):
             cls_scores_masked = cls_scores[mask_scores]
             cls_boxes_masked = cls_boxes[mask_scores, :]
             preds = np.hstack([cls_boxes_masked, cls_scores_masked[:, np.newaxis]])
+            if cnms is None:
+                raise ImportError(
+                    "Cython NMS is not available. Install with: "
+                    "apt-get install gcc python3-dev && pip install hailo_model_zoo[postprocessing]"
+                )
             keep = cnms(preds, self._iou_threshold)
             cls_lst.append(keep * 0 + _cls)
             scr_lst.append(cls_scores_masked[keep])

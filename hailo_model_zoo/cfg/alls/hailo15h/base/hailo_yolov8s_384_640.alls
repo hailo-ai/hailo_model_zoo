@@ -8,3 +8,5 @@ post_quantization_optimization(finetune, policy=enabled, learning_rate=0.0001, e
 allocator_param(enable_partial_row_buffers=disabled)
 performance_param(optimize_for_batch=5, optimize_for_power=True)
 resources_param(max_utilization=0.9)
+
+allocator_param(automatic_reshapes=disabled)

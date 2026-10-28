@@ -67,6 +67,29 @@ def normalize(image, normalization_params):
     return (image - list(mean)) / list(std)
 
 
+def _is_image_tensor(tensor):
+    """Check if a tensor is an RGB image (rank 3 with 3 channels)."""
+    shape = tensor.shape
+    return len(shape) == 3 and shape[-1] == 3
+
+
+def _apply_image_transforms(image, normalization_params, input_resize, yuv2rgb, yuy2, nv12, rgbx):
+    """Apply normalization and input-conversion transforms to a single image tensor."""
+    if normalization_params and normalization_params[0] and normalization_params[1]:
+        image = normalize(image, normalization_params)
+    if input_resize.get("enabled", False):
+        image = image_resize(image, input_resize.input_shape)
+    if yuv2rgb:
+        image = convert_rgb_to_yuv(image)
+    if yuy2:
+        image = convert_yuv_to_yuy2(image)
+    if nv12:
+        image = convert_yuv_to_nv12(image)
+    if rgbx:
+        image = convert_rgb_to_rgbx(image)
+    return image
+
+
 def get_preprocessing(name, height, width, normalization_params, **kwargs):
     """Returns preprocessing_fn(image, height, width, **kwargs).
 
@@ -96,18 +119,15 @@ def get_preprocessing(name, height, width, normalization_params, **kwargs):
 
     def preprocessing_fn(image, image_info=None):
         image, image_info = preprocessing_callback(image, image_info, height, width, flip=flip, **kwargs)
-        if normalization_params and normalization_params[0] and normalization_params[1]:
-            image = normalize(image, normalization_params)
-        if input_resize.get("enabled", False):
-            image = image_resize(image, input_resize.input_shape)
-        if yuv2rgb:
-            image = convert_rgb_to_yuv(image)
-        if yuy2:
-            image = convert_yuv_to_yuy2(image)
-        if nv12:
-            image = convert_yuv_to_nv12(image)
-        if rgbx:
-            image = convert_rgb_to_rgbx(image)
+        if isinstance(image, dict):
+            image = {
+                key: _apply_image_transforms(tensor, normalization_params, input_resize, yuv2rgb, yuy2, nv12, rgbx)
+                if _is_image_tensor(tensor)
+                else tensor
+                for key, tensor in image.items()
+            }
+        else:
+            image = _apply_image_transforms(image, normalization_params, input_resize, yuv2rgb, yuy2, nv12, rgbx)
         return image, image_info
 
     return preprocessing_fn

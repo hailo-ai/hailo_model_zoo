@@ -1,0 +1,4 @@
+post_quantization_optimization(finetune, policy=disabled)
+
+allocator_param(automatic_reshapes=disabled)
+performance_param(compiler_optimization_level=max_exhaustive)

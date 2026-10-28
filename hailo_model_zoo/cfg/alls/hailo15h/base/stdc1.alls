@@ -1,7 +1,12 @@
 stdc1/normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(calibration, batch_size=1, calibset_size=64)
+model_optimization_config(calibration, batch_size=1)
 pre_quantization_optimization(global_avgpool_reduction, layers=avgpool7, division_factors=[128, 1])
 post_quantization_optimization(finetune, policy=enabled, dataset_size=512, epochs=6, loss_layer_names=[conv33], loss_types=[l2])
 
 resources_param(max_apu_utilization=0.9, max_compute_16bit_utilization=0.9, max_compute_utilization=0.9, max_control_utilization=0.9, max_input_aligner_utilization=0.9, max_memory_utilization=0.85, max_utilization=0.0)
 allocator_param(timeout=25m)
+
+
+resize7_input_reshape = format_conversion(conv38, resize7, hailo_rgb_to_f8cr, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+resize7_output_reshape = format_conversion(resize7, argmax1, f8cr_to_hailo_rgb, input_windows=[1, 1, 1], output_windows=[1, 1, 1])
+compilation_param(resize7_output_reshape, hw_layer_type_list=[lcu], number_of_apus=2, number_of_subclusters=2)

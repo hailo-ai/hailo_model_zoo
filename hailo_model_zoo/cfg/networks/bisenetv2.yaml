@@ -1,0 +1,43 @@
+base:
+- base/fcn.yaml
+network:
+  network_name: bisenetv2
+parser:
+  nodes:
+  - null
+  - null
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 53.856
+    - 54.774
+    - 53.933
+    mean_list:
+    - 83.054
+    - 94.095
+    - 82.187
+paths:
+  alls_script: bisenetv2.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/bisenetv2/pretrained/2026-09-17/bisenetv2.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/bisenetv2/pretrained/2026-09-17/bisenetv2.zip
+inference:
+  full_precision_batch_size: 1
+  emulator_batch_size: 1
+info:
+  task: semantic segmentation
+  input_shape: 1024x2048x3
+  output_shape: 1024x2048x1
+  operations: 196.84G
+  parameters: 3.36M
+  framework: pytorch
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 72.964
+  source: https://github.com/CoinCheung/BiSeNet
+  license_url: https://github.com/CoinCheung/BiSeNet/blob/master/LICENSE
+  license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

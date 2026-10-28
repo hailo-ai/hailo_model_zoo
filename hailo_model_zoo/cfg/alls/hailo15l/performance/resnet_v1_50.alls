@@ -1,0 +1,9 @@
+normalization1 = normalization([123.68, 116.78, 103.94], [1.0, 1.0, 1.0])
+post_quantization_optimization(bias_correction, policy=enabled)
+post_quantization_optimization(finetune, policy=disabled)
+quantization_param({*}, max_elementwise_feed_repeat=1)
+model_optimization_config(calibration, batch_size=2)
+
+allocator_param(enable_fixer=max_adjcents, layer_inputs_use_single_shmifo=true)
+resources_param(max_utilization=0.9, max_memory_utilization=0.85)
+performance_param(compiler_optimization_level=max_exhaustive)

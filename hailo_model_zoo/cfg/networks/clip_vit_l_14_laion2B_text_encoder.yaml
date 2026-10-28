@@ -12,7 +12,7 @@ network:
 parser:
   nodes:
   - Add_4
-  - output
+  - null
 paths:
   alls_script: clip_vit_l_14_laion2B_text_encoder.alls
   network_path:

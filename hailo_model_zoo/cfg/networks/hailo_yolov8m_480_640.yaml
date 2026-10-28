@@ -21,8 +21,9 @@ postprocessing:
   hpp: true
 info:
   task: pipeline
+  validation_data: coco
   input_shape: 480x640x3
-  output_shape: 2x5x80
+  output_shape: 4x5x100
   operations: 59.0G
   parameters: 25.9M
   full_precision_result: 56.25

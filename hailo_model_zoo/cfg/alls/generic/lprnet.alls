@@ -1,4 +1,4 @@
 lprnet/normalization1 = normalization([127.5, 127.5, 127.5], [128.0, 128.0, 128.0])
 reshape_rgb = input_conversion(input_layer1, bgr_to_rgb)
-model_optimization_config(calibration, batch_size=4, calibset_size=64)
+model_optimization_config(calibration, batch_size=4)
 pre_quantization_optimization(equalization, policy=disabled)

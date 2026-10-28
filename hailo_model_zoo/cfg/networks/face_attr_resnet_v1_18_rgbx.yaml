@@ -13,5 +13,4 @@ info:
   output_shape: '80'
   supported_hw_arch:
   - hailo15h
-  - hailo15l
   - hailo10h

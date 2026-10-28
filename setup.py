@@ -4,7 +4,7 @@ from importlib.metadata import PackageNotFoundError, version
 
 from setuptools import find_packages, setup
 
-CUR_DFC_VERSION = CUR_MZ_VERSION = "5.4.0"
+CUR_DFC_VERSION = CUR_MZ_VERSION = "5.5.0"
 package_name = "hailo-dataflow-compiler"
 
 try:
@@ -41,8 +41,8 @@ if cpu_flags is not None and "avx" not in cpu_flags:
 def main():
     reqs = [
         "numba==0.59.0",
-        "imageio==2.22.4",
-        "matplotlib==3.5.2",
+        "imageio>=2.36.1",
+        "matplotlib==3.9.4",
         "numpy",
         "opencv-python",
         "scipy",
@@ -50,12 +50,11 @@ def main():
         "termcolor",
         "tqdm",
         "pycocotools",
-        "lap==0.5.12",
-        "motmetrics==1.2.5",
+        "motmetrics==1.4.0",
         "omegaconf==2.3.0",
-        "pillow<=9.3.0",
+        "pillow<=11.2.1",
         "detection-tools==0.3",
-        "scikit-image==0.20.0",
+        "scikit-image==0.24.0",
         "nuscenes-devkit",
         "pyquaternion==0.9.9",
         "Shapely>=2.0.0",
@@ -93,6 +92,9 @@ def main():
         license="MIT",
         packages=find_packages(),
         install_requires=reqs,
+        extras_require={
+            "postprocessing": ["Cython"],  # Cython NMS; requires: apt-get install gcc python3-dev
+        },
         zip_safe=False,
         package_data=package_data,
     )

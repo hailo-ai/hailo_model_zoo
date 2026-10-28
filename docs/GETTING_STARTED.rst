@@ -12,10 +12,20 @@ System Requirements
 * Hailo Dataflow Compiler v5.3.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ )
 * HailoRT v5.3.0 (Obtain from `hailo.ai <http://hailo.ai>`_\ ) - required only for inference on Hailo-10H.
 * The Hailo Model Zoo supports Hailo-10H connected via PCIe only.
-* Nvidia’s Pascal/Turing/Ampere GPU architecture (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, or RTX A4000)
+* NVIDIA GPU with compute capability 6.1-8.9 — the Pascal, Turing, Ampere and Ada Lovelace architectures
+  (such as Titan X Pascal, GTX 1080 Ti, RTX 2080 Ti, RTX A4000, RTX A5000, or RTX 5000 Ada Generation).
+  Check your device with ``nvidia-smi --query-gpu=name,compute_cap --format=csv``.
+  NVIDIA Blackwell GPUs (compute capability 10.0 and 12.0, including the GeForce RTX 50 series,
+  RTX PRO Blackwell, and B100/B200) are not currently supported, and may be supported in a
+  future release.
+* 8 GB of GPU memory (VRAM) minimum, 16 GB recommended
 * GPU driver version 555+
 * CUDA 12.5.1
 * CUDNN 9.10
+
+.. note:: If no compatible GPU is detected, model optimization continues on the CPU but is automatically
+   reduced to optimization level 0. Accuracy will not be optimized and compression is unavailable, so this
+   configuration is not recommended for production models.
 
 
 Install Instructions
@@ -55,6 +65,14 @@ Manual Installation
    .. code-block::
 
       cd hailo_model_zoo; pip install -e .
+
+#. (Optional) For evaluation and postprocessing of detection, instance-segmentation, and pose-estimation models,
+   Cython NMS is required. Install the system build tools and the postprocessing extra:
+
+   .. code-block::
+
+      sudo apt-get install gcc python3-dev
+      pip install -e .[postprocessing]
 
 #. For setting up datasets, please see `DATA <DATA.rst>`_.
 

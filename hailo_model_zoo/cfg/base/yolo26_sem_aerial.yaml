@@ -1,0 +1,25 @@
+base:
+- base/fcn.yaml
+parser:
+  nodes:
+  - null
+  - - /model.17/classifier/classifier.1/Conv
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 255.0
+    - 255.0
+    - 255.0
+    mean_list:
+    - 0.0
+    - 0.0
+    - 0.0
+postprocessing:
+  device_pre_post_layers:
+    argmax: false
+    bilinear: false
+info:
+  framework: pytorch
+  source: https://github.com/dronefreak/CABiNet
+  license_url: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+  license_name: AGPL-3.0

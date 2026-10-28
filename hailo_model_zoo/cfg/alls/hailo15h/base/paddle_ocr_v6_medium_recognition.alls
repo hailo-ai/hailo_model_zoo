@@ -1,0 +1,14 @@
+# PP-OCRv6 medium recognition - Hailo-10H/15H model script (SDK-73220).
+# The wide classifier (conv56, 18710 outputs) is tiled across a 5x8 spatial grid
+# (v5-style spatial_reshape) so it allocates; adaround (optimization_level=4)
+# recovers quantized accuracy. icdar15: full-precision 83.17 / quantized 81.33 WordAcc.
+normalization = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_flavor(optimization_level=4)
+allocator_param(enable_automatic_wgq=fast)
+resources_param(max_utilization=0.9)
+context_switch_param(toposort_mode=pushdown)
+allocator_param(enable_auto_spatial_reshapes=False)
+reshape1 = format_conversion(normalization5, conv56, spatial_reshape, 5, 8)
+reshape2 = format_conversion(conv56, output_layer1, spatial_reshape, 1, 40, collapse=True)
+reshape_to_fcr = format_conversion(conv56, output_layer1, hailo_rgb_to_ppu)
+compilation_param(reshape_to_fcr, hw_layer_type_list=[lcu])

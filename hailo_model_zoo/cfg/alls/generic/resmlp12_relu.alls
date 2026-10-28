@@ -1,2 +1,4 @@
 norm_layer1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 model_optimization_config(calibration, batch_size=2, calibset_size=128)
+# TODO(SDK-71197): enable conv 2-APU once numerical diff is fixed (related: SDK-71124)
+# allocator_param(enable_conv_2_apus_in_racehorse_pyramids=enabled)

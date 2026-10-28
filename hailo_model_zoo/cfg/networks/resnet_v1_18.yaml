@@ -7,10 +7,6 @@ paths:
   network_path:
   - models_files/Classification/resnet_v1_18/pretrained/2022-04-19/resnet_v1_18.onnx
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/resnet_v1_18/pretrained/2022-04-19/resnet_v1_18.zip
-parser:
-  nodes:
-  - input.1
-  - '191'
 postprocessing:
   device_pre_post_layers:
     softmax: false

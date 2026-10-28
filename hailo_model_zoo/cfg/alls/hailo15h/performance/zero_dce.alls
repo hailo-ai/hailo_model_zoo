@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+
+allocator_param(enable_partial_row_buffers=disabled, width_splitter_defuse=disabled)
+performance_param(compiler_optimization_level=max_exhaustive)

@@ -3,4 +3,4 @@ change_output_activation(conv42, sigmoid)
 change_output_activation(conv49, sigmoid)
 change_output_activation(conv55, sigmoid)
 
-allocator_param(automatic_reshapes=enabled)
+allocator_param(automatic_reshapes=disabled)

@@ -1,8 +1,17 @@
 model_optimization_config(calibration, batch_size=16, calibset_size=1024)
-pre_quantization_optimization(equalization, policy=enabled)
 pre_quantization_optimization(ew_add_fusing, policy=disabled)
-model_optimization_flavor(optimization_level=0, compression_level=0)
+model_optimization_flavor(optimization_level=2, compression_level=0)
 pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+# split_precision expands each of the 26 layer norms into 17 layers, which deepens one
+# side of every residual until the opposite side needs 257 buffered rows (max 255).
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
 model_optimization_config(negative_exponent, layers={*}, rank=0)
 quantization_param({ew_add*}, precision_mode=a16_w16)
 set_input_mask_to_softmax()
+# QFT at the default batch size exhausts a 24GB GPU.
+post_quantization_optimization(finetune, policy=enabled, batch_size=2)
+
+allocator_param(enable_unite_soft_blocks_optimization=False, enable_automatic_wgq=fast, enable_automatic_features_chunks=True, automatic_l4_portals=False, automatic_ddr=False, automatic_reshapes=disabled, disable_row_per_cut=False, enable_auto_spatial_reshapes=True, enable_fixer=max_adjcents, enable_partial_row_buffers=disabled, enable_post_split_average_buffers=False, splitter_timeout=400, timeout=3600)
+performance_param(compiler_optimization_level=1, optimize_for_batch=1)
+resources_param(max_compute_16bit_utilization=1.0, max_compute_utilization=0.9, max_control_utilization=1.0, max_memory_utilization=0.85)
+context_switch_param(mode=enabled, slotter_chances=200, toposort_mode=pushdown)

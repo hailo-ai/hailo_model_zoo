@@ -6,7 +6,7 @@ model_optimization_flavor(compression_level=0)
 model_optimization_config(calibration, batch_size=2)
 post_quantization_optimization(finetune, policy=enabled, loss_layer_names = [conv113, conv136, conv159, conv117, conv140, conv162, conv120, conv143, conv165],
                                 loss_types = [l2rel,l2rel,l2rel,l2rel,l2rel,l2rel,ce,ce,ce],
-                                loss_factors=[1,1,1,2,2,2,2,2,2], epochs=4, batch_size=2)
+                                loss_factors=[1,1,1,2,2,2,2,2,2], batch_size=2)
 nms_postprocess("../../postprocess_config/yolov11x_nms_config.json", meta_arch=yolov8, engine=cpu)
 
 

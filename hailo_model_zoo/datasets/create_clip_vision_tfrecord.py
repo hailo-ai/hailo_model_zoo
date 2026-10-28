@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 import argparse
+import json
+import os
+import random
+import re
 import zipfile
 from pathlib import Path
 
@@ -25,11 +29,11 @@ except ModuleNotFoundError as err:
 try:
     import clip
 except ModuleNotFoundError:
-    raise ModuleNotFoundError("Module 'clip' not found. Please run: pip install clip-by-openai") from None
+    clip = None
 
 from hailo_model_zoo.utils import downloader, path_resolver
 
-CLASSES = [
+CIFAR100_CLASSES = [
     "apple",
     "aquarium fish",
     "baby",
@@ -131,6 +135,18 @@ CLASSES = [
     "woman",
     "worm",
 ]
+
+IMAGENET_NAMES_PATH = os.path.join(os.path.dirname(__file__), "..", "core", "postprocessing", "imagenet_names.json")
+
+
+def _get_imagenet_classes():
+    """Load ImageNet 1000 class names, taking the first name before comma for clean CLIP prompts."""
+    with open(IMAGENET_NAMES_PATH) as f:
+        imagenet_names = json.load(f)
+    # names['1'] through names['1000'] are the 1000 classes (names['0'] is background)
+    return [imagenet_names[str(i)].split(",")[0].strip() for i in range(1, 1001)]
+
+
 TEMPLATES = [
     "a photo of a {}.",
     "a blurry photo of a {}.",
@@ -151,6 +167,7 @@ TEMPLATES = [
     "a photo of the small {}.",
     "a photo of the big {}.",
 ]
+DATASET_CHOICES = ["cifar100", "imagenet"]
 TF_RECORD_TYPE = ["val", "calib"]
 CLASS_TOKEN_LOC = {
     "RN50": "models_files/cifar100/2025-08-18/class_token_resnet50.npy",
@@ -182,8 +199,28 @@ CLASS_TOKEN_LOC = {
 }
 TF_RECORD_LOC = {
     "val": "models_files/cifar100/test/cifar100_val.tfrecord",
+    "val_imagenet": "models_files/imagenet/2026-05-05/imagenet_clip_val.tfrecord",
     "calib": "models_files/coco/2025-07-02/coco_clip_calib2017.tfrecord",
 }
+
+
+def _get_class_token_path(model_name, dataset):
+    """Get class token path, replacing cifar100 with imagenet in path for imagenet dataset."""
+    base_path = CLASS_TOKEN_LOC[model_name]
+    if dataset == "imagenet":
+        return base_path.replace("cifar100", "imagenet")
+    return base_path
+
+
+def _get_classes(dataset):
+    if dataset == "cifar100":
+        return CIFAR100_CLASSES
+    elif dataset == "imagenet":
+        return _get_imagenet_classes()
+    else:
+        raise ValueError(f"Unknown dataset: {dataset}")
+
+
 PADDING_LENGTH = {
     "google/siglip-base-patch16-224": 64,
     "google/siglip-so400m-patch14-224": 16,
@@ -197,12 +234,15 @@ COCO_PATH = "http://images.cocodataset.org/zips/val2017.zip"
 
 
 def _generate_class_tokens(model, tokenizer, classnames, templates, model_name):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
     zeroshot_weights = []
     for classname in tqdm(classnames):
         texts = [template.format(classname) for template in templates]  # format with class
         if model_name.startswith("RN50"):
+            assert clip is not None, "clip module required for RN50 models — install with `pip install clip-by-openai`"
             with torch.no_grad():
-                texts = clip.tokenize(texts).cpu()
+                texts = clip.tokenize(texts).to(device)
                 outputs = model.encode_text(texts)
         else:
             if model_name.startswith("google/siglip"):
@@ -212,8 +252,10 @@ def _generate_class_tokens(model, tokenizer, classnames, templates, model_name):
                 )
             else:
                 inputs = tokenizer(texts, return_tensors="pt", padding=True, truncation=True)
-            input_ids = inputs["input_ids"]
+            input_ids = inputs["input_ids"].to(device)
             attention_mask = inputs.get("attention_mask", None)
+            if attention_mask is not None:
+                attention_mask = attention_mask.to(device)
 
             with torch.no_grad():
                 outputs = model.get_text_features(input_ids=input_ids, attention_mask=attention_mask)
@@ -265,11 +307,13 @@ def _create_tfrecord_cifar(name, images, labels):
     return i + 1
 
 
-def _create_class_tokens(model_name):
+def _create_class_tokens(model_name, dataset="cifar100"):
     if model_name.startswith("google/siglip"):
         model = AutoModel.from_pretrained(model_name)
         tokenizer = AutoTokenizer.from_pretrained(model_name)
     elif model_name.startswith("RN50"):
+        if clip is None:
+            raise ModuleNotFoundError("Module 'clip' not found. Please run: pip install clip-by-openai")
         model, _ = clip.load(model_name)
         tokenizer = clip.tokenize
     elif model_name.startswith("wkcn/TinyCLIP"):
@@ -278,19 +322,62 @@ def _create_class_tokens(model_name):
     else:
         model = CLIPModel.from_pretrained(model_name)
         tokenizer = CLIPTokenizer.from_pretrained(model_name)
-    class_token_filename = path_resolver.resolve_data_path(CLASS_TOKEN_LOC[model_name])
+    class_token_filename = path_resolver.resolve_data_path(_get_class_token_path(model_name, dataset))
     (class_token_filename.parent).mkdir(parents=True, exist_ok=True)
-    class_tokens = _generate_class_tokens(model, tokenizer, CLASSES, TEMPLATES, model_name)
+    classes = _get_classes(dataset)
+    class_tokens = _generate_class_tokens(model, tokenizer, classes, TEMPLATES, model_name)
     np.save(class_token_filename, class_tokens)
     print(f"Class tokens are saved in {class_token_filename}")
 
 
-def run_val(type, model_name, npy_only=False):
-    _create_class_tokens(model_name)
+def _create_tfrecord_imagenet(dataset_dir):
+    """Create TFRecord from ImageNet validation set directory (expects n*/ subfolders)."""
+    tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC["val_imagenet"])
+    (tfrecords_filename.parent).mkdir(parents=True, exist_ok=True)
+
+    lib_names = sorted(f.name for f in Path(dataset_dir).iterdir() if re.match(r"^n[0-9]+$", f.name))
+    class_id = {v: i for i, v in enumerate(lib_names)}
+    file_list = []
+    for lib in Path(dataset_dir).iterdir():
+        if lib.name not in class_id:
+            continue
+        for img_path in lib.iterdir():
+            file_list.append((str(img_path), class_id[lib.name]))
+    random.seed(0)
+    random.shuffle(file_list)
+
+    progress_bar = tqdm(file_list)
+    with tf.io.TFRecordWriter(str(tfrecords_filename)) as writer:
+        for i, (img_path, label_index) in enumerate(progress_bar):
+            progress_bar.set_description(f"val_imagenet #{i}: {Path(img_path).name}")
+            img_jpeg = open(img_path, "rb").read()
+            img = Image.open(img_path).convert("RGB")
+            width, height = img.size
+            example = tf.train.Example(
+                features=tf.train.Features(
+                    feature={
+                        "height": _int64_feature(height),
+                        "width": _int64_feature(width),
+                        "label_index": _int64_feature(label_index),
+                        "image_name": _bytes_feature(str.encode(Path(img_path).name)),
+                        "image_jpeg": _bytes_feature(img_jpeg),
+                    }
+                )
+            )
+            writer.write(example.SerializeToString())
+    return i + 1
+
+
+def run_val(type, model_name, npy_only=False, dataset="cifar100", dataset_dir=None):
+    _create_class_tokens(model_name, dataset)
     if npy_only:
         return
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar100.load_data()
-    images_num = _create_tfrecord_cifar(type, x_test, y_test)
+    if dataset == "cifar100":
+        (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar100.load_data()
+        images_num = _create_tfrecord_cifar(type, x_test, y_test)
+    elif dataset == "imagenet":
+        assert dataset_dir is not None, "Please provide --dataset-dir for ImageNet validation set"
+        images_num = _create_tfrecord_imagenet(dataset_dir)
     print(f"Done converting {images_num} images")
 
 
@@ -340,7 +427,7 @@ def run_calib(type, model_name, dataset_dir):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description=(
-            "Create TFRecord of CIFAR100 for validation and COCO for calibration to use in CLIP/Siglip\n"
+            "Create TFRecord of CIFAR100/ImageNet for validation and COCO for calibration to use in CLIP/Siglip\n"
             "models from HuggingFace.\n"
             "Note: If you use a GPU and encounter an Out of Memory (OOM) error, "
             "consider setting CUDA_VISIBLE_DEVICES=99 to use CPU only."
@@ -356,13 +443,21 @@ if __name__ == "__main__":
         default="laion/CLIP-ViT-L-14-laion2B-s32B-b82K",
         choices=list(CLASS_TOKEN_LOC.keys()),
     )
-
+    parser.add_argument(
+        "--dataset",
+        help="Evaluation dataset to use",
+        type=str,
+        default="cifar100",
+        choices=DATASET_CHOICES,
+    )
     parser.add_argument("--npy_only", help="Create only npy for validation", action="store_true", default=False)
-    parser.add_argument("--dataset-dir", type=None, default=None, help="Path to coco for calib set")
+    parser.add_argument(
+        "--dataset-dir", type=str, default=None, help="Path to dataset (ImageNet val dir or COCO for calib)"
+    )
 
     args = parser.parse_args()
     if args.type == "val":
-        run_val(args.type, args.model, args.npy_only)
+        run_val(args.type, args.model, args.npy_only, args.dataset, args.dataset_dir)
     elif args.type == "calib":
         run_calib(args.type, args.model, args.dataset_dir)
     else:
@@ -373,8 +468,11 @@ if __name__ == "__main__":
 CMD used to create a cifar100.tfrecord of the CIFAR100 dataset for validation:
 python create_clip_vision_tfrecord.py val --model <model_name>
 
+CMD used to create an imagenet.tfrecord of the ImageNet dataset for validation:
+python create_clip_vision_tfrecord.py val --model <model_name> --dataset imagenet --dataset-dir <path_to_imagenet_val>
+
 If you only need the NPY files containing the text embeddings for the validation set, you can use:
-python create_clip_vision_tfrecord.py val --npy_only --model <model_name>
+python create_clip_vision_tfrecord.py val --npy_only --model <model_name> --dataset <cifar100|imagenet>
 
 CMD used to create a coco.tfrecord of the COCO dataset for calibration (independent of the model):
 python create_clip_vision_tfrecord.py calib --dataset-dir <path_to_coco_dataset>

@@ -280,6 +280,7 @@ class BasicDatasetsEnum(Enum):
     D2S = "d2s_detection"
     D2S_FRUITS = "d2s_fruits_detection"
     NUSCENES = "nuscenes"
+    COCO_WITH_TEXT_EMBEDDINGS = "coco_with_text_embeddings"
 
 
 DATASETS_INFO = {
@@ -287,6 +288,9 @@ DATASETS_INFO = {
     BasicDatasetsEnum.D2S.value: DatasetInfo(class_names=CLASS_NAMES_D2S, label_map=D2S_LABEL_MAP),
     BasicDatasetsEnum.D2S_FRUITS.value: DatasetInfo(class_names=CLASS_NAMES_D2S_FRUITS, label_map=D2S_FRUITS_LABEL_MAP),
     BasicDatasetsEnum.NUSCENES.value: DatasetInfo(class_names=CLASS_NAMES_NUSCENES, label_map=NUSCENES_LABEL_MAP),
+    BasicDatasetsEnum.COCO_WITH_TEXT_EMBEDDINGS.value: DatasetInfo(
+        class_names=CLASS_NAMES_COCO, label_map=COCO_LABEL_MAP
+    ),
 }
 
 

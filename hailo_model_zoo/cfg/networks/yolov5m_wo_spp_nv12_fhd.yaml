@@ -9,7 +9,7 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov5m/pretrained/2023-04-25/yolov5m_wo_spp.zip
 parser:
   nodes:
-  - images
+  - null
   - - Conv_251
     - Conv_267
     - Conv_283

@@ -1,0 +1,2 @@
+normalization = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+model_optimization_flavor(optimization_level=2)

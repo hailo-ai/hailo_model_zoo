@@ -1,0 +1,13 @@
+norm_layer1 = normalization([0, 0, 0], [255, 255, 255], input_layer1)
+model_optimization_config(calibration, calibset_size=1024)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+model_optimization_config(negative_exponent, layers={*}, rank=0)
+model_optimization_config(precision_config, use_precision_8=enabled)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block_3)
+pre_quantization_optimization(matmul_equalization, layers={matmul*}, policy=disabled)
+quantization_param([conv36, conv41, conv42, conv45, conv47, conv57, conv68, conv70], precision_mode=a16_w8)
+nms_postprocess("../../../postprocess_config/yolo_world_v2s_nms_config.json", meta_arch=yolov8, engine=cpu)
+
+buffers(normalization4, yolov8_nms_postprocess, 0, FRAMES)
+allocator_param(enable_auto_spatial_collapse=False)
+allocator_param(automatic_reshapes=disabled)

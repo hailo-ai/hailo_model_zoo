@@ -1,7 +1,7 @@
 # normalization commands
 norm_layer1 = normalization([127, 127, 127], [128, 128, 128])
 
-model_optimization_config(calibration, batch_size=4, calibset_size=64)
+model_optimization_config(calibration, batch_size=4)
 
 performance_param(optimization_level=1)
 

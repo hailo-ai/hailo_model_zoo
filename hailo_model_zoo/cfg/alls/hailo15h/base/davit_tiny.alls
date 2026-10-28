@@ -1,6 +1,6 @@
 normalization0 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
 
-model_optimization_config(calibration, batch_size=4, calibset_size=64)
+model_optimization_config(calibration, batch_size=4)
 model_optimization_config(globals, multiproc_policy=disabled)
 pre_quantization_optimization(ew_add_fusing, policy=disabled)
 model_optimization_flavor(optimization_level=0, compression_level=0)
@@ -174,4 +174,4 @@ buffers(r2_2, format_conversion12, 1, FULL_ROW)
 
 
 #### alls hacks for diff in dw3x3 16x4
-compilation_param({dw*}, use_16x4_sc=disabled, number_of_input_aligners=1, number_of_subclusters=1, resources_allocation_strategy=manual_scs_selection)
+compilation_param({dw*}, use_16x4_sc=disabled, number_of_input_aligners=1, number_of_subclusters=1)

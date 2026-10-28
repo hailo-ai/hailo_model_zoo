@@ -1,0 +1,9 @@
+normalization1 = normalization([122.4, 127.245, 116.535], [57.375, 53.04, 58.14])
+
+# 72x128 pool needs a bigger accumulator shift than the HW has; 9x16 then 8x8 tiles it exactly.
+pre_quantization_optimization(global_avgpool_reduction, layers=[avgpool1, avgpool2, avgpool3], division_factors=[8, 8])
+# Layer Noise Analysis crashes on the attention key projection (SDK-74388).
+model_optimization_config(checker_cfg, policy=disabled)
+
+model_optimization_config(calibration, batch_size=1, calibset_size=200)
+model_optimization_flavor(optimization_level=2, compression_level=0)

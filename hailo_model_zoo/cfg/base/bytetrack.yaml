@@ -1,0 +1,38 @@
+base:
+- base/yolox.yaml
+preprocessing:
+  network_type: multiple_object_tracking
+parser:
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 123.675
+    - 116.28
+    - 103.53
+    std_list:
+    - 58.395
+    - 57.12
+    - 57.375
+  nodes:
+  - null
+  - - /head/reg_preds.2/Conv
+    - /head/Sigmoid_4
+    - /head/Sigmoid_5
+    - /head/reg_preds.1/Conv
+    - /head/Sigmoid_2
+    - /head/Sigmoid_3
+    - /head/reg_preds.0/Conv
+    - /head/Sigmoid
+    - /head/Sigmoid_1
+postprocessing:
+  nms_iou_thresh: 0.7
+  score_threshold: 0.1
+  should_clip: false
+evaluation:
+  meta_arch: bytetrack
+info:
+  framework: pytorch
+  training_data: crowdhuman, mot17 train, cityperson, ethz
+  source: https://github.com/ifzhang/ByteTrack
+  license_url: https://github.com/ifzhang/ByteTrack/blob/main/LICENSE
+  license_name: MIT

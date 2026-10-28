@@ -1,0 +1,16 @@
+base:
+- base/pidnet.yaml
+network:
+  network_name: pidnet_l
+paths:
+  alls_script: pidnet_l.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/pidnet_l/pretrained/2026-09-16/pidnet_l.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/pidnet_l/pretrained/2026-09-16/pidnet_l.zip
+info:
+  operations: 550.05G
+  parameters: 36.94M
+  full_precision_result: 80.329
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

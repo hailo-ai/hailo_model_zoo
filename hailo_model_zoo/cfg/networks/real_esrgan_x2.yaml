@@ -1,17 +1,13 @@
 base:
 - base/base.yaml
+- base/div2k_x4.yaml
 evaluation:
-  data_set: models_files/div2k/2020-12-06/hailo_validation_set_div2k_super_resolution.tfrecord
-  dataset_name: div2k
   network_type: srgan
 inference:
   emulator_batch_size: 2
 preprocessing:
   network_type: super_resolution_srgan
   meta_arch: srgan
-quantization:
-  calib_set:
-  - models_files/div2k/2020-12-06/hailo_calib_set_div2k_super_resolution.tfrecord
 postprocessing:
   meta_arch: sr_resnet
 paths:
@@ -22,9 +18,6 @@ paths:
 network:
   network_name: real_esrgan_x2
 parser:
-  nodes:
-  - x
-  - - '1915'
   normalization_params:
     normalize_in_net: true
     mean_list:
@@ -43,7 +36,6 @@ info:
   parameters: 16.7M
   framework: pytorch
   training_data: DIV2K
-  validation_data: DIV2K
   eval_metric: PSNR
   full_precision_result: 28.27
   source: https://github.com/ai-forever/Real-ESRGAN

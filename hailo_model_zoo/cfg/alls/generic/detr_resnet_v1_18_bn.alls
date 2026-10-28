@@ -1,12 +1,10 @@
 norm_layer = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-post_quantization_optimization(bias_correction, policy=disabled)
-pre_quantization_optimization(equalization, policy=enabled)
 model_optimization_flavor(optimization_level=0, compression_level=0)
 
 # model_optimization_config commands
 model_optimization_config(negative_exponent, layers={*}, rank=0)
-model_optimization_config(calibration,batch_size=8, calibset_size=32)
-model_optimization_config(checker_cfg, policy=enabled, batch_size=1)
+model_optimization_config(calibration, calibset_size=32)
+model_optimization_config(checker_cfg, batch_size=1)
 quantization_param([detr_resnet_v1_18_bn/conv116, detr_resnet_v1_18_bn/conv115], precision_mode=a16_w16)
 quantization_param([detr_resnet_v1_18_bn/conv116, detr_resnet_v1_18_bn/conv115], bias_mode=single_scale_decomposition)
 
@@ -20,4 +18,4 @@ context_switch_param(slotter_chances=600)
 allocator_param(timeout=43200)
 
 compilation_param(conv24, balance_output_multisplit=enabled)
-allocator_param(automatic_reshapes=enabled)
+allocator_param(automatic_reshapes=disabled)

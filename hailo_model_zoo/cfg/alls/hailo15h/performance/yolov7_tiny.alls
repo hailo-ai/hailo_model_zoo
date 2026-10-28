@@ -1,0 +1,6 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+change_output_activation(sigmoid)
+nms_postprocess("../../../postprocess_config/yolov7_tiny_nms_config.json", yolov5, engine=cpu)
+
+allocator_param(automatic_reshapes=disabled)
+performance_param(compiler_optimization_level=max_exhaustive)

@@ -1,6 +1,6 @@
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 
-model_optimization_config(calibration, batch_size=8, calibset_size=1024)
+model_optimization_config(calibration, calibset_size=1024)
 post_quantization_optimization(finetune, policy=enabled, batch_size=4)
 quantization_param([dw1, dw6, dw7, dw8], precision_mode=a16_w16)
 

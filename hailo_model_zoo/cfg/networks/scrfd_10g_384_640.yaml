@@ -1,0 +1,38 @@
+base:
+- base/scrfd.yaml
+network:
+  network_name: scrfd_10g_384_640
+paths:
+  alls_script: scrfd_10g_384_640.alls
+  network_path:
+  - models_files/FaceDetection/scrfd/scrfd_10g_384_640/pretrained/2026-04-07/scrfd_10g_kps_384x640.onnx
+parser:
+  nodes:
+  - null
+  - - /bbox_head/scales.0/Mul
+    - /bbox_head/(8, 8)/Conv
+    - /bbox_head/(8, 8)_2/Conv
+    - /bbox_head/scales.1/Mul
+    - /bbox_head/(16, 16)/Conv
+    - /bbox_head/(16, 16)_2/Conv
+    - /bbox_head/scales.2/Mul
+    - /bbox_head/(32, 32)/Conv
+    - /bbox_head/(32, 32)_2/Conv
+info:
+  task: face detection
+  input_shape: 384x640x3
+  output_shape: 48x80x8, 48x80x2, 48x80x20, 24x40x8, 24x40x2, 24x40x20, 12x20x8, 12x20x2,
+    12x20x20
+  operations: 16.01G
+  parameters: 4.23M
+  framework: pytorch
+  training_data: wider train
+  validation_data: wider val
+  eval_metric: mAP
+  full_precision_result: 76.5
+  license_url: https://opensource.org/licenses/MIT
+  license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

@@ -1,3 +1,12 @@
 normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 post_quantization_optimization(finetune, policy=disabled)
 post_quantization_optimization(bias_correction, policy=enabled)
+
+context_switch_param(partitioner=slottest)
+context_switch_param(unikorn_cluster_pass_probability=0.4)
+context_switch_param(unikorn_single_cluster=true)
+context_switch_param(slottest_accuracy_level=3)
+context_switch_param(slottest_shmifo_overflow=0)
+context_switch_param(slottest_splitter_topk=5)
+context_switch_param(slottest_use_funks=true)
+allocator_param(enable_fixer=max_adjcents, layer_inputs_use_single_shmifo=true)

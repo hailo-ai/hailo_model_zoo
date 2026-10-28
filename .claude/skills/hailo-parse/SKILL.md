@@ -37,6 +37,8 @@ When the user is exporting from PyTorch with `torch.onnx.export(...)`, the follo
 
 If the user can't change the export, suggest re-exporting before parsing.
 
+- **`AdaptiveAvgPool2d`**: not exportable to a fixed ONNX graph when its output size does not evenly divide the input size — this is exactly the situation in pyramid-pooling modules (common in segmentation networks). Replace it before export with a fixed `AvgPool2d(kernel_size=ceil(in/out), stride=floor(in/out))`. On a real pyramid-pooling segmentation network this swap changed the metric by under 0.01, so it's safe to apply by default. Verify it by comparing ONNX Runtime against the original torch model on the same inputs before parsing.
+
 ## Workflow
 
 ### 1. Resolve inputs
@@ -87,6 +89,8 @@ Tell the user how to find start/end nodes:
 - Open the ONNX in **Netron** (https://netron.app) and identify the input op (typically the first `Conv` or `Gemm`) and the output op(s) **before any post-processing**.
 - For YOLO families: end at the `Conv` outputs that feed NMS, **not** at the post-NMS ops. NMS will be added by `/hailo-optimize` via `nms_postprocess(...)`.
 - For classifiers: usually end at the final `Softmax` or `Gemm`.
+- For segmentation networks: end at the classifier conv that emits per-class logits at reduced resolution, **not** after the final full-resolution `Resize`. Recover full resolution in postprocessing instead — the Model Zoo config key for the upsample factor is `postprocessing.ext_upsample`. This keeps the resize off the device and keeps the parsed graph small.
+- Attention blocks (`MatMul` / `Softmax` / `Reshape` over HxW tokens) do parse, but budget for their allocation cost early — a non-local block at 2304 tokens cost 6 contexts on a small segmentation network. Don't assume an attention block is free just because it parses cleanly.
 
 Offer to run a short ONNX I/O dump to help:
 
@@ -127,7 +131,7 @@ Run the script with `python <script>.py` (or inline via `python -c`).
 
 - Confirm `<model_name>.har` exists; report its size in MB.
 - Suggest `hailo visualizer <model_name>.har --no-browser` to view the parsed graph as an HTML report (this is the canonical inspection tool for parsed HARs; `hailo profiler` at this stage only renders "Model overview" — its richer reports are for quantized/compiled HARs).
-- **Recommended sanity check**: run the parsed model through the SDK_NATIVE emulator and compare a few outputs against the original framework. This catches start/end-node mismatches and preprocessing bugs *before* the (sometimes hours-long) optimization run blames them on quantization:
+- **Sanity check — required for a new model family**: run the parsed model through the SDK_NATIVE emulator and compare a few outputs against the original framework. This catches start/end-node mismatches and preprocessing bugs *before* the (sometimes hours-long) optimization run blames them on quantization. For a model family the Model Zoo hasn't handled before, treat this as a hard gate, not an optional nicety: score the original checkpoint under the exact evaluation protocol you'll use later (same resolution, tiling, letterboxing, etc.), *before* exporting. Comparing against the wrong protocol is the single easiest way to mistake a protocol mismatch for a conversion bug — the two get confused routinely, and this comparison is the only way to tell them apart.
   ```python
   from hailo_sdk_client import ClientRunner, InferenceContext
   runner = ClientRunner(har="<model_name>.har")
@@ -145,6 +149,7 @@ Run the script with `python <script>.py` (or inline via `python -c`).
 | Shape inference fails | ONNX has dynamic dims | Pass `net_input_shapes={<start>: [1, C, H, W]}` explicitly. |
 | Tries to parse through NMS / TopK / detection-output | Custom postprocess in the graph | Cut at the conv/sigmoid outputs that feed it. `/hailo-optimize` will insert `nms_postprocess(...)` for you. |
 | End node not found | Stale node name (model was re-exported) | Re-inspect with Netron; node names change between exports. |
+| Allocation blows the context budget on a small model | Attention block (`MatMul`/`Softmax`/`Reshape` over HxW tokens) — parses fine but is expensive | Expect it: a non-local block at 2304 tokens can cost several contexts on its own. Budget for it up front rather than debugging it as a regression later. |
 
 ### 7. Hand-off
 

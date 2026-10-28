@@ -1,0 +1,5 @@
+normalization1 = normalization([114.444, 111.4605, 103.02], [1.0, 1.0, 1.0])
+model_optimization_config(calibration, batch_size=1)
+pre_quantization_optimization(activation_clipping, layers={conv*}, mode=percentile, clipping_values=[0.01, 99.99])
+# block-1 c2_r SiLU conv: pre-activation tail to -150 leaves the 8-bit LUT no resolution where SiLU bends
+quantization_param([conv3], precision_mode=a16_w16)

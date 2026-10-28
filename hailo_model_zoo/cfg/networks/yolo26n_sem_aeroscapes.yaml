@@ -1,0 +1,18 @@
+base:
+- base/yolo26_sem_aerial.yaml
+- base/aeroscapes_seg.yaml
+network:
+  network_name: yolo26n_sem_aeroscapes
+paths:
+  alls_script: yolo26n_sem_aeroscapes.alls
+  network_path:
+  - models_files/Segmentation/AeroScapes/yolo26n_sem_aeroscapes/pretrained/2026-09-03/yolo26n_sem_aeroscapes.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/AeroScapes/yolo26n_sem_aeroscapes/pretrained/2026-09-03/yolo26n_sem_aeroscapes.zip
+info:
+  operations: 6.4G
+  parameters: 1.63M
+  full_precision_result: 65.578
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

@@ -1,0 +1,19 @@
+base:
+- base/bytetrack.yaml
+- base/mot16.yaml
+network:
+  network_name: bytetrack_nano_mot17
+paths:
+  alls_script: bytetrack_nano_mot17.alls
+  network_path:
+  - models_files/MultipleObjectTracking/bytetrack_nano_mot17/pretrained/2026-09-27/bytetrack_nano_mot17.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/MultipleObjectTracking/bytetrack_nano_mot17/pretrained/2026-09-27/bytetrack_nano_mot17.zip
+info:
+  input_shape: 608x1088x3
+  output_shape: 19x34x4, 19x34x1, 19x34x1, 38x68x4, 38x68x1, 38x68x1, 76x136x4, 76x136x1,
+    76x136x1
+  operations: 4.12G
+  parameters: 0.90M
+  full_precision_result: 70.044
+  supported_hw_arch:
+  - hailo15h

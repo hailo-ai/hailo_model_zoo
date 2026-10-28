@@ -1,0 +1,8 @@
+base:
+- base/base.yaml
+evaluation:
+  dataset_name: lagenda
+  data_set: models_files/lagenda/2026-07-23/lagenda_val.tfrecord
+quantization:
+  calib_set:
+  - models_files/lagenda/2026-07-23/lagenda_calib.tfrecord

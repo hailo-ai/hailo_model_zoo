@@ -34,6 +34,7 @@ evaluation:
   dataset_name: icdar15_rec
   data_set: models_files/icdar2015/2026-01-14/icdar15_text_rec_val_set.tfrecord
 info:
+  validation_data: icdar 2015
   input_shape: 48x320x3
   output_shape: 1x40x18385
   operations: 1.5G

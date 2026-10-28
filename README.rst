@@ -22,14 +22,14 @@ Hailo Model Zoo
    :height: 20
 
 
-.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.4.0-brightgreen.svg
+.. |compiler| image:: https://img.shields.io/badge/Hailo%20Dataflow%20Compiler-5.5.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: Hailo Dataflow Compiler
    :width: 180
    :height: 20
 
 
-.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.4.0-brightgreen.svg
+.. |runtime| image:: https://img.shields.io/badge/HailoRT%20(optional)-5.5.0-brightgreen.svg
    :target: https://hailo.ai/company-overview/contact-us/
    :alt: HailoRT
    :width: 170
@@ -78,9 +78,33 @@ What's new
 
 **Core stack updates** This release aligns with the latest version of the Hailo software stack, ensuring compatibility and performance improvements.
 
-* Upgraded to Dataflow Compiler v5.4.0
+* Upgraded to Dataflow Compiler v5.5.0
 
-* Upgraded to HailoRT v5.4.0
+* Upgraded to HailoRT v5.5.0
+
+**New model support** We have expanded the Model Zoo with new tasks and architectures for object tracking, audio classification, sentence embeddings, OCR, depth estimation, super-resolution and real-time semantic segmentation:
+
+* `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - stark_lightning_repvgg_a0 - Single-object tracking, the first tracker in the Model Zoo
+* `ByteTrack <https://github.com/ifzhang/ByteTrack>`_ - bytetrack_tiny_mot17, bytetrack_s_mot17, bytetrack_nano_mot17 (Hailo-15H) - Multi-object pedestrian tracking
+* `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - yamnet - AudioSet audio event classification, the first audio network in the Model Zoo
+* `all-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_ - all_minilm_l6_v2, all_minilm_l6_v2_v2a - Sentence embeddings, the first embedding model in the Model Zoo
+* `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - mivolo_d1 - Age and gender estimation
+* `DINOv2 <https://arxiv.org/abs/2304.07193>`_ - dinov2_vits14_lc - Self-supervised Vision Transformer backbone with a linear ImageNet head
+* `ZipDepth <https://arxiv.org/abs/2607.08771>`_ - zipdepth_256x832, zipdepth_384x384 (Hailo-15H) - Lightweight zero-shot monocular depth estimation
+* `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ - paddle_ocr_v6 detection and recognition models - the complete PP-OCRv6 OCR pipeline
+* `SPAN <https://github.com/hongyuanyu/SPAN>`_ / `SPANF <https://github.com/Amazingren/NTIRE2025_ESR>`_ - span_x2, span_x4, spanf_x4 - Efficient super-resolution, the NTIRE 2024 and 2025 winners
+* Real-time Cityscapes semantic segmentation - `PIDNet <https://github.com/XuJiacong/PIDNet>`_ (pidnet_s, pidnet_l), `PP-LiteSeg <https://arxiv.org/abs/2204.02681>`_ (pp_liteseg_t, pp_liteseg_b), `BiSeNetV2 <https://github.com/CoinCheung/BiSeNet>`_ (bisenetv2), `DDRNet <https://github.com/ydhongHIT/DDRNet>`_ (ddrnet_23_slim) and `YOLO26-sem <https://arxiv.org/abs/2606.03748>`_ (yolo26n_sem, yolo26s_sem, yolo26m_sem, yolo26l_sem)
+* `CABiNet <https://github.com/dronefreak/CABiNet>`_ - cabinet_mnv3l_uavid - Aerial (UAV) semantic segmentation
+
+**New variants and wider hardware support** Existing families gained new variants, and the CLIP-style encoders are now available on Hailo-15L:
+
+* `YOLOv11-seg <https://docs.ultralytics.com/models/yolo11/>`_ - yolov11n_seg, yolov11s_seg, yolov11m_seg, yolov11l_seg, yolov11x_seg - Instance segmentation
+* `YOLO26 <https://arxiv.org/abs/2606.03748>`_ - yolo26s_768_448, yolo26s_768_576 and yolo26x_seg (Hailo-15H)
+* `YOLO26-sem <https://arxiv.org/abs/2606.03748>`_ aerial - yolo26n_sem and yolo26s_sem fine-tuned on UAVid and AeroScapes
+* `YOLO-World <https://arxiv.org/abs/2401.17270>`_ - yolo_world_v2m - Open-vocabulary detection
+* `SCRFD <https://arxiv.org/abs/2105.04714>`_ - scrfd_2.5g_384_640, scrfd_10g_384_640 - 384x640 face detectors
+* `CLIP <https://arxiv.org/abs/2103.00020>`_, `SigLIP <https://arxiv.org/abs/2303.15343>`_, `SigLIP2 <https://arxiv.org/abs/2502.14786>`_ and `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_ image and text encoders are now also released for Hailo-15L
+
 
 Retraining
 ----------

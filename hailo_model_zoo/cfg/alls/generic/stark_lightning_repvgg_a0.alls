@@ -1,0 +1,6 @@
+set_seed(0)
+norm_template, norm_search = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_flavor(optimization_level=0, compression_level=0)
+model_optimization_config(calibration, calibset_size=64)
+quantization_param({*layer_norm*}, precision_mode=a16_w16)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)

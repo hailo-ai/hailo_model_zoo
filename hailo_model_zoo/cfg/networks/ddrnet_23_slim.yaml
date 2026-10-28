@@ -1,0 +1,33 @@
+base:
+- base/fcn.yaml
+network:
+  network_name: ddrnet_23_slim
+parser:
+  nodes:
+  - null
+  - null
+paths:
+  alls_script: ddrnet_23_slim.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/ddrnet_23_slim/pretrained/2026-09-17/ddrnet_23_slim.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/ddrnet_23_slim/pretrained/2026-09-17/ddrnet_23_slim.zip
+inference:
+  full_precision_batch_size: 1
+  emulator_batch_size: 1
+info:
+  task: semantic segmentation
+  input_shape: 1024x2048x3
+  output_shape: 1024x2048x1
+  operations: 72.60G
+  parameters: 5.70M
+  framework: pytorch
+  training_data: cityscapes train
+  validation_data: cityscapes val
+  eval_metric: mIoU
+  full_precision_result: 76.687
+  source: https://github.com/ydhongHIT/DDRNet
+  license_url: https://github.com/ydhongHIT/DDRNet/blob/main/LICENSE
+  license_name: MIT
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

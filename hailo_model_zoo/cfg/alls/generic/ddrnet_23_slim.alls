@@ -1,0 +1,7 @@
+normalization1 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+# LCU keeps the author's half_pixels upsample; the PPU streaming kernel is align_corners-only
+resize8 = resize(conv55, resize_shapes=[1024, 2048], resize_method=bilinear, pixels_mode=half_pixels, hw_layer_type=lcu)
+logits_layer1 = logits_layer(resize8, argmax, -1)
+model_optimization_config(calibration, batch_size=1)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+resources_param(max_control_utilization=0.8, max_compute_utilization=0.8, max_compute_16bit_utilization=0.8, max_memory_utilization=0.8, max_input_aligner_utilization=0.8, max_apu_utilization=0.8)

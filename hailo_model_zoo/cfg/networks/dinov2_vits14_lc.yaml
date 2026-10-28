@@ -1,0 +1,16 @@
+base:
+- base/dinov2_classifier.yaml
+network:
+  network_name: dinov2_vits14_lc
+paths:
+  alls_script: dinov2_vits14_lc.alls
+  network_path:
+  - models_files/Classification/dinov2/dinov2_vits14_lc/2024-07-02/dinov2_vits14_lc.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Classification/dinov2_vits14_lc/pretrained/2024-07-02/dinov2_vits14_lc.zip
+info:
+  operations: 12.28G
+  parameters: 22.06M
+  full_precision_result: 81.36
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

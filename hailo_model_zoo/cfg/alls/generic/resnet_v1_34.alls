@@ -1,6 +1,4 @@
 # New quantization params
-post_quantization_optimization(bias_correction, policy=disabled)
-pre_quantization_optimization(equalization, policy=enabled)
 
 
 # normalization commands
@@ -10,4 +8,4 @@ quantization_param({*}, max_elementwise_feed_repeat=1)
 
 
 # model_optimization_config commands
-model_optimization_config(calibration, batch_size=2, calibset_size=64)
+model_optimization_config(calibration, batch_size=2)

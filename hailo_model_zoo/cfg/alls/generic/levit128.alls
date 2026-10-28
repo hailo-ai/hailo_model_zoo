@@ -10,4 +10,4 @@ quantization_param({levit128/ew_add*}, precision_mode=a16_w16)
 model_optimization_flavor(optimization_level=2, compression_level=0)
 allocator_param(optimize_pipeline_stoppage=True)
 
-allocator_param(automatic_reshapes=enabled)
+allocator_param(automatic_reshapes=disabled)

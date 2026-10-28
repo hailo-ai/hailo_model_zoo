@@ -13,5 +13,4 @@ info:
   full_precision_result: 43.46
   supported_hw_arch:
   - hailo15h
-  - hailo15l
   - hailo10h

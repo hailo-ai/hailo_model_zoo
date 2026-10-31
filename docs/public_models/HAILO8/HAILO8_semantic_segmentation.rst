@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v2.18.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v2.20.0
+* Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
 
@@ -37,6 +39,204 @@ Link Legend
        - **RGBX:** RGBX format
    * - **PR**
      - Profiler Report – Download the model's performance profiling report.
+
+|
+
+Cityscapes
+----------
+
+|
+
+
+
+
+
+
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   * - Network Name
+     - float mIoU
+     - Hardware mIoU
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Links
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
+   * - bisenetv2
+     - 73.0
+     - 72.6
+     - 9.69
+     - 
+     - | `S <https://github.com/CoinCheung/BiSeNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/bisenetv2/pretrained/2026-09-17/bisenetv2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/bisenetv2_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/bisenetv2.hef>`_
+     - 1024x2048x3
+     - 3.36
+     - 196.84
+   
+   
+   
+   
+   
+   
+   
+
+   * - ddrnet_23_slim
+     - 76.7
+     - 76.3
+     - 38.1
+     - 38.0
+     - | `S <https://github.com/ydhongHIT/DDRNet>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/ddrnet_23_slim/pretrained/2026-10-05/ddrnet_23_slim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/ddrnet_23_slim_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/ddrnet_23_slim.hef>`_
+     - 1024x2048x3
+     - 5.70
+     - 72.60
+   
+   
+   
+   
+   
+   
+   
+
+   * - fcn8_resnet_v1_18⭐
+     - 69.4
+     - 69.3
+     - 42.6
+     - 42.6
+     - | `S <https://mmsegmentation.readthedocs.io/en/latest>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2023-06-22/fcn8_resnet_v1_18.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/fcn8_resnet_v1_18_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/fcn8_resnet_v1_18.hef>`_
+     - 1024x1920x3
+     - 11.20
+     - 142.82
+   
+   
+   
+   
+   
+   
+   
+
+   * - pp_liteseg_b
+     - 78.4
+     - 78.4
+     - 17.9
+     - 23.3
+     - | `S <https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.9/configs/pp_liteseg>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/pp_liteseg_b/pretrained/2026-09-23/pp_liteseg_b.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/pp_liteseg_b_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/pp_liteseg_b.hef>`_
+     - 1024x2048x3
+     - 12.23
+     - 153.83
+   
+   
+   
+   
+   
+   
+   
+
+   * - pp_liteseg_t
+     - 76.4
+     - 76.0
+     - 9.7
+     - 
+     - | `S <https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.9/configs/pp_liteseg>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/pp_liteseg_t/pretrained/2026-09-23/pp_liteseg_t.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/pp_liteseg_t_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/pp_liteseg_t.hef>`_
+     - 1024x2048x3
+     - 8.02
+     - 91.38
+   
+   
+   
+   
+   
+   
+   
+
+   * - segformer_b0_bn⭐
+     - 69.8
+     - 67.8
+     - 12.6
+     - 25.4
+     - | `S <https://github.com/NVlabs/SegFormer>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/segformer_b0_bn_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/segformer_b0_bn.hef>`_
+     - 512x1024x3
+     - 3.72
+     - 35.76
+   
+   
+   
+   
+   
+   
+   
+
+   * - stdc1⭐
+     - 74.6
+     - 73.8
+     - 57.6
+     - 57.6
+     - | `S <https://mmsegmentation.readthedocs.io/en/latest>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/stdc1/pretrained/2023-06-12/stdc1.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/stdc1_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/stdc1.hef>`_
+     - 1024x1920x3
+     - 8.27
+     - 126.47
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26m_sem
+     - 81.3
+     - 80.9
+     - 13.6
+     - 16.7
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26m_sem/pretrained/2026-05-28/yolo26m-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26m_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26m_sem.hef>`_
+     - 1024x2048x3
+     - 14.30
+     - 305.6
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26n_sem
+     - 77.4
+     - 75.9
+     - 143
+     - 143
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26n_sem/pretrained/2026-05-28/yolo26n-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26n_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26n_sem.hef>`_
+     - 1024x2048x3
+     - 1.63
+     - 23.9
+   
+   
+   
+   
+   
+   
+   
+
+   * - yolo26s_sem
+     - 80.0
+     - 79.5
+     - 36.7
+     - 45.0
+     - | `S <https://github.com/ultralytics/ultralytics>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26s_sem/pretrained/2026-05-28/yolo26s-sem.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26s_sem_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/yolo26s_sem.hef>`_
+     - 1024x2048x3
+     - 6.49
+     - 91.1
 
 |
 
@@ -78,7 +278,7 @@ Pascal Voc
      - 74.6
      - 121
      - 121
-     - | `S <https://github.com/bonlime/keras-deeplab-v3-plus>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2_dilation/pretrained/2023-08-22/deeplab_v3_mobilenet_v2_dilation.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/deeplab_v3_mobilenet_v2_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/deeplab_v3_mobilenet_v2.hef>`_
+     - | `S <https://github.com/bonlime/keras-deeplab-v3-plus>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2_dilation/pretrained/2023-08-22/deeplab_v3_mobilenet_v2_dilation.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/deeplab_v3_mobilenet_v2_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/deeplab_v3_mobilenet_v2.hef>`_
      - 513x513x3
      - 2.10
      - 17.65
@@ -92,92 +292,13 @@ Pascal Voc
 
    * - deeplab_v3_mobilenet_v2_wo_dilation⭐
      - 71.5
-     - 71.2
+     - 71.1
      - 262
      - 262
-     - | `S <https://github.com/tensorflow/models/tree/master/research/deeplab>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2025-01-20/deeplab_v3_mobilenet_v2_wo_dilation_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/deeplab_v3_mobilenet_v2_wo_dilation_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/deeplab_v3_mobilenet_v2_wo_dilation.hef>`_
+     - | `S <https://github.com/tensorflow/models/tree/master/research/deeplab>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Pascal/deeplab_v3_mobilenet_v2/pretrained/2025-01-20/deeplab_v3_mobilenet_v2_wo_dilation_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/deeplab_v3_mobilenet_v2_wo_dilation_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/deeplab_v3_mobilenet_v2_wo_dilation.hef>`_
      - 513x513x3
      - 2.10
      - 3.21
-
-|
-
-Cityscapes
-----------
-
-|
-
-
-
-
-
-
-
-
-.. list-table::
-   :header-rows: 1
-   :widths: 31 9 7 11 9 8 8 8 9
-
-   * - Network Name
-     - float mIoU
-     - Hardware mIoU
-     - FPS (Batch Size=1)
-     - FPS (Batch Size=8)
-     - Links
-     - Input Resolution (HxWxC)
-     - Params (M)
-     - OPS (G)
-   
-   
-   
-   
-   
-   
-   
-
-   * - fcn8_resnet_v1_18⭐
-     - 69.4
-     - 69.3
-     - 42.6
-     - 42.6
-     - | `S <https://mmsegmentation.readthedocs.io/en/latest>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/fcn8_resnet_v1_18/pretrained/2023-06-22/fcn8_resnet_v1_18.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/fcn8_resnet_v1_18_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/fcn8_resnet_v1_18.hef>`_
-     - 1024x1920x3
-     - 11.20
-     - 142.82
-   
-   
-   
-   
-   
-   
-   
-
-   * - segformer_b0_bn⭐
-     - 69.8
-     - 67.8
-     - 12.6
-     - 25.4
-     - | `S <https://github.com/NVlabs/SegFormer>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/segformer_b0_512x1024_bn/pretrained/2023-09-04/segformer_b0_512x1024_bn.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/segformer_b0_bn_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/segformer_b0_bn.hef>`_
-     - 512x1024x3
-     - 3.72
-     - 35.76
-   
-   
-   
-   
-   
-   
-   
-
-   * - stdc1⭐
-     - 74.6
-     - 73.8
-     - 57.6
-     - 58.0
-     - | `S <https://mmsegmentation.readthedocs.io/en/latest>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/stdc1/pretrained/2023-06-12/stdc1.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/stdc1_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/stdc1.hef>`_
-     - 1024x1920x3
-     - 8.27
-     - 126.47
 
 |
 
@@ -218,8 +339,8 @@ Oxford-Iiit Pet
      - 77.3
      - 77.2
      - 662
-     - 662
-     - | `S <https://www.tensorflow.org/tutorials/images/segmentation>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2025-01-15/unet_mobilenet_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/unet_mobilenet_v2_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/unet_mobilenet_v2.hef>`_
+     - 664
+     - | `S <https://www.tensorflow.org/tutorials/images/segmentation>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Oxford_Pet/unet_mobilenet_v2/pretrained/2025-01-15/unet_mobilenet_v2.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/unet_mobilenet_v2_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/unet_mobilenet_v2.hef>`_
      - 256x256x3
      - 10.08
      - 28.88

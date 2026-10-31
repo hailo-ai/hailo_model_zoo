@@ -4,7 +4,9 @@
 Public Models
 =============
 
-All models were compiled using Hailo Dataflow Compiler v2.18.0.
+* System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
+* Hailo Dataflow Compiler Version v2.20.0
+* Measurement conditions: PCIe Gen 3 x 4 lanes, room temperature
 
 |
 
@@ -75,10 +77,55 @@ Link Legend
 
    * - paddle_ocr_v5_mobile_recognition⭐
      - 62.4
-     - 61.0
-     - 91.5
-     - 393
-     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/paddle_ocr_v5_mobile_recognition_profiler_results_compiled.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.18.0/hailo8/paddle_ocr_v5_mobile_recognition.hef>`_
+     - 59.1
+     - 90.2
+     - 378
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/paddle_ocr_v5_mobile_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/paddle_ocr_v5_mobile_recognition.hef>`_
      - 48x320x3
      - 4.1
      - 1.5
+
+|
+
+Icdar15 Recognition
+-------------------
+
+|
+
+
+
+
+
+
+
+
+.. list-table::
+   :header-rows: 1
+   :widths: 31 9 7 11 9 8 8 8 9
+
+   * - Network Name
+     - float 
+     - Hardware 
+     - FPS (Batch Size=1)
+     - FPS (Batch Size=8)
+     - Links
+     - Input Resolution (HxWxC)
+     - Params (M)
+     - OPS (G)
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_small_recognition
+     - 78.6
+     - 75.8
+     - 148
+     - 656
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-07-22/PP-OCRv6_small_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/paddle_ocr_v6_small_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v2.20.0/hailo8/paddle_ocr_v6_small_recognition.hef>`_
+     - 48x320x3
+     - 5.2
+     - 2.18

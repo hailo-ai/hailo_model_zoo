@@ -14,14 +14,14 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO10H/HAILO10H_age_gender_classification.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_age_gender_classification.rst>`_
      - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_age_gender_classification.rst>`_
      - NA
    * - Audio Classification
      - `Link <public_models/HAILO10H/HAILO10H_audio_classification.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_audio_classification.rst>`_
      - `Link <public_models/HAILO15L/HAILO15L_audio_classification.rst>`_
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_audio_classification.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_audio_classification.rst>`_
    * - Automatic Speech Recognition
      - NA
      - NA
@@ -70,6 +70,12 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15L/HAILO15L_hand_landmark_detection.rst>`_
      - `Link <public_models/HAILO8/HAILO8_hand_landmark_detection.rst>`_
      - `Link <public_models/HAILO8L/HAILO8L_hand_landmark_detection.rst>`_
+   * - Image Captioning
+     - NA
+     - NA
+     - NA
+     - `Link <public_models/HAILO8/HAILO8_image_captioning.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_image_captioning.rst>`_
    * - Image Denoising
      - `Link <public_models/HAILO10H/HAILO10H_image_denoising.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_image_denoising.rst>`_
@@ -92,8 +98,8 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO10H/HAILO10H_multiple_object_tracking.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_multiple_object_tracking.rst>`_
      - `Link <public_models/HAILO15L/HAILO15L_multiple_object_tracking.rst>`_
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_multiple_object_tracking.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_multiple_object_tracking.rst>`_
    * - Object Detection
      - `Link <public_models/HAILO10H/HAILO10H_object_detection.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_object_detection.rst>`_
@@ -105,13 +111,13 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
      - NA
      - `Link <public_models/HAILO8/HAILO8_object_detection_3d.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_object_detection_3d.rst>`_
+     - NA
    * - Oriented Object Detection
      - `Link <public_models/HAILO10H/HAILO10H_oriented_object_detection.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_oriented_object_detection.rst>`_
      - `Link <public_models/HAILO15L/HAILO15L_oriented_object_detection.rst>`_
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_oriented_object_detection.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_oriented_object_detection.rst>`_
    * - Person Attribute
      - `Link <public_models/HAILO10H/HAILO10H_person_attribute.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_person_attribute.rst>`_
@@ -140,14 +146,14 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO10H/HAILO10H_sentence_embedding_generation.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_sentence_embedding_generation.rst>`_
      - `Link <public_models/HAILO15L/HAILO15L_sentence_embedding_generation.rst>`_
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_sentence_embedding_generation.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_sentence_embedding_generation.rst>`_
    * - Single Object Tracking
      - `Link <public_models/HAILO10H/HAILO10H_single_object_tracking.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_single_object_tracking.rst>`_
      - NA
-     - NA
-     - NA
+     - `Link <public_models/HAILO8/HAILO8_single_object_tracking.rst>`_
+     - `Link <public_models/HAILO8L/HAILO8L_single_object_tracking.rst>`_
    * - Single Person Pose Estimation
      - `Link <public_models/HAILO10H/HAILO10H_single_person_pose_estimation.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_single_person_pose_estimation.rst>`_
@@ -159,7 +165,7 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - `Link <public_models/HAILO15H/HAILO15H_stereo_depth_estimation.rst>`_
      - NA
      - `Link <public_models/HAILO8/HAILO8_stereo_depth_estimation.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_stereo_depth_estimation.rst>`_
+     - NA
    * - Super Resolution
      - `Link <public_models/HAILO10H/HAILO10H_super_resolution.rst>`_
      - `Link <public_models/HAILO15H/HAILO15H_super_resolution.rst>`_
@@ -220,9 +226,3 @@ Hailo provides different pre-trained models in ONNX / TF formats and pre-compile
      - NA
      - NA
      - NA
-   * - Zero Text Image Retrieval
-     - NA
-     - NA
-     - NA
-     - `Link <public_models/HAILO8/HAILO8_zero_text_image_retrieval.rst>`_
-     - `Link <public_models/HAILO8L/HAILO8L_zero_text_image_retrieval.rst>`_

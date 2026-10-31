@@ -6,7 +6,11 @@ import numpy as np
 
 from hailo_model_zoo.core.datasets.datasets_info import CLASS_NAMES_COCO, get_dataset_info
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
-from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+
+try:
+    from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+except ImportError:
+    cnms = None
 from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.utils import path_resolver
 
@@ -418,6 +422,11 @@ def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, max_det=300
         conf = x[:, 4:5]
         preds = np.hstack([boxes.astype(np.float32), conf.astype(np.float32)])
 
+        if cnms is None:
+            raise ImportError(
+                "Cython NMS is not available. Install with: "
+                "apt-get install gcc python3-dev && pip install hailo_model_zoo[postprocessing]"
+            )
         keep = cnms(preds, iou_thres)
         if keep.shape[0] > max_det:
             keep = keep[:max_det]
@@ -1049,15 +1058,15 @@ def yolov8_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
 
 def yolo26_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
     """
-    endnodes is a list of 10 tensors:
+    endnodes is a list of 10 tensors (grouped by head type, not interleaved):
         endnodes[0]:  bbox output with shapes (BS, 20, 20, 64)
-        endnodes[1]:  scores output with shapes (BS, 20, 20, 80)
-        endnodes[2]:  mask coeff output with shapes (BS, 20, 20, 32)
-        endnodes[3]:  bbox output with shapes (BS, 40, 40, 64)
+        endnodes[1]:  bbox output with shapes (BS, 40, 40, 64)
+        endnodes[2]:  bbox output with shapes (BS, 80, 80, 64)
+        endnodes[3]:  scores output with shapes (BS, 20, 20, 80)
         endnodes[4]:  scores output with shapes (BS, 40, 40, 80)
-        endnodes[5]:  mask coeff output with shapes (BS, 40, 40, 32)
-        endnodes[6]:  bbox output with shapes (BS, 80, 80, 64)
-        endnodes[7]:  scores output with shapes (BS, 80, 80, 80)
+        endnodes[5]:  scores output with shapes (BS, 80, 80, 80)
+        endnodes[6]:  mask coeff output with shapes (BS, 20, 20, 32)
+        endnodes[7]:  mask coeff output with shapes (BS, 40, 40, 32)
         endnodes[8]:  mask coeff output with shapes (BS, 80, 80, 32)
         endnodes[9]:  mask protos with shape (BS, 160, 160, 32)
     Returns:
@@ -1097,7 +1106,7 @@ def yolo26_seg_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
         output["detection_scores"] = np.array(detection_results["detection_scores"].numpy()[b])
         output["detection_classes"] = np.array(detection_results["detection_classes"].numpy()[b]).astype(int)
         if masks is not None:
-            output["mask"] = np.transpose(masks, (0, 1, 2))
+            output["mask"] = masks
         else:
             output["mask"] = masks
         output["detection_scores"] = np.array(detection_results["detection_scores"].numpy()[b])

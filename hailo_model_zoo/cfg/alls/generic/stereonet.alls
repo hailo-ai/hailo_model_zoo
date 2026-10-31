@@ -1,5 +1,5 @@
 stereonet/normalization1, stereonet/normalization2 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
-model_optimization_config(checker_cfg, analyze_mode=simple, batch_norm_checker=True, dataset_size=16, policy=enabled, batch_size=2)
+model_optimization_config(checker_cfg, batch_norm_checker=True, batch_size=2)
 conv42_ws, conv42_sd0, conv42_sd1, conv42_sd2, conv42_sd3, conv42_sdc = defuse(conv42, 4, defuse_type=SPATIAL, splitter=True)
 ws_from_conv42_ws_to_conv42_sd0-2 = shape_splitter(SPLIT_WIDTH, conv42_ws, [conv42_sd0, conv42_sd1, conv42_sd2])
 concat_from_conv42_sd0-2_to_conv42_sdc = concat([conv42_sd0, conv42_sd1, conv42_sd2], conv42_sdc)

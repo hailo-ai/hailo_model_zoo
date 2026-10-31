@@ -101,7 +101,7 @@ def parse_model(runner, network_info, *, ckpt_path=None, results_dir=Path("."), 
 
     model_name = network_info.network.network_name
     start_node_names, end_node_names = network_info.parser.nodes[0:2]
-    input_format = network_info.parser.input_format
+    input_format = network_info.parser.input_format if network_info.parser.input_format else {}
 
     parser_args = argparse.Namespace(
         net_name=model_name,
@@ -321,22 +321,34 @@ def optimize_full_precision_model(runner, calib_feed_callback, logger, model_scr
     if classes is not None:
         _handle_classes_argument(runner, logger, classes)
     input_layers = runner.get_hn_model().get_input_layers()
-    scope_name = input_layers[0].scope
+    image_input_layers = [
+        layer for layer in input_layers if len(layer.input_shapes[0]) == 4 and layer.input_shapes[0][-1] == 3
+    ]
+    if (resize is not None or input_conversion is not None) and not image_input_layers:
+        logger.warning(
+            f"No image inputs (rank-4 with 3 channels) found among {len(input_layers)} input layer(s). "
+            f"Skipping --resize/--input-conversion."
+        )
     if resize is not None:
         height, width = resize
-        resize_layer_names = ", ".join(
-            f"{input_layer.scope}/resize_input{i}" for i, input_layer in enumerate(input_layers, start=1)
-        )
-        runner.load_model_script(f"{resize_layer_names} = resize(resize_shapes=[{height},{width}])", append=True)
+        for i, layer in enumerate(image_input_layers, start=1):
+            runner.load_model_script(
+                f"{layer.scope}/resize_input{i} = resize({layer.name_without_scope}, resize_shapes=[{height},{width}])",
+                append=True,
+            )
     if input_conversion is not None:
         hailo_conversion_type = {"rgbx_to_rgb": "tf_rgbx_to_hailo_rgb"}.get(input_conversion, input_conversion)
-        conversion_layers = [f"{scope_name}/input_conversion1"]
-        if hailo_conversion_type in ["yuy2_to_rgb", "nv12_to_rgb"]:
-            conversion_layers.append(f"{scope_name}/yuv_to_rgb1")
-        runner.load_model_script(
-            f"{', '.join(conversion_layers)} = input_conversion({hailo_conversion_type}, emulator_support=True)",
-            append=True,
-        )
+        is_hybrid = hailo_conversion_type in ["yuy2_to_rgb", "nv12_to_rgb"]
+        for i, layer in enumerate(image_input_layers, start=1):
+            scope_name = layer.scope
+            conversion_layers = [f"{scope_name}/input_conversion{i}"]
+            if is_hybrid:
+                conversion_layers.append(f"{scope_name}/yuv_to_rgb{i}")
+            runner.load_model_script(
+                f"{', '.join(conversion_layers)} = input_conversion("
+                f"{layer.name_without_scope}, {hailo_conversion_type}, emulator_support=True)",
+                append=True,
+            )
     runner.optimize_full_precision(calib_data=calib_feed_callback)
 
 
@@ -458,6 +470,9 @@ def make_eval_callback(network_info, runner, show_results_per_class, logger):
         "meta_arch": meta_arch,
         "mask_thresh": network_info.postprocessing.mask_threshold,
         "show_results_per_class": show_results_per_class,
+        "tool_description_path": getattr(network_info.evaluation, "tool_description_path", None),
+        "candidate_embeddings_path": getattr(network_info.evaluation, "candidate_embeddings_path", None),
+        "corpus_embeddings_path": getattr(network_info.evaluation, "corpus_embeddings_path", None),
     }
 
     evaluation_constructor = eval_factory.get_evaluation(network_type)

@@ -1,0 +1,8 @@
+quantization:
+  calib_set:
+  - models_files/div2k/2026-09-16/div2k_x4_calib512.tfrecord
+evaluation:
+  dataset_name: div2k
+  data_set: models_files/div2k/2026-09-16/div2k_x4_val.tfrecord
+info:
+  validation_data: DIV2K

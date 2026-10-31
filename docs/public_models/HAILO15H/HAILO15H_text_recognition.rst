@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v5.4.0
+* Hailo Dataflow Compiler Version v5.5.0
 * Measurement conditions: Measuring from the SoC, room temperature
 
 |
@@ -77,10 +77,61 @@ Icdar15 Recognition
 
    * - paddle_ocr_v5_mobile_recognition⭐
      - 62.3
-     - 60.1
+     - 60.4
      - 127
      - 436
-     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15h/paddle_ocr_v5_mobile_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15h/paddle_ocr_v5_mobile_recognition.hef>`_
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v5/2025-08-10/PP-OCRv5_mobile_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v5_mobile_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v5_mobile_recognition.hef>`_ `NV12 <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v5_mobile_recognition_nv12.hef>`_
      - 48x320x3
      - 4.1
      - 1.5
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_medium_recognition
+     - 83.2
+     - 81.5
+     - 63.0
+     - 281
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-07-22/PP-OCRv6_medium_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_medium_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_medium_recognition.hef>`_
+     - 48x320x3
+     - 19
+     - 11.37
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_small_recognition
+     - 78.6
+     - 77.1
+     - 193
+     - 773
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-07-22/PP-OCRv6_small_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_small_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_small_recognition.hef>`_
+     - 48x320x3
+     - 5.2
+     - 2.18
+   
+   
+   
+   
+   
+   
+   
+
+   * - paddle_ocr_v6_tiny_recognition
+     - 63.7
+     - 57.6
+     - 9847
+     - 7013
+     - | `S <https://github.com/PaddlePaddle/PaddleOCR/tree/main>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/OCR/PaddleOCR/v6/2026-07-22/PP-OCRv6_tiny_rec_48x320_sim.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_tiny_recognition_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15h/paddle_ocr_v6_tiny_recognition.hef>`_
+     - 48x320x3
+     - 1.1
+     - 0.37

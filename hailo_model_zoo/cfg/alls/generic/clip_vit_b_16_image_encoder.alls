@@ -5,7 +5,6 @@ quantization_param({norm*}, precision_mode=a16_w16)
 quantization_param([slice1], precision_mode=a16_w16)
 quantization_param([conv1_s2d, concat1, conv1], precision_mode=a16_w16)
 pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
-model_optimization_config(calibration, calibset_size=64)
 pre_quantization_optimization(decompose_conv_factor, policy=enabled)
 
 allocator_param(enable_automatic_features_chunks=False, enable_partial_row_buffers=disabled, disable_row_per_cut=True, enable_auto_spatial_reshapes=True, automatic_ddr=False)

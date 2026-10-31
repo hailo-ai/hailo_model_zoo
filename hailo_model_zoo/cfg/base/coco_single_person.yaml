@@ -9,3 +9,5 @@ quantization:
   calib_set:
   - models_files/coco/2022-06-28/coco_single_person_calib2017.tfrecord
   - models_files/coco/2022-06-28/person_keypoints_val2017.json
+info:
+  validation_data: coco keypoints val2017

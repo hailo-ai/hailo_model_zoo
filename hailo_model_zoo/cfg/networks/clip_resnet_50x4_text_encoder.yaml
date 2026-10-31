@@ -24,4 +24,5 @@ info:
   source: https://huggingface.co/timm/resnet50x4_clip.openai
   supported_hw_arch:
   - hailo15h
+  - hailo15l
   - hailo10h

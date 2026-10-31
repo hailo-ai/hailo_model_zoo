@@ -5,7 +5,7 @@ FROM $base_image
 ENV DEBIAN_FRONTEND=noninteractive, TZ=$timezone
 
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install git build-essential python3-opencv wget vim sudo
+    apt-get -y --no-install-recommends install git build-essential python3-opencv wget curl vim sudo
 
 RUN git clone https://github.com/hailo-ai/ultralytics.git && \
     cd ultralytics && \

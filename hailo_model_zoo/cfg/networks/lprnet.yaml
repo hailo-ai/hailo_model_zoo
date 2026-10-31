@@ -31,6 +31,7 @@ evaluation:
   data_set: null
 info:
   task: pipeline
+  validation_data: license plate ocr
   input_shape: 75x300x3
   output_shape: 5x19x11
   operations: 36.54G

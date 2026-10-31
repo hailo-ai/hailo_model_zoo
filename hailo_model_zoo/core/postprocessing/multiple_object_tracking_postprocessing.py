@@ -4,13 +4,22 @@ import tensorflow as tf
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.detection.centernet import CenternetPostProc
 from hailo_model_zoo.core.postprocessing.detection.visualization_utils import visualize_boxes_and_labels_on_image_array
+from hailo_model_zoo.core.postprocessing.detection_postprocessing import detection_postprocessing
+
+
+@POSTPROCESS_FACTORY.register(name="single_object_tracking")
+def single_object_tracking_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
+    """Passthrough: the soft-argmax is on chip, so the head emits normalized xyxy."""
+    return {"pred_boxes": tf.reshape(endnodes, (-1, 4))}
 
 
 @POSTPROCESS_FACTORY.register(name="multiple_object_tracking")
 def multiple_object_tracking_postprocessing(endnodes, device_pre_post_layers=None, **kwargs):
     kwargs["meta_arch"] = kwargs.get("meta_arch", {})
+    if kwargs["meta_arch"] == "yolox":
+        return detection_postprocessing(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     if kwargs["meta_arch"] != "fair_mot":
-        raise NotImplementedError("Tracking post-processing currently supports only FairMOT based architectures")
+        raise NotImplementedError("Tracking post-processing currently supports only FairMOT and YOLOX architectures")
 
     centernet_postprocessing = CenternetPostProc(
         device_pre_post_layers=device_pre_post_layers, score_threshold=kwargs["score_threshold"]

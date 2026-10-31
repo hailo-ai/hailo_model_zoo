@@ -3,4 +3,3 @@ change_output_activation(conv26, sigmoid)
 change_output_activation(conv32, sigmoid)
 change_output_activation(conv38, sigmoid)
 
-allocator_param(automatic_reshapes=enabled)

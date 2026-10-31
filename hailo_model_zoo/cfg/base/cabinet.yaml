@@ -1,0 +1,25 @@
+base:
+- base/fcn.yaml
+parser:
+  nodes:
+  - null
+  - null
+  normalization_params:
+    normalize_in_net: true
+    std_list:
+    - 57.375
+    - 53.04
+    - 58.14
+    mean_list:
+    - 122.4
+    - 127.245
+    - 116.535
+postprocessing:
+  device_pre_post_layers:
+    argmax: false
+    bilinear: false
+info:
+  framework: pytorch
+  source: https://github.com/dronefreak/CABiNet
+  license_url: https://github.com/dronefreak/CABiNet/blob/master/LICENSE
+  license_name: Apache-2.0

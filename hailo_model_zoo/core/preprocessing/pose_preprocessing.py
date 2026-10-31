@@ -93,6 +93,8 @@ def yolo_pose(image, image_info=None, height=None, width=None, scope=None, paddi
         )
         image.set_shape((height, width, 3))
 
+    image_info["img_orig"] = tf.cast(image, tf.uint8)
+
     if image.dtype == tf.uint8:
         image = tf.cast(image, tf.float32)
 

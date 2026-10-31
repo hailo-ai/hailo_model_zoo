@@ -5,7 +5,7 @@ Public Models
 =============
 
 * System host: Intel® Core™ i5-9400 CPU @ 2.90GHz
-* Hailo Dataflow Compiler Version v5.4.0
+* Hailo Dataflow Compiler Version v5.5.0
 * Measurement conditions: Measuring from the SoC, room temperature
 
 |
@@ -75,12 +75,29 @@ Cifar100
    
    
 
+   * - clip_resnet_50_image_encoder
+     - 42.1
+     - 37.1
+     - 88.6
+     - 217
+     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_resnet_50/image_encoder/pretrained/2023-03-09/clip_resnet_50.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_resnet_50_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_resnet_50_image_encoder.hef>`_
+     - 224x224x3
+     - 38.72
+     - 11.62
+   
+   
+   
+   
+   
+   
+   
+
    * - clip_resnet_50x4_image_encoder
      - 50.6
-     - 49.8
+     - 51.2
      - 30.4
-     - 59.0
-     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_resnet_50x4/image_encoder/pretrained/2023-03-09/clip_resnet_50x4.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15l/clip_resnet_50x4_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15l/clip_resnet_50x4_image_encoder.hef>`_
+     - 60.0
+     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_resnet_50x4/image_encoder/pretrained/2023-03-09/clip_resnet_50x4.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_resnet_50x4_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_resnet_50x4_image_encoder.hef>`_
      - 288x288x3
      - 87.0
      - 41.3
@@ -92,12 +109,97 @@ Cifar100
    
    
 
+   * - clip_vit_b_16_image_encoder
+     - 69.9
+     - 66.5
+     - 36.9
+     - 84.3
+     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_vit_base_patch16_224/image_encoder/pretrained/2023-03-09/clip_vit_b_16.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_vit_b_16_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_vit_b_16_image_encoder.hef>`_
+     - 224x224x3
+     - 86
+     - 35.1
+   
+   
+   
+   
+   
+   
+   
+
    * - clip_vit_b_32_image_encoder
      - 64.5
-     - 63.7
-     - 54.2
-     - 206
-     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_vit_base_patch32_224/image_encoder/pretrained/2023-03-09/clip_vit_b_32.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15l/clip_vit_b_32_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.4.0/hailo15l/clip_vit_b_32_image_encoder.hef>`_
+     - 63.3
+     - 54.1
+     - 203
+     - | `S <https://github.com/openai/CLIP>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/clip_vit_base_patch32_224/image_encoder/pretrained/2023-03-09/clip_vit_b_32.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_vit_b_32_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/clip_vit_b_32_image_encoder.hef>`_
      - 224x224x3
      - 87.8
      - 8.8
+   
+   
+   
+   
+   
+   
+   
+
+   * - siglip2_b_16_image_encoder
+     - 76.2
+     - 71.7
+     - 31.1
+     - 52.7
+     - | `S <https://huggingface.co/google/siglip2-base-patch16-224>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_base_patch16_224/image_encoder/pretrained/2025-05-06/siglip2-base-patch16-224_vision_encoder.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip2_b_16_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip2_b_16_image_encoder.hef>`_
+     - 224x224x3
+     - 92.1
+     - 35.4
+   
+   
+   
+   
+   
+   
+   
+
+   * - siglip2_b_32_256_image_encoder
+     - 75.1
+     - 70.7
+     - 47.0
+     - 157
+     - | `S <https://huggingface.co/google/siglip2-base-patch32-256>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip2_base_patch32_256/image_encoder/pretrained/2025-05-21/siglip2-base-patch32-256_vision_encoder.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip2_b_32_256_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip2_b_32_256_image_encoder.hef>`_
+     - 256x256x3
+     - 93.9
+     - 11.5
+   
+   
+   
+   
+   
+   
+   
+
+   * - siglip_l_16_256_image_encoder
+     - 82.0
+     - 78.0
+     - 8.18
+     - 15.4
+     - | `S <https://huggingface.co/google/siglip-large-patch16-256>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/siglip/siglip_large_patch16_256/image_encoder/pretrained/2025-03-25/siglip_large_patch16_256_vision_encoder.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip_l_16_256_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/siglip_l_16_256_image_encoder.hef>`_
+     - 256x256x3
+     - 315
+     - 163.1
+   
+   
+   
+   
+   
+   
+   
+
+   * - tinyclip_vit_39m_16_text_19m_yfcc15m_image_encoder
+     - 67.9
+     - 64.5
+     - 69.6
+     - 165
+     - | `S <https://huggingface.co/wkcn/TinyCLIP-ViT-39M-16-Text-19M-YFCC15M>`_ `PT <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ZeroShotClassification/clip/tinyclip/tinyclip_vit_39m_16_text_19m_yfcc15m_image_encoder/pretrained/2025-07-21/TinyCLIP-ViT-39M-16-Text-19M-YFCC15M_image_encoder.zip>`_ `PR <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/tinyclip_vit_39m_16_text_19m_yfcc15m_image_encoder_profiler_results_compiled_runtime_data.html>`_  `HEF <https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ModelZoo/Compiled/v5.5.0/hailo15l/tinyclip_vit_39m_16_text_19m_yfcc15m_image_encoder.hef>`_
+     - 224x224x3
+     - 39
+     - 16.02

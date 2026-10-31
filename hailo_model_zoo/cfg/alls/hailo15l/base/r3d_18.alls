@@ -1,5 +1,4 @@
 post_quantization_optimization(finetune, policy=disabled)
-post_quantization_optimization(bias_correction, policy=disabled)
 
 resources_param(max_utilization=0.95)
 allocator_param(enable_fixer=max_adjcents)

@@ -3,9 +3,8 @@ conv49_d0, conv49_d1, conv49_d2, conv49_d3, conv49_dc = defuse(conv49, 4)
 norm_layer1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
 
 # model_optimization_config commands
-model_optimization_config(calibration, batch_size=16, calibset_size=64)
+model_optimization_config(calibration, batch_size=16)
 post_quantization_optimization(finetune, policy=enabled, batch_size=4, warmup_epochs=0, learning_rate=0.00005)
-pre_quantization_optimization(equalization, policy=enabled)
 model_optimization_flavor(optimization_level=2, compression_level=0)
 pre_quantization_optimization(matmul_equalization,layers={matmul*}, policy=disabled)
 

@@ -1,0 +1,5 @@
+normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
+model_optimization_config(calibration, batch_size=1)
+pre_quantization_optimization(activation_clipping, layers={conv*}, mode=percentile, clipping_values=[0.01, 99.99])
+# SiLU pre-activation tails to -150 and sigmoid-0.5 gates near zero have no 8-bit resolution
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.001, epochs=8, dataset_size=512, batch_size=1, def_loss_type=l2)

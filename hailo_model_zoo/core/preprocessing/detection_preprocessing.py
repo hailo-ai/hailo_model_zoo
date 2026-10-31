@@ -266,9 +266,12 @@ def yolo_world(image, image_info=None, height=None, width=None, scope=None, padd
         image_info["is_ignore"] = _pad_tensor(image_info["is_ignore"], max_pad)
 
     network_name = kwargs.get("network_name", "yolo_world")
+    text_embeddings = image_info["text_embeddings"]
+    if "yoloe" in network_name:
+        text_embeddings = tf.transpose(text_embeddings, perm=[0, 2, 1])
     return {
         f"{network_name}/input_layer1": image,
-        f"{network_name}/input_layer2": image_info["text_embeddings"],
+        f"{network_name}/input_layer2": text_embeddings,
     }, image_info
 
 

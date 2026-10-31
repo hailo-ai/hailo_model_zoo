@@ -1,0 +1,16 @@
+base:
+- base/zipdepth.yaml
+network:
+  network_name: zipdepth_384x384
+paths:
+  alls_script: zipdepth_384x384.alls
+  network_path:
+  - models_files/DepthEstimation/ZipDepth/pretrained/2026-09-16/zipdepth_384x384.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/DepthEstimation/ZipDepth/pretrained/2026-09-16/zipdepth_384x384.zip
+info:
+  input_shape: 384x384x3
+  output_shape: 384x384x1
+  operations: 5.84G
+  full_precision_result: 0.121
+  supported_hw_arch:
+  - hailo15h

@@ -3,4 +3,4 @@ post_quantization_optimization(finetune, policy=disabled)
 quantization_param(output_layer1, precision_mode=a16_w16)
 quantization_param(output_layer2, precision_mode=a16_w16)
 
-allocator_param(automatic_reshapes=enabled)
+allocator_param(automatic_reshapes=disabled)

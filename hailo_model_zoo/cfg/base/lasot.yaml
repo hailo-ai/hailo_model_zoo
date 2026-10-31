@@ -1,0 +1,14 @@
+base:
+- base/base.yaml
+evaluation:
+  dataset_name: lasot
+  data_set: models_files/lasot/2026-08-03/lasot_val.tfrecord
+  network_type: single_object_tracking
+  infer_type: tracker_infer
+preprocessing:
+  network_type: single_object_tracking
+  meta_arch: single_object_tracking
+quantization:
+  calib_set:
+  - models_files/lasot/2026-08-03/lasot_calib_pairs.tfrecord
+  calib_set_name: lasot_calib

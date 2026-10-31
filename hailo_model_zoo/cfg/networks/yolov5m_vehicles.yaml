@@ -27,6 +27,7 @@ postprocessing:
   hpp: true
 info:
   task: pipeline
+  validation_data: vehicles
   input_shape: 1080x1920x3
   output_shape: 1x5x80
   operations: 51.19G

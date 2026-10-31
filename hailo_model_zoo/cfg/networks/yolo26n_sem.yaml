@@ -1,0 +1,17 @@
+base:
+- base/yolo26_sem.yaml
+network:
+  network_name: yolo26n_sem
+paths:
+  alls_script: yolo26n_sem.alls
+  network_path:
+  - models_files/Segmentation/Cityscapes/yolo26n_sem/pretrained/2026-05-28/yolo26n-sem.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/Cityscapes/yolo26n_sem/pretrained/2026-05-28/yolo26n-sem.zip
+info:
+  operations: 23.9G
+  parameters: 1.63M
+  full_precision_result: 77.354
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

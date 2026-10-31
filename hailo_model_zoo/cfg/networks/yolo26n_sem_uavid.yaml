@@ -1,0 +1,18 @@
+base:
+- base/yolo26_sem_aerial.yaml
+- base/uavid_seg.yaml
+network:
+  network_name: yolo26n_sem_uavid
+paths:
+  alls_script: yolo26n_sem_uavid.alls
+  network_path:
+  - models_files/Segmentation/UAVid/yolo26n_sem_uavid/pretrained/2026-09-03/yolo26n_sem_uavid.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/UAVid/yolo26n_sem_uavid/pretrained/2026-09-03/yolo26n_sem_uavid.zip
+info:
+  operations: 6.4G
+  parameters: 1.63M
+  full_precision_result: 58.055
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

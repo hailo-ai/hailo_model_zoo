@@ -1,0 +1,17 @@
+inference:
+  full_precision_batch_size: 2
+  emulator_batch_size: 2
+quantization:
+  calib_set:
+  - models_files/uavid/2026-09-03/uavid_calib.tfrecord
+evaluation:
+  classes: 8
+  dataset_name: uavid
+  data_set: models_files/uavid/2026-09-03/uavid_test.tfrecord
+info:
+  task: semantic segmentation
+  input_shape: 576x1024x3
+  output_shape: 576x1024x1
+  training_data: uavid train
+  validation_data: uavid test
+  eval_metric: mIoU

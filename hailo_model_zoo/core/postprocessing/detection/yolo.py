@@ -43,6 +43,7 @@ class YoloPostProc(object):
             "yolo_v6": YoloPostProc._yolo6_decode,
             "yolo26": YoloPostProc._yolo6_decode,
             "yolo26_seg": YoloPostProc._yolo6_decode,
+            "yolo26_pose": YoloPostProc._yolo6_decode,
         }
         self._nms_on_device = False
         self._should_clip = should_clip

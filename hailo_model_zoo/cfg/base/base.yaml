@@ -60,6 +60,7 @@ postprocessing:
   nms_max_output_per_class: null
   mask_threshold: null
   ext_upsample: null
+  align_corners: false
   device_pre_post_layers:
     softmax: false
     argmax: false

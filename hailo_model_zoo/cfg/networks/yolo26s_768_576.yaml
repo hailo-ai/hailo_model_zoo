@@ -1,0 +1,18 @@
+base:
+- base/yolo26.yaml
+network:
+  network_name: yolo26s_768_576
+paths:
+  network_path:
+  - models_files/ObjectDetection/Detection-COCO/yolo/yolo26s_768_576/2026-04-14/yolo26s_768_576.onnx
+  alls_script: yolo26s_768_576.alls
+info:
+  input_shape: 576x768x3
+  output_shape: 1x300x6
+  operations: 22.65G
+  parameters: 9.5M
+  full_precision_result: 47.81
+  supported_hw_arch:
+  - hailo15h
+  - hailo15l
+  - hailo10h

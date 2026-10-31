@@ -1,0 +1,17 @@
+inference:
+  full_precision_batch_size: 2
+  emulator_batch_size: 2
+quantization:
+  calib_set:
+  - models_files/aeroscapes/2026-09-03/aeroscapes_calib.tfrecord
+evaluation:
+  classes: 12
+  dataset_name: aeroscapes
+  data_set: models_files/aeroscapes/2026-09-03/aeroscapes_val.tfrecord
+info:
+  task: semantic segmentation
+  input_shape: 576x1024x3
+  output_shape: 576x1024x1
+  training_data: aeroscapes train
+  validation_data: aeroscapes val
+  eval_metric: mIoU

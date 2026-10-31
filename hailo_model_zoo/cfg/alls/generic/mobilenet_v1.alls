@@ -4,4 +4,4 @@ post_quantization_optimization(bias_correction, policy=enabled)
 
 performance_param(optimize_for_power=True)
 
-allocator_param(automatic_reshapes=enabled)
+allocator_param(enable_conv_2_apus_in_racehorse_pyramids=enabled)

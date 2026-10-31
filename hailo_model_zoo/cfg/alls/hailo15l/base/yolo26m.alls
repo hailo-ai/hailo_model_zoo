@@ -8,3 +8,5 @@ quantization_param([dw1, dw6, dw7, dw8], precision_mode=a16_w8_a16)
 quantization_param([ew_add10, ew_add20], precision_mode=a16_w16_a16)
 quantization_param([conv46, conv71, conv74, conv87, conv90, conv95, conv101, conv102, conv103, conv104], precision_mode=a16_w8)
 quantization_param([output_layer1, output_layer2, output_layer3, output_layer4, output_layer5, output_layer6], precision_mode=a16_w16)
+
+compilation_param({conv*}, defuse_spatial_w_with_many_features=False)

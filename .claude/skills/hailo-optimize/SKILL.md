@@ -59,7 +59,7 @@ The user may want to extend the auto-matched ALLS. Most-common commands (lifted 
 | Command | Purpose |
 |---|---|
 | `normalization1 = normalization([means], [stds])` | Fold normalization into the network. |
-| `model_optimization_flavor(optimization_level=0..4, compression_level=0..5)` | Compilation-speed vs accuracy and 4-bit weight aggressiveness. `compression_level=5` ≈ 100% 4-bit weights (most aggressive); `0` disables auto-4-bit. |
+| `model_optimization_flavor(optimization_level=0..4, compression_level=0..5)` | Optimization method and 4-bit weight aggressiveness — **not a monotone accuracy ladder**, see below. `compression_level=5` ≈ 100% 4-bit weights (most aggressive); `0` disables auto-4-bit. |
 | `model_optimization_config(calibration, batch_size=N, calibset_size=M)` | Calibration knobs. |
 | `change_output_activation(<layer>, sigmoid)` | Common for YOLO output convs. |
 | `nms_postprocess("<path-to-nms.json>", meta_arch=yolov5\|yolov8\|..., engine=cpu)` | Wire NMS in as a CPU postprocess. NMS configs ship in `hailo_model_zoo/cfg/postprocess_config/`. |
@@ -68,6 +68,24 @@ The user may want to extend the auto-matched ALLS. Most-common commands (lifted 
 | `post_quantization_optimization(bias_correction, policy=enabled)` | Per-channel bias correction. |
 | `quantization_param(<layer>, precision_mode=a16_w16)` | Promote a noisy layer to 16-bit. |
 | `input_conversion(yuv_to_rgb)` / `resize(resize_shapes=[H,W])` | Preprocessing fused into the network. |
+
+#### `optimization_level` is a choice of method, not a monotone ladder
+
+Each level runs a **different** optimization algorithm — a higher number is not simply "more" of what a lower number does:
+
+| Level | Algorithm |
+|---|---|
+| 0 | Equalization only |
+| 1 | Equalization + iterative bias correction |
+| 2 | Equalization + QAT fine-tune (4 epochs, 1024 calibration images) |
+| 3 | Equalization + AdaRound (320 epochs, 256 images) |
+| 4 | Equalization + AdaRound (320 epochs, 1024 images) |
+
+Levels 3 and 4 **replace** the fine-tune with AdaRound — they do not add AdaRound on top of it. Moving a script from level 2 to level 3 while also disabling AdaRound therefore gets *weaker* optimization, not stronger; never do both at once, and don't treat 2 → 3 as a generic "try harder" escalation.
+
+**Real defaults** matter whenever a script omits `model_optimization_flavor(...)` entirely: `optimization_level` defaults to 2 only when a GPU is available **and** the calibration set has at least 1024 images; it drops to 1 with a smaller calibration set, and to 0 with no GPU at all. `compression_level` defaults to 1 (roughly 20% of weights auto-converted to 4-bit) when the resolved optimization level is above 1 and the network has more than 20M parameters, otherwise it defaults to 0. Because these defaults depend on the machine and the calibration set actually used, pin both `optimization_level` and `compression_level` explicitly in any model script whose accuracy numbers must reproduce on another machine.
+
+`post_quantization_optimization(adaround, policy=disabled)` is a no-op at level 2 or below — AdaRound is only scheduled starting at level 3, and its policy already defaults to disabled. Don't add this line, and don't carry it over from a sibling model's script.
 
 ### 4. Calibration data prep
 
@@ -120,6 +138,8 @@ If the outputs diverge wildly here, fix the model script before paying for a ful
 
 ### 7. Run optimization (full quantization)
 
+`runner.optimize(...)` (and `hailomz optimize`) writes its output HAR under a name derived from the network, in the current directory — the same name the parse stage wrote to. Copy the parsed HAR aside first (e.g. `<net>_parsed.har`) or it gets overwritten:
+
 ```python
 from hailo_sdk_client import ClientRunner
 import numpy as np
@@ -141,13 +161,30 @@ The DFC prints per-output SNR (in dB) at the end of `runner.optimize(...)`. Pars
 
 - **Default threshold: ≥ 10 dB** per output. This matches the DFC convention — the CLI tools flag layers with SNR < 10 dB as "most sensitive" (`command_line_tools.rst`). Tighten the threshold (e.g. ≥ 16 dB) for accuracy-critical deployments; loosen it for very lossy tasks.
 - All outputs above threshold → report success and continue.
-- One or more outputs below threshold → suggest, in order:
-  1. Raise `model_optimization_flavor(optimization_level=2 → 3)`.
-  2. Add `post_quantization_optimization(finetune, policy=enabled, learning_rate=2.5e-5)` if not already enabled.
-  3. Add `post_quantization_optimization(bias_correction, policy=enabled)`.
-  4. Run `runner.analyze_noise(...)` (DFC tutorial `DFC_5_Layer_Noise_Analysis_Tutorial.ipynb`, extract via `hailo tutorial`) to identify the worst layers.
-  5. Promote the worst layers via `quantization_param(<layer>, precision_mode=a16_w16)`.
-  6. **Last resort — Quantization-Aware Training (QAT)**: see `DFC_6_QAT_Tutorial.ipynb`. QAT typically recovers the most accuracy when the simpler escalations above fail, but it requires the original training pipeline (data + loss + optimizer) — only suggest this when the user has retraining infrastructure available.
+- One or more outputs below threshold → escalate in order, and stop as soon as SNR recovers:
+  1. Promote the starved layer to 16-bit: `quantization_param([<layer>], precision_mode=a16_w16)`.
+  2. Add fine-tune epochs: `post_quantization_optimization(finetune, policy=enabled, epochs=8)`. `policy=enabled` is mandatory here — the model-script parser rejects the command without it, even though the flavor-level fine-tune (level 2) enables it implicitly.
+  3. Only then consider AdaRound (`optimization_level=3` or `4`) or full QAT with the original training pipeline (data + loss + optimizer) — see `DFC_6_QAT_Tutorial.ipynb`. This is the most expensive step and, per the level table above, replaces rather than adds to whatever fine-tune was running before.
+
+  Do not treat "raise the optimization level" as the first move, and do not assume a higher level adds fine-tune on top of what a lower level already had — see the level table above.
+
+  Run `runner.analyze_noise(...)` (DFC tutorial `DFC_5_Layer_Noise_Analysis_Tutorial.ipynb`, extract via `hailo tutorial`) beforehand to identify which layer to target with step 1.
+
+**hailo10h caveat**: `precision_mode=a16_w8` (and `a16_w4`) on a conv currently crashes the fine-tune stage on hailo10h. Use `a16_w16` instead. Separately, the hardware rejects a 16-to-8 precision transition feeding an 8-bit matmul — if the starved layers are a matmul's input projections, pin the layer *after* the matmul instead; its transition is 8-to-16 and is legal.
+
+If `runner.analyze_noise(...)` itself crashes with a dimension mismatch on a decomposed matmul, disable the checker so optimization can proceed — `model_optimization_config(checker_cfg, policy=disabled)` — and get per-layer SNR another way (e.g. compare native vs quantized outputs directly). This is a known DFC issue with attention blocks whose projections aren't a multiple of the vector width.
+
+**Noise floor**: an SNR or accuracy check on a small validation set (a few hundred images) carries run-to-run noise of order 0.1 metric points, since the calibration draw and fine-tune are both stochastic. A result that sits within noise of a pass/fail gate should be repeated before it's treated as a real pass or fail.
+
+#### Global average pool overflow
+
+A global average pool over a large spatial map (roughly 8k pixels and up — e.g. 72x128) can overflow the accumulator shift and abort numerization. Split it into two pooling stages with:
+
+```
+pre_quantization_optimization(global_avgpool_reduction, layers=[<pool>, ...], division_factors=[a, b])
+```
+
+The two factors must tile the input spatial size exactly — e.g. 72x128 splits as a 9x16 pool followed by an 8x8 pool. A layer in `layers` that was dead-code eliminated earlier in the graph is silently ignored, so a factor mismatch elsewhere is the more likely cause if the overflow persists.
 
 ### 9. Hand-off
 

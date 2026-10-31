@@ -1,3 +1,125 @@
+**v5.5.0**
+
+* Updated to use with Dataflow Compiler v5.5.0
+* Updated to use with HailoRT v5.5.0
+* The DIV2K super-resolution network real_esrgan_x2 now calibrates on a DIV2K train-split set; the
+  previous calibration set was cut from the validation split.
+* New Models:
+
+  * `STARK-Lightning <https://arxiv.org/abs/2103.17154>`_ - First single-object tracker in the Model
+    Zoo (stark_lightning_repvgg_a0). RepVGG-A0 backbone with one lite transformer encoder layer;
+    128x128 template and 320x320 search crop, evaluated on LaSOT. Released for Hailo-15H and
+    Hailo-10H.
+
+  * `MiVOLO <https://github.com/WildChlamydia/MiVOLO>`_ - Age and gender estimation (mivolo_d1),
+    6-channel face+person input with face-only and body-only modes. Released for Hailo-15H and
+    Hailo-10H.
+
+  * `YamNet <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>`_ - First
+    audio-classification network in the Model Zoo (yamnet), a 521-class AudioSet event classifier.
+    Released for Hailo-15L, Hailo-15H and Hailo-10H.
+
+  * `YOLO26-seg-semantic <https://arxiv.org/abs/2606.03748>`_ - Cityscapes semantic segmentation
+    (1024x2048 input, 19 classes). yolo26n_sem and yolo26s_sem released for Hailo-15L, Hailo-15H and
+    Hailo-10H; yolo26m_sem and yolo26l_sem released for Hailo-15H and Hailo-10H.
+
+  * `CABiNet <https://github.com/dronefreak/CABiNet>`_ - Aerial (UAV) semantic segmentation with a
+    MobileNetV3 context branch and non-local attention (cabinet_mnv3l_uavid, UAVid, 8 classes).
+    Released for Hailo-15H and Hailo-10H.
+
+  * `PaddleOCR-v6 <https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv6/PP-OCRv6.html>`_ -
+    The complete PP-OCRv6 text detection and recognition pipeline. paddle_ocr_v6_tiny_recognition,
+    paddle_ocr_v6_small_recognition, paddle_ocr_v6_medium_recognition and
+    paddle_ocr_v6_small_detection released for Hailo-15L, Hailo-15H and Hailo-10H;
+    paddle_ocr_v6_tiny_detection and paddle_ocr_v6_medium_detection released for Hailo-15H and
+    Hailo-10H.
+
+  * `all-MiniLM-L6-v2 <https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2>`_ - First
+    sentence-embedding model in the Model Zoo (all_minilm_l6_v2), 128-token input and 384-dim
+    embeddings, evaluated by Retrieval\@10 on MTEB ArguAna. all_minilm_l6_v2_v2a is the same encoder
+    on a tool-description classification set. Both released for Hailo-15L, Hailo-15H and Hailo-10H.
+
+  * `DINOv2 <https://arxiv.org/abs/2304.07193>`_ - Self-supervised Vision Transformer backbone with
+    a linear ImageNet classifier head (dinov2_vits14_lc), ViT-S/14 at 224x224. Released for
+    Hailo-15H and Hailo-10H.
+
+  * `PIDNet <https://github.com/XuJiacong/PIDNet>`_ - Real-time Cityscapes semantic segmentation
+    with a three-branch (proportional / integral / derivative) pure-conv design. pidnet_s and
+    pidnet_l released for Hailo-15H and Hailo-10H.
+
+  * `SPAN <https://github.com/hongyuanyu/SPAN>`_ - Swift Parameter-free Attention Network, the NTIRE
+    2024 Efficient Super-Resolution winner - span_x4 (512x512 -> 2048x2048) and span_x2 (1024x1024
+    -> 2048x2048). Released for Hailo-15H and Hailo-10H.
+
+  * `SPANF <https://github.com/Amazingren/NTIRE2025_ESR>`_ - The lighter NTIRE 2025 successor to
+    SPAN - spanf_x4 (512x512 -> 2048x2048). Released for Hailo-15H and Hailo-10H.
+
+  * `PP-LiteSeg <https://arxiv.org/abs/2204.02681>`_ - Real-time Cityscapes semantic segmentation
+    from PaddleSeg with an STDC encoder - pp_liteseg_t and pp_liteseg_b. Released for Hailo-15H and
+    Hailo-10H.
+
+  * `BiSeNetV2 <https://github.com/CoinCheung/BiSeNet>`_ - Real-time Cityscapes semantic
+    segmentation with a bilateral detail / semantic design (bisenetv2, 3.36M parameters). Released
+    for Hailo-15H and Hailo-10H.
+
+  * `DDRNet <https://github.com/ydhongHIT/DDRNet>`_ - Real-time Cityscapes semantic segmentation
+    with a deep dual-resolution design and a DAPPM context head (ddrnet_23_slim, 5.7M parameters).
+    Released for Hailo-15H and Hailo-10H.
+
+  * `ByteTrack <https://github.com/ifzhang/ByteTrack>`_ - Multi-object pedestrian tracking by
+    associating every detection box, low-score ones included. One-class YOLOX detectors trained on
+    MOT17, scored by MOTA on MOT16. bytetrack_tiny_mot17 and bytetrack_s_mot17 released for
+    Hailo-15L, Hailo-15H and Hailo-10H; bytetrack_nano_mot17 released for Hailo-15H.
+
+  * `ZipDepth <https://arxiv.org/abs/2607.08771>`_ - Lightweight zero-shot monocular depth
+    estimation (zipdepth_256x832, zipdepth_384x384), a 6.1M-parameter network distilled from Depth
+    Anything v2-Large. Released for Hailo-15H.
+
+* New variants of models already in the Model Zoo:
+
+  * `YOLO26-seg-semantic <https://arxiv.org/abs/2606.03748>`_ aerial - YOLO26 semantic-segmentation
+    models fine-tuned on aerial imagery (weights published by the CABiNet project), 576x1024 input.
+    Introduces the ``uavid`` and ``aeroscapes`` datasets. yolo26n_sem_uavid, yolo26s_sem_uavid,
+    yolo26n_sem_aeroscapes and yolo26s_sem_aeroscapes released for Hailo-15L, Hailo-15H and
+    Hailo-10H.
+
+  * `YOLOv11-seg <https://docs.ultralytics.com/models/yolo11/>`_ - Instance-segmentation variants of
+    the YOLOv11 family. yolov11n_seg, yolov11s_seg, yolov11m_seg and yolov11l_seg released for
+    Hailo-15L, Hailo-15H and Hailo-10H; yolov11x_seg released for Hailo-15H and Hailo-10H.
+
+  * `YOLO26 <https://arxiv.org/abs/2606.03748>`_ - yolo26s_768_448 and yolo26s_768_576, YOLO26s
+    object detectors at 448x768 and 576x768 input, released for Hailo-15L, Hailo-15H and Hailo-10H;
+    yolo26x_seg, the YOLO26x instance-segmentation model, released for Hailo-15H.
+
+  * `YOLO-World <https://arxiv.org/abs/2401.17270>`_ - yolo_world_v2m, the medium YOLO-World v2
+    open-vocabulary detector, released for Hailo-15H and Hailo-10H.
+
+  * `SCRFD <https://arxiv.org/abs/2105.04714>`_ - scrfd_2.5g_384_640 and scrfd_10g_384_640, 384x640
+    variants of the SCRFD face detectors. Released for Hailo-15L, Hailo-15H and Hailo-10H.
+
+* Existing models now released for additional hardware:
+
+  * `CLIP <https://arxiv.org/abs/2103.00020>`_, `SigLIP <https://arxiv.org/abs/2303.15343>`_,
+    `SigLIP2 <https://arxiv.org/abs/2502.14786>`_ and `TinyCLIP <https://arxiv.org/pdf/2309.12314>`_
+    - the following encoders are now also released for Hailo-15L: clip_resnet_50_image_encoder,
+    clip_resnet_50x4_text_encoder, clip_vit_b_16_image_encoder, siglip_l_16_256_image_encoder,
+    siglip2_b_16_text_encoder, siglip2_b_32_256_image_encoder, siglip2_b_32_256_text_encoder,
+    tinyclip_vit_39m_16_text_19m_yfcc15m_image_encoder and
+    tinyclip_vit_39m_16_text_19m_yfcc15m_text_encoder. siglip2_b_16_image_encoder is released for
+    the first time, on Hailo-15L.
+
+
+
+
+
+
+
+
+
+
+
+
+
 **v5.4.0**
 
 * Updated to use with Dataflow Compiler v5.4.0
@@ -12,7 +134,7 @@
 * New Models:
 
   * `YOLOv11-obb <https://arxiv.org/pdf/2410.17725v1>`_ - Added support for oriented bounding box detection models - YOLOv11-obb family
-  * `YOLO26 <https://arxiv.org/abs/2509.25164>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
+  * `YOLO26 <https://arxiv.org/abs/2606.03748>`_ - New family of object detection and instance segmentation models. The new architecture is NMS-free.
   * `PaddleOCR-v5 <https://arxiv.org/abs/2507.05595>`_ - Added support for paddle_ocr_v5_mobile_detection and paddle_ocr_v5_mobile_recognition for Hailo-15L hardware architecture, and improved Hailo-10H/Hailo-15H FPS
   * YOLOv5-seg-hpp - Added support for instance segmentation with HailoRT postprocessing - yolov5n_seg_hpp, yolov5s_seg_hpp, yolov5m_seg_hpp
 

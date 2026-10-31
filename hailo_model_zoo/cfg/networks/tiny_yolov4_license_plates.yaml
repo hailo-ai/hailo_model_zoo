@@ -35,7 +35,7 @@ paths:
   url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/HailoNets/LPR/lp_detector/tiny_yolov4_license_plates/2021-12-23/tiny_yolov4_license_plates.zip
 parser:
   nodes:
-  - input
+  - null
   - - Conv_100
     - Conv_453
 evaluation:
@@ -45,6 +45,7 @@ evaluation:
   data_set: null
 info:
   task: pipeline
+  validation_data: license plates
   input_shape: 416x416x3
   output_shape: 13x13x18, 26x26x18
   operations: 6.8G

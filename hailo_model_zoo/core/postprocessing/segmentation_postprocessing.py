@@ -59,6 +59,34 @@ def get_dataset_colors(dataset):
                 [89.0, 197.0, 132.0, 115.0],
             ]
         ),
+        "uavid": np.array(
+            [
+                [0.0, 0.0, 0.0, 115.0],  # clutter
+                [128.0, 0.0, 0.0, 115.0],  # building
+                [128.0, 64.0, 128.0, 115.0],  # road
+                [192.0, 0.0, 192.0, 115.0],  # static car
+                [0.0, 128.0, 0.0, 115.0],  # tree
+                [128.0, 128.0, 0.0, 115.0],  # vegetation
+                [64.0, 64.0, 0.0, 115.0],  # human
+                [64.0, 0.0, 128.0, 115.0],  # moving car
+            ]
+        ),
+        "aeroscapes": np.array(
+            [
+                [0.0, 0.0, 0.0, 115.0],  # background
+                [192.0, 128.0, 128.0, 115.0],  # person
+                [0.0, 128.0, 0.0, 115.0],  # bike
+                [128.0, 128.0, 128.0, 115.0],  # car
+                [128.0, 0.0, 0.0, 115.0],  # drone
+                [0.0, 0.0, 128.0, 115.0],  # boat
+                [192.0, 0.0, 128.0, 115.0],  # animal
+                [192.0, 0.0, 0.0, 115.0],  # obstacle
+                [192.0, 128.0, 0.0, 115.0],  # construction
+                [0.0, 64.0, 0.0, 115.0],  # vegetation
+                [128.0, 128.0, 0.0, 115.0],  # road
+                [0.0, 128.0, 128.0, 115.0],  # sky
+            ]
+        ),
         "ss_dpm": np.array(
             [
                 [0.0, 0.0, 0.0, 0.0],  # background 0
@@ -104,7 +132,10 @@ def segmentation_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
             logits = endnodes
         else:
             size = np.array(endnodes.shape[1:3]) * kwargs["ext_upsample"]
-            logits = tf.image.resize(endnodes, size=size.tolist(), method="bilinear")
+            if kwargs.get("align_corners"):
+                logits = tf.compat.v1.image.resize_bilinear(endnodes, size=size.tolist(), align_corners=True)
+            else:
+                logits = tf.image.resize(endnodes, size=size.tolist(), method="bilinear")
         predictions = tf.cast(tf.argmax(logits, axis=-1), tf.float32)
     return {"predictions": predictions}
 
@@ -128,9 +159,7 @@ def visualize_segmentation_result(logits, image, **kwargs):
         mask_3d = logits[0, :, :, None] * np.ones(3, dtype=int)[None, None, :]
         blur_img = np.array(blur_img) * mask_3d
         img_out = np.array(image * (1 - mask_3d) + blur_img, np.uint8)
-    elif dataset == "cityscapes":
-        img_out = color_segment_img(image, logits[0], dataset)
-    elif dataset == "pascal":
+    elif dataset in ("cityscapes", "pascal", "uavid", "aeroscapes"):
         img_out = color_segment_img(image, logits[0], dataset)
     elif dataset == "ss_dpm":
         img_out = color_segment_img(image, np.argmax(logits[0], axis=-1), dataset)

@@ -1,0 +1,15 @@
+base:
+- base/depth_anything.yaml
+network:
+  network_name: zipdepth
+parser:
+  nodes:
+  - /encoder/stem_half/conv/Conv
+  - /decoder/convex_up/Relu
+info:
+  task: zero-shot depth estimation
+  framework: pytorch
+  parameters: 6.14M
+  source: https://github.com/fabiotosi92/ZipDepth
+  license_url: https://github.com/fabiotosi92/ZipDepth/blob/main/LICENSE
+  license_name: MIT

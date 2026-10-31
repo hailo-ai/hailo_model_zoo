@@ -1,6 +1,6 @@
-import lap
 import numpy as np
 import scipy
+from scipy.optimize import linear_sum_assignment
 from scipy.spatial.distance import cdist
 
 from hailo_model_zoo.core.eval.tracking_evaluation_external import kalman_filter
@@ -36,16 +36,30 @@ def _indices_to_matches(cost_matrix, indices, thresh):
 
 
 def linear_assignment(cost_matrix, thresh):
+    """Solve the assignment problem with ``lap.lapjv(extend_cost=True, cost_limit=thresh)`` semantics.
+
+    Leaving a row or a column unmatched costs ``thresh / 2``, so a pair is taken only when it is
+    cheaper than leaving both sides open, not whenever it costs less than ``thresh``.
+
+    Args:
+        cost_matrix: 2D array of pairwise costs (tracks x detections).
+        thresh: Maximum cost of an accepted pair.
+
+    Returns:
+        Tuple of (matches, unmatched_a, unmatched_b), where matches is an
+        (N, 2) array of (row, column) index pairs.
+    """
     if cost_matrix.size == 0:
         return np.empty((0, 2), dtype=int), tuple(range(cost_matrix.shape[0])), tuple(range(cost_matrix.shape[1]))
-    matches, unmatched_a, unmatched_b = [], [], []
-    cost, x, y = lap.lapjv(cost_matrix, extend_cost=True, cost_limit=thresh)
-    for ix, mx in enumerate(x):
-        if mx >= 0:
-            matches.append([ix, mx])
-    unmatched_a = np.where(x < 0)[0]
-    unmatched_b = np.where(y < 0)[0]
-    matches = np.asarray(matches)
+    n_rows, n_cols = cost_matrix.shape
+    extended = np.full((n_rows + n_cols, n_rows + n_cols), thresh / 2.0)
+    extended[n_rows:, n_cols:] = 0
+    extended[:n_rows, :n_cols] = np.where(np.isfinite(cost_matrix), cost_matrix, thresh + 1.0)
+    rows, cols = linear_sum_assignment(extended)
+    paired = (rows < n_rows) & (cols < n_cols)
+    matches = np.stack((rows[paired], cols[paired]), axis=1)
+    unmatched_a = np.setdiff1d(np.arange(n_rows), matches[:, 0])
+    unmatched_b = np.setdiff1d(np.arange(n_cols), matches[:, 1])
     return matches, unmatched_a, unmatched_b
 
 
@@ -109,3 +123,11 @@ def fuse_motion(kf, cost_matrix, tracks, detections, only_position=False, lambda
         cost_matrix[row, gating_distance > gating_threshold] = np.inf
         cost_matrix[row] = lambda_ * cost_matrix[row] + (1 - lambda_) * gating_distance
     return cost_matrix
+
+
+def fuse_score(cost_matrix, detections):
+    """Scale IoU similarity by detection confidence (ByteTrack)."""
+    if cost_matrix.size == 0:
+        return cost_matrix
+    det_scores = np.array([det.score for det in detections])[None, :]
+    return 1 - (1 - cost_matrix) * det_scores

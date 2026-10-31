@@ -1,0 +1,5 @@
+normalization1 = normalization([114.444, 111.4605, 103.02], [1.0, 1.0, 1.0])
+model_optimization_config(calibration, batch_size=1)
+# conv3's negative-exponent split cannot consume clipped stats (SDK-74666), so no activation clipping; hailo15l convs have no a16_w16
+quantization_param([conv3], precision_mode=a16_w8)
+post_quantization_optimization(finetune, policy=enabled, learning_rate=0.001, epochs=8, dataset_size=512, batch_size=1, def_loss_type=l2)

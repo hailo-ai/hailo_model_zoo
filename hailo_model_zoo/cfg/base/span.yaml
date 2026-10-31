@@ -1,0 +1,33 @@
+base:
+- base/base.yaml
+preprocessing:
+  network_type: super_resolution_srgan
+  meta_arch: span
+postprocessing:
+  meta_arch: sr_resnet
+evaluation:
+  network_type: srgan
+inference:
+  full_precision_batch_size: 1
+  emulator_batch_size: 1
+parser:
+  nodes:
+  - input
+  - - output
+  normalization_params:
+    normalize_in_net: true
+    mean_list:
+    - 114.444
+    - 111.4605
+    - 103.02
+    std_list:
+    - 1
+    - 1
+    - 1
+info:
+  task: super resolution
+  eval_metric: PSNR
+  framework: pytorch
+  source: https://github.com/hongyuanyu/SPAN
+  license_url: https://github.com/hongyuanyu/SPAN/blob/main/LICENSE.txt
+  license_name: Apache-2.0

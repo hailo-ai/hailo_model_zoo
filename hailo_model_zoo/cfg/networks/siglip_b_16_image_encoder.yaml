@@ -11,7 +11,7 @@ paths:
   alls_script: siglip_b_16_image_encoder.alls
 parser:
   nodes:
-  - input.1
+  - null
   - - '1725'
 info:
   task: zero-shot classification

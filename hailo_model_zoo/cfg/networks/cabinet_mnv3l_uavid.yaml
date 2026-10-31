@@ -1,0 +1,17 @@
+base:
+- base/cabinet.yaml
+- base/uavid_seg.yaml
+network:
+  network_name: cabinet_mnv3l_uavid
+paths:
+  alls_script: cabinet_mnv3l_uavid.alls
+  network_path:
+  - models_files/Segmentation/UAVid/cabinet_mnv3l_uavid/pretrained/2026-09-03/cabinet_mnv3l_uavid.onnx
+  url: https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/Segmentation/UAVid/cabinet_mnv3l_uavid/pretrained/2026-09-03/cabinet_mnv3l_uavid.zip
+info:
+  operations: 27.20G
+  parameters: 6.36M
+  full_precision_result: 54.401
+  supported_hw_arch:
+  - hailo15h
+  - hailo10h

@@ -13,3 +13,12 @@ info:
   full_precision_result: 53.87
   supported_hw_arch:
   - hailo15l
+parser:
+  nodes:
+  - null
+  - - /model.23/one2one_cv2.0/one2one_cv2.0.2/Conv
+    - /model.23/one2one_cv2.1/one2one_cv2.1.2/Conv
+    - /model.23/one2one_cv2.2/one2one_cv2.2.2/Conv
+    - /model.23/one2one_cv3.0/one2one_cv3.0.2/Conv
+    - /model.23/one2one_cv3.1/one2one_cv3.1.2/Conv
+    - /model.23/one2one_cv3.2/one2one_cv3.2.2/Conv

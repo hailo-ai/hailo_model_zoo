@@ -10,7 +10,6 @@ quantization_param({ew_add*}, precision_mode=a16_w16)
 quantization_param({norm*}, precision_mode=a16_w16)
 quantization_param([slice1], precision_mode=a16_w16)
 quantization_param({conv_feature_splitter*_3}, precision_mode=a8_w8) 
-model_optimization_config(calibration, calibset_size=64)
 post_quantization_optimization(finetune, policy=disabled, learning_rate=0.000001)
 model_optimization_config(globals, multiproc_policy=disabled)
 

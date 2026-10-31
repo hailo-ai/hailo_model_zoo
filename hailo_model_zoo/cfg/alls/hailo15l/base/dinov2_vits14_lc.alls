@@ -1,0 +1,18 @@
+normalization_entry = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+
+model_optimization_flavor(optimization_level=0, compression_level=0)
+model_optimization_config(negative_exponent, layers={*}, rank=0)
+
+pre_quantization_optimization(layer_norm_decomposition, equalization=disabled, bit_decomposition_mode=uniform_precision)
+pre_quantization_optimization(matmul_correction, layers={matmul*}, correction_type=zp_comp_block)
+pre_quantization_optimization(smart_softmax_stats, optimize_bias=enabled, optimize_bias_algorithm=ZERO_MIDPOINT, force_zero_centered=True)
+
+quantization_param({ew_add*}, precision_mode=a16_w16)
+# Hailo-15L does not support a16_w16 on HailoNormalization layers; a16_w8 is the max there.
+quantization_param({normalization*}, precision_mode=a16_w8)
+quantization_param({layer_normalization*}, precision_mode=a16_w16)
+quantization_param({reduce_max_softmax*}, precision_mode=a16_w16)
+quantization_param({ew_sub_softmax*}, precision_mode=a16_w16)
+quantization_param([dinov2_vits14_lc/conv1, dinov2_vits14_lc/concat1, dinov2_vits14_lc/format_conversion1], precision_mode=a16_w16)
+
+model_optimization_config(calibration, calibset_size=64)

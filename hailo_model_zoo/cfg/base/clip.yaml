@@ -17,3 +17,4 @@ parser:
 quantization:
   calib_set:
   - models_files/coco/2025-07-02/coco_clip_calib2017.tfrecord
+  calib_set_name: coco_encoders

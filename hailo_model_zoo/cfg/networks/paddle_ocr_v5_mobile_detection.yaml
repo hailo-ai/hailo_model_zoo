@@ -35,6 +35,7 @@ evaluation:
   data_set: models_files/icdar2015/2025-07-14/icdar15_val_set.tfrecord
   classes: 1
 info:
+  validation_data: icdar 2015
   input_shape: 544x960x3
   output_shape: 544x960x1
   operations: 6.5G

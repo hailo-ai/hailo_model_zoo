@@ -33,3 +33,16 @@ def text_classification_preprocessing(image, image_info, height, width, **kwargs
         f"{kwargs['network_name']}/input_layer1": attention_mask,
     }
     return model_inp, image_info
+
+
+@PREPROCESS_FACTORY.register(name="sentence_embedding_generation")
+def text_classification_v2a_preprocessing(image, image_info, height, width, **kwargs):
+    embeddings = tf.reshape(image, [1, width, image_info["channels"]])
+    attention_mask = tf.reshape(image_info["multiplicative_mask"], [1, width, 1])
+    reshaped_mask = tf.reshape(attention_mask, (1, 1, width))
+    mask = tf.tile(reshaped_mask, (1, width, 1))
+    model_inp = {
+        f"{kwargs['network_name']}/input_layer1": embeddings,
+        f"{kwargs['network_name']}/input_layer2": mask,
+    }
+    return model_inp, image_info

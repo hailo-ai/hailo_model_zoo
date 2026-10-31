@@ -15,6 +15,7 @@ Usage:
     python create_coco_tfrecord_with_text_embeddings.py val2017 --num-images 1000
     python create_coco_tfrecord_with_text_embeddings.py calib2017 --img /path/to/images --det /path/to/annotations.json
     python create_coco_tfrecord_with_text_embeddings.py val2017 --pooling mean --model openai/clip-vit-large-patch14
+    python create_coco_tfrecord_with_text_embeddings.py val2017 --text-encoder mobileclip
 """
 
 import argparse
@@ -22,6 +23,7 @@ import collections
 import json
 import os
 import random
+import sys
 import zipfile
 from pathlib import Path
 
@@ -38,8 +40,8 @@ from hailo_model_zoo.utils import downloader, path_resolver
 # TFRecord configuration
 TF_RECORD_TYPE = "val2017", "calib2017"
 TF_RECORD_LOC = {
-    "val2017": "models_files/coco/2023-08-03/coco_val2017_with_text_embeddings.tfrecord",
-    "calib2017": "models_files/coco/2023-08-03/coco_calib2017_with_text_embeddings.tfrecord",
+    "val2017": "models_files/coco_with_text_embeddings/2026-04-05/coco_val2017_with_text_embeddings.tfrecord",
+    "calib2017": "models_files/coco_with_text_embeddings/2026-04-05/coco_calib2017_with_text_embeddings.tfrecord",
 }
 
 # COCO class names (80 categories)
@@ -199,6 +201,47 @@ def generate_text_embeddings(model_name="openai/clip-vit-base-patch32", device="
     return embeddings
 
 
+def generate_text_embeddings_ultralytics(model_name=None, device="auto"):
+    """
+    Generate text embeddings using the ultralytics YOLOE text pipeline (MobileCLIP2-B + reprta).
+
+    This produces reprta-processed embeddings compatible with YOLOE ONNX models exported
+    with the fused-style vocabulary input (no reprta in the ONNX graph).
+    Uses YOLOE's get_text_pe() which runs MobileCLIP2-B followed by the model's reprta
+    projection and L2 normalization.
+
+    Args:
+        model_name: YOLOE model name (default: yoloe-26n-seg.pt).
+        device: Device to run on ('auto', 'cuda', 'cpu')
+
+    Returns:
+        numpy.ndarray: Text embeddings of shape (1, 80, 512), reprta-processed and L2-normalized
+    """
+
+    try:
+        from ultralytics import YOLOE
+    except Exception:
+        sys.exit("need to install ultralytics using 'pip install ultralytics'")
+
+    if model_name is None:
+        model_name = "yoloe-26n-seg.pt"
+    print(f"Generating reprta-processed text embeddings using {model_name}...")
+
+    if device == "auto":
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using device: {device}")
+
+    model = YOLOE(model_name)
+    with torch.no_grad():
+        texts = model.model.get_text_pe(COCO_CLASSES, without_reprta=False)
+
+    embeddings = texts.cpu().numpy()
+
+    print(f"Generated text embeddings shape: {embeddings.shape}")
+    print(f"Embedding dimension: {embeddings.shape[-1]}")
+    return embeddings
+
+
 def _create_tfrecord(filenames, name, num_images, imgs_name2id, text_embeddings):
     """Loop over all the images in filenames and create the TFRecord"""
     tfrecords_filename = path_resolver.resolve_data_path(TF_RECORD_LOC[name])
@@ -233,7 +276,6 @@ def _create_tfrecord(filenames, name, num_images, imgs_name2id, text_embeddings)
 
             # Convert text embeddings to bytes
             text_embeddings_bytes = text_embeddings.astype(np.float32).tobytes()
-
             example = tf.train.Example(
                 features=tf.train.Features(
                     feature={
@@ -308,10 +350,14 @@ def download_dataset(name):
     return dataset_dir / dataset_name, dataset_annotations / ("instances_" + dataset_name + ".json")
 
 
-def run(dataset_dir, det_file, name, num_images, model_name, device, pooling_method="mean"):
+def run(dataset_dir, det_file, name, num_images, model_name, device, pooling_method="mean", text_encoder="clip"):
     # Generate text embeddings first
-    print("Step 1: Generating CLIP text embeddings for COCO categories...")
-    text_embeddings = generate_text_embeddings(model_name, device, pooling_method)
+    if text_encoder == "mobileclip":
+        print("Step 1: Generating text embeddings using MobileCLIP2-B...")
+        text_embeddings = generate_text_embeddings_ultralytics(model_name, device)
+    else:
+        print("Step 1: Generating CLIP text embeddings for COCO categories...")
+        text_embeddings = generate_text_embeddings(model_name, device, pooling_method)
 
     # Process dataset
     print("Step 2: Processing COCO dataset...")
@@ -349,8 +395,20 @@ if __name__ == "__main__":
         choices=["mean", "max", "cls_token"],
         help="Pooling method for text embeddings (default: mean)",
     )
+    parser.add_argument(
+        "--text-encoder",
+        type=str,
+        default="clip",
+        choices=["clip", "mobileclip"],
+        help="Text encoder backend: 'clip' for HF CLIP, 'mobileclip' for MobileCLIP2-B (default: clip)",
+    )
 
     args = parser.parse_args()
     assert args.type in TF_RECORD_TYPE, "need to provide which kind of tfrecord to create {}".format(TF_RECORD_TYPE)
 
-    run(args.img, args.det, args.type, args.num_images, args.model, args.device, args.pooling)
+    # When using mobileclip, --model refers to the YOLOE .pt checkpoint
+    model_name = args.model
+    if args.text_encoder == "mobileclip" and model_name == "openai/clip-vit-base-patch32":
+        model_name = "yoloe-26n-seg.pt"  # default YOLOE model for text embedding generation
+
+    run(args.img, args.det, args.type, args.num_images, model_name, args.device, args.pooling, args.text_encoder)

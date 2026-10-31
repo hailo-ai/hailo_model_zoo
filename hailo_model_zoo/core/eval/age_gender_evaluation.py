@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from hailo_model_zoo.core.eval.eval_base_class import Eval
+from hailo_model_zoo.core.eval.eval_result import EvalResult
 from hailo_model_zoo.core.factory import EVAL_FACTORY
 
 ACCEPTED_AGE_DELTA = 5
@@ -14,6 +15,7 @@ def _get_age_range(age):
     return len(ADIENCE_AGE_LIST)
 
 
+@EVAL_FACTORY.register(name="mivolo")
 @EVAL_FACTORY.register(name="age_gender")
 class AgeGenderEval(Eval):
     """
@@ -78,5 +80,20 @@ class AgeGenderEval(Eval):
             )
         )
 
-    def is_percentage(self):
-        return True
+    def get_accuracy(self):
+        """Per-metric flags: the three accuracies are fractions, Age MAE is in years.
+
+        The base implementation stamps one ``is_percentage`` on every metric, which
+        scales the MAE by 100 and reports e.g. "Age MAE=1846" for a real error of
+        18.46 years. MAE is also smaller-the-better, unlike the accuracies.
+        """
+        results = self._get_accuracy()
+        return [
+            EvalResult(
+                value=value,
+                name=name,
+                is_percentage=(name != "Age MAE"),
+                is_bigger_better=(name != "Age MAE"),
+            )
+            for name, value in results.items()
+        ]

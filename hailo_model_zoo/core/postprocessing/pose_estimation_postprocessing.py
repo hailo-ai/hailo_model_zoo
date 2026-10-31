@@ -6,7 +6,12 @@ import numpy as np
 
 from hailo_model_zoo.core.factory import POSTPROCESS_FACTORY, VISUALIZATION_FACTORY
 from hailo_model_zoo.core.postprocessing.centerpose_postprocessing import centerpose_postprocessing
-from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+
+try:
+    from hailo_model_zoo.core.postprocessing.cython_utils.cython_nms import nms as cnms
+except ImportError:
+    cnms = None
+from hailo_model_zoo.core.postprocessing.detection.yolo import YoloPostProc
 from hailo_model_zoo.core.postprocessing.instance_segmentation_postprocessing import xywh2xyxy
 
 BODY_PARTS_KPT_IDS = [
@@ -96,6 +101,8 @@ def pose_estimation_postprocessing(endnodes, device_pre_post_layers=None, **kwar
         return centerpose_postprocessing(endnodes, device_pre_post_layers=None, **kwargs)
     if kwargs.get("meta_arch") == "nanodet_v8":
         return yolov8_pose_estimation_postprocess(endnodes, device_pre_post_layers=None, **kwargs)
+    if kwargs.get("meta_arch") == "yolo26_pose":
+        return yolo26_pose_estimation_postprocess(endnodes, device_pre_post_layers=device_pre_post_layers, **kwargs)
     coco_result_list = []
     for i in range(len(endnodes)):
         image_info = kwargs["gt_images"]
@@ -477,6 +484,11 @@ def non_max_suppression(prediction, conf_thres=0.1, iou_thres=0.45, max_det=100,
         conf = x[:, 4:5]
         preds = np.hstack([boxes.astype(np.float32), conf.astype(np.float32)])
 
+        if cnms is None:
+            raise ImportError(
+                "Cython NMS is not available. Install with: "
+                "apt-get install gcc python3-dev && pip install hailo_model_zoo[postprocessing]"
+            )
         keep = cnms(preds, iou_thres)
         if keep.shape[0] > max_det:
             keep = keep[:max_det]
@@ -592,4 +604,79 @@ def yolov8_pose_estimation_postprocess(endnodes, device_pre_post_layers=None, **
         output["keypoints"][b, : nms_res[b]["num_detections"]] = nms_res[b]["keypoints"][..., :2]
         output["joint_scores"][b, : nms_res[b]["num_detections"], ..., 0] = _sigmoid(nms_res[b]["keypoints"][..., 2])
         output["scores"][b, : nms_res[b]["num_detections"], ..., 0] = nms_res[b]["scores"]
+    return output
+
+
+def _decode_yolo26_pose_kpts(raw_kpts_per_scale, strides, n_kpts=17):
+    """Decode keypoints per scale in pixel coords, then flatten across scales.
+
+    yolo26 pose head emits raw xy as an offset in stride units from the anchor
+    center, so the decode is simply: kpts_xy = raw * stride + (grid + 0.5) * stride.
+    This differs from yolov8 pose (which uses a `*2 - 0.5` rescale). Verified
+    against the ONNX's built-in decoded output on a COCO val image.
+    Confidence channel (index 2) is left as a raw logit; sigmoid is applied
+    after the detection-side gather, like yolov8 pose does.
+    """
+    decoded = []
+    for raw_kpts, stride in zip(raw_kpts_per_scale, strides, strict=True):
+        arr = np.asarray(raw_kpts)
+        bs, h, w, _ = arr.shape
+        kpts = arr.reshape(bs, h * w, n_kpts, 3).astype(np.float32, copy=True)
+        grid_x, grid_y = np.meshgrid(np.arange(w) + 0.5, np.arange(h) + 0.5)
+        center = np.stack([grid_x.flatten(), grid_y.flatten()], axis=-1) * stride  # (h*w, 2)
+        kpts[..., :2] = stride * kpts[..., :2] + center[np.newaxis, :, np.newaxis, :]
+        decoded.append(kpts.reshape(bs, h * w, n_kpts * 3))
+    return np.concatenate(decoded, axis=1)  # (BS, sum(h*w), n_kpts * 3)
+
+
+def yolo26_pose_estimation_postprocess(endnodes, device_pre_post_layers=None, **kwargs):
+    """
+    endnodes is a list of 9 tensors (grouped by head type, not interleaved):
+        endnodes[0]:  bbox   output with shape (BS, 20, 20, 4)    # stride 32
+        endnodes[1]:  bbox   output with shape (BS, 40, 40, 4)    # stride 16
+        endnodes[2]:  bbox   output with shape (BS, 80, 80, 4)    # stride 8
+        endnodes[3]:  scores output with shape (BS, 20, 20, 1)
+        endnodes[4]:  scores output with shape (BS, 40, 40, 1)
+        endnodes[5]:  scores output with shape (BS, 80, 80, 1)
+        endnodes[6]:  kpts   output with shape (BS, 20, 20, 51)   # 17 * 3
+        endnodes[7]:  kpts   output with shape (BS, 40, 40, 51)
+        endnodes[8]:  kpts   output with shape (BS, 80, 80, 51)
+
+    Box & score branches go through the shared `YoloPostProc` (yolo26 decode path:
+    4-ch direct box regression + top-k filter, no NMS). Keypoints are pre-decoded
+    per scale into pixel coordinates, then flattened and passed as `mask_coeffs` so
+    `YoloPostProc.yolo26_filter` gathers the kpts for the selected detections.
+    """
+    n_kpts = 17
+    strides = kwargs["anchors"]["strides"]  # [32, 16, 8]
+    decoded_kpts = _decode_yolo26_pose_kpts(endnodes[6:9], strides, n_kpts=n_kpts)
+
+    detection_endnodes = endnodes[:6]
+    kwargs["device_pre_post_layers"] = device_pre_post_layers
+    kwargs["edit_classes"] = False
+    kwargs["normalize_boxes"] = False
+    detection_postproc = YoloPostProc(**kwargs)
+    detection_results = detection_postproc.postprocessing(detection_endnodes, mask_coeffs=decoded_kpts)
+
+    boxes_batch = np.asarray(detection_results["detection_boxes"])
+    scores_batch = np.asarray(detection_results["detection_scores"])
+    num_dets_batch = np.asarray(detection_results["num_detections"])
+    kpts_batch = np.asarray(detection_results["mask"])
+
+    batch_size, max_detections = boxes_batch.shape[:2]
+    output = {
+        "bboxes": np.zeros((batch_size, max_detections, 4)),
+        "keypoints": np.zeros((batch_size, max_detections, n_kpts, 2)),
+        "joint_scores": np.zeros((batch_size, max_detections, n_kpts, 1)),
+        "scores": np.zeros((batch_size, max_detections, 1)),
+    }
+    for b in range(batch_size):
+        n = int(num_dets_batch[b])
+        if n == 0:
+            continue
+        kpts = kpts_batch[b, :n].reshape(n, n_kpts, 3)
+        output["bboxes"][b, :n] = boxes_batch[b, :n]
+        output["keypoints"][b, :n] = kpts[..., :2]
+        output["joint_scores"][b, :n, :, 0] = _sigmoid(kpts[..., 2])
+        output["scores"][b, :n, 0] = scores_batch[b, :n]
     return output

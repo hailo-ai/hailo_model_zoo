@@ -43,4 +43,3 @@ dw12_fc, dw12_d0, dw12_d1, dw12_d2, dw12_d3, dw12_d4, dw12_d5, dw12_d6, dw12_d7,
 dw13_fc, dw13_d0, dw13_d1, dw13_d2, dw13_d3, dw13_d4, dw13_d5, dw13_d6, dw13_d7, dw13_dc = defuse(dw13, 8, defuse_type=INPUT_FEATURES, splitter=True)
 dw14_fc, dw14_d0, dw14_d1, dw14_d2, dw14_d3, dw14_d4, dw14_d5, dw14_d6, dw14_d7, dw14_dc = defuse(dw14, 8, defuse_type=INPUT_FEATURES, splitter=True)
 
-allocator_param(automatic_reshapes=enabled)

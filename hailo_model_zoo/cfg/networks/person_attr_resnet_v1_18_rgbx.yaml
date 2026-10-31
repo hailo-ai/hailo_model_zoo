@@ -12,5 +12,4 @@ info:
   input_shape: 224x224x4
   supported_hw_arch:
   - hailo15h
-  - hailo15l
   - hailo10h

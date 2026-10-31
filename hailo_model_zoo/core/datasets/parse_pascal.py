@@ -4,6 +4,8 @@ from hailo_model_zoo.core.factory import DATASET_FACTORY
 
 
 @DATASET_FACTORY.register(name="pascal")
+@DATASET_FACTORY.register(name="uavid")
+@DATASET_FACTORY.register(name="aeroscapes")
 def parse_record(serialized_example):
     """Parse serialized example of TfRecord and extract dictionary of all the information"""
     features = tf.io.parse_single_example(

@@ -28,6 +28,13 @@ This skill is shipped with the Hailo Model Zoo. It assumes the DFC wheel (`hailo
 
 ### 2. Run compile
 
+`hailomz compile` (and `runner.compile()` when driven through it) rewrites the HAR named after the network in the current directory — the same optimized HAR this stage reads from. Back up the optimized HAR under a distinct name first and checksum the file you're about to compile; losing the optimized HAR to a compile is easy to do and the loss is silent. Compile is also CPU-only, so set `CUDA_VISIBLE_DEVICES=""` before running it — otherwise it can hold a GPU that an optimization job elsewhere needs.
+
+```bash
+cp <optimized.har> <optimized.har>.bak
+md5sum <optimized.har> > <optimized.har>.md5
+```
+
 ```python
 from hailo_sdk_client import ClientRunner
 
@@ -43,6 +50,7 @@ The compiled HAR carries the metadata the profiler and `hailo har extract` consu
 ### 3. Verify
 
 - Confirm `<model_name>.hef` exists and report its size and location.
+- The compile log line `Applying selected partition to N contexts` gives the context count — report it. It's the number that explains a multi-context model's FPS.
 - Inspect the HEF metadata with `hailortcli parse-hef <model_name>.hef` (requires HailoRT installed).
 - **Per-layer profiler (static)** — `hailo profiler <model_name>_compiled_model.har` produces a static per-layer report. **Note**: for multi-context models (most large models), this report does **not** include performance / FPS numbers without runtime data.
 - **Profiler with runtime data (full FPS / utilization)** — the documented two-step flow for accurate performance on multi-context models:

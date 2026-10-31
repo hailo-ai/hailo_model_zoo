@@ -52,13 +52,13 @@ class SCRFDPostProc(object):
 
             anchor_centers = np.stack(np.mgrid[:height, :width][::-1], axis=-1).astype(np.float32)
             anchor_centers = (anchor_centers * stride).reshape((-1, 2))
-            anchor_centers[:, 0] /= self._image_dims[0]
-            anchor_centers[:, 1] /= self._image_dims[1]
+            anchor_centers[:, 0] /= self._image_dims[1]
+            anchor_centers[:, 1] /= self._image_dims[0]
             if num_anchors > 1:
                 anchor_centers = np.stack([anchor_centers] * num_anchors, axis=1).reshape((-1, 2))
             anchor_scales = np.ones_like(anchor_centers, dtype=np.float32) * stride
-            anchor_scales[:, 0] /= self._image_dims[0]
-            anchor_scales[:, 1] /= self._image_dims[1]
+            anchor_scales[:, 0] /= self._image_dims[1]
+            anchor_scales[:, 1] /= self._image_dims[0]
             anchor = np.concatenate([anchor_centers, anchor_scales], axis=1)
             anchors.append(anchor)
         return tf.convert_to_tensor(np.concatenate(anchors, axis=0))

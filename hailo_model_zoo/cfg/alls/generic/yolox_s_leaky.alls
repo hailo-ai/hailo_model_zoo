@@ -3,3 +3,4 @@ post_quantization_optimization(finetune, policy=disabled)
 nms_postprocess("../../postprocess_config/nms_config_yolox_s_leaky.json", yolox, engine=cpu)
 
 allocator_param(width_splitter_defuse=disabled)
+allocator_param(enable_conv_2_apus_in_racehorse_pyramids=enabled)

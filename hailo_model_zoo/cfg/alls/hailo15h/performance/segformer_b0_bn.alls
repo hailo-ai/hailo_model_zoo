@@ -1,0 +1,13 @@
+normalization199 = normalization([123.675, 116.28, 103.53], [58.395, 57.12, 57.375])
+model_optimization_config(calibration, batch_size=1)
+model_optimization_flavor(optimization_level=2, compression_level=0)
+post_quantization_optimization(finetune, policy=disabled)
+
+
+# with 2 apus, we get allocation timeout
+
+# performance_param(optimization_level=2)
+allocator_param(enable_partial_row_buffers=disabled)
+compilation_param(matmul1, number_of_apus=1)
+compilation_param(matmul3, number_of_apus=1)
+performance_param(compiler_optimization_level=max)

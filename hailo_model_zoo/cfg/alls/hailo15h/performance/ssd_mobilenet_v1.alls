@@ -1,0 +1,4 @@
+new_normalization1 = normalization([127.5, 127.5, 127.5], [127.5, 127.5, 127.5])
+
+nms_postprocess(meta_arch=ssd)
+performance_param(compiler_optimization_level=max)

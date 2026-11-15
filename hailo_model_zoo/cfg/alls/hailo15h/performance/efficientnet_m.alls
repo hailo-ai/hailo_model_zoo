@@ -1,0 +1,2 @@
+normalization1 = normalization([127, 127, 127], [128, 128, 128])
+performance_param(compiler_optimization_level=max)
